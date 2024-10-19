@@ -1,6 +1,6 @@
-name = "Winter Mod"
+name = "WinterLands Mod"
 description = "It's a frozen island with stuff on it."
-author = "Feything, Gearless, LukaS"
+author = "Feything, Gearless, LukaS, ADM, Notka"
 version = "1.0.0." 
 
 forumthread = ""
