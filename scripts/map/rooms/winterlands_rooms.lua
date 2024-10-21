@@ -76,7 +76,8 @@ AddRoom("Tundra",  {
 			distributepercent = 0.15,
 			distributeprefabs =
 			{
-				marsh_bush = 0.66,				
+				rock1 = 0.66,	
+				ice_cavepillar = 1,
 				
 			},
 		},

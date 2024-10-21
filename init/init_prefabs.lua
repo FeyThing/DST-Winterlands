@@ -1,1 +1,3 @@
-PrefabFiles = {}
+PrefabFiles = {
+    "ice_cavepillar",
+}

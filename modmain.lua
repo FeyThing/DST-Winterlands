@@ -1,5 +1,5 @@
 local require = GLOBAL.require
-
+local AddSimPostInit = AddSimPostInit
 
 local inits = {
     "init_prefabs",
@@ -14,4 +14,7 @@ for _, v in pairs(inits) do
     modimport("init/"..v)
 end
 
+AddSimPostInit(function()
+    modimport("postinit/shadeeffects")
+end)
 
