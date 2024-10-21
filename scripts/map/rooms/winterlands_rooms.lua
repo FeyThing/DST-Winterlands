@@ -1,6 +1,6 @@
 	AddRoom("BG Icy Fields",  {
 		colour={r=0.3,g=0.2,b=0.1,a=0.3},
-		value = WORLD_TILES.OCEAN_ICE,
+		value = WORLD_TILES.ICEFIELD_NOISE,
 		contents = {
 			{
 			},
@@ -15,7 +15,7 @@
 	
 	AddRoom("BG Tundra",  {
 		colour={r=0.3,g=0.2,b=0.1,a=0.3},
-		value = WORLD_TILES.OCEAN_ICE,
+		value = WORLD_TILES.ICETUNDRA_NOISE,
 		contents = {
 			{
 			},
@@ -30,7 +30,7 @@
 
 	AddRoom("Icy Fields",  {
 		colour={r=0.3,g=0.2,b=0.1,a=0.3},
-		value = WORLD_TILES.OCEAN_ICE,
+		value = WORLD_TILES.ICEFIELD_NOISE,
 		contents = {
 			{
 			},
@@ -48,7 +48,7 @@
 	
 AddRoom("Tundra",  {
 		colour={r=0.3,g=0.2,b=0.1,a=0.3},
-		value = WORLD_TILES.OCEAN_ICE,
+		value = WORLD_TILES.ICETUNDRA_NOISE,
 		contents = {
 			countstaticlayouts =
 			{
@@ -56,8 +56,9 @@ AddRoom("Tundra",  {
 			distributepercent = 0.07,
 			distributeprefabs =
 			{								
-				marsh_tree = 1,
-				marsh_bush = 0.66,	
+				marsh_tree = 0.1,
+				marsh_bush = 0.66,
+				rock1 = 1,
 			},
 		},
 		
@@ -65,7 +66,7 @@ AddRoom("Tundra",  {
 	
 	AddRoom("Icy Pillars",  {
 		colour={r=0.3,g=0.2,b=0.1,a=0.3},
-		value = WORLD_TILES.OCEAN_ICE,
+		value = WORLD_TILES.ICECAVE_NOISE,
 		contents = {
 			countstaticlayouts =
 			{
@@ -75,7 +76,6 @@ AddRoom("Tundra",  {
 			distributepercent = 0.15,
 			distributeprefabs =
 			{
-				marsh_tree = 1,
 				marsh_bush = 0.66,				
 				
 			},
@@ -85,7 +85,7 @@ AddRoom("Tundra",  {
 	
 	AddRoom("Cold Wastes",  {
 		colour={r=0.3,g=0.2,b=0.1,a=0.3},
-		value = WORLD_TILES.OCEAN_ICE,
+		value = WORLD_TILES.ICEWASTE,
 		contents = {			
 			countstaticlayouts =
 			{
@@ -93,8 +93,9 @@ AddRoom("Tundra",  {
 			distributepercent = 0.15,
 			distributeprefabs =
 			{
-				marsh_tree = 1,
-				marsh_bush = 0.66,		
+				marsh_tree = .1,
+				marsh_bush = 0.66,
+				rock_ice = .3,
 	
 			},
 		},
