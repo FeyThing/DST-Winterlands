@@ -1,4 +1,3 @@
-local require = GLOBAL.require
 local AddSimPostInit = AddSimPostInit
 
 local inits = {
@@ -9,7 +8,6 @@ local inits = {
     "init_strings",
 }
 
-
 for _, v in pairs(inits) do
     modimport("init/"..v)
 end
@@ -17,4 +15,3 @@ end
 AddSimPostInit(function()
     modimport("postinit/shadeeffects")
 end)
-
