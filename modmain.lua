@@ -12,6 +12,8 @@ for _, v in pairs(inits) do
     modimport("init/"..v)
 end
 
+modimport("scripts/snowstorm")
+
 AddSimPostInit(function()
     modimport("postinit/shadeeffects")
 end)
