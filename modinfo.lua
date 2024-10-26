@@ -1,25 +1,26 @@
 name = "WinterLands Mod"
-description = "It's a frozen island with stuff on it."
 author = "Feything, Gearless, LukaS, ADM, Notka"
-version = "1.0.0." 
+
+version = "dry-icing"
+local info_version = "󰀔 [ Version "..version.." ]\n"
+
+description = info_version..[[
+
+It's a frozen island with stuff on it.]]
 
 forumthread = ""
 api_version = 10
 
+all_clients_require_mod = true
 dst_compatible = true
-
-dont_starve_compatible = false
-reign_of_giants_compatible = false
-shipwrecked_compatible = false
-
-all_clients_require_mod = true 
 
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
 
-
 server_filter_tags = {
-"environment", "scenario", "worldgen", "item", "creature", "art",
+	
 }
 
---configuration_options = {}
+configuration_options = {
+	
+}

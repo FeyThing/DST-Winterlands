@@ -1,0 +1,282 @@
+Warning: QPainter::begin: Paint device returned engine == 0, type: 1
+Warning: QPainter::setPen: Painter not active
+Warning: QPainter::setBrush: Painter not active
+Warning: QPainter::setRenderHint: Painter must be active to set rendering hints
+Warning: QPainter::setPen: Painter not active
+Debug: "16:50:05 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\layerpropertiesdialog.ui.h:89 DX: Change Layer Properties" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:52:06 ..\..\src\propertyeditor.cpp:4234 ER: Set Max Playbacks Behavior" 
+Debug: "16:54:03 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\parameterpropertiesdialog.ui.h:116 EJ: Change Parameter Properties" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:55:22 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\eventform.ui.h:1529 HH: Add Simple Event" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:17 ..\..\src\eventlayerstackwidget.cpp:1334 CV: Add Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Warning: QColor::setHsv: HSV parameters out of range
+Warning: QColor::setHsv: HSV parameters out of range
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:24 ..\..\src\eventlayerstackwidget.cpp:1402 CW: Replace sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:31 ..\..\src\eventlayerstackwidget.cpp:1465 CX: Delete Sound" 
+Debug: "16:56:38 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\newsounddialog.ui.h:178 ED: Add Sound File" 
+Debug: "16:56:40 ..\..\src\eventlayerstackwidget.cpp:1334 CV: Add Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length" 
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "16:57:06 ..\..\src\propertyeditor.cpp:1508 EM: Set Name" 
+Debug: 
+Building project 'polarsounds'...
+Debug: Building project C:\Program Files (x86)\Steam\steamapps\common\Don't Starve Together\mods\DST-Winterlands\sound\polarsounds.fev...
+Debug: Unique sound defs 1/2
+Debug: Retrieving sound file info...
+Debug: Retrieving reverb info...
+Debug: FEV file written ok
+Debug: Unique Envelope Points: 3 of 3
+Debug: Unique Strings: 70 characters of 70
+Debug: Caching sound file details for ''...
+Debug: polarwetness\freeze.wav
+Debug: Building 'polarsounds.fsb'
+Debug: Encoded C:\Program Files (x86)\Steam\steamapps\common\Don't Starve Together\mods\DST-Winterlands\sound\polarwetness\freeze.wav
+Debug: Writing FSB...
+Debug: Finished building FSB
+Debug: 
+Debug: 
+Summary of build:
+SUCCESS: C:/Program Files (x86)/Steam/steamapps/common/Don't Starve Together/mods/DST-Winterlands/sound/polarsounds.fev
+SUCCESS: polarsounds.fsb

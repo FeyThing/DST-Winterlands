@@ -80,16 +80,21 @@ return Class(function(self, inst)
 					local tile = _map:GetTile(x, y)
 					local level = 0
 	
-					if tile == WORLD_TILES.ICEFIELD or
-					tile == WORLD_TILES.ICETUNDRA or
-					tile == WORLD_TILES.ICEWASTE or
-					tile == WORLD_TILES.ICECAVE or
-					tile == WORLD_TILES.ICETUNDRA_NOISE or
-					tile == WORLD_TILES.ICEFIELD_NOISE or
-					tile == WORLD_TILES.ICECAVE_NOISE then
+					if tile == WORLD_TILES.POLAR_ICE or
+					tile == WORLD_TILES.POLAR_SNOW or
+					tile == WORLD_TILES.POLAR_CAVES then
 						level = 1
 						table.insert(_gradient_indeces, index)
 					end
+					
+					--[[ADM: I would suggest to change the above to this when you're ready for it. We (or other mods) could be tempted to have other classic turfs onto the island ^
+							 if you want to fetch it from further away, remove 0 or a specific larger range :)
+							 
+					local _x, _y, _z = TheWorld.Map:GetTileCenterPoint(x, y)
+					if IsInPolarAtPoint(_x, _y, _z, 0) then
+						level = 1
+						table.insert(_gradient_indeces, index)
+					end]]
 	
 					SetStormLevel(index, level)
 				end

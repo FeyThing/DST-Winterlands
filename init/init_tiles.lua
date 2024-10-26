@@ -1,155 +1,142 @@
 local NOISES = require("noisetilefunctions")
 local ChangeTileRenderOrder = ChangeTileRenderOrder
 
-local WINTERLANDS_COLOR =
-{
-	primary_color =        {5, 15, 45,  255}, -- {153, 76, 0,  200},
-	secondary_color =      {5,  20, 20, 200}, -- {102,  51, 0, 255/2},
-	secondary_color_dusk = {0,  2, 10, 125}, -- {51,  25, 0, 80},
-	minimap_color =        {3,  12,  23,  150},
+local POLAR_COLOR = {
+	primary_color = 		{5, 	15, 	90, 	255}, 	-- {153, 	76, 	0, 	200}
+	secondary_color = 		{5, 	20, 	95, 	200}, 	-- {102, 	51, 	0, 	255/2}
+	secondary_color_dusk = 	{0, 	2, 		35, 	125}, 	-- {51, 	25, 	0, 	80}
+	minimap_color = 		{5, 	15, 	65, 	150},
 }
 
-
-local WINTERLANDS_WAVETINTS =
-{
-    winter = {249, 180, 45} -- 1,  0.20,   0.10
+local POLAR_WAVETINTS = {
+	winter = {249, 180, 45} 	-- {1, 	0.20, 	0.10}
 }
 
-AddTile("OCEAN_WINTER", "OCEAN",
-    {
-		ground_name = "Winter Waves", 
-	},
-    {
-        name = "cave",
-        noise_texture = "levels/textures/ocean_noise.tex",
-        runsound="dontstarve/movement/run_marsh",
-        walksound="dontstarve/movement/walk_marsh",
-        snowsound="dontstarve/movement/run_ice",
-        mudsound = "dontstarve/movement/run_mud",
-        ocean_depth = "SHALLOW",
-        colors = WINTERLANDS_COLOR,
-        wavetint = WINTERLANDS_WAVETINTS.winter,
-    },
-    {
-        name = "map_edge",
-        noise_texture = "levels/textures/mini_water_coral.tex",
-    }
-)
+--	Lands
 
+-- TODO(?) change cannotbedug to some new thing and require a special pitchfork made of charged bluegem to retrieve turfs from the island?
 
-AddTile("ICEFIELD", "LAND",
+AddTile("POLAR_ICE", "LAND",
 	{
-		ground_name 	= "Icy Ground",
+		ground_name = 	"Polar Ice",
 	},
 	{
-		name			= "fluffysnow",
-		noise_texture	= "levels/textures/ground_noise_icefield.tex",
-		runsound 		= "dontstarve/movement/run_dirt",
-        walksound 		= "dontstarve/movement/walk_dirt",
-		snowsound		= "dontstarve/movement/run_snow",
-		mudsound        = "dontstarve/movement/run_mud",
-		ocean_depth = "SHALLOW",
-		colors = WINTERLANDS_COLOR,
+		name = 			"ocean_ice", -- Well I don't like this either
+		noise_texture = "levels/textures/noise_oceanice.tex",
+		runsound = 		"dontstarve/movement/run_iceslab",
+		walksound = 	"dontstarve/movement/walk_iceslab",
+		snowsound = 	"dontstarve/movement/run_iceslab",
+		mudsound = 		"dontstarve/movement/run_iceslab",
+		colors = 		POLAR_COLOR,
+		--cannotbedug = true,
 	},
 	{
-		name 			= "map_edge",
-		noise_texture	= "levels/textures/mini_noise_icefield.tex",
-        pickupsound = "grainy",
-	}
-
-)
-
-
-AddTile("ICETUNDRA", "LAND",
-	{
-		ground_name 	= "Tundra Desert",
-	},
-	{
-		name			= "fluffysnow",
-		noise_texture	= "levels/textures/ground_noise_icetundra.tex",
-		runsound 		= "dontstarve/movement/run_dirt",
-        walksound 		= "dontstarve/movement/walk_dirt",
-		snowsound		= "dontstarve/movement/run_ice",
-		mudsound        = "dontstarve/movement/run_mud",
-		ocean_depth = "SHALLOW",
-		colors = WINTERLANDS_COLOR,
-	},
-	{
-		name 			= "map_edge",
-		noise_texture	= "levels/textures/mini_noise_icetundra.tex",
-		pickupsound = "grainy",
+		name = 			"map_edge",
+		noise_texture = "levels/textures/mini_meteor.tex", --"levels/textures/mini_noise_polarice.tex",
+		pickupsound = 	"grainy",
 	}
 )
 
-AddTile("ICEWASTE", "LAND",
+AddTile("POLAR_SNOW", "LAND",
 	{
-		ground_name 	= "Icy Wasteland",
+		ground_name = 	"Polar Snow",
 	},
 	{
-		name			= "icy",
-		noise_texture	= "levels/textures/ground_noise_icewaste.tex",
-		runsound="dontstarve/movement/run_dirt",
-        walksound="dontstarve/movement/walk_dirt",
-        snowsound="dontstarve/movement/run_snow",
-        mudsound="dontstarve/movement/run_mud",
-		ocean_depth = "SHALLOW",
-		colors = WINTERLANDS_COLOR,
+		name = 			"polarsnow",
+		noise_texture = "levels/textures/noise_polarsnow.tex",
+		runsound = 		"dontstarve/movement/run_snow",
+		walksound = 	"dontstarve/movement/run_snow",
+		snowsound = 	"dontstarve/movement/run_snow",
+		mudsound = 		"dontstarve/movement/run_snow",
+		colors = 		POLAR_COLOR,
+		cannotbedug = 	true,
+		hard = 			true,
 	},
 	{
-		name 			= "map_edge",
-		noise_texture	= "levels/textures/mini_noise_icewaste.tex",
-        pickupsound = "grainy",
+		name = 			"map_edge",
+		noise_texture = "levels/textures/mini_dirt_noise.tex", --"levels/textures/mini_noise_polarsnow.tex",
+		pickupsound = 	"grainy",
 	}
 )
 
-AddTile("ICECAVE", "LAND",
+AddTile("POLAR_CAVES", "LAND",
 	{
-		ground_name 	= "Icy Cave",
+		ground_name = 	"Polar Cave",
 	},
 	{
-		name			= "icy",
-		noise_texture	= "levels/textures/ground_noise_icecave.tex",
-		runsound="dontstarve/movement/run_dirt",
-        walksound="dontstarve/movement/walk_dirt",
-        snowsound="dontstarve/movement/run_snow",
-        mudsound="dontstarve/movement/run_mud",
-        hard			= true,
-		ocean_depth = "SHALLOW",
-		colors = WINTERLANDS_COLOR,
+		name = 			"dirt",
+		noise_texture = "levels/textures/noise_polar.tex", --"levels/textures/noise_polarcaves.tex",
+		runsound = 		"dontstarve/movement/run_ice",
+		walksound = 	"dontstarve/movement/run_ice",
+		snowsound = 	"dontstarve/movement/run_ice",
+		mudsound = 		"dontstarve/movement/run_ice",
+		colors = 		POLAR_COLOR,
+		cannotbedug = 	true,
+		hard = 			true,
 	},
 	{
-		name 			= "map_edge",
-		noise_texture	= "levels/textures/mini_noise_icecave.tex",
+		name = 			"map_edge",
+		noise_texture = "levels/textures/mini_oceanice_noise.tex", --"levels/textures/mini_noise_polarcaves.tex",
 	}
 )
 
-AddTile("ICETUNDRA_NOISE", "NOISE")
+AddTile("POLAR_CAVES_NOISE", "NOISE")
+AddTile("POLAR_LAKES_NOISE", "NOISE")
+AddTile("POLAR_TUNDRA_NOISE", "NOISE")
 
-local function GetTileForIcetundraNoise(noise)
-    return noise < .5 and WORLD_TILES.ICETUNDRA or WORLD_TILES.ROCKY
+--	Oceans
+
+AddTile("OCEAN_POLAR", "OCEAN",
+	{
+		ground_name = 	"Polar Shore", 
+	},
+	{
+		name = 			"cave",
+		noise_texture = "levels/textures/ocean_noise.tex",
+		runsound = 		"dontstarve/movement/run_marsh",
+		walksound = 	"dontstarve/movement/walk_marsh",
+		snowsound = 	"dontstarve/movement/run_ice",
+		mudsound = 		"dontstarve/movement/run_mud",
+		ocean_depth = 	"POLAR",
+		colors = 		POLAR_COLOR,
+		wavetint = 		POLAR_WAVETINTS.winter,
+	},
+	{
+		name = 			"map_edge",
+		noise_texture = "levels/textures/mini_water_coral.tex",
+	}
+)
+
+--	Noise Tiles
+
+local function GetTileForPolarCaves(noise)
+	return noise > 0.8 and WORLD_TILES.POLAR_SNOW or noise < 0.3 and WORLD_TILES.POLAR_ICE or WORLD_TILES.POLAR_CAVES
 end
 
-NOISES[WORLD_TILES.ICETUNDRA_NOISE] = GetTileForIcetundraNoise
-
-AddTile("ICEFIELD_NOISE", "NOISE")
-
-local function GetTileForIcewasteNoise(noise)
-    return noise < .6 and WORLD_TILES.ICEFIELD or noise < .3 and WORLD_TILES.ICETUNDRA or WORLD_TILES.ICEWASTE
+local function GetTileForPolarLakes(noise)
+	return noise < 0.35 and WORLD_TILES.OCEAN_POLAR or noise < 0.4 and WORLD_TILES.POLAR_ICE or noise < 0.55 and WORLD_TILES.PEBBLEBEACH or WORLD_TILES.POLAR_SNOW
 end
 
-NOISES[WORLD_TILES.ICEFIELD_NOISE] = GetTileForIcewasteNoise
-
-AddTile("ICECAVE_NOISE", "NOISE")
-
-local function GetTileForIcecaveNoise(noise)
-    return noise < .6 and WORLD_TILES.ICECAVE or WORLD_TILES.OCEAN_ICE
+local function GetTileForPolarTundra(noise)
+	return noise < 0.35 and WORLD_TILES.POLAR_SNOW or noise < 0.45 and WORLD_TILES.ROCKY
+		or WORLD_TILES.POLAR_SNOW
 end
 
-NOISES[WORLD_TILES.ICECAVE_NOISE] = GetTileForIcecaveNoise
+NOISES[WORLD_TILES.POLAR_CAVES_NOISE] = GetTileForPolarCaves
+NOISES[WORLD_TILES.POLAR_LAKES_NOISE] = GetTileForPolarLakes
+NOISES[WORLD_TILES.POLAR_TUNDRA_NOISE] = GetTileForPolarTundra
 
-ChangeTileRenderOrder(WORLD_TILES.OCEAN_WINTER, WORLD_TILES.OCEAN_HAZARDOUS, true)
+--	Tile Order
 
-ChangeTileRenderOrder(WORLD_TILES.ICEFIELD, WORLD_TILES.DIRT)
-ChangeTileRenderOrder(WORLD_TILES.ICETUNDRA, WORLD_TILES.DIRT)
-ChangeTileRenderOrder(WORLD_TILES.ICEWASTE, WORLD_TILES.DIRT)
-ChangeTileRenderOrder(WORLD_TILES.ICECAVE, WORLD_TILES.DIRT)
+ChangeTileRenderOrder(WORLD_TILES.OCEAN_POLAR, WORLD_TILES.OCEAN_HAZARDOUS, true)
+
+ChangeTileRenderOrder(WORLD_TILES.POLAR_CAVES, WORLD_TILES.DIRT)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.DIRT)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_SNOW, WORLD_TILES.DIRT)
+
+--	Setpiece Ground Type
+
+GLOBAL.POLAR_GROUND_TYPES = {
+	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.OCEAN_POLAR, -- 1, 2, 3, 4, 5
+	WORLD_TILES.DIRT, WORLD_TILES.ROCKY, -- 6, 7
+}

@@ -1,23 +1,13 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local AddLevelPreInitAny = ENV.AddLevelPreInitAny
-local AddTaskSetPreInitAny = ENV.AddTaskSetPreInitAny
-local AddRoomPreInit = ENV.AddRoomPreInit
-local AddTaskPreInit = ENV.AddTaskPreInit
-local GetModConfigData = ENV.GetModConfigData
+require("map/tasks/polar")
+local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
 
-local tasks = require("map/tasks/winterlands")
-
-local winter_tasks = {"Icy Fields", "Tundra", "Icy Pillars", "Cold Wastes"}
-
-AddTaskSetPreInitAny(function(tasksetdata)
-   		if tasksetdata.location == "forest" and tasksetdata.tasks and #tasksetdata.tasks > 1 then
-			for i, setpieces in ipairs(winter_tasks) do
-			table.insert(tasksetdata.tasks, setpieces)
-			end	
-   		end
+ENV.AddTaskSetPreInitAny(function(self)
+	if self.location == "forest" and self.tasks and #self.tasks > 1 then
+		for i, v in ipairs(polar_tasks) do
+			table.insert(self.tasks, v)
+		end	
+	end
 end)
-
-
-

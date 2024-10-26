@@ -1,0 +1,7 @@
+﻿<Atlas>
+	<Texture filename="polarminimap.tex" />
+	<Elements>
+		<Element name="pillar_polar.png" u1="0.001" u2="0.249" v2="0.999" v1="0.501" />
+		<Element name="pillar_polarcave.png" u1="0.251" u2="0.749" v2="0.999" v1="0.001" />
+	</Elements>
+</Atlas>
