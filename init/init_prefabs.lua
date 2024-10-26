@@ -1,4 +1,4 @@
 PrefabFiles = {
-    "ice_cavepillar",
+    "ice_pillars",
     "snowstorm_snow"
 }
