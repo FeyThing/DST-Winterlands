@@ -32,7 +32,7 @@ function GetTemperatureAtXZ(x, z, ...)
 			or TheWorld.state.iscavedusk and TUNING.POLAR_TEMPERATURES["dusk"]
 			or TUNING.POLAR_TEMPERATURES["day"])
 	elseif TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_DRYICE then
-		temperature = temperature + TUNING.POLAR_TEMPERATURES["ice"])
+		temperature = temperature + TUNING.POLAR_TEMPERATURES["ice"]
 	end
 	
 	return temperature
