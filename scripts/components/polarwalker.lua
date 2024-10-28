@@ -73,7 +73,9 @@ function PolarWalker:GetSlowingMult()
 end
 
 function PolarWalker:IsPolarSlowed()
-	if self.inst:HasTag("flying") or self.inst:HasTag("playerghost") then
+	if self.inst:HasTag("flying") or self.inst:HasTag("playerghost")
+		or (self.inst.components.health and (self.inst.components.health:IsDead() or self.inst.components.health:IsInvincible())) then
+		
 		self.slow_time = 0
 		self.start_time = nil
 		
@@ -127,24 +129,8 @@ end
 
 function PolarWalker:SetWetness()
 	local x, y, z = self.inst.Transform:GetWorldPosition()
-	if not TheWorld.Map:IsPolarSnowAtPoint(x, y, z) then
+	if not TheWorld.Map:IsPolarSnowAtPoint(x, y, z) or HasPolarImmunity(self.inst) then
 		return
-	end
-	
-	if self.inst:HasTag("polarimmune") then
-		return
-	end
-	
-	if self.inst.components.inventory then
-		for k, v in pairs(self.inst.components.inventory.equipslots) do
-			if v:HasTag("polarimmunity") then
-				return
-			end
-		end
-		
-		if self.inst.components.inventory:GetWaterproofness() >= TUNING.POLAR_WETNESS_MIN_PROOFNESS then
-			return
-		end
 	end
 	
 	self.inst:AddDebuff("buff_polarwetness", "buff_polarwetness")

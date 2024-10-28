@@ -13,8 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	}
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Eep...! This is snow joke!"
-	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "I'm dry... but only in terms of snow."
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr...! This is snow joke!"
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "I'm dry. But only in terms of snow."
 	
 --	Worldgen
 	

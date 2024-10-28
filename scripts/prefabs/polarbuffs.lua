@@ -21,7 +21,10 @@ local function wetness_ontick(inst, target)
 			inst.components.temperature:SetTemp(temperature)
 		end
 		
-		print("OnTick:", level, temperature, temperature_level)
+		local immune = HasPolarImmunity(target)
+		local waterproofness = immune and 1 or (target.components.moisture and target.components.moisture:GetWaterproofness() or 0)
+		inst.components.temperature.inherentinsulation = TUNING.POLAR_WETNESS_MAX_INSULATION * waterproofness * (immune and 4 or 1)
+		
 		SetPolarWetness(target, (temperature_level <= 0 and not in_snow) and 0 or math.max(level, temperature_level))
 	end
 end

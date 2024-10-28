@@ -21,8 +21,8 @@ AddTile("POLAR_ICE", "LAND",
 		ground_name = 	"Polar Ice",
 	},
 	{
-		name = 			"ocean_ice", -- Well I don't like this either
-		noise_texture = "levels/textures/noise_ice_age.tex",
+		name = 			"ocean_ice",
+		noise_texture = "levels/textures/noise_polarice.tex",
 		runsound = 		"dontstarve/movement/run_iceslab",
 		walksound = 	"dontstarve/movement/walk_iceslab",
 		snowsound = 	"dontstarve/movement/run_iceslab",

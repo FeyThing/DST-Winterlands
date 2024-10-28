@@ -5,7 +5,7 @@ local TREES = {"evergreen", "evergreen_sparse"}
 
 local function OnInit(inst)
 	if IsInPolar(inst) then
-		inst.AnimState:SetSymbolSaturation("pieces", 4)
+		inst.AnimState:SetSymbolSaturation("pieces", 3)
 	end
 end
 

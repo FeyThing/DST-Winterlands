@@ -218,11 +218,13 @@ local function fn()
 	
 	inst:AddTag("character")
 	inst:AddTag("bear")
+	inst:AddTag("polarwet")
 	
 	inst:AddComponent("talker")
 	inst.components.talker.fontsize = 35
 	inst.components.talker.font = TALKINGFONT
 	inst.components.talker.offset = Vector3(0, -400, 0)
+	inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
 	inst.components.talker:MakeChatter()
 	
 	inst.entity:SetPristine()

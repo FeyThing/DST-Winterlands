@@ -90,6 +90,10 @@ function SetPolarWetness(inst, level)
 end
 
 function GetPolarWetness(inst)
+	if inst:HasTag("polarwet") then
+		return TUNING.POLAR_WETNESS_LVLS, true
+	end
+	
 	for i = 1, TUNING.POLAR_WETNESS_LVLS do
 		if inst:HasTag("polarwet_"..i) then
 			return i, true
@@ -97,4 +101,20 @@ function GetPolarWetness(inst)
 	end
 	
 	return 0, false
+end
+
+function HasPolarImmunity(inst)
+	if inst:HasTag("polarimmune") then
+		return true
+	end
+	
+	if inst.components.inventory then
+		for k, v in pairs(inst.components.inventory.equipslots) do
+			if v:HasTag("polarimmunity") then
+				return true, v
+			end
+		end
+	end
+	
+	return false
 end

@@ -36,7 +36,7 @@ function GetTemperatureAtXZ(x, z, ...)
 	return temperature
 end
 
--- We keep snow on things here, and thicken it
+--	We keep snow on things here, and thicken it
 
 local OldMakeSnowCovered = MakeSnowCovered
 function MakeSnowCovered(inst, ...)
@@ -67,7 +67,49 @@ function MakeNoGrowInWinter(inst, ...)
 	end
 end
 
--- Dryice leaves a big cloud when it sinks
+--	Descs get sneazy while having the snow debuff
+
+function PolarifySpeech(ret, inst)
+	local ret_poses = {}
+	
+	if inst:HasTag("soulless") then
+		return ret
+	end
+	
+	if type(inst) == "table" then
+		local polar_level = GetPolarWetness(inst)
+		if math.random() < (TUNING.POLARWETNESS_SNIFFNESS * polar_level) then
+			for i = 1, #ret do
+				local c = ret:sub(i, i)
+				if c == " " then
+					table.insert(ret_poses, i)
+				end
+			end
+		end
+	end
+	
+	if #ret_poses > 0 then
+		local ret_pos = ret_poses[math.random(#ret_poses)]
+		local ret_snuff = STRINGS.POLARCOLD_SNUFFING[math.random(#STRINGS.POLARCOLD_SNUFFING)]
+		
+		if not inst:HasTag("player") then
+			ret_snuff = string.upper(ret_snuff)
+		end
+		
+		ret = ret:sub(1, ret_pos)..ret_snuff..ret:sub(ret_pos + 1)
+	end
+	
+	return ret
+end
+
+local OldSpecialCases = GetDescription_AddSpecialCases
+function GetDescription_AddSpecialCases(ret, charactertable, inst, item, modifier, ...)
+	ret = PolarifySpeech(ret, inst)
+	
+	return OldSpecialCases(ret, charactertable, inst, item, modifier, ...)
+end
+
+--	Dryice leaves a big cloud when it sinks
 require("ocean_util")
 
 local OldSinkEntity = SinkEntity

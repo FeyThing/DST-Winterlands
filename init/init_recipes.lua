@@ -34,6 +34,7 @@ PolarRecipe("polar_dryice", 		{Ingredient("ice", 4)}, 																	TECH.SCIE
 
 --	Structures
 PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 	{"STRUCTURES"}, {"rabbithouse"})
+PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2)}, 															TECH.LOST, 				{numtogive = 6}, 						{"STRUCTURES", "DECOR"}, {"wall_stone_item", "wall_stone_item"})
 
 --	Deconstruction
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe

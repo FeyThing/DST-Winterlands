@@ -3,13 +3,26 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local Moisture = require("components/moisture")
 	
-	function Moisture:GetPolarMoistureRate(rate, drying)
+--	Wetness rate is halted while the debuff is active, however it will consequently increase if the player is attempting to dry, or rather, melt the debuff
+	
+	function Moisture:GetPolarMoistureRate(rate)
 		rate = rate or self:GetMoistureRate()
 		
 		local level = GetPolarWetness(self.inst)
-		local level_rate = (level <= 0 and rate) or (level == 1 and rate / 2) or 0
+		rate = (level <= 0 and rate) or (level == 1 and rate / 2) or 0
 		
-		return level_rate -- TODO: if debuff is drying, then increase wetness! (using drying rate)
+		return rate
+	end
+	
+	function Moisture:GetPolarDryingRate(rate)
+		rate = rate or self:GetDryingRate()
+		
+		local level = GetPolarWetness(self.inst)
+		if level > 0 and rate > 0 then
+			rate = TUNING.POLAR_WETNESS_LVL_WETNESS * level * rate
+		end
+		
+		return rate
 	end
 	
 	local OldGetMoistureRate = Moisture.GetMoistureRate
@@ -20,13 +33,8 @@ local Moisture = require("components/moisture")
 	end
 	
 	local OldGetDryingRate = Moisture.GetDryingRate
-	function Moisture:GetDryingRate(...)
-		local rate = OldGetDryingRate(self, ...)
+	function Moisture:GetDryingRate(moisturerate, ...)
+		local rate = OldGetDryingRate(self, moisturerate, ...)
 		
-		local polar_level = GetPolarWetness(self.inst)
-		if polar_level > 0 and rate > 0 then
-			rate = -rate -- TODO: change that to level based rate, I gotta go tho :wave:
-		end
-		
-		return rate
+		return self:GetPolarDryingRate(rate)
 	end
