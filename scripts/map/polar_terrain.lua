@@ -13,7 +13,8 @@ local function OnlyAllow(approved)
 end
 
 local polar_filters = {
-	polarbearhouse = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
+	pillar_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_SNOW}),
+	polarbearhouse = OnlyAllow({WORLD_TILES.POLAR_DRYICE, WORLD_TILES.POLAR_ROCKY, WORLD_TILES.POLAR_SNOW}),
 }
 
 local polar_addedtiles = {
@@ -25,6 +26,10 @@ local polar_addedtiles = {
 	evergreen_sparse_normal = {WORLD_TILES.POLAR_ICE},
 	evergreen_sparse_short = {WORLD_TILES.POLAR_ICE},
 	evergreen_sparse_tall = {WORLD_TILES.POLAR_ICE},
+	rock1 = {WORLD_TILES.POLAR_ICE},
+	rock2 = {WORLD_TILES.POLAR_ICE},
+	rock_flintless = {WORLD_TILES.POLAR_ICE},
+	rock_ice = {WORLD_TILES.POLAR_SNOW},
 }
 
 for terrain, tiles in pairs(polar_filters) do

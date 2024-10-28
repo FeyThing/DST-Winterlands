@@ -130,7 +130,7 @@ local function fn()
 	
 	inst.persists = false
 	
-	inst.mist_task = inst:DoPeriodicTask(FRAMES * 4, inst.DoMistUpdate)
+	inst.mist_task = inst:DoPeriodicTask(FRAMES * 8, inst.DoMistUpdate)
 	
 	return inst
 end

@@ -76,11 +76,7 @@ function OnPolarCover(inst, loading)
 end
 
 function SetPolarWetness(inst, level)
-	if level > 0 then
-		if inst.components.moisture and inst.components.moisture:GetMoisturePercent() < 0.05 then
-			inst.components.moisture:SetPercent(0.05)
-		end
-	else
+	if level <= 0 then
 		inst:RemoveDebuff("buff_polarwetness")
 	end
 	
@@ -103,7 +99,7 @@ function GetPolarWetness(inst)
 	return 0, false
 end
 
-function HasPolarImmunity(inst)
+function HasPolarImmunity(inst, ignorewaterproof)
 	if inst:HasTag("polarimmune") then
 		return true
 	end
@@ -116,5 +112,5 @@ function HasPolarImmunity(inst)
 		end
 	end
 	
-	return false
+	return (not ignorewaterproof and inst.components.moisture and inst.components.moisture:GetWaterproofness() >= TUNING.POLAR_WETNESS_MIN_PROOFNESS) or false
 end

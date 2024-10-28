@@ -27,6 +27,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLAR_SPEAR = "Stalagspear"
 	
 	--	Others
+	NAMES.TURFS_POLAR_DRYICE = "Cobbled Dry Ice"
 	NAMES.WALL_POLAR = "Dry Ice Wall"
 	NAMES.WALL_POLAR_ITEM = "Dry Ice Wall"
 	
@@ -61,6 +62,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Recipes
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
+	RECIPE_DESC.TURFS_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
 	
 	--	Misc

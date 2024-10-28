@@ -57,6 +57,7 @@ local function shadefn()
 	inst.components.polarmistemitter.scale = 5
 	inst.components.polarmistemitter.speed = 0.6
 	inst.components.polarmistemitter.maxmist = 30
+	inst.components.polarmistemitter.maxmist_range = 6
 	
 	return inst
 end

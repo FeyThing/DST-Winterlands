@@ -5,6 +5,12 @@ local HEATSOURCE_TAGS = {"HASHEATER"}
 local HEATSOURCE_NOT_TAGS = {"heatrock"}
 
 local function wetness_ontick(inst, target)
+	if target.components.moisture and target.components.moisture:GetMoisturePercent() <= 0 then
+		SetPolarWetness(target, 0) -- This should only be happening in case of Cordon Bleu or other witchcrafts
+		
+		return
+	end
+	
 	if inst.components.temperature then
 		local level = GetPolarWetness(target)
 		local level_max = TUNING.POLAR_WETNESS_LVLS
@@ -21,6 +27,10 @@ local function wetness_ontick(inst, target)
 			inst.components.temperature:SetTemp(temperature)
 		end
 		
+		if target.components.temperature then
+			target.components.temperature:SetModifier("polarwetness", TUNING.POLARWETNESS_DEBUFF_TEMP_MODIFIER * level)
+		end
+		
 		local immune = HasPolarImmunity(target)
 		local waterproofness = immune and 1 or (target.components.moisture and target.components.moisture:GetWaterproofness() or 0)
 		inst.components.temperature.inherentinsulation = TUNING.POLAR_WETNESS_MAX_INSULATION * waterproofness * (immune and 4 or 1)
@@ -30,6 +40,9 @@ local function wetness_ontick(inst, target)
 end
 
 local function Wetness_OnAttached(inst, target)
+	if target.components.moisture and target.components.moisture:GetMoisturePercent() < 0.05 then
+		target.components.moisture:SetPercent(0.05)
+	end
 	if target.components.health then
 		target.components.health.externalfiredamagemultipliers:SetModifier("polarwetness", 1 - TUNING.POLARWETNESS_DEBUFF_FIRE_RESIST)
 	end
@@ -40,6 +53,9 @@ end
 local function Wetness_OnDetached(inst, target)
 	if target.components.health then
 		target.components.health.externalfiredamagemultipliers:RemoveModifier("polarwetness")
+	end
+	if target.components.health then
+		target.components.temperature:RemoveModifier("polarwetness")
 	end
 	
 	SetPolarWetness(target, 0)

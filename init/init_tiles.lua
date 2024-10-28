@@ -28,12 +28,12 @@ AddTile("POLAR_ICE", "LAND",
 		snowsound = 	"dontstarve/movement/run_iceslab",
 		mudsound = 		"dontstarve/movement/run_iceslab",
 		colors = 		POLAR_COLOR,
-		--cannotbedug = true,
+		cannotbedug = true,
+		hard = 			true,
 	},
 	{
 		name = 			"map_edge",
 		noise_texture = "levels/textures/mini_meteor.tex", --"levels/textures/mini_noise_polarice.tex",
-		pickupsound = 	"grainy",
 	}
 )
 
@@ -50,33 +50,63 @@ AddTile("POLAR_SNOW", "LAND",
 		mudsound = 		"dontstarve/movement/run_snow",
 		colors = 		POLAR_COLOR,
 		cannotbedug = 	true,
-		hard = 			true,
 	},
 	{
 		name = 			"map_edge",
 		noise_texture = "levels/textures/mini_dirt_noise.tex", --"levels/textures/mini_noise_polarsnow.tex",
-		pickupsound = 	"grainy",
 	}
 )
 
 AddTile("POLAR_CAVES", "LAND",
 	{
-		ground_name = 	"Polar Cave",
+		ground_name = 	"Polar Caves",
 	},
 	{
 		name = 			"dirt",
 		noise_texture = "levels/textures/noise_polar.tex", --"levels/textures/noise_polarcaves.tex",
+		runsound = 		"turnoftides/movement/run_meteor",
+		walksound = 	"turnoftides/movement/run_meteor",
+		snowsound = 	"dontstarve/movement/run_ice",
+		mudsound = 		"dontstarve/movement/run_mud",
+		hard = 			true,
+	},
+	{
+		name = 			"map_edge",
+		noise_texture = "levels/textures/mini_rock_noise.tex", --"levels/textures/mini_noise_polarcaves.tex",
+	}--[[,				TODO: this one probably should be an item
+	{		
+		name = 			"polar_caves",
+		anim = 			"turf2",
+		bank_build = 	"turf_polar",
+		pickupsound = 	"rock",
+	}]]
+)
+
+AddTile("POLAR_DRYICE", "LAND",
+	{
+		ground_name = 	"Dry Ice",
+	},
+	{
+		name = 			"blocky",
+		noise_texture = "levels/textures/noise_dryice.tex",
 		runsound = 		"dontstarve/movement/run_ice",
 		walksound = 	"dontstarve/movement/run_ice",
 		snowsound = 	"dontstarve/movement/run_ice",
 		mudsound = 		"dontstarve/movement/run_ice",
 		colors = 		POLAR_COLOR,
-		cannotbedug = 	true,
+		flooring = 		true,
 		hard = 			true,
+		roadways = 		true,
 	},
 	{
 		name = 			"map_edge",
-		noise_texture = "levels/textures/mini_oceanice_noise.tex", --"levels/textures/mini_noise_polarcaves.tex",
+		noise_texture = "levels/textures/mini_noise_dryice.tex",
+	},
+	{
+		name = 			"polar_dryice",
+		anim = 			"turf",
+		bank_build = 	"turf_polar",
+		pickupsound = 	"grainy",
 	}
 )
 
@@ -118,7 +148,7 @@ local function GetTileForPolarLakes(noise)
 end
 
 local function GetTileForPolarTundra(noise)
-	return noise < 0.35 and WORLD_TILES.POLAR_SNOW or noise < 0.45 and WORLD_TILES.ROCKY
+	return noise < 0.35 and WORLD_TILES.POLAR_SNOW or noise < 0.4 and WORLD_TILES.POLAR_ICE or noise < 0.45 and WORLD_TILES.ROCKY
 		or WORLD_TILES.POLAR_SNOW
 end
 
@@ -130,13 +160,13 @@ NOISES[WORLD_TILES.POLAR_TUNDRA_NOISE] = GetTileForPolarTundra
 
 ChangeTileRenderOrder(WORLD_TILES.OCEAN_POLAR, WORLD_TILES.OCEAN_HAZARDOUS, true)
 
-ChangeTileRenderOrder(WORLD_TILES.POLAR_CAVES, WORLD_TILES.DIRT)
-ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.DIRT)
-ChangeTileRenderOrder(WORLD_TILES.POLAR_SNOW, WORLD_TILES.DIRT)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_CAVES, WORLD_TILES.ROCKY)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.MUD)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_DRYICE, WORLD_TILES.DIRT)
 
 --	Setpiece Ground Type
 
 GLOBAL.POLAR_GROUND_TYPES = {
-	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.OCEAN_POLAR, -- 1, 2, 3, 4, 5
-	WORLD_TILES.DIRT, WORLD_TILES.ROCKY, -- 6, 7
+	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_DRYICE, -- 1, 2, 3, 4, 5
+	WORLD_TILES.OCEAN_POLAR, WORLD_TILES.DIRT, WORLD_TILES.ROCKY, -- 6, 7, 8
 }

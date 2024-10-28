@@ -74,3 +74,5 @@ end
 for _, v in pairs(stategraphs) do
 	modimport("postinit/stategraphs/"..v)
 end
+
+require("polarcommands")

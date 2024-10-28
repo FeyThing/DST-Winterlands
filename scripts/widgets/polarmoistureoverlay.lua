@@ -3,6 +3,8 @@ local Widget = require("widgets/widget")
 
 --TODO: add a pst anims for each levels for when debuff gets removed
 
+--		also, get an access to debuff temperature, and build transparency on the overlay so player can guess current melting progress of tag level?
+
 local PolarMoistureOverlay = Class(Widget, function(self, owner, parent)
 	Widget._ctor(self, "PolarMoistureOverlay")
 	self.owner = owner
