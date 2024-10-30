@@ -132,9 +132,12 @@ local function ValidRepairFn(inst)
 		return true
 	end
 	
-	if TheWorld.Map:IsVisualGroundAtPoint(x, y, z) then
+	if TheWorld.Map:IsVisualGroundAtPoint(x,y,z) then
 		for i, v in ipairs(TheSim:FindEntities(x, 0, z, 1, PLAYER_TAGS)) do
-			if v ~= inst and v.entity:IsVisible() and v.components.placer == nil and v.entity:GetParent() == nil then
+			if v ~= inst and
+			v.entity:IsVisible() and
+			v.components.placer == nil and
+			v.entity:GetParent() == nil then
 				local px, _, pz = v.Transform:GetWorldPosition()
 				if math.floor(x) == math.floor(px) and math.floor(z) == math.floor(pz) then
 					return false

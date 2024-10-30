@@ -52,6 +52,7 @@ local components = {
 	"map",
 	"moisture",
 	"pickable",
+	"repairable",
 	"sheltered",
 	"slipperyfeet",
 	"temperature",

@@ -96,7 +96,7 @@ local function fn()
 	
 	inst:AddComponent("repairer")
 	inst.components.repairer.repairmaterial = MATERIALS.DRYICE
-	inst.components.repairer.perishrepairpercent = 0.05
+	inst.components.repairer.perishrepairpercent = 0.25
 	
 	inst:AddComponent("smotherer")
 	
