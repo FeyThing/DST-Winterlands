@@ -77,25 +77,14 @@ return Class(function(self, inst)
 			for x = 0, WIDTH - 1 do
 				for y = 0, HEIGHT - 1 do
 					local index = _snowstormgrid:GetIndex(x, y)
-					local tile = _map:GetTile(x, y)
+					local tx, ty, tz = _map:GetTileCenterPoint(x, y)
 					local level = 0
 	
-					if tile == WORLD_TILES.POLAR_ICE or
-					tile == WORLD_TILES.POLAR_SNOW or
-					tile == WORLD_TILES.POLAR_CAVES then
+					if IsInPolarAtPoint(tx, ty, tz) then
 						level = 1
 						table.insert(_gradient_indeces, index)
 					end
-					
-					--[[ADM: I would suggest to change the above to this when you're ready for it. We (or other mods) could be tempted to have other classic turfs onto the island ^
-							 if you want to fetch it from further away, remove 0 or a specific larger range :)
-							 
-					local _x, _y, _z = TheWorld.Map:GetTileCenterPoint(x, y)
-					if IsInPolarAtPoint(_x, _y, _z, 0) then
-						level = 1
-						table.insert(_gradient_indeces, index)
-					end]]
-	
+
 					SetStormLevel(index, level)
 				end
 			end
