@@ -62,7 +62,7 @@ AddTile("POLAR_CAVES", "LAND",
 		ground_name = 	"Polar Caves",
 	},
 	{
-		name = 			"dirt",
+		name = 			"blocky",
 		noise_texture = "levels/textures/noise_polar.tex", --"levels/textures/noise_polarcaves.tex",
 		runsound = 		"turnoftides/movement/run_meteor",
 		walksound = 	"turnoftides/movement/run_meteor",
