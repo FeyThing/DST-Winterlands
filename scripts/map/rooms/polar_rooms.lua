@@ -24,11 +24,11 @@ AddRoom("PolarIsland_Caves", {
 	value = WORLD_TILES.POLAR_CAVES_NOISE,
 	contents = {
 		countstaticlayouts = {
-			["PolarCave_Pillar"] = function() return math.random(6, 9) end,
+			["PolarCave_Pillar"] = 7,
+			["PolarCave_SmallPillar"] = function() return math.random(1, 2) end,
 		},
 		countprefabs = {
 			rock2 = 1,
-			pillar_polar = 1,
 		},
 		
 		distributepercent = 0.12,
@@ -36,7 +36,6 @@ AddRoom("PolarIsland_Caves", {
 			rock_flintless = 1.5,
 			rock_ice = 1,
 			ice = 2,
-			pillar_polar = 0.5,
 		},
 	}
 })

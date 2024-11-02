@@ -10,10 +10,10 @@
 	end
 	
 	--[[if translation then
-		require("badlands_strings/translation_"..translation.."/strings")
+		require("polar_strings/translation_"..translation.."/strings")
 		
 		for i, character in ipairs(characters) do
-			require("badlands_strings/translation_"..translation.."/"..character)
+			require("polar_strings/translation_"..translation.."/"..character)
 		end
 	end]]
 	
@@ -49,9 +49,11 @@ local prefabs = {
 
 local components = {
 	"ambientsound",
+	"dynamicmusic", -- : (
 	"map",
 	"moisture",
 	"pickable",
+	"playervision",
 	"repairable",
 	"sheltered",
 	"slipperyfeet",

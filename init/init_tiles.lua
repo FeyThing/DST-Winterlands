@@ -73,13 +73,13 @@ AddTile("POLAR_CAVES", "LAND",
 	{
 		name = 			"map_edge",
 		noise_texture = "levels/textures/mini_rock_noise.tex", --"levels/textures/mini_noise_polarcaves.tex",
-	}--[[,				TODO: this one probably should be an item
+	},
 	{		
 		name = 			"polar_caves",
 		anim = 			"turf2",
 		bank_build = 	"turf_polar",
 		pickupsound = 	"rock",
-	}]]
+	}
 )
 
 AddTile("POLAR_DRYICE", "LAND",

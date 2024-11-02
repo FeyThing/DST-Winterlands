@@ -1,129 +1,43 @@
-16:50:05 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\layerpropertiesdialog.ui.h:89 DX: Change Layer Properties
-16:52:06 ..\..\src\propertyeditor.cpp:4234 ER: Set Max Playbacks Behavior
-16:54:03 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\parameterpropertiesdialog.ui.h:116 EJ: Change Parameter Properties
-16:55:22 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\eventform.ui.h:1529 HH: Add Simple Event
-16:56:17 ..\..\src\eventlayerstackwidget.cpp:1334 CV: Add Sound
-16:56:24 ..\..\src\eventlayerstackwidget.cpp:1402 CW: Replace sound
-16:56:31 ..\..\src\eventlayerstackwidget.cpp:1465 CX: Delete Sound
-16:56:38 c:\anthill_jobs\job504524\fmod4\tools\fmod_designer\src\newsounddialog.ui.h:178 ED: Add Sound File
-16:56:40 ..\..\src\eventlayerstackwidget.cpp:1334 CV: Add Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:40 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:41 ..\..\src\eventsoundwidget.cpp:636 DR: Move Sound
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:42 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:56:43 ..\..\src\eventsoundwidget.cpp:700 DS: Adjust Sound Length
-16:57:06 ..\..\src\propertyeditor.cpp:1508 EM: Set Name
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:01 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:02 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:03 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:03 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:03 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:03 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:03 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:03 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
+23:14:04 ..\..\src\envelopewidget.cpp:1139 BT: Move Envelope Point
