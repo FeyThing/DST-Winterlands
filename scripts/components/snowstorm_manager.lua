@@ -1,4 +1,5 @@
 local WIDTH, HEIGHT
+local MAX_GRADIENT_DEPTH = 6
 
 return Class(function(self, inst)
     assert(inst.ismastersim, "Snowstorm Manager should not exist on the client!")
@@ -20,7 +21,7 @@ return Class(function(self, inst)
 		end
 	end
 
-	local function GenerateSnowStormGradient(depth, maxdepth)
+	local function GenerateSnowStormGradient(depth)
 		assert(depth > 0, "Snowstorm gradient depth must be positive!")
 
 		local new_gradient_indeces = {  }
@@ -31,7 +32,7 @@ return Class(function(self, inst)
 				for y = -1, 1 do
 					local level = _snowstormgrid:GetDataAtPoint(ox + x, oy + y) or 0
 					if level == 0 then
-						_snowstormgrid:SetDataAtPoint(ox + x, oy + y, depth / maxdepth) -- Linear falloff based on how far from the main island tile we are
+						_snowstormgrid:SetDataAtPoint(ox + x, oy + y, depth / MAX_GRADIENT_DEPTH) -- Linear falloff based on how far from the main island tile we are
 						table.insert(new_gradient_indeces, _snowstormgrid:GetIndex(ox + x, oy + y))
 					end
 				end
@@ -42,7 +43,7 @@ return Class(function(self, inst)
 
 		depth = depth - 1
 		if depth > 0 and next(_gradient_indeces) ~= nil then
-			GenerateSnowStormGradient(depth, maxdepth)
+			GenerateSnowStormGradient(depth)
 		end
 	end
 
@@ -89,7 +90,7 @@ return Class(function(self, inst)
 				end
 			end
 
-			GenerateSnowStormGradient(5, 5)
+			GenerateSnowStormGradient(MAX_GRADIENT_DEPTH)
 		end
 	end
 end)
