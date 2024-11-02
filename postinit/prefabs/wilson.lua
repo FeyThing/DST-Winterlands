@@ -4,6 +4,10 @@ GLOBAL.setfenv(1, GLOBAL)
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
 ENV.AddPlayerPostInit(function(inst)
+	if not TheNet:IsDedicated() then
+		inst:AddComponent("snowwaver")
+	end
+	
 	if not TheWorld.ismastersim then
 		return
 	end

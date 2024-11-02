@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+    <folder id="0" name="pillar">
+        <file id="0" name="pillar/pillar-0.png" width="1159" height="1727" pivot_x="0.594966" pivot_y="0.897239"/>
+    </folder>
+    <folder id="1" name="shdw">
+        <file id="0" name="shdw/shdw-0.png" width="1178" height="96" pivot_x="0.5" pivot_y="0.5"/>
+    </folder>
+    <entity id="0" name="pillar_ice_med">
+        <animation id="0" name="idle" length="33" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="1" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="0" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="33">
+                    <object_ref id="0" timeline="1" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="0" key="0" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="pillar-0">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="27.88448" y="1353.875768" angle="0" scale_x="0.898243" scale_y="0.898243"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="shdw-0">
+                <key id="0" spin="0">
+                    <object folder="1" file="0" x="-26.390034" y="-14.24476" angle="0" scale_x="0.898243" scale_y="0.898243"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

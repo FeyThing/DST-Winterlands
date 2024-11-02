@@ -14,7 +14,7 @@ local Layouts = require("map/layouts").Layouts
 local StaticLayout = require("map/static_layout")
 
 local polar_layouts = {
-	"PolarCave_Pillar", "PolarFlea_Farm",
+	"PolarCave_Pillar", "PolarCave_SmallPillar", "PolarFlea_Farm",
 }
 
 for _, layout in ipairs(polar_layouts) do

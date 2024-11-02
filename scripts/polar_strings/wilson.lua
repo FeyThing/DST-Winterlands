@@ -42,5 +42,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
 	
 	--	Others
+	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
+	DESCRIBE.TURF_POLAR_DRYICE = "Hastily cobbled ice."
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."
 	DESCRIBE.WALL_POLAR_ITEM = "Useful to keep one's cool."

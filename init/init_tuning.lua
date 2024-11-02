@@ -19,6 +19,7 @@ local night_time = seg_time * night_segs
 	TUNING.WEREMODE_POLAR_SLOWTIME = 3
 	
 --	Worldgen
+	TUNING.POLAR_ROCK_MINE_TALL = 7
 	
 --	Mobs
 	TUNING.POLARBEAR_HEALTH = 500
@@ -61,3 +62,5 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_MIST_TIME = 15
 	TUNING.POLAR_MIST_TWEENTIME = 1.5
+	
+	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
