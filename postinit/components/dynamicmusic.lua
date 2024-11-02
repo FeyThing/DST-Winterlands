@@ -15,7 +15,7 @@ ENV.AddComponentPostInit("dynamicmusic", function(self)
 			return
 		end
 		
-		local setpolar = IsInPolar(ThePlayer)
+		local setpolar = IsInPolar(ThePlayer, 0)
 		if self._polar ~= setpolar then
 			local isplaying = TheFocalPoint.SoundEmitter:PlayingSound("busy")
 			TheFocalPoint.SoundEmitter:KillSound("busy")

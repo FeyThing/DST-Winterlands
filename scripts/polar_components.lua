@@ -1,19 +1,17 @@
 function IsInPolarAtPoint(x, y, z, range)
-	if TheWorld.Map:IsVisualGroundAtPoint(x, y, z) then
-		local node = TheWorld.Map:FindNodeAtPoint(x, y, z)
-		
-		if node == nil and (range == nil or range > 0) then
-			local pt = Vector3(x, y, z)
-			local node_offset = FindValidPositionByFan(0, range or 12, 64, function(offset)
-				local _node = TheWorld.Map:FindNodeAtPoint((pt + offset):Get())
-				
-				return _node and _node.tags and table.contains(_node.tags, "polararea")
-			end)
+	local node = TheWorld.Map:FindNodeAtPoint(x, y, z)
+	
+	if node == nil and (range == nil or range > 0) then
+		local pt = Vector3(x, y, z)
+		local node_offset = FindValidPositionByFan(0, range or 12, 64, function(offset)
+			local _node = TheWorld.Map:FindNodeAtPoint((pt + offset):Get())
 			
-			return node_offset ~= nil
-		else
-			return node and node.tags and table.contains(node.tags, "polararea")
-		end
+			return _node and _node.tags and table.contains(_node.tags, "polararea")
+		end)
+		
+		return node_offset ~= nil
+	else
+		return node and node.tags and table.contains(node.tags, "polararea")
 	end
 	
 	return false

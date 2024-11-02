@@ -20,6 +20,12 @@ local sounds = {
 
 local polarbear_brain = require("brains/polarbearbrain")
 
+local DEFAULT_PAINTING = "blue"
+local BODY_PAINTINGS = {
+	"blue",
+	"red",
+}
+
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
 local RETARGET_ONEOF_TAGS = {"merm", "monster", "player", "pirate"}
 
@@ -181,15 +187,37 @@ local function OnUnmarkForTeleport(inst, data)
 	end
 end
 
+local function SetPainting(inst, colour)
+	if colour ~= DEFAULT_PAINTING then
+		inst.AnimState:OverrideSymbol("pig_torso", "polarbear_build", "pig_torso_"..colour)
+		inst.AnimState:OverrideSymbol("pig_head", "polarbear_build", "pig_head_"..colour)
+	else
+		inst.AnimState:ClearOverrideSymbol("pig_torso")
+		inst.AnimState:ClearOverrideSymbol("pig_head")
+	end
+	
+	inst.body_paint = colour
+end
+
 local function OnSave(inst, data)
 	if inst.wantstoteleport then
 		data.wantstoteleport = true
 	end
+	data.colour = inst.body_paint
 end
 
 local function OnLoad(inst, data)
 	if data then
 		inst.wantstoteleport = data.wantstoteleport or inst.wantstoteleport
+		if data.colour then
+			inst:SetPainting(data.colour)
+		end
+	end
+end
+
+local function OnInit(inst)
+	if inst.body_paint == nil then
+		inst:SetPainting(BODY_PAINTINGS[math.random(#BODY_PAINTINGS)])
 	end
 end
 
@@ -214,7 +242,6 @@ local function fn()
 	inst.AnimState:Hide("hat")
 	inst.AnimState:Hide("ARM_carry_up")
 	inst.AnimState:Hide("ARM_carry")
-	inst.AnimState:SetAddColour(0.78, 0.78, 0.99, 0)
 	
 	inst:AddTag("character")
 	inst:AddTag("bear")
@@ -297,10 +324,13 @@ local function fn()
 	MakeMediumBurnableCharacter(inst, "pig_torso")
 	MakeHauntablePanic(inst)
 	
-	inst.sounds = sounds
-	
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	inst.SetPainting = SetPainting
+	
+	inst.sounds = sounds
+	
+	inst.inittask = inst:DoTaskInTime(0, OnInit)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("entitysleep", OnEntitySleep)
