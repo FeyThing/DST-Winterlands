@@ -34,6 +34,10 @@ local function OnVacate(inst, child)
 			child:Remove()
 		elseif child.components.health then
 			child.components.health:SetPercent(1)
+			
+			if child.SetPainting then
+				child:SetPainting(inst.house_paint)
+			end
 		end
 	end
 end
@@ -175,7 +179,7 @@ local function fn()
 	
 	MakeObstaclePhysics(inst, 1)
 	
-	inst.MiniMapEntity:SetIcon("pighouse.png")
+	inst.MiniMapEntity:SetIcon("polarbearhouse.png")
 	
 	inst.AnimState:SetBank("polarbearhouse")
 	inst.AnimState:SetBuild("polarbearhouse")

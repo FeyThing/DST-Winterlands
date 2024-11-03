@@ -26,6 +26,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Equipments
 	NAMES.POLAR_SPEAR = "Stalagspear"
+	NAMES.POLARMOOSEHAT = "Moose Ushanka"
 	
 	--	Others
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"

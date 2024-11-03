@@ -33,6 +33,8 @@ local night_time = seg_time * night_segs
 --	Items
 	TUNING.DRYICE_FREEZABLE_COLDNESS = 0.67
 	
+	TUNING.POLARMOOSEHAT_PERISHTIME = total_day_time * 5
+	
 --	Buffs
 	TUNING.POLAR_WETNESS_LVLS = 6
 	TUNING.POLAR_WETNESS_LVL_WETNESS = -0.2

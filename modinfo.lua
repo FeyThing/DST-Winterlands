@@ -1,7 +1,7 @@
 name = "WinterLands Mod"
 author = "Feything, Gearless, LukaS, ADM, Notka"
 
-version = "dry-icing"
+version = "polar_bearing"
 local info_version = "󰀔 [ Version "..version.." ]\n"
 
 description = info_version..[[

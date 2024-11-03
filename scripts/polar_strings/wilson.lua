@@ -40,6 +40,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
+	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
 	--	Others
 	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."

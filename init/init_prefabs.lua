@@ -7,5 +7,7 @@ PrefabFiles = {
 	"polarbearfur",
 	"polarbearhouse",
 	"polarbuffs",
+	"polarmoosehat",
 	"snowstorm_snow",
+	"snowwave",
 }
