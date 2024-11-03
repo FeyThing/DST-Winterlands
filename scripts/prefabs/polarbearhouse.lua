@@ -21,19 +21,38 @@ local function GetStatus(inst)
 		or nil
 end
 
+local BEAR_TAGS = {"bear"}
+
 local function OnVacate(inst, child)
 	inst.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
 	
 	if not inst:HasTag("burnt") and child then
-		local child_platform = TheWorld.Map:GetPlatformAtPoint(child.Transform:GetWorldPosition())
+		local x, y, z = child.Transform:GetWorldPosition()
+		local child_platform = TheWorld.Map:GetPlatformAtPoint(x, y, z)
 		
 		if (child_platform == nil and not child:IsOnValidGround()) then
 			local fx = SpawnPrefab("splash_sink")
-			fx.Transform:SetPosition(child.Transform:GetWorldPosition())
+			fx.Transform:SetPosition(x, y, z)
 			
 			child:Remove()
 		elseif child.components.health then
 			child.components.health:SetPercent(1)
+			
+			local ents = TheSim:FindEntities(x, y, z, 15, BEAR_TAGS)
+			for i, v in ipairs(ents) do
+				if v ~= child and math.random() <= TUNING.POLARBEAR_HAT_CHANCE then
+					local equipped_hat = v.components.inventory and v.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD) or nil
+					if not (equipped_hat and equipped_hat.prefab == "polarmoosehat") then
+						if child.components.inventory and child.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD) == nil then
+							local hat = SpawnPrefab("polarmoosehat")
+							hat.Transform:SetPosition(x, y, z)
+							child.components.inventory:Equip(hat)
+						end
+						
+						break
+					end
+				end
+			end
 			
 			if child.SetPainting then
 				child:SetPainting(inst.house_paint)

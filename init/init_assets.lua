@@ -43,6 +43,8 @@ local ITEMS = {
 	"turf_polar_caves",
 	"turf_polar_dryice",
 	"wall_polar_item",
+	
+	"ms_polarmoosehat_white",
 }
 
 --	Scrapbook Stuff

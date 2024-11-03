@@ -8,6 +8,9 @@ PrefabFiles = {
 	"polarbearhouse",
 	"polarbuffs",
 	"polarmoosehat",
+	"rock_polar",
 	"snowstorm_snow",
 	"snowwave",
+	
+	"polarskinprefabs",
 }

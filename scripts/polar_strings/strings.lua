@@ -36,6 +36,12 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 --	Skins
 	
+	--	Names
+	STRINGS.SKIN_NAMES.ms_polarmoosehat_white = "Hornamented Ushanka"
+	
+	--	Desc
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "Bears say they look sick with all the sticks tucked in!"
+	
 --	Speech, etc
 	STRINGS.POLARCOLD_SNUFFING = {"(huff) ", "(sniff) ", "(sniffff) ", "(snort) ", "(snurf) ", "(snuffle) "}
 	
