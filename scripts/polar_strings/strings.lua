@@ -55,6 +55,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Strawberry",
 		"Gelato",
 		"Banana",
+		"Ceviche",
+		"Popsicle",
 		--pitbulls
 		"Sugarbean",
 		"Snowflake",
@@ -62,7 +64,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Princess",
 		"Cupcake",
 		"Milkshake",
-		"Marshmallow"
+		"Marshmallow",
+		"Fluffball",
 		--warriors
 		"Igor",
 		"Alexander",
@@ -90,6 +93,10 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Aconcagua",
 		"Chimborazo",
 		"Cotopaxi",
+		"Andes",
+		"Fuji",
+		"Mam Tor",
+		"Tatra",
 	}
 	
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!"}
