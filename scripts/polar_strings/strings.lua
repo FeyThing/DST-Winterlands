@@ -46,12 +46,50 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARCOLD_SNUFFING = {"(huff) ", "(sniff) ", "(sniffff) ", "(snort) ", "(snurf) ", "(snuffle) "}
 	
 	STRINGS.POLARBEARNAMES = {
-		"What",
-		"The",
-		"Fuck",
-		"Are",
-		"My",
-		"Names",
+		--cold foods
+		"Mint",
+		"Macaroni",
+		"Chicken Salad",
+		"Sandwich",
+		"Tiramisu",
+		"Strawberry",
+		"Gelato",
+		"Banana",
+		--pitbulls
+		"Sugarbean",
+		"Snowflake",
+		"Jellybean",
+		"Princess",
+		"Cupcake",
+		"Milkshake",
+		"Marshmallow"
+		--warriors
+		"Igor",
+		"Alexander",
+		"Bellantrix",
+		"Alfonso",
+		"Cahira",
+		"Koa",
+		"Viggo",
+		"Ragnar",
+		--mountains
+		"Denali",
+		"Eureka",
+		"Verkhoyansk",
+		"Ulaanbaatar",
+		"Oymyakon",
+		"Everest",
+		"Snag",
+		"Rainier",
+		"Matterhorn",
+		"Blanc",
+		"Elbrus",
+		"Eiger",
+		"Olympus",
+		"Kazbek",
+		"Aconcagua",
+		"Chimborazo",
+		"Cotopaxi",
 	}
 	
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!"}
