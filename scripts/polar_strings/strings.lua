@@ -57,6 +57,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Banana",
 		"Ceviche",
 		"Popsicle",
+		"Sundae",
 		--pitbulls
 		"Sugarbean",
 		"Snowflake",

@@ -29,11 +29,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Buildings
 
-	DESCRIBE.POLARBEARHOUSE = {
-		"I doubt it's much warmer in here.",
-		"Something fishy is going on here.",
-	}
-	
+	DESCRIBE.POLARBEARHOUSE = "I doubt it's much warmer in here."
+
 --	Items
 	
 	--	Food
