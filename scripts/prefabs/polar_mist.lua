@@ -67,17 +67,15 @@ local function SetEmitter(inst, emitter, scale, speed)
 	inst.mist_emitter = emitter
 	inst.mist_scale = scale or 1
 	
-	if inst.mist_scale >= 4 then
-		inst.AnimState:SetSortOrder(2)
-	end
-	
-	inst.components.locomotor.walkspeed = speed or 0.1
 	inst.AnimState:SetScale(inst.mist_scale, inst.mist_scale)
+	inst.AnimState:SetSortOrder(-2)
 	
 	local x, y, z
 	if emitter.Transform then
 		x, y, z = emitter.Transform:GetWorldPosition()
 	end
+	
+	inst.components.locomotor.walkspeed = speed or 0.1
 	
 	inst:DoTaskInTime(FRAMES, OnInit, x, y, z)
 end

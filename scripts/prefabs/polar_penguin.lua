@@ -43,6 +43,12 @@ local function OnAttacked(inst, data)
 	end
 end
 
+local function CheckAutoRemove(inst)
+	if not inst:IsOnValidGround() or TheWorld.state.iswinter or inst.components.herdmember and inst.components.herdmember:GetHerd() == nil then
+		inst:Remove()
+	end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -126,6 +132,8 @@ local function fn()
 	
 	inst.eggsLayed = 0
 	inst.eggprefab = "bird_egg"
+	inst.OnEntityWake = CheckAutoRemove
+	inst.OnEntitySleep = CheckAutoRemove
 	
 	inst:SetStateGraph("SGpenguin")
 	inst:SetBrain(brain)
@@ -191,6 +199,10 @@ local function herd()
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
+	inst.entity:AddMiniMapEntity()
+	inst.entity:AddNetwork()
+	
+	inst.MiniMapEntity:SetIcon("penguin.png")
 	
 	inst:AddTag("herd")
 	inst:AddTag("NOBLOCK")

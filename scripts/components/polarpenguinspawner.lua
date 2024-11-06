@@ -64,6 +64,10 @@ return Class(function(self, inst)
 	end
 	
 	local function OnDayComplete(inst, delay)
+		if TheWorld.state.iswinter then
+			return
+		end
+		
 		local num_herds = 0
 		delay = delay or GetRandomMinMax(TUNING.POLAR_PENGUIN_HERD_SPAWN_TIMES.min, TUNING.POLAR_PENGUIN_HERD_SPAWN_TIMES.max)
 		
