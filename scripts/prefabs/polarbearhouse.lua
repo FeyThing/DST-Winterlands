@@ -54,6 +54,10 @@ local function OnVacate(inst, child)
 				end
 			end
 			
+			if TheWorld.state.iscaveday and child.components.timer and not child.components.timer:TimerExists("plowinthemorning") then
+				child.components.timer:StartTimer("plowinthemorning", TUNING.POLARBEAR_PLOWTIME)
+			end
+			
 			if child.SetPainting then
 				child:SetPainting(inst.house_paint)
 			end
@@ -205,6 +209,10 @@ local function fn()
 	inst.AnimState:PlayAnimation("idle", true)
 	
 	inst:AddTag("structure")
+	inst:AddTag("snowblocker")
+	
+	inst._snowblockrange = net_tinybyte(inst.GUID, "polarbearhouse._snowblockrange")
+	inst._snowblockrange:set(2)
 	
 	MakeSnowCoveredPristine(inst)
 	

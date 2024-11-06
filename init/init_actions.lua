@@ -16,7 +16,30 @@ end
 
 --	Actions
 
+local POLARPLOW = PolarAction("POLARPLOW", {distance = 1, priority = 1})
+	POLARPLOW.fn = function(act)
+		local shovel = act.invobject or act.doer.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+		local act_pos = act:GetActionPoint()
+		
+		if shovel and shovel.components.polarplower then
+			if shovel.components.polarplower:CanPlow(act.target, act_pos) then
+				return shovel.components.polarplower:DoPlow(act.target, act_pos)
+			end
+			
+			return false
+		end
+	end
+
 --	Components, SGs
+
+AddComponentAction("POINT", "polarplower", function(inst, doer, pos, actions, right)
+	if right then
+		local x, y, z = pos:Get()
+		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) then
+			table.insert(actions, ACTIONS.POLARPLOW)
+		end
+	end
+end)
 
 --
 
@@ -30,3 +53,18 @@ local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer
 			oldrepairer(inst, doer, target, actions, ...)
 		end
 	end
+
+--
+
+local function AddToSGAC(action, state)
+	ENV.AddStategraphActionHandler("wilson", ActionHandler(ACTIONS[action], state))
+	ENV.AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS[action], state))
+end
+
+local actionhandlers = {
+	POLARPLOW = "dig_start",
+}
+
+for action, state in pairs(actionhandlers) do
+	AddToSGAC(action, state)
+end

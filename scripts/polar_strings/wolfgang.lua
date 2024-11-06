@@ -25,9 +25,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	--	Misc
 	
 --	Mobs
+	
 	DESCRIBE.POLARBEAR = "I respect bear man!"
 	
 --	Buildings
+	
 	DESCRIBE.POLARBEARHOUSE = "Bear man have defeated big fish."
 	
 --	Items

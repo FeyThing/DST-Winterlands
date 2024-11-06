@@ -11,6 +11,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Misc
 	
 --	Mobs
+	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
 	NAMES.POLARBEAR = "Polar Bear"
 	
 --	Buildings
@@ -46,58 +47,60 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARCOLD_SNUFFING = {"(huff) ", "(sniff) ", "(sniffff) ", "(snort) ", "(snurf) ", "(snuffle) "}
 	
 	STRINGS.POLARBEARNAMES = {
-		--cold foods
-		"Mint",
-		"Macaroni",
-		"Chicken Salad",
-		"Sandwich",
-		"Tiramisu",
-		"Strawberry",
-		"Gelato",
+		--	cold foods
 		"Banana",
 		"Ceviche",
+		"Chicken Salad",
+		"Gelato",
+		"Granita",
+		"Macaroni",
+		"Mint",
 		"Popsicle",
+		"Sandwich",
+		"Strawberry",
 		"Sundae",
-		--pitbulls
-		"Sugarbean",
-		"Snowflake",
-		"Jellybean",
-		"Princess",
-		"Cupcake",
-		"Milkshake",
-		"Marshmallow",
-		"Fluffball",
-		--warriors
-		"Igor",
-		"Alexander",
-		"Bellantrix",
-		"Alfonso",
-		"Cahira",
-		"Koa",
-		"Viggo",
-		"Ragnar",
-		--mountains
-		"Denali",
-		"Eureka",
-		"Verkhoyansk",
-		"Ulaanbaatar",
-		"Oymyakon",
-		"Everest",
-		"Snag",
-		"Rainier",
-		"Matterhorn",
-		"Blanc",
-		"Elbrus",
-		"Eiger",
-		"Olympus",
-		"Kazbek",
+		"Tiramisu",
+		--	mountains
 		"Aconcagua",
+		"Andes",
+		"Blanc",
 		"Chimborazo",
 		"Cotopaxi",
-		"Andes",
+		"Denali",
+		"Eiger",
+		"Elbrus",
+		"Eureka",
+		"Everest",
 		"Fuji",
+		"Kazbek",
 		"Mam Tor",
+		"Matterhorn",
+		"Olympus",
+		"Oymyakon",
+		"Pyrenees",
+		"Rainier",
+		"Snag",
 		"Tatra",
+		"Ulaanbaatar",
+		"Verkhoyansk",
+		--	pitbulls
+		"Cupcake",
+		"Fluffball",
+		"Jellybean",
+		"Marshmallow",
+		"Milkshake",
+		"Princess",
+		"Snowflake",
+		"Sugarbean",
+		--	warriors
+		"Alfonso",
+		"Alexander",
+		"Bellantrix",
+		"Cahira",
+		"Igor",
+		"Koa",
+		"Ragnar",
+		"Viggo",
 	}
 	
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!"}
@@ -108,6 +111,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	UI
 	
 	--	Actions
+	STRINGS.ACTIONS.POLARPLOW = "Plow"
 	
 	--	Scrapbook, Cookbook
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."

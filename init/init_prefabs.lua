@@ -1,6 +1,7 @@
 PrefabFiles = {
 	"polar_dryice",
 	"polar_mist",
+	"polar_penguin",
 	"polar_pillars",
 	"polar_walls",
 	"polarbear",

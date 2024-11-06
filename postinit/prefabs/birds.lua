@@ -11,7 +11,7 @@ local function OnInit(inst)
 		local current_tile = TheWorld.Map:GetTile(tile_x, tile_y)
 		
 		if IsInPolar(inst) or current_tile == WORLD_TILES.OCEAN_POLAR then
-			local birb = SpawnPrefab(current_tile == WORLD_TILES.POLAR_ICE and "robin_winter" or "puffin")
+			local birb = SpawnPrefab(current_tile == WORLD_TILES.OCEAN_POLAR and "puffin" or "robin_winter")
 			birb.Transform:SetPosition(x, y, z)
 			birb.sg:HasStateTag("glide")
 			

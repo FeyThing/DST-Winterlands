@@ -21,7 +21,7 @@ AddTile("POLAR_ICE", "LAND",
 		ground_name = 	"Polar Ice",
 	},
 	{
-		name = 			"ocean_ice",
+		name = 			"polarice",
 		noise_texture = "levels/textures/noise_polarice.tex",
 		runsound = 		"dontstarve/movement/run_iceslab",
 		walksound = 	"dontstarve/movement/walk_iceslab",

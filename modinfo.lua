@@ -1,7 +1,7 @@
 name = "WinterLands Mod"
 author = "Feything, Gearless, LukaS, ADM, Notka"
 
-version = "skin_test"
+version = "penguin_and_walrus"
 local info_version = "󰀔 [ Version "..version.." ]\n"
 
 description = info_version..[[

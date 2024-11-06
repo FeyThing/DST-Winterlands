@@ -14,6 +14,7 @@ local MIN_FOLLOW_DIST = 2
 local TARGET_FOLLOW_DIST = 5
 local MAX_FOLLOW_DIST = 9
 local MAX_WANDER_DIST = 20
+local MAX_PLOW_DIST = 10
 
 local LEASH_RETURN_DIST = 10
 local LEASH_MAX_DIST = 30
@@ -30,6 +31,8 @@ local SEE_PLAYER_DIST = 6
 
 local GETTRADER_MUST_TAGS = {"player"}
 local FINDFOOD_CANT_TAGS = {"INLIMBO", "outofreach"}
+
+--	Eatin'
 
 local function GetTraderFn(inst)
 	return FindEntity(inst, TRADE_DIST, function(target)
@@ -60,6 +63,8 @@ local function FindFoodAction(inst)
 
 	return (target and BufferedAction(inst, target, ACTIONS.EAT)) or nil
 end
+
+--	Housin'
 
 local function HasValidHome(inst)
 	local home = (inst.components.homeseeker and inst.components.homeseeker.home) or nil
@@ -96,6 +101,43 @@ local function GetNoLeaderHomePos(inst)
 	end
 end
 
+--	Plowin'
+
+local function HasPlowTool(inst)
+	local tool = inst.components.inventory and inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS) or nil
+	
+	return tool and tool.components.polarplower
+end
+
+local function HasPolarSnow(pt)
+	return TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z)
+end
+
+local function DoPlowingAction(inst)
+	local pt = GetHomePos(inst, true)
+	
+	if pt and inst.components.timer and inst.components.timer:TimerExists("plowinthemorning") then
+		local dist = 2
+		local offset
+		
+		while offset == nil and dist < MAX_PLOW_DIST do
+			offset = FindWalkableOffset(pt, TWOPI * math.random(), MAX_PLOW_DIST, 2, true, true, HasPolarSnow)
+			dist = dist + 1
+		end
+		
+		if offset then
+			inst.StartPolarPlowing(inst)
+			local plower = inst.components.inventory:FindItem(function(item) return item.components.polarplower end) or inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+			
+			return BufferedAction(inst, nil, ACTIONS.POLARPLOW, plower, pt + offset)
+		else
+			inst.StopPolarPlowing(inst)
+		end
+	end
+end
+
+--
+
 local PolarBearBrain = Class(Brain, function(self, inst)
 	Brain._ctor(self, inst)
 end)
@@ -115,6 +157,10 @@ function PolarBearBrain:OnStart()
 		FaceEntity(self.inst, GetTraderFn, KeepTraderFn),
 		DoAction(self.inst, FindFoodAction),
 		Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST),
+		
+		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
+			DoAction(self.inst, DoPlowingAction, "plow snow")),
+		
 		ChattyNode(self.inst, "POLARBEAR_GOHOME",
 			WhileNode(function() return TheWorld.state.iscavenight or not self.inst:IsInLight() end, "NightTime",
 				DoAction(self.inst, GoHomeAction, "go home", true))),

@@ -27,11 +27,11 @@ local BODY_PAINTINGS = {
 }
 
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
-local RETARGET_ONEOF_TAGS = {"merm", "monster", "player", "pirate"}
+local RETARGET_ONEOF_TAGS = {"hound", "merm", "pirate", "walrus"}
 
 local function RetargetFn(inst)
 	return not inst:IsInLimbo() and FindEntity(inst, TUNING.PIG_TARGET_DIST, function(guy)
-		return inst.components.combat:CanTarget(guy) and (guy:HasTag("monster") or guy:HasTag("wonkey") or guy:HasTag("pirate"))
+		return inst.components.combat:CanTarget(guy)
 	end, RETARGET_MUST_TAGS, nil, RETARGET_ONEOF_TAGS) or nil
 end
 
@@ -187,6 +187,49 @@ local function OnUnmarkForTeleport(inst, data)
 	end
 end
 
+local function StartPolarPlowing(inst)
+	local equipped = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+	local plower = inst.components.inventory:FindItem(function(item) return item.components.polarplower end) or (equipped and equipped.components.polarplower and equipped)
+	
+	if not plower then
+		plower = SpawnPrefab("shovel") -- TODO: custom ? (also don't drop them on death!!)
+		plower.components.polarplower.plow_use = 0
+		
+		inst.components.inventory:GiveItem(plower)
+	end
+	if not plower.components.equippable.isequipped then
+		inst.components.inventory:Equip(plower)
+	end
+	
+	if inst.putawayplower then
+		inst.putawayplower:Cancel()
+		inst.putawayplower = nil
+	end
+	inst._plowingtimer = function(inst, data)
+		if data.name == "polarplowingtime" then
+			inst.StopPolarPlowing(inst)
+		end
+	end
+	inst:ListenForEvent("timerdone", inst._plowingtimer)
+end
+
+local function StopPolarPlowing(inst)
+	if inst._plowingtimer then
+		inst:RemoveEventCallback("timerdone", inst._plowingtimer)
+		inst._plowingtimer = nil
+	end
+	if inst.components.timer:TimerExists("polarplowingtime") then
+		inst.components.timer:StopTimer("polarplowingtime")
+	end
+	
+	inst.putawayplower = inst:DoTaskInTime(2, function()
+		local item = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+		if item and item.components.polarplower then
+			inst.components.inventory:Unequip(EQUIPSLOTS.HANDS)
+		end
+	end)
+end
+
 local function SetPainting(inst, colour)
 	if colour ~= DEFAULT_PAINTING then
 		inst.AnimState:OverrideSymbol("pig_torso", "polarbear_build", "pig_torso_"..colour)
@@ -328,6 +371,8 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	inst.SetPainting = SetPainting
+	inst.StartPolarPlowing = StartPolarPlowing
+	inst.StopPolarPlowing = StopPolarPlowing
 	
 	inst.sounds = sounds
 	

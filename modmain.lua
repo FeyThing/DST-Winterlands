@@ -42,6 +42,8 @@ local prefabs = {
 	"evergreen",
 	"flower",
 	"forest",
+	"shovels",
+	"walrus",
 	"wilson",
 	
 	"polar_walking",
@@ -63,7 +65,7 @@ local components = {
 }
 
 local stategraphs = {
-	
+	"penguin",
 }
 
 for _, v in pairs(prefabs) do

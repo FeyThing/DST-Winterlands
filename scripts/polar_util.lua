@@ -74,7 +74,7 @@ end
 function PolarifySpeech(ret, inst)
 	local ret_poses = {}
 	
-	if inst:HasTag("soulless") then
+	if inst:HasTag("soulless") or ret == nil then
 		return ret
 	end
 	
