@@ -39,9 +39,12 @@ local ITEMS = {
 	"polar_dryice",
 	"polarbearfur",
 	"polarbearhouse",
+	"polarmoosehat",
 	"turf_polar_caves",
 	"turf_polar_dryice",
 	"wall_polar_item",
+	
+	"ms_polarmoosehat_white",
 }
 
 --	Scrapbook Stuff

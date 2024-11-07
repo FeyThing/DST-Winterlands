@@ -9,7 +9,7 @@ local PolarWalker = Class(function(self, inst)
 end)
 
 local function IsPolarTile(pt)
-	return TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
+	return TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true)
 end
 
 function PolarWalker:IsPolarEdgeAtPoint(pt)
@@ -25,7 +25,15 @@ end
 function PolarWalker:ShouldSlow()
 	local pt = self.inst:GetPosition()
 	
-	return IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)
+	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
+		return false, "RIDING"
+	end
+	
+	if IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt) then
+		return not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z), "SNOW"
+	end
+	
+	return false
 end
 
 function PolarWalker:GetSlowTime()
@@ -63,7 +71,6 @@ function PolarWalker:GetSlowingMult()
 	if self.inst.polar_slowingmult then
 		mult = self.inst:polar_slowingmult(mult)
 	end
-	
 	
 	if self.start_time then
 		mult = Lerp(1, mult, math.min((self.slow_time - self.start_time), slowtime) / slowtime)
@@ -128,8 +135,7 @@ function PolarWalker:Start()
 end
 
 function PolarWalker:SetWetness()
-	local x, y, z = self.inst.Transform:GetWorldPosition()
-	if not TheWorld.Map:IsPolarSnowAtPoint(x, y, z) or HasPolarImmunity(self.inst) then
+	if HasPolarImmunity(self.inst) then
 		return
 	end
 	

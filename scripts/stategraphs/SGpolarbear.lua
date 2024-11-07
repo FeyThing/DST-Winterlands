@@ -9,6 +9,7 @@ local actionhandlers = {
 	ActionHandler(ACTIONS.PICKUP, "pickup"),
 	ActionHandler(ACTIONS.TAKEITEM, "pickup"),
 	ActionHandler(ACTIONS.UNPIN, "pickup"),
+	ActionHandler(ACTIONS.POLARPLOW, "use_tool"),
 }
 
 local events = {
@@ -167,6 +168,43 @@ local states = {
 		
 		timeline = {
 			TimeEvent(10 * FRAMES, function(inst)
+				inst:PerformBufferedAction()
+			end),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
+		name = "use_tool",
+		tags = {"busy"},
+		
+		onenter = function(inst)
+			inst.Physics:Stop()
+			inst.AnimState:PlayAnimation("work")
+		end,
+		
+		timeline = {
+			TimeEvent(14 * FRAMES, function(inst)
+				local act = inst:GetBufferedAction()
+				local target = act.target
+				local tool = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+				
+				if tool and target and target:IsValid() and target.components.workable and target.components.workable:CanBeWorked() then
+					target.components.workable:WorkedBy(inst, tool.components.tool:GetEffectiveness(act.action))
+					tool:OnUsedAsItem(act.action, inst, target)
+				end
+				
+				if target and act.action == ACTIONS.MINE then
+					PlayMiningFX(inst, target)
+				elseif act.action == ACTIONS.DIG or act.action == ACTIONS.TILL or act.action == ACTIONS.POLARPLOW then
+					inst.SoundEmitter:PlaySound("dontstarve/wilson/dig")
+				end
+				
 				inst:PerformBufferedAction()
 			end),
 		},

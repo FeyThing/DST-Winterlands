@@ -31,7 +31,7 @@ function SnowWaver:GetWavePosition(row, line, pt)
 	local row_x = -(self.lines / 2 * self.spacing_x) + (line - 1) * self.spacing_x
 	local row_z = -(self.rows / 2 * self.spacing_y) + (row - 1) * self.spacing_y - 1
 	
-	local heading = math.rad(TheCamera:GetHeading()) -- GetHeadingTarget instead?
+	local heading = math.rad(TheCamera:GetHeadingTarget()) -- GetHeading would be smoother but causes bigger fps drop, so maybe after some optimization
 	local heading_cos = math.cos(heading)
 	local heading_sin = math.sin(heading)
 	
@@ -59,7 +59,7 @@ function SnowWaver:SetWaves()
 			local wave = self.waves[id]
 			
 			local x, y, z, pt = self:GetWavePosition(row, line, self.waves_data[id])
-			local insnow = TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_SNOW
+			local insnow = TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
 			
 			if wave == nil and insnow then
 				wave = SpawnPrefab("snowwave")

@@ -23,6 +23,7 @@ AddTask("Polar Lands", {
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
 		["PolarIsland_Lakes"] = 2,
+		["PolarIsland_Walrus"] = 1,
 		["PolarIsland_BG"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,

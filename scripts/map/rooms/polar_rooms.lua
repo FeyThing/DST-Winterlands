@@ -57,6 +57,17 @@ AddRoom("PolarIsland_Lakes", {
 	}
 })
 
+AddRoom("PolarIsland_Walrus", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_LAKES_NOISE,
+	required_prefabs = {"walrus_camp"},
+	contents = {
+		countstaticlayouts = {
+			["PolarTuskTown"] = 1,
+		},
+	}
+})
+
 AddRoom("PolarIsland_BG", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_TUNDRA_NOISE,

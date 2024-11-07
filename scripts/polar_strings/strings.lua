@@ -11,7 +11,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Misc
 	
 --	Mobs
+	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
 	NAMES.POLARBEAR = "Polar Bear"
+	NAMES.SHADOW_ICICLER = "Shadow Spine"
 	
 --	Buildings
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
@@ -26,6 +28,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Equipments
 	NAMES.POLAR_SPEAR = "Stalagspear"
+	NAMES.POLARMOOSEHAT = "Moose Ushanka"
 	
 	--	Others
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"
@@ -35,16 +38,70 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 --	Skins
 	
+	--	Names
+	STRINGS.SKIN_NAMES.ms_polarmoosehat_white = "Hornamented Ushanka"
+	
+	--	Desc
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "Bears say they look sick with all the sticks tucked in!"
+	
 --	Speech, etc
 	STRINGS.POLARCOLD_SNUFFING = {"(huff) ", "(sniff) ", "(sniffff) ", "(snort) ", "(snurf) ", "(snuffle) "}
 	
 	STRINGS.POLARBEARNAMES = {
-		"What",
-		"The",
-		"Fuck",
-		"Are",
-		"My",
-		"Names",
+		--	cold foods
+		"Banana",
+		"Ceviche",
+		"Chicken Salad",
+		"Gelato",
+		"Granita",
+		"Macaroni",
+		"Mint",
+		"Popsicle",
+		"Sandwich",
+		"Strawberry",
+		"Sundae",
+		"Tiramisu",
+		--	mountains
+		"Aconcagua",
+		"Andes",
+		"Blanc",
+		"Chimborazo",
+		"Cotopaxi",
+		"Denali",
+		"Eiger",
+		"Elbrus",
+		"Eureka",
+		"Everest",
+		"Fuji",
+		"Kazbek",
+		"Mam Tor",
+		"Matterhorn",
+		"Olympus",
+		"Oymyakon",
+		"Pyrenees",
+		"Rainier",
+		"Snag",
+		"Tatra",
+		"Ulaanbaatar",
+		"Verkhoyansk",
+		--	pitbulls
+		"Cupcake",
+		"Fluffball",
+		"Jellybean",
+		"Marshmallow",
+		"Milkshake",
+		"Princess",
+		"Snowflake",
+		"Sugarbean",
+		--	warriors
+		"Alfonso",
+		"Alexander",
+		"Bellantrix",
+		"Cahira",
+		"Igor",
+		"Koa",
+		"Ragnar",
+		"Viggo",
 	}
 	
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!"}
@@ -55,6 +112,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	UI
 	
 	--	Actions
+	STRINGS.ACTIONS.POLARPLOW = "Plow"
 	
 	--	Scrapbook, Cookbook
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."

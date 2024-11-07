@@ -6,5 +6,5 @@ ENV.AddPrefabPostInit("forest", function(inst)
 		return
 	end
 	
-	
+	inst:AddComponent("polarpenguinspawner")
 end)

@@ -57,4 +57,5 @@ PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2)}, 														
 --	Deconstruction
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe
 
+AddDeconstructRecipe("polarmoosehat", {Ingredient("cutgrass", 3), Ingredient("boneshard", 2)})
 --AddDeconstructRecipe("polar_spear", {Ingredient("ice", 1), Ingredient("twigs", 2)})
