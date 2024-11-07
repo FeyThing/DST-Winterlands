@@ -11,6 +11,10 @@ local SEASON_BUSY_MUSIC = {
 
 ENV.AddComponentPostInit("dynamicmusic", function(self)
 	function self:UpdatePolarMusic(self, ignore)
+		if ThePlayer == nil then
+			return
+		end
+
 		if ignore then
 			return
 		end

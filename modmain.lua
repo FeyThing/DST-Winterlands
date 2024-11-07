@@ -80,15 +80,3 @@ for _, v in pairs(stategraphs) do
 end
 
 require("polarcommands")
-
-
-AddPlayerPostInit(function(inst)
-	if not GLOBAL.TheWorld.ismastersim then
-		return
-	end
-
-	inst:DoPeriodicTask(0.5, function()
-		GLOBAL.TheNet:Announce(tostring(GLOBAL.TheWorld.components.polarice_manager:GetBaseAtPoint(inst.Transform:GetWorldPosition())))
-		GLOBAL.TheNet:Announce(tostring(GLOBAL.TheWorld.components.polarice_manager:GetVariabledAtPoint(inst.Transform:GetWorldPosition())))
-	end)
-end)
