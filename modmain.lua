@@ -36,6 +36,7 @@ for _, v in pairs(inits) do
 end
 
 modimport("scripts/snowstorm")
+modimport("scripts/polarice")
 
 local prefabs = {
 	"birds",
