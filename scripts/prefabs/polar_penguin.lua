@@ -82,11 +82,10 @@ local function fn()
 	
 	inst:AddComponent("combat")
 	inst.components.combat.hiteffectsymbol = "body"
+	inst.components.combat:SetDefaultDamage(TUNING.PENGUIN_DAMAGE)
 	inst.components.combat:SetAttackPeriod(TUNING.PENGUIN_ATTACK_PERIOD)
 	inst.components.combat:SetRange(TUNING.PENGUIN_ATTACK_DIST)
 	inst.components.combat:SetKeepTargetFunction(KeepTarget)
-	inst.components.combat:SetDefaultDamage(TUNING.PENGUIN_DAMAGE)
-	inst.components.combat:SetAttackPeriod(3)
 	
 	inst:AddComponent("eater")
 	inst.components.eater:SetDiet({FOODGROUP.OMNI}, {FOODGROUP.OMNI})
@@ -176,7 +175,10 @@ local function OnSpawned(inst, pengu)
 		
 		local angle = pengu:GetAngleToPoint(inst.Transform:GetWorldPosition())
 		pengu.Transform:SetRotation(angle)
-		pengu.sg:GoToState("appear")
+		
+		if pengu.sg then
+			pengu.sg:GoToState("appear")
+		end
 	end
 end
 

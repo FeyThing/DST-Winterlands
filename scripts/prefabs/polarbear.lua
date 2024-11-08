@@ -306,6 +306,7 @@ local function fn()
 	
 	inst:AddComponent("combat")
 	inst.components.combat.hiteffectsymbol = "pig_torso"
+	inst.components.combat:SetDefaultDamage(TUNING.POLARBEAR_DAMAGE)
 	inst.components.combat:SetAttackPeriod(TUNING.POLARBEAR_ATTACK_PERIOD)
 	inst.components.combat:SetRetargetFunction(1, RetargetFn)
 	inst.components.combat:SetKeepTargetFunction(KeepTargetFn)

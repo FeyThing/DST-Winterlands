@@ -57,6 +57,7 @@ local components = {
 	"pickable",
 	"playervision",
 	"repairable",
+	"shadowcreaturespawner",
 	"sheltered",
 	"slipperyfeet",
 	"temperature",

@@ -13,7 +13,7 @@ local events = {
 	EventHandler("death", function(inst) inst.sg:GoToState("death") end),
 	EventHandler("doattack", function(inst, data)
 		if not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
-			inst.sg:GoToState("attack", data.target)
+			inst.sg:GoToState("cast", data.target)
 		end
 	end),
 	CommonHandlers.OnLocomote(false, true),
@@ -39,7 +39,7 @@ local states = {
 	},
 	
 	State{
-		name = "attack",
+		name = "cast",
 		tags = {"attack", "busy"},
 		
 		onenter = function(inst, target)
@@ -48,13 +48,51 @@ local states = {
 			inst.AnimState:PushAnimation("atk_pst", false)
 			inst.Physics:Stop()
 			
-			inst.sg.statemem.target = target
+			if target and target:IsValid() then
+				inst.sg.statemem.target = target
+				inst.sg.statemem.targetpos = target:GetPosition()
+			end
+			
 			inst.components.combat:StartAttack()
+		end,
+		
+		onupdate = function(inst)
+			local target = inst.sg.statemem.target
+			
+			if target and target:IsValid() then
+				local pos = inst.sg.statemem.targetpos
+				pos.x, pos.y, pos.z = inst.sg.statemem.target.Transform:GetWorldPosition()
+			else
+				inst.sg.statemem.target = nil
+			end
+			
+			inst:ForceFacePoint(inst.sg.statemem.targetpos)
 		end,
 		
 		timeline = {
 			TimeEvent(16 * FRAMES, function(inst)
-				inst.components.combat:DoAttack(inst.sg.statemem.target)
+				local pos = inst.sg.statemem.targetpos
+				
+				if pos then
+					local spike = SpawnPrefab("shadow_icicler_spike")
+					spike.Physics:Teleport(pos.x, pos.y + TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.min, pos.z)
+					spike.components.complexprojectile:Launch(pos, inst)
+					
+					local dtheta = TWOPI / math.random(TUNING.SHADOW_ICICLER_SPIKE_AMT.min, TUNING.SHADOW_ICICLER_SPIKE_AMT.max)
+					for theta = math.random() * dtheta, TWOPI, dtheta do
+						local height = GetRandomMinMax(TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.min, TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.max)
+						local range = GetRandomMinMax(TUNING.SHADOW_ICICLER_SPIKE_RING_RANGE.min, TUNING.SHADOW_ICICLER_SPIKE_RING_RANGE.max)
+						
+						local x = pos.x + range * math.cos(theta)
+						local z = pos.z + range * math.sin(theta)
+						
+						inst:DoTaskInTime(math.random(), function()
+							local _spike = SpawnPrefab("shadow_icicler_spike")
+							_spike.Physics:Teleport(x, pos.y, z)
+							_spike.components.complexprojectile:Launch(Vector3(x, pos.y + height, z), inst)
+						end)
+					end
+				end
 			end),
 		},
 		
@@ -76,16 +114,11 @@ local states = {
 		
 		events = {
 			EventHandler("animover", function(inst)
-				local x0, y0, z0 = inst.Transform:GetWorldPosition()
+				local pt = inst:GetPosition()
+				local offset = FindWalkableOffset(pt, TWOPI * math.random(), TUNING.SHADOW_ICICLER_ATTACK_RANGE, 8, true, true, nil, true, true)
 				
-				for k = 1, 4 do
-					local x = x0 + math.random() * 20 - 10
-					local z = z0 + math.random() * 20 - 10
-					
-					if TheWorld.Map:IsPassableAtPoint(x, 0, z) then
-						inst.Physics:Teleport(x, 0, z)
-						break
-					end
+				if offset then
+					inst.Physics:Teleport((pt + offset):Get())
 				end
 				
 				inst.sg:GoToState("appear")

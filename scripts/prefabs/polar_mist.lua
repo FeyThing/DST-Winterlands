@@ -68,7 +68,7 @@ local function SetEmitter(inst, emitter, scale, speed)
 	inst.mist_scale = scale or 1
 	
 	inst.AnimState:SetScale(inst.mist_scale, inst.mist_scale)
-	inst.AnimState:SetSortOrder(-2)
+	inst.AnimState:SetSortOrder(2)
 	
 	local x, y, z
 	if emitter.Transform then
