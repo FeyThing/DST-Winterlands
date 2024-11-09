@@ -17,6 +17,9 @@ Assets = {
 	
 	Asset("ANIM", "anim/meter_polar_over.zip"),
 	
+	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
+	Asset("ATLAS", "images/rain_polar.xml"),
+	
 	-- Anims / Builds
 	Asset("ANIM", "anim/polar_snow.zip"),
 	

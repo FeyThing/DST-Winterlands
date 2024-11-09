@@ -19,14 +19,44 @@ local events = {
 	CommonHandlers.OnLocomote(false, true),
 }
 
+local function TryDropTarget(inst)
+	if inst.ShouldKeepTarget then
+		local target = inst.components.combat.target
+		if target and not inst:ShouldKeepTarget(target) then
+			inst.components.combat:DropTarget()
+			
+			return true
+		end
+	end
+end
+
+local function TryDespawn(inst)
+	if inst.sg.mem.forcedespawn or (inst.wantstodespawn and not inst.components.combat:HasTarget()) then
+		inst.sg:GoToState("disappear")
+		
+		return true
+	end
+end
+
 local states = {
 	State{
 		name = "idle",
 		tags = {"idle", "canrotate"},
 		
 		onenter = function(inst)
+			local dropped = TryDropTarget(inst)
+			if TryDespawn(inst) then
+				return
+			elseif dropped then
+				inst.sg:GoToState("taunt")
+				return
+			end
+			
 			if not inst.AnimState:IsCurrentAnimation("idle_loop") then
 				inst.AnimState:PlayAnimation("idle_loop", true)
+			end
+			if not inst.SoundEmitter:PlayingSound("idlesound") then
+				inst.SoundEmitter:PlaySound(inst.sounds.idle, "idle")
 			end
 			
 			inst.components.locomotor:StopMoving()
@@ -46,6 +76,7 @@ local states = {
 			inst.AnimState:PlayAnimation("atk_pre")
 			inst.AnimState:PushAnimation("atk", false)
 			inst.AnimState:PushAnimation("atk_pst", false)
+			inst.SoundEmitter:PlaySound(inst.sounds.attack_grunt)
 			inst.Physics:Stop()
 			
 			if target and target:IsValid() then
@@ -70,9 +101,10 @@ local states = {
 		end,
 		
 		timeline = {
-			TimeEvent(16 * FRAMES, function(inst)
-				local pos = inst.sg.statemem.targetpos
+			TimeEvent(11 * FRAMES, function(inst)
+				inst.SoundEmitter:PlaySound(inst.sounds.attack)
 				
+				local pos = inst.sg.statemem.targetpos
 				if pos then
 					local spike = SpawnPrefab("shadow_icicler_spike")
 					spike.Physics:Teleport(pos.x, pos.y + TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.min, pos.z)
@@ -98,7 +130,14 @@ local states = {
 		
 		events = {
 			EventHandler("animqueueover", function(inst)
-				inst.sg:GoToState("idle")
+				if math.random() < .333 then
+					TryDropTarget(inst)
+					inst.forceretarget = true
+					
+					inst.sg:GoToState("taunt")
+				else
+					inst.sg:GoToState("idle")
+				end
 			end),
 		},
 	},
@@ -132,22 +171,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("taunt")
-			inst.Physics:Stop()
-		end,
-		
-		events = {
-			EventHandler("animover", function(inst)
-				inst.sg:GoToState("idle")
-			end),
-		},
-	},
-	
-	State{
-		name = "appear",
-		tags = {"busy"},
-		
-		onenter = function(inst)
-			inst.AnimState:PlayAnimation("appear")
+			inst.SoundEmitter:PlaySound(inst.sounds.taunt)
 			inst.Physics:Stop()
 		end,
 		
@@ -164,6 +188,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("disappear")
+			inst.SoundEmitter:PlaySound(inst.sounds.death)
 			inst.Physics:Stop()
 			
 			RemovePhysicsColliders(inst)
@@ -175,11 +200,30 @@ local states = {
 	},
 	
 	State{
+		name = "appear",
+		tags = {"busy"},
+		
+		onenter = function(inst)
+			TryDropTarget(inst)
+			inst.AnimState:PlayAnimation("appear")
+			inst.SoundEmitter:PlaySound(inst.sounds.appear)
+			inst.Physics:Stop()
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
 		name = "disappear",
 		tags = {"busy", "noattack"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("disappear")
+			inst.SoundEmitter:PlaySound(inst.sounds.disappear)
 			inst.Physics:Stop()
 			
 			inst.persists = false
@@ -213,6 +257,20 @@ local states = {
 	},
 }
 
-CommonStates.AddWalkStates(states)
+CommonStates.AddWalkStates(states, {
+	walktimeline = {
+		TimeEvent(0, function(inst)
+			local dropped = TryDropTarget(inst)
+			if TryDespawn(inst) then
+				return
+			elseif dropped then
+				inst.sg:GoToState("taunt")
+			end
+		end),
+		TimeEvent(17 * FRAMES, function(inst)
+			inst.Physics:Stop()
+		end),
+    }
+})
 
 return StateGraph("shadow_icicler", states, events, "appear", actionhandlers)

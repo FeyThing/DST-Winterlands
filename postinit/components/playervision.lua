@@ -24,7 +24,7 @@ local POLAR_COLOURCUBES_CONVERT = {
 
 local function OnPolarChanged(inst, data, ...)
 	local self = inst.components.playervision
-	local in_polar = IsInPolar(inst, 20) -- data and data.tags and table.contains(data.tags, "polararea")
+	local in_polar = IsInPolar(inst, 30)
 	
 	if self and self.polarvision ~= in_polar then
 		self.polarvision = in_polar
@@ -61,7 +61,7 @@ ENV.AddModShadersInit(function()
 	PostProcessor__index.SetColourCubeData = function(pp, index, src, dest, ...)
 		
 		local polar_convert = POLAR_COLOURCUBES_CONVERT[dest]
-		if ThePlayer and IsInPolar(ThePlayer, 20) and polar_convert then
+		if ThePlayer and IsInPolar(ThePlayer, 30) and polar_convert then
 			dest = POLAR_COLOURCUBES[polar_convert] or dest
 		end
 		

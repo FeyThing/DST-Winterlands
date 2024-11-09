@@ -165,6 +165,7 @@ local function fn()
 	inst.AnimState:SetBuild("shadow_polar_basic")
 	inst.AnimState:PlayAnimation("idle_loop", true)
 	inst.AnimState:SetMultColour(1, 1, 1, 0.5)
+	inst.AnimState:SetScale(0.8, 0.8)
 	
 	inst:AddTag("shadowcreature")
 	inst:AddTag("gestaltnoloot")
@@ -188,7 +189,7 @@ local function fn()
 		return inst
 	end
 	
-	inst.sanityreward = TUNING.SANITY_MEDLARGE
+	inst.sanityreward = TUNING.SANITY_TINY
 	inst.sounds = sounds
 	
 	inst:AddComponent("combat")
@@ -197,6 +198,7 @@ local function fn()
 	inst.components.combat:SetRange(TUNING.SHADOW_ICICLER_ATTACK_RANGE)
 	inst.components.combat:SetRetargetFunction(3, RetargetFn)
 	inst.components.combat.onkilledbyother = OnKilledByOther
+	inst.components.combat.battlecryinterval = 12
 	
 	inst:AddComponent("health")
 	inst.components.health:SetMaxHealth(TUNING.SHADOW_ICICLER_HEALTH)

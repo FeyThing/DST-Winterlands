@@ -23,14 +23,18 @@ end
 
 --	Constant lower temperature
 
+function GetPolarTemperature(temperature)
+	return temperature + (TheWorld.state.iscavenight and TUNING.POLAR_TEMPERATURES["night"]
+		or TheWorld.state.iscavedusk and TUNING.POLAR_TEMPERATURES["dusk"]
+		or TUNING.POLAR_TEMPERATURES["day"])
+end
+
 local OldGetTemperatureAtXZ = GetTemperatureAtXZ
 function GetTemperatureAtXZ(x, z, ...)
 	local temperature = OldGetTemperatureAtXZ(x, z, ...)
 	
 	if IsInPolarAtPoint(x, 0, z) then
-		temperature = temperature + (TheWorld.state.iscavenight and TUNING.POLAR_TEMPERATURES["night"]
-			or TheWorld.state.iscavedusk and TUNING.POLAR_TEMPERATURES["dusk"]
-			or TUNING.POLAR_TEMPERATURES["day"])
+		temperature = GetPolarTemperature(temperature)
 	elseif TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_DRYICE then
 		temperature = temperature + TUNING.POLAR_TEMPERATURES["ice"]
 	end
