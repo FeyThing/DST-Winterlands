@@ -9,7 +9,6 @@ local prefabs = {
 	"drumstick",
 	"feather_crow",
 	"bird_egg",
-	"teamleader",
 }
 
 local brain = require("brains/polar_penguinbrain")
@@ -44,7 +43,7 @@ local function OnAttacked(inst, data)
 end
 
 local function CheckAutoRemove(inst)
-	if not inst:IsOnValidGround() or TheWorld.state.iswinter or inst.components.herdmember and inst.components.herdmember:GetHerd() == nil then
+	if TheWorld.state.iswinter then
 		inst:Remove()
 	end
 end
@@ -145,9 +144,17 @@ end
 --
 
 local function HerdFindWater(pt)
-	return FindValidPositionByFan(math.random() * TWOPI, 2, 12, function(offset) 
-		return not TheWorld.Map:IsVisualGroundAtPoint(pt.x + offset.x, 0, pt.z + offset.z)
-	end)
+	local pos
+	local range = 1
+	
+	while pos == nil and range < 8 do
+		pos = FindValidPositionByFan(math.random() * TWOPI, range, 12, function(offset) 
+			return not TheWorld.Map:IsVisualGroundAtPoint(pt.x + offset.x, 0, pt.z + offset.z)
+		end)
+		range = range + 1
+	end
+	
+	return pos ~= nil
 end
 
 local function GetSpawnPoint(inst)
@@ -156,7 +163,7 @@ local function GetSpawnPoint(inst)
 	local range = 2
 	
 	while offset == nil and range < TUNING.POLAR_PENGUIN_SHORE_DIST + 2 do
-		offset = FindWalkableOffset(pt, math.random() * TWOPI, range, 6, false, false, HerdFindWater)
+		offset = FindWalkableOffset(pt, math.random() * TWOPI, range, 6, false, false, function(_pt) return inst:IsAsleep() or HerdFindWater(_pt) end)
 		range = range + 2
 	end
 	

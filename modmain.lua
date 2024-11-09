@@ -43,6 +43,7 @@ local prefabs = {
 	"evergreen",
 	"flower",
 	"forest",
+	"penguin",
 	"shovels",
 	"walrus",
 	"wilson",
