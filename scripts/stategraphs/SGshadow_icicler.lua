@@ -13,11 +13,30 @@ local events = {
 	EventHandler("death", function(inst) inst.sg:GoToState("death") end),
 	EventHandler("doattack", function(inst, data)
 		if not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
-			inst.sg:GoToState("attack", data.target)
+			inst.sg:GoToState("cast", data.target)
 		end
 	end),
 	CommonHandlers.OnLocomote(false, true),
 }
+
+local function TryDropTarget(inst)
+	if inst.ShouldKeepTarget then
+		local target = inst.components.combat.target
+		if target and not inst:ShouldKeepTarget(target) then
+			inst.components.combat:DropTarget()
+			
+			return true
+		end
+	end
+end
+
+local function TryDespawn(inst)
+	if inst.sg.mem.forcedespawn or (inst.wantstodespawn and not inst.components.combat:HasTarget()) then
+		inst.sg:GoToState("disappear")
+		
+		return true
+	end
+end
 
 local states = {
 	State{
@@ -25,8 +44,19 @@ local states = {
 		tags = {"idle", "canrotate"},
 		
 		onenter = function(inst)
+			local dropped = TryDropTarget(inst)
+			if TryDespawn(inst) then
+				return
+			elseif dropped then
+				inst.sg:GoToState("taunt")
+				return
+			end
+			
 			if not inst.AnimState:IsCurrentAnimation("idle_loop") then
 				inst.AnimState:PlayAnimation("idle_loop", true)
+			end
+			if not inst.SoundEmitter:PlayingSound("idlesound") then
+				inst.SoundEmitter:PlaySound(inst.sounds.idle, "idle")
 			end
 			
 			inst.components.locomotor:StopMoving()
@@ -39,28 +69,75 @@ local states = {
 	},
 	
 	State{
-		name = "attack",
+		name = "cast",
 		tags = {"attack", "busy"},
 		
 		onenter = function(inst, target)
 			inst.AnimState:PlayAnimation("atk_pre")
 			inst.AnimState:PushAnimation("atk", false)
 			inst.AnimState:PushAnimation("atk_pst", false)
+			inst.SoundEmitter:PlaySound(inst.sounds.attack_grunt)
 			inst.Physics:Stop()
 			
-			inst.sg.statemem.target = target
+			if target and target:IsValid() then
+				inst.sg.statemem.target = target
+				inst.sg.statemem.targetpos = target:GetPosition()
+			end
+			
 			inst.components.combat:StartAttack()
 		end,
 		
+		onupdate = function(inst)
+			local target = inst.sg.statemem.target
+			
+			if target and target:IsValid() then
+				local pos = inst.sg.statemem.targetpos
+				pos.x, pos.y, pos.z = inst.sg.statemem.target.Transform:GetWorldPosition()
+			else
+				inst.sg.statemem.target = nil
+			end
+			
+			inst:ForceFacePoint(inst.sg.statemem.targetpos)
+		end,
+		
 		timeline = {
-			TimeEvent(16 * FRAMES, function(inst)
-				inst.components.combat:DoAttack(inst.sg.statemem.target)
+			TimeEvent(11 * FRAMES, function(inst)
+				inst.SoundEmitter:PlaySound(inst.sounds.attack)
+				
+				local pos = inst.sg.statemem.targetpos
+				if pos then
+					local spike = SpawnPrefab("shadow_icicler_spike")
+					spike.Physics:Teleport(pos.x, pos.y + TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.min, pos.z)
+					spike.components.complexprojectile:Launch(pos, inst)
+					
+					local dtheta = TWOPI / math.random(TUNING.SHADOW_ICICLER_SPIKE_AMT.min, TUNING.SHADOW_ICICLER_SPIKE_AMT.max)
+					for theta = math.random() * dtheta, TWOPI, dtheta do
+						local height = GetRandomMinMax(TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.min, TUNING.SHADOW_ICICLER_SPIKE_HEIGHT.max)
+						local range = GetRandomMinMax(TUNING.SHADOW_ICICLER_SPIKE_RING_RANGE.min, TUNING.SHADOW_ICICLER_SPIKE_RING_RANGE.max)
+						
+						local x = pos.x + range * math.cos(theta)
+						local z = pos.z + range * math.sin(theta)
+						
+						inst:DoTaskInTime(math.random(), function()
+							local _spike = SpawnPrefab("shadow_icicler_spike")
+							_spike.Physics:Teleport(x, pos.y, z)
+							_spike.components.complexprojectile:Launch(Vector3(x, pos.y + height, z), inst)
+						end)
+					end
+				end
 			end),
 		},
 		
 		events = {
 			EventHandler("animqueueover", function(inst)
-				inst.sg:GoToState("idle")
+				if math.random() < .333 then
+					TryDropTarget(inst)
+					inst.forceretarget = true
+					
+					inst.sg:GoToState("taunt")
+				else
+					inst.sg:GoToState("idle")
+				end
 			end),
 		},
 	},
@@ -76,16 +153,11 @@ local states = {
 		
 		events = {
 			EventHandler("animover", function(inst)
-				local x0, y0, z0 = inst.Transform:GetWorldPosition()
+				local pt = inst:GetPosition()
+				local offset = FindWalkableOffset(pt, TWOPI * math.random(), TUNING.SHADOW_ICICLER_ATTACK_RANGE, 8, true, true, nil, true, true)
 				
-				for k = 1, 4 do
-					local x = x0 + math.random() * 20 - 10
-					local z = z0 + math.random() * 20 - 10
-					
-					if TheWorld.Map:IsPassableAtPoint(x, 0, z) then
-						inst.Physics:Teleport(x, 0, z)
-						break
-					end
+				if offset then
+					inst.Physics:Teleport((pt + offset):Get())
 				end
 				
 				inst.sg:GoToState("appear")
@@ -99,22 +171,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("taunt")
-			inst.Physics:Stop()
-		end,
-		
-		events = {
-			EventHandler("animover", function(inst)
-				inst.sg:GoToState("idle")
-			end),
-		},
-	},
-	
-	State{
-		name = "appear",
-		tags = {"busy"},
-		
-		onenter = function(inst)
-			inst.AnimState:PlayAnimation("appear")
+			inst.SoundEmitter:PlaySound(inst.sounds.taunt)
 			inst.Physics:Stop()
 		end,
 		
@@ -131,6 +188,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("disappear")
+			inst.SoundEmitter:PlaySound(inst.sounds.death)
 			inst.Physics:Stop()
 			
 			RemovePhysicsColliders(inst)
@@ -142,11 +200,30 @@ local states = {
 	},
 	
 	State{
+		name = "appear",
+		tags = {"busy"},
+		
+		onenter = function(inst)
+			TryDropTarget(inst)
+			inst.AnimState:PlayAnimation("appear")
+			inst.SoundEmitter:PlaySound(inst.sounds.appear)
+			inst.Physics:Stop()
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
 		name = "disappear",
 		tags = {"busy", "noattack"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("disappear")
+			inst.SoundEmitter:PlaySound(inst.sounds.disappear)
 			inst.Physics:Stop()
 			
 			inst.persists = false
@@ -180,6 +257,20 @@ local states = {
 	},
 }
 
-CommonStates.AddWalkStates(states)
+CommonStates.AddWalkStates(states, {
+	walktimeline = {
+		TimeEvent(0, function(inst)
+			local dropped = TryDropTarget(inst)
+			if TryDespawn(inst) then
+				return
+			elseif dropped then
+				inst.sg:GoToState("taunt")
+			end
+		end),
+		TimeEvent(17 * FRAMES, function(inst)
+			inst.Physics:Stop()
+		end),
+    }
+})
 
 return StateGraph("shadow_icicler", states, events, "appear", actionhandlers)

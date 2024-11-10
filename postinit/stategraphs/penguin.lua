@@ -52,10 +52,15 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 		sg.states[state.name] = state
 	end
 	
-	--	Fix spawning in shadow
+	--	Fix spawning in shadow, remove non-polar penguin on spawn
 	
 	local oldappear_enter = sg.states["appear"].onenter
 	sg.states["appear"].onenter = function(inst, ...)
+		if inst.prefab == "penguin" and IsInPolar(inst) then
+			inst:Remove()
+			return
+		end
+		
 		if inst.DynamicShadow then
 			inst.DynamicShadow:Enable(false)
 		end

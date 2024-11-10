@@ -93,6 +93,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Princess",
 		"Snowflake",
 		"Sugarbean",
+		"Cookie",
 		--	warriors
 		"Alfonso",
 		"Alexander",
@@ -102,6 +103,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Koa",
 		"Ragnar",
 		"Viggo",
+		--  others
+		"Feng Min",
+		"Laser",
+		"Deyr",
+		"Otog",
+		"Iggy",
+		"Crimson",
+		"Mustafa",
 	}
 	
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!"}
