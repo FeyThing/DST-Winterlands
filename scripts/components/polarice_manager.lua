@@ -1,10 +1,10 @@
 local WIDTH, HEIGHT
 local MAX_GRADIENT_DEPTH = 4
 
-local STRENGTH_UPDATE_TIME = 10
+local STRENGTH_UPDATE_TIME = 8
 
-local ICE_TILE_UPDATE_TIME = 10
-local ICE_TILE_UPDATE_VARIANCE = 10 -- Create/destroy tiles every 10-20 seconds
+local ICE_TILE_UPDATE_TIME = 4
+local ICE_TILE_UPDATE_VARIANCE = 10 -- Create/destroy tiles every 4 - 14 seconds
 local ICE_TILE_UPDATE_COOLDOWN = 120
 
 local MIN_TEMPERATURE = -25
@@ -33,6 +33,31 @@ return Class(function(self, inst)
 	local wasloaded = false
 
 	-- [ Functions ] --
+	local function RemoveCrackedIceFx(x, y, z)
+		local cracks = TheSim:FindEntities(x, 0, z, 2, { "ice_crack_fx" })
+
+		for i = #cracks, 1, -1 do
+			cracks[i]:Remove()
+		end
+	end
+
+	local function SpawnCracks(x, y, z)
+		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, 0, z)
+		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+		local fx = SpawnPrefab("fx_ice_crackle")
+		fx.Transform:SetPosition(cx, cy, cz)
+
+		local function spawnfx(lx, lz, rot)
+			local fx = SpawnPrefab("ice_crack_grid_fx")
+			fx.Transform:SetPosition(lx, 0, lz)
+			fx.Transform:SetRotation(rot)
+			fx.AnimState:SetScale(1.2, 1.2, 1.2)
+		end
+
+		spawnfx(cx, cz, -40 + math.random() * 80)
+		spawnfx(cx, cz, 50 + math.random() * 80)
+	end
+
 	local function QueueCreateIceAtTile(tx, ty)
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 		
@@ -53,18 +78,24 @@ return Class(function(self, inst)
 
 	local function QueueDestroyIceAtTile(tx, ty)
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
-		
+
 		if _recently_updated_tiles[index] ~= nil then
 			return
 		end
 
 		if _destroyicetasks[index] == nil and _createicetasks[index] == nil then
 			_destroyicetasks[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
-				self:DestroyIceAtTile(tx, ty)
-				_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
-					_recently_updated_tiles[index] = nil
+				SpawnCracks(_map:GetTileCenterPoint(tx, ty))
+
+				inst:DoTaskInTime(3.5, function()
+					self:DestroyIceAtTile(tx, ty)
+					RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
+
+					_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
+						_recently_updated_tiles[index] = nil
+					end)
+					_destroyicetasks[index] = nil
 				end)
-				_destroyicetasks[index] = nil
 			end)
 		end
 	end
@@ -327,8 +358,8 @@ return Class(function(self, inst)
 				end
 
 				ent:Remove()
-			elseif ent.prefab == "wobster_den" then
-				ent:Remove()
+			elseif ent.components.walkableplatform and ent.components.health then
+				ent.components.health:Kill()
 			elseif ent.components.inventoryitem and ent.Physics then
 				launch_away(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
