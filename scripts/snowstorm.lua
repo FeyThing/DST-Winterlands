@@ -16,33 +16,10 @@ AddPrefabPostInit("player_classified", function(inst)
     inst:DoStaticTaskInTime(0, function(inst)
         inst:ListenForEvent("snowstormleveldirty", function(inst)
             if not GLOBAL.TheWorld.ismastersim then
-                inst._parent._snowfx.particles_per_tick = 20 * inst.snowstormlevel:value()
+                inst._parent._snowfx.particles_per_tick = 16 * inst.snowstormlevel:value()
             end
         end)
     end)
-end)
-
-local function OnUpdate(inst)
-    local x, y, z = inst.Transform:GetWorldPosition()
-    local snowstormlevel = GLOBAL.TheWorld.components.snowstorm_manager:GetAtPoint(x, y, z)
-    inst.player_classified.snowstormlevel:set(snowstormlevel)
-end
-
-AddPlayerPostInit(function(inst)
-    if not inst.components.updatelooper then
-        inst:AddComponent("updatelooper")
-    end
-
-    if not GLOBAL.TheNet:IsDedicated() then
-        inst._snowfx = GLOBAL.SpawnPrefab("snowstorm_snow")
-        inst._snowfx.entity:SetParent(inst.entity)
-        inst._snowfx.particles_per_tick = 0
-        inst._snowfx:PostInit()
-    end
-
-    if GLOBAL.TheWorld.ismastersim then
-        inst.components.updatelooper:AddOnUpdateFn(OnUpdate)
-    end
 end)
 
 local Weather = require("components/weather")
@@ -87,20 +64,51 @@ Weather._ctor = function(self, ...)
     end
 end
 
+AddPlayerPostInit(function(inst)
+    local function OnUpdate(inst)
+        local x, y, z = inst.Transform:GetWorldPosition()
+        local snowstormlevel = GLOBAL.TheWorld.components.snowstorm_manager:GetAtPoint(x, y, z)
+        inst.player_classified.snowstormlevel:set(snowstormlevel)
+    end
+
+    if not inst.components.updatelooper then
+        inst:AddComponent("updatelooper")
+    end
+
+    if not GLOBAL.TheNet:IsDedicated() then
+        inst._snowfx = GLOBAL.SpawnPrefab("snowstorm_snow")
+        inst._snowfx.entity:SetParent(inst.entity)
+        inst._snowfx.particles_per_tick = 0
+        inst._snowfx:PostInit()
+    end
+
+    if GLOBAL.TheWorld.ismastersim then
+        inst:DoTaskInTime(1, function() -- Delay the first check to make sure the snowstormlevel is synced
+            OnUpdate(inst)
+            inst.components.updatelooper:AddOnUpdateFn(OnUpdate)
+        end)
+    end
+end)
+
 local function DisableParticlesInWinterlands(inst)
+    local function OnUpdate(inst)
+        if GLOBAL.ThePlayer and GLOBAL.ThePlayer.player_classified.snowstormlevel:value() ~= 0 then
+            inst.particles_per_tick = 0
+
+            if inst.splashes_per_tick ~= nil then
+                inst.splashes_per_tick = 0
+            end
+        end
+    end
+
     if not inst.components.updatelooper then
         inst:AddComponent("updatelooper")
     end
 
     if not GLOBAL.TheWorld.ismastersim then
-        inst.components.updatelooper:AddOnUpdateFn(function()
-            if GLOBAL.ThePlayer and GLOBAL.ThePlayer.player_classified.snowstormlevel:value() ~= 0 then
-                inst.particles_per_tick = 0
-
-                if inst.splashes_per_tick ~= nil then
-                    inst.splashes_per_tick = 0
-                end
-            end
+        inst:DoTaskInTime(1, function() -- Delay the first check to make sure the snowstormlevel is synced
+            OnUpdate(inst)
+            inst.components.updatelooper:AddOnUpdateFn(OnUpdate)
         end)
     end
 end
@@ -109,6 +117,7 @@ end
 
 AddPrefabPostInit("snow", DisableParticlesInWinterlands)
 AddPrefabPostInit("rain", DisableParticlesInWinterlands)
+AddPrefabPostInit("pollen", DisableParticlesInWinterlands)
 
 local Moisture = require("components/moisture")
 local old_Moisture_GetMoistureRateAssumingRain = Moisture._GetMoistureRateAssumingRain
