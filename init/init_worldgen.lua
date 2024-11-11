@@ -1,6 +1,8 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+--	Adding island tasks
+
 require("map/tasks/polar")
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
 

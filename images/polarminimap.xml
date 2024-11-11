@@ -4,5 +4,6 @@
 		<Element name="pillar_polar.png" u1="0.001" u2="0.249" v2="0.999" v1="0.501" />
 		<Element name="pillar_polarcave.png" u1="0.251" u2="0.749" v2="0.999" v1="0.001" />
 		<Element name="polarbearhouse.png" u1="0.001" u2="0.249" v2="0.499" v1="0.001" />
+		<Element name="polarglobe.png" u1="0.751" u2="0.999" v2="0.999" v1="0.501" />
 	</Elements>
 </Atlas>

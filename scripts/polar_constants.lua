@@ -6,6 +6,8 @@ for k, v in pairs(POLAR_NAUGHTY_VALUE) do
 	NAUGHTY_VALUE[k] = v
 end
 
+FUELTYPE.DRYICE = "DRYICE"
+
 MATERIALS.DRYICE = "dryice"
 
 OCEAN_DEPTH.POLAR = 5

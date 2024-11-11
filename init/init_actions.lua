@@ -30,6 +30,18 @@ local POLARPLOW = PolarAction("POLARPLOW", {distance = 1, priority = 1})
 		end
 	end
 
+local TURNONSTR = ACTIONS.TURNON.stroverridefn
+	ACTIONS.TURNON.stroverridefn = function(act, ...)
+		local target = act.invobject or act.target
+		if target and target:HasTag("snowglobe") then
+			return STRINGS.ACTIONS.SNOWGLOBE
+		end
+		
+		if TURNONSTR then
+			return TURNONSTR(act, ...)
+		end
+	end
+
 --	Components, SGs
 
 AddComponentAction("POINT", "polarplower", function(inst, doer, pos, actions, right)
@@ -51,6 +63,15 @@ local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer
 			table.insert(actions, ACTIONS.REPAIR)
 		elseif oldrepairer then
 			oldrepairer(inst, doer, target, actions, ...)
+		end
+	end
+	
+local oldmachine = COMPONENT_ACTIONS.INVENTORY.machine
+	COMPONENT_ACTIONS.INVENTORY.machine = function(inst, doer, actions, right, ...)
+		if inst:HasTag("snowglobe") and not inst:HasTag("cooldown") and not inst:HasTag("fueldepleted") and inst:HasTag("enabled") then
+			table.insert(actions, inst:HasTag("turnedon") and ACTIONS.TURNOFF or ACTIONS.TURNON)
+		elseif oldmachine then
+			oldmachine(inst, doer, actions, right, ...)
 		end
 	end
 

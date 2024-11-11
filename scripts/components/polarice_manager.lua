@@ -219,7 +219,7 @@ return Class(function(self, inst)
 	inst:ListenForEvent("temperaturetick", function(inst, temp) _world_temperature = temp end)
 
     -- [ Methods ] --
-	local IGNORE_ICE_DROWNING_ONREMOVE_TAGS = { "ignorewalkableplatforms", "ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
+	local IGNORE_ICE_DROWNING_ONREMOVE_TAGS = {"ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
 	local FLOATEROBJECT_TAGS = { "floaterobject" }
 	function self:DestroyIceAtPoint(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, y, z)
@@ -335,16 +335,19 @@ return Class(function(self, inst)
 		if undertile then
 			current_tile = _map:GetTile(tx, ty)
 		end
-
+		
 		_map:SetTile(tx, ty, WORLD_TILES.POLAR_ICE)
-
+		
 		-- V2C: Because of a terraforming callback in farming_manager.lua, the undertile gets cleared during SetTile.
 		--      We can circumvent this for now by setting the undertile after SetTile.
 		if undertile and current_tile then
 			undertile:SetTileUnderneath(tx, ty, current_tile)
 		end
-
-		local x, _, z = _map:GetTileCenterPoint(tx, ty)
+		
+		local terraformer = SpawnPrefab("polarice_terraformer")
+		terraformer.Transform:SetPosition(x, 0, z)
+      
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
 		local center_position = Vector3(x, 0, z)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
 		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
@@ -387,18 +390,18 @@ return Class(function(self, inst)
 				local uprooted_kelp_plant = SpawnPrefab("bullkelp_root")
 				if uprooted_kelp_plant then
 					uprooted_kelp_plant.Transform:SetPosition(entx, enty, entz)
-					LaunchAway(uprooted_kelp_plant, center_position + Vector3(0.5*  math.random(), 0, 0.5 * math.random()))
+					LaunchAway(uprooted_kelp_plant, center_position + Vector3(0.5 * math.random(), 0, 0.5 * math.random()))
 				end
 
 				ent:Remove()
-			elseif ent.components.walkableplatform and ent.components.health then
-				ent.components.health:Kill()
+			elseif ent.components.workable and ent:GetCurrentPlatform() == nil and not TheWorld.Map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) then
+				ent.components.workable:Destroy(terraformer)
 			elseif ent.components.inventoryitem and ent.Physics then
 				LaunchAway(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
 			end
 		end
-
+		
 		local floaterobjects = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, FLOATEROBJECT_TAGS)
 		for _, floaterobject in ipairs(floaterobjects) do
 			if floaterobject.components.floater then

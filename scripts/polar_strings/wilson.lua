@@ -11,6 +11,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		"Hngh...",
 		"Huff...",
 	}
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Quakes and shivers- what just happened?!"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr...! This is snow joke!"
@@ -21,6 +22,9 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Plants
 	
 	--	Rocks and stones
+	DESCRIBE.POLAR_ICICLE = "It believe it moved just now."
+	DESCRIBE.POLAR_ICICLE_ROCK = "It did move."
+	DESCRIBE.ROCK_POLAR = "Gems fresh for harvest."
 	
 	--	Misc
 	
@@ -43,6 +47,11 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
 	--	Others
+	DESCRIBE.POLARGLOBE = {
+		GENERIC = "It's still going.",
+		INUSE = "Let's not do this again!",
+		REFUEL = "Where did the snow go?",
+	}
 	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
 	DESCRIBE.TURF_POLAR_DRYICE = "Hastily cobbled ice."
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."

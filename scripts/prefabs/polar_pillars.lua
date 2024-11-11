@@ -11,6 +11,54 @@ local function GetPolarMistRange(inst)
 	return math.random(4, 8)
 end
 
+local function OnSave(inst, data)
+	data.spawned_icicles = inst.spawned_icicles
+end
+
+local function OnLoad(inst, data)
+	if data then
+		inst.spawned_icicles = data.spawned_icicles
+	end
+end
+
+local ICICLE_AVOID_TAGS = {"bigicicle", "structure", "wall", "birdblocker"}
+
+local function NoIcicleInRange(pt)
+	return not TheWorld.Map:IsPointNearHole(pt) and #TheSim:FindEntities(pt.x, pt.y, pt.z, 9, nil, nil, ICICLE_AVOID_TAGS) == 0
+end
+
+local function GetSpawnPoint(inst)
+	local pt = inst:GetPosition()
+	local offset
+	local range = 4
+	
+	while offset == nil and range < TUNING.SHADE_POLAR_RANGE do
+		offset = FindWalkableOffset(pt, math.random() * TWOPI, range, 6, true, false, NoIcicleInRange)
+		range = range + 2
+	end
+	
+	if offset then
+		return pt + offset
+	end
+end
+
+local function OnInit(inst)
+	if not inst.spawned_icicles then
+		for i = 1, TUNING.POLAR_MAX_ICICLES do
+			local spawnpoint = inst.components.periodicspawner and inst.components.periodicspawner.getspawnpointfn(inst)
+			
+			if spawnpoint then
+				local icicle = SpawnPrefab("polar_icicle")
+				icicle.Transform:SetPosition(spawnpoint:Get())
+				icicle.stage = math.random(3)
+				
+			end
+		end
+		
+		inst.spawned_icicles = true
+	end
+end
+
 local function commonfn()
 	local inst = CreateEntity()
 	
@@ -53,6 +101,14 @@ local function shadefn()
 		return inst
 	end
 	
+	inst:AddComponent("periodicspawner")
+	inst.components.periodicspawner:SetRandomTimes(TUNING.POLAR_ICICLE_SPAWNTIME, 0)
+	inst.components.periodicspawner:SetPrefab("polar_icicle")
+	inst.components.periodicspawner:SetDensityInRange(TUNING.POLAR_MAX_ICICLES, TUNING.SHADE_POLAR_RANGE)
+	inst.components.periodicspawner:SetGetSpawnPointFn(GetSpawnPoint)
+	inst.components.periodicspawner:SetOnlySpawnOffscreen(true)
+	inst.components.periodicspawner:Start()
+	
 	inst:AddComponent("polarmistemitter")
 	inst.components.polarmistemitter:StartMisting()
 	inst.components.polarmistemitter.rate = 0.1
@@ -61,6 +117,11 @@ local function shadefn()
 	inst.components.polarmistemitter.speed = 0.6
 	inst.components.polarmistemitter.maxmist = 15
 	inst.components.polarmistemitter.maxmist_range = 8
+	
+	inst.OnSave = OnSave
+	inst.OnLoad = OnLoad
+	
+	inst:DoTaskInTime(0, OnInit)
 	
 	return inst
 end

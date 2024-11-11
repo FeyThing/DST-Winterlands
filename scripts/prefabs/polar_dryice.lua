@@ -79,6 +79,10 @@ local function fn()
 	inst.components.edible.temperaturedelta = TUNING.COLD_FOOD_BONUS_TEMP
 	inst.components.edible.temperatureduration = TUNING.FOOD_TEMP_LONG * 1.5
 	
+	inst:AddComponent("fuel")
+	inst.components.fuel.fuelvalue = TUNING.MED_FUEL
+	inst.components.fuel.fueltype = FUELTYPE.DRYICE
+	
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("inventoryitem")
