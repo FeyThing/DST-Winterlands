@@ -41,7 +41,7 @@ local function fn()
 	inst:AddComponent("colourtweener")
 	
 	inst.DoWaveFade = DoWaveFade
-	inst.OnEntitySleep = OnEntitySleep
+	--inst.OnEntitySleep = OnEntitySleep
 	
 	inst.persists = false
 	

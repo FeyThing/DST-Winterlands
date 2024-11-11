@@ -18,14 +18,14 @@ function SnowWaver:OnRemoveFromEntity()
 	self:StopWatchingWorldState("temperature", self.OnTemperatureChanged)
 end
 
-function SnowWaver:GetWavePosition(row, line, pt)
+function SnowWaver:GetWavePosition(row, line, pt, cx, cy, cz)
 	local x, y, z
 	
 	if pt then
 		x, y, z = pt:Get()
 	end
-	if z == nil then
-		x, y, z = TheWorld.Map:GetTileCenterPoint(TheCamera.currentpos:Get())
+	if z == nil and cz then
+		x, y, z = cx, cy, cz
 	end
 	
 	local row_x = -(self.lines / 2 * self.spacing_x) + (line - 1) * self.spacing_x
@@ -51,6 +51,7 @@ function SnowWaver:RemoveWaves()
 end
 
 function SnowWaver:SetWaves()
+	local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(TheCamera.currentpos:Get())
 	local i = 1
 	
 	for row = 1, self.rows do
@@ -58,7 +59,7 @@ function SnowWaver:SetWaves()
 			local id = tostring(i)
 			local wave = self.waves[id]
 			
-			local x, y, z, pt = self:GetWavePosition(row, line, self.waves_data[id])
+			local x, y, z, pt = self:GetWavePosition(row, line, self.waves_data[id], cx, cy, cz)
 			local insnow = TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
 			
 			if wave == nil and insnow then

@@ -11,6 +11,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		"M-must...defeat snow.",
 		"Brrr... ",
 	}
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Was sky always this blue?"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Ice hides inside Wolfgang's shoes."
@@ -21,6 +22,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	--	Plants
 	
 	--	Rocks and stones
+	DESCRIBE.POLAR_ICICLE = "Mmm? Must have been the wind."
+	DESCRIBE.POLAR_ICICLE_ROCK = "Came closer to say hello?"
+	DESCRIBE.ROCK_POLAR = "Too cold for lifting."
 	
 	--	Misc
 	
@@ -45,6 +49,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Mighty Hat!"
 	
 	--	Others
+	DESCRIBE.POLARGLOBE = {
+		GENERIC = "Reminds Wolfgang of home.",
+		INUSE = "Wolfgang shaked too hard?",
+		REFUEL = "Is only strange globe.",
+	}
 	DESCRIBE.TURF_POLAR_CAVES = "Cold step stones."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold step stones."
 	DESCRIBE.WALL_POLAR = "I see handsome man trapped inside!"

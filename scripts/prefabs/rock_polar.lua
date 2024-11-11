@@ -81,6 +81,7 @@ local function commonfn()
 	MakeObstaclePhysics(inst, 1.25)
 	
 	inst:AddTag("boulder")
+	inst:AddTag("icicleimmune")
 	
 	inst.AnimState:SetBank("polar_rocks")
 	inst.AnimState:SetBuild("polar_rocks")

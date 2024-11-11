@@ -1,5 +1,6 @@
 PrefabFiles = {
 	"polar_dryice",
+	"polar_icicles",
 	"polar_mist",
 	"polar_penguin",
 	"polar_pillars",
@@ -8,6 +9,8 @@ PrefabFiles = {
 	"polarbearfur",
 	"polarbearhouse",
 	"polarbuffs",
+	"polarglobe",
+	"polarice_terraformer",
 	"polarmoosehat",
 	"rock_polar",
 	"shadowcreature_polar",

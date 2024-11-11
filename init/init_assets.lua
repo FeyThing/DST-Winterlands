@@ -42,6 +42,7 @@ local ITEMS = {
 	"polar_dryice",
 	"polarbearfur",
 	"polarbearhouse",
+	"polarglobe",
 	"polarmoosehat",
 	"turf_polar_caves",
 	"turf_polar_dryice",

@@ -6,6 +6,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Plants
 	
 	--	Rocks and stones
+	NAMES.POLAR_ICICLE = "Icicle"
+	NAMES.POLAR_ICICLE_ROCK = "Icicle"
 	NAMES.POLAR_ROCK = "Ice Protuberance"
 	
 	--	Misc
@@ -31,6 +33,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARMOOSEHAT = "Moose Ushanka"
 	
 	--	Others
+	NAMES.POLARGLOBE = "Strange Snowglobe"
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"
 	NAMES.TURF_POLAR_DRYICE = "Cobbled Dry Ice"
 	NAMES.WALL_POLAR = "Dry Ice Wall"
@@ -93,7 +96,6 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Princess",
 		"Snowflake",
 		"Sugarbean",
-		"Cookie",
 		--	warriors
 		"Alfonso",
 		"Alexander",
@@ -103,14 +105,6 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Koa",
 		"Ragnar",
 		"Viggo",
-		--  others
-		"Feng Min",
-		"Laser",
-		"Deyr",
-		"Otog",
-		"Iggy",
-		"Crimson",
-		"Mustafa",
 	}
 	
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!"}
@@ -122,6 +116,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Actions
 	STRINGS.ACTIONS.POLARPLOW = "Plow"
+	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	
 	--	Scrapbook, Cookbook
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."

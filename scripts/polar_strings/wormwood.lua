@@ -11,16 +11,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		"Cold! Cold!",
 		"Not like cold!",
 	}
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Oww oow oww!"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Noo! Cold!"
-	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Dry"
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Ahhh. Snow is all gone"
 	
 --	Worldgen
 	
 	--	Plants
 	
 	--	Rocks and stones
+	DESCRIBE.POLAR_ICICLE = "Growing?"
+	DESCRIBE.POLAR_ICICLE_ROCK = "Big fall"
+	DESCRIBE.ROCK_POLAR = "Cold Shiny trapped in ice? How?"
 	
 	--	Misc
 	
@@ -43,6 +47,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Axe friend?"
 	
 	--	Others
+	DESCRIBE.POLARGLOBE = {
+		GENERIC = "Hmm... Someone touched?",
+		INUSE = "No no no. Go back inside!",
+		REFUEL = "Finally sleeping?",
+	}
 	DESCRIBE.TURF_POLAR_CAVES = "Ice"
 	DESCRIBE.TURF_POLAR_DRYICE = "Ice"
 	DESCRIBE.WALL_POLAR = "Slippery"

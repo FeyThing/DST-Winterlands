@@ -175,7 +175,7 @@ return Class(function(self, inst)
 	inst:ListenForEvent("temperaturetick", function(inst, temp) _world_temperature = temp end)
 
     -- [ Methods ] --
-	local IGNORE_ICE_DROWNING_ONREMOVE_TAGS = { "ignorewalkableplatforms", "ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
+	local IGNORE_ICE_DROWNING_ONREMOVE_TAGS = {"ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
 	local FLOATEROBJECT_TAGS = { "floaterobject" }
 	function self:DestroyIceAtPoint(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, y, z)
@@ -271,70 +271,32 @@ return Class(function(self, inst)
 		if undertile then
 			current_tile = _map:GetTile(tx, ty)
 		end
-
-		_map:SetTile(tx, ty, WORLD_TILES.POLAR_ICE)
-
-		-- V2C: Because of a terraforming callback in farming_manager.lua, the undertile gets cleared during SetTile.
-		--      We can circumvent this for now by setting the undertile after SetTile.
-		if undertile and current_tile then
-			undertile:SetTileUnderneath(tx, ty, current_tile)
-		end
-
-		local x, _, z = _map:GetTileCenterPoint(tx, ty)
+		
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
 		local center_position = Vector3(x, 0, z)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
 		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
+		
+		local terraformer = SpawnPrefab("polarice_terraformer")
+		terraformer.Transform:SetPosition(x, 0, z)
+		
 		for _, ent in ipairs(entities_near_ice) do
-			if ent.components.oceanfishable then
-				local projectile = ent.components.oceanfishable:MakeProjectile()
-				local projectile_complexprojectile = projectile.components.complexprojectile
-				if projectile_complexprojectile then
-					projectile_complexprojectile:SetHorizontalSpeed(16)
-					projectile_complexprojectile:SetGravity(-30)
-					projectile_complexprojectile:SetLaunchOffset(Vector3(0, 0.5, 0))
-					projectile_complexprojectile:SetTargetOffset(Vector3(0, 0.5, 0))
-
-					local v_position = ent:GetPosition()
-					local launch_position = v_position + (v_position - center_position):Normalize() * SPEED
-					projectile_complexprojectile:Launch(launch_position, projectile, projectile_complexprojectile.owningweapon)
-				else
-					launch_away(projectile, center_position)
-				end
-			elseif ent.prefab == "bullkelp_plant" then
-				local entx, enty, entz = ent.Transform:GetWorldPosition()
-
-				if ent.components.pickable and ent.components.pickable:CanBePicked() then
-					local product = ent.components.pickable.product
-					local loot = SpawnPrefab(product)
-					if loot then
-						loot.Transform:SetPosition(entx, enty, entz)
-						if loot.components.inventoryitem then
-							loot.components.inventoryitem:InheritWorldWetnessAtTarget(ent)
-						end
-
-						if loot.components.stackable and ent.components.pickable.numtoharvest > 1 then
-							loot.components.stackable:SetStackSize(ent.components.pickable.numtoharvest)
-						end
-
-						launch_away(loot, center_position)
-					end
-				end
-
-				local uprooted_kelp_plant = SpawnPrefab("bullkelp_root")
-				if uprooted_kelp_plant then
-					uprooted_kelp_plant.Transform:SetPosition(entx, enty, entz)
-					launch_away(uprooted_kelp_plant, center_position + Vector3(0.5*  math.random(), 0, 0.5 * math.random()))
-				end
-
-				ent:Remove()
-			elseif ent.prefab == "wobster_den" then
-				ent:Remove()
+			if ent.components.workable and ent:GetCurrentPlatform() == nil and not TheWorld.Map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) then
+				ent.components.workable:Destroy(terraformer)
 			elseif ent.components.inventoryitem and ent.Physics then
 				launch_away(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
 			end
 		end
-
+		
+		_map:SetTile(tx, ty, WORLD_TILES.POLAR_ICE)
+		
+		-- V2C: Because of a terraforming callback in farming_manager.lua, the undertile gets cleared during SetTile.
+		--      We can circumvent this for now by setting the undertile after SetTile.
+		if undertile and current_tile then
+			undertile:SetTileUnderneath(tx, ty, current_tile)
+		end
+		
 		local floaterobjects = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, FLOATEROBJECT_TAGS)
 		for _, floaterobject in ipairs(floaterobjects) do
 			if floaterobject.components.floater then
