@@ -21,7 +21,7 @@ return Class(function(self, inst)
 	local _icebasestrengthgrid -- Stores [0 - 1] values defining the base strength of ice tiles in the world
 	local _gradient_indeces = {  } -- Indeces for the next iteration of the gradient
 	local _world_temperature = TUNING.STARTING_TEMP
-	
+
 	local _icecurrentstrengthgrid -- Stores [0 - 1] values defining the current strength of ice tiles
 
 	local _createicetasks = {  }
@@ -58,6 +58,26 @@ return Class(function(self, inst)
 		spawnfx(cx, cz, 50 + math.random() * 80)
 	end
 
+	local function TossDebris(debris_prefab, dx, dz)
+		local ice_debris = SpawnPrefab(debris_prefab)
+		ice_debris.Physics:Teleport(dx, 0.1, dz)
+
+		local debris_angle = TWOPI*math.random()
+		local debris_speed = 2.5 + 2*math.random()
+		ice_debris.Physics:SetVel(debris_speed * math.cos(debris_angle), 10, debris_speed * math.sin(debris_angle))
+	end
+
+	local function SpawnDegradePiece(center_x, center_z, spawn_angle)
+		spawn_angle = spawn_angle or TWOPI*math.random()
+
+		local ice_degrade_fx = SpawnPrefab("degrade_fx_ice")
+		local spawn_offset = TUNING.OCEAN_ICE_RADIUS * (0.4 + 0.65 * math.sqrt(math.random()))
+
+		center_x = center_x + (spawn_offset * math.cos(spawn_angle))
+		center_z = center_z + (spawn_offset * math.sin(spawn_angle))
+		ice_degrade_fx.Transform:SetPosition(center_x, 0, center_z)
+	end
+
 	local function QueueCreateIceAtTile(tx, ty)
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 		
@@ -68,9 +88,6 @@ return Class(function(self, inst)
 		if _createicetasks[index] == nil and _destroyicetasks[index] == nil then
 			_createicetasks[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
 				self:CreateIceAtTile(tx, ty)
-				_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
-					_recently_updated_tiles[index] = nil
-				end)
 				_createicetasks[index] = nil
 			end)
 		end
@@ -90,10 +107,6 @@ return Class(function(self, inst)
 				inst:DoTaskInTime(3.5, function()
 					self:DestroyIceAtTile(tx, ty)
 					RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
-
-					_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
-						_recently_updated_tiles[index] = nil
-					end)
 					_destroyicetasks[index] = nil
 				end)
 			end)
@@ -149,7 +162,7 @@ return Class(function(self, inst)
 
 	local INITIAL_LAUNCH_HEIGHT = 0.1
 	local SPEED = 6
-	local function launch_away(item, position)
+	local function LaunchAway(item, position)
 		local ix, iy, iz = item.Transform:GetWorldPosition()
 		item.Physics:Teleport(ix, iy + INITIAL_LAUNCH_HEIGHT, iz)
 	
@@ -162,7 +175,7 @@ return Class(function(self, inst)
 
 		item.Physics:SetVel(SPEED * cosa, 2 + SPEED, SPEED * sina)
 	end
-	
+
 	local DoUpdate
 	local function Reschedule(time)
 		if _update_task then
@@ -213,15 +226,15 @@ return Class(function(self, inst)
 		self:DestroyIceAtTile(tx, ty)
 	end
 
-	function self:DestroyIceAtTile(tx, ty)
+	function self:DestroyIceAtTile(tx, ty, spawnloot)
 		local tile = _map:GetTile(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE then
 			return
 		end
-	
+
 		local old_tile = WORLD_TILES.OCEAN_SWELL
 		local undertile = inst.components.undertile
-	
+
 		if undertile then
 			old_tile = undertile:GetTileUnderneath(tx, ty)
 			if old_tile then
@@ -245,12 +258,12 @@ return Class(function(self, inst)
 				end
 			end
 		end
-	
+
 		_map:SetTile(tx, ty, old_tile)
-	
+
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1.0) * 1.4142
 		local is_ocean_tile = IsOceanTile(old_tile)
-	
+
 		if is_ocean_tile then
 			-- Behaviour pulled from walkableplatform's onremove/DestroyObjectsOnPlatform response.
 			local entities_near_ice = TheSim:FindEntities(dx, dy, dz, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
@@ -275,7 +288,7 @@ return Class(function(self, inst)
 				end
 			end
 		end
-	
+
 		local floaterobjects = TheSim:FindEntities(dx, 0, dz, tile_radius_plus_overhang, FLOATEROBJECT_TAGS)
 		for _, floaterobject in ipairs(floaterobjects) do
 			if floaterobject.components.floater then
@@ -288,7 +301,27 @@ return Class(function(self, inst)
 			end
 		end
 
+		if spawnloot then -- Aka wasn't melted away but rammed into
+			TossDebris("ice", dx, dz)
+
+			if math.random() > 0.40 then
+				TossDebris("ice", dx, dz)
+			end
+
+			local half_num_debris = 4
+			local angle_per_debris = TWOPI / half_num_debris
+			for i = 1, half_num_debris do
+				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
+				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
+			end
+		end
+
 		SpawnPrefab("fx_ice_pop").Transform:SetPosition(dx, 0, dz)
+
+		local index = _icebasestrengthgrid:GetIndex(tx, ty)
+		_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
+			_recently_updated_tiles[index] = nil
+		end)
 	end
 
 	function self:CreateIceAtPoint(x, y, z)
@@ -329,7 +362,7 @@ return Class(function(self, inst)
 					local launch_position = v_position + (v_position - center_position):Normalize() * SPEED
 					projectile_complexprojectile:Launch(launch_position, projectile, projectile_complexprojectile.owningweapon)
 				else
-					launch_away(projectile, center_position)
+					LaunchAway(projectile, center_position)
 				end
 			elseif ent.prefab == "bullkelp_plant" then
 				local entx, enty, entz = ent.Transform:GetWorldPosition()
@@ -347,21 +380,21 @@ return Class(function(self, inst)
 							loot.components.stackable:SetStackSize(ent.components.pickable.numtoharvest)
 						end
 
-						launch_away(loot, center_position)
+						LaunchAway(loot, center_position)
 					end
 				end
 
 				local uprooted_kelp_plant = SpawnPrefab("bullkelp_root")
 				if uprooted_kelp_plant then
 					uprooted_kelp_plant.Transform:SetPosition(entx, enty, entz)
-					launch_away(uprooted_kelp_plant, center_position + Vector3(0.5*  math.random(), 0, 0.5 * math.random()))
+					LaunchAway(uprooted_kelp_plant, center_position + Vector3(0.5*  math.random(), 0, 0.5 * math.random()))
 				end
 
 				ent:Remove()
 			elseif ent.components.walkableplatform and ent.components.health then
 				ent.components.health:Kill()
 			elseif ent.components.inventoryitem and ent.Physics then
-				launch_away(ent)
+				LaunchAway(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
 			end
 		end
@@ -377,6 +410,11 @@ return Class(function(self, inst)
 				end
 			end
 		end
+
+		local index = _icebasestrengthgrid:GetIndex(tx, ty)
+		_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
+			_recently_updated_tiles[index] = nil
+		end)
 	end
 
 	function self:GetBaseAtPoint(x, y, z)
