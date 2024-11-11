@@ -343,11 +343,12 @@ return Class(function(self, inst)
 		if undertile and current_tile then
 			undertile:SetTileUnderneath(tx, ty, current_tile)
 		end
-		
+
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
+
 		local terraformer = SpawnPrefab("polarice_terraformer")
 		terraformer.Transform:SetPosition(x, 0, z)
-      
-		local x, y, z = _map:GetTileCenterPoint(tx, ty)
+		
 		local center_position = Vector3(x, 0, z)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
 		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
