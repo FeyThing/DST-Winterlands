@@ -21,7 +21,7 @@ local function OnLoad(inst, data)
 	end
 end
 
-local ICICLE_AVOID_TAGS = {"bigicicle", "structure", "wall", "birdblocker"}
+local ICICLE_AVOID_TAGS = {"bigicicle", "birdblocker", "HAMMER_workable", "structure", "wall"}
 
 local function NoIcicleInRange(pt)
 	return not TheWorld.Map:IsPointNearHole(pt) and #TheSim:FindEntities(pt.x, pt.y, pt.z, 9, nil, nil, ICICLE_AVOID_TAGS) == 0
@@ -59,6 +59,38 @@ local function OnInit(inst)
 	end
 end
 
+local RAINPROTECT_TAGS = {"inspectable"}
+local RAINPROTECT_NOT_TAGS = {"INLIMBO"}
+
+local function DoRainProtection(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local ents = TheSim:FindEntities(x, y, z, inst.rainprotect_rad, RAINPROTECT_TAGS, RAINPROTECT_NOT_TAGS)
+
+	local oldtargets = inst.rainprotected
+	local newtargets = {}
+	
+	for i, target in ipairs(ents) do
+		if oldtargets[target] then
+			oldtargets[target] = nil
+		else
+			if not target.components.rainimmunity then
+				target:AddComponent("rainimmunity")
+			end
+			target.components.rainimmunity:AddSource(inst)
+		end
+		
+		newtargets[target] = true
+	end
+	
+	for target in pairs(oldtargets) do
+		if target:IsValid() and target.components.rainimmunity then
+			target.components.rainimmunity:RemoveSource(inst)
+		end
+	end
+	
+	inst.rainprotected = newtargets
+end
+
 local function commonfn()
 	local inst = CreateEntity()
 	
@@ -88,11 +120,15 @@ local function shadefn()
 	inst.AnimState:SetBuild("pillar_icecave")
 	inst.AnimState:PlayAnimation("idle")
 	
+	inst:AddTag("icecaveshelter")
+	
 	inst.MiniMapEntity:SetIcon("pillar_polarcave.png")
+	
+	inst.rainprotect_rad = TUNING.SHADE_POLAR_RANGE
 	
 	if not TheNet:IsDedicated() then
 		inst:AddComponent("distancefade")
-		inst.components.distancefade:Setup(15, 25)
+		inst.components.distancefade:Setup(TUNING.SHADE_POLAR_RANGE, TUNING.SHADE_POLAR_RANGE * 2)
 		
 		inst:AddComponent("polarcaveshade")
 	end
@@ -100,6 +136,8 @@ local function shadefn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst.rainprotected = {}
 	
 	inst:AddComponent("periodicspawner")
 	inst.components.periodicspawner:SetRandomTimes(TUNING.POLAR_ICICLE_SPAWNTIME, 0)
@@ -118,10 +156,13 @@ local function shadefn()
 	inst.components.polarmistemitter.maxmist = 15
 	inst.components.polarmistemitter.maxmist_range = 8
 	
+	inst.DoRainProtection = DoRainProtection
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	
 	inst:DoTaskInTime(0, OnInit)
+	
+	inst._rainprottask = inst:DoPeriodicTask(0.25, inst.DoRainProtection)
 	
 	return inst
 end

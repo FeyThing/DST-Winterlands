@@ -4,83 +4,118 @@ local SnowWaver = Class(function(self, inst)
 	self.enabled = false
 	self.lines = 30
 	self.rows = 30
-	self.spacing_x = 2.5
-	self.spacing_y = 2.5
+	self.spacing_x = TILE_SCALE
+	self.spacing_y = TILE_SCALE
 	
 	self.waves = {}
-	self.waves_data = {}
+	self.waves_positions = {}
+	self.last_tile = {}
 	
-	self:WatchWorldState("temperature", self.OnTemperatureChanged)
-	self:OnTemperatureChanged(TheWorld.state.temperature)
+	--self:WatchWorldState("temperature", self.OnTemperatureChanged)
+	--self:OnTemperatureChanged(TheWorld.state.temperature)
 end)
 
 function SnowWaver:OnRemoveFromEntity()
-	self:StopWatchingWorldState("temperature", self.OnTemperatureChanged)
+	--self:StopWatchingWorldState("temperature", self.OnTemperatureChanged)
 end
 
-function SnowWaver:GetWavePosition(row, line, pt, cx, cy, cz)
-	local x, y, z
+function SnowWaver:GetWavePosition(row, line, x, y, z)
+	local row_x = -((self.lines - 1) * self.spacing_x) / 2 + (line - 1) * self.spacing_x
+	local row_z = -((self.rows - 1) * self.spacing_y) / 2 + (row - 1) * self.spacing_y
 	
-	if pt then
-		x, y, z = pt:Get()
-	end
-	if z == nil and cz then
-		x, y, z = cx, cy, cz
-	end
-	
-	local row_x = -(self.lines / 2 * self.spacing_x) + (line - 1) * self.spacing_x
-	local row_z = -(self.rows / 2 * self.spacing_y) + (row - 1) * self.spacing_y - 1
-	
-	local heading = math.rad(TheCamera:GetHeadingTarget()) -- GetHeading would be smoother but causes bigger fps drop, so maybe after some optimization
+	local heading = math.rad(TheCamera:GetHeadingTarget())
 	local heading_cos = math.cos(heading)
 	local heading_sin = math.sin(heading)
 	
 	local rotated_x = row_x * heading_cos - row_z * heading_sin
 	local rotated_z = row_x * heading_sin + row_z * heading_cos
 	
-	return x + rotated_x, 0, z + rotated_z, Vector3(x, y, z)
+	return Vector3(x + rotated_x, 0, z + rotated_z)
+end
+
+function SnowWaver:GetWaveRefreshPosition(positions)
+	for str, pt in pairs(positions) do
+		return pt, str
+	end
 end
 
 function SnowWaver:RemoveWaves()
 	for k, wave in pairs(self.waves) do
-		wave:Remove()
+		if wave:IsValid() then
+			wave:Remove()
+		end
 	end
 	
 	self.waves = {}
-	self.waves_data = {}
+	self.waves_positions = {}
+	self.last_tile = {}
 end
 
 function SnowWaver:SetWaves()
 	local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(TheCamera.currentpos:Get())
-	local i = 1
+	local tile_x, tile_y = TheWorld.Map:GetTileCoordsAtPoint(cx, cy, cz)
 	
-	for row = 1, self.rows do
-		for line = 1, self.lines do
-			local id = tostring(i)
-			local wave = self.waves[id]
-			
-			local x, y, z, pt = self:GetWavePosition(row, line, self.waves_data[id], cx, cy, cz)
-			local insnow = TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
-			
-			if wave == nil and insnow then
-				wave = SpawnPrefab("snowwave")
-				wave._id = id
+	if TheCamera:GetHeadingTarget() ~= TheCamera:GetHeading() or tile_x ~= self.last_tile[1] or tile_y ~= self.last_tile[2] then
+		local valid_positions = {}
+		local i = 1
+		
+		for row = 1, self.rows do
+			for line = 1, self.lines do
+				local id = tostring(i)
+				local pt = self:GetWavePosition(row, line, cx, cy, cz)
 				
-				wave:DoWaveFade()
-			end
-			
-			if wave and wave:IsValid() and insnow then
-				wave.Transform:SetPosition(x, y, z)
-				self.waves[id] = wave
-				self.waves_data[id] = pt
-			else
-				if wave and wave:IsValid() then
-					wave:DoWaveFade(true)
+				if self.waves_positions[id] == nil then
+					self.waves_positions[id] = pt
 				end
+				
+				local pos_str = string.format("%.2f_%.2f", pt.x, pt.z)
+				valid_positions[pos_str] = pt
+				i = i + 1
 			end
-			
-			i = i + 1
 		end
+		
+		for id, pt in pairs(self.waves_positions) do
+			local pos_str = string.format("%.2f_%.2f", pt.x, pt.z)
+			
+			if not valid_positions[pos_str] then
+				local wave = self.waves[id]
+				if wave and wave:IsValid() then
+					wave:Remove()
+				end
+				
+				self.waves[id] = nil
+				self.waves_positions[id] = nil
+			else
+				valid_positions[pos_str] = nil
+			end
+		end
+		
+		i = 1
+		for row = 1, self.rows do
+			for line = 1, self.lines do
+				local id = tostring(i)
+				local pt = self.waves_positions[id]
+				
+				if pt == nil then
+					local str
+					pt, str = self:GetWaveRefreshPosition(valid_positions)
+					valid_positions[str] = nil
+				end
+				
+				local wave = self.waves[id]
+				
+				if not wave then
+					wave = SpawnPrefab("snowwave")
+					wave:DoWaveFade()
+					self.waves[id] = wave
+				end
+				
+				wave.Transform:SetPosition(pt.x, pt.y, pt.z)
+				i = i + 1
+			end
+		end
+		
+		self.last_tile = {tile_x, tile_y}
 	end
 end
 

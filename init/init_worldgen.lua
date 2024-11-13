@@ -1,8 +1,6 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
---	Adding island tasks
-
 require("map/tasks/polar")
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
 
@@ -11,5 +9,7 @@ ENV.AddTaskSetPreInitAny(function(self)
 		for i, v in ipairs(polar_tasks) do
 			table.insert(self.tasks, v)
 		end	
+		
+		self.set_pieces["IcicleSkeleton"] = {count = 1, tasks = {"Polar Caves"}}
 	end
 end)

@@ -24,7 +24,7 @@ ShadeRenderer:SetShadeTranslationSpeed(ShadeTypes.PolarCaveShade, 0)
 ShadeRenderer:SetShadeTexture(ShadeTypes.PolarCaveShade, resolvefilepath("images/polarpillar.tex"))
 
 function SpawnPolarCaveShade(x, z)
-	return ShadeRenderer:SpawnShade(ShadeTypes.PolarCaveShade, x, z, math.random() * 360, TUNING.CANOPY_SCALE)
+	return ShadeRenderer:SpawnShade(ShadeTypes.PolarCaveShade, x, z, math.random() * 360, TUNING.SHADE_POLAR_SCALE)
 end
 
 function DespawnPolarCaveShade(id)

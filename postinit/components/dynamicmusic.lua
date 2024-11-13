@@ -34,7 +34,7 @@ ENV.AddComponentPostInit("dynamicmusic", function(self)
 			
 			if isplaying then
 				TheFocalPoint.SoundEmitter:PlaySound(SEASON_BUSY_MUSIC[TheWorld.state.season] or SEASON_BUSY_MUSIC["autumn"], "busy")
-				TheFocalPoint.SoundEmitter:SetParameter("busy", "intensity", 1)
+				--TheFocalPoint.SoundEmitter:SetParameter("busy", "intensity", 1)
 			end
 			self._polar = setpolar
 		end

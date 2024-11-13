@@ -6,18 +6,10 @@ local SNOWWAVE_VARS = 4
 
 local function DoWaveFade(inst, out)
 	if out then
-		if ThePlayer and ThePlayer.components.snowwaver then
-			ThePlayer.components.snowwaver.waves[inst._id] = nil
-			ThePlayer.components.snowwaver.waves_data[inst._id] = nil
-		end
 		inst.components.colourtweener:StartTween({1, 1, 1, 0}, 0.3, inst.Remove)
 	else
 		inst.components.colourtweener:StartTween({1, 1, 1, 1}, 0.3)
 	end
-end
-
-local function OnEntitySleep(inst)
-	inst:DoWaveFade(true)
 end
 
 local function fn()
@@ -41,7 +33,6 @@ local function fn()
 	inst:AddComponent("colourtweener")
 	
 	inst.DoWaveFade = DoWaveFade
-	--inst.OnEntitySleep = OnEntitySleep
 	
 	inst.persists = false
 	

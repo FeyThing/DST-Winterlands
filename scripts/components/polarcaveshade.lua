@@ -11,7 +11,7 @@ end
 local PolarCaveShade = Class(function(self, inst)
 	self.inst = inst
 	
-	self.range = TUNING.SHADE_POLAR_RANGE
+	self.range = TUNING.SHADE_POLAR_RANGE / 4
 	
 	self.PolarCaveShade_positions = {}
 	self.spawned = false

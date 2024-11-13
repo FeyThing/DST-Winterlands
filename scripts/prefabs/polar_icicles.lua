@@ -53,7 +53,7 @@ local function DoGrow(inst, breaking)
 	inst.DynamicShadow:SetSize(0.5 + inst.stage, 1)
 	
 	if breaking then
-		for i = 1, math.random(4) do
+		for i = 1, math.random(2, 4) do
 			inst.AnimState:PushAnimation("shake_"..anim, false)
 		end
 		inst.AnimState:PushAnimation("fall_"..anim, false)
@@ -99,7 +99,11 @@ local function OnTimerDone(inst, data)
 		
 		if not break_early then
 			local maxed = inst.stage >= #ICICLE_STAGES
-			inst.components.timer:StartTimer(maxed and "break_icicle" or "grow_icicle", inst:GetGrowTime(maxed))
+			local timer = maxed and "break_icicle" or "grow_icicle"
+			
+			if not inst.components.timer:TimerExists(timer) then
+				inst.components.timer:StartTimer(timer, inst:GetGrowTime(maxed))
+			end
 		end
 	elseif data.name == "break_icicle" then
 		inst:DoGrow(true)
@@ -146,6 +150,9 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	
+	local scale = math.random() > 0.5 and 1 or -1
+	inst.AnimState:SetScale(scale, 1)
+	
 	inst:DoTaskInTime(0, OnInit)
 	
 	inst:ListenForEvent("timerdone", OnTimerDone)
@@ -185,6 +192,7 @@ local function rock()
 	inst.AnimState:SetBank("icicle_rock")
 	inst.AnimState:SetBuild("icicle_rock")
 	inst.AnimState:PlayAnimation("full")
+	inst.AnimState:SetFinalOffset(-2)
 	
 	MakeObstaclePhysics(inst, 0.3)
 	
@@ -208,6 +216,9 @@ local function rock()
 	inst.components.workable:SetWorkLeft(TUNING.POLAR_ICICLE_MINE)
 	inst.components.workable:SetOnWorkCallback(OnWork)
 	inst.components.workable.savestate = true
+	
+	local scale = math.random() > 0.5 and 1 or -1
+	inst.AnimState:SetScale(scale, 1)
 	
 	inst:DoTaskInTime(0, UpdateAnim)
 	

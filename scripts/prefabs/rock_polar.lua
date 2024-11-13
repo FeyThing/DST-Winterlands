@@ -114,11 +114,11 @@ local function commonfn()
 	
 	MakeSnowCovered(inst)
 	
-	--[[local color = 1 - (math.random() * 0.2)
+	local color = 1 - (math.random() * 0.2)
 	inst.AnimState:SetMultColour(color, color, color, 1)
 	
 	local scale = math.random() > 0.5 and 1.75 or -1.75
-	inst.AnimState:SetScale(scale, 1.75)]]
+	inst.AnimState:SetScale(scale, 1.75)
 	
 	inst:DoTaskInTime(0, function() UpdateVariation(inst, math.random(NUM_VARIATIONS)) end)
 	
