@@ -201,7 +201,12 @@ return Class(function(self, inst)
 		end
 	end
 
-	function self:QueueDestroyIceAtTile(tx, ty, force)
+	function self:QueueDestroyIceAtTile(tx, ty, force, spawnloot)
+		local tile = _map:GetTile(tx, ty)
+		if tile ~= WORLD_TILES.POLAR_ICE then
+			return
+		end
+		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 
 		if _recently_updated_tiles[index] ~= nil and not force then
@@ -214,7 +219,7 @@ return Class(function(self, inst)
 				SpawnCracks(_map:GetTileCenterPoint(tx, ty))
 
 				inst:DoTaskInTime(3.5, function()
-					self:DestroyIceAtTile(tx, ty)
+					self:DestroyIceAtTile(tx, ty, spawnloot)
 					RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
 					_destroyicetasks[index] = nil
 				end)
