@@ -78,41 +78,6 @@ return Class(function(self, inst)
 		ice_degrade_fx.Transform:SetPosition(center_x, 0, center_z)
 	end
 
-	local function QueueCreateIceAtTile(tx, ty)
-		local index = _icebasestrengthgrid:GetIndex(tx, ty)
-		
-		if _recently_updated_tiles[index] ~= nil then
-			return
-		end
-
-		if _createicetasks[index] == nil and _destroyicetasks[index] == nil then
-			_createicetasks[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
-				self:CreateIceAtTile(tx, ty)
-				_createicetasks[index] = nil
-			end)
-		end
-	end
-
-	local function QueueDestroyIceAtTile(tx, ty)
-		local index = _icebasestrengthgrid:GetIndex(tx, ty)
-
-		if _recently_updated_tiles[index] ~= nil then
-			return
-		end
-
-		if _destroyicetasks[index] == nil and _createicetasks[index] == nil then
-			_destroyicetasks[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
-				SpawnCracks(_map:GetTileCenterPoint(tx, ty))
-
-				inst:DoTaskInTime(3.5, function()
-					self:DestroyIceAtTile(tx, ty)
-					RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
-					_destroyicetasks[index] = nil
-				end)
-			end)
-		end
-	end
-
 	local function SetBaseIceStrength(index, strength)
 		if 0 <= index and index < WIDTH*HEIGHT then
 			_icebasestrengthgrid:SetDataAtIndex(index, math.clamp(strength, 0, 1))
@@ -126,9 +91,9 @@ return Class(function(self, inst)
 			local tx, ty = _icecurrentstrengthgrid:GetXYFromIndex(index)
 			local x, y, z = _map:GetTileCenterPoint(tx, ty)
 			if strength >= 0.1 and _map:IsOceanTileAtPoint(x, y, z) then
-				QueueCreateIceAtTile(tx, ty)
+				self:QueueCreateIceAtTile(tx, ty)
 			elseif strength < 0.1 and _map:GetTile(tx, ty) == WORLD_TILES.POLAR_ICE then
-				QueueDestroyIceAtTile(tx, ty)
+				self:QueueDestroyIceAtTile(tx, ty)
 			end
 		end
 	end
@@ -219,6 +184,44 @@ return Class(function(self, inst)
 	inst:ListenForEvent("temperaturetick", function(inst, temp) _world_temperature = temp end)
 
     -- [ Methods ] --
+
+	function self:QueueCreateIceAtTile(tx, ty, force)
+		local index = _icebasestrengthgrid:GetIndex(tx, ty)
+		
+		if _recently_updated_tiles[index] ~= nil and not force then
+			return
+		end
+
+		if _createicetasks[index] == nil and _destroyicetasks[index] == nil then
+			local waittime = force and 0 or ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE
+			_createicetasks[index] = inst:DoTaskInTime(waittime, function()
+				self:CreateIceAtTile(tx, ty)
+				_createicetasks[index] = nil
+			end)
+		end
+	end
+
+	function self:QueueDestroyIceAtTile(tx, ty, force)
+		local index = _icebasestrengthgrid:GetIndex(tx, ty)
+
+		if _recently_updated_tiles[index] ~= nil and not force then
+			return
+		end
+
+		if _destroyicetasks[index] == nil and _createicetasks[index] == nil then
+			local waittime = force and 0 or ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE
+			_destroyicetasks[index] = inst:DoTaskInTime(waittime, function()
+				SpawnCracks(_map:GetTileCenterPoint(tx, ty))
+
+				inst:DoTaskInTime(3.5, function()
+					self:DestroyIceAtTile(tx, ty)
+					RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
+					_destroyicetasks[index] = nil
+				end)
+			end)
+		end
+	end
+
 	local IGNORE_ICE_DROWNING_ONREMOVE_TAGS = {"ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
 	local FLOATEROBJECT_TAGS = { "floaterobject" }
 	function self:DestroyIceAtPoint(x, y, z)
