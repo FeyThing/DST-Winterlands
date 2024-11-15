@@ -2,12 +2,15 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local POLAR_BUSY_MUSIC = "polarsounds/music/music_work"
+
 local SEASON_BUSY_MUSIC = {
 	autumn = "dontstarve/music/music_work",
 	winter = "dontstarve/music/music_work_winter",
 	spring = "dontstarve_DLC001/music/music_work_spring",
 	summer = "dontstarve_DLC001/music/music_work_summer",
 }
+
+--TODO: replace combat music to winter one(s, epic too) in here
 
 ENV.AddComponentPostInit("dynamicmusic", function(self)
 	function self:UpdatePolarMusic(self, ignore)

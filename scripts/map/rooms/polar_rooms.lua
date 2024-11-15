@@ -29,6 +29,7 @@ AddRoom("PolarIsland_Caves", {
 		},
 		countprefabs = {
 			rock2 = 1,
+			polar_icicle_rock = function() return math.random(3, 10) end,
 		},
 		
 		distributepercent = 0.12,
@@ -36,6 +37,10 @@ AddRoom("PolarIsland_Caves", {
 			rock_flintless = 1.5,
 			rock_ice = 1,
 			ice = 2,
+		},
+		
+		prefabdata = {
+			polar_icicle_rock = function() return {workable = {workleft = math.random(3)}} end,
 		},
 	}
 })

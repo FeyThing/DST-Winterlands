@@ -39,6 +39,7 @@ modimport("scripts/snowstorm")
 modimport("scripts/polarice")
 
 local prefabs = {
+	"bearger",
 	"birds",
 	"evergreen",
 	"flower",
@@ -55,6 +56,7 @@ local components = {
 	"ambientsound",
 	"dynamicmusic", -- : (
 	"explosive",
+	"groundpounder",
 	"map",
 	"moisture",
 	"pickable",
