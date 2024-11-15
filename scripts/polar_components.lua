@@ -1,9 +1,9 @@
 function IsInPolarAtPoint(x, y, z, range)
 	local node = TheWorld.Map:FindNodeAtPoint(x, y, z)
 	
-	if node == nil and (range == nil or range > 0) then
+	if node == nil and range and range > 0 then
 		local pt = Vector3(x, y, z)
-		local node_offset = FindValidPositionByFan(0, range or 12, 64, function(offset)
+		local node_offset = FindValidPositionByFan(0, range, 64, function(offset)
 			local _node = TheWorld.Map:FindNodeAtPoint((pt + offset):Get())
 			
 			return _node and _node.tags and table.contains(_node.tags, "polararea")
@@ -21,6 +21,37 @@ function IsInPolar(inst, range)
 	local x, y, z = inst.Transform:GetWorldPosition()
 
 	return IsInPolarAtPoint(x, y, z, range)
+end
+
+function GetClosestPolarTileToPoint(x, y, z, maxdist) -- LukaS: Kinda hacky but works well and doesn't brick your pc
+	if TheWorld.components.winterlands_manager == nil then
+		return
+	end
+
+	if IsInPolarAtPoint(x, y, z) then
+		return TheWorld.Map:GetTileAtPoint(x, y, z), 0
+	end
+
+	maxdist = maxdist or math.huge
+	local polartiles = TheWorld.components.winterlands_manager:GetGrid().grid
+	local mindist = math.huge
+	local tile
+
+	for i, ispolar in pairs(polartiles) do
+		if ispolar then
+			local tx, ty = TheWorld.components.winterlands_manager:GetGrid():GetXYFromIndex(i)
+			local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+			local dist = distsq(x, z, cx, cz)
+			if dist < mindist then
+				mindist = dist
+				tile = TheWorld.Map:GetTileAtPoint(cx, cy, cz)
+			end
+		end
+	end
+
+	if math.sqrt(mindist) <= maxdist then
+		return tile, math.sqrt(mindist)
+	end
 end
 
 function MakePolarCovered(inst, polar)

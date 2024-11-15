@@ -1,5 +1,5 @@
 local WIDTH, HEIGHT
-local MAX_GRADIENT_DEPTH = 6
+local MAX_GRADIENT_DEPTH = 8
 
 return Class(function(self, inst)
     assert(inst.ismastersim, "Snowstorm Manager should not exist on the client!")
@@ -11,8 +11,6 @@ return Class(function(self, inst)
 	local _map = inst.Map
 	local _snowstormgrid
 	local _gradient_indeces = {  } -- Indeces for the next iteration of the gradient
-
-	local wasloaded = false
 
 	-- [ Functions ] --
 	local function SetStormLevel(index, level)
@@ -30,10 +28,11 @@ return Class(function(self, inst)
 
 			for x = -1, 1 do
 				for y = -1, 1 do
-					local level = _snowstormgrid:GetDataAtPoint(ox + x, oy + y) or 0
+					local nx, ny = ox + x, oy + y
+					local level = self:GetDataAtTile(nx, ny)
 					if level == 0 then
-						_snowstormgrid:SetDataAtPoint(ox + x, oy + y, depth / MAX_GRADIENT_DEPTH) -- Linear falloff based on how far from the main island tile we are
-						table.insert(new_gradient_indeces, _snowstormgrid:GetIndex(ox + x, oy + y))
+						SetStormLevel(_snowstormgrid:GetIndex(nx, ny), depth / (MAX_GRADIENT_DEPTH + 1)) -- Linear falloff based on how far from the main island tile we are
+						table.insert(new_gradient_indeces, _snowstormgrid:GetIndex(nx, ny))
 					end
 				end
 			end
@@ -52,45 +51,29 @@ return Class(function(self, inst)
 		if _snowstormgrid then return end
 
 		WIDTH, HEIGHT = _map:GetSize()
-		_snowstormgrid = DataGrid(WIDTH, HEIGHT) -- This grid contains the snowstorm information
+		_snowstormgrid = DataGrid(WIDTH, HEIGHT)
 
-		inst:RemoveEventCallback("worldmapsetsize", InitializeDataGrids)
+		local polartiles = inst.components.winterlands_manager:GetGrid().grid
+		for i, ispolar in pairs(polartiles) do
+			if ispolar then
+				table.insert(_gradient_indeces, i)
+				SetStormLevel(i, 1)
+			end
+		end
+
+		GenerateSnowStormGradient(MAX_GRADIENT_DEPTH)
+
+		inst:RemoveEventCallback("winterlands_initialized", InitializeDataGrids)
 	end
 
-	inst:ListenForEvent("worldmapsetsize", InitializeDataGrids)
+	inst:ListenForEvent("winterlands_initialized", InitializeDataGrids)
 
     -- [ Methods ] --
-	function self:GetAtPoint(x, y, z)
+	function self:GetDataAtPoint(x, y, z)
 		return _snowstormgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
-	-- [ Saving/Loading ] --
-	function self:OnSave()
-		return ZipAndEncodeSaveData(_snowstormgrid:Save())
-	end
-
-	function self:OnLoad(data)
-		if data then
-			data = DecodeAndUnzipSaveData(data)
-			_snowstormgrid:Load(data)
-			wasloaded = true
-        elseif not wasloaded then -- If no saved data is being loaded, generate the default grid
-			for x = 0, WIDTH - 1 do
-				for y = 0, HEIGHT - 1 do
-					local index = _snowstormgrid:GetIndex(x, y)
-					local tx, ty, tz = _map:GetTileCenterPoint(x, y)
-					local level = 0
-	
-					if IsInPolarAtPoint(tx, ty, tz) then
-						level = 1
-						table.insert(_gradient_indeces, index)
-					end
-
-					SetStormLevel(index, level)
-				end
-			end
-
-			GenerateSnowStormGradient(MAX_GRADIENT_DEPTH)
-		end
+	function self:GetDataAtTile(tx, ty)
+		return _snowstormgrid:GetDataAtPoint(tx, ty) or 0
 	end
 end)

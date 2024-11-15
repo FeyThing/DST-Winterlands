@@ -91,7 +91,6 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_SLOWMULT = 0.5
 	TUNING.POLAR_SLOWTIME = 8
-	TUNING.POLAR_TEMPERATURES = {day = -20, dusk = -40, night = -80, ice = -30}
 	TUNING.POLAR_COVERTIME = {min = 3, max = 10}
 	
 	TUNING.POLARPLOW_BLOCKER_DURATION = total_day_time * 0.8

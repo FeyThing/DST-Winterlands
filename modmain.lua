@@ -35,8 +35,7 @@ for _, v in pairs(inits) do
 	modimport("init/"..v)
 end
 
-modimport("scripts/snowstorm")
-modimport("scripts/polarice")
+modimport("scripts/winterlands_tiles_manager")
 
 local prefabs = {
 	"bearger",
