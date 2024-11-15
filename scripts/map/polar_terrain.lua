@@ -14,20 +14,21 @@ end
 
 local polar_filters = {
 	pillar_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_SNOW}),
+	polar_icicle_rock = OnlyAllow({WORLD_TILES.POLAR_CAVES}),
 	polarbearhouse = OnlyAllow({WORLD_TILES.POLAR_DRYICE, WORLD_TILES.POLAR_ROCKY, WORLD_TILES.POLAR_SNOW}),
 }
 
 local polar_addedtiles = {
-	evergreen = {WORLD_TILES.POLAR_ICE},
-	evergreen_normal = {WORLD_TILES.POLAR_ICE},
-	evergreen_short = {WORLD_TILES.POLAR_ICE},
-	evergreen_tall = {WORLD_TILES.POLAR_ICE},
-	evergreen_sparse = {WORLD_TILES.POLAR_ICE},
-	evergreen_sparse_normal = {WORLD_TILES.POLAR_ICE},
-	evergreen_sparse_short = {WORLD_TILES.POLAR_ICE},
-	evergreen_sparse_tall = {WORLD_TILES.POLAR_ICE},
-	grass = {WORLD_TILES.POLAR_ICE},
-	marsh_tree = {WORLD_TILES.POLAR_ICE},
+	evergreen = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_normal = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_short = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_tall = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_sparse = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_sparse_normal = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_sparse_short = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	evergreen_sparse_tall = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	grass = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	marsh_tree = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
 	marsh_bush = {WORLD_TILES.POLAR_ICE},
 	rock1 = {WORLD_TILES.POLAR_ICE},
 	rock2 = {WORLD_TILES.POLAR_ICE},

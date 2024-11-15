@@ -1,5 +1,7 @@
 local assets = {
 	Asset("ANIM", "anim/polarbear_build.zip"),
+	Asset("ANIM", "anim/polarbear_anims.zip"),
+	
 	Asset("ANIM", "anim/ds_pig_basic.zip"),
 	Asset("ANIM", "anim/ds_pig_actions.zip"),
 	Asset("ANIM", "anim/ds_pig_attacks.zip"),
@@ -11,11 +13,15 @@ local prefabs = {
 }
 
 local sounds = {
-	attack = "dontstarve/creatures/merm/attack",
-	hit = "dontstarve/creatures/merm/hurt",
-	death = "dontstarve/creatures/merm/death",
-	talk = "dontstarve/characters/wurt/merm/warrior/talk",
-	buff = "dontstarve/characters/wurt/merm/warrior/yell",
+	attack = "polarsounds/polarbear/atk",
+	bite = "polarsounds/polarbear/bite",
+	bite_snap = "polarsounds/polarbear/bite_snap",
+	hit = "polarsounds/polarbear/hit",
+	death = "polarsounds/polarbear/death",
+	growl = "polarsounds/polarbear/growl",
+	chew = "polarsounds/polarbear/chew",
+	eat = "polarsounds/polarbear/eat",
+	talk = "polarsounds/polarbear/sniff",
 }
 
 local polarbear_brain = require("brains/polarbearbrain")
@@ -41,12 +47,17 @@ end
 
 local function OnAttacked(inst, data)
 	if data and data.attacker then
-		inst.components.combat:SetTarget(data.attacker)  
+		inst.components.combat:SetTarget(data.attacker)
+		inst.components.combat:ShareTarget(data.attacker, 30, function(dude)
+			return dude:HasTag("bear") and dude.components.health and not dude.components.health:IsDead()
+		end, 10)
 	end
+	
+	inst:SetEnraged(true)
 end
 
 local function CalcSanityAura(inst, observer)
-	return (inst.components.combat and inst.components.combat.target ~= nil and -TUNING.SANITYAURA_LARGE)
+	return (inst.enraged and -TUNING.SANITYAURA_LARGE)
 		or (inst.components.follower and inst.components.follower.leader == observer and TUNING.SANITYAURA_SMALL)
 		or 0
 end
@@ -125,6 +136,8 @@ local function OnRefuseItem(inst, item)
 	
 	if inst.components.sleeper and inst.components.sleeper:IsAsleep() then
 		inst.components.sleeper:WakeUp()
+	elseif inst.components.talker and inst.components.combat and not inst.components.combat.target then
+		inst.components.talker:Say(STRINGS.POLARBEAR_REFUSE_FOOD[math.random(#STRINGS.POLARBEAR_REFUSE_FOOD)])
 	end
 end
 
@@ -192,8 +205,10 @@ local function StartPolarPlowing(inst)
 	local plower = inst.components.inventory:FindItem(function(item) return item.components.polarplower end) or (equipped and equipped.components.polarplower and equipped)
 	
 	if not plower then
-		plower = SpawnPrefab("shovel") -- TODO: custom ? (also don't drop them on death!!)
-		plower.components.polarplower.plow_use = 0
+		plower = SpawnPrefab("shovel")
+		if plower.components.polarplower then
+			plower.components.polarplower.plow_use = 0 -- TODO: custom shovel instead ? (don't drop them on death otherwise!)
+		end
 		
 		inst.components.inventory:GiveItem(plower)
 	end
@@ -205,38 +220,78 @@ local function StartPolarPlowing(inst)
 		inst.putawayplower:Cancel()
 		inst.putawayplower = nil
 	end
-	inst._plowingtimer = function(inst, data)
-		if data.name == "polarplowingtime" then
-			inst.StopPolarPlowing(inst)
-		end
+end
+
+local function _putaway(inst)
+	local item = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+	
+	if item and item.components.polarplower then
+		inst.components.inventory:Unequip(EQUIPSLOTS.HANDS)
 	end
-	inst:ListenForEvent("timerdone", inst._plowingtimer)
+	
+	inst.putawayplower = nil
 end
 
 local function StopPolarPlowing(inst)
-	if inst._plowingtimer then
-		inst:RemoveEventCallback("timerdone", inst._plowingtimer)
-		inst._plowingtimer = nil
-	end
-	if inst.components.timer:TimerExists("polarplowingtime") then
-		inst.components.timer:StopTimer("polarplowingtime")
+	if inst.putawayplower then
+		_putaway(inst)
+	else
+		inst.putawayplower = inst:DoTaskInTime(1 + math.random(), _putaway)
 	end
 	
-	inst.putawayplower = inst:DoTaskInTime(2, function()
-		local item = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
-		if item and item.components.polarplower then
-			inst.components.inventory:Unequip(EQUIPSLOTS.HANDS)
+	if inst.components.timer:TimerExists("plowinthemorning") then
+		inst.components.timer:StopTimer("plowinthemorning")
+	end
+end
+
+local function DoGrowl(inst)
+	inst.SoundEmitter:PlaySound(inst.sounds.growl, "growl")
+	
+	if inst.enraged and inst.components.health and not inst.components.health:IsDead() then
+		inst._growltask = inst:DoTaskInTime(0.1 + math.random() * 0.5, inst.DoGrowl)
+	end
+end
+
+local function SetEnraged(inst, enable)
+	if enable ~= inst.enraged then
+		local colour = inst.body_paint ~= DEFAULT_PAINTING and inst.body_paint or nil
+		
+		inst.AnimState:OverrideSymbol("pig_head", "polarbear_build", "pig_head"..(colour and "_"..colour or "")..(enable and "_rage" or ""))
+		inst.enraged = enable
+	end
+	
+	inst._isenraged:set(enable)
+	if inst._growltask then
+		inst._growltask:Cancel()
+		inst._growltask = nil
+	end
+	
+	if inst.enraged then
+		inst:StopPolarPlowing()
+		
+		inst._growltask = inst:DoTaskInTime(0.1, inst.DoGrowl)
+		if not inst.components.timer:TimerExists("rageover") then
+			inst.components.timer:StartTimer("rageover", TUNING.POLARBEAR_RAGE_TIME)
+		else
+			inst.components.timer:SetTimeLeft("rageover", TUNING.POLARBEAR_RAGE_TIME)
 		end
-	end)
+		
+		inst.components.locomotor:SetExternalSpeedMultiplier(inst, "ragespeed", TUNING.POLARBEAR_RAGE_RUN_MULT)
+	else
+		inst.SoundEmitter:KillSound("growl")
+		
+		inst.components.timer:StopTimer("rageover")
+		inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "ragespeed")
+	end
 end
 
 local function SetPainting(inst, colour)
 	if colour ~= DEFAULT_PAINTING then
 		inst.AnimState:OverrideSymbol("pig_torso", "polarbear_build", "pig_torso_"..colour)
-		inst.AnimState:OverrideSymbol("pig_head", "polarbear_build", "pig_head_"..colour)
+		inst.AnimState:OverrideSymbol("pig_head", "polarbear_build", "pig_head_"..colour..(inst.enraged and "_rage" or ""))
 	else
 		inst.AnimState:ClearOverrideSymbol("pig_torso")
-		inst.AnimState:ClearOverrideSymbol("pig_head")
+		inst.AnimState:OverrideSymbol("pig_head", "polarbear_build", "pig_head"..(inst.enraged and "_rage" or ""))
 	end
 	
 	inst.body_paint = colour
@@ -264,6 +319,39 @@ local function OnInit(inst)
 	end
 end
 
+local function OnEquip(inst, data)
+	if data.item and data.item.components.equippable and data.item.components.equippable.equipslot == EQUIPSLOTS.HANDS then
+		inst.AnimState:Show("ARM_carry_up")
+		inst.AnimState:Hide("ARM_carry")
+	end
+end
+
+local function OnUnequip(inst, data)
+	if data.item and data.item.components.equippable and data.item.components.equippable.equipslot == EQUIPSLOTS.HANDS then
+		inst.AnimState:Show("ARM_carry")
+		inst.AnimState:Hide("ARM_carry_up")
+		inst.AnimState:ClearOverrideSymbol("swap_object")
+	end
+end
+
+local function OnTimerDone(inst, data)
+	if data.name == "rageover" then
+		inst:SetEnraged(false)
+	elseif data.name == "plowinthemorning" then
+		inst:StopPolarPlowing()
+	end
+end
+
+local function OnIsEnraged(inst)
+	if inst.components.talker then
+		inst.components.talker.colour = inst._isenraged:value() and Vector3(0.7, 0.1, 0.1, 1) or nil
+	end
+end
+
+local function OnTalk(inst, script)
+	inst.SoundEmitter:PlaySound(inst.sounds.talk)
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -285,20 +373,26 @@ local function fn()
 	inst.AnimState:SetScale(1.4, 1.4)
 	inst.AnimState:Hide("hat")
 	inst.AnimState:Hide("ARM_carry_up")
-	inst.AnimState:Hide("ARM_carry")
 	
 	inst:AddTag("character")
 	inst:AddTag("bear")
 	inst:AddTag("polarwet")
 	
+	inst.sounds = sounds
+	
 	inst:AddComponent("talker")
 	inst.components.talker.fontsize = 35
 	inst.components.talker.font = TALKINGFONT
 	inst.components.talker.offset = Vector3(0, -400, 0)
+	inst.components.talker.ontalk = OnTalk
 	inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
 	inst.components.talker:MakeChatter()
 	
+	inst._isenraged = net_bool(inst.GUID, "polarbear._isenraged", "isenraged")
+	
 	inst.entity:SetPristine()
+	
+	inst:ListenForEvent("isenraged", OnIsEnraged)
 	
 	if not TheWorld.ismastersim then
 		return inst
@@ -369,23 +463,26 @@ local function fn()
 	MakeMediumBurnableCharacter(inst, "pig_torso")
 	MakeHauntablePanic(inst)
 	
+	inst.DoGrowl = DoGrowl
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	inst.SetEnraged = SetEnraged
 	inst.SetPainting = SetPainting
 	inst.StartPolarPlowing = StartPolarPlowing
 	inst.StopPolarPlowing = StopPolarPlowing
 	
-	inst.sounds = sounds
-	
 	inst.inittask = inst:DoTaskInTime(0, OnInit)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
+	inst:ListenForEvent("equip", OnEquip)
+	inst:ListenForEvent("unequip", OnUnequip)
 	inst:ListenForEvent("entitysleep", OnEntitySleep)
 	inst:ListenForEvent("entitywake", CancelRunHomeTask)
-	inst:ListenForEvent("loseloyalty", OnMarkForTeleport)
-	inst:ListenForEvent("stopfollowing", OnMarkForTeleport)
 	inst:ListenForEvent("gainloyalty", OnUnmarkForTeleport)
+	inst:ListenForEvent("loseloyalty", OnMarkForTeleport)
 	inst:ListenForEvent("startfollowing", OnUnmarkForTeleport)
+	inst:ListenForEvent("stopfollowing", OnMarkForTeleport)
+	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	inst:SetStateGraph("SGpolarbear")
 	inst:SetBrain(polarbear_brain)

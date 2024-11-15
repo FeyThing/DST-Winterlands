@@ -8,8 +8,10 @@ SetSharedLootTable("polar_icicle", {
 	{"ice", 0.5},
 })
 
-local ICICLE_STAGES = {"small", "med", "large"}
 local BREAK_IGNORE_TAGS = {"INLIMBO", "icicleimmune"}
+
+local ICICLE_STAGES = {"small", "med", "large"}
+local ICICLE_ROCK_TAGS = {"rockicicle"}
 
 local function DoBreak(inst)
 	local anim = ICICLE_STAGES[inst.stage]
@@ -26,6 +28,16 @@ local function DoBreak(inst)
 					v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE)
 				elseif v.components.workable and v.components.workable:CanBeWorked() then
 					v.components.workable:WorkedBy(inst, 5)
+				end
+			end
+		end
+		
+		local icicles = TheSim:FindEntities(x, y, z, 100, ICICLE_ROCK_TAGS)
+		if #icicles >= TUNING.POLAR_WORLD_MAXICICLES then
+			for i, v in ipairs(icicles) do
+				if v:IsAsleep() then
+					v:Remove()
+					break
 				end
 			end
 		end
@@ -55,7 +67,7 @@ local function DoGrow(inst, breaking)
 	
 	local anim = ICICLE_STAGES[inst.stage]
 	inst.AnimState:PlayAnimation("shake_"..anim, false)
-	inst.SoundEmitter:PlaySound("dontstarve/winter/pondfreeze")
+	inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
 	
 	inst.DynamicShadow:SetSize(0.5 + inst.stage, 1)
 	
@@ -200,6 +212,8 @@ local function rock()
 	inst.AnimState:SetBuild("icicle_rock")
 	inst.AnimState:PlayAnimation("full")
 	inst.AnimState:SetFinalOffset(-2)
+	
+	inst:AddTag("rockicicle")
 	
 	MakeObstaclePhysics(inst, 0.3)
 	

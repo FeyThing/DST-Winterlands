@@ -6,7 +6,7 @@ local POLAR_SCRAPBOOK = {
 	wall_polar_item = {type = "item", subcat = "wall", stacksize = 20, build = "wall_polar", bank = "wall", anim = "idle", deps = {"polar_dryice", "wall_polar"}, specialinfo = "WALL_POLAR"},
 	
 	--	Creatures / Giants
-	polarbear = {type = "creature", health = 500, damage = 33, hide = {"hat", "ARM_carry_up"}, build = "polarbear_build", bank = "pigman", anim = "idle_loop", deps = {"meat", "polarbearfur"}},
+	polarbear = {type = "creature", health = 800, damage = "50-75", hide = {"hat", "ARM_carry_up"}, build = "polarbear_build", bank = "pigman", anim = "idle_loop", deps = {"meat", "polarbearfur"}},
 	
 	--	Things / POI
 	polarbearhouse = {type = "thing", subcat = "structure", build = "polarbearhouse", bank = "polarbearhouse", anim = "idle", workable = "HAMMER", burnable = true, deps = {"boards", "polar_dryice", "polarbear", "polarbearfur"}},

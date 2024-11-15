@@ -1,7 +1,7 @@
-name = "WinterLands Mod"
+name = "The Winterlands"
 author = "Feything, Gearless, LukaS, ADM, Notka"
 
-version = "impaling_icicles"
+version = "chomp_growl"
 local info_version = "󰀔 [ Version "..version.." ]\n"
 
 description = info_version..[[

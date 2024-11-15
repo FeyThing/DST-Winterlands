@@ -126,14 +126,24 @@ local function DoPlowingAction(inst)
 		end
 		
 		if offset then
-			inst.StartPolarPlowing(inst)
+			inst:StartPolarPlowing()
 			local plower = inst.components.inventory:FindItem(function(item) return item.components.polarplower end) or inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
 			
 			return BufferedAction(inst, nil, ACTIONS.POLARPLOW, plower, pt + offset)
 		else
-			inst.StopPolarPlowing(inst)
+			inst:StopPolarPlowing()
 		end
 	end
+end
+
+local function GetFaceTargetNearestPlayerFn(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	
+	return FindClosestPlayerInRange(x, y, z, MIN_FOLLOW_DIST, true)
+end
+
+local function KeepFaceTargetNearestPlayerFn(inst, target)
+	return GetFaceTargetNearestPlayerFn(inst) == target
 end
 
 --
@@ -150,21 +160,29 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return self.inst.components.health.takingfiredamage end, "OnFire",
 			ChattyNode(self.inst, "POLARBEAR_PANICFIRE",
 				Panic(self.inst))),
-		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST),
+		ChattyNode(self.inst, "POLARBEAR_FIGHT",
+			WhileNode(function() return not self.inst.components.combat:InCooldown() end, "AttackMomentarily",
+				ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST))),
 		WhileNode(function() return IsHomeOnFire(self.inst) end, "OnFire",
 			ChattyNode(self.inst, "POLARBEAR_PANICHOUSEFIRE",
 				Panic(self.inst))),
+		IfNode(function() return self.inst.enraged end, "RageZoomin",
+			Panic(self.inst)),
 		FaceEntity(self.inst, GetTraderFn, KeepTraderFn),
-		DoAction(self.inst, FindFoodAction),
+		ChattyNode(self.inst, "POLARBEAR_FIND_MEAT",
+			DoAction(self.inst, FindFoodAction)),
 		Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST),
 		
 		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
-			DoAction(self.inst, DoPlowingAction, "plow snow")),
+			ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
+				DoAction(self.inst, DoPlowingAction, "plow snow"), 5, 10, 5, 5)),
 		
 		ChattyNode(self.inst, "POLARBEAR_GOHOME",
 			WhileNode(function() return TheWorld.state.iscavenight or not self.inst:IsInLight() end, "NightTime",
 				DoAction(self.inst, GoHomeAction, "go home", true))),
 		Leash(self.inst, GetNoLeaderHomePos, LEASH_MAX_DIST, LEASH_RETURN_DIST),
+		ChattyNode(self.inst, "POLARBEAR_LOOKATWILSON",
+			FaceEntity(self.inst, GetFaceTargetNearestPlayerFn, KeepFaceTargetNearestPlayerFn)),
 		Wander(self.inst, GetNoLeaderHomePos, MAX_WANDER_DIST)
 	}, 0.5)
 	
