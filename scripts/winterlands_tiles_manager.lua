@@ -1,8 +1,15 @@
+-- [ Winterlands Tiles ] --
 AddSimPostInit(function()
-    if GLOBAL.TheWorld.components.snowstorm_manager then
-        GLOBAL.TheWorld.components.snowstorm_manager:OnLoad()
+    if GLOBAL.TheWorld.components.winterlands_manager then
+        GLOBAL.TheWorld.components.winterlands_manager:OnLoad()
     end
 end)
+
+AddPrefabPostInit("forest", function(inst)
+    inst:AddComponent("winterlands_manager")
+end)
+
+-- [ Snow Storm Tiles ] --
 
 AddPrefabPostInit("forest", function(inst)
     if GLOBAL.TheWorld.ismastersim then
@@ -67,7 +74,7 @@ end
 AddPlayerPostInit(function(inst)
     local function OnUpdate(inst)
         local x, y, z = inst.Transform:GetWorldPosition()
-        local snowstormlevel = GLOBAL.TheWorld.components.snowstorm_manager:GetAtPoint(x, y, z)
+        local snowstormlevel = GLOBAL.TheWorld.components.snowstorm_manager:GetDataAtPoint(x, y, z)
         inst.player_classified.snowstormlevel:set(snowstormlevel)
     end
 
@@ -113,8 +120,6 @@ local function DisableParticlesInWinterlands(inst)
     end
 end
 
--- TODO: rain (and probably also snow) particles are sometimes present on reset even when in winterlands (c_reset())
-
 AddPrefabPostInit("snow", DisableParticlesInWinterlands)
 AddPrefabPostInit("rain", DisableParticlesInWinterlands)
 AddPrefabPostInit("pollen", DisableParticlesInWinterlands)
@@ -127,4 +132,36 @@ Moisture._GetMoistureRateAssumingRain = function(self, ...)
     end
     
     return old_Moisture_GetMoistureRateAssumingRain(self, ...)
+end
+
+-- [ Polar Ice Tiles ] --
+
+AddPrefabPostInit("forest", function(inst)
+    if GLOBAL.TheWorld.ismastersim then
+        inst:AddComponent("polarice_manager")
+    end
+end)
+
+local HullHealth = require("components/hullhealth")
+local old_OnCollide = HullHealth.OnCollide
+HullHealth.OnCollide = function(self, data, ...)
+    old_OnCollide(self, data, ...)
+
+    local absolute_hit_normal_overlap_percentage = math.abs(data.hit_dot_velocity)
+    local damage_alignment = absolute_hit_normal_overlap_percentage / (data.speed_damage_factor or 1)
+    if damage_alignment > 0.258 then -- math.cos(75deg)
+        local hit_adjacent_speed = self.inst.components.boatphysics:GetVelocity() * absolute_hit_normal_overlap_percentage
+        if hit_adjacent_speed > 2 then
+            local dist = (GLOBAL.TILE_SCALE + self.inst.components.walkableplatform.platform_radius) / 2
+            local normal = -GLOBAL.Vector3(data.world_normal_on_b_x, data.world_normal_on_b_y, data.world_normal_on_b_z):Normalize()
+            local tpos = GLOBAL.Vector3(data.world_position_on_a_x, data.world_position_on_a_y, data.world_position_on_a_z)
+            tpos = tpos + normal * dist
+
+            local hit_tile = GLOBAL.TheWorld.Map:GetTileAtPoint(tpos:Get())
+            if hit_tile == GLOBAL.WORLD_TILES.POLAR_ICE then
+                local tx, ty = GLOBAL.TheWorld.Map:GetTileCoordsAtPoint(tpos:Get())
+                GLOBAL.TheWorld.components.polarice_manager:DestroyIceAtTile(tx, ty, false)
+            end
+        end
+    end
 end

@@ -23,20 +23,25 @@ end
 
 --	Constant lower temperature
 
-function GetPolarTemperature(temperature)
-	return temperature + (TheWorld.state.iscavenight and TUNING.POLAR_TEMPERATURES["night"]
-		or TheWorld.state.iscavedusk and TUNING.POLAR_TEMPERATURES["dusk"]
-		or TUNING.POLAR_TEMPERATURES["day"])
+function GetPolarTemperature() -- Deprecated, TODO
+	return TUNING.STARTING_TEMP
 end
+
+-- Testing
+-- \frac{x+25}{a+\cos\left(2t\pi\right)}-25\left\{-25\le x\le95\right\}
+-- a = 3
+-- t = [0, 1]
+
+-- local x, y, z = ThePlayer.Transform:GetWorldPosition() print(GetTemperatureAtXZ(x, z))
+-- Testing
 
 local OldGetTemperatureAtXZ = GetTemperatureAtXZ
 function GetTemperatureAtXZ(x, z, ...)
 	local temperature = OldGetTemperatureAtXZ(x, z, ...)
-	
-	if IsInPolarAtPoint(x, 0, z) then
-		temperature = GetPolarTemperature(temperature)
-	elseif TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_DRYICE then
-		temperature = temperature + TUNING.POLAR_TEMPERATURES["ice"]
+	local _, polartile_dist = GetClosestPolarTileToPoint(x, 0, z, 32)
+	if polartile_dist then
+		local factor = 4 - 3 * polartile_dist / 32
+		temperature = (temperature + 25) / factor - 25
 	end
 	
 	return temperature
