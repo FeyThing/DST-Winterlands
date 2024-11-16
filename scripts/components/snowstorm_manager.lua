@@ -70,10 +70,10 @@ return Class(function(self, inst)
 
     -- [ Methods ] --
 	function self:GetDataAtPoint(x, y, z)
-		return _snowstormgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _snowstormgrid and _snowstormgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetDataAtTile(tx, ty)
-		return _snowstormgrid:GetDataAtPoint(tx, ty) or 0
+		return _snowstormgrid and _snowstormgrid:GetDataAtPoint(tx, ty) or 0
 	end
 end)
