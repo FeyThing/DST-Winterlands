@@ -53,7 +53,7 @@ AddTile("POLAR_SNOW", "LAND",
 	},
 	{
 		name = 			"map_edge",
-		noise_texture = "levels/textures/mini_dirt_noise.tex", --"levels/textures/mini_noise_polarsnow.tex",
+		noise_texture = "levels/textures/mini_noise_polarsnow.tex", --"levels/textures/mini_noise_polarsnow.tex",
 	}
 )
 
