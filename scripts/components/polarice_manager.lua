@@ -441,19 +441,19 @@ return Class(function(self, inst)
 	end
 
 	function self:GetBaseAtPoint(x, y, z)
-		return _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _icebasestrengthgrid and _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetBaseAtTile(tx, ty)
-		return _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
+		return _icebasestrengthgrid and _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
 
 	function self:GetCurrentAtPoint(x, y, z)
-		return _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _icecurrentstrengthgrid and _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetCurrentAtTile(tx, ty)
-		return _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
+		return _icecurrentstrengthgrid and _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
 
 	function self:StartUpdatingIceTiles()
