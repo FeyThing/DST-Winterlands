@@ -29,10 +29,24 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Misc
 	
 --	Mobs
-	DESCRIBE.POLARBEAR = "A fearsome, cuddly looking guy."
+	DESCRIBE.POLARBEAR = {
+		DEAD = "A pile of snow... no wait.",
+		ENRAGED = "He's as much bark than bite!",
+		FOLLOWER = "That's my bear buddy.",
+		GENERIC = "A fearsome, cuddly looking guy.",
+	}
+	DESCRIBE.POLARFOX = {
+		FOLLOWER = "Let's play a small game.",
+		GENERIC = "Aha! Come here!",
+		SNOW = "I think I saw something in here.",
+	}
 	
 --	Buildings
-	DESCRIBE.POLARBEARHOUSE = "I doubt it's much warmer in here."
+	
+	DESCRIBE.POLARBEARHOUSE = {
+		BURNT = "Holy mackerel!",
+		GENERIC = "I doubt it's much warmer in here.",
+	}
 	
 --	Items
 	

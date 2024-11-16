@@ -16,9 +16,7 @@ local HOUSE_PAINTINGS = {
 }
 
 local function GetStatus(inst)
-	return (inst:HasTag("burnt") and "BURNT")
-		or (inst.components.spawner and inst.components.spawner:IsOccupied() and "FULL")
-		or nil
+	return (inst:HasTag("burnt") and "BURNT") or nil
 end
 
 local BEAR_TAGS = {"bear"}

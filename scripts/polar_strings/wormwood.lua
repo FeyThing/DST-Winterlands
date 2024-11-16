@@ -29,10 +29,24 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	--	Misc
 	
 --	Mobs
-	DESCRIBE.POLARBEAR = "Hi cold friend!"
+	DESCRIBE.POLARBEAR = {
+		DEAD = "Uh oh...",
+		ENRAGED = "Need to chill!",
+		FOLLOWER = "Cold Fuzzy good friend",
+		GENERIC = "Oh. Cold Fuzzy!",
+	}
+	DESCRIBE.POLARFOX = {
+		FOLLOWER = "Shh... it's okay now",
+		GENERIC = "Aww! Come, COME!",
+		SNOW = "Mmm?",
+	}
 	
 --	Buildings
-	DESCRIBE.POLARBEARHOUSE = "Glub Glub house"
+	
+	DESCRIBE.POLARBEARHOUSE = {
+		BURNT = "Smells fishy",
+		GENERIC = "Glub Glub house",
+	}
 	
 --	Items
 	

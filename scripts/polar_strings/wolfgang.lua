@@ -30,11 +30,24 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 --	Mobs
 	
-	DESCRIBE.POLARBEAR = "I respect bear man!"
+	DESCRIBE.POLARBEAR = {
+		DEAD = "Bear man was strong. But Wolfgang is stronger!",
+		ENRAGED = "Is... a bit intimidating.",
+		FOLLOWER = "Wolfgang enjoys arm wrestling with friend.",
+		GENERIC = "I respect bear man!",
+	}
+	DESCRIBE.POLARFOX = {
+		FOLLOWER = "Puny but cute.",
+		GENERIC = "Ha! Is puny critter!",
+		SNOW = "Someone hiding?",
+	}
 	
 --	Buildings
 	
-	DESCRIBE.POLARBEARHOUSE = "Bear man have defeated big fish."
+	DESCRIBE.POLARBEARHOUSE = {
+		BURNT = "Big fish had tough life.",
+		GENERIC = "Bear man have defeated big fish.",
+	}
 	
 --	Items
 	

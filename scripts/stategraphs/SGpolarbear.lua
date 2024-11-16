@@ -188,11 +188,11 @@ local states = {
 				
 				local not_tags = deepcopy(BITE_NOT_TAGS)
 				local target = inst.components.combat.target
-				if target == nil or target and not (target:IsValid() or target:HasTarget("bear")) then
+				if target == nil or (target:IsValid() and target:HasTag("bear")) then
 					table.insert(not_tags, "bear")
 				end
 				
-				local ents = TheSim:FindEntities(x, y, z, TUNING.POLARBEAR_BITE_RANGE * 0.8, nil, BITE_NOT_TAGS, BITE_TAGS)
+				local ents = TheSim:FindEntities(x, y, z, TUNING.POLARBEAR_BITE_RANGE * 0.8, nil, not_tags, BITE_TAGS)
 				for i, v in ipairs(ents) do
 					if not inst.sg.statemem.chomptargets[v] and v.components.combat and v.components.health and not v.components.health:IsDead() then
 						v.components.combat:GetAttacked(inst, TUNING.POLARBEAR_DAMAGE_BITE)

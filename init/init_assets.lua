@@ -39,6 +39,8 @@ end)
 --	Inventory Images
 
 local ITEMS = {
+	"icelettuce",
+	"icelettuce_seed",
 	"polar_dryice",
 	"polarbearfur",
 	"polarbearhouse",

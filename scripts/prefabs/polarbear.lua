@@ -56,6 +56,10 @@ local function OnAttacked(inst, data)
 	inst:SetEnraged(true)
 end
 
+local function GetStatus(inst)
+	return (inst.enraged and "ENRAGED") or (inst.components.follower and inst.components.follower.leader ~= nil and "FOLLOWER") or nil
+end
+
 local function CalcSanityAura(inst, observer)
 	return (inst.enraged and -TUNING.SANITYAURA_LARGE)
 		or (inst.components.follower and inst.components.follower.leader == observer and TUNING.SANITYAURA_SMALL)
@@ -103,11 +107,9 @@ local function OnGetItemFromPlayer(inst, giver, item)
 			
 			if inst.components.combat:TargetIs(giver) then
 				inst.components.combat:SetTarget(nil)
-			elseif giver.components.leader and not giver:HasTag("monster") then
-				if giver.components.minigame_participator == nil then
-					giver:PushEvent("makefriend")
-					giver.components.leader:AddFollower(inst)
-				end
+			elseif giver.components.leader then
+				giver:PushEvent("makefriend")
+				giver.components.leader:AddFollower(inst)
 				
 				inst.components.follower:AddLoyaltyTime(item.components.edible:GetHunger() * TUNING.PIG_LOYALTY_PER_HUNGER)
 				inst.components.follower.maxfollowtime = giver:HasTag("polite")
@@ -421,6 +423,7 @@ local function fn()
 	inst:AddComponent("inventory")
 	
 	inst:AddComponent("inspectable")
+	inst.components.inspectable.getstatus = GetStatus
 	
 	inst:AddComponent("knownlocations")
 	
