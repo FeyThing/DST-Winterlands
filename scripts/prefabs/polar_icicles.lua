@@ -53,8 +53,10 @@ local function DoBreak(inst)
 			return
 		end
 
-		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
-		TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, true)
+		if TheWorld.components.polarice_manager then
+			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, true)
+		end
 	elseif inst.AnimState:IsCurrentAnimation("fx_"..anim) then
 		inst:Remove()
 	end

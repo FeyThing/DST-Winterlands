@@ -9,14 +9,14 @@ local penguin_prefabs = {
 	"rock_ice",
 }
 
-for i, v in ipairs(penguin_prefabs) do
-	local function OnPolarInit(inst)
-		if IsInPolar(inst) and (inst.prefab ~= "rock_ice" or inst.remove_on_dryup) then
-			inst:Hide()
-			inst:DoTaskInTime(0.1, inst.Remove)
-		end
+local function OnPolarInit(inst)
+	if IsInPolar(inst) and (inst.prefab ~= "rock_ice" or inst.remove_on_dryup) then
+		inst:Hide()
+		inst:DoTaskInTime(0.1, inst.Remove)
 	end
-	
+end
+
+for i, v in ipairs(penguin_prefabs) do
 	ENV.AddPrefabPostInit(v, function(inst)
 		if not TheWorld.ismastersim then
 			return

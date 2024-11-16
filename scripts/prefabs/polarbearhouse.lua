@@ -36,20 +36,22 @@ local function OnVacate(inst, child)
 		elseif child.components.health then
 			child.components.health:SetPercent(1)
 			
-			local ents = TheSim:FindEntities(x, y, z, 15, BEAR_TAGS)
-			for i, v in ipairs(ents) do
-				if v ~= child and math.random() <= TUNING.POLARBEAR_HAT_CHANCE then
+			local free_hat = math.random() < TUNING.POLARBEAR_HAT_CHANCE
+			if free_hat then
+				local ents = TheSim:FindEntities(x, y, z, 30, BEAR_TAGS)
+				for i, v in ipairs(ents) do
 					local equipped_hat = v.components.inventory and v.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD) or nil
-					if not (equipped_hat and equipped_hat.prefab == "polarmoosehat") then
-						if child.components.inventory and child.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD) == nil then
-							local hat = SpawnPrefab("polarmoosehat")
-							hat.Transform:SetPosition(x, y, z)
-							child.components.inventory:Equip(hat)
-						end
-						
+					if equipped_hat and equipped_hat.prefab == "polarmoosehat" then
+						free_hat = false
 						break
 					end
 				end
+			end
+			
+			if free_hat and child.components.inventory and child.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD) == nil then
+				local hat = SpawnPrefab("polarmoosehat")
+				hat.Transform:SetPosition(x, y, z)
+				child.components.inventory:Equip(hat)
 			end
 			
 			if TheWorld.state.iscaveday and child.components.timer and not child.components.timer:TimerExists("plowinthemorning") then

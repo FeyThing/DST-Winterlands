@@ -19,7 +19,7 @@ end
 
 function IsInPolar(inst, range)
 	local x, y, z = inst.Transform:GetWorldPosition()
-
+	
 	return IsInPolarAtPoint(x, y, z, range)
 end
 

@@ -5,7 +5,6 @@ return Class(function(self, inst)
 	local BORDER_SCALE = 0.85
 	
 	local SHORE_CHECK_ATTEMPTS = 20
-	
 	local SPAWN_POINT_ATTEMPTS = 20
 	
 	local _herds = {}
@@ -16,7 +15,7 @@ return Class(function(self, inst)
 	end
 	
 	local function IsPenguinBeach(pt)
-		return IsInPolarAtPoint(pt.x, 0, pt.z, 0)
+		return IsInPolarAtPoint(pt.x, 0, pt.z)
 	end
 	
 	local function GetHerdSpawnPos()
@@ -25,12 +24,13 @@ return Class(function(self, inst)
 		local pt
 		
 		while attemps < SPAWN_POINT_ATTEMPTS and pt == nil do
-			pt = FindWalkableOffset(Vector3(0, 0, 0), math.random() * TWOPI, radius, SHORE_CHECK_ATTEMPTS, false, true, IsPenguinBeach)
+			pt = FindWalkableOffset(Vector3(0, 0, 0), math.random() * TWOPI, math.random(radius), SHORE_CHECK_ATTEMPTS, false, true, IsPenguinBeach)
 			
 			if pt and not FindSwimmableOffset(pt, math.random() * TWOPI, TUNING.POLAR_PENGUIN_SHORE_DIST, SHORE_CHECK_ATTEMPTS) then
-				attemps = attemps + 1
 				pt = nil
 			end
+			
+			attemps = attemps + 1
 		end
 		
 		return pt

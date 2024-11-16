@@ -39,7 +39,9 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 				
 				if oldupdatetemp then
 					local function updatetemp(val, ...)
-						local in_polar = ThePlayer and IsInPolar(ThePlayer)
+						local x, y, z = ThePlayer.Transform:GetWorldPosition()
+						local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32)
+						
 						if in_polar ~= self.worldtempbadge_polar then
 							if self.worldtempbadge.head then
 								self.worldtempbadge.head:SetTexture("images/"..(in_polar and "rain_polar" or "rain")..".xml", "rain.tex")
@@ -48,7 +50,7 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 							self.worldtempbadge_polar = in_polar
 						end
 						
-						val = in_polar and TheWorld and GetPolarTemperature(val) or val
+						val = in_polar and TheWorld and GetPolarTemperature(val, x, z) or val
 						oldupdatetemp(val, ...)
 					end
 					PolarUpvalue(fn, "updatetemp", updatetemp)

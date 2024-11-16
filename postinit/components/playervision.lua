@@ -24,7 +24,8 @@ local POLAR_COLOURCUBES_CONVERT = {
 
 local function OnPolarChanged(inst, data, ...)
 	local self = inst.components.playervision
-	local in_polar = IsInPolar(inst, 30)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32)
 	
 	if self and self.polarvision ~= in_polar then
 		self.polarvision = in_polar
@@ -59,10 +60,13 @@ ENV.AddModShadersInit(function()
 
 	local OldSetColourCubeData = PostProcessor__index.SetColourCubeData
 	PostProcessor__index.SetColourCubeData = function(pp, index, src, dest, ...)
-		
 		local polar_convert = POLAR_COLOURCUBES_CONVERT[dest]
-		if ThePlayer and IsInPolar(ThePlayer, 30) and polar_convert then
-			dest = POLAR_COLOURCUBES[polar_convert] or dest
+		
+		if ThePlayer then
+			local x, y, z = ThePlayer.Transform:GetWorldPosition()
+			if GetClosestPolarTileToPoint(x, 0, z, 32) and polar_convert then
+				dest = POLAR_COLOURCUBES[polar_convert] or dest
+			end
 		end
 		
 		OldSetColourCubeData(pp, index, src, dest, ...)
