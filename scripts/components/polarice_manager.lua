@@ -328,6 +328,11 @@ return Class(function(self, inst)
 	end
 
 	function self:StartDestroyingIceAtTile(tx, ty, melting)
+		local tile = _map:GetTile(tx, ty)
+		if tile ~= WORLD_TILES.POLAR_ICE then
+			return
+		end
+		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 		if _updating_tiles[index] == nil then
 			_updating_tiles[index] = true -- Ensure we have stored the updating tile when calling this method directly from the outside
@@ -441,19 +446,19 @@ return Class(function(self, inst)
 	end
 
 	function self:GetBaseAtPoint(x, y, z)
-		return _icebasestrengthgrid and _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetBaseAtTile(tx, ty)
-		return _icebasestrengthgrid and _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
+		return _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
 
 	function self:GetCurrentAtPoint(x, y, z)
-		return _icecurrentstrengthgrid and _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetCurrentAtTile(tx, ty)
-		return _icecurrentstrengthgrid and _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
+		return _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
 
 	function self:StartUpdatingIceTiles()

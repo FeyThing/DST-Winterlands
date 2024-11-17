@@ -60,8 +60,8 @@ return Class(function(self, inst)
 					end
 				end
 			end
-
-            inst:PushEvent("winterlands_initialized")
 		end
+
+		inst:PushEvent("winterlands_initialized")
 	end
 end)
