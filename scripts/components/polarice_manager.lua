@@ -211,6 +211,44 @@ return Class(function(self, inst)
 		end
 	end
 
+	function self:CreateTemporaryIceAtTile(tx, ty, time)
+		local index = _icecurrentstrengthgrid:GetIndex(tx, ty)
+
+		local tile = _map:GetTile(tx, ty)
+		if tile == WORLD_TILES.POLAR_ICE then
+			if _updating_tiles[index] and GetTaskRemaining(_updating_tiles[index]) < time then
+				local task_fn = _updating_tiles[index].fn
+				_updating_tiles[index]:Cancel()
+
+				_updating_tiles[index] = inst:DoTaskInTime(time, task_fn)
+			end
+
+			if _recently_updated_tiles[index] and GetTaskRemaining(_recently_updated_tiles[index]) < time then
+				local task_fn = _recently_updated_tiles[index].fn
+				_recently_updated_tiles[index]:Cancel()
+
+				_recently_updated_tiles[index] = inst:DoTaskInTime(time, task_fn)
+			end
+		else
+			if _updating_tiles[index] then
+				_updating_tiles[index]:Cancel()
+				_updating_tiles[index] = nil
+			end
+
+			if _recently_updated_tiles[index] then
+				_recently_updated_tiles[index]:Cancel()
+				_recently_updated_tiles[index] = nil
+			end
+
+			self:CreateIceAtTile(tx, ty)
+
+			_recently_updated_tiles[index] = inst:DoTaskInTime(time, function()
+				self:DestroyIceAtTile(tx, ty, true)
+				_recently_updated_tiles[index] = nil
+			end)
+		end
+	end
+
 	function self:CreateIceAtPoint(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, y, z)
 		self:CreateIceAtTile(tx, ty)

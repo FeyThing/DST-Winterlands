@@ -39,6 +39,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.TURF_POLAR_DRYICE = "Cobbled Dry Ice"
 	NAMES.WALL_POLAR = "Dry Ice Wall"
 	NAMES.WALL_POLAR_ITEM = "Dry Ice Wall"
+	NAMES.FROSTWALKERAMULET = "Dry Ice Amulet"
 	
 --	Skins
 	
