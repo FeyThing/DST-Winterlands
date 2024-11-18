@@ -3,7 +3,7 @@ local assets = {
 	Asset("ANIM", "anim/torso_amulets.zip")
 }
 
-local ICE_FORMING_BLOCKER_TAGS = { "shadecanopy", "crabking" }
+local ICE_FORMING_BLOCKER_TAGS = { "shadecanopy", "crabking", "boat" }
 local function FormIceBridge(inst, owner)
     if TheWorld.components.polarice_manager == nil then
         return
@@ -14,8 +14,8 @@ local function FormIceBridge(inst, owner)
     for x = -1, 1 do
         for y = -1, 1 do
             local tx, ty = ox + x, oy + y
-			local _x, _y, _z = TheWorld.Map:GetTileCenterPoint(tx, ty)
-            if next(TheSim:FindEntities(_x, _y, _z, 10, nil, nil, ICE_FORMING_BLOCKER_TAGS)) == nil then
+            local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+            if next(TheSim:FindEntities(cx, cy, cz, 10, nil, nil, ICE_FORMING_BLOCKER_TAGS)) == nil then
                 local tile = TheWorld.Map:GetTile(tx, ty)
                 if TileGroupManager:IsOceanTile(tile) or tile == WORLD_TILES.POLAR_ICE then
                     TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
@@ -76,6 +76,36 @@ local function OnEquipToModel(inst, owner, from_ground)
 	end
 end
 
+local function OnLanded(inst)
+    if TheWorld.components.polarice_manager == nil then
+        return
+    end
+    
+    if inst.landed_task then
+        inst.landed_task:Cancel()
+        inst.landed_task = nil
+    end
+
+    inst.landed_task = inst:DoPeriodicTask(0.25, function()
+        local x, y, z = inst.Transform:GetWorldPosition()
+        local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+        local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+        if next(TheSim:FindEntities(cx, cy, cz, 10, nil, nil, ICE_FORMING_BLOCKER_TAGS)) == nil then
+            local tile = TheWorld.Map:GetTile(tx, ty)
+            if TileGroupManager:IsOceanTile(tile) or tile == WORLD_TILES.POLAR_ICE then
+                TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
+            end
+        end
+    end)
+end
+
+local function OnNoLongerLanded(inst)
+    if inst.landed_task then
+        inst.landed_task:Cancel()
+        inst.landed_task = nil
+    end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -120,10 +150,13 @@ local function fn()
 	
 	inst:AddComponent("shadowlevel")
 	inst.components.shadowlevel:SetDefaultLevel(TUNING.AMULET_SHADOW_LEVEL)
-	
-	MakeHauntableLaunch(inst)
-	
-	return inst
+
+    inst:ListenForEvent("on_landed", OnLanded)
+    inst:ListenForEvent("on_no_longer_landed", OnNoLongerLanded)
+
+    MakeHauntableLaunch(inst)
+
+    return inst
 end
 
 return Prefab("frostwalkeramulet", fn, assets)
