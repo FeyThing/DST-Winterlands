@@ -167,6 +167,6 @@ local function lowrock()
 	return inst
 end
 
-return Prefab("polar_rock", fn, assets, prefabs),
-	Prefab("polar_rock_med", medrock, assets, prefabs),
-	Prefab("polar_rock_low", lowrock, assets, prefabs)
+return Prefab("rock_polar", fn, assets, prefabs),
+	Prefab("rock_polar_med", medrock, assets, prefabs),
+	Prefab("rock_polar_low", lowrock, assets, prefabs)

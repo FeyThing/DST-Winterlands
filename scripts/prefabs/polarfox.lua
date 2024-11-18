@@ -106,10 +106,26 @@ local function OnTimerDone(inst, data)
 	
 end
 
+local function TailSwip(inst)
+	if not inst.sg:HasStateTag("moving") and not inst._tailalert and not inst.sg:HasStateTag("busy") then
+		if inst.tail then
+			inst.tail:PlayTailAnim("swip", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
+		end
+		
+		inst.SoundEmitter:PlaySound("turnoftides/creatures/together/lunarmothling/flap_fast")
+	end
+	
+	inst._tailswip = inst:DoTaskInTime(0.5 + (math.random() * 24.5), TailSwip)
+end
+
 local function TailTask(inst)
 	if inst.tail == nil then
 		inst.tail = SpawnPrefab("polarfox_tail")
 		inst.tail:AttachToOwner(inst)
+	end
+	
+	if inst._tailswip == nil then
+		TailSwip(inst)
 	end
 end
 
@@ -124,19 +140,22 @@ local function fn()
 	
 	MakeCharacterPhysics(inst, 50, 0.5)
 	
-	inst.Transform:SetFourFaced()
+	inst.Transform:SetSixFaced()
 	
-	inst.DynamicShadow:SetSize(2, 0.75)
+	inst.DynamicShadow:SetSize(2, 0.33)
 	
 	inst.AnimState:SetRayTestOnBB(true)
 	inst.AnimState:SetBank("polarfox")
 	inst.AnimState:SetBuild("polarfox")
 	inst.AnimState:PlayAnimation("idle", true)
 	inst.AnimState:SetScale(1.25, 1.25)
+	inst.AnimState:SetSymbolBloom("glowfx")
+	inst.AnimState:SetSymbolLightOverride("glowfx", 0.7)
 	inst.AnimState:SetSymbolMultColour("tail", 0, 0, 0, 0)
 	
 	inst:AddTag("animal")
 	inst:AddTag("fox")
+	inst:AddTag("snowhidden")
 	
 	inst.entity:SetPristine()
 	
@@ -179,7 +198,7 @@ local function fn()
 	inst.components.lootdropper.numrandomloot = 1
 	
 	inst:AddComponent("playerprox")
-	inst.components.playerprox:SetDist(5, 7)
+	inst.components.playerprox:SetDist(7, 9)
 	inst.components.playerprox:SetOnPlayerNear(OnPlayerNear)
 	inst.components.playerprox:SetOnPlayerFar(OnPlayerFar)
 	

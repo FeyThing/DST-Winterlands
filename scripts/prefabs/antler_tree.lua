@@ -72,7 +72,6 @@ local function ChopDownBurntTree(inst, chopper)
 	inst.components.lootdropper:DropLoot()
 	
 	SetStump(inst)
-	RemovePhysicsColliders(inst)
 	inst:ListenForEvent("animover", inst.Remove)
 end
 
@@ -88,7 +87,7 @@ local function OnBurnt(inst)
 	inst.components.workable:SetOnWorkCallback(nil)
 	inst.components.workable:SetOnFinishCallback(ChopDownBurntTree)
 	
-	inst.AnimState:PlayAnimation("burnt_idle", true)
+	inst.AnimState:PlayAnimation("burnt")
 	inst:AddTag("burnt")
 	inst.MiniMapEntity:SetIcon("marshtree_burnt.png")
 end
@@ -114,7 +113,7 @@ local function OnLoad(inst, data)
 		if data.stump then
 			SetStump(inst)
 			
-			inst.AnimState:PlayAnimation("stump", false)
+			inst.AnimState:PlayAnimation("stump")
 			if data.burnt or inst:HasTag("burnt") then
 				DefaultBurntFn(inst)
 			else
@@ -129,64 +128,79 @@ local function OnLoad(inst, data)
 	end
 end
 
-local function fn()
-	local inst = CreateEntity()
-	
-	inst.entity:AddTransform()
-	inst.entity:AddAnimState()
-	inst.entity:AddSoundEmitter()
-	inst.entity:AddMiniMapEntity()
-	inst.entity:AddNetwork()
-	
-	MakeObstaclePhysics(inst, 0.25)
-	
-	inst.MiniMapEntity:SetIcon("marshtree.png")
-	inst.MiniMapEntity:SetPriority(-1)
-	
-	inst:AddTag("plant")
-	inst:AddTag("tree")
-	
-	inst.AnimState:SetBuild("antler_tree")
-	inst.AnimState:SetBank("antler_tree")
-	inst.AnimState:PlayAnimation("idle")
-	
-	MakeSnowCoveredPristine(inst)
-	
-	inst.entity:SetPristine()
-	
-	if not TheWorld.ismastersim then
+local function MakeHornyTree(data)
+	local function fn()
+		local inst = CreateEntity()
+		
+		inst.entity:AddTransform()
+		inst.entity:AddAnimState()
+		inst.entity:AddSoundEmitter()
+		inst.entity:AddMiniMapEntity()
+		inst.entity:AddNetwork()
+		
+		MakeObstaclePhysics(inst, 0.25)
+		
+		inst.MiniMapEntity:SetIcon("marshtree.png")
+		inst.MiniMapEntity:SetPriority(-1)
+		
+		inst:AddTag("plant")
+		inst:AddTag("tree")
+		
+		inst.AnimState:SetBuild("antler_tree")
+		inst.AnimState:SetBank("antler_tree")
+		inst.AnimState:PlayAnimation("idle")
+		
+		inst:SetPrefabName("antler_tree")
+		
+		MakeSnowCoveredPristine(inst)
+		
+		inst.entity:SetPristine()
+		
+		if not TheWorld.ismastersim then
+			return inst
+		end
+		
+		MakeLargeBurnable(inst)
+		inst.components.burnable:SetOnBurntFn(OnBurnt)
+		MakeSmallPropagator(inst)
+		
+		inst:AddComponent("inspectable")
+		inst.components.inspectable.getstatus = GetStatus
+		
+		inst:AddComponent("lootdropper")
+		inst.components.lootdropper:SetChanceLootTable("antler_tree")
+		
+		inst:AddComponent("workable")
+		inst.components.workable:SetWorkAction(ACTIONS.CHOP)
+		inst.components.workable:SetWorkLeft(10)
+		inst.components.workable:SetOnWorkCallback(ChopTree)
+		inst.components.workable:SetOnFinishCallback(ChopDownTree)
+		
+		local color = 0.5 + math.random() * 0.5
+		inst.AnimState:SetMultColour(color, color, color, 1)
+		
+		local scale = math.random() > 0.5 and 1.4 or -1.4
+		inst.AnimState:SetScale(scale, 1.4)
+		
+		if data == "stump" then
+			inst.AnimState:PlayAnimation("stump")
+			SetStump(inst)
+		elseif data == "burnt" then
+			OnBurnt(inst)
+		end
+		
+		MakeHauntableWorkAndIgnite(inst)
+		MakeSnowCovered(inst)
+		
+		inst.OnSave = OnSave
+		inst.OnLoad = OnLoad
+		
 		return inst
 	end
 	
-	MakeLargeBurnable(inst)
-	inst.components.burnable:SetOnBurntFn(OnBurnt)
-	MakeSmallPropagator(inst)
-	
-	inst:AddComponent("inspectable")
-	inst.components.inspectable.getstatus = GetStatus
-	
-	inst:AddComponent("lootdropper")
-	inst.components.lootdropper:SetChanceLootTable("antler_tree")
-	
-	inst:AddComponent("workable")
-	inst.components.workable:SetWorkAction(ACTIONS.CHOP)
-	inst.components.workable:SetWorkLeft(10)
-	inst.components.workable:SetOnWorkCallback(ChopTree)
-	inst.components.workable:SetOnFinishCallback(ChopDownTree)
-	
-	local color = 0.5 + math.random() * 0.5
-	inst.AnimState:SetMultColour(color, color, color, 1)
-	
-	local scale = math.random() > 0.5 and 1.4 or -1.4
-	inst.AnimState:SetScale(scale, 1.4)
-	
-	MakeHauntableWorkAndIgnite(inst)
-	MakeSnowCovered(inst)
-	
-	inst.OnSave = OnSave
-	inst.OnLoad = OnLoad
-	
-	return inst
+	return Prefab("antler_tree"..(data ~= nil and "_"..data or ""), fn, assets, prefabs)
 end
 
-return Prefab("antler_tree", fn, assets, prefabs)
+return MakeHornyTree(),
+	MakeHornyTree("stump"),
+	MakeHornyTree("burnt")

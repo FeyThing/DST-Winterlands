@@ -121,15 +121,15 @@ function GetDescription_AddSpecialCases(ret, charactertable, inst, item, modifie
 	return OldSpecialCases(ret, charactertable, inst, item, modifier, ...)
 end
 
---	Can't see the name of things in snow, unless it's tall enough
+--	Can't see the name of things in snow, unless it's tall enough or we get close
 
 function IsTooDeepInSnow(inst, viewer)
 	local insnow = false
 	if inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
 		local x, y, z = inst.Transform:GetWorldPosition()
-		insnow = TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
+		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
 		
-		if insnow then
+		if insnow and not inst:HasTag("snowhidden") then
 			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
 			local bby = bby2 - bby1
 			

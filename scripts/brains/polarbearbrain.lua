@@ -30,7 +30,7 @@ local SEE_BURNING_HOME_DIST_SQ = 20 * 20
 local SEE_PLAYER_DIST = 6
 
 local GETTRADER_MUST_TAGS = {"player"}
-local FINDFOOD_CANT_TAGS = {"INLIMBO", "outofreach"}
+local FINDFOOD_CANT_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach", "show_spoiled"}
 
 --	Eatin'
 

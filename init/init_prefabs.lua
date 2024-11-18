@@ -1,5 +1,6 @@
 PrefabFiles = {
 	"antler_tree",
+	"frostwalkeramulet",
 	"polar_dryice",
 	"polar_icicles",
 	"polar_mist",
@@ -18,7 +19,6 @@ PrefabFiles = {
 	"shadowcreature_polar",
 	"snowstorm_snow",
 	"snowwave",
-	"frostwalkeramulet",
 	"warg_polar",
 	
 	"polarskinprefabs",

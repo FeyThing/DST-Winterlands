@@ -56,6 +56,7 @@ local prefabs = {
 
 local components = {
 	"ambientsound",
+	"builder",
 	"dynamicmusic", -- : (
 	"explosive",
 	"groundpounder",

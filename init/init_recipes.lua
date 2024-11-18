@@ -29,12 +29,13 @@ local function PolarRecipe(name, ingredients, tech, config, filters, order)
 	end
 end
 
---	[ 	Station Defs	]	--
+--	[ 	Station 	Defs	]	--
 
 PROTOTYPER_DEFS["polarsnow"] = {icon_atlas = CRAFTING_ICONS_ATLAS, icon_image = "station_none.tex", is_crafting_station = false}
 
-local OldIsTechIngredient = IsTechIngredient
 local POLAR_TECHING = {"polarsnow_material"}
+
+local OldIsTechIngredient = IsTechIngredient
 function IsTechIngredient(ingredienttype, ...)
 	if table.contains(POLAR_TECHING, ingredienttype) then
 		return true
@@ -43,10 +44,10 @@ function IsTechIngredient(ingredienttype, ...)
 	return OldIsTechIngredient(ingredienttype, ...)
 end
 
---	[ 		Recipes		]	--
+--	[ 		Recipes			]	--
 
 --	Refine
-PolarRecipe("polar_dryice", 		{Ingredient("ice", 4)--[[, Ingredient(TECH_INGREDIENT.POLARSNOW, 1)]]}, 					TECH.SCIENCE_TWO, 		nil, 									{"REFINE"}, {"refined_dust"})
+PolarRecipe("polar_dryice", 		{Ingredient("ice", 3), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 							TECH.LOST, 				nil, 									{"REFINE"}, {"refined_dust"})
 
 --	Structures
 PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 	{"STRUCTURES"}, {"rabbithouse"})

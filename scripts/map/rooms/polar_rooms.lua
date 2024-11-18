@@ -2,13 +2,19 @@ AddRoom("PolarIsland_Village", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_SNOW,
 	tags = {"Town"},
+	required_prefabs = {"wall_polar"}, -- Present in all villages, added from taskset
 	contents = {
 		countstaticlayouts = {
-			["CropCircle"] = 1,
-			["TreeFarm"] = 1,
+			["TreeFarm"] = function() 
+				if math.random() > 0.97 then
+					return math.random(1,2)
+				end
+				
+				return 0
+			end,
 		},
 		countprefabs = {
-			polarbearhouse = function() return math.random(8, 12) end,
+			polarbearhouse = function() return math.random(2, 4) end,
 		},
 		
 		distributepercent = 0.04,
@@ -57,7 +63,9 @@ AddRoom("PolarIsland_Lakes", {
 		
 		distributepercent = 0.2,
 		distributeprefabs = {
-			evergreen_sparse = 1,
+			evergreen_sparse = 1.22,
+			antler_tree_stump = 0.02,
+			antler_tree_stump = 0.01,
 		},
 	}
 })
@@ -87,6 +95,7 @@ AddRoom("PolarIsland_BG", {
 		distributeprefabs = {
 			grass = 1,
 			antler_tree = 1.25,
+			antler_tree_stump = 0.25,
 			marsh_bush = 1,
 			rock_ice = 1,
 		},

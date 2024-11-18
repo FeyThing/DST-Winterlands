@@ -7,6 +7,7 @@ local modimport = ENV.modimport
 
 modimport("init/init_tiles")
 require("map/polar_terrain")
+require("polar_strings/strings")
 
 --	Setpieces
 
@@ -14,7 +15,8 @@ local Layouts = require("map/layouts").Layouts
 local StaticLayout = require("map/static_layout")
 
 local polar_layouts = {
-	"IcicleSkeleton", "PolarCave_Pillar", "PolarCave_SmallPillar", "PolarFlea_Farm", "PolarTuskTown",
+	"BearTown1", "BearTown2", "PolarTuskTown", "PolarFlea_Farm",
+	"IcicleSkeleton", "PolarCave_Pillar", "PolarCave_SmallPillar",
 }
 
 for _, layout in ipairs(polar_layouts) do

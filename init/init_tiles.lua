@@ -53,7 +53,7 @@ AddTile("POLAR_SNOW", "LAND",
 	},
 	{
 		name = 			"map_edge",
-		noise_texture = "levels/textures/mini_noise_polarsnow.tex", --"levels/textures/mini_noise_polarsnow.tex",
+		noise_texture = "levels/textures/mini_noise_polarsnow.tex",
 	}
 )
 
@@ -161,12 +161,12 @@ NOISES[WORLD_TILES.POLAR_TUNDRA_NOISE] = GetTileForPolarTundra
 ChangeTileRenderOrder(WORLD_TILES.OCEAN_POLAR, WORLD_TILES.OCEAN_HAZARDOUS, true)
 
 ChangeTileRenderOrder(WORLD_TILES.POLAR_CAVES, WORLD_TILES.ROCKY)
-ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.MUD)
-ChangeTileRenderOrder(WORLD_TILES.POLAR_DRYICE, WORLD_TILES.DIRT)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.UNDERROCK)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_DRYICE, WORLD_TILES.UNDERROCK)
 
 --	Setpiece Ground Type
 
 GLOBAL.POLAR_GROUND_TYPES = {
 	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_DRYICE, -- 1, 2, 3, 4, 5
-	WORLD_TILES.OCEAN_POLAR, WORLD_TILES.DIRT, WORLD_TILES.ROCKY, -- 6, 7, 8
+	WORLD_TILES.OCEAN_POLAR, WORLD_TILES.DIRT, WORLD_TILES.ROCKY, WORLD_TILES.UNDERROCK, WORLD_TILES.MONKEY_DOCK, -- 6, 7, 8, 9, 10
 }

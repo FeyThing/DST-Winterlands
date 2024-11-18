@@ -75,14 +75,28 @@ local function DoIceExplosion(inst)
 	inst.SoundEmitter:PlaySound("dontstarve/creatures/hound/icehound_explo")
 end
 
+local function DoForceBreath(inst)
+	if inst.components.frostybreather and inst.sg and not inst.sg:HasStateTag("busy") then
+		inst.components.frostybreather:EmitOnce()
+	end
+end
+
 local function fn()
 	local inst = Prefabs.warg.fn()
 	
 	inst.AnimState:SetBuild("warg_polar")
 	
+	inst:AddComponent("frostybreather")
+	inst.components.frostybreather.offset = Vector3(1.3, 1.4, 0)
+	inst.components.frostybreather:StartBreath()
+	
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst.components.combat:SetDefaultDamage(TUNING.POLARWARG_DAMAGE)
+	
+	inst.components.health:SetMaxHealth(TUNING.POLARWARG_HEALTH)
 	
 	inst:RemoveComponent("freezable")
 	
@@ -92,6 +106,8 @@ local function fn()
 		end
 		inst.event_listeners.spawnedforhunt[inst][1] = OnSpawnedForHunt
 	end
+	
+	inst._breathtask = inst:DoPeriodicTask(2, DoForceBreath)
 	
 	inst:ListenForEvent("death", DoIceExplosion)
 	

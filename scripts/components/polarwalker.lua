@@ -81,7 +81,7 @@ end
 
 function PolarWalker:IsPolarSlowed()
 	if self.inst:HasTag("flying") or self.inst:HasTag("playerghost")
-		or (self.inst.components.health and (self.inst.components.health:IsDead() or self.inst.components.health:IsInvincible())) then
+		or (self.inst.components.health and self.inst.components.health:IsDead()) then
 		
 		self.slow_time = 0
 		self.start_time = nil
@@ -134,8 +134,21 @@ function PolarWalker:Start()
 	end
 end
 
+local function LearnDryIceRecipe(inst)
+	local rec = "polar_dryice"
+	
+	if not inst.components.builder:KnowsRecipe(rec) and inst.components.builder:CanLearn(rec) then
+		inst.components.builder:UnlockRecipe(rec)
+		inst:PushEvent("learnrecipe", {teacher = inst, recipe = rec})
+	end
+end
+
 function PolarWalker:SetWetness()
-	if HasPolarImmunity(self.inst) then
+	if self._learndryice == nil then
+		self._learndryice = self.inst:DoTaskInTime(1 + math.random(), LearnDryIceRecipe)
+	end
+	
+	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarImmunity(self.inst) then
 		return
 	end
 	
@@ -191,6 +204,10 @@ function PolarWalker:OnUpdate()
 	
 	if slowing and self.inst.components.moisture then
 		self:SetWetness()
+	end
+	
+	if self.inst.components.builder and self._slowed ~= slowed then
+		self.inst:PushEvent("refreshcrafting")
 	end
 	
 	self._slowed = slowed and "slowed" or slowing and "slowing" or nil
