@@ -33,11 +33,20 @@ local function OnPolarFreezeCookieCutter(inst, forming)
 	end
 end
 
+local function OnPolarFreezeBoatFragment(inst, forming)
+	if forming then
+		DestroyEntity(inst, TheWorld)
+	end
+end
+
 local SEASTUFF = {
 	bullkelp_beachedroot = OnPolarFreezeKelp,
 	bullkelp_plant = OnPolarFreezeKelp,
 	waterplant = OnPolarFreezeWaterplant,
-	cookiecutter = OnPolarFreezeCookieCutter
+	cookiecutter = OnPolarFreezeCookieCutter,
+	boatfragment03 = OnPolarFreezeBoatFragment,
+	boatfragment04 = OnPolarFreezeBoatFragment,
+	boatfragment05 = OnPolarFreezeBoatFragment,
 }
 
 for prefab, fn in pairs(SEASTUFF) do
