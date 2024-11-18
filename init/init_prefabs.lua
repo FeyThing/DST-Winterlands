@@ -18,6 +18,7 @@ PrefabFiles = {
 	"shadowcreature_polar",
 	"snowstorm_snow",
 	"snowwave",
+	"frostwalkeramulet",
 	"warg_polar",
 	
 	"polarskinprefabs",

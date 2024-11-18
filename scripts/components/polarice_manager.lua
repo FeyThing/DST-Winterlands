@@ -213,6 +213,44 @@ return Class(function(self, inst)
 		end
 	end
 
+	function self:CreateTemporaryIceAtTile(tx, ty, time)
+		local index = _icecurrentstrengthgrid:GetIndex(tx, ty)
+
+		local tile = _map:GetTile(tx, ty)
+		if tile == WORLD_TILES.POLAR_ICE then
+			if _updating_tiles[index] and GetTaskRemaining(_updating_tiles[index]) < time then
+				local task_fn = _updating_tiles[index].fn
+				_updating_tiles[index]:Cancel()
+
+				_updating_tiles[index] = inst:DoTaskInTime(time, task_fn)
+			end
+
+			if _recently_updated_tiles[index] and GetTaskRemaining(_recently_updated_tiles[index]) < time then
+				local task_fn = _recently_updated_tiles[index].fn
+				_recently_updated_tiles[index]:Cancel()
+
+				_recently_updated_tiles[index] = inst:DoTaskInTime(time, task_fn)
+			end
+		else
+			if _updating_tiles[index] then
+				_updating_tiles[index]:Cancel()
+				_updating_tiles[index] = nil
+			end
+
+			if _recently_updated_tiles[index] then
+				_recently_updated_tiles[index]:Cancel()
+				_recently_updated_tiles[index] = nil
+			end
+
+			self:CreateIceAtTile(tx, ty)
+
+			_recently_updated_tiles[index] = inst:DoTaskInTime(time, function()
+				self:DestroyIceAtTile(tx, ty, true)
+				_recently_updated_tiles[index] = nil
+			end)
+		end
+	end
+
 	function self:CreateIceAtPoint(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, y, z)
 		self:CreateIceAtTile(tx, ty)
@@ -290,6 +328,11 @@ return Class(function(self, inst)
 	end
 
 	function self:StartDestroyingIceAtTile(tx, ty, melting)
+		local tile = _map:GetTile(tx, ty)
+		if tile ~= WORLD_TILES.POLAR_ICE then
+			return
+		end
+		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 		if _updating_tiles[index] == nil then
 			_updating_tiles[index] = true -- Ensure we have stored the updating tile when calling this method directly from the outside
@@ -402,19 +445,19 @@ return Class(function(self, inst)
 	end
 
 	function self:GetBaseAtPoint(x, y, z)
-		return _icebasestrengthgrid and _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetBaseAtTile(tx, ty)
-		return _icebasestrengthgrid and _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
+		return _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
 
 	function self:GetCurrentAtPoint(x, y, z)
-		return _icecurrentstrengthgrid and _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetCurrentAtTile(tx, ty)
-		return _icecurrentstrengthgrid and _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
+		return _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
 
 	function self:StartUpdatingIceTiles()
