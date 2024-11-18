@@ -4,6 +4,7 @@ local MAX_GRADIENT_DEPTH = 5
 local STRENGTH_UPDATE_TIME = 10
 
 local ICE_TILE_UPDATE_TIME = 4
+local ICE_TILE_ENTBREAK_TIME = 0.1
 local ICE_TILE_UPDATE_VARIANCE = 10 -- Create/destroy tiles every 4 - 14 seconds
 local ICE_TILE_UPDATE_COOLDOWN = 120
 
@@ -204,7 +205,8 @@ return Class(function(self, inst)
 		end
 
 		if _updating_tiles[index] == nil then
-			_updating_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
+			local create_time = ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE
+			_updating_tiles[index] = inst:DoTaskInTime(create_time, function()
 				self:CreateIceAtTile(tx, ty)
 				_updating_tiles[index] = nil
 			end)
@@ -278,53 +280,12 @@ return Class(function(self, inst)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
 		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
 		for _, ent in ipairs(entities_near_ice) do
-			if ent.components.oceanfishable then
-				local projectile = ent.components.oceanfishable:MakeProjectile()
-				local projectile_complexprojectile = projectile.components.complexprojectile
-				if projectile_complexprojectile then
-					projectile_complexprojectile:SetHorizontalSpeed(16)
-					projectile_complexprojectile:SetGravity(-30)
-					projectile_complexprojectile:SetLaunchOffset(Vector3(0, 0.5, 0))
-					projectile_complexprojectile:SetTargetOffset(Vector3(0, 0.5, 0))
-
-					local v_position = ent:GetPosition()
-					local launch_position = v_position + (v_position - center_position):Normalize() * SPEED
-					projectile_complexprojectile:Launch(launch_position, projectile, projectile_complexprojectile.owningweapon)
-				else
-					LaunchAway(projectile, center_position)
-				end
-			elseif ent.prefab == "bullkelp_plant" then
-				local entx, enty, entz = ent.Transform:GetWorldPosition()
-
-				if ent.components.pickable and ent.components.pickable:CanBePicked() then
-					local product = ent.components.pickable.product
-					local loot = SpawnPrefab(product)
-					if loot then
-						loot.Transform:SetPosition(entx, enty, entz)
-						if loot.components.inventoryitem then
-							loot.components.inventoryitem:InheritWorldWetnessAtTarget(ent)
-						end
-
-						if loot.components.stackable and ent.components.pickable.numtoharvest > 1 then
-							loot.components.stackable:SetStackSize(ent.components.pickable.numtoharvest)
-						end
-
-						LaunchAway(loot, center_position)
-					end
-				end
-
-				local uprooted_kelp_plant = SpawnPrefab("bullkelp_root")
-				if uprooted_kelp_plant then
-					uprooted_kelp_plant.Transform:SetPosition(entx, enty, entz)
-					LaunchAway(uprooted_kelp_plant, center_position + Vector3(0.5 * math.random(), 0, 0.5 * math.random()))
-				end
-
-				ent:Remove()
-			elseif ent.components.workable and ent:GetCurrentPlatform() == nil and not TheWorld.Map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) then
-				ent.components.workable:Destroy(terraformer)
-			elseif ent.components.inventoryitem and ent.Physics then
+			if ent.components.inventoryitem and ent.Physics then
 				LaunchAway(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
+			end
+			if ent.OnPolarFreeze then
+				ent:OnPolarFreeze(true)
 			end
 		end
 		
@@ -346,7 +307,7 @@ return Class(function(self, inst)
 		end)
 	end
 
-	function self:QueueMeltIceAtTile(tx, ty)
+	function self:QueueMeltIceAtTile(tx, ty, doer)
 		local tile = _map:GetTile(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE then
 			return
@@ -354,12 +315,13 @@ return Class(function(self, inst)
 		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 
-		if _recently_updated_tiles[index] ~= nil then
+		if _recently_updated_tiles[index] ~= nil and not doer then
 			return
 		end
 
 		if _updating_tiles[index] == nil then
-			_updating_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
+			local break_time = doer ~= nil and ICE_TILE_ENTBREAK_TIME or (ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE)
+			_updating_tiles[index] = inst:DoTaskInTime(break_time, function()
 				self:StartDestroyingIceAtTile(tx, ty, true)
 			end)
 		end
@@ -430,15 +392,14 @@ return Class(function(self, inst)
 				if ent:IsValid() then
 					local has_drownable = (ent.components.drownable ~= nil)
 					local shore_point = (has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz))) or nil
-					ent:PushEvent("onsink", { boat = nil, shore_pt = shore_point })
-
+					ent:PushEvent("onsink", {boat = nil, shore_pt = shore_point})
 					-- We're testing the overhang, so we need to verify that anything we find isn't
 					-- still on some adjacent dock or land tile or other platform after we remove ourself.
 					if ent:IsValid() and not has_drownable and not ent.entity:GetParent()
-						and not ent.components.amphibiouscreature
-						and not _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) and not ent:GetCurrentPlatform() then
-
-						if ent.components.inventoryitem then
+						and not ent.components.amphibiouscreature and not _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) and not ent:GetCurrentPlatform() then
+						if ent.OnPolarFreeze then
+							ent:OnPolarFreeze(false)
+						elseif ent.components.inventoryitem then
 							ent.components.inventoryitem:SetLanded(false, true)
 						else
 							DestroyEntity(ent, inst, true, true)

@@ -22,14 +22,16 @@ local POLAR_COLOURCUBES_CONVERT = {
 	["images/colour_cubes/summer_night_cc.tex"] = "night",
 }
 
-local function OnPolarChanged(inst, data, ...)
-	local self = inst.components.playervision
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32)
-	
-	if self and self.polarvision ~= in_polar then
-		self.polarvision = in_polar
-		inst:PushEvent("setinpolar", in_polar)
+local function OnPolarChanged(inst)
+	if inst and inst:IsValid() then
+		local self = inst.components.playervision
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil
+		
+		if self and self.polarvision ~= in_polar then
+			self.polarvision = in_polar
+			inst:PushEvent("setinpolar", in_polar)
+		end
 	end
 end
 
@@ -43,13 +45,14 @@ ENV.AddComponentPostInit("playervision", function(self)
 				full_moon = "images/colour_cubes/purple_moon_cc.tex"
 			} or nil
 			
+			self.inst:PushEvent("ccoverrides", {}) -- Winter cc will persist after despawning from the island thinking it already use the current season cc if nil and won't update
 			self.inst:PushEvent("ccoverrides", cctable)
 		end
 	end
 	
 	self.inst:ListenForEvent("setinpolar", function(src, enabled) self:SetPolarVision(enabled) end)
 	
-	self.inst:DoTaskInTime(1, function()
+	self.inst:DoTaskInTime(0, function()
 		self.polarvision = nil
 		self._polarupdate = self.inst:DoPeriodicTask(1, OnPolarChanged)
 	end)
@@ -64,7 +67,7 @@ ENV.AddModShadersInit(function()
 		
 		if ThePlayer then
 			local x, y, z = ThePlayer.Transform:GetWorldPosition()
-			if GetClosestPolarTileToPoint(x, 0, z, 32) and polar_convert then
+			if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and polar_convert then
 				dest = POLAR_COLOURCUBES[polar_convert] or dest
 			end
 		end

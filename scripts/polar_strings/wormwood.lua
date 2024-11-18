@@ -27,6 +27,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.ROCK_POLAR = "Cold Shiny trapped in ice? How?"
 	
 	--	Misc
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Mmm?"
 	
 --	Mobs
 	DESCRIBE.POLARBEAR = {
@@ -38,8 +39,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Shh... it's okay now",
 		GENERIC = "Aww! Come, COME!",
-		SNOW = "Mmm?",
 	}
+	DESCRIBE.POLARWARG = "Big chilly woofer"
 	
 --	Buildings
 	
@@ -51,6 +52,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.ICELETTUCE = "Friend want big warm hug?"
+	DESCRIBE.ICEBURRITO = "Glub Glub sleeping in roll"
 	
 	--	Crafting
 	DESCRIBE.POLAR_DRYICE = "For fresh snack"

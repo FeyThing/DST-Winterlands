@@ -49,7 +49,7 @@ local function DoBreak(inst)
 			rock.components.workable:WorkedBy(inst, numworks)
 		end
 
-		if FindEntity(inst, 6, nil, { "icecaveshelter" }) ~= nil then
+		if FindEntity(inst, 6, nil, {"icecaveshelter"}) ~= nil then
 			return
 		end
 

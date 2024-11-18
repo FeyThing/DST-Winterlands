@@ -4,6 +4,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Worldgen
 	
 	--	Plants
+	NAMES.ANTLER_TREE = "Bullbark"
 	
 	--	Rocks and stones
 	NAMES.POLAR_ICICLE = "Icicle"
@@ -11,12 +12,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLAR_ROCK = "Ice Protuberance"
 	
 	--	Misc
+	NAMES.IN_POLARSNOW = "Snow?"
 	
 --	Mobs
 	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
 	NAMES.POLARBEAR = "Polar Bear"
 	NAMES.POLARFOX = "Frost Tail"
 	NAMES.SHADOW_ICICLER = "Shadow Spine"
+	NAMES.POLARWARG = "Ice Varg"
 	
 --	Buildings
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
@@ -24,6 +27,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Items
 	
 	--	Food
+	NAMES.ICELETTUCE = "Iceberg Lettuce"
+	NAMES.ICEBURRITO = "Brrito"
 	
 	--	Crafting
 	NAMES.POLAR_DRYICE = "Dry Ice"

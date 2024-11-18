@@ -20,6 +20,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Worldgen
 	
 	--	Plants
+	DESCRIBE.ANTLER_TREE = {
+		BURNING = "Horns is burned now!",
+		BURNT = "Would snap in a punch.",
+		CHOPPED = "Wolfgang needs better opponents.",
+		GENERIC = "Tree with horns? Tree wants to fight?",
+	}
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Mmm? Must have been the wind."
@@ -27,6 +33,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.ROCK_POLAR = "Too cold for lifting."
 	
 	--	Misc
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Something hiding?"
 	
 --	Mobs
 	
@@ -39,7 +46,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Puny but cute.",
 		GENERIC = "Ha! Is puny critter!",
-		SNOW = "Someone hiding?",
 	}
 	
 --	Buildings
@@ -52,6 +58,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.ICELETTUCE = "Leaves (Crunch)... very (Cronch)... crunchy..."
+	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgang's grip."
 	
 	--	Crafting
 	DESCRIBE.POLAR_DRYICE = "Stronger than ice."
