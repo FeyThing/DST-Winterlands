@@ -86,8 +86,8 @@ AddRoom("PolarIsland_BG", {
 		distributepercent = 0.07,
 		distributeprefabs = {
 			grass = 1,
+			antler_tree = 1.25,
 			marsh_bush = 1,
-			marsh_tree = 1,
 			rock_ice = 1,
 		},
 	}

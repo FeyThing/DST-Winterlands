@@ -28,26 +28,6 @@ local function OnEntitySleep(inst)
 	inst:Remove()
 end
 
---[[local function OnSave(inst, data)
-	data.mist_scale = inst.mist_scale
-	if inst.mist_emitter then
-		local ents = {}
-		
-		data.emitter_id = inst.mist_emitter.GUID
-		table.insert(ents, data.emitter_id)
-		
-		return ents
-	end
-end
-
-local function OnLoadPostPass(inst, newents, data)
-	if data then
-		if data.emitter_id ~= nil and newents[data.emitter_id] then
-			inst:SetEmitter(newents[data.emitter_id].entity, data.mist_scale)
-		end
-	end
-end]]
-
 local function OnInit(inst, x, y, z)
 	if not inst:IsValid() then
 		return
@@ -60,7 +40,7 @@ local function OnInit(inst, x, y, z)
 		inst.Transform:SetRotation(math.random() * 360)
 	end
 	
-	inst.components.locomotor:WalkForward()
+	inst.Physics:SetMotorVel(inst.mistspeed, 0, 0)
 end
 
 local function SetEmitter(inst, emitter, scale, speed)
@@ -75,7 +55,7 @@ local function SetEmitter(inst, emitter, scale, speed)
 		x, y, z = emitter.Transform:GetWorldPosition()
 	end
 	
-	inst.components.locomotor.walkspeed = speed or 0.1
+	inst.mistspeed = speed or 0.1
 	
 	inst:DoTaskInTime(FRAMES, OnInit, x, y, z)
 end
@@ -115,15 +95,8 @@ local function fn()
 	inst.components.perishable:StartPerishing()
 	inst.components.perishable:SetOnPerishFn(OnPerish)
 	
-	inst:AddComponent("locomotor")
-	inst.components.locomotor.walkspeed = 0.1
-	inst.components.locomotor:EnableGroundSpeedMultiplier(false)
-	inst.components.locomotor:SetTriggersCreep(false)
-	
 	inst.DoMistUpdate = DoMistUpdate
 	inst.OnEntitySleep = OnEntitySleep
-	--inst.OnSave = OnSave
-	--inst.OnLoadPostPass = OnLoadPostPass
 	inst.SetEmitter = SetEmitter
 	
 	inst.persists = false

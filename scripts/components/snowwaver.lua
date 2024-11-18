@@ -103,10 +103,11 @@ function SnowWaver:SetWaves()
 				end
 				
 				local wave = self.waves[id]
+				local insnow = TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
 				
 				if not wave then
 					wave = SpawnPrefab("snowwave")
-					wave:DoWaveFade()
+					wave:DoWaveFade(not insnow)
 					self.waves[id] = wave
 				end
 				

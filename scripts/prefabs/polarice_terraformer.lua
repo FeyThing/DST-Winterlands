@@ -1,6 +1,5 @@
 -- This only helps to collide with things while forming the ice tiles, but in the future it would be nice to form them visually using this too
 
-local DESTROY_NOT_TAGS = {"ignorewalkableplatforms", "ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO"}
 local PLATFORM_TAGS = {"walkableplatform"}
 
 local function OnInit(inst)
@@ -9,10 +8,10 @@ local function OnInit(inst)
 	
 	for i, platform in ipairs(ents) do
 		if platform.components.boatphysics then
-			local angle = inst:GetAngleToPoint(platform.Transform:GetWorldPosition())
-			local direction = -Vector3(math.cos(angle), 0, math.sin(angle))
+			local px, py, pz = platform.Transform:GetWorldPosition()
+			local normalx, normalz = VecUtil_Normalize(px - x, pz - z)
 			
-			platform.components.boatphysics:ApplyForce(direction.x, direction.z, 3)
+			platform.components.boatphysics:ApplyForce(normalx, normalz, 5)
 		end
 	end
 end
@@ -32,11 +31,11 @@ local function fn()
 	inst:AddTag("FX")
 	inst:AddTag("ignorewalkableplatforms")
 	
-	MakeWaterObstaclePhysics(inst, 4, 1, 1)
+	--[[MakeWaterObstaclePhysics(inst, 4, 1, 1)
 	inst.Physics:ClearCollisionMask()
 	inst.Physics:CollidesWith(COLLISION.WORLD)
 	inst.Physics:CollidesWith(COLLISION.ITEMS)
-	inst.Physics:CollidesWith(COLLISION.OBSTACLES)
+	inst.Physics:CollidesWith(COLLISION.OBSTACLES)]]
 	
 	inst.entity:SetPristine()
 	

@@ -2,7 +2,7 @@
 	
 	require("polar_strings/strings")
 	
-	local characters = {"wilson", "wolfgang", "wormwood"}
+	local characters = {"wilson", "wolfgang", "warly", "wormwood", "walter"}
 	--local translation = GetModConfigData("language")
 	
 	for i, character in ipairs(characters) do
@@ -46,6 +46,7 @@ local prefabs = {
 	"penguin",
 	"rabbit",
 	"rock_ice",
+	"seastack",
 	"shovels",
 	"walrus",
 	"wilson",
@@ -58,6 +59,10 @@ local components = {
 	"dynamicmusic", -- : (
 	"explosive",
 	"groundpounder",
+	"hounded",
+	"hunter",
+	"inspectable",
+	"locomotor",
 	"map",
 	"moisture",
 	"pickable",

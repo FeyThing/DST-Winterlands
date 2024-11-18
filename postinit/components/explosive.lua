@@ -8,10 +8,15 @@ local Explosive = require("components/explosive")
 	local OldOnBurnt = Explosive.OnBurnt
 	function Explosive:OnBurnt(...)
 		local x, y, z = self.inst.Transform:GetWorldPosition()
-		local icicles = TheSim:FindEntities(x, y, z, self.explosiverange * 25, ICICLE_TAGS)
+		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
 		
+		if TheWorld.components.polarice_manager then
+			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, self.inst)
+		end
+		
+		local icicles = TheSim:FindEntities(x, y, z, self.explosiverange * 25, ICICLE_TAGS)
 		for i, icicle in ipairs(icicles) do
-			local dist = math.sqrt(self.inst:GetDistanceSqToInst(icicle))
+			local dist = math.sqrt(icicle:GetDistanceSqToPoint(x, y, z))
 			local break_time = 0.5 * (dist / 12)
 			
 			icicle:DoTaskInTime(break_time, function()

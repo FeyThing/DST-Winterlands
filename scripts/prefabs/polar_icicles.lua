@@ -49,13 +49,13 @@ local function DoBreak(inst)
 			rock.components.workable:WorkedBy(inst, numworks)
 		end
 
-		if FindEntity(inst, 6, nil, { "icecaveshelter" }) ~= nil then
+		if FindEntity(inst, 6, nil, {"icecaveshelter"}) ~= nil then
 			return
 		end
 
 		if TheWorld.components.polarice_manager then
 			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
-			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, true)
+			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, inst)
 		end
 	elseif inst.AnimState:IsCurrentAnimation("fx_"..anim) then
 		inst:Remove()

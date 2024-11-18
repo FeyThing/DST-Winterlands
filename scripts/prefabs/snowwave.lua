@@ -6,7 +6,7 @@ local SNOWWAVE_VARS = 4
 
 local function DoWaveFade(inst, out)
 	if out then
-		inst.components.colourtweener:StartTween({1, 1, 1, 0}, 0.3, inst.Remove)
+		inst.components.colourtweener:StartTween({1, 1, 1, 0}, 0.3)--, inst.Remove)
 	else
 		inst.components.colourtweener:StartTween({1, 1, 1, 1}, 0.3)
 	end

@@ -20,6 +20,12 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Worldgen
 	
 	--	Plants
+	DESCRIBE.ANTLER_TREE = {
+		BURNING = "I won't say no to a fire.",
+		BURNT = "It contrasts a lot with the rest of the place.",
+		CHOPPED = "Better vamoose before the other trees notice.",
+		GENERIC = "This tree is axing for a fight.",
+	}
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "It believe it moved just now."
@@ -27,10 +33,11 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.ROCK_POLAR = "Gems fresh for harvest."
 	
 	--	Misc
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "I think I saw something in here."
 	
 --	Mobs
 	DESCRIBE.POLARBEAR = {
-		DEAD = "A pile of snow... no wait.",
+		DEAD = "A pile of snow... no, wait.",
 		ENRAGED = "He's as much bark than bite!",
 		FOLLOWER = "That's my bear buddy.",
 		GENERIC = "A fearsome, cuddly looking guy.",
@@ -38,8 +45,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Let's play a small game.",
 		GENERIC = "Aha! Come here!",
-		SNOW = "I think I saw something in here.",
 	}
+	DESCRIBE.POLARWARG = "The cold must be trivial with fur like his."
 	
 --	Buildings
 	
@@ -51,6 +58,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.ICELETTUCE = "That's a little too much seasoning."
+	DESCRIBE.ICEBURRITO = "I really dig that name."
 	
 	--	Crafting
 	DESCRIBE.POLAR_DRYICE = "I could build something cool with all that."

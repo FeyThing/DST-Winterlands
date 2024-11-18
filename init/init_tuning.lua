@@ -96,6 +96,8 @@ local night_time = seg_time * night_segs
 --	Misc
 	TUNING.ANCHOR_DEPTH_TIMES.POLAR = 5
 	
+	TUNING.DEEP_IN_SNOW_PLAYERDIST = 24
+	
 	TUNING.POLAR_SLOWMULT = 0.5
 	TUNING.POLAR_SLOWTIME = 8
 	TUNING.POLAR_COVERTIME = {min = 3, max = 10}

@@ -1,6 +1,12 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local function OnPolarFreeze(inst, forming)
+	if not forming then
+		DestroyEntity(inst, TheWorld, true, true)
+	end
+end
+
 local OldSetStage
 local function SetStage(inst, stage, source, ...)
 	if inst._canpolarise and IsInPolar(inst) and (source == nil or source == "grow" or source == "melt") then
@@ -35,6 +41,8 @@ ENV.AddPrefabPostInit("rock_ice", function(inst)
 			PolarUpvalue(inst.components.workable.onwork, "SetStage", SetStage)
 		end
 	end
+	
+	inst.OnPolarFreeze = OnPolarFreeze
 	
 	inst:DoTaskInTime(0.1, OnPolarInit) -- Stage change should be delayed because OnLoad begs to restore saved stage first
 end)
