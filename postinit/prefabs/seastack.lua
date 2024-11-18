@@ -1,7 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local function OnKelpFreeze(inst, forming)
+local function OnPolarFreezeKelp(inst, forming)
 	local replace_pref = forming and "bullkelp_beachedroot" or "bullkelp_plant"
 	if replace_pref ~= inst.prefab then
 		inst = ReplacePrefab(inst, replace_pref)
@@ -12,18 +12,32 @@ local function OnKelpFreeze(inst, forming)
 	end
 end
 
-local function OnPolarFreeze(inst, forming)
+local function OnPolarFreezeWaterplant(inst, forming)
 	if forming then
-		DestroyEntity(inst, TheWorld, true, true)
+		local pos = inst:GetPosition()
+		inst.components.lootdropper:SpawnLootPrefab("waterplant_planter", pos)
+
+		local rock = SpawnPrefab("waterplant_rock")
+		rock.Transform:SetPosition(inst.Transform:GetWorldPosition())
+
+		inst.base:Remove()
+		inst:Remove()
+
+		DestroyEntity(rock, TheWorld, false, true)
+	end
+end
+
+local function OnPolarFreezeCookieCutter(inst, forming)
+	if forming then
+		inst:Remove()
 	end
 end
 
 local SEASTUFF = {
-	bullkelp_beachedroot = OnKelpFreeze,
-	bullkelp_plant = OnKelpFreeze,
-	seastack = OnPolarFreeze,
-	wobster_den = OnPolarFreeze,
-	moonglass_wobster_den = OnPolarFreeze,
+	bullkelp_beachedroot = OnPolarFreezeKelp,
+	bullkelp_plant = OnPolarFreezeKelp,
+	waterplant = OnPolarFreezeWaterplant,
+	cookiecutter = OnPolarFreezeCookieCutter
 }
 
 for prefab, fn in pairs(SEASTUFF) do
