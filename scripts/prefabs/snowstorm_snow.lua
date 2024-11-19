@@ -89,6 +89,13 @@ local function fn()
         local lifetime = MIN_LIFETIME + (MAX_LIFETIME - MIN_LIFETIME) * UnitRand()
         local px, py, pz = emitter_shape()
 
+        local abs_px, _, abs_pz = inst.Transform:GetWorldPosition()
+        abs_px = abs_px + px
+        abs_pz = abs_pz + pz
+        if next(TheSim:FindEntities(abs_px, 0, abs_pz, TUNING.SHADE_POLAR_RANGE - 2, { "icecaveshelter" })) ~= nil then
+            return
+        end
+
         if use_uv_offset then
             local angle = math.random() * 360
             local uv_offset = math.random(0, 7) * .125
