@@ -194,7 +194,8 @@ return Class(function(self, inst)
 	inst:ListenForEvent("temperaturetick", function(inst, val) _world_temperature = val end)
 
     -- [ Methods ] --
-	local IGNORE_ICE_DROWNING_ONREMOVE_TAGS = {"ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
+	local IGNORE_ICE_BREAKING_ONREMOVE_TAGS = { "ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
+	local IGNORE_ICE_FORMING_ONREMOVE_TAGS = { "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
 	local FLOATEROBJECT_TAGS = { "floaterobject" }
 
 	function self:QueueCreateIceAtTile(tx, ty)
@@ -276,16 +277,18 @@ return Class(function(self, inst)
 		local terraformer = SpawnPrefab("polarice_terraformer")
 		terraformer.Transform:SetPosition(x, 0, z)
 		
-		local center_position = Vector3(x, 0, z)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
-		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
+		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_FORMING_ONREMOVE_TAGS)
 		for _, ent in ipairs(entities_near_ice) do
 			if ent.components.inventoryitem and ent.Physics then
 				LaunchAway(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
 			end
+
 			if ent.OnPolarFreeze then
 				ent:OnPolarFreeze(true)
+			elseif ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
+				DestroyEntity(ent, inst, true, true)
 			end
 		end
 		
@@ -384,24 +387,23 @@ return Class(function(self, inst)
 
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1.0) * 1.4142
 		local is_ocean_tile = IsOceanTile(old_tile)
-
 		if is_ocean_tile then
 			-- Behaviour pulled from walkableplatform's onremove/DestroyObjectsOnPlatform response.
-			local entities_near_ice = TheSim:FindEntities(dx, dy, dz, tile_radius_plus_overhang, nil, IGNORE_ICE_DROWNING_ONREMOVE_TAGS)
+			local entities_near_ice = TheSim:FindEntities(dx, dy, dz, tile_radius_plus_overhang, nil, IGNORE_ICE_BREAKING_ONREMOVE_TAGS)
 			for _, ent in ipairs(entities_near_ice) do
 				if ent:IsValid() then
 					local has_drownable = (ent.components.drownable ~= nil)
-					local shore_point = (has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz))) or nil
-					ent:PushEvent("onsink", {boat = nil, shore_pt = shore_point})
+					local shore_point = has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz)) or nil
+					ent:PushEvent("onsink", { boat = nil, shore_pt = shore_point })
 					-- We're testing the overhang, so we need to verify that anything we find isn't
 					-- still on some adjacent dock or land tile or other platform after we remove ourself.
-					if ent:IsValid() and not has_drownable and not ent.entity:GetParent()
-						and not ent.components.amphibiouscreature and not _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) and not ent:GetCurrentPlatform() then
+					if not has_drownable and not ent.entity:GetParent() and not ent.components.amphibiouscreature and
+					not _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) and not ent:GetCurrentPlatform() then
 						if ent.OnPolarFreeze then
 							ent:OnPolarFreeze(false)
 						elseif ent.components.inventoryitem then
 							ent.components.inventoryitem:SetLanded(false, true)
-						else
+						elseif not ent:HasTag("ignorewalkableplatforms") then -- Not ocean stuff
 							DestroyEntity(ent, inst, true, true)
 						end
 					end
