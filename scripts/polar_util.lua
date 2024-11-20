@@ -90,7 +90,7 @@ function PolarifySpeech(ret, inst)
 	
 	if type(inst) == "table" then
 		local polar_level = GetPolarWetness(inst)
-		if math.random() < (TUNING.POLARWETNESS_SNIFFNESS * polar_level) then
+		if math.random() < (TUNING.POLAR_WETNESS_SNIFFNESS * polar_level) then
 			for i = 1, #ret do
 				local c = ret:sub(i, i)
 				if c == " " then
@@ -127,7 +127,7 @@ function IsTooDeepInSnow(inst, viewer)
 	local insnow = false
 	if inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
 		local x, y, z = inst.Transform:GetWorldPosition()
-		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
+		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
 		
 		if insnow and not inst:HasTag("snowhidden") then
 			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()

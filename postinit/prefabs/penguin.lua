@@ -10,7 +10,8 @@ local penguin_prefabs = {
 }
 
 local function OnPolarInit(inst)
-	if IsInPolar(inst) and (inst.prefab ~= "rock_ice" or inst.remove_on_dryup) then
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and (inst.prefab ~= "rock_ice" or inst.remove_on_dryup) then
 		inst:Hide()
 		inst:DoTaskInTime(0.1, inst.Remove)
 	end

@@ -1,6 +1,23 @@
 -------------------------------------------------------------------------
 ---------------------- Attach and dettach functions ---------------------
 -------------------------------------------------------------------------
+
+local function Immunity_OnAttached(inst, target)
+	if not target:HasTag("polarimmune") then
+		target:AddTag("polarimmune")
+		
+		inst._immunity = true
+	end
+end
+
+local function Immunity_OnDetached(inst, target)
+	if inst._immunity then
+		target:RemoveTag("polarimmune")
+	end
+end
+
+--
+
 local HEATSOURCE_TAGS = {"HASHEATER"}
 local HEATSOURCE_NOT_TAGS = {"heatrock"}
 
@@ -152,4 +169,5 @@ local function MakeBuff(name, onattachedfn, onextendedfn, ondetachedfn, duration
 	return Prefab("buff_"..name, fn)
 end
 
-return MakeBuff("polarwetness", Wetness_OnAttached, nil, Wetness_OnDetached, nil, 2, true, TUNING.POLAR_WETNESS_OVERHEATS - (TUNING.POLAR_WETNESS_OVERHEATS / TUNING.POLAR_WETNESS_LVLS) - 1)
+return MakeBuff("polarwetness", Wetness_OnAttached, nil, Wetness_OnDetached, nil, 2, true, TUNING.POLARWETNESS_DEBUFF_STARTTEMP),
+	MakeBuff("polarimmunity", Immunity_OnAttached, nil, Immunity_OnDetached, TUNING.POLAR_IMMUNITY_DURATION, 2, false)

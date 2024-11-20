@@ -40,7 +40,7 @@ end)
 
 local ITEMS = {
 	"icelettuce",
-	"icelettuce_seed",
+	"icelettuce_seeds",
 	"polar_dryice",
 	"polarbearfur",
 	"polarbearhouse",

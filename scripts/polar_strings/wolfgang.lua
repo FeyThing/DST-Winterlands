@@ -26,6 +26,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		CHOPPED = "Wolfgang needs better opponents.",
 		GENERIC = "Tree with horns? Tree wants to fight?",
 	}
+	DESCRIBE.ICELETTUCE_SEEDS = "Is little tiny seed for burying."
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Mmm? Must have been the wind."

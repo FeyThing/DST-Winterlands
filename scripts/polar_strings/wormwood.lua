@@ -20,6 +20,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 --	Worldgen
 	
 	--	Plants
+	DESCRIBE.ANTLER_TREE = {
+		BURNING = "Fire! Nooooo!",
+		BURNT = "Snow not enough?",
+		CHOPPED = "(sigh) Why fight?",
+		GENERIC = "Why grow horns for?",
+	}
+	DESCRIBE.ICELETTUCE_SEEDS = "Chilly baby"
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Growing?"
@@ -30,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Mmm?"
 	
 --	Mobs
+
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Uh oh...",
 		ENRAGED = "Need to chill!",

@@ -14,6 +14,8 @@ end
 
 local polar_filters = {
 	antler_tree = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
+	antler_tree_burnt = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
+	antler_tree_stump = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
 	pillar_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_SNOW}),
 	polar_icicle_rock = OnlyAllow({WORLD_TILES.POLAR_CAVES}),
 	polarbearhouse = OnlyAllow({WORLD_TILES.POLAR_DRYICE, WORLD_TILES.POLAR_ROCKY, WORLD_TILES.POLAR_SNOW}),

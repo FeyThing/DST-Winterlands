@@ -25,6 +25,10 @@ end
 function PolarWalker:ShouldSlow()
 	local pt = self.inst:GetPosition()
 	
+	if self.inst:HasTag("polarimmune") then
+		return false, "IMMUNE"
+	end
+	
 	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
 		return false, "RIDING"
 	end

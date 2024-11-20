@@ -5,6 +5,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Plants
 	NAMES.ANTLER_TREE = "Bullbark"
+	NAMES.FARM_PLANT_ICELETTUCE = "Iceberg Lettuce"
+	NAMES.ICELETTUCE_SEEDS = "Frigid Seed"
+	NAMES.KNOWN_ICELETTUCE_SEEDS = "Iceberg Lettuce Seed"
 	
 	--	Rocks and stones
 	NAMES.POLAR_ICICLE = "Icicle"
@@ -133,7 +136,10 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	
 	--	Scrapbook, Cookbook
+	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
+	
+	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
 	
 	--	Recipes
 	RECIPE_DESC.FROSTWALKERAMULET = "Water never was this cool before!"

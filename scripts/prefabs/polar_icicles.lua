@@ -32,7 +32,7 @@ local function DoBreak(inst)
 			end
 		end
 		
-		local icicles = TheSim:FindEntities(x, y, z, 100, ICICLE_ROCK_TAGS)
+		local icicles = TheSim:FindEntities(x, y, z, 200, ICICLE_ROCK_TAGS)
 		if #icicles >= TUNING.POLAR_WORLD_MAXICICLES then
 			for i, v in ipairs(icicles) do
 				if v:IsAsleep() then
@@ -52,10 +52,14 @@ local function DoBreak(inst)
 		if FindEntity(inst, 6, nil, {"icecaveshelter"}) ~= nil then
 			return
 		end
-
-		if TheWorld.components.polarice_manager then
+		
+		if TheWorld.components.polarice_manager and TheWorld.Map:GetTileAtPoint(x, y, z) == WORLD_TILES.POLAR_ICE then
 			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
 			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, inst)
+			
+			if rock and rock:IsValid() then
+				rock.Transform:SetPosition(TheWorld.Map:GetTileCenterPoint(tx, ty))
+			end
 		end
 	elseif inst.AnimState:IsCurrentAnimation("fx_"..anim) then
 		inst:Remove()
