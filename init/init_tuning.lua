@@ -137,3 +137,4 @@ local night_time = seg_time * night_segs
 	TUNING.POLAR_MIST_TWEENTIME = 1.5
 	
 	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
+	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false

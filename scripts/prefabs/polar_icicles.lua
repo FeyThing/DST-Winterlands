@@ -5,7 +5,6 @@ local assets = {
 
 SetSharedLootTable("polar_icicle", {
 	{"ice", 1},
-	{"ice", 0.5},
 })
 
 local BREAK_IGNORE_TAGS = {"INLIMBO", "icicleimmune"}

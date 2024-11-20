@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "Feything, Gearless, LukaS, ADM, Notka"
 
-version = "let_tuce_grow"
+version = "snowy_day"
 local info_version = "󰀔 [ Version "..version.." ]\n"
 
 description = info_version..[[
@@ -23,13 +23,12 @@ server_filter_tags = {
 
 local descs = {
 	misc_shader = "It's always winter in here, visually speaking.",
-	misc_snow = "High Snow is meant to hide away small things.\nStill... you might want to adjust it?",
+	misc_snow = "High Snow will hide away small things in the snow.\nBut it melts away in Summer for you to look inside!",
 }
 
 local options = {
 	none = {{description = "", data = false}},
 	language = {{description = "English", data = false}},
-	snow = {{description = "Full", data = 1}, {description = "Less", data = 0.7}, {description = "Few", data = 0.4}, {description = "Melted", hover = "It's gone.", data = 0}},
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},
 }
 
@@ -45,5 +44,6 @@ configuration_options = {
 	{name = "language",				label = configs.language,				hover = descs.language,			options = options.language, 	default = false},
 --	Misc
 	{name = "misc",					label = configs.misc,													options = options.none, 		default = false},
+	{name = "misc_snow",			label = configs.misc_snow,				hover = descs.misc_snow,		options = options.toggle,		default = true},
 	{name = "misc_shader",			label = configs.misc_shader,			hover = descs.misc_shader,		options = options.toggle,		default = true},
 }

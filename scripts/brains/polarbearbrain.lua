@@ -166,7 +166,7 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return IsHomeOnFire(self.inst) end, "OnFire",
 			ChattyNode(self.inst, "POLARBEAR_PANICHOUSEFIRE",
 				Panic(self.inst))),
-		IfNode(function() return self.inst.enraged end, "RageZoomin",
+		WhileNode(function() return self.inst.enraged end, "RageZoomin",
 			Panic(self.inst)),
 		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),

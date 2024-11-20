@@ -8,7 +8,7 @@ local BLOCKER_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "cha
 local LETTUCE_TAGS = {"farm_plant_icelettuce"}
 
 local function SnowHasSpace(pt)
-	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 4, nil, BLOCKER_TAGS) == 0 and TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 10, nil, BLOCKER_TAGS) == 0 and TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
 end
 
 local function SpawnLettuce(inst)
@@ -37,7 +37,6 @@ local function OnLoadPostPass(inst, newents, savedata)
 	if savedata then
 		if savedata.lettuce_id and newents[savedata.lettuce_id] then
 			inst.lettuce = newents[savedata.lettuce_id].entity
-			inst.lettuce:LinkToHome(inst)
 		end
 		
 		inst.canspawnlettuce = savedata.canspawnlettuce or inst.canspawnlettuce
