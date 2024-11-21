@@ -8,24 +8,27 @@ local prefabs = {
 
 local polarfox_brain = require("brains/polarfoxbrain")
 
-local function OnPlayerFar(inst, player)
-	if inst.tail and inst._tailalert then
-		inst._tailalert = nil
-		inst.tail:PlayTailAnim("alert_pst", "idle")
-	end
-end
-
 local function OnPlayerNear(inst, player)
-	if inst.components.follower and inst.components.follower.leader == nil then
-		if inst.tail and not inst._tailalert then
-			inst._tailalert = true
+	if inst.components.follower and inst.components.follower.leader == nil and inst.components.combat and inst.components.combat.target == nil then
+		if inst.tail and not inst.wantstoalert then
 			inst.tail:PlayTailAnim("alert_pre", "alert_loop")
 		end
+		
+		inst.last_wake_time = GetTime()
+		inst.wantstoalert = true
 		
 		if inst.components.sleeper and inst.components.sleeper:IsAsleep() then
 			inst.components.sleeper:WakeUp()
 		end
 	end
+end
+
+local function OnPlayerFar(inst, player)
+	if inst.tail and inst.wantstoalert then
+		inst.tail:PlayTailAnim("alert_pst", "idle")
+	end
+	
+	inst.wantstoalert = nil
 end
 
 local function IsAbleToAccept(inst, item, giver)
@@ -52,8 +55,8 @@ local function OnGetItemFromPlayer(inst, giver, item)
 	if item.components.edible then
 		if giver.components.leader then
 			if inst.tail and inst.tail.tailanim:value() ~= "wiggle" then
-				inst.tail:PlayTailAnim(inst._tailalert and "alert_pst" or "wiggle", "wiggle")
-				inst._tailalert = nil
+				inst.tail:PlayTailAnim(inst.wantstoalert and "alert_pst" or "wiggle", "wiggle")
+				inst.wantstoalert = nil
 			end
 			
 			giver:PushEvent("makefriend")
@@ -94,12 +97,21 @@ local function SleepTest(inst)
 end
 
 local function WakeTest(inst)
-    if not inst.last_sleep_time or GetTime() - inst.last_sleep_time >= inst.nap_length then
-        inst.nap_interval = math.random(TUNING.MIN_CATNAP_INTERVAL, TUNING.MAX_CATNAP_INTERVAL)
-        inst.last_wake_time = GetTime()
+	if not inst.last_sleep_time or GetTime() - inst.last_sleep_time >= inst.nap_length then
+		inst.nap_interval = math.random(TUNING.MIN_CATNAP_INTERVAL, TUNING.MAX_CATNAP_INTERVAL)
+		inst.last_wake_time = GetTime()
 		
-        return true
-    end
+		return true
+	end
+end
+
+local function OnAttacked(inst, data)
+	inst.wantstoalert = nil
+	inst.wantstosit = nil
+	
+	if inst.tail then
+		inst.tail:PlayTailAnim("hit", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
+	end
 end
 
 local function OnTimerDone(inst, data)
@@ -107,7 +119,7 @@ local function OnTimerDone(inst, data)
 end
 
 local function TailSwip(inst)
-	if not inst.sg:HasStateTag("moving") and not inst._tailalert and not inst.sg:HasStateTag("busy") then
+	if not inst.sg:HasStateTag("moving") and not inst.wantstoalert and not inst.sg:HasStateTag("busy") then
 		if inst.tail then
 			inst.tail:PlayTailAnim("swip", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
 		end
@@ -229,6 +241,7 @@ local function fn()
 	
 	inst:DoTaskInTime(0, TailTask)
 	
+	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	inst:SetStateGraph("SGpolarfox")
@@ -281,7 +294,7 @@ end
 local function SetTailAnim(inst, anim, push, loop)
 	for i, v in ipairs(inst.fx or {}) do
 		v.AnimState:PlayAnimation(anim, loop)
-		if not loop and push then
+		if not loop and push and push ~= "__" then
 			v.AnimState:PushAnimation(push, true)
 		end
 	end
@@ -296,7 +309,7 @@ end
 
 local function PlayTailAnim(inst, anim, push, loop)
 	if anim then
-		inst.tailpush:set(push or "idle")
+		inst.tailpush:set(push or "__")
 		inst.tailloop:set(loop or false)
 		if anim then
 			inst.tailanim:set(anim)

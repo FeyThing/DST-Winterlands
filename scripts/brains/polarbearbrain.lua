@@ -60,7 +60,7 @@ local function FindFoodAction(inst)
 			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 8 and item:IsOnPassablePoint()
 		end, nil, FINDFOOD_CANT_TAGS)
 	end
-
+	
 	return (target and BufferedAction(inst, target, ACTIONS.EAT)) or nil
 end
 

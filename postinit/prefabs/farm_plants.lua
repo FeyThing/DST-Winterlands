@@ -124,7 +124,22 @@ PLANT_DEFS.icelettuce = {
 local OLD_GROWTH_STAGES
 local LETTUCE_GROWTH_STAGES = {}
 
---	Freeze nearby tender
+--	Freeze Tender
+
+local function IsTenderImmune(inst, doer)
+	local immune = inst:GetDistanceSqToInst(doer) > 2 or (doer._music_modules and doer._music_modules > 0)
+	
+	if not immune and doer.components.inventory then
+		for k, v in pairs(doer.components.inventory.equipslots) do
+			if v:HasTag("band") then
+				immune = true
+				break
+			end
+		end
+	end
+	
+	return immune
+end
 
 local OldOnTendTo
 local function OnTendTo(inst, doer, ...)
@@ -134,11 +149,19 @@ local function OnTendTo(inst, doer, ...)
 		test = OldOnTendTo(inst, doer, ...)
 	end
 	
-	if test and doer and doer.components.freezable and inst:GetDistanceSqToInst(doer) < 2 then
+	if test and doer and doer.components.freezable and not inst:IsTenderImmune(doer) then
 		doer.components.freezable:AddColdness(TUNING.ICELETTUCE_FREEZABLE_COLDNESS)
 	end
 	
 	return test
+end
+
+local function OnPicked(inst, data)
+	local picker = data and data.picker
+	
+	if picker and picker.components.freezable and not inst:IsTenderImmune(picker) then
+		picker.components.freezable:AddColdness(TUNING.ICELETTUCE_FREEZABLE_COLDNESS)
+	end
 end
 
 --	Stress other plants when it's not hot outside
@@ -232,6 +255,10 @@ for k, data in pairs(PLANT_DEFS) do
 			
 			inst:AddComponent("polarmistemitter")
 			inst.components.polarmistemitter.maxmist_range = 2
+			
+			inst.IsTenderImmune = IsTenderImmune
+			
+			inst:ListenForEvent("picked", OnPicked)
 			
 		elseif inst.components.farmplantstress then
 			if OldKillJoyStressTest == nil then
