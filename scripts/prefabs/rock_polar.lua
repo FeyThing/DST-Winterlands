@@ -86,9 +86,9 @@ local function commonfn()
 	inst.AnimState:SetBank("polar_rocks")
 	inst.AnimState:SetBuild("polar_rocks")
 	
-	inst.MiniMapEntity:SetIcon("polar_rock.png")
+	inst.MiniMapEntity:SetIcon("rock_polar.png")
 	
-	inst:SetPrefabNameOverride("polar_rocks")
+	inst:SetPrefabNameOverride("rock_polar")
 	
 	MakeSnowCoveredPristine(inst)
 	

@@ -15,7 +15,7 @@ return Class(function(self, inst)
 	end
 	
 	local function IsPenguinBeach(pt)
-		return IsInPolarAtPoint(pt.x, 0, pt.z)
+		return GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
 	end
 	
 	local function GetHerdSpawnPos()

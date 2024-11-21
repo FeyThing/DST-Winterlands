@@ -26,6 +26,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		CHOPPED = "Clashed!",
 		GENERIC = "Oh! I almost ran into it.",
 	}
+	DESCRIBE.ICELETTUCE_SEEDS = "It will grow some nice fresh vegetable."
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "My thanks for the fresh reminder."
@@ -36,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Anything edible in here?"
 	
 --	Mobs
+	
 	DESCRIBE.POLARBEAR = {
 		DEAD = "I can finally sell its fur.",
 		ENRAGED = "It's hungry for a fight!",

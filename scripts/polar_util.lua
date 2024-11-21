@@ -90,7 +90,7 @@ function PolarifySpeech(ret, inst)
 	
 	if type(inst) == "table" then
 		local polar_level = GetPolarWetness(inst)
-		if math.random() < (TUNING.POLARWETNESS_SNIFFNESS * polar_level) then
+		if math.random() < (TUNING.POLAR_WETNESS_SNIFFNESS * polar_level) then
 			for i = 1, #ret do
 				local c = ret:sub(i, i)
 				if c == " " then
@@ -125,15 +125,18 @@ end
 
 function IsTooDeepInSnow(inst, viewer)
 	local insnow = false
-	if inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
-		local x, y, z = inst.Transform:GetWorldPosition()
-		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
-		
-		if insnow and not inst:HasTag("snowhidden") then
-			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
-			local bby = bby2 - bby1
+	
+	if ThePlayer.components.snowwaver and ThePlayer.components.snowwaver.enabled then
+		if inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
+			local x, y, z = inst.Transform:GetWorldPosition()
+			insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
 			
-			insnow = bby < 2 -- TODO: adapt with current snowwave size
+			if insnow and not inst:HasTag("snowhidden") then
+				local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
+				local bby = bby2 - bby1
+				
+				insnow = bby < 2 -- TODO: adapt with current snowwave size
+			end
 		end
 	end
 	
@@ -172,9 +175,10 @@ end
 local OldPlayFootstep = PlayFootstep
 function PlayFootstep(inst, volume, ispredicted, ...)
 	if inst.components.polarwalker then
-		local slowed, slowing = inst.components.polarwalker:IsPolarSlowed()
+		--local slowed, slowing = inst.components.polarwalker:IsPolarSlowed()
 		
-		if slowing then
+		local x, y, z = ThePlayer.Transform:GetWorldPosition()
+		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) then
 			local splash_fx = (inst:HasTag("epic") and inst:HasTag("largecreature")) and "polar_splash_epic"
 				or (inst:HasTag("epic") or inst:HasTag("largecreature")) and "polar_splash_large"
 				or "polar_splash"

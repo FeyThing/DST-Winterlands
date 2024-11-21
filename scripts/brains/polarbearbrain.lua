@@ -60,7 +60,7 @@ local function FindFoodAction(inst)
 			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 8 and item:IsOnPassablePoint()
 		end, nil, FINDFOOD_CANT_TAGS)
 	end
-
+	
 	return (target and BufferedAction(inst, target, ACTIONS.EAT)) or nil
 end
 
@@ -166,7 +166,7 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return IsHomeOnFire(self.inst) end, "OnFire",
 			ChattyNode(self.inst, "POLARBEAR_PANICHOUSEFIRE",
 				Panic(self.inst))),
-		IfNode(function() return self.inst.enraged end, "RageZoomin",
+		WhileNode(function() return self.inst.enraged end, "RageZoomin",
 			Panic(self.inst)),
 		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),

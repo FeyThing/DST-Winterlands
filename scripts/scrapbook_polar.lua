@@ -1,5 +1,7 @@
 local POLAR_SCRAPBOOK = {
 	--	Items / Foods
+	icelettuce = {type = "food", stacksize = 40, hungervalue = 18.75, healthvalue = 10, sanityvalue = 5, foodtype = "VEGGIE", perishable = 1440, burnable = true, build = "icelettuce", bank = "icelettuce", anim = "idle", deps = {"icelettuce_seeds"}, specialinfo = "ICELETTUCE"},
+	icelettuce_seeds = {type = "food", subcat = "tackle", stacksize = 40, hungervalue = 9.375, healthvalue = 0.5, sanityvalue = 0, foodtype = "SEEDS", perishable = 19200, lure_charm = 0.2, lure_dist = 1, lure_radius = 3, burnable = true, build = "polar_seeds", bank = "polar_seeds", anim = "icelettuce", deps = {"farm_plant_icelettuce", "seeds_cooked", "spoiled_food"}},
 	polar_dryice = {type = "item", subcat = "element", stacksize = 40, hungervalue = 9.375, healthvalue = 2, sanityvalue = 0, foodtype = "ELEMENTAL", build = "polar_dryice", bank = "polar_dryice", anim = "f1", perishable = 19200},
 	polarbearfur = {type = "item", stacksize = 20, build = "polarbearfur", bank = "polarbearfur", anim = "idle", fueltype = "BURNABLE", fuelvalue = 45, burnable = true},
 	polarmoosehat = {type = "item", subcat = "hat", insulator = 240, insulator_type = "winter", waterproofer = 0.2, dapperness = 0.022222222222222, fueledmax = 2400, fueledrate = 1, fueledtype1 = "USAGE", sewable = true, build = "hat_polarmoose", bank = "polarmoosehat", anim = "anim"},
@@ -13,6 +15,7 @@ local POLAR_SCRAPBOOK = {
 	
 	--	Things / POI
 	antler_tree = {type = "thing", subcat = "tree", workable = "CHOP", burnable = true, build = "antler_tree", bank = "antler_tree", anim = "idle", deps = {"log", "twigs"}},
+	farm_plant_icelettuce = {type = "thing", subcat = "farmplant", workable = "DIG", burnable = true, speechname = "FARM_PLANT", build = "farm_plant_icelettuce", bank = "farm_plant_icelettuce", anim = "crop_full", overridesymbol = {"soil01", "farm_soil", "soil01"}, deps = {"spoiled_food", "icelettuce", "icelettuce_seeds"}},
 	polar_icicle = {type = "thing", damage = 300, build = "icicle_roof", bank = "icicle_roof", anim = "idle_med", deps = {"polar_icicle_rock"}},
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},
 	polarbearhouse = {type = "thing", subcat = "structure", workable = "HAMMER", burnable = true, build = "polarbearhouse", bank = "polarbearhouse", anim = "idle", deps = {"boards", "polar_dryice", "polarbear", "polarbearfur"}},

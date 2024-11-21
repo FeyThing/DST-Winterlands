@@ -56,7 +56,8 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 	
 	local oldappear_enter = sg.states["appear"].onenter
 	sg.states["appear"].onenter = function(inst, ...)
-		if inst.prefab == "penguin" and IsInPolar(inst) then
+		local x, y, z = inst.Transform:GetWorldPosition()
+		if inst.prefab == "penguin" and GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil then
 			inst:Remove()
 			return
 		end

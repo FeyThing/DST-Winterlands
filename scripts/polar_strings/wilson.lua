@@ -26,6 +26,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		CHOPPED = "Better vamoose before the other trees notice.",
 		GENERIC = "This tree is axing for a fight.",
 	}
+	DESCRIBE.ICELETTUCE_SEEDS = "It's some seed."
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "It believe it moved just now."
@@ -36,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "I think I saw something in here."
 	
 --	Mobs
+	
 	DESCRIBE.POLARBEAR = {
 		DEAD = "A pile of snow... no, wait.",
 		ENRAGED = "He's as much bark than bite!",

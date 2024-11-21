@@ -6,7 +6,8 @@ local prefabs = Prefabs.warg.deps
 
 local OldSimulateKoalefantDrops = SimulateKoalefantDrops
 function SimulateKoalefantDrops(inst, ...)
-	if IsInPolar(inst) then
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil then
 		for i = 1, 2 do
 			local loot = SpawnPrefab("meat")
 			inst.components.lootdropper:FlingItem(loot)
@@ -26,7 +27,8 @@ local function OnPolarInit(inst)
 	if inst.event_listeners.spawnedforhunt and inst.event_listeners.spawnedforhunt[inst] then
 		local OldOnSpawnedForHunt = inst.event_listeners.spawnedforhunt[inst][1]
 		inst.event_listeners.spawnedforhunt[inst][1] = function(src, data, ...)
-			if IsInPolar(inst) and OldOnSpawnedForHunt then
+			local x, y, z = inst.Transform:GetWorldPosition()
+			if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and OldOnSpawnedForHunt then
 				OldOnSpawnedForHunt(src, data, ...)
 				
 				local carcass = GetClosestInstWithTag(CARCASS_TAGS, inst, 4)
@@ -44,13 +46,16 @@ local function OnSpawnedForHunt(inst, data, ...)
 		OldOnSpawnedForHunt(inst, data, ...)
 	end
 	
-	if IsInPolar(inst) then
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil then
 		local carcass = GetClosestInstWithTag(CARCASS_TAGS, inst, 4)
 		if carcass and carcass.MakeWinter and not carcass.winter then
 			carcass:MakeWinter()
 		end
 	end
 end
+
+--
 
 local FREEZABLE_TAGS = {"freezable"}
 local NO_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO"}

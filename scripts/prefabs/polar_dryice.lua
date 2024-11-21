@@ -95,6 +95,7 @@ local function fn()
 	inst.components.perishable:StartPerishing()
 	
 	inst:AddComponent("polarmistemitter")
+	inst.components.polarmistemitter.maxmist = 8
 	inst.components.polarmistemitter.scale = 1.5
 	inst.components.polarmistemitter:StartMisting()
 	

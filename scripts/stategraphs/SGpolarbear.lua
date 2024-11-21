@@ -188,7 +188,7 @@ local states = {
 				
 				local not_tags = deepcopy(BITE_NOT_TAGS)
 				local target = inst.components.combat.target
-				if target == nil or (target:IsValid() and target:HasTag("bear")) then
+				if target == nil or (target:IsValid() and not target:HasTag("bear")) then
 					table.insert(not_tags, "bear")
 				end
 				

@@ -4,7 +4,7 @@ local MAX_RATE = 2
 local function GetMistRate(self, inst)
 	local rate = self.rate or 0.44
 	
-	self.maxmist = 8
+	self.maxmist = 2
 	
 	return rate * GetRandomMinMax(MIN_RATE, MAX_RATE)
 end

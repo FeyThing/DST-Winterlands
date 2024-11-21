@@ -9,7 +9,7 @@ ENV.AddComponentPostInit("hounded", function(self)
 	
 	local function SummonSpawn(pt, upgrade, radius_override, ...)
 		if pt then
-			self._polarify = IsInPolarAtPoint(pt.x, 0, pt.z)
+			self._polarify = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
 		end
 		
 		return OldSummonSpawn(pt, upgrade, radius_override, ...)

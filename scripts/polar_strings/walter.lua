@@ -26,6 +26,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		CHOPPED = "The axe won the clash.",
 		GENERIC = "The specter m- ah, it's a tree. Still cool though.",
 	}
+	DESCRIBE.ICELETTUCE_SEEDS = "Where should we plant it, Woby?"
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "I wonder when it will fall."
@@ -36,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Huh? Woby... what's in here?"
 	
 --	Mobs
+	
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Sir? Sir I think you need our help!",
 		ENRAGED = "What big fangs you have!",

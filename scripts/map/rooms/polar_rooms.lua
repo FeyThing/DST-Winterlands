@@ -87,6 +87,7 @@ AddRoom("PolarIsland_BG", {
 	tags = {"PolarFleas"},
 	contents = {
 		countprefabs = {
+			icelettuce_spawner = function(area) return math.max(1, math.floor(area / 42)) end,
 			flint = function() return math.random(2, 3) end,
 			rocks = function() return math.random(3, 6) end,
 		},
