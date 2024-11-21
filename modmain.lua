@@ -50,6 +50,7 @@ local prefabs = {
 	"shovels",
 	"walrus",
 	"wilson",
+	"antlion_sinkhole",
 	
 	"polar_walking",
 }
