@@ -5,7 +5,7 @@ local OldDoRetrofitting = require("map/retrofit_savedata").DoRetrofitting
 
 require("map/retrofit_savedata").DoRetrofitting = function(savedata, world_map, ...)
 	local dirty = false
-	print("HIII????, DoRetrofitting", TUNING.POLAR_RETROFIT)
+	
 	if TUNING.POLAR_RETROFIT == 1 and savedata.map ~= nil and savedata.map.prefab == "forest" then
 		if savedata.ents ~= nil and savedata.ents.pillar_polarcave ~= nil then
 			print("Retrofitting for The Winterlands - Ice Cave found, it seems the island already exists.")

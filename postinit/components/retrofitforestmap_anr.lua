@@ -12,7 +12,7 @@ local function RetrofitPolarIsland()
 		return false
 	end
 	
-	local tags = {"polararea"}
+	local tags = {"RoadPoison", "polararea", "not_mainland"}
 	for k, v in ipairs(node_indices) do
 		if TheWorld.topology.nodes[v].tags == nil then
 			TheWorld.topology.nodes[v].tags = {}
@@ -35,10 +35,9 @@ end
 ENV.AddComponentPostInit("retrofitforestmap_anr", function(self)
 	local OldOnPostInit = self.OnPostInit
 	function self:OnPostInit(...)
-		print("HII??", TUNING.POLAR_RETROFIT)
 		if TUNING.POLAR_RETROFIT == 1 then -- Retrofit full island
 			local success = RetrofitPolarIsland()
-			print("success?", success)
+			
 			if success then
 				TheWorld.Map:RetrofitNavGrid()
 				ChangePolarConfigs("biome_retrofit", 0)
