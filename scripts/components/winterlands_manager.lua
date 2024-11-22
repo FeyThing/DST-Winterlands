@@ -41,7 +41,15 @@ return Class(function(self, inst)
 
 	-- [ Saving/Loading ] --
 	function self:OnSave()
-		return ZipAndEncodeSaveData(_winterlands_grid:Save())
+		local has_data = false
+		for key, val in pairs(_winterlands_grid) do
+			if val then
+				has_data = true
+				break
+			end
+		end
+
+		return has_data and ZipAndEncodeSaveData(_winterlands_grid:Save()) or nil
 	end
 
 	function self:OnLoad(data)
