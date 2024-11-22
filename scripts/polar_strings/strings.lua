@@ -115,7 +115,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Igor",
 		"Koa",
 		"Ragnar",
-		"Viggo",
+		"Viggo",						
 	}
 	
 	STRINGS.POLARBEAR_LOOKATWILSON = {"GOOD DAY FOR FISHING", "SNIFF", "BRR...", "ICE TO MEET YOU", "... EH?", "HA! SMALL LIKE PENGULL!", "YOU'RE NO WALRUS?", "WATCH THE SNOW"}
@@ -142,7 +142,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
 	
 	--	Recipes
-	RECIPE_DESC.FROSTWALKERAMULET = "Water never was this cool before!"
+	RECIPE_DESC.FROSTWALKERAMULET = "Never was water this cool before!"
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
 	RECIPE_DESC.TURF_POLAR_CAVES = "The chilly stone of the chillest cave."

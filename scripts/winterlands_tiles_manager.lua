@@ -22,7 +22,7 @@ AddPrefabPostInit("player_classified", function(inst)
 
     inst:DoStaticTaskInTime(0, function(inst)
         inst:ListenForEvent("snowstormleveldirty", function(inst)
-            if not GLOBAL.TheWorld.ismastersim then
+            if inst._parent._snowfx then
                 inst._parent._snowfx.particles_per_tick = 16 * inst.snowstormlevel:value()
             end
         end)

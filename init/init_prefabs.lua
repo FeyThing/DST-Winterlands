@@ -22,6 +22,7 @@ PrefabFiles = {
 	"veggies_polar",
 	"walls_polar",
 	"warg_polar",
+	"frosty",
 	
 	"polarskinprefabs",
 }
