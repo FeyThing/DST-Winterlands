@@ -356,7 +356,7 @@ return Class(function(self, inst)
 			return
 		end
 
-		local old_tile = WORLD_TILES.OCEAN_SWELL
+		local old_tile = WORLD_TILES.OCEAN_POLAR
 		local undertile = inst.components.undertile
 
 		if undertile then
@@ -364,7 +364,7 @@ return Class(function(self, inst)
 			if old_tile then
 				undertile:ClearTileUnderneath(tx, ty)
 			else
-				old_tile = WORLD_TILES.OCEAN_SWELL
+				old_tile = WORLD_TILES.OCEAN_POLAR
 			end
 		end
 

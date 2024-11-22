@@ -21,6 +21,23 @@ function PolarUpvalue(fn, upvalue_name, set_upvalue)
 	end
 end
 
+local WINTERLANDS_MOD_ID = "DST-Winterlands" -- "workshop-????"	TODO: UPDATE WITH ID HERE WHEN UPLOADED, or match it with your mod folder name if it's local
+
+function ChangePolarConfigs(config, value)
+	local configs = KnownModIndex:LoadModConfigurationOptions(WINTERLANDS_MOD_ID, false)
+	
+	if configs then
+		for i, v in ipairs(configs) do
+			if v.name == config then
+				v.saved = value
+				print("Changed "..config.." to "..value)
+			end
+		end
+	end
+	
+	KnownModIndex:SaveConfigurationOptions(function() end, WINTERLANDS_MOD_ID, configs, false)
+end
+
 --	Constant lower temperature
 
 -- Testing
@@ -177,7 +194,7 @@ function PlayFootstep(inst, volume, ispredicted, ...)
 	if inst.components.polarwalker then
 		--local slowed, slowing = inst.components.polarwalker:IsPolarSlowed()
 		
-		local x, y, z = ThePlayer.Transform:GetWorldPosition()
+		local x, y, z = inst.Transform:GetWorldPosition()
 		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) then
 			local splash_fx = (inst:HasTag("epic") and inst:HasTag("largecreature")) and "polar_splash_epic"
 				or (inst:HasTag("epic") or inst:HasTag("largecreature")) and "polar_splash_large"

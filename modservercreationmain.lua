@@ -9,3 +9,8 @@ FrontEndAssets = {
 ReloadFrontEndAssets()
 
 modimport("init/init_tuning")
+
+--	Reset retrofit, should have run the previous time
+
+require("polar_util")
+GLOBAL.ChangePolarConfigs("biome_retrofit", 0)

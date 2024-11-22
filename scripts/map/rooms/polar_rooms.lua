@@ -64,7 +64,7 @@ AddRoom("PolarIsland_Lakes", {
 		distributepercent = 0.2,
 		distributeprefabs = {
 			evergreen_sparse = 1.22,
-			antler_tree_stump = 0.02,
+			evergreen_stump = 0.02,
 			antler_tree_stump = 0.01,
 		},
 	}

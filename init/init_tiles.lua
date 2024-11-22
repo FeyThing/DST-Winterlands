@@ -2,10 +2,10 @@ local NOISES = require("noisetilefunctions")
 local ChangeTileRenderOrder = ChangeTileRenderOrder
 
 local POLAR_COLOR = {
-	primary_color = 		{5, 	15, 	90, 	255}, 	-- {153, 	76, 	0, 	200}
-	secondary_color = 		{5, 	20, 	95, 	200}, 	-- {102, 	51, 	0, 	255/2}
-	secondary_color_dusk = 	{0, 	2, 		35, 	125}, 	-- {51, 	25, 	0, 	80}
-	minimap_color = 		{5, 	15, 	65, 	150},
+	primary_color = 		{5, 	15, 	90, 	255},
+	secondary_color = 		{5, 	20, 	95, 	200},
+	secondary_color_dusk = 	{0, 	2, 		35, 	125},
+	minimap_color = 		{19, 	41, 	62, 	154},
 }
 
 local POLAR_WAVETINTS = {
@@ -169,4 +169,5 @@ ChangeTileRenderOrder(WORLD_TILES.POLAR_DRYICE, WORLD_TILES.UNDERROCK)
 GLOBAL.POLAR_GROUND_TYPES = {
 	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_DRYICE, -- 1, 2, 3, 4, 5
 	WORLD_TILES.OCEAN_POLAR, WORLD_TILES.DIRT, WORLD_TILES.ROCKY, WORLD_TILES.UNDERROCK, WORLD_TILES.MONKEY_DOCK, -- 6, 7, 8, 9, 10
+	WORLD_TILES.OCEAN_COASTAL_SHORE, -- 11
 }
