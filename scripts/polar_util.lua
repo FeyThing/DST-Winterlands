@@ -143,7 +143,7 @@ end
 function IsTooDeepInSnow(inst, viewer)
 	local insnow = false
 	
-	if ThePlayer.components.snowwaver and ThePlayer.components.snowwaver.enabled then
+	if viewer.components.snowwaver and viewer.components.snowwaver.enabled then
 		if inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
 			local x, y, z = inst.Transform:GetWorldPosition()
 			insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
