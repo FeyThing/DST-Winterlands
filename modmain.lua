@@ -26,6 +26,7 @@ local inits = {
 	"init_assets",
 	"init_prefabs",
 	"init_recipes",
+	"init_retrofit",
 	"init_tuning",
 	"init_widgets",
 	"fx",
@@ -38,6 +39,7 @@ end
 modimport("scripts/winterlands_tiles_manager")
 
 local prefabs = {
+	"antlion_sinkhole",
 	"bearger",
 	"birds",
 	"evergreen",
@@ -51,7 +53,6 @@ local prefabs = {
 	"shovels",
 	"walrus",
 	"wilson",
-	"antlion_sinkhole",
 	
 	"polar_walking",
 }
@@ -71,6 +72,7 @@ local components = {
 	"pickable",
 	"playervision",
 	"repairable",
+	"retrofitforestmap_anr",
 	"shadowcreaturespawner",
 	"sheltered",
 	"slipperyfeet",

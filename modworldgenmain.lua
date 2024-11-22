@@ -24,6 +24,20 @@ for _, layout in ipairs(polar_layouts) do
 	Layouts[layout].ground_types = POLAR_GROUND_TYPES
 end
 
+--	Retrofit
+
+local retrofit_islands = {"retrofit_polarisland"}
+
+for i, layout in ipairs(retrofit_islands) do
+	Layouts[layout] = StaticLayout.Get("map/static_layouts/"..layout, {
+		start_mask = PLACE_MASK.IGNORE_IMPASSABLE,
+		fill_mask = PLACE_MASK.IGNORE_IMPASSABLE,
+		add_topology = {room_id = "StaticLayoutIsland:Polar Lands", tags = {"RoadPoison", "polararea", "not_mainland"}},
+		min_dist_from_land = 0,
+	})
+	Layouts[layout].ground_types = POLAR_GROUND_TYPES
+end
+
 --	Tags, Keys
 
 require("map/lockandkey")
