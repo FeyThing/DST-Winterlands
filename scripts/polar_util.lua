@@ -194,7 +194,7 @@ function PlayFootstep(inst, volume, ispredicted, ...)
 	if inst.components.polarwalker then
 		--local slowed, slowing = inst.components.polarwalker:IsPolarSlowed()
 		
-		local x, y, z = ThePlayer.Transform:GetWorldPosition()
+		local x, y, z = inst.Transform:GetWorldPosition()
 		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) then
 			local splash_fx = (inst:HasTag("epic") and inst:HasTag("largecreature")) and "polar_splash_epic"
 				or (inst:HasTag("epic") or inst:HasTag("largecreature")) and "polar_splash_large"
