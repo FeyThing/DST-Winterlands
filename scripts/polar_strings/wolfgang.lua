@@ -8,29 +8,29 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Feets are cold now!",
-		"M-must...defeat snow.",
-		"Brrr... ",
+		"M-must... defeat snow.",
+		"Brrr...",
 	}
-	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Was sky always this blue?"
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Was sky always so blue?"
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Ice hides inside Wolfgang's shoes."
-	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Hah! Santa won't stop me now."
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Wolfgang does not like snow in shoes."
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Hah! Santa won't stop me."
 	
 --	Worldgen
 	
 	--	Plants
 	DESCRIBE.ANTLER_TREE = {
-		BURNING = "Horns is burned now!",
-		BURNT = "Would snap in a punch.",
+		BURNING = "Horns is burning!",
+		BURNT = "Tree look more scary now.",
 		CHOPPED = "Wolfgang needs better opponents.",
-		GENERIC = "Tree with horns? Tree wants to fight?",
+		GENERIC = "Tree with horns? Tree wants fight?",
 	}
 	DESCRIBE.ICELETTUCE_SEEDS = "Is little tiny seed for burying."
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Mmm? Must have been the wind."
-	DESCRIBE.POLAR_ICICLE_ROCK = "Came closer to say hello?"
+	DESCRIBE.POLAR_ICICLE_ROCK = "Oh, ice rock want to say hello?"
 	DESCRIBE.ROCK_POLAR = "Too cold for lifting."
 	
 	--	Misc
@@ -59,8 +59,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Items
 	
 	--	Food
-	DESCRIBE.ICELETTUCE = "Leaves (Crunch)... very (Cronch)... crunchy..."
-	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgang's grip."
+	DESCRIBE.ICELETTUCE = "Leaves very crunchy..."
+	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgangs grip."
 	
 	--	Crafting
 	DESCRIBE.POLAR_DRYICE = "Stronger than ice."
@@ -72,9 +72,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {
-		GENERIC = "Reminds Wolfgang of home.",
-		INUSE = "Wolfgang shaked too hard?",
-		REFUEL = "Is only strange globe.",
+		GENERIC = "Wolfgang likes pretty snow ball.",
+		INUSE = "Wolfgang shake too hard?",
+		REFUEL = "Is only strange ball.",
 	}
 	DESCRIBE.TURF_POLAR_CAVES = "Cold step stones."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold step stones."
