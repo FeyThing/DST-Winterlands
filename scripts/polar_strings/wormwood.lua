@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "Attack!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {

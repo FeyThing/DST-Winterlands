@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "Watch Woby! I'm fighting a big, scary bear!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {

@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "Is time for good brawl!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {

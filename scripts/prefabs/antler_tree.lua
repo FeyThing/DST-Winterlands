@@ -176,7 +176,7 @@ local function MakeHornyTree(data)
 		inst.components.workable:SetOnWorkCallback(ChopTree)
 		inst.components.workable:SetOnFinishCallback(ChopDownTree)
 		
-		local color = 0.5 + math.random() * 0.5
+		local color = 0.7 + math.random() * 0.3
 		inst.AnimState:SetMultColour(color, color, color, 1)
 		
 		local scale = math.random() > 0.5 and 1.4 or -1.4

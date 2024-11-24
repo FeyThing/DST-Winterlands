@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "This may bear consequences."
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {

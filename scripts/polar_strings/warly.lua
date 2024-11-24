@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "You know what they say about selling bear fur?"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {

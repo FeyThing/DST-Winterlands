@@ -4,12 +4,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "I'll stuff Bernie with your fur!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Ugh... why did it have to be... snow.",
+		"Get me out of here!",
 		"Hmph...",
-		"Huh...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Ah! I already hate it here!"
 	
@@ -33,7 +34,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.ROCK_POLAR = "I can feel cold emanating from them."
 	
 	--	Misc
-	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "There's something there."
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Don't make me go in here."
 	
 --	Mobs
 	DESCRIBE.POLARBEAR = {
@@ -72,7 +73,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	--	Others
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "What a dumb toy.",
-		INUSE = "",
+		INUSE = "Why did you have to shake it, why?",
 		REFUEL = "And don't come back!",
 	}
 	DESCRIBE.TURF_POLAR_CAVES = "The ground is boring and cold"

@@ -2,7 +2,7 @@
 	
 	require("polar_strings/strings")
 	
-	local characters = {"wilson", "wolfgang", "warly", "wormwood", "walter"}
+	local characters = {"wilson", "willow", "wolfgang", "wx78", "woodie", "wathgrithr", "warly", "wortox", "wormwood", "walter"}
 	--local translation = GetModConfigData("language")
 	
 	for i, character in ipairs(characters) do

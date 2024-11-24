@@ -129,7 +129,7 @@ function GetPolarWetness(inst)
 end
 
 function HasPolarImmunity(inst, ignorewaterproof)
-	if inst:HasTag("polarimmune") then
+	if inst:HasTag("polarimmune") or inst:HasTag("wereplayer") then
 		return true
 	end
 	
