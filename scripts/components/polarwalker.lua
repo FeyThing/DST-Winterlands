@@ -8,6 +8,9 @@ local PolarWalker = Class(function(self, inst)
 	self.slow_time_max = TUNING.POLAR_SLOWTIME
 end)
 
+-- TODO: Sometimes there can be tiny little bits of deep-in-snow areas while the snow wave grid doesn't show any.
+--		 Players should probably have a little radius check to make sure it's all snowy around them before getting the debuff!
+
 local function IsPolarTile(pt)
 	return TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true)
 end

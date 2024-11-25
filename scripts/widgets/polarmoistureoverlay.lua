@@ -17,6 +17,15 @@ local PolarMoistureOverlay = Class(Widget, function(self, owner, parent)
 	self.polaranim:GetAnimState():PlayAnimation("lvl0", true)
 	self.polaranim:GetAnimState():AnimateWhilePaused(false)
 	self.polaranim:SetClickable(false)
+	self.polaranim:Hide()
+	
+	self.meltanim = self:AddChild(UIAnim())
+	self.meltanim:GetAnimState():SetBank("meter_polar_over")
+	self.meltanim:GetAnimState():SetBuild("meter_polar_over")
+	self.meltanim:GetAnimState():PlayAnimation("melting", true)
+	self.meltanim:GetAnimState():AnimateWhilePaused(false)
+	self.meltanim:SetClickable(false)
+	self.meltanim:Hide()
 	
 	self.inst:DoTaskInTime(0.2, function() self:InternalUpdate() end)
 end)
@@ -24,8 +33,18 @@ end)
 function PolarMoistureOverlay:InternalUpdate(level)
 	local polar_level = level or GetPolarWetness(self.owner)
 	
+	local rate = self.owner and self.owner:GetMoistureRateScale()
+	if rate then
+		if rate > 0 and polar_level > 0 then
+			self.meltanim:Show()
+		else
+			self.meltanim:Hide()
+		end
+	end
+	
 	if self.moisturemeter == nil or not self.moisturemeter.active then
 		self.polaranim:Hide()
+		self.meltanim:Hide()
 	elseif polar_level ~= self.polar_level then
 		self.polaranim:Show()
 		
