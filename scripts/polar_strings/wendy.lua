@@ -1,81 +1,85 @@
-local ANNOUNCE = STRINGS.CHARACTERS.WENDY -- TODO
+local ANNOUNCE = STRINGS.CHARACTERS.WENDY
 local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "Let's put you to sleep."
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
-		"Trust me... this is... a shortcut.",
-		"Hngh...",
-		"Huff...",
+		"Cold chains... pulling me down...",
+		"Each step is slower than the last...",
+		"I don't find it funny... Abigail...",
 	}
-	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Quakes and shivers- what just happened?!"
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Is it the end yet?"
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr...! This is snow joke!"
-	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "I'm dry. But only in terms of snow."
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "The cold seeps into my very soul."
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "The cold snow bled out."
 	
 --	Worldgen
 	
 	--	Plants
 	DESCRIBE.ANTLER_TREE = {
-		BURNING = "I won't say no to a fire.",
-		BURNT = "It contrasts a lot with the rest of the place.",
-		CHOPPED = "Better vamoose before the other trees notice.",
-		GENERIC = "This tree is axing for a fight.",
+		BURNING = "Even in flames, it stands with dignity.",
+		BURNT = "Don't crumble, let me end you.",
+		CHOPPED = "It's met its end at our hands.",
+		GENERIC = "I think it's... pretty.",
 	}
+	DESCRIBE.ICELETTUCE_SEEDS = "It's a plant that's waiting to be."
 	
 	--	Rocks and stones
-	DESCRIBE.POLAR_ICICLE = "Did it move just now?"
-	DESCRIBE.POLAR_ICICLE_ROCK = "Yeah, it definitely moved."
-	DESCRIBE.ROCK_POLAR = "Gems fresh for harvest."
+	DESCRIBE.POLAR_ICICLE = "It will try to take another life in its fall."
+	DESCRIBE.POLAR_ICICLE_ROCK = "Oh. I was too late."
+	DESCRIBE.ROCK_POLAR = "Some pieces are colder than others."
 	
 	--	Misc
-	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "I think I saw something in here."
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Come out."
 	
 --	Mobs
+	
 	DESCRIBE.POLARBEAR = {
-		DEAD = "A pile of snow... no, wait.",
-		ENRAGED = "He's got as much bark as bite!",
-		FOLLOWER = "That's my bear buddy.",
-		GENERIC = "A fearsome, cuddly looking guy.",
+		DEAD = "You will be missed, perhaps.",
+		ENRAGED = "I knew this was too easy.",
+		FOLLOWER = "It's my stuffy now.",
+		GENERIC = "A predator born of the ice.",
 	}
 	DESCRIBE.POLARFOX = {
-		FOLLOWER = "Let's play a small game.",
-		GENERIC = "Aha! Come here!",
+		FOLLOWER = "Would you like to take me somewhere?",
+		GENERIC = "A sly shade in the snow.",
 	}
-	DESCRIBE.POLARWARG = "The cold must be trivial with fur like his."
+	DESCRIBE.POLARWARG = "The champion of the tundra."
 	
 --	Buildings
 	
 	DESCRIBE.POLARBEARHOUSE = {
-		BURNT = "Holy mackerel!",
-		GENERIC = "I doubt it's much warmer in there.",
+		BURNT = "No longer a refuge from the biting cold.",
+		GENERIC = "They made their graves here.",
 	}
 	
 --	Items
 	
 	--	Food
-	DESCRIBE.ICELETTUCE = "That's a little too much seasoning."
-	DESCRIBE.ICEBURRITO = "I really dig that name."
+	DESCRIBE.ICELETTUCE = "This year's harvest was most disappointing."
+	DESCRIBE.ICEBURRITO = "My frozen heart won't feel the change."
 	
 	--	Crafting
-	DESCRIBE.POLAR_DRYICE = "I could build something reeeally cool with that."
-	DESCRIBE.POLARBEARFUR = "It's snuggy. Fur real!"
+	DESCRIBE.POLAR_DRYICE = "Ghostly."
+	DESCRIBE.POLARBEARFUR = "It carries the weight of its loss, and vermins."
 	
 	--	Equipments
-	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
-	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
+	DESCRIBE.ANTLER_TREE_STICK = "Another tree bone."
+	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."
+	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {
-		GENERIC = "It's still going.",
-		INUSE = "Let's not do this again!",
-		REFUEL = "Where did the snow go?",
+		GENERIC = "This looks so fragile...",
+		INUSE = "I see. Breaking it would have lasting consequences.",
+		REFUEL = "I can't shake it no more. What a pity.",
 	}
-	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
-	DESCRIBE.TURF_POLAR_DRYICE = "Tougher than most ice around here."
-	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."
-	DESCRIBE.WALL_POLAR_ITEM = "Useful to keep one's cool."
+	DESCRIBE.TURF_POLAR_CAVES = "Some ground."
+	DESCRIBE.TURF_POLAR_DRYICE = "Cold stone beneath my feet."
+	DESCRIBE.WALL_POLAR = "Alas, they won't melt easily."
+	DESCRIBE.WALL_POLAR_ITEM = "Parts of an icy prison to lock myself away."

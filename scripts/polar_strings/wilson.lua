@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "This may bear consequences."
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
@@ -68,6 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "It's snuggy. Fur real!"
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "Science says this stick is perfect."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	

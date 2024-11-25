@@ -107,5 +107,47 @@ local function blocker()
 	return inst
 end
 
+--
+
+local function OnDig(inst, worker)
+	if worker and worker:HasTag("shadowminion") then
+		local blocker = SpawnPrefab("snowwave_blocker")
+		blocker.Transform:SetPosition(inst.Transform:GetWorldPosition())
+		
+		if blocker.SetSnowBlockRange then
+			blocker:SetSnowBlockRange(inst.plow_range)
+		end
+	end
+end
+
+local function marker()
+	local inst = CreateEntity()
+	
+	inst.entity:AddTransform()
+	inst.entity:AddNetwork()
+	
+	inst:AddTag("stump") -- Worker's Brain only looks out for stumps, graves and farm debris
+	inst:AddTag("shadowworker_plowmark")
+	
+	inst.entity:SetPristine()
+	
+	if not TheWorld.ismastersim then
+		return inst
+	end
+	
+	inst:AddComponent("workable")
+	inst.components.workable:SetWorkAction(ACTIONS.DIG)
+	inst.components.workable:SetWorkLeft(1)
+	inst.components.workable:SetOnFinishCallback(OnDig)
+	
+	inst.plow_range = 5
+	inst.persists = false
+	
+	inst:DoTaskInTime(60, inst.Remove)
+	
+	return inst
+end
+
 return Prefab("snowwave", fn, assets),
-	Prefab("snowwave_blocker", blocker)
+	Prefab("snowwave_blocker", blocker),
+	Prefab("snowwave_workermarker", marker)

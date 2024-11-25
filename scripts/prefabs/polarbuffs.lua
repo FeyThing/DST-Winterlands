@@ -3,17 +3,11 @@
 -------------------------------------------------------------------------
 
 local function Immunity_OnAttached(inst, target)
-	if not target:HasTag("polarimmune") then
-		target:AddTag("polarimmune")
-		
-		inst._immunity = true
-	end
+	target:AddTag("polarimmune")
 end
 
 local function Immunity_OnDetached(inst, target)
-	if inst._immunity then
-		target:RemoveTag("polarimmune")
-	end
+	target:RemoveTag("polarimmune")
 end
 
 --
@@ -36,7 +30,7 @@ local function wetness_ontick(inst, target)
 		
 		local x, y, z = target.Transform:GetWorldPosition()
 		local heat_sources = TheSim:FindEntities(x, y, z, 10, HEATSOURCE_TAGS, HEATSOURCE_NOT_TAGS)
-		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z)
+		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z) -- TODO: Ignore blockers if source of snow is blizard
 		
 		if in_snow or #heat_sources > 0 then
 			inst.components.temperature:SetTemp(nil)

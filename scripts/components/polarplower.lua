@@ -25,6 +25,10 @@ function PolarPlower:DoPlow(doer, pos)
 		end
 		
 		local blocker_dist = v:GetDistanceSqToPoint(pos.x, pos.y, pos.z)
+		if blocker_dist <= MIN_SNOWBLOCKER_DIST / 2 and v.SetSnowBlockRange and v._snowblockrange and v._snowblockrange:value() < self.plow_range then
+			v:SetSnowBlockRange(self.plow_range)
+		end
+		
 		dist = blocker_dist < dist and blocker_dist or dist
 	end
 	

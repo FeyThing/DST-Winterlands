@@ -4,6 +4,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "Is time for good brawl!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
@@ -30,7 +31,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Mmm? Must have been the wind."
-	DESCRIBE.POLAR_ICICLE_ROCK = "Oh, ice rock want to say hello?"
+	DESCRIBE.POLAR_ICICLE_ROCK = "Oh, ice rock wants to say hello?"
 	DESCRIBE.ROCK_POLAR = "Too cold for lifting."
 	
 	--	Misc
@@ -67,6 +68,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "Ha-ha! I make carpet now."
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "Good stick for walking and whacking."
 	DESCRIBE.POLAR_SPEAR = "Is ice but spiky!"
 	DESCRIBE.POLARMOOSEHAT = "Mighty Hat!"
 	

@@ -50,7 +50,6 @@ local function AddSquareTopology(topology, left, top, size, room_id, tags)
 end
 
 local function PolarRetrofitting_Island(map, savedata)
-	print("HII? PolarRetrofitting_Island")
 	local topology = savedata.map.topology
 	local map_width = savedata.map.width
 	local map_height = savedata.map.height

@@ -1,0 +1,85 @@
+local ANNOUNCE = STRINGS.CHARACTERS.WATHGRITHR
+local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
+
+--	Announcements
+	
+	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "Leave me a pretty scar, will you?"
+	
+	--	World, Events
+	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
+		"'Tis... nothing...!",
+		"I will brave you... snow!",
+		"...Mggrmm...",
+	}
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Curses! The Fimbulvetr just begun!"
+	
+	--	Buffs
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Ullr has cast a curse upon me!"
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "May Loge dry me from this watery nightmare!"
+	
+--	Worldgen
+	
+	--	Plants
+	DESCRIBE.ANTLER_TREE = {
+		BURNING = "Thy branches will be missed, tree.",
+		BURNT = "Alas, it has been claimed by Hel's fire.",
+		CHOPPED = "It hath fallen in an honorable battle.",
+		GENERIC = "Thy branches would make a fine weapon.",
+	}
+	DESCRIBE.ICELETTUCE_SEEDS = "'Tis a seed, for not-meat."
+	
+	--	Rocks and stones
+	DESCRIBE.POLAR_ICICLE = "Death from above!"
+	DESCRIBE.POLAR_ICICLE_ROCK = "Haha! Loki's trick will not work on me!"
+	DESCRIBE.ROCK_POLAR = "The ice provided goods from down under."
+	
+	--	Misc
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Friend, or froze?"
+	
+--	Mobs
+	
+	DESCRIBE.POLARBEAR = {
+		DEAD = "May thy soul ascend in Valhalla.",
+		ENRAGED = "Fight me with all your might!",
+		FOLLOWER = "A compagnon from the frost land.",
+		GENERIC = "Stout Norse warriors, feared by all of the fish realm.",
+	}
+	DESCRIBE.POLARFOX = {
+		FOLLOWER = "'Tis all fun and games until you lend me into a trap.",
+		GENERIC = "'Twas no chance to escape me!",
+	}
+	DESCRIBE.POLARWARG = "A glorious battle awaits me on this frozen land."
+	
+--	Buildings
+	
+	DESCRIBE.POLARBEARHOUSE = {
+		BURNT = "The house fish has gone into smoke.",
+		GENERIC = "T'would be impressive if 'twas a real catch!",
+	}
+	
+--	Items
+	
+	--	Food
+	DESCRIBE.ICELETTUCE = "Non-meat made of ice."
+	DESCRIBE.ICEBURRITO = "Fish lying in its frozen bedroll!"
+	
+	--	Crafting
+	DESCRIBE.POLAR_DRYICE = "Chunks from an ice giant!"
+	DESCRIBE.POLARBEARFUR = "This will make me a fine fur!"
+	
+	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
+	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
+	DESCRIBE.POLARMOOSEHAT = "A pelt only the fiercest warriors can acquire."
+	
+	--	Others
+	DESCRIBE.POLARGLOBE = {
+		GENERIC = "It contain the power to unleash the winter!",
+		INUSE = "'Tis vigorous shake hath displeased the gods!",
+		REFUEL = "It shall be refilled with the driest ice.",
+	}
+	DESCRIBE.TURF_POLAR_CAVES = "A piece of the battlefield."
+	DESCRIBE.TURF_POLAR_DRYICE = "This road leads me home."
+	DESCRIBE.WALL_POLAR = "Cold and unyielding, as is my resolve!"
+	DESCRIBE.WALL_POLAR_ITEM = "Fortifications made of an ice giant."

@@ -192,16 +192,14 @@ end
 local OldPlayFootstep = PlayFootstep
 function PlayFootstep(inst, volume, ispredicted, ...)
 	if inst.components.polarwalker then
-		--local slowed, slowing = inst.components.polarwalker:IsPolarSlowed()
-		
 		local x, y, z = inst.Transform:GetWorldPosition()
-		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) then
+		
+		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z) then
 			local splash_fx = (inst:HasTag("epic") and inst:HasTag("largecreature")) and "polar_splash_epic"
 				or (inst:HasTag("epic") or inst:HasTag("largecreature")) and "polar_splash_large"
 				or "polar_splash"
 			
 			local fx = SpawnPrefab(splash_fx)
-			
 			if not inst:HasTag("character") then
 				fx.entity:SetParent(inst.entity)
 			else
