@@ -1,7 +1,7 @@
 -- [ Winterlands Tiles ] --
 AddSimPostInit(function()
     if GLOBAL.TheWorld.components.winterlands_manager then
-        GLOBAL.TheWorld.components.winterlands_manager:OnLoad()
+        GLOBAL.TheWorld.components.winterlands_manager:Initialize()
     end
 end)
 

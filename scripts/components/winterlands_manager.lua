@@ -10,8 +10,6 @@ return Class(function(self, inst)
 	-- [ Private fields ] --
 	local _map = inst.Map
 	local _winterlands_grid
-
-	local wasloaded = false
     
 	-- [ Initialization ] --
 	local function InitializeDataGrids()
@@ -39,33 +37,14 @@ return Class(function(self, inst)
         return _winterlands_grid:GetDataAtPoint(tx, ty)
     end
 
-	-- [ Saving/Loading ] --
-	function self:OnSave()
-		local has_data = false
-		for key, val in pairs(_winterlands_grid) do
-			if val then
-				has_data = true
-				break
-			end
-		end
+	function self:Initialize()
+		for x = 0, WIDTH - 1 do
+			for y = 0, HEIGHT - 1 do
+				local index = _winterlands_grid:GetIndex(x, y)
+				local tx, ty, tz = _map:GetTileCenterPoint(x, y)
 
-		return has_data and ZipAndEncodeSaveData(_winterlands_grid:Save()) or nil
-	end
-
-	function self:OnLoad(data)
-		if data then
-			data = DecodeAndUnzipSaveData(data)
-			_winterlands_grid:Load(data)
-			wasloaded = true
-        elseif not wasloaded then -- If no saved data is being loaded, generate the default grid
-			for x = 0, WIDTH - 1 do
-				for y = 0, HEIGHT - 1 do
-					local index = _winterlands_grid:GetIndex(x, y)
-					local tx, ty, tz = _map:GetTileCenterPoint(x, y)
-	
-					if IsInPolarAtPoint(tx, ty, tz) then
-                        _winterlands_grid:SetDataAtIndex(index, true)
-					end
+				if IsInPolarAtPoint(tx, ty, tz) then
+					_winterlands_grid:SetDataAtIndex(index, true)
 				end
 			end
 		end
