@@ -312,7 +312,8 @@ return Class(function(self, inst)
 
 	function self:QueueMeltIceAtTile(tx, ty, doer)
 		local tile = _map:GetTile(tx, ty)
-		if tile ~= WORLD_TILES.POLAR_ICE then
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
+		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
 			return
 		end
 		
