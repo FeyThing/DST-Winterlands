@@ -121,7 +121,7 @@ function SnowWaver:SetWaves()
 					wave.Transform:SetPosition(pt.x, pt.y, pt.z)
 					
 					if not insnow and not wave._fading then
-						wave:DoWaveFade(true, wave.Remove)
+						wave:DoWaveFade(true)
 					elseif insnow and wave._fading then
 						wave:DoWaveFade()
 					end

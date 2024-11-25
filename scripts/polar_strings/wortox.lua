@@ -69,6 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "A thick fur for frolicking in the snow."
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
 	

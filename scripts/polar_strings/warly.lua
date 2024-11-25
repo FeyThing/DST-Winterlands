@@ -69,6 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "The coziest of snowballs."
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
 	DESCRIBE.FROSTWALKERAMULET = "This takes frosting to the next level!"
 	DESCRIBE.POLAR_SPEAR = "It's all fun until it starts dripping."
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."

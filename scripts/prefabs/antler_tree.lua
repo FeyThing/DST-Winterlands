@@ -14,6 +14,10 @@ SetSharedLootTable("antler_tree", {
 	{"twigs", 	1},
 })
 
+SetSharedLootTable("antler_tree_burnt", {
+	{"charcoal", 1},
+})
+
 local function ChopTree(inst, chopper, chops)
 	inst.AnimState:PlayAnimation("chop")
 	inst.AnimState:PushAnimation("idle", false)
@@ -46,7 +50,7 @@ end
 
 local function ChopDownTree(inst, chopper)
 	local he_right = (chopper:GetPosition() - inst:GetPosition()):Dot(TheCamera:GetRightVec()) > 0
-	inst.AnimState:PlayAnimation("fall"..(he_right and "right" or "left"))
+	inst.AnimState:PlayAnimation("fall"..(he_right and (inst.face_left and "left" or "right") or (inst.face_left and "right" or "left")))
 	inst.AnimState:PushAnimation("stump", false)
 	inst.SoundEmitter:PlaySound("dontstarve/forest/treeCrumble")
 	if not (chopper and chopper:HasTag("playerghost")) then
@@ -81,7 +85,7 @@ local function OnBurnt(inst)
 	inst:RemoveComponent("hauntable")
 	MakeHauntableWork(inst)
 	
-	inst.components.lootdropper:SetLoot({"charcoal"})
+	inst.components.lootdropper:SetChanceLootTable("moontree_burnt")
 	
 	inst.components.workable:SetWorkLeft(1)
 	inst.components.workable:SetOnWorkCallback(nil)
@@ -179,7 +183,8 @@ local function MakeHornyTree(data)
 		local color = 0.7 + math.random() * 0.3
 		inst.AnimState:SetMultColour(color, color, color, 1)
 		
-		local scale = math.random() > 0.5 and 1.4 or -1.4
+		inst.face_left = math.random() > 0.5
+		local scale = inst.face_left and 1.4 or -1.4
 		inst.AnimState:SetScale(scale, 1.4)
 		
 		if data == "stump" then

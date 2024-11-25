@@ -67,6 +67,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "It keeps heat well."
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "Who would leave good firewood laying around like that?"
 	DESCRIBE.POLAR_SPEAR = "Keep your cool, if you must."
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."
 	

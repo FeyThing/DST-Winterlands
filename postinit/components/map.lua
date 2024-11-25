@@ -13,7 +13,7 @@ function Map:IsPolarSnowBlocked(x, y, z)
 	local ents = TheSim:FindEntities(x, y, z, SNOWBLOCKER_DIST, nil, SNOWBLOCKER_NOT_TAGS, SNOWBLOCKER_TAGS)
 	
 	for i, v in ipairs(ents) do
-		local range = v._snowblockrange and v._snowblockrange:value() or (v:HasTag("fire") and 6 or 2)
+		local range = math.max(v._snowblockrange and v._snowblockrange:value() or 2, v:HasTag("fire") and 6 or 0)
 		local dist = v:GetDistanceSqToPoint(x, y, z)
 		
 		if dist <= range * range then

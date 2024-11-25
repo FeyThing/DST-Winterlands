@@ -160,6 +160,7 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return self.inst.components.health.takingfiredamage end, "OnFire",
 			ChattyNode(self.inst, "POLARBEAR_PANICFIRE",
 				Panic(self.inst))),
+		
 		ChattyNode(self.inst, "POLARBEAR_FIGHT",
 			WhileNode(function() return not self.inst.components.combat:InCooldown() end, "AttackMomentarily",
 				ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST))),
@@ -168,11 +169,13 @@ function PolarBearBrain:OnStart()
 				Panic(self.inst))),
 		WhileNode(function() return self.inst.enraged end, "RageZoomin",
 			Panic(self.inst)),
+		
 		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),
-		ChattyNode(self.inst, "POLARBEAR_FIND_MEAT",
+		ChattyNode(self.inst, "POLARBEAR_FIND_FOOD",
 			DoAction(self.inst, FindFoodAction)),
-		Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST),
+		ChattyNode(self.inst, "POLARBEAR_FOLLOWWILSON",
+			Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST)),
 		
 		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
 			ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",

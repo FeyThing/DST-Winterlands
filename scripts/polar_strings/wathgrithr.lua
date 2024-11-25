@@ -69,6 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "This will make me a fine fur!"
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
 	DESCRIBE.POLARMOOSEHAT = "A pelt only the fiercest warriors can acquire."
 	

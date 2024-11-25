@@ -21,5 +21,9 @@ local Temperature = require("components/temperature")
 		local winterInsulation, summerInsulation = OldGetInsulation(self, ...)
 		local winterPolarI, summerPolarI = self:GetPolarWetnessModifier(winterInsulation, summerInsulation)
 		
+		if self.inst:HasTag("heatrock") and IsInPolar(self.inst) then
+			winterPolarI = winterPolarI * TUNING.HEATROCK_INSULATION_POLARMULT
+		end
+		
 		return math.max(0, winterPolarI), math.max(0, summerPolarI)
 	end

@@ -106,6 +106,8 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLARMOOSEHAT_PERISHTIME = total_day_time * 5
 	
+	TUNING.HEATROCK_INSULATION_POLARMULT = 0.5
+	
 --	Buffs
 	TUNING.POLAR_IMMUNITY_DURATION = total_day_time
 	

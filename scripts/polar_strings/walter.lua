@@ -66,9 +66,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 	--	Crafting
 	DESCRIBE.POLAR_DRYICE = "Let's build a snow golem!"
-	DESCRIBE.POLARBEARFUR = "We've got ourselves a pillow."
+	DESCRIBE.POLARBEARFUR = "Woah, check out all the fleas in it!"
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "A good stick to play fetch and... for a few other things."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	

@@ -69,6 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.POLARBEARFUR = "I should stuff my plaid with it."
 	
 	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "I'll just take that, eh!"
 	DESCRIBE.POLAR_SPEAR = "Ice suppose that would hurt a little."
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
 	
