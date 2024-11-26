@@ -34,6 +34,7 @@ AddRoom("PolarIsland_Caves", {
 			["PolarCave_SmallPillar"] = function() return math.random(1, 2) end,
 		},
 		countprefabs = {
+			rock_polar = function() return math.random(6, 8) end,
 			rock2 = 1,
 			polar_icicle_rock = function() return math.random(3, 10) end,
 		},
@@ -94,7 +95,7 @@ AddRoom("PolarIsland_BG", {
 		
 		distributepercent = 0.07,
 		distributeprefabs = {
-			grass = 1,
+			grass_polar_spawner = 1,
 			antler_tree = 1.25,
 			antler_tree_stump = 0.25,
 			marsh_bush = 1,

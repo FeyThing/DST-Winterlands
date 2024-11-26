@@ -58,10 +58,10 @@ return {
 				11, 11, 11, 11, 11, 11, 11, 11, 6, 6, 6, 6, 6, 6, 11, 11, 11, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4, 4, 4, 3, 3, 3, 4, 4, 3, 3, 3, 4, 4, 4, 4, 3, 4, 6, 6, 11, 11, 6, 6, 6, 6, 6, 2, 2, 2, 6, 6, 6, 6, 6, 11, 11, 11, 11,
 				11, 11, 11, 11, 11, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 6, 6, 6, 6, 6, 6, 4, 4, 4, 3, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 6, 6, 6, 6, 5, 6, 6, 11, 11, 11,
 				11, 11, 11, 11, 11, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 6, 6, 4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 5, 6, 6, 6, 6, 5, 6, 6, 6, 11, 11,
-				11, 11, 11, 11, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 6, 6, 2, 2, 2, 2, 2, 2, 5, 6, 6, 6, 5, 5, 5, 6, 6, 11, 11,
-				11, 11, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 3, 3, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 6, 6, 6, 5, 2, 2, 6, 6, 11, 11,
-				11, 11, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10, 6, 6, 6, 10, 6, 2, 2, 2, 2, 2, 2, 2, 6, 4, 3, 3, 3, 4, 4, 4, 4, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 6, 6, 11, 11,
-				11, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10, 6, 6, 6, 10, 6, 6, 2, 2, 2, 2, 2, 2, 6, 4, 4, 3, 3, 3, 4, 4, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 6, 6, 5, 5, 5, 2, 2, 2, 2, 2, 6, 6, 11, 11,
+				11, 11, 11, 11, 6, 6, 6, 6, 6, 6, 6, 8, 8, 2, 2, 2, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 6, 6, 2, 2, 2, 2, 2, 2, 5, 6, 6, 6, 5, 5, 5, 6, 6, 11, 11,
+				11, 11, 6, 6, 6, 6, 8, 8, 8, 6, 6, 8, 8, 2, 2, 2, 2, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 3, 3, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 6, 6, 6, 5, 2, 2, 6, 6, 11, 11,
+				11, 11, 6, 6, 6, 8, 8, 2, 2, 6, 6, 8, 2, 2, 2, 2, 10, 6, 6, 6, 10, 6, 2, 2, 2, 2, 2, 2, 2, 6, 4, 3, 3, 3, 4, 4, 4, 4, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 6, 6, 11, 11,
+				11, 6, 6, 6, 2, 2, 2, 2, 2, 6, 2, 2, 2, 2, 2, 2, 10, 6, 6, 6, 10, 6, 6, 2, 2, 2, 2, 2, 2, 6, 4, 4, 3, 3, 3, 4, 4, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 6, 6, 5, 5, 5, 2, 2, 2, 2, 2, 6, 6, 11, 11,
 				11, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 10, 6, 6, 6, 10, 6, 6, 5, 5, 2, 2, 2, 6, 6, 4, 4, 3, 4, 4, 4, 4, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 6, 6, 6, 6, 5, 2, 2, 2, 2, 2, 6, 6, 6, 11, 11,
 				11, 6, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 10, 10, 10, 10, 10, 6, 6, 10, 5, 2, 2, 2, 6, 6, 6, 4, 4, 4, 4, 4, 4, 6, 2, 2, 2, 2, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 2, 2, 2, 2, 6, 6, 6, 11, 11,
 				11, 6, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 10, 6, 6, 6, 10, 10, 10, 10, 5, 2, 2, 2, 6, 6, 6, 4, 4, 3, 4, 4, 4, 6, 6, 2, 2, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 2, 2, 2, 6, 6, 6, 6, 11, 11,
@@ -715,7 +715,7 @@ return {
 				},
 				{
 					name = "",
-					type = "evergreen",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 525,
 					y = 1638,
@@ -913,80 +913,94 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2208,
 					y = 544,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2195,
 					y = 576,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2227,
 					y = 563,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2266,
 					y = 602,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2278,
 					y = 653,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2240,
 					y = 640,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 2330,
 					y = 666,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
@@ -2398,7 +2412,7 @@ return {
 				},
 				{
 					name = "",
-					type = "rock_flintless",
+					type = "rock_polar",
 					shape = "rectangle",
 					x = 2035,
 					y = 1850,
@@ -2420,32 +2434,10 @@ return {
 				},
 				{
 					name = "",
-					type = "rock_flintless",
-					shape = "rectangle",
-					x = 2010,
-					y = 1446,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "rock_flintless",
-					shape = "rectangle",
-					x = 2157,
-					y = 1427,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "rock_flintless",
+					type = "rock_polar",
 					shape = "rectangle",
 					x = 2086,
-					y = 1504,
+					y = 1440,
 					width = 0,
 					height = 0,
 					visible = true,
@@ -2644,50 +2636,6 @@ return {
 					shape = "rectangle",
 					x = 2598,
 					y = 1446,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "pillar_polar",
-					shape = "rectangle",
-					x = 2368,
-					y = 1600,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "pillar_polar",
-					shape = "rectangle",
-					x = 2240,
-					y = 1088,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "pillar_polar",
-					shape = "rectangle",
-					x = 1920,
-					y = 1536,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "pillar_polar",
-					shape = "rectangle",
-					x = 1728,
-					y = 1088,
 					width = 0,
 					height = 0,
 					visible = true,
@@ -2961,17 +2909,6 @@ return {
 					name = "",
 					type = "flint",
 					shape = "rectangle",
-					x = 646,
-					y = 1517,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "flint",
-					shape = "rectangle",
 					x = 1363,
 					y = 358,
 					width = 0,
@@ -3168,7 +3105,7 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 1293,
 					y = 3853,
@@ -3179,7 +3116,7 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 736,
 					y = 3546,
@@ -3190,7 +3127,7 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 1299,
 					y = 2970,
@@ -3201,7 +3138,7 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 1229,
 					y = 3085,
@@ -3212,29 +3149,7 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 1293,
-					y = 3155,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 1434,
-					y = 3046,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 858,
 					y = 2989,
@@ -3245,29 +3160,7 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 1190,
-					y = 2797,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 800,
-					y = 2592,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 1370,
 					y = 2387,
@@ -3278,43 +3171,10 @@ return {
 				},
 				{
 					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 1190,
-					y = 3309,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
+					type = "grass_polar_spawner",
 					shape = "rectangle",
 					x = 1568,
 					y = 544,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 1453,
-					y = 672,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "grass",
-					shape = "rectangle",
-					x = 1709,
-					y = 333,
 					width = 0,
 					height = 0,
 					visible = true,
@@ -3326,6 +3186,17 @@ return {
 					shape = "rectangle",
 					x = 2906,
 					y = 474,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "rock_polar",
+					shape = "rectangle",
+					x = 2374,
+					y = 1082,
 					width = 0,
 					height = 0,
 					visible = true,

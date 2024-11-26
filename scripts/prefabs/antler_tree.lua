@@ -18,15 +18,41 @@ SetSharedLootTable("antler_tree_burnt", {
 	{"charcoal", 1},
 })
 
+local tree_sticcs = {"low", "med", "high"}
+
 local function ChopTree(inst, chopper, chops)
 	inst.AnimState:PlayAnimation("chop")
 	inst.AnimState:PushAnimation("idle", false)
 	if not (chopper and chopper:HasTag("playerghost")) then
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/use_axe_tree")
 	end
+	
+	if chopper and chopper:HasTag("deer") or chopper:HasTag("weremoose") then -- TODO: Mooses won't have deer tag later
+		local valid_sticcs = {}
+		for k, v in pairs(inst.sticcs) do
+			if v then
+				table.insert(valid_sticcs, k)
+			end
+		end
+		
+		if #valid_sticcs > 0 then
+			local k = valid_sticcs[math.random(#valid_sticcs)]
+			
+			local sticc = inst.components.lootdropper:SpawnLootPrefab("antler_tree_stick")
+			if sticc.DropSticc then
+				sticc:DropSticc(inst, k)
+			end
+			
+			inst.sticcs[k] = nil
+		end
+		
+		inst:SetSticcs()
+	end
 end
 
 local function SetStump(inst)
+	inst.sticcs = nil
+	
 	inst:RemoveComponent("workable")
 	inst:RemoveComponent("burnable")
 	inst:RemoveComponent("propagator")
@@ -80,6 +106,8 @@ local function ChopDownBurntTree(inst, chopper)
 end
 
 local function OnBurnt(inst)
+	inst.sticcs = nil
+	
 	inst:RemoveComponent("burnable")
 	inst:RemoveComponent("propagator")
 	inst:RemoveComponent("hauntable")
@@ -110,10 +138,17 @@ local function OnSave(inst, data)
 	if inst:HasTag("stump") then
 		data.stump = true
 	end
+	if inst.sticcs then
+		data.sticcs = inst.sticcs
+	end
 end
 
 local function OnLoad(inst, data)
 	if data then
+		if data.sticcs then
+			inst.sticcs = data.sticcs
+			inst:SetSticcs()
+		end
 		if data.stump then
 			SetStump(inst)
 			
@@ -129,6 +164,37 @@ local function OnLoad(inst, data)
 		elseif data.burnt and not inst:HasTag("burnt") then
 			OnBurnt(inst)
 		end
+	end
+end
+
+local function SetSticcs(inst)
+	for i, v in ipairs(tree_sticcs) do
+		if inst.sticcs[v] then
+			inst.AnimState:Show("antler_"..v)
+		else
+			inst.AnimState:Hide("antler_"..v)
+		end
+	end
+end
+
+local function OnTimerDone(inst, data)
+	if data.name == "regensticc" then
+		inst.sticcs = {}
+		for i, v in ipairs(tree_sticcs) do
+			inst.sticcs[v] = true
+		end
+		inst:SetSticcs()
+	end
+end
+
+local function OnSeasonChange(inst, season)
+	if season == "winter" then
+		if not inst.components.timer:TimerExists("regensticc") then
+			local season_time = TheWorld.state[TheWorld.state.season.."length"] * TUNING.TOTAL_DAY_TIME
+			inst.components.timer:StartTimer("regensticc", GetRandomMinMax(TUNING.TOTAL_DAY_TIME, season_time))
+		end
+	elseif inst.components.timer and inst.components.timer:TimerExists("regensticc") then
+		inst.components.timer:StopTimer("regensticc")
 	end
 end
 
@@ -164,6 +230,11 @@ local function MakeHornyTree(data)
 			return inst
 		end
 		
+		inst.sticcs = {}
+		for i, v in ipairs(tree_sticcs) do
+			inst.sticcs[v] = true
+		end
+		
 		MakeLargeBurnable(inst)
 		inst.components.burnable:SetOnBurntFn(OnBurnt)
 		MakeSmallPropagator(inst)
@@ -173,6 +244,8 @@ local function MakeHornyTree(data)
 		
 		inst:AddComponent("lootdropper")
 		inst.components.lootdropper:SetChanceLootTable("antler_tree")
+		
+		inst:AddComponent("timer")
 		
 		inst:AddComponent("workable")
 		inst.components.workable:SetWorkAction(ACTIONS.CHOP)
@@ -199,6 +272,12 @@ local function MakeHornyTree(data)
 		
 		inst.OnSave = OnSave
 		inst.OnLoad = OnLoad
+		inst.SetSticcs = SetSticcs
+		
+		inst:ListenForEvent("timerdone", OnTimerDone)
+		
+		inst:WatchWorldState("season", OnSeasonChange)
+		OnSeasonChange(inst, TheWorld.state.season)
 		
 		return inst
 	end

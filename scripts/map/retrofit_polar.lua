@@ -32,8 +32,7 @@ local function AddSquareTopology(topology, left, top, size, room_id, tags)
 	node.c = 1
 	node.cent = {left + (size / 2), top + (size / 2)}
 	node.neighbours = {}
-	node.poly =
-	{
+	node.poly = {
 		{left, top},
 		{left + size, top},
 		{left + size, top + size},
@@ -115,7 +114,12 @@ local function PolarRetrofitting_Island(map, savedata)
 			for _, candidate in ipairs(candidates) do
 				local top, left = candidate.top, candidate.left
 				local world_top, world_left = left * 4 - (map_width * 0.5 * 4), top * 4 - (map_height * 0.5 * 4)
-				local ents_to_remove = FindEntsInArea(savedata.ents, world_top - 5, world_left - 5, world_size + 10, {"boat", "malbatross", "oceanfish_shoalspawner", "chester_eyebone", "glommerflower", "klaussackkey", "saltstack", "oceantree_pillar", "watertree_pillar"})
+				local ents_to_remove = FindEntsInArea(savedata.ents, world_top - 5, world_left - 5, world_size + 10, {
+					"boat", "boat_ancient", "malbatross", "oceanfish_shoalspawner",
+					"chester_eyebone", "glommerflower", "klaussackkey",
+					"saltstack", "oceantree_pillar", "watertree_pillar"
+				})
+				
 				if ents_to_remove ~= nil then
 					print("   Removed "..tostring(#ents_to_remove).." entities for static layout:")
 					for i = #ents_to_remove, 1, -1 do
@@ -125,6 +129,8 @@ local function PolarRetrofitting_Island(map, savedata)
 					
 					obj_layout.Place({left, top}, name, add_fn, nil, map)
 					if layout.add_topology ~= nil then
+						AddSquareTopology(topology, world_top, world_left, world_size, "StaticLayoutIsland:Dummy", {"not_mainland"})
+						-- ^ Why ? Because adding a Layout with add_topology will cover staticlayouts in the ocean, so minimize the risks with a tagless one under first
 						AddSquareTopology(topology, world_top, world_left, world_size, layout.add_topology.room_id, layout.add_topology.tags)
 					end
 					

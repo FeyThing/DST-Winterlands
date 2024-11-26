@@ -46,16 +46,18 @@ local prefabs = {
 	"farm_plants",
 	"flower",
 	"forest",
+	"grass",
 	"penguin",
 	"rabbit",
 	"rock_ice",
-	"seastack",
 	"shadowworker",
 	"shovels",
 	"walrus",
 	"wilson",
 	
+	"ents_onfreeze",
 	"polar_walking",
+	"waxed_plants",
 }
 
 local components = {
@@ -70,6 +72,7 @@ local components = {
 	"locomotor",
 	"map",
 	"moisture",
+	"moonstormmanager",
 	"pickable",
 	"playervision",
 	"repairable",
@@ -84,6 +87,7 @@ local components = {
 
 local stategraphs = {
 	"penguin",
+	"wilson",
 }
 
 for _, v in pairs(prefabs) do

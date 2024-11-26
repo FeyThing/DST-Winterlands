@@ -1,6 +1,9 @@
 PrefabFiles = {
 	"antler_tree",
+	"antler_tree_stick",
 	"frostwalkeramulet",
+	"frosty",
+	"grass_polar",
 	"icelettuce_spawner",
 	"polar_dryice",
 	"polar_icicles",
@@ -22,7 +25,7 @@ PrefabFiles = {
 	"veggies_polar",
 	"walls_polar",
 	"warg_polar",
-	"frosty",
+	"waxed_polar_plants",
 	
 	"polarskinprefabs",
 }

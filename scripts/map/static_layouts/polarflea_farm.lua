@@ -54,91 +54,107 @@ return {
 			objects = {
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 256,
 					y = 257,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 226,
 					y = 292,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 287,
 					y = 308,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 237,
 					y = 340,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 298,
 					y = 369,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 300,
 					y = 413,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 353,
 					y = 412,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",
-					type = "grass",
+					type = "grass_polar",
 					shape = "rectangle",
 					x = 344,
 					y = 366,
 					width = 0,
 					height = 0,
 					visible = true,
-					properties = {}
+					properties = {
+						["data.pickable.makealwaysbarren"] = "1"
+					}
 				},
 				{
 					name = "",

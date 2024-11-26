@@ -16,9 +16,11 @@ local polar_filters = {
 	antler_tree = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
 	antler_tree_burnt = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
 	antler_tree_stump = OnlyAllow({WORLD_TILES.POLAR_SNOW}),
+	grass_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_SNOW}),
 	pillar_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_SNOW}),
 	polar_icicle_rock = OnlyAllow({WORLD_TILES.POLAR_CAVES}),
 	polarbearhouse = OnlyAllow({WORLD_TILES.POLAR_DRYICE, WORLD_TILES.POLAR_ROCKY, WORLD_TILES.POLAR_SNOW}),
+	rock_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES}),
 }
 
 local polar_addedtiles = {
@@ -30,7 +32,8 @@ local polar_addedtiles = {
 	evergreen_sparse_normal = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
 	evergreen_sparse_short = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
 	evergreen_sparse_tall = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
-	grass = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
+	grass = {WORLD_TILES.POLAR_ICE},
+	sapling = {WORLD_TILES.POLAR_ICE},
 	marsh_tree = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
 	marsh_bush = {WORLD_TILES.POLAR_ICE},
 	rock1 = {WORLD_TILES.POLAR_ICE},

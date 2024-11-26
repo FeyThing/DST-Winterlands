@@ -1,5 +1,5 @@
 local assets = {
-	Asset("ANIM", "anim/polar_rocks.zip"),
+	Asset("ANIM", "anim/rock_polar.zip"),
 }
 
 local prefabs = {
@@ -10,31 +10,12 @@ local prefabs = {
 
 SetSharedLootTable("rock_polar", {
 	{"ice", 		1},
-	{"ice", 		1},
-	{"ice", 		1},
 	{"ice", 		0.5},
-	{"bluegem", 	0.75},
-	{"bluegem", 	0.5},
-	{"rocks", 		0.1},
-})
-
-SetSharedLootTable("rock_polar_med", {
-	{"ice", 		1},
-	{"ice", 		1},
-	{"ice", 		1},
-	{"bluegem", 	0.5},
+	{"bluegem", 	0.9},
 	{"bluegem", 	0.25},
-	{"rocks", 		0.1},
 })
 
-SetSharedLootTable("rock_polar_low", {
-	{"ice", 		1},
-	{"ice", 		1},
-	{"bluegem", 	0.5},
-	{"rocks", 		0.1},
-})
-
-local NUM_VARIATIONS = 1
+local NUM_VARIATIONS = 3
 
 local function UpdateVariation(inst, num)
 	if num and inst.variation == nil then
@@ -43,18 +24,28 @@ local function UpdateVariation(inst, num)
 	
 	local workleft = inst.components.workable.workleft
 	inst.AnimState:PlayAnimation(
-		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 3 and "idle_low") or
-		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 1.5 and "idle_med") or
+		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 4.2 and "idle_low") or
+		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 2.1 and "idle_med") or
+		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 1.3 and "idle_tall") or
 		"idle_full")
+	inst.AnimState:OverrideSymbol("rock0", "rock_polar", "rock"..(inst.variation - 1))
 end
 
-local function OnWork(inst, worker, workleft)
+local function OnWork(inst, worker, workleft, numworks)
 	if workleft <= 0 then
 		local pt = inst:GetPosition()
 		inst.components.lootdropper:DropLoot(pt)
-		--SpawnPrefab("rock_break_fx").Transform:SetPosition(pt:Get())
+		
+		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
+		
 		inst:Remove()
 	else
+		if numworks and numworks >= 0.8 then
+			local ice = inst.components.lootdropper:SpawnLootPrefab("ice")
+			if worker and worker.components.inventory then
+				LaunchAt(ice, inst, worker, 1, 3, 1, 65)
+			end
+		end
 		UpdateVariation(inst)
 	end
 end
@@ -69,7 +60,7 @@ local function OnLoad(inst, data)
 	end
 end
 
-local function commonfn()
+local function fn()
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
@@ -78,15 +69,17 @@ local function commonfn()
 	inst.entity:AddMiniMapEntity()
 	inst.entity:AddNetwork()
 	
-	MakeObstaclePhysics(inst, 1.25)
+	MakeObstaclePhysics(inst, 2)
 	
+	inst:AddTag("antlion_sinkhole_blocker")
 	inst:AddTag("boulder")
+	inst:AddTag("frozen")
 	inst:AddTag("icicleimmune")
 	
-	inst.AnimState:SetBank("polar_rocks")
-	inst.AnimState:SetBuild("polar_rocks")
+	inst.AnimState:SetBank("rock_polar")
+	inst.AnimState:SetBuild("rock_polar")
 	
-	inst.MiniMapEntity:SetIcon("rock_polar.png")
+	inst.MiniMapEntity:SetIcon("iceboulder.png") -- rock_polar.png
 	
 	inst:SetPrefabNameOverride("rock_polar")
 	
@@ -101,8 +94,10 @@ local function commonfn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("lootdropper")
+	inst.components.lootdropper:SetChanceLootTable("rock_polar")
 	
 	inst:AddComponent("workable")
+	inst.components.workable:SetWorkLeft(TUNING.POLAR_ROCK_MINE_TALL)
 	inst.components.workable:SetWorkAction(ACTIONS.MINE)
 	inst.components.workable:SetOnWorkCallback(OnWork)
 	inst.components.workable.savestate = true
@@ -117,56 +112,12 @@ local function commonfn()
 	local color = 1 - (math.random() * 0.2)
 	inst.AnimState:SetMultColour(color, color, color, 1)
 	
-	local scale = math.random() > 0.5 and 1.75 or -1.75
-	inst.AnimState:SetScale(scale, 1.75)
+	local scale = math.random() > 0.5 and 1.3 or -1.3
+	inst.AnimState:SetScale(scale, 1.3)
 	
 	inst:DoTaskInTime(0, function() UpdateVariation(inst, math.random(NUM_VARIATIONS)) end)
 	
 	return inst
 end
 
-local function fn()
-	local inst = commonfn()
-	
-	if not TheWorld.ismastersim then
-		return inst
-	end
-	
-	inst.components.lootdropper:SetChanceLootTable("polar_rock")
-	
-	inst.components.workable:SetWorkLeft(TUNING.POLAR_ROCK_MINE_TALL)
-	
-	return inst
-end
-
-local function medrock()
-	local inst = commonfn()
-	
-	if not TheWorld.ismastersim then
-		return inst
-	end
-	
-	inst.components.lootdropper:SetChanceLootTable("polar_rock_med")
-	
-	inst.components.workable:SetWorkLeft(TUNING.POLAR_ROCK_MINE_TALL / 1.5)
-	
-	return inst
-end
-
-local function lowrock()
-	local inst = commonfn()
-	
-	if not TheWorld.ismastersim then
-		return inst
-	end
-	
-	inst.components.lootdropper:SetChanceLootTable("polar_rock_low")
-	
-	inst.components.workable:SetWorkLeft(TUNING.POLAR_ROCK_MINE_TALL / 3)
-	
-	return inst
-end
-
-return Prefab("rock_polar", fn, assets, prefabs),
-	Prefab("rock_polar_med", medrock, assets, prefabs),
-	Prefab("rock_polar_low", lowrock, assets, prefabs)
+return Prefab("rock_polar", fn, assets, prefabs)

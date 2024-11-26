@@ -6,12 +6,27 @@ local BrainCommon = require("brains/braincommon")
 
 local FINDFOOD_CANT_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach", "show_spoiled"}
 
+local RUN_AWAY_COMBAT_DIST = 10
+local RUN_AWAY_DIST = 6
+local STOP_RUN_AWAY_DIST = 25
+
+local wandertimes = {
+	minwalktime = 2,
+	randwalktime = 3,
+	minwaittime = 4,
+	randwaittime = 12,
+}
+
 local PolarFoxBrain = Class(Brain, function(self, inst)
 	Brain._ctor(self, inst)
 end)
 
 local function GetLeader(inst)
-	return inst.components.follower.leader
+	return inst.components.follower and inst.components.follower.leader
+end
+
+local function KeepLeader(inst, target)
+	return GetLeader(inst) == target
 end
 
 local function FindFoodAction(inst)
@@ -48,21 +63,43 @@ local function FindFoodAction(inst)
 	return (target and BufferedAction(inst, target, ACTIONS.EAT)) or nil
 end
 
-local function GetFaceTargetFn(inst)
-	return inst.components.follower.leader
+local function ShouldRunAway(target, inst)
+	local dist = inst:GetDistanceSqToInst(target)
+	
+	if target.components.health and target.components.health:IsDead() then
+		return false
+	elseif target:HasTag("character") and GetLeader(inst) ~= nil then
+		return false
+	end
+	
+	if inst.components.combat and inst.components.combat.target == target and dist < RUN_AWAY_COMBAT_DIST * RUN_AWAY_COMBAT_DIST then
+		return true
+	end
+	
+	return dist < RUN_AWAY_DIST * RUN_AWAY_DIST
 end
 
-local function KeepFaceTargetFn(inst, target)
-	return inst.components.follower.leader == target
+local function CanChill(inst)
+	return inst.sg and not inst.sg.statemem.alerted and not inst.sg:HasStateTag("sitting") and not inst.sg:HasStateTag("alert") and not inst.wantstoalert
+end
+
+local function WanderPointFn(pt)
+	if pt and TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z) then
+		return true
+	end
+	
+	return false
 end
 
 function PolarFoxBrain:OnStart()
 	local root = PriorityNode({
-		--BrainCommon.PanicWhenScared(self.inst, 1),
-		--BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.PanicWhenScared(self.inst, 1),
+		BrainCommon.PanicTrigger(self.inst),
+		RunAway(self.inst, {fn = ShouldRunAway, oneoftags = {"hostile", "scarytoprey"}, notags = {"INLIMBO", "companion"}}, RUN_AWAY_COMBAT_DIST, STOP_RUN_AWAY_DIST),
 		IfNode(function() return GetLeader(self.inst) end, "HasLeader",
-			FaceEntity(self.inst, GetFaceTargetFn, KeepFaceTargetFn)),
-		StandStill(self.inst),
+			FaceEntity(self.inst, GetLeader, KeepLeader)),
+		WhileNode(function() return CanChill(self.inst) end, "Chilling",
+			Wander(self.inst, nil, 5, wandertimes, nil, nil, WanderPointFn)),
 	}, 0.25)
 	
 	self.bt = BT(self.inst, root)

@@ -33,7 +33,7 @@ AddTile("POLAR_ICE", "LAND",
 	},
 	{
 		name = 			"map_edge",
-		noise_texture = "levels/textures/mini_meteor.tex", --"levels/textures/mini_noise_polarice.tex",
+		noise_texture = "levels/textures/mini_noise_polarice.tex",
 	}
 )
 
@@ -63,7 +63,7 @@ AddTile("POLAR_CAVES", "LAND",
 	},
 	{
 		name = 			"blocky",
-		noise_texture = "levels/textures/noise_polar.tex", --"levels/textures/noise_polarcaves.tex",
+		noise_texture = "levels/textures/noise_polar.tex",
 		runsound = 		"turnoftides/movement/run_meteor",
 		walksound = 	"turnoftides/movement/run_meteor",
 		snowsound = 	"dontstarve/movement/run_ice",
@@ -72,7 +72,7 @@ AddTile("POLAR_CAVES", "LAND",
 	},
 	{
 		name = 			"map_edge",
-		noise_texture = "levels/textures/mini_rock_noise.tex", --"levels/textures/mini_noise_polarcaves.tex",
+		noise_texture = "levels/textures/mini_noise_polar.tex",
 	},
 	{		
 		name = 			"polar_caves",

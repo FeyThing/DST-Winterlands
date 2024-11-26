@@ -39,6 +39,8 @@ end)
 --	Inventory Images
 
 local ITEMS = {
+	"antler_tree_stick",
+	"dug_grass_polar",
 	"icelettuce",
 	"icelettuce_seeds",
 	"polar_dryice",

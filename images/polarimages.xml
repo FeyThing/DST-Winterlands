@@ -1,17 +1,19 @@
 ﻿<Atlas>
 	<Texture filename="polarimages.tex" />
 	<Elements>
-		<Element name="icelettuce.tex" u1="0.001" u2="0.249" v2="0.999" v1="0.751" />
-		<Element name="icelettuce_seeds.tex" u1="0.251" u2="0.499" v2="0.999" v1="0.751" />
-		<Element name="ms_polarmoosehat_white.tex" u1="0.001" u2="0.249" v2="0.749" v1="0.501" />
-		<Element name="polar_dryice.tex" u1="0.251" u2="0.499" v2="0.749" v1="0.501" />
-		<Element name="polarbearfur.tex" u1="0.501" u2="0.749" v2="0.999" v1="0.751" />
-		<Element name="polarbearhouse.tex" u1="0.501" u2="0.749" v2="0.749" v1="0.501" />
-		<Element name="polarglobe.tex" u1="0.751" u2="0.96775" v2="0.999" v1="0.751" />
-		<Element name="polarmoosehat.tex" u1="0.751" u2="0.999" v2="0.749" v1="0.501" />
-		<Element name="polarsnow_material.tex" u1="0.001" u2="0.249" v2="0.499" v1="0.251" />
-		<Element name="turf_polar_caves.tex" u1="0.001" u2="0.249" v2="0.249" v1="0.001" />
-		<Element name="turf_polar_dryice.tex" u1="0.251" u2="0.499" v2="0.499" v1="0.251" />
-		<Element name="wall_polar_item.tex" u1="0.501" u2="0.749" v2="0.499" v1="0.251" />
+		<Element name="antler_tree_stick.tex" u1="0.001" u2="0.249" v2="0.999" v1="0.751" />
+		<Element name="dug_grass_polar.tex" u1="0.251" u2="0.499" v2="0.999" v1="0.751" />
+		<Element name="icelettuce.tex" u1="0.001" u2="0.249" v2="0.749" v1="0.501" />
+		<Element name="icelettuce_seeds.tex" u1="0.251" u2="0.499" v2="0.749" v1="0.501" />
+		<Element name="ms_polarmoosehat_white.tex" u1="0.501" u2="0.749" v2="0.999" v1="0.751" />
+		<Element name="polar_dryice.tex" u1="0.501" u2="0.749" v2="0.749" v1="0.501" />
+		<Element name="polarbearfur.tex" u1="0.751" u2="0.999" v2="0.999" v1="0.751" />
+		<Element name="polarbearhouse.tex" u1="0.751" u2="0.999" v2="0.749" v1="0.501" />
+		<Element name="polarglobe.tex" u1="0.001" u2="0.21775" v2="0.499" v1="0.251" />
+		<Element name="polarmoosehat.tex" u1="0.21975" u2="0.46775" v2="0.499" v1="0.251" />
+		<Element name="polarsnow_material.tex" u1="0.001" u2="0.249" v2="0.249" v1="0.001" />
+		<Element name="turf_polar_caves.tex" u1="0.46975" u2="0.71775" v2="0.499" v1="0.251" />
+		<Element name="turf_polar_dryice.tex" u1="0.251" u2="0.499" v2="0.249" v1="0.001" />
+		<Element name="wall_polar_item.tex" u1="0.71975" u2="0.96775" v2="0.499" v1="0.251" />
 	</Elements>
 </Atlas>

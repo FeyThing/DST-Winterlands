@@ -174,7 +174,7 @@ local function smallfn()
 	inst.AnimState:SetBuild("pillar_ice_med")
 	inst.AnimState:PlayAnimation("idle")
 	
-	inst.MiniMapEntity:SetIcon("pillar_polar.png")
+	--inst.MiniMapEntity:SetIcon("iceboulder.png")
 	
 	return inst
 end

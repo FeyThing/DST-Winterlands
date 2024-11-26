@@ -121,7 +121,7 @@ local function DoPlowingAction(inst)
 		local offset
 		
 		while offset == nil and dist < MAX_PLOW_DIST do
-			offset = FindWalkableOffset(pt, TWOPI * math.random(), MAX_PLOW_DIST, 2, true, true, HasPolarSnow)
+			offset = FindWalkableOffset(pt, TWOPI * math.random(), dist, 2, true, true, HasPolarSnow)
 			dist = dist + 1
 		end
 		

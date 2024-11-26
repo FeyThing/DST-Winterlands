@@ -7,7 +7,7 @@ local actionhandlers = {
 local events = {
 	CommonHandlers.OnAttacked(),
 	CommonHandlers.OnDeath(),
-	--CommonHandlers.OnLocomote(true, true),
+	CommonHandlers.OnLocomote(true, true),
 	CommonHandlers.OnSleepEx(),
 	CommonHandlers.OnWakeEx(),
 }
@@ -18,10 +18,10 @@ local states = {
 		tags = {"idle"},
 		
 		onenter = function(inst, data)
-			inst.AnimState:PlayAnimation("idle")
-			inst.Physics:Stop()
-			
 			inst.sg.statemem.alerted = data and data.alerted and inst.wantstoalert
+			
+			inst.AnimState:PlayAnimation(inst.sg.statemem.alerted and "idle_alerted" or "idle")
+			inst.Physics:Stop()
 		end,
 		
 		onupdate = function(inst)
@@ -50,7 +50,7 @@ local states = {
 	
 	State{
 		name = "sit",
-		tags = {"busy"},
+		tags = {"busy", "sitting"},
 		
 		onenter = function(inst)
 			if inst.wantstosit then
@@ -132,7 +132,7 @@ local states = {
 			TimeEvent(6 * FRAMES, function(inst)
 				inst:PerformBufferedAction()
 			end),
-        },
+		},
 		
 		events = {
 			EventHandler("animqueueover", function(inst)
@@ -188,6 +188,109 @@ local states = {
 				inst.components.lootdropper:DropLoot() -- TODO: Hide tail if dropped ?
 			end
 		end,
+	},
+	
+	State{
+		name = "walk_start",
+		tags = {"moving", "canrotate", "foxwalk"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("walk_pre")
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("walk")
+			end),
+		},
+	},
+	
+	State{
+		name = "walk",
+		tags = {"moving", "canrotate", "foxwalk"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("walk")
+			inst.components.locomotor:WalkForward()
+		end,
+		
+		timeline = {
+			TimeEvent(FRAMES, function(inst) PlayFootstep(inst) end),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("walk")
+			end),
+		},
+	},
+	
+	State{
+		name = "walk_stop",
+		tags = {"canrotate", "foxwalk"},
+		
+		onenter = function(inst)
+			inst.components.locomotor:StopMoving()
+			inst.AnimState:PlayAnimation("walk_pst")
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
+		name = "run_start",
+		tags = {"moving", "running", "canrotate"},
+		
+		onenter = function(inst)
+			inst.components.locomotor:RunForward()
+			inst.AnimState:PlayAnimation("run_pre")
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("run")
+			end),
+		},
+	},
+	
+	State{
+		name = "run",
+		tags = {"moving", "running", "canrotate"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("run", true)
+			inst.components.locomotor:RunForward()
+		end,
+		
+		timeline = {
+			TimeEvent(5 * FRAMES, PlayFootstep),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("run")
+			end),
+		},
+	},
+	
+	State{
+		name = "run_stop",
+		tags = {"idle"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("run_pst")
+			inst.components.locomotor:StopMoving()
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
 	},
 }
 

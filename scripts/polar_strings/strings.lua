@@ -6,6 +6,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Plants
 	NAMES.ANTLER_TREE = "Bullbark"
 	NAMES.FARM_PLANT_ICELETTUCE = "Iceberg Lettuce"
+	NAMES.GRASS_POLAR = "Tundra Grass"
 	NAMES.ICELETTUCE_SEEDS = "Frigid Seed"
 	NAMES.KNOWN_ICELETTUCE_SEEDS = "Iceberg Lettuce Seed"
 	
@@ -39,11 +40,13 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARBEARFUR = "Polar Fur"
 	
 	--	Equipments
+	NAMES.ANTLER_TREE_STICK = "Bullbranch"
 	NAMES.FROSTWALKERAMULET = "Chillest Amulet"
 	NAMES.POLAR_SPEAR = "Stalagspear"
 	NAMES.POLARMOOSEHAT = "Moose Ushanka"
 	
 	--	Others
+	NAMES.DUG_GRASS_POLAR = "Tundra Tuft"
 	NAMES.POLARGLOBE = "Strange Snowglobe"
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"
 	NAMES.TURF_POLAR_DRYICE = "Cobbled Dry Ice"
@@ -137,6 +140,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	
 	--	Scrapbook, Cookbook
+	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
 	

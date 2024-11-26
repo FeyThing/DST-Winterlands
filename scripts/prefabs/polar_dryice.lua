@@ -49,8 +49,6 @@ local function fn()
 	inst.entity:AddAnimState()
 	inst.entity:AddNetwork()
 	
-	MakeInventoryPhysics(inst)
-	
 	inst.AnimState:SetBank("polar_dryice")
 	inst.AnimState:SetBuild("polar_dryice")
 	inst.AnimState:SetScale(0.8, 0.8)
@@ -59,6 +57,8 @@ local function fn()
 	inst:AddTag("dryice")
 	
 	inst.pickupsound = "rock"
+	
+	MakeInventoryPhysics(inst)
 	
 	inst.entity:SetPristine()
 	

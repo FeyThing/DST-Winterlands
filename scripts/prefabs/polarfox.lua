@@ -8,10 +8,19 @@ local prefabs = {
 
 local polarfox_brain = require("brains/polarfoxbrain")
 
+local function KeepTargetFn(inst, target)
+	return target and inst:IsNear(target, 30)
+end
+
 local function OnPlayerNear(inst, player)
 	if inst.components.follower and inst.components.follower.leader == nil and inst.components.combat and inst.components.combat.target == nil then
 		if inst.tail and not inst.wantstoalert then
 			inst.tail:PlayTailAnim("alert_pre", "alert_loop")
+		end
+		
+		if inst.sg and (inst.sg:HasStateTag("foxwalk") or inst.sg:HasStateTag("idle")) and inst.components.locomotor then
+			inst.components.locomotor:StopMoving()
+			inst.sg:GoToState("alert")
 		end
 		
 		inst.last_wake_time = GetTime()
@@ -112,6 +121,10 @@ local function OnAttacked(inst, data)
 	if inst.tail then
 		inst.tail:PlayTailAnim("hit", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
 	end
+	
+	if data and data.attacker then
+		inst.components.combat:SetTarget(data.attacker)
+	end
 end
 
 local function OnTimerDone(inst, data)
@@ -178,6 +191,7 @@ local function fn()
 	inst:AddComponent("combat")
 	inst.components.combat.hiteffectsymbol = "body"
 	inst.components.combat:SetDefaultDamage(TUNING.POLARFOX_DAMAGE)
+	inst.components.combat:SetKeepTargetFunction(KeepTargetFn)
 	
 	inst:AddComponent("eater")
 	inst.components.eater:SetDiet({FOODTYPE.MEAT}, {FOODTYPE.MEAT})
@@ -210,7 +224,7 @@ local function fn()
 	inst.components.lootdropper.numrandomloot = 1
 	
 	inst:AddComponent("playerprox")
-	inst.components.playerprox:SetDist(7, 9)
+	inst.components.playerprox:SetDist(8, 10)
 	inst.components.playerprox:SetOnPlayerNear(OnPlayerNear)
 	inst.components.playerprox:SetOnPlayerFar(OnPlayerFar)
 	
