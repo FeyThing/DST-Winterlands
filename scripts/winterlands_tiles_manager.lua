@@ -97,9 +97,6 @@ AddPlayerPostInit(function(inst)
     end
 end)
 
-local inspect = require("inspect2")
-print(inspect(GLOBAL.EntityScript, { depth = 2 }))
-
 local function DisableParticlesInWinterlands(inst)
     local mt = GLOBAL.deepcopy(GLOBAL.getmetatable(inst))
     if inst.particles_per_tick then
