@@ -37,6 +37,7 @@ for _, v in pairs(inits) do
 end
 
 modimport("scripts/winterlands_tiles_manager")
+modimport("scripts/blizzards_init")
 
 local prefabs = {
 	"antlion_sinkhole",
