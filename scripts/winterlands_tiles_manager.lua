@@ -97,27 +97,46 @@ AddPlayerPostInit(function(inst)
     end
 end)
 
-local function DisableParticlesInWinterlands(inst)
-    local function OnUpdate(inst)
-        if GLOBAL.ThePlayer and GLOBAL.ThePlayer.player_classified.snowstormlevel:value() ~= 0 then
-            inst.particles_per_tick = 0
+local inspect = require("inspect2")
+print(inspect(GLOBAL.EntityScript, { depth = 2 }))
 
-            if inst.splashes_per_tick ~= nil then
-                inst.splashes_per_tick = 0
+local function DisableParticlesInWinterlands(inst)
+    local mt = GLOBAL.deepcopy(GLOBAL.getmetatable(inst))
+    if inst.particles_per_tick then
+        mt.__index["particles_per_tick"] = 0
+    end
+
+    if inst.splashes_per_tick then
+        mt.__index["splashes_per_tick"] = 0
+    end
+    
+    mt.__newindex = function(t, key, val) -- Don't actually assign splashes and particles, __index runs only if the value is nil
+        if key == "particles_per_tick" then
+            local mt2 = GLOBAL.deepcopy(GLOBAL.getmetatable(inst))
+            if GLOBAL.ThePlayer and GLOBAL.ThePlayer.player_classified.snowstormlevel:value() ~= 0 then
+                mt2.__index["particles_per_tick"] = 0
+            else
+                mt2.__index["particles_per_tick"] = val
             end
+
+            GLOBAL.setmetatable(inst, mt2)
+        elseif key == "splashes_per_tick" then
+            local mt2 = GLOBAL.deepcopy(GLOBAL.getmetatable(inst))
+            if GLOBAL.ThePlayer and GLOBAL.ThePlayer.player_classified.snowstormlevel:value() ~= 0 then
+                mt2.__index["splashes_per_tick"] = 0
+            else
+                mt2.__index["splashes_per_tick"] = val
+            end
+
+            GLOBAL.setmetatable(inst, mt2)
+        else
+            GLOBAL.rawset(t, key, val)
         end
     end
 
-    if not inst.components.updatelooper then
-        inst:AddComponent("updatelooper")
-    end
-
-    if not GLOBAL.TheWorld.ismastersim then
-        inst:DoTaskInTime(1, function() -- Delay the first check to make sure the snowstormlevel is synced
-            OnUpdate(inst)
-            inst.components.updatelooper:AddOnUpdateFn(OnUpdate)
-        end)
-    end
+    inst.particles_per_tick = nil
+    inst.splashes_per_tick = nil
+    GLOBAL.setmetatable(inst, mt)
 end
 
 AddPrefabPostInit("snow", DisableParticlesInWinterlands)
