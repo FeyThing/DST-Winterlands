@@ -92,7 +92,7 @@ local function fn()
         local abs_px, _, abs_pz = inst.Transform:GetWorldPosition()
         abs_px = abs_px + px
         abs_pz = abs_pz + pz
-        if next(TheSim:FindEntities(abs_px, 0, abs_pz, TUNING.SHADE_POLAR_RANGE - 2, { "icecaveshelter" })) ~= nil then
+        if next(TheSim:FindEntities(abs_px, 0, abs_pz, TUNING.SHADE_POLAR_RANGE, { "icecaveshelter" })) ~= nil then
             return
         end
 
