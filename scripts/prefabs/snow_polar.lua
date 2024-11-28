@@ -75,6 +75,7 @@ local function fn()
 
     local desired_particles_per_second = 0
     inst.particles_per_tick = desired_particles_per_second * tick_time
+    inst.particles_acceleration = { 0, -1, -9.80, 1 }
 
     inst.num_particles_to_emit = inst.particles_per_tick
 
@@ -129,12 +130,10 @@ local function fn()
                 effect:SetRotationStatus(0, true)
                 use_uv_offset = true
                 particle_mult = 2
-                effect:SetAcceleration(0, -1, -9.80, 1)
                 effect:SetDragCoefficient(0, .85)
             else
                 effect:SetRenderResources(0, TEXTURE, SHADER)
                 effect:SetScaleEnvelope(0, SCALE_ENVELOPE_NAME)
-                effect:SetAcceleration(0, -1, -9.80, 1)
                 effect:SetDragCoefficient(0, .8)
             end
             effect:SetMaxNumParticles(0, 4800)
@@ -144,6 +143,8 @@ local function fn()
             effect:SetSortOrder(0, 3)
             effect:EnableDepthTest(0, true)
         end
+
+        effect:SetAcceleration(unpack(inst.particles_acceleration)) -- We allow acceleration modulation
 
         while inst.num_particles_to_emit > 1 do
             emit_fn()

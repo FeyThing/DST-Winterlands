@@ -6,6 +6,15 @@ local StormWatcher = require("components/stormwatcher")
 local old_StormWatcher_ctor = StormWatcher._ctor
 StormWatcher._ctor = function(self, ...)
 	old_StormWatcher_ctor(self, ...)
+
+	local old_onstormtype = self._.currentstorm[2] -- Accessing the prop function for currentstorm
+	self._.currentstorm[2] = function(self, ...)
+		old_onstormtype(self, ...)
+		if self.inst.player_classified then
+			self.inst.player_classified.stormtypechange:push()
+		end
+	end
+
 	if TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsPolarStormActive() then
 		self:UpdateStorms({ stormtype = STORM_TYPES.POLARSTORM, setting = true })
 	end

@@ -45,12 +45,32 @@ ENV.AddPlayerPostInit(function(inst)
 end)
 
 AddPrefabPostInit("player_classified", function(inst)
+	inst.stormtypechange = net_event(inst.GUID, "stormtypedirty") -- stormtype lacks a dirty event
+
+	local base_polarsnow_particles_per_tick = 16
 	inst.polarsnowlevel = net_float(inst.GUID, "polarsnowlevel", "polarsnowleveldirty")
 	
 	inst:DoStaticTaskInTime(0, function(inst)
 		inst:ListenForEvent("polarsnowleveldirty", function(inst)
 			if inst._parent._polarsnowfx then
-				inst._parent._polarsnowfx.particles_per_tick = 16 * inst.polarsnowlevel:value()
+				inst._parent._polarsnowfx.particles_per_tick = base_polarsnow_particles_per_tick * inst.polarsnowlevel:value()
+
+				if inst.stormtype:value() == STORM_TYPES.POLARSTORM then
+					inst._parent._polarsnowfx.particles_per_tick = inst._parent._polarsnowfx.particles_per_tick * 4
+				end
+			end
+		end)
+
+		inst:ListenForEvent("stormtypedirty", function(inst)
+			if inst._parent._polarsnowfx then
+				inst._parent._polarsnowfx.particles_per_tick = base_polarsnow_particles_per_tick * inst.polarsnowlevel:value()
+
+				if inst.stormtype:value() == STORM_TYPES.POLARSTORM then
+					inst._parent._polarsnowfx.particles_per_tick = inst._parent._polarsnowfx.particles_per_tick * 4
+					inst._parent._polarsnowfx.particles_acceleration = { 0, -20, -9.80 * 4, 24 }
+				else
+					inst._parent._polarsnowfx.particles_acceleration = { 0, -1, -9.80, 1 }
+				end
 			end
 		end)
 	end)
