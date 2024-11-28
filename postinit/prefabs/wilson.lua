@@ -3,8 +3,22 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
+--
+
+local function PolarSnowUpdate(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local polarsnowlevel = TheWorld.components.polarsnow_manager:GetDataAtPoint(x, y, z)
+	
+	inst.player_classified.polarsnowlevel:set(polarsnowlevel)
+end
+
 ENV.AddPlayerPostInit(function(inst)
 	if not TheNet:IsDedicated() then
+		inst._polarsnowfx = SpawnPrefab("snow_polar")
+		inst._polarsnowfx.entity:SetParent(inst.entity)
+		inst._polarsnowfx.particles_per_tick = 0
+		inst._polarsnowfx:PostInit()
+		
 		inst:AddComponent("snowwaver")
 	end
 	
@@ -12,11 +26,34 @@ ENV.AddPlayerPostInit(function(inst)
 		return
 	end
 	
+	inst:AddComponent("polarstormwatcher")
+	
 	if inst.components.areaaware then
 		inst.components.areaaware:StartWatchingTile(WORLD_TILES.POLAR_ICE)
 	end
 	
 	inst:AddComponent("polarwalker")
+	
+	if not inst.components.updatelooper then
+		inst:AddComponent("updatelooper")
+	end
+	
+	inst:DoTaskInTime(1, function() -- Delay the first check to make sure the polarsnowlevel is synced
+		PolarSnowUpdate(inst)
+		inst.components.updatelooper:AddOnUpdateFn(PolarSnowUpdate)
+	end)
+end)
+
+AddPrefabPostInit("player_classified", function(inst)
+	inst.polarsnowlevel = net_float(inst.GUID, "polarsnowlevel", "polarsnowleveldirty")
+	
+	inst:DoStaticTaskInTime(0, function(inst)
+		inst:ListenForEvent("polarsnowleveldirty", function(inst)
+			if inst._parent._polarsnowfx then
+				inst._parent._polarsnowfx.particles_per_tick = 16 * inst.polarsnowlevel:value()
+			end
+		end)
+	end)
 end)
 
 --	Wolfgang beats snow when mighty, not when wimpy :<

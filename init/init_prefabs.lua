@@ -20,7 +20,7 @@ PrefabFiles = {
 	"polarmoosehat",
 	"rock_polar",
 	"shadowcreature_polar",
-	"snowstorm_snow",
+	"snow_polar",
 	"snowwave",
 	"veggies_polar",
 	"walls_polar",

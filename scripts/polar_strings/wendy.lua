@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Would you like to take me somewhere?",
+		FRIEND = "Oh. Did I leave you to starve?",
 		GENERIC = "A sly shade in the snow.",
 	}
 	DESCRIBE.POLARWARG = "The champion of the tundra."

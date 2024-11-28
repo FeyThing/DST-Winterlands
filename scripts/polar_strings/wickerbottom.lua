@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "A little food goes a long way here, right dear?",
+		FRIEND = "A face I won't soon forget.",
 		GENERIC = "Vulpes lagopus, frolicking happily in the snow!",
 	}
 	DESCRIBE.POLARWARG = "He will be hard to defeat at field advantage."

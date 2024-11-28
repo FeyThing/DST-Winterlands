@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Now that I caught you... well. I don't know what I'll be doing exactly!",
+		FRIEND = "We've met in this timestream, haven't we?",
 		GENERIC = "Ooooh you! You won't get away this time!",
 	}
 	DESCRIBE.POLARWARG = "For how long has this monster been prowling around here?"

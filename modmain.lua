@@ -36,9 +36,6 @@ for _, v in pairs(inits) do
 	modimport("init/"..v)
 end
 
-modimport("scripts/winterlands_tiles_manager")
-modimport("scripts/blizzards_init")
-
 local prefabs = {
 	"antlion_sinkhole",
 	"bearger",
@@ -68,6 +65,7 @@ local components = {
 	"explosive",
 	"groundpounder",
 	"hounded",
+	"hullhealth",
 	"hunter",
 	"inspectable",
 	"locomotor",
@@ -81,8 +79,10 @@ local components = {
 	"shadowcreaturespawner",
 	"sheltered",
 	"slipperyfeet",
+	"stormwatcher",
 	"temperature",
 	"wavemanager",
+	"weather",
 	"wisecracker",
 }
 

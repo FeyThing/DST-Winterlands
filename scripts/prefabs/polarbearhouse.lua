@@ -56,6 +56,9 @@ local function OnVacate(inst, child)
 			
 			if TheWorld.state.iscaveday and child.components.timer and not child.components.timer:TimerExists("plowinthemorning") then
 				child.components.timer:StartTimer("plowinthemorning", TUNING.POLARBEAR_PLOWTIME)
+				if child:IsAsleep() then
+					child.components.timer:PauseTimer("plowinthemorning")
+				end
 			end
 			
 			if child.SetPainting then

@@ -6,10 +6,71 @@ local prefabs = {
 	"polarfox_tail",
 }
 
+local snowhuntPrefabs = {
+	rabbit = 7,
+	mole = 1,
+}
+
 local polarfox_brain = require("brains/polarfoxbrain")
 
 local function KeepTargetFn(inst, target)
 	return target and inst:IsNear(target, 30)
+end
+
+local function OnChangedLeader(inst, new, old)
+	if new then
+		if inst._trusted_survivors == nil then
+			inst._trusted_survivors = {}
+		end
+		inst._trusted_survivors[new.prefab] = true
+	end
+	
+	if inst.tail and inst.tail.tailanim:value() ~= "wiggle" then
+		local anim = new and "wiggle" or "idle"
+		inst.tail:PlayTailAnim(inst.wantstoalert and "alert_pst" or anim, anim)
+		inst.wantstoalert = nil
+	end
+end
+
+local function GetStatus(inst, viewer)
+	return (inst.components.follower and inst.components.follower.leader ~= nil and "FOLLOWER")
+		or (inst._trusted_survivors and inst._trusted_survivors[viewer.prefab] and "FRIEND")
+		or nil
+end
+
+local function OnPlayerDrop(inst, player, data)
+	local item = data and data.item
+	
+	if item and item:IsValid() and item.components.edible and inst.components.eater and inst.components.eater:CanEat(item) then
+		if inst._trusted_foods == nil then
+			inst._trusted_foods = {}
+		end
+		
+		inst._trusted_foods[item] = player
+	end
+end
+
+local function ListenForPlayerDrops(inst, disable)
+	if inst._listened_surivors == nil then
+		inst._listened_surivors = {}
+	end
+	
+	if disable then
+		for i, v in pairs(inst._listened_surivors) do
+			inst:RemoveEventCallback("dropitem", inst.OnPlayerDrop, v)
+		end
+		inst._listened_surivors = {}
+	else
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local players = FindPlayersInRange(x, y, z, 20, true)
+		
+		for i, v in ipairs(players) do
+			if not table.contains(inst._listened_surivors, v) then
+				inst:ListenForEvent("dropitem", inst.OnPlayerDrop, v)
+				table.insert(inst._listened_surivors, v)
+			end
+		end
+	end
 end
 
 local function OnPlayerNear(inst, player)
@@ -18,9 +79,11 @@ local function OnPlayerNear(inst, player)
 			inst.tail:PlayTailAnim("alert_pre", "alert_loop")
 		end
 		
-		if inst.sg and (inst.sg:HasStateTag("foxwalk") or inst.sg:HasStateTag("idle")) and inst.components.locomotor then
+		if inst.sg and (inst.sg:HasStateTag("foxwalk") or inst.sg:HasStateTag("idle")) and inst.components.locomotor
+			and (inst._trusted_foods == nil or IsTableEmpty(inst._trusted_foods)) then
+			
 			inst.components.locomotor:StopMoving()
-			inst.sg:GoToState("alert")
+			inst.sg:GoToState("_alert")
 		end
 		
 		inst.last_wake_time = GetTime()
@@ -28,6 +91,10 @@ local function OnPlayerNear(inst, player)
 		
 		if inst.components.sleeper and inst.components.sleeper:IsAsleep() then
 			inst.components.sleeper:WakeUp()
+		end
+		
+		if inst._droptask == nil then
+			inst._droptask = inst:DoPeriodicTask(0.2, inst.ListenForPlayerDrops)
 		end
 	end
 end
@@ -37,7 +104,32 @@ local function OnPlayerFar(inst, player)
 		inst.tail:PlayTailAnim("alert_pst", "idle")
 	end
 	
+	if inst._droptask then
+		inst._droptask:Cancel()
+		inst._droptask = nil
+		
+		inst:ListenForPlayerDrops(true)
+	end
+	
 	inst.wantstoalert = nil
+end
+
+local function OnEat(inst, food, feeder)
+	if food and inst._trusted_foods and inst._trusted_foods[food] then
+		if inst.components.follower and inst.components.follower.leader == nil then
+			local player = inst._trusted_foods[food]
+			
+			if player:IsValid() and player.components.leader then
+				player:PushEvent("makefriend")
+				player.components.leader:AddFollower(inst)
+				
+				inst.components.follower:AddLoyaltyTime(TUNING.POLARFOX_LOYALTY_PER_FOOD)
+				inst.components.follower.maxfollowtime = player:HasTag("polite")
+					and TUNING.POLARFOX_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS
+					or TUNING.POLARFOX_LOYALTY_MAXTIME
+			end
+		end
+	end
 end
 
 local function IsAbleToAccept(inst, item, giver)
@@ -49,13 +141,17 @@ local function IsAbleToAccept(inst, item, giver)
 		else
 			return false, "BUSY"
 		end
-	else
-		return true
 	end
+	
+	return true
 end
 
 local function ShouldAcceptItem(inst, item, giver)
 	if inst.components.eater:CanEat(item) and inst.components.follower then
+		if giver and inst._trusted_survivors and not inst._trusted_survivors[giver.prefab] then
+			return false
+		end
+		
 		return inst.components.follower.leader == nil or inst.components.follower:GetLoyaltyPercent() <= TUNING.PIG_FULL_LOYALTY_PERCENT
 	end
 end
@@ -63,17 +159,22 @@ end
 local function OnGetItemFromPlayer(inst, giver, item)
 	if item.components.edible then
 		if giver.components.leader then
-			if inst.tail and inst.tail.tailanim:value() ~= "wiggle" then
-				inst.tail:PlayTailAnim(inst.wantstoalert and "alert_pst" or "wiggle", "wiggle")
-				inst.wantstoalert = nil
-			end
-			
 			giver:PushEvent("makefriend")
 			giver.components.leader:AddFollower(inst)
 			
 			inst.components.follower:AddLoyaltyTime(TUNING.POLARFOX_LOYALTY_PER_FOOD)
 			inst.components.follower.maxfollowtime = giver:HasTag("polite")
-				and TUNING.POLARFOX_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS or TUNING.POLARFOX_LOYALTY_MAXTIME
+				and TUNING.POLARFOX_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS
+				or TUNING.POLARFOX_LOYALTY_MAXTIME
+			
+			if inst._droptask then
+				inst._droptask:Cancel()
+				inst._droptask = nil
+				
+				inst:ListenForPlayerDrops(true)
+			end
+			
+			inst._trusted_foods = nil
 		end
 		
 		if inst.components.sleeper:IsAsleep() then
@@ -97,6 +198,10 @@ local function SleepTest(inst)
 		return false
 	end
 	
+	if leader and inst:GetDistanceSqToInst(leader) >= TUNING.POLARFOX_LEADER_RUN_DIST / 2 then
+		return false
+	end
+	
 	if not inst.sg:HasStateTag("busy") and (not inst.last_wake_time or GetTime() - inst.last_wake_time >= inst.nap_interval) then
 		inst.nap_length = math.random(TUNING.MIN_CATNAP_LENGTH, TUNING.MAX_CATNAP_LENGTH)
 		inst.last_sleep_time = GetTime()
@@ -106,13 +211,53 @@ local function SleepTest(inst)
 end
 
 local function WakeTest(inst)
-	if not inst.last_sleep_time or GetTime() - inst.last_sleep_time >= inst.nap_length then
+	local leader = inst.components.follower and inst.components.follower.leader
+	
+	if not inst.last_sleep_time
+		or (GetTime() - inst.last_sleep_time >= inst.nap_length)
+		or (leader and inst:GetDistanceSqToInst(leader) >= TUNING.POLARFOX_LEADER_RUN_DIST / 2) then
+		
 		inst.nap_interval = math.random(TUNING.MIN_CATNAP_INTERVAL, TUNING.MAX_CATNAP_INTERVAL)
 		inst.last_wake_time = GetTime()
 		
 		return true
 	end
 end
+
+--
+
+local function OnSave(inst, data)
+	if inst._trusted_survivors and not IsTableEmpty(inst._trusted_survivors) then
+		data.trusted_survivors = inst._trusted_survivors
+	end
+end
+
+local function OnLoad(inst, data)
+	if data then
+		inst._trusted_survivors = data.trusted_survivors
+	end
+end
+
+local function NoHoles(pt)
+	return not TheWorld.Map:IsPointNearHole(pt)
+end
+
+local function HuntRandomPrey(inst, tier)
+	local pt = inst:GetPosition()
+	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 2, 8, true, false, NoHoles)
+	
+	if offset then
+		local preyfab = weighted_random_choice(inst.snowhuntPrefabs)
+		local prey = SpawnPrefab(preyfab)
+		
+		if prey then
+			prey.Transform:SetPosition((pt + offset):Get())
+		end
+		TheWorld:PushEvent("spawned_snowhuntprey", {prey = prey, hunter = inst})
+	end
+end
+
+--
 
 local function OnAttacked(inst, data)
 	inst.wantstoalert = nil
@@ -124,12 +269,24 @@ local function OnAttacked(inst, data)
 	
 	if data and data.attacker then
 		inst.components.combat:SetTarget(data.attacker)
+		
+		if inst._trusted_survivors then
+			inst._trusted_survivors[data.attacker.prefab] = nil
+		end
+	end
+end
+
+local function OnLootPrefabSpawned(inst, data)
+	if data and data.loot and data.loot.prefab == "manrabbit_tail" then
+		inst.AnimState:HideSymbol("tail")
 	end
 end
 
 local function OnTimerDone(inst, data)
-	
+	-- TODO: time to hunt for bunnies in the snow... also cooldown for bird hunting
 end
+
+--
 
 local function TailSwip(inst)
 	if not inst.sg:HasStateTag("moving") and not inst.wantstoalert and not inst.sg:HasStateTag("busy") then
@@ -137,7 +294,7 @@ local function TailSwip(inst)
 			inst.tail:PlayTailAnim("swip", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
 		end
 		
-		inst.SoundEmitter:PlaySound("turnoftides/creatures/together/lunarmothling/flap_fast")
+		inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_low")
 	end
 	
 	inst._tailswip = inst:DoTaskInTime(0.5 + (math.random() * 24.5), TailSwip)
@@ -167,7 +324,7 @@ local function fn()
 	
 	inst.Transform:SetSixFaced()
 	
-	inst.DynamicShadow:SetSize(2, 0.33)
+	inst.DynamicShadow:SetSize(1.7, 1)
 	
 	inst.AnimState:SetRayTestOnBB(true)
 	inst.AnimState:SetBank("polarfox")
@@ -196,9 +353,11 @@ local function fn()
 	inst:AddComponent("eater")
 	inst.components.eater:SetDiet({FOODTYPE.MEAT}, {FOODTYPE.MEAT})
 	inst.components.eater:SetCanEatRaw()
+	inst.components.eater:SetOnEatFn(OnEat)
 	
 	inst:AddComponent("follower")
 	inst.components.follower.maxfollowtime = TUNING.POLARFOX_LOYALTY_MAXTIME
+	inst.components.follower.OnChangedLeader = OnChangedLeader
 	
 	inst:AddComponent("health")
 	inst.components.health:SetMaxHealth(TUNING.POLARFOX_HEALTH)
@@ -206,6 +365,7 @@ local function fn()
 	inst:AddComponent("inventory")
 	
 	inst:AddComponent("inspectable")
+	inst.components.inspectable.getstatus = GetStatus
 	
 	inst:AddComponent("knownlocations")
 	
@@ -253,9 +413,17 @@ local function fn()
 	
 	MakeSmallFreezableCharacter(inst, "body")
 	
+	inst.snowhuntPrefabs = snowhuntPrefabs
+	inst.HuntRandomPrey = HuntRandomPrey
+	inst.ListenForPlayerDrops = ListenForPlayerDrops
+	inst.OnPlayerDrop = function(player, data) OnPlayerDrop(inst, player, data) end
+	inst.OnSave = OnSave
+	inst.OnLoad = OnLoad
+	
 	inst:DoTaskInTime(0, TailTask)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
+	inst:ListenForEvent("loot_prefab_spawned", OnLootPrefabSpawned)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	inst:SetStateGraph("SGpolarfox")

@@ -43,7 +43,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.ANTLER_TREE_STICK = "Bullbranch"
 	NAMES.FROSTWALKERAMULET = "Chillest Amulet"
 	NAMES.POLAR_SPEAR = "Stalagspear"
-	NAMES.POLARMOOSEHAT = "Moose Ushanka"
+	NAMES.POLARMOOSEHAT = "Ushanka"
 	
 	--	Others
 	NAMES.DUG_GRASS_POLAR = "Tundra Tuft"
@@ -140,6 +140,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	
 	--	Scrapbook, Cookbook
+	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "This tree has robust branches that could prove to be useful.\nHowever, axes won't cut it to take them off properly..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."

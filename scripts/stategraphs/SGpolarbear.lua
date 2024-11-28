@@ -366,7 +366,10 @@ CommonStates.AddRunStates(states, {
 
 CommonStates.AddSleepStates(states, {
 	sleeptimeline = {
-		TimeEvent(35 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("dontstarve/pig/sleep") end),
+		TimeEvent(4 * FRAMES, function(inst) inst.SoundEmitter:PlaySound(inst.sounds.growl, nil, 0.15) end),
+	},
+	waketimeline = {
+		TimeEvent(3 * FRAMES, function(inst) inst.SoundEmitter:PlaySound(inst.sounds.talk) end),
 	},
 })
 

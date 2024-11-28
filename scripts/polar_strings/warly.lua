@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "You simply can't say non to a good meal, non?",
+		FRIEND = "What say you for a meal like old times?",
 		GENERIC = "A cunning little renard.",
 	}
 	DESCRIBE.POLARWARG = "I'm all shivery, and it's not just the cold..."

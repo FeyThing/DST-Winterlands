@@ -16,8 +16,8 @@ Assets = {
 	Asset("ATLAS", "images/scrapbook_polar.xml"),
 	
 	Asset("ANIM", "anim/meter_polar_over.zip"),
-
-	Asset("ANIM", "anim/snow_over.zip"),
+	
+	Asset("ANIM", "anim/polarstorm_over.zip"),
 	
 	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
 	Asset("ATLAS", "images/rain_polar.xml"),
@@ -33,10 +33,6 @@ Assets = {
 }
 
 AddMinimapAtlas("images/polarminimap.xml")
-
-AddSimPostInit(function()
-	modimport("postinit/shadeeffects")
-end)
 
 --	Inventory Images
 

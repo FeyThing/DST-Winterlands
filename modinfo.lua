@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "Feything, Gearless, LukaS, ADM, Notka"
 
-version = "grassious"
+version = "blizzstorm"
 local info_version = "󰀔 [ Version "..version.." ]\n"
 
 description = info_version..[[

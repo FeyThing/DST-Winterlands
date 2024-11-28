@@ -11,6 +11,27 @@ local Text = require("widgets/text")
 local UIAnim = require("widgets/uianim")
 local Widget = require("widgets/widget")
 
+--	Blizzard
+
+local i = 0
+for key, val in pairs(STORM_TYPES) do
+	i = i + 1
+end
+
+STORM_TYPES.POLARSTORM = i
+
+local PolarOver = require("widgets/polarover")
+local PolarDustOver = require("widgets/polardustover")
+local PlayerHud = require("screens/playerhud")
+
+local old_PlayerHud_CreateOverlays = PlayerHud.CreateOverlays
+PlayerHud.CreateOverlays = function(self, owner, ...)
+	old_PlayerHud_CreateOverlays(self, owner, ...)
+	
+	self.polardustover = self.storm_overlays:AddChild(PolarDustOver(owner))
+	self.polarover = self.overlayroot:AddChild(PolarOver(owner, self.polardustover))
+end
+
 --	Polar Wetness
 
 local MoistureMeter = require("widgets/moisturemeter")

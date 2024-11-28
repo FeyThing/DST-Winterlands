@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Let's play a small game.",
+		FRIEND = "He's got a familiar face. Look like I do too.",
 		GENERIC = "Aha! Come here!",
 	}
 	DESCRIBE.POLARWARG = "The cold must be trivial with fur like his."

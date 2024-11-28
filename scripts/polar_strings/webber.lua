@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Wanna make angels in the snow?",
+		FRIEND = "It remembers us!",
 		GENERIC = "I bet it's hungry.",
 	}
 	DESCRIBE.POLARWARG = "Who knew the yeti had a puppy?"

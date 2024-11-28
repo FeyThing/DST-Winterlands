@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Puny but cute.",
+		FRIEND = "Aww, is too hungry to follow.",
 		GENERIC = "Ha! Is puny critter!",
 	}
 	

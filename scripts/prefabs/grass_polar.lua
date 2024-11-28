@@ -194,4 +194,5 @@ local waxed_data = {
 
 return Prefab("grass_polar", fn, assets, prefabs),
 	Prefab("grass_polar_spawner", spawner, assets, prefabs),
+	MakePlacer("dug_grass_polar_placer", "grass_tall", "grass_polar", "idle"),
 	WAXED_PLANTS.CreateDugWaxedPlant(waxed_data)

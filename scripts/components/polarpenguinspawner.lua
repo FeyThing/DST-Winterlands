@@ -85,7 +85,7 @@ return Class(function(self, inst)
 	function self:OnPostInit()
 		if TUNING.PENGUINS_MAX_COLONIES > 0 and TheWorld.has_ocean then
 			inst:WatchWorldState("cycles", OnDayComplete)
-			OnDayComplete(inst, 1)
+			OnDayComplete(inst)
 		end
 	end
 	

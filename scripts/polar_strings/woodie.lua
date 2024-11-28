@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Go get'em birds!",
+		FRIEND = "That's my old chum.",
 		GENERIC = "A rare sight even up in the North.",
 	}
 	DESCRIBE.POLARWARG = "It could pull a sled on its own."

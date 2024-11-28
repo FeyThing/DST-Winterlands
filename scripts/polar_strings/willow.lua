@@ -45,6 +45,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Come with me, and you'll see...",
+		FRIEND = "I thought I had lost you!",
 		GENERIC = "Hey there little guy!",
 	}
 	DESCRIBE.POLARWARG = "Get your fleas away from me."

@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "'Tis all fun and games until you lend me into a trap.",
+		FRIEND = "Our roads cross again.",
 		GENERIC = "'Twas no chance to escape me!",
 	}
 	DESCRIBE.POLARWARG = "A glorious battle awaits me on this frozen land."
@@ -66,12 +67,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 	--	Crafting
 	DESCRIBE.POLAR_DRYICE = "Chunks from an ice giant!"
-	DESCRIBE.POLARBEARFUR = "This will make me a fine fur!"
+	DESCRIBE.POLARBEARFUR = "A pelt only the fiercest warriors can acquire."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
-	DESCRIBE.POLARMOOSEHAT = "A pelt only the fiercest warriors can acquire."
+	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {

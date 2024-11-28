@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Shh... it's okay now",
+		FRIEND = "Hi friend! Remember?",
 		GENERIC = "Aww! Come, COME!",
 	}
 	DESCRIBE.POLARWARG = "Big chilly woofer"

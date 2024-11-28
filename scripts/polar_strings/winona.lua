@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "You get me rabbits, and I get you dinners, simple.",
+		FRIEND = "Have I forgotten my part of our little engagement?",
 		GENERIC = "Get over here, you little rascal!",
 	}
 	DESCRIBE.POLARWARG = "I've got no doubt about his minty breath."

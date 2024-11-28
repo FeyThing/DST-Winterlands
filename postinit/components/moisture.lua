@@ -32,6 +32,15 @@ local Moisture = require("components/moisture")
 		return self:GetPolarMoistureRate(rate)
 	end
 	
+	local Old_GetMoistureRateAssumingRain = Moisture._GetMoistureRateAssumingRain
+	Moisture._GetMoistureRateAssumingRain = function(self, ...)
+		if self.inst.player_classified.polarsnowlevel:value() ~= 0 then
+			return 0
+		end
+		
+		return Old_GetMoistureRateAssumingRain(self, ...)
+	end
+	
 	local OldGetDryingRate = Moisture.GetDryingRate
 	function Moisture:GetDryingRate(moisturerate, ...)
 		local rate = OldGetDryingRate(self, moisturerate, ...)

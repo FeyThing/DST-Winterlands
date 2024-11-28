@@ -177,6 +177,10 @@ end
 local function OnEntitySleep(inst)
 	CancelRunHomeTask(inst)
 	
+	if inst.components.timer:TimerExists("plowinthemorning") then
+		inst.components.timer:PauseTimer("plowinthemorning")
+	end
+	
 	if not inst.wantstoteleport then
 		return
 	end
@@ -187,6 +191,14 @@ local function OnEntitySleep(inst)
 	local hometraveltime = inst.components.homeseeker and inst.components.homeseeker:GetHomeDirectTravelTime() or nil
 	if hometraveltime then
 		inst.runhometask = inst:DoTaskInTime(hometraveltime, OnRanHome)
+	end
+end
+
+local function OnEntityWake(inst)
+	CancelRunHomeTask(inst)
+	
+	if inst.components.timer:TimerExists("plowinthemorning") then
+		inst.components.timer:ResumeTimer("plowinthemorning")
 	end
 end
 
@@ -268,6 +280,7 @@ local function SetEnraged(inst, enable)
 		inst._growltask = nil
 	end
 	
+	inst:AddOrRemoveTag("hostile", enable)
 	if inst.enraged then
 		inst:StopPolarPlowing()
 		
@@ -376,9 +389,10 @@ local function fn()
 	inst.AnimState:Hide("hat")
 	inst.AnimState:Hide("ARM_carry_up")
 	
-	inst:AddTag("character")
 	inst:AddTag("bear")
+	inst:AddTag("character")
 	inst:AddTag("polarwet")
+	inst:AddTag("scarytoprey")
 	
 	inst.sounds = sounds
 	
@@ -467,6 +481,8 @@ local function fn()
 	MakeHauntablePanic(inst)
 	
 	inst.DoGrowl = DoGrowl
+	inst.OnEntitySleep = OnEntitySleep
+	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	inst.SetEnraged = SetEnraged
@@ -479,8 +495,6 @@ local function fn()
 	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("equip", OnEquip)
 	inst:ListenForEvent("unequip", OnUnequip)
-	inst:ListenForEvent("entitysleep", OnEntitySleep)
-	inst:ListenForEvent("entitywake", CancelRunHomeTask)
 	inst:ListenForEvent("gainloyalty", OnUnmarkForTeleport)
 	inst:ListenForEvent("loseloyalty", OnMarkForTeleport)
 	inst:ListenForEvent("startfollowing", OnUnmarkForTeleport)

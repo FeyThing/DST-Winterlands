@@ -47,6 +47,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "We're in this together now.",
+		FRIEND = "Long time no see, Pal.",
 		GENERIC = "Be on your way.",
 	}
 	DESCRIBE.POLARWARG = "What wonderful adaptation."

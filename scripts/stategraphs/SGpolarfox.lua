@@ -1,15 +1,48 @@
 require("stategraphs/commonstates")
 
 local actionhandlers = {
-	
+	ActionHandler(ACTIONS.EAT, function(inst)
+		local ba = inst:GetBufferedAction()
+		if ba and ba.target and inst._trusted_foods and inst._trusted_foods[ba.target] then
+			local leader = inst.components.follower and inst.components.follower.leader
+			
+			return leader == nil and "sniff" or "eat"
+		else
+			return "eat"
+		end
+	end),
 }
 
 local events = {
 	CommonHandlers.OnAttacked(),
 	CommonHandlers.OnDeath(),
-	CommonHandlers.OnLocomote(true, true),
+	CommonHandlers.OnHop(),
+	CommonHandlers.OnSink(),
+    CommonHandlers.OnFallInVoid(),
 	CommonHandlers.OnSleepEx(),
 	CommonHandlers.OnWakeEx(),
+	
+	EventHandler("locomote", function(inst)
+		if inst.components.locomotor then
+			if inst.sg:HasStateTag("sitting") and inst.wantstosit then
+				inst.wantstosit = nil
+				inst.sg:GoToState("sit")
+				return
+			end
+			
+			local is_idling = inst.sg:HasStateTag("idle")
+			local is_moving = inst.sg:HasStateTag("moving")
+			local is_running = inst.sg:HasStateTag("running")
+			local should_move = inst.components.locomotor:WantsToMoveForward()
+			local should_run = inst.components.locomotor:WantsToRun()
+			
+			if is_moving and not should_move then
+				inst.sg:GoToState(is_running and "run_stop" or "walk_stop")
+			elseif (is_idling and should_move) or (is_moving and should_move and is_running ~= should_run) then
+				inst.sg:GoToState((should_run and "run_start") or "walk_start")
+			end
+		end
+	end),
 }
 
 local states = {
@@ -43,14 +76,14 @@ local states = {
 				local wantstoalert = inst.wantstoalert and not inst.sg.statemem.alerted
 				inst.wantstosit = math.random() < 0.1 and not (inst.sg.statemem.alerted and inst.components.follower and inst.components.follower.leader == nil)
 				
-				inst.sg:GoToState((wantstoalert and "alert") or (inst.wantstosit and "sit") or "idle", {alerted = inst.sg.statemem.alerted})
+				inst.sg:GoToState((wantstoalert and "_alert") or (inst.wantstosit and "sit") or "idle", {alerted = inst.sg.statemem.alerted})
 			end),
 		},
 	},
 	
 	State{
 		name = "sit",
-		tags = {"busy", "sitting"},
+		tags = {"busy", "caninterrupt", "sitting"},
 		
 		onenter = function(inst)
 			if inst.wantstosit then
@@ -64,7 +97,7 @@ local states = {
 		events = {
 			EventHandler("animover", function(inst)
 				local wantstosit = not inst.wantstoalert and inst.wantstosit
-				inst.sg:GoToState((wantstosit and "sitting") or (inst.wantstoalert and "alert") or "idle")
+				inst.sg:GoToState((wantstosit and "sitting") or (inst.wantstoalert and "_alert") or "idle")
 			end),
 		},
 	},
@@ -88,11 +121,12 @@ local states = {
 	},
 	
 	State{
-		name = "alert",
+		name = "_alert", -- Cannot use standard state name because of facing behaviour
 		tags = {"alert", "busy", "canrotate"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("alert")
+			inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_long", nil, 0.25)
 			inst.Physics:Stop()
 			
 			local x, y, z = inst.Transform:GetWorldPosition()
@@ -105,6 +139,11 @@ local states = {
 				end
 			end
 		end,
+		
+		timeline = {
+			TimeEvent(4 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive") end),
+			TimeEvent(8 * FRAMES, function(inst) PlayFootstep(inst, 0.1) end),
+		},
 		
 		events = {
 			EventHandler("animover", function(inst)
@@ -131,6 +170,7 @@ local states = {
 		timeline = {
 			TimeEvent(6 * FRAMES, function(inst)
 				inst:PerformBufferedAction()
+				inst.sg:AddStateTag("caninterrupt")
 			end),
 		},
 		
@@ -145,28 +185,48 @@ local states = {
 	
 	State{
 		name = "sniff",
-		tags = {"sniffing", "busy", "canrotate"},
+		tags = {"sniffing", "canrotate"},
 		
-		onenter = function(inst, target)
+		onenter = function(inst)
 			inst.AnimState:PlayAnimation("sniff")
 			inst.Physics:Stop()
 			
-			inst.sg.statemem.sniff_target = target
+			local ba = inst:GetBufferedAction()
+			if ba and ba.target then
+				inst.sg.statemem.sniff_target = ba.target
+			end
 		end,
 		
 		onupdate = function(inst)
 			local target = inst.sg.statemem.sniff_target
-			if target and target:IsValid() and not target:IsInLimbo() then
+			if target and target:IsValid() and not target:IsInLimbo() and not inst.components.locomotor:WantsToRun() then
 				inst:ForceFacePoint(target.Transform:GetWorldPosition())
 			else
-				inst.sg.statemem.sniff_target = nil
+				inst._trusted_foods = nil
+				
+				inst:ClearBufferedAction()
+				inst.sg:GoToState("_alert")
 			end
 		end,
 		
+		timeline = {
+			TimeEvent(FRAMES, function(inst) PlayFootstep(inst, 0.4) end),
+			TimeEvent(6 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_cut") end),
+			TimeEvent(15 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_short") end),
+			TimeEvent(28 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_long") end),
+			TimeEvent(45 * FRAMES, function(inst) PlayFootstep(inst, 0.6) end),
+			TimeEvent(53 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_low") end),
+			
+		},
+		
 		events = {
 			EventHandler("animover", function(inst)
-				inst.sniffed_food = inst.sg.statemem.sniff_target
-				inst.sg:GoToState("idle")
+				local target = inst.sg.statemem.sniff_target
+				if target and target:IsValid() and not target:IsInLimbo() then
+					inst.sg:GoToState("eat")
+				else
+					inst.sg:GoToState("idle")
+				end
 			end),
 		},
 	},
@@ -185,7 +245,7 @@ local states = {
 			RemovePhysicsColliders(inst)
 			
 			if inst.components.lootdropper then
-				inst.components.lootdropper:DropLoot() -- TODO: Hide tail if dropped ?
+				inst.components.lootdropper:DropLoot()
 			end
 		end,
 	},
@@ -215,7 +275,8 @@ local states = {
 		end,
 		
 		timeline = {
-			TimeEvent(FRAMES, function(inst) PlayFootstep(inst) end),
+			TimeEvent(FRAMES, function(inst) PlayFootstep(inst, 0.1) end),
+			TimeEvent(14 * FRAMES, function(inst) PlayFootstep(inst, 0.1) end),
 		},
 		
 		events = {
@@ -250,6 +311,11 @@ local states = {
 			inst.AnimState:PlayAnimation("run_pre")
 		end,
 		
+		timeline = {
+			TimeEvent(FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive") end),
+			TimeEvent(2 * FRAMES, function(inst) PlayFootstep(inst, 0.2) end),
+		},
+		
 		events = {
 			EventHandler("animover", function(inst)
 				inst.sg:GoToState("run")
@@ -267,7 +333,9 @@ local states = {
 		end,
 		
 		timeline = {
-			TimeEvent(5 * FRAMES, PlayFootstep),
+			TimeEvent(2 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive") end),
+			TimeEvent(5 * FRAMES, function(inst) PlayFootstep(inst, 0.2) end),
+			TimeEvent(6 * FRAMES, function(inst) PlayFootstep(inst, 0.1) end),
 		},
 		
 		events = {
@@ -295,6 +363,34 @@ local states = {
 }
 
 CommonStates.AddSimpleState(states, "hit", "hit")
-CommonStates.AddSleepExStates(states)
+CommonStates.AddSleepExStates(states, {
+	sleeptimeline = {
+		TimeEvent(26 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_low", nil, 0.1 + (math.random() * 0.4)) end),
+	},
+	waketimeline = {
+		TimeEvent(11 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive") end),
+	},
+},
+{
+	onsleep = function(inst)
+		if inst.tail then
+			inst.tail:PlayTailAnim("still", "still")
+		end
+	end,
+	onwake = function(inst)
+		if inst.tail then
+			inst.tail:PlayTailAnim("idle", (inst.components.follower and inst.components.follower.leader) and "wiggle" or "idle")
+		end
+	end,
+})
+CommonStates.AddHopStates(states, false, nil, {
+	hop_pre = {
+		TimeEvent(2, function(inst)
+			inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive")
+		end),
+	}
+})
+CommonStates.AddSinkAndWashAshoreStates(states)
+CommonStates.AddVoidFallStates(states)
 
 return StateGraph("polarfox", states, events, "idle", actionhandlers)
