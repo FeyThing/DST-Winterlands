@@ -40,9 +40,21 @@ return Class(function(self, inst)
     end
     
     function self:GetPolarStormLevel(ent)
-        return (ent and self:IsPolarStormActive() and TheWorld.components.polarsnow_manager) and
+        local stormlevel = (ent and self:IsPolarStormActive() and TheWorld.components.polarsnow_manager) and
         TheWorld.components.polarsnow_manager:GetDataAtPoint(ent.Transform:GetWorldPosition()) or
         0
+
+        local x, y, z = ent.Transform:GetWorldPosition()
+        local pillars = TheSim:FindEntities(x, y, z, TUNING.SHADE_POLAR_RANGE, { "icecaveshelter" })
+        local minsq = TUNING.SHADE_POLAR_RANGE * TUNING.SHADE_POLAR_RANGE
+        for i, pillar in ipairs(pillars) do
+            local px, py, pz = pillar.Transform:GetWorldPosition()
+            if distsq(x, z, px, pz) <= minsq then
+                minsq = distsq(x, z, px, pz)
+            end
+        end
+
+        return stormlevel * math.clamp((math.sqrt(minsq) - TUNING.SHADE_POLAR_RANGE + TILE_SCALE) / TILE_SCALE, 0.2, 1)
     end
     
     function self:IsPolarStormActive()
