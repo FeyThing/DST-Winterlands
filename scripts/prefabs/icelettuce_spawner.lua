@@ -8,7 +8,7 @@ local BLOCKER_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "cha
 local LETTUCE_TAGS = {"farm_plant_icelettuce"}
 
 local function SnowHasSpace(pt)
-	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 10, nil, BLOCKER_TAGS) == 0 and TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 10, nil, nil, BLOCKER_TAGS) == 0 and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true)
 end
 
 local function SpawnLettuce(inst)

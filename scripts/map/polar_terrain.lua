@@ -21,6 +21,7 @@ local polar_filters = {
 	polar_icicle_rock = OnlyAllow({WORLD_TILES.POLAR_CAVES}),
 	polarbearhouse = OnlyAllow({WORLD_TILES.POLAR_DRYICE, WORLD_TILES.POLAR_ROCKY, WORLD_TILES.POLAR_SNOW}),
 	rock_polar = OnlyAllow({WORLD_TILES.POLAR_CAVES}),
+	snowwave_itemrespawner = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.PEBBLEBEACH, WORLD_TILES.ROCKY},
 }
 
 local polar_addedtiles = {
@@ -36,6 +37,8 @@ local polar_addedtiles = {
 	sapling = {WORLD_TILES.POLAR_ICE},
 	marsh_tree = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES},
 	marsh_bush = {WORLD_TILES.POLAR_ICE},
+	flint = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_SNOW},
+	rocks = {WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_SNOW},
 	rock1 = {WORLD_TILES.POLAR_ICE},
 	rock2 = {WORLD_TILES.POLAR_ICE},
 	rock_flintless = {WORLD_TILES.POLAR_ICE},

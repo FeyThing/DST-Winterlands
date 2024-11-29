@@ -37,6 +37,15 @@ function PolarPlower:DoPlow(doer, pos)
 		blocker = SpawnPrefab("snowwave_blocker")
 		blocker.Transform:SetPosition(pos.x, pos.y, pos.z)
 		
+		if TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(blocker)
+			and blocker.components.timer and blocker.components.timer:TimerExists("plowcycle") then
+			
+			local blizzard = TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(blocker)
+			local timeleft = blocker.components.timer:GetTimeLeft("plowcycle")
+			
+			blocker.components.timer:SetTimeLeft("plowcycle", timeleft * (blizzard and TUNING.POLARPLOW_BLOCKER_STORMCUT or 1))
+		end
+		
 		if blocker.SetSnowBlockRange then
 			blocker:SetSnowBlockRange(self.plow_range)
 		end

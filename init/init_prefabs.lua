@@ -22,6 +22,7 @@ PrefabFiles = {
 	"shadowcreature_polar",
 	"snow_polar",
 	"snowwave",
+	"snowwave_itemrespawner",
 	"veggies_polar",
 	"walls_polar",
 	"warg_polar",

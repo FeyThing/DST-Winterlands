@@ -127,7 +127,7 @@ local LETTUCE_GROWTH_STAGES = {}
 --	Freeze Tender
 
 local function IsTenderImmune(inst, doer)
-	local immune = inst:GetDistanceSqToInst(doer) > 2 or (doer._music_modules and doer._music_modules > 0)
+	local immune = inst:GetDistanceSqToInst(doer) > 3 or (doer._music_modules and doer._music_modules > 0) or (doer.sg and doer.sg:HasStateTag("playing"))
 	
 	if not immune and doer.components.inventory then
 		for k, v in pairs(doer.components.inventory.equipslots) do

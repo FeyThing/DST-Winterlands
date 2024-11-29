@@ -192,6 +192,12 @@ local function UpdateAnim(inst)
 	local workleft = inst.components.workable and inst.components.workable.workleft or WORK_MAX
 	local anim = workleft >= WORK_MAX and "full" or workleft >= WORK_MAX / 2 and "med" or "low"
 	
+	if anim == "low" then
+		RemovePhysicsColliders(inst)
+	else
+		MakeObstaclePhysics(inst, 0.3)
+	end
+	
 	inst.AnimState:PlayAnimation(anim)
 end
 

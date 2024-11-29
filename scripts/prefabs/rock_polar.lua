@@ -79,7 +79,7 @@ local function fn()
 	inst.AnimState:SetBank("rock_polar")
 	inst.AnimState:SetBuild("rock_polar")
 	
-	inst.MiniMapEntity:SetIcon("iceboulder.png") -- rock_polar.png
+	inst.MiniMapEntity:SetIcon("rock_polar.png")
 	
 	inst:SetPrefabNameOverride("rock_polar")
 	

@@ -45,7 +45,11 @@ end
 
 local function ExtendSnowBlocker(inst)
 	if inst.components.timer and inst.components.timer:TimerExists("plowcycle") then
-		inst.components.timer:SetTimeLeft("plowcycle", TUNING.POLARPLOW_BLOCKER_DURATION)
+		
+		local blizzard = TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)
+		local timeleft = TUNING.POLARPLOW_BLOCKER_DURATION
+		
+		inst.components.timer:SetTimeLeft("plowcycle", timeleft * (blizzard and TUNING.POLARPLOW_BLOCKER_STORMCUT or 1))
 	end
 end
 
@@ -60,6 +64,15 @@ end
 local function OnLoad(inst, data)
 	if data and data.range then
 		inst:SetSnowBlockRange(data.range)
+	end
+end
+
+local function OnPolarstormChanged(inst, active)
+	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)
+		and inst.components.timer then
+		
+		local timeleft = inst.components.timer:GetTimeLeft("plowcycle")
+		inst.components.timer:SetTimeLeft("plowcycle", timeleft * TUNING.POLARPLOW_BLOCKER_STORMCUT)
 	end
 end
 
@@ -102,6 +115,13 @@ local function blocker()
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	
+	inst.onpolarstormchanged = function(src, data)
+		if data and data.stormtype == STORM_TYPES.POLARSTORM then
+			OnPolarstormChanged(inst, data.setting)
+		end
+	end
+	
+	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	return inst

@@ -59,7 +59,8 @@ AddRoom("PolarIsland_Lakes", {
 	random_node_entrance_weight = 0,
 	contents = {
 		countprefabs = {
-			rocks = 5,
+			snowwave_itemrespawner = function() return math.random(6, 9) end,
+			rocks = 4,
 		},
 		
 		distributepercent = 0.2,
@@ -67,6 +68,10 @@ AddRoom("PolarIsland_Lakes", {
 			evergreen_sparse = 1.22,
 			evergreen_stump = 0.02,
 			antler_tree_stump = 0.01,
+		},
+		
+		prefabdata = {
+			snowwave_itemrespawner = {canspawnsnowitem = true},
 		},
 	}
 })
@@ -89,8 +94,7 @@ AddRoom("PolarIsland_BG", {
 	contents = {
 		countprefabs = {
 			icelettuce_spawner = function(area) return math.max(1, math.floor(area / 42)) end,
-			flint = function() return math.random(2, 3) end,
-			rocks = function() return math.random(3, 6) end,
+			snowwave_itemrespawner = function() return math.random(6, 9) end,
 		},
 		
 		distributepercent = 0.07,
@@ -100,6 +104,10 @@ AddRoom("PolarIsland_BG", {
 			antler_tree_stump = 0.25,
 			marsh_bush = 1,
 			rock_ice = 1,
+		},
+		
+		prefabdata = {
+			snowwave_itemrespawner = {canspawnsnowitem = true},
 		},
 	}
 })
