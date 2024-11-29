@@ -22,8 +22,8 @@ end
 
 local old_StormWatcher_UpdateStormLevel = StormWatcher.UpdateStormLevel
 StormWatcher.UpdateStormLevel = function(self, ...)
-	old_StormWatcher_UpdateStormLevel(self, ...)
-	
+    self:CheckStorms() -- LukaS: Doubled up unfortunately but shouldn't cause any problems
+
 	if self.currentstorm ~= STORM_TYPES.NONE then
 		if self.currentstorm == STORM_TYPES.POLARSTORM then
 			self.stormlevel = math.floor(TheWorld.components.polarstorm:GetPolarStormLevel(self.inst) * 7 + 0.5) / 7
@@ -32,10 +32,12 @@ StormWatcher.UpdateStormLevel = function(self, ...)
 	else
 		if self.laststorm ~= STORM_TYPES.NONE then
 			if self.laststorm == STORM_TYPES.POLARSTORM then
-				self.inst.components.locomotor:RemoveExternalSpeedMultiplier(self.inst, "blizzardstorm")
+				self.inst.components.locomotor:RemoveExternalSpeedMultiplier(self.inst, "polarstorm")
 			end
 		end
 	end
+
+	old_StormWatcher_UpdateStormLevel(self, ...)
 end
 
 local old_StormWatcher_GetCurrentStorm = StormWatcher.GetCurrentStorm
