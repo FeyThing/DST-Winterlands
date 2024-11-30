@@ -86,6 +86,7 @@ local components = {
 	"wavemanager",
 	"weather",
 	"wisecracker",
+	"birdspawner"
 }
 
 local stategraphs = {
