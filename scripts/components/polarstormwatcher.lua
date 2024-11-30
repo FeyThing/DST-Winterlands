@@ -95,9 +95,9 @@ function PolarStormWatcher:UpdatePolarStormWalkSpeed_Internal(level)
 		self.inst.components.playervision:HasGoggleVision() or
 		self.inst.components.playervision:HasGhostVision() or
 		self.inst.components.rider:IsRiding() then
-            self.inst.components.locomotor:RemoveExternalSpeedMultiplier(self.inst, "blizzardstorm")
+            self.inst.components.locomotor:RemoveExternalSpeedMultiplier(self.inst, "polarstorm")
         else
-            self.inst.components.locomotor:SetExternalSpeedMultiplier(self.inst, "blizzardstorm", self.polarstormspeedmult)
+            self.inst.components.locomotor:SetExternalSpeedMultiplier(self.inst, "polarstorm", self.polarstormspeedmult)
         end
     end
 end
