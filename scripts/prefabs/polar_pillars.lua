@@ -91,6 +91,58 @@ local function DoRainProtection(inst)
 	inst.rainprotected = newtargets
 end
 
+local DROP_ITEMS_DIST_MIN = 2
+local DROP_ITEMS_DIST_VARIANCE = 6
+local function DropLightningItems(inst, items)
+    local x, _, z = inst.Transform:GetWorldPosition()
+    local num_items = #items
+
+    for i, item_prefab in ipairs(items) do
+        local dist = DROP_ITEMS_DIST_MIN + DROP_ITEMS_DIST_VARIANCE * math.random()
+        local theta = TWOPI * math.random()
+
+        inst:DoTaskInTime(i * 5 * FRAMES, function()
+            local item = SpawnPrefab(item_prefab)
+            item.Transform:SetPosition(x + dist * math.cos(theta), 20, z + dist * math.sin(theta))
+
+            if i == num_items then
+                inst._lightning_drop_task:Cancel()
+                inst._lightning_drop_task = nil
+            end 
+        end)
+    end
+end
+
+local ICICLE_TAGS = { "bigicicle" }
+local MIN_DROP_ICE_LIGHTNING = 3
+local MAX_DROP_ICE_LIGHTNING = 5
+local function OnLightningStrike(inst, pos)
+	local icicles = TheSim:FindEntities(pos.x, pos.y, pos.z, 18, ICICLE_TAGS)
+	for i, icicle in ipairs(icicles) do
+		local dist = math.sqrt(icicle:GetDistanceSqToPoint(pos.x, pos.y, pos.z))
+		local break_time = 0.5 * (dist / 12)
+		
+		icicle:DoTaskInTime(break_time, function()
+			if icicle:IsValid() and icicle.DoGrow then
+				icicle:DoGrow(true)
+			end
+		end)
+	end
+
+    if inst._lightning_drop_task then
+        return
+    end
+
+    local num_items = math.random(MIN_DROP_ICE_LIGHTNING, MAX_DROP_ICE_LIGHTNING)
+    local items_to_drop = {  }
+
+    for i = 1, num_items do
+        table.insert(items_to_drop, "ice")
+    end
+
+    inst._lightning_drop_task = inst:DoTaskInTime(20*FRAMES, DropLightningItems, items_to_drop)
+end
+
 local function commonfn()
 	local inst = CreateEntity()
 	
@@ -155,6 +207,10 @@ local function shadefn()
 	inst.components.polarmistemitter.speed = 0.6
 	inst.components.polarmistemitter.maxmist = 15
 	inst.components.polarmistemitter.maxmist_range = 8
+
+    inst:AddComponent("lightningblocker")
+    inst.components.lightningblocker:SetBlockRange(TUNING.SHADE_POLAR_RANGE)
+    inst.components.lightningblocker:SetOnLightningStrike(OnLightningStrike)
 	
 	inst.DoRainProtection = DoRainProtection
 	inst.OnSave = OnSave
