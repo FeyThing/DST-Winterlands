@@ -170,3 +170,8 @@ local night_time = seg_time * night_segs
 	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false
 
 	TUNING.POLAR_STORM_TEMP_MODIFIER = -10
+
+	TUNING.BLIZZARD_COOLDOWN_MIN = total_day_time * 8 -- Every 8 - 30 days a blizzard will happen
+	TUNING.BLIZZARD_COOLDOWN_MAX = total_day_time * 30
+	TUNING.BLIZZARD_LENGTH_MIN = total_day_time * 0.5 -- Blizzards blizzard for 0.5 - 1 day
+	TUNING.BLIZZARD_LENGTH_MAX = total_day_time * 1

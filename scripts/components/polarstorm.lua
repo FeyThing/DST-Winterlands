@@ -5,36 +5,78 @@ return Class(function(self, inst)
     self.inst = inst
 
 	-- [ Private fields ] --
-    local _worldstate = TheWorld.state
     local _polarstormactive = false
-    local _israining = false
+
+    local _blizzard_cooldown_min = TUNING.BLIZZARD_COOLDOWN_MIN
+    local _blizzard_cooldown_max = TUNING.BLIZZARD_COOLDOWN_MAX
+    local _blizzard_length_min = TUNING.BLIZZARD_LENGTH_MIN
+    local _blizzard_length_max = TUNING.BLIZZARD_LENGTH_MAX
+
+    local _blizzard_cd_task
+    local _blizzard_time_task
     
 	-- [ Functions ] --
-    local function ShouldActivatePolarStorm()
-        return _israining
+    local function StartBlizzard()
+        if _polarstormactive then
+            return
+        end
+
+        _polarstormactive = true
+        inst:PushEvent("ms_stormchanged", { stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive })
     end
-    
-    local function TogglePolarStorm()
-        if _polarstormactive ~= ShouldActivatePolarStorm() then
-            _polarstormactive = not _polarstormactive
-            inst:PushEvent("ms_stormchanged", { stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive })
+
+    local function StopBlizzard()
+        if not _polarstormactive then
+            return
+        end
+
+        _polarstormactive = false
+        inst:PushEvent("ms_stormchanged", { stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive })
+    end
+
+    local function RestartTasks()
+        if _blizzard_cd_task then
+            _blizzard_cd_task:Cancel()
+            _blizzard_cd_task = nil
+        end
+
+        if _blizzard_time_task then
+            _blizzard_time_task:Cancel()
+            _blizzard_time_task = nil
+            StopBlizzard()
         end
     end
-    
-    local function OnIsRaining(src, data)
-        _israining = data
-        TogglePolarStorm()
-    end
-    
+
 	-- [ Initialization ] --
-    inst:WatchWorldState("israining", OnIsRaining)
-    
-    -- [ Post initialization ] --
     function self:OnPostInit()
-        OnIsRaining(inst, _worldstate.israining)
+        if _blizzard_cd_task == nil and _blizzard_time_task == nil then
+            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max))
+        end
     end
 
     -- [ Methods ] --
+    function self:RequeueBlizzard(cooldown)
+        RestartTasks()
+
+        _blizzard_cd_task = inst:DoTaskInTime(cooldown, function()
+            StartBlizzard()
+            _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max), function()
+                StopBlizzard()
+                self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max))
+            end)
+        end)
+    end
+
+    function self:PushBlizzard(length)
+        RestartTasks()
+        
+        StartBlizzard()
+        _blizzard_time_task = inst:DoTaskInTime(length, function()
+            StopBlizzard()
+            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max))
+        end)
+    end
+    
     function self:IsInPolarStorm(ent)
         return self:GetPolarStormLevel(ent) ~= 0
     end
@@ -59,5 +101,24 @@ return Class(function(self, inst)
     
     function self:IsPolarStormActive()
         return _polarstormactive
+    end
+
+    -- [ Save / Load ] --
+    function self:OnSave()
+        if _blizzard_time_task then -- If (for some reason) both timers exist prioritize blizzard time left
+            return { blizzard_time_left = GetTaskRemaining(_blizzard_time_task) }
+        elseif _blizzard_cd_task then
+            return { blizzard_cd_left = GetTaskRemaining(_blizzard_cd_task) }
+        end
+    end
+
+    function self:OnLoad(data)
+        if data then
+            if data.blizzard_time_left then
+                self:PushBlizzard(data.blizzard_time_left)
+            elseif data.blizzard_cd_left then
+                self:RequeueBlizzard(data.blizzard_cd_left)
+            end
+        end
     end
 end)
