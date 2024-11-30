@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "This warrants closer inspection."
+	DESCRIBE.TUMBLEWEED_POLAR = "I would like to observe its structure from closer."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Fresh sustenance, followed by a certain brain freeze."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Frozen beyond measure."
+	DESCRIBE.BLUEGEM_SHARDS = "Matter is neither created nor destroyed, only shattered."
 	DESCRIBE.POLAR_DRYICE = "Solid carbon dioxide."
 	DESCRIBE.POLARBEARFUR = "I ought to wash it... you can never be too prudent with fleas."
+	DESCRIBE.POLARWARGSTOOTH = "Not a single cavity, I'll give him that."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "It's the right shape for a few applications."
+	DESCRIBE.FROSTWALKERAMULET = "Fascinating. It solidifies water through rapid thermal regulation."
 	DESCRIBE.POLAR_SPEAR = "Crude, but highly durable in the cold."
 	DESCRIBE.POLARMOOSEHAT = "To keep one's warmth while the cold rages on."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		INUSE = "Oh dear... was everyone ready for this?",
 		REFUEL = "It would be wise to lock away this... thing.",
 	}
+	DESCRIBE.POLARICEPACK = "Works wonders when sealed up in an airtight space."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground. You step on it."
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground. You step on it."
 	DESCRIBE.WALL_POLAR = "Barriers of ice, frigid and formidable."

@@ -81,7 +81,7 @@ local function fn()
 	inst.entity:AddMiniMapEntity()
 	inst.entity:AddNetwork()
 	
-	inst.MiniMapEntity:SetIcon("grass.png")
+	inst.MiniMapEntity:SetIcon("grass_polar.png")
 	inst.MiniMapEntity:SetPriority(-1)
 	
 	inst:AddTag("plant")
@@ -146,7 +146,7 @@ local PLANT_TAGS = {"plant"}
 
 local function customcheckfn(pt)
 	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 3, nil, nil, GRASS_BLOCKER_TAGS) == 0 and #TheSim:FindEntities(pt.x, pt.y, pt.z, 1.5, PLANT_TAGS) == 0
-		and not TheWorld.Map:IsPointNearHole(pt) and TheWorld.Map:CanPlantAtPoint(pt.x, pt.y, pt.z)
+		and not TheWorld.Map:IsPointNearHole(pt) and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true)
 end
 
 local function OnInit(inst)

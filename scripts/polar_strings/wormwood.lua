@@ -66,11 +66,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Glub Glub sleeping in roll"
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Makes more cold"
+	DESCRIBE.BLUEGEM_SHARDS = "Makes little cold"
 	DESCRIBE.POLAR_DRYICE = "For fresh snack"
 	DESCRIBE.POLARBEARFUR = "Warm"
+	DESCRIBE.POLARWARGSTOOTH = "Cold! Brr!"
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Dropped something?"
+	DESCRIBE.FROSTWALKERAMULET = "Now water, now rock?"
 	DESCRIBE.POLAR_SPEAR = "Spiky"
 	DESCRIBE.POLARMOOSEHAT = "Axe friend?"
 	
@@ -80,6 +84,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		INUSE = "No no no. Go back inside!",
 		REFUEL = "Finally sleeping?",
 	}
+	DESCRIBE.POLARICEPACK = "Keeps belly stuff more?"
 	DESCRIBE.TURF_POLAR_CAVES = "Ice"
 	DESCRIBE.TURF_POLAR_DRYICE = "Ice"
 	DESCRIBE.WALL_POLAR = "Slippery"

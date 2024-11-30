@@ -4,16 +4,25 @@ local assets = {
 
 local prefabs = {
 	"bluegem",
+	"bluegem_shards",
 	"ice",
 	"rocks",
 }
 
 SetSharedLootTable("rock_polar", {
-	{"ice", 		1},
-	{"ice", 		0.5},
-	{"bluegem", 	0.9},
-	{"bluegem", 	0.25},
+	{"ice", 			1},
+	{"ice", 			0.5},
+	{"bluegem_shards", 	1},
+	{"bluegem_shards", 	0.7},
+	{"bluegem_shards", 	0.3},
+	{"bluegem", 		0.02},
 })
+
+local ROCK_POLAR_LOOTS = {
+	ice = 0.95,
+	bluegem_shards = 0.04,
+	bluegem = 0.01,
+}
 
 local NUM_VARIATIONS = 3
 
@@ -41,9 +50,11 @@ local function OnWork(inst, worker, workleft, numworks)
 		inst:Remove()
 	else
 		if numworks and numworks >= 0.8 then
-			local ice = inst.components.lootdropper:SpawnLootPrefab("ice")
+			local prefab = weighted_random_choice(inst.mine_loots)
+			local loot = inst.components.lootdropper:SpawnLootPrefab(prefab)
+			
 			if worker and worker.components.inventory then
-				LaunchAt(ice, inst, worker, 1, 3, 1, 65)
+				LaunchAt(loot, inst, worker, 1, 3, 1, 65)
 			end
 		end
 		UpdateVariation(inst)
@@ -79,7 +90,7 @@ local function fn()
 	inst.AnimState:SetBank("rock_polar")
 	inst.AnimState:SetBuild("rock_polar")
 	
-	inst.MiniMapEntity:SetIcon("iceboulder.png") -- rock_polar.png
+	inst.MiniMapEntity:SetIcon("rock_polar.png")
 	
 	inst:SetPrefabNameOverride("rock_polar")
 	
@@ -90,6 +101,8 @@ local function fn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst.mine_loots = ROCK_POLAR_LOOTS
 	
 	inst:AddComponent("inspectable")
 	

@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "I think I saw something in here."
+	DESCRIBE.TUMBLEWEED_POLAR = "It defies all known science."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.ICEBURRITO = "I really dig that name."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "I take it back. THIS sparkles with cold energy!"
+	DESCRIBE.BLUEGEM_SHARDS = "A puzzle of mineralogical intrigue."
 	DESCRIBE.POLAR_DRYICE = "I could build something reeeally cool with that."
 	DESCRIBE.POLARBEARFUR = "It's snuggy. Fur real!"
+	DESCRIBE.POLARWARGSTOOTH = "It's sharper!"
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Science says this stick is perfect."
+	DESCRIBE.FROSTWALKERAMULET = "Science can explain this phenomenon... but I won't."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		INUSE = "Let's not do this again!",
 		REFUEL = "Where did the snow go?",
 	}
+	DESCRIBE.POLARICEPACK = "Alas, it won't preserve me any better."
 	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
 	DESCRIBE.TURF_POLAR_DRYICE = "Tougher than most ice around here."
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."

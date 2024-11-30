@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "It's... a thing in the snow."
+	DESCRIBE.TUMBLEWEED_POLAR = "A whimsical display, but entirely unimportant."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.ICEBURRITO = "I don't assume it tastes bad but..."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "I'm getting back what's rightfully mine, even if it's changed a little."
+	DESCRIBE.BLUEGEM_SHARDS = "Glitters."
 	DESCRIBE.POLAR_DRYICE = "Reminds me... I've never had myself sculpted in ice, yet."
 	DESCRIBE.POLARBEARFUR = "Now this is- Gah! So many fleas!"
+	DESCRIBE.POLARWARGSTOOTH = "I say, it looks quite fashionable."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Ah, that can be useful."
+	DESCRIBE.FROSTWALKERAMULET = "A pity for the fish in my wake. But oh well."
 	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear trough my suit."
 	DESCRIBE.POLARMOOSEHAT = "Hm. Very... rustic."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		INUSE = "I knew this was a bad idea.",
 		REFUEL = "I should throw you at sea.",
 	}
+	DESCRIBE.POLARICEPACK = "This will keep the bacterias away for longer."
 	DESCRIBE.TURF_POLAR_CAVES = "Turf."
 	DESCRIBE.TURF_POLAR_DRYICE = "At least this one is useful."
 	DESCRIBE.WALL_POLAR = "I like them for their atmospheric touch."

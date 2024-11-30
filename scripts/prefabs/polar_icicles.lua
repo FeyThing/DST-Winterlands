@@ -27,6 +27,11 @@ local function DoBreak(inst)
 					v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE)
 				elseif v.components.workable and v.components.workable:CanBeWorked() then
 					v.components.workable:WorkedBy(inst, 5)
+				elseif v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
+					local vx, vy, vz = v.Transform:GetWorldPosition()
+					SpawnPrefab("ground_chunks_breaking").Transform:SetPosition(vx, vy, vz)
+					
+					v:Remove()
 				end
 			end
 		end
@@ -191,6 +196,12 @@ local WORK_MAX = TUNING.POLAR_ICICLE_MINE
 local function UpdateAnim(inst)
 	local workleft = inst.components.workable and inst.components.workable.workleft or WORK_MAX
 	local anim = workleft >= WORK_MAX and "full" or workleft >= WORK_MAX / 2 and "med" or "low"
+	
+	if anim == "low" then
+		RemovePhysicsColliders(inst)
+	else
+		MakeObstaclePhysics(inst, 0.3)
+	end
 	
 	inst.AnimState:PlayAnimation(anim)
 end

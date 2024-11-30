@@ -20,6 +20,10 @@ local MIST_TAGS = {"polarmist"}
 local MIST_NOT_TAGS = {"spoiled"}
 
 function PolarMistEmitter:GetMistOffset()
+	if self.inst:IsInLimbo() or TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(self.inst) then
+		return nil, false
+	end
+	
 	local pt = self.inst:GetPosition()
 	local radius = FunctionOrValue(self.radius, self.inst, self.radius) or 1 * math.random()
 	

@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Hyuyu! What could it be?"
+	DESCRIBE.TUMBLEWEED_POLAR = "A frosty flake with a flair for fun!"
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.ICEBURRITO = "I suppose I could have a bite. A frostbite, hyuyu!"
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "In the air or in a gem, your soul will still be mine."
+	DESCRIBE.BLUEGEM_SHARDS = "Whoopsie! I broke it again."
 	DESCRIBE.POLAR_DRYICE = "Cold as can be, it's perfect for me."
 	DESCRIBE.POLARBEARFUR = "A thick fur for frolicking in the snow."
+	DESCRIBE.POLARWARGSTOOTH = "I admit, this one might be a worthy contender."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
+	DESCRIBE.FROSTWALKERAMULET = "New paths unfold when the water grows cold."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		INUSE = "What a tempting, cursed trinket!",
 		REFUEL = "It's empty... not that it makes me unhappy.",
 	}
+	DESCRIBE.POLARICEPACK = "Must I sacrifice space for mere mortal food?"
 	DESCRIBE.TURF_POLAR_CAVES = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.TURF_POLAR_DRYICE = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or it?"

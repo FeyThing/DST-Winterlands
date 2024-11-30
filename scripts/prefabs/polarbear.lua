@@ -108,6 +108,8 @@ local function OnGetItemFromPlayer(inst, giver, item)
 			if inst.components.combat:TargetIs(giver) then
 				inst.components.combat:SetTarget(nil)
 			elseif giver.components.leader then
+				inst:StopPolarPlowing()
+				
 				giver:PushEvent("makefriend")
 				giver.components.leader:AddFollower(inst)
 				
@@ -367,6 +369,14 @@ local function OnTalk(inst, script)
 	inst.SoundEmitter:PlaySound(inst.sounds.talk)
 end
 
+local function UpdateHead(inst)
+	if inst.AnimState:GetCurrentFacing() == FACING_DOWN then
+		inst.AnimState:SetMultiSymbolExchange("pig_ear", "pig_head")
+	else
+		inst.AnimState:ClearSymbolExchanges("pig_ear")
+	end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -376,10 +386,9 @@ local function fn()
 	inst.entity:AddDynamicShadow()
 	inst.entity:AddNetwork()
 	
-	MakeCharacterPhysics(inst, 100, 0.5)
-	inst:SetPhysicsRadiusOverride(0.5)
+	MakeCharacterPhysics(inst, 200, 0.75)
 	
-	inst.DynamicShadow:SetSize(1.5, 0.75)
+	inst.DynamicShadow:SetSize(2, 1)
 	inst.Transform:SetFourFaced()
 	
 	inst.AnimState:SetBank("pigman")
@@ -474,8 +483,12 @@ local function fn()
 	inst.components.trader.onrefuse = OnRefuseItem
 	inst.components.trader.deleteitemonaccept = false
 	
+	inst:AddComponent("updatelooper")
+	inst.components.updatelooper:AddPostUpdateFn(UpdateHead)
+	
 	MakeMediumFreezableCharacter(inst, "pig_torso")
 	inst.components.freezable:SetResistance(8)
+	inst.components.freezable:SetDefaultWearOffTime(5)
 	
 	MakeMediumBurnableCharacter(inst, "pig_torso")
 	MakeHauntablePanic(inst)

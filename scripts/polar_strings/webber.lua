@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "We saw something! But what?"
+	DESCRIBE.TUMBLEWEED_POLAR = "Doubt that one would melt on our tongue."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Legend says this burrito never falls apart!"
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Glittery-er and cooler!"
+	DESCRIBE.BLUEGEM_SHARDS = "Maybe we could have been more careful."
 	DESCRIBE.POLAR_DRYICE = "Those are ruled out in snowball fights."
 	DESCRIBE.POLARBEARFUR = "We've got ourselves a pillow."
+	DESCRIBE.POLARWARGSTOOTH = "It sure is sharper than ours."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "After all these years... the perfect stick!"
+	DESCRIBE.FROSTWALKERAMULET = "Better to have cold legs than soggy."
 	DESCRIBE.POLAR_SPEAR = "It's like a giant icicle on a stick!"
 	DESCRIBE.POLARMOOSEHAT = "A hat made of Mr. Woodie's friends."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		INUSE = "Will that get me on the naughty list?",
 		REFUEL = "It needs some special snow.",
 	}
+	DESCRIBE.POLARICEPACK = "It's funny to hold... f-for a while at least."
 	DESCRIBE.TURF_POLAR_CAVES = "Some ground that we dug up."
 	DESCRIBE.TURF_POLAR_DRYICE = "Don't step on the cracks!"
 	DESCRIBE.WALL_POLAR = "The walls of our Frosty Fort!"

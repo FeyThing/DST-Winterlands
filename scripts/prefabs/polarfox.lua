@@ -412,6 +412,8 @@ local function fn()
 	MakeSmallBurnableCharacter(inst, "body", Vector3(1, 0, 1))
 	
 	MakeSmallFreezableCharacter(inst, "body")
+	inst.components.freezable:SetResistance(6)
+	inst.components.freezable:SetDefaultWearOffTime(3)
 	
 	inst.snowhuntPrefabs = snowhuntPrefabs
 	inst.HuntRandomPrey = HuntRandomPrey

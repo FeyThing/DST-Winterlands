@@ -42,9 +42,9 @@ end
 function SnowWaver:OnTemperatureChanged(temperature)
 	temperature = temperature or TheWorld.state.temperature
 	
-	if temperature <= 60 and not self.enabled then
+	if temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled then
 		self:Enable(true)
-	elseif temperature > 60 and self.enabled then
+	elseif temperature > TUNING.POLAR_SNOW_MELT_TEMP and self.enabled then
 		self:Enable(false)
 	end
 end

@@ -91,7 +91,10 @@ return Class(function(self, inst)
 		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
 		local fx = SpawnPrefab("fx_ice_crackle")
 		fx.Transform:SetPosition(cx, cy, cz)
-
+		
+		fx:AddTag("scarytoprey")
+		fx:AddTag("icecrackfx")
+		
 		local function spawnfx(lx, lz, rot)
 			local fx = SpawnPrefab("ice_crack_grid_fx")
 			fx.Transform:SetPosition(lx, 0, lz)

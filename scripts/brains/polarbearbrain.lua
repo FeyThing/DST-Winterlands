@@ -32,6 +32,24 @@ local SEE_PLAYER_DIST = 6
 local GETTRADER_MUST_TAGS = {"player"}
 local FINDFOOD_CANT_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach", "show_spoiled"}
 
+--	Followin'
+
+local function GetLeader(inst)
+	return inst.components.follower.leader
+end
+
+local function GetFrozenLeader(inst)
+	local leader = not inst.enraged and GetLeader(inst)
+	
+	if leader and leader.components.freezable and leader.components.freezable:IsFrozen() then
+		return leader
+	end
+end
+
+local function RescueLeaderAction(inst)
+	return BufferedAction(inst, GetFrozenLeader(inst), ACTIONS.ATTACK)
+end
+
 --	Eatin'
 
 local function GetTraderFn(inst)
@@ -83,10 +101,6 @@ local function IsHomeOnFire(inst)
 	
 	return homeseeker and homeseeker.home and homeseeker.home.components.burnable and homeseeker.home.components.burnable:IsBurning()
 		and inst:GetDistanceSqToInst(homeseeker.home) < SEE_BURNING_HOME_DIST_SQ
-end
-
-local function GetLeader(inst)
-	return inst.components.follower.leader
 end
 
 local function GetHomePos(inst)
@@ -169,6 +183,13 @@ function PolarBearBrain:OnStart()
 				Panic(self.inst))),
 		WhileNode(function() return self.inst.enraged end, "RageZoomin",
 			Panic(self.inst)),
+		EventNode(self.inst, "gohome",
+			ChattyNode(self.inst, "POLARBEAR_BLIZZARD",
+				DoAction(self.inst, GoHomeAction, "Go Home", true))),
+		ChattyNode(self.inst, "POLARBEAR_RESCUE",
+			WhileNode(function() return GetFrozenLeader(self.inst) end, "Leader Frozen",
+				DoAction(self.inst, RescueLeaderAction, "Rescue Leader", true))),
+		RunAway(self.inst, "icecrackfx", 5, 7),
 		
 		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),

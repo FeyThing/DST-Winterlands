@@ -66,8 +66,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.ICEBURRITO = "This is the last time I rely on Wilson to name my recipes."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Oh my, that is too cold for my taste!"
+	DESCRIBE.BLUEGEM_SHARDS = "Could use a bit of glue."
 	DESCRIBE.POLAR_DRYICE = "What big ice cubes!"
 	DESCRIBE.POLARBEARFUR = "The coziest of snowballs."
+	DESCRIBE.POLARWARGSTOOTH = "That would leave a dent."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
@@ -81,6 +84,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		INUSE = "Well. I'd better prep some soup for everyone.",
 		REFUEL = "Ah non! You aren't getting your snow back.",
 	}
+	DESCRIBE.POLARICEPACK = "Some fortification against my worst enemy."
 	DESCRIBE.TURF_POLAR_CAVES = "It's like an ingredient for the ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "It's like an ingredient for the ground."
 	DESCRIBE.WALL_POLAR = "Aaah. Isn't that ice?"

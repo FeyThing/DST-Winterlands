@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Friend, or froze?"
+	DESCRIBE.TUMBLEWEED_POLAR = "A swirling herald of winter's might."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Fish lying in its frozen bedroll!"
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Empowered by the ice giant's death rattle."
+	DESCRIBE.BLUEGEM_SHARDS = "The gem hath been defeated."
 	DESCRIBE.POLAR_DRYICE = "Chunks from an ice giant!"
 	DESCRIBE.POLARBEARFUR = "A pelt only the fiercest warriors can acquire."
+	DESCRIBE.POLARWARGSTOOTH = "To wield this is to have tamed the frost."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
+	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		INUSE = "'Tis vigorous shake hath displeased the gods!",
 		REFUEL = "It shall be refilled with the driest ice.",
 	}
+	DESCRIBE.POLARICEPACK = "Our treasured feast will last a little longer."
 	DESCRIBE.TURF_POLAR_CAVES = "A piece of the battlefield."
 	DESCRIBE.TURF_POLAR_DRYICE = "This road leads me home."
 	DESCRIBE.WALL_POLAR = "Cold and unyielding, as is my resolve!"

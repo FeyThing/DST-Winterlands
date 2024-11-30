@@ -155,6 +155,10 @@ local function OnLoad(inst, data)
 	end
 end
 
+local function OnPreLoad(inst, data)
+	WorldSettings_Spawner_PreLoad(inst, data, TUNING.POLARBEARHOUSE_SPAWN_TIME)
+end
+
 local function SetPainting(inst, colour)
 	if colour ~= DEFAULT_PAINTING then
 		inst.AnimState:OverrideSymbol("base", "polarbearhouse", "base_"..colour)
@@ -190,8 +194,17 @@ local function OnIgnite(inst)
 	end
 end
 
-local function OnPreLoad(inst, data)
-	WorldSettings_Spawner_PreLoad(inst, data, TUNING.POLARBEARHOUSE_SPAWN_TIME)
+local function OnPolarstormChanged(inst, active)
+	local child = inst.components.spawner and inst.components.spawner.child
+	
+	if child and active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(child) then
+		inst._leavestormtask = inst:DoPeriodicTask(1 + math.random() * 3, function()
+			child:PushEvent("gohome")
+		end)
+	elseif inst._leavestormtask then
+		inst._leavestormtask:Cancel()
+		inst._leavestormtask = nil
+	end
 end
 
 local function fn()
@@ -253,10 +266,16 @@ local function fn()
 	inst.SetPainting = SetPainting
 	
 	inst.inittask = inst:DoTaskInTime(0, OnInit)
+	inst.onpolarstormchanged = function(src, data)
+		if data and data.stormtype == STORM_TYPES.POLARSTORM then
+			OnPolarstormChanged(inst, data.setting)
+		end
+	end
 	
 	inst:ListenForEvent("onbuilt", OnBuilt)
 	inst:ListenForEvent("burntup", OnBurntUp)
 	inst:ListenForEvent("onignite", OnIgnite)
+	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	
 	return inst
 end

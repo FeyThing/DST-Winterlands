@@ -44,6 +44,41 @@ local function PolarInit(inst)
 	end
 end
 
+local function OnPolarstormChanged(inst, active)
+	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) then
+		inst._leavestormtask = inst:DoPeriodicTask(1, function()
+			local childrens = inst.data and inst.data.children
+			
+			if childrens and not IsTableEmpty(childrens) then
+				for child in pairs(childrens) do
+					if child:IsValid() and child.components.combat and child.components.combat.target == nil
+						and child.components.health and not child.components.health:IsDead() then
+						if child.components.entitytracker then
+							child.components.entitytracker:ForgetEntity("leader")
+						end
+						
+						if child:HasTag("walrus") then
+							child:AddTag("taunt_attack")
+							
+							if child.components.leader then
+								child.components.leader:RemoveAllFollowers()
+							end
+							if child.components.locomotor then
+								local action = BufferedAction(child, inst, ACTIONS.GOHOME, nil, inst:GetPosition())
+								
+								child.components.locomotor:PushAction(action, true, true)
+							end
+						end
+					end
+				end
+			end
+		end)
+	elseif inst._leavestormtask then
+		inst._leavestormtask:Cancel()
+		inst._leavestormtask = nil
+	end
+end
+
 ENV.AddPrefabPostInit("walrus_camp", function(inst)
 	inst:AddTag("snowblocker")
 	
@@ -73,6 +108,14 @@ ENV.AddPrefabPostInit("walrus_camp", function(inst)
 			OldSpawnHuntingParty = PolarUpvalue(OldCheckSpawnHuntingParty, "SpawnHuntingParty")
 		end
 	end
+	
+	inst.onpolarstormchanged = function(src, data)
+		if data and data.stormtype == STORM_TYPES.POLARSTORM then
+			OnPolarstormChanged(inst, data.setting)
+		end
+	end
+	
+	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	
 	inst:DoTaskInTime(0, PolarInit)
 end)

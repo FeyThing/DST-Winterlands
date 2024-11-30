@@ -1,11 +1,15 @@
 local POLAR_SCRAPBOOK = {
 	--	Items / Foods
 	antler_tree_stick = {type = "item", subcat = "weapon", weapondamage = 48, finiteuses = 625, fueledmax = 4800, fueledrate = 1, fueledtype1 = "USAGE", build = "antler_tree_stick", bank = "antler_tree_stick", anim = "idle", specialinfo = "ANTLER_TREE_STICK"},
+	bluegem_overcharged = {type = "item", subcat = "element", stacksize = 40, hungervalue = 1, healthvalue = 10, sanityvalue = 0, foodtype = "ELEMENTAL", build = "bluegem_overcharged", bank = "bluegem_overcharged", anim = "idle"},
+	bluegem_shards = {type = "item", subcat = "element", stacksize = 40, hungervalue = 1, healthvalue = 10, sanityvalue = 0, foodtype = "ELEMENTAL", build = "bluegem_shards", bank = "bluegem_shards", anim = "idle", deps = {"bluegem"}},
 	icelettuce = {type = "food", stacksize = 40, hungervalue = 18.75, healthvalue = 10, sanityvalue = 5, foodtype = "VEGGIE", perishable = 1440, burnable = true, build = "icelettuce", bank = "icelettuce", anim = "idle", deps = {"icelettuce_seeds"}, specialinfo = "ICELETTUCE"},
 	icelettuce_seeds = {type = "food", subcat = "tackle", stacksize = 40, hungervalue = 9.375, healthvalue = 0.5, sanityvalue = 0, foodtype = "SEEDS", perishable = 19200, lure_charm = 0.2, lure_dist = 1, lure_radius = 3, burnable = true, build = "polar_seeds", bank = "polar_seeds", anim = "icelettuce", deps = {"farm_plant_icelettuce", "seeds_cooked", "spoiled_food"}},
 	polar_dryice = {type = "item", subcat = "element", stacksize = 40, hungervalue = 9.375, healthvalue = 2, sanityvalue = 0, foodtype = "ELEMENTAL", build = "polar_dryice", bank = "polar_dryice", anim = "f1", perishable = 19200},
 	polarbearfur = {type = "item", stacksize = 20, build = "polarbearfur", bank = "polarbearfur", anim = "idle", fueltype = "BURNABLE", fuelvalue = 45, burnable = true},
+	polaricepack = {type = "item", perishable = 28800, build = "polaricepack", bank = "polaricepack", anim = "idle", deps = {"bluegem_shards", "polar_dryice", "mosquito_sack"}, specialinfo = "POLARICEPACK"},
 	polarmoosehat = {type = "item", subcat = "hat", insulator = 240, insulator_type = "winter", waterproofer = 0.2, dapperness = 0.022222222222222, fueledmax = 2400, fueledrate = 1, fueledtype1 = "USAGE", sewable = true, build = "hat_polarmoose", bank = "polarmoosehat", anim = "anim"},
+	polarwargstooth = {type = "item", stacksize = 10, perishable = 7200, build = "polarwarg_tooth", bank = "polarwarg_tooth", anim = "idle"},
 	wall_polar_item = {type = "item", subcat = "wall", stacksize = 20, build = "wall_polar", bank = "wall", anim = "idle", deps = {"polar_dryice", "wall_polar"}, specialinfo = "WALL_POLAR"},
 	
 	--	Creatures / Giants
@@ -21,7 +25,8 @@ local POLAR_SCRAPBOOK = {
 	polar_icicle = {type = "thing", damage = 300, build = "icicle_roof", bank = "icicle_roof", anim = "idle_med", deps = {"polar_icicle_rock"}},
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},
 	polarbearhouse = {type = "thing", subcat = "structure", workable = "HAMMER", burnable = true, build = "polarbearhouse", bank = "polarbearhouse", anim = "idle", deps = {"boards", "polar_dryice", "polarbear", "polarbearfur"}},
-	rock_polar = {type = "thing", workable = "MINE", build = "rock_polar", bank = "rock_polar", anim = "idle_full", deps = {"bluegem", "ice"}},
+	rock_polar = {type = "thing", workable = "MINE", build = "rock_polar", bank = "rock_polar", anim = "idle_full", deps = {"bluegem", "bluegem_shards", "ice"}},
+	tumbleweed_polar = {type = "thing", pickable = true, build = "tumbleweed_polar", bank = "tumbleweed_polar", anim = "idle", deps = {"antler_tree_stick", "berries", "bird_egg", "blowdart_pipe", "bluegem", "bluegem_shards", "blueprint", "boneshard", "cookingrecipecard", "dug_grass", "dug_marsh_bush", "feather_crow", "feather_robin_winter", "fishsticks", "furtuft", "greengem", "houndstooth", "ice", "icelettuce", "icelettuce_seeds", "mole", "polarbearfur", "purplegem", "rabbit", "rottenegg", "scrapbook_page", "seeds", "spider_dropper", "spoiled_fish", "spoiled_fish_small", "wobster_sheller_land"}},
 	wall_polar = {type = "thing", subcat = "wall", health = 600, repairitems = {"polar_dryice", "wall_polar_item"}, workable = "HAMMER", build = "wall_polar", bank = "wall", anim = "half", deps = {"wall_polar_item"}, specialinfo = "WALL_POLAR"},
 }
 

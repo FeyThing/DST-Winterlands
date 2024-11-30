@@ -26,7 +26,9 @@ function PolarWalker:IsPolarEdgeAtPoint(pt)
 end
 
 function PolarWalker:ShouldSlow()
-	local pt = self.inst:GetPosition()
+	if TheWorld.state.temperature > TUNING.POLAR_SNOW_MELT_TEMP then
+		return false, "MELTED"
+	end
 	
 	if self.inst:HasTag("polarimmune") then
 		return false, "IMMUNE"
@@ -36,6 +38,7 @@ function PolarWalker:ShouldSlow()
 		return false, "RIDING"
 	end
 	
+	local pt = self.inst:GetPosition()
 	if IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt) then
 		return not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z), "SNOW"
 	end

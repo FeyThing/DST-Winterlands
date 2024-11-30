@@ -66,7 +66,7 @@ local function SetStump(inst)
 	
 	RemovePhysicsColliders(inst)
 	inst:AddTag("stump")
-	inst.MiniMapEntity:SetIcon("marshtree_stump.png")
+	inst.MiniMapEntity:SetIcon("antler_tree_stump.png")
 end
 
 local function DigUpStump(inst, chopper)
@@ -121,7 +121,7 @@ local function OnBurnt(inst)
 	
 	inst.AnimState:PlayAnimation("burnt")
 	inst:AddTag("burnt")
-	inst.MiniMapEntity:SetIcon("marshtree_burnt.png")
+	inst.MiniMapEntity:SetIcon("antler_tree_burnt.png")
 end
 
 local function GetStatus(inst)
@@ -210,7 +210,7 @@ local function MakeHornyTree(data)
 		
 		MakeObstaclePhysics(inst, 0.25)
 		
-		inst.MiniMapEntity:SetIcon("marshtree.png")
+		inst.MiniMapEntity:SetIcon("antler_tree.png")
 		inst.MiniMapEntity:SetPriority(-1)
 		
 		inst:AddTag("plant")

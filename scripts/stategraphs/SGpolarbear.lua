@@ -2,6 +2,7 @@ require("stategraphs/commonstates")
 
 local actionhandlers = {
 	ActionHandler(ACTIONS.ADDFUEL, "pickup"),
+	ActionHandler(ACTIONS.ATTACK, "attack_action"),
 	ActionHandler(ACTIONS.DROP, "dropitem"),
 	ActionHandler(ACTIONS.EAT, "eat"),
 	ActionHandler(ACTIONS.EQUIP, "pickup"),
@@ -96,13 +97,14 @@ local states = {
 		name = "attack",
 		tags = {"attack", "busy"},
 		
-		onenter = function(inst)
+		onenter = function(inst, rescue_target)
 			SetEnragedHead(inst, false)
 			
 			inst.AnimState:PlayAnimation("atk")
 			inst.SoundEmitter:PlaySound(inst.sounds.attack)
 			inst.Physics:Stop()
 			
+			inst.sg.statemem.rescue_target = rescue_target
 			inst.components.combat:StartAttack()
 		end,
 		
@@ -115,7 +117,15 @@ local states = {
 				inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_whoosh")
 			end),
 			TimeEvent(13 * FRAMES, function(inst)
-				inst.components.combat:DoAttack()
+				local rescue_target = inst.sg.statemem.rescue_target
+				if rescue_target then
+					if rescue_target:IsValid() and rescue_target.components.freezable then
+						rescue_target.components.freezable:Unfreeze()
+					end
+					inst:ClearBufferedAction()
+				else
+					inst.components.combat:DoAttack()
+				end
 				inst.sg:RemoveStateTag("attack")
 			end),
 		},
@@ -207,6 +217,18 @@ local states = {
 				inst.sg:GoToState("idle")
 			end),
 		},
+	},
+	
+	State{
+		name = "attack_action",
+		
+		onenter = function(inst)
+			local ba = inst:GetBufferedAction()
+			local leader = inst.components.follower and inst.components.follower.leader
+			local rescue_target = (ba.target and leader and ba.target == leader and leader.components.freezable and leader.components.freezable:IsFrozen()) and leader or nil
+			
+			inst.sg:GoToState("attack", rescue_target)
+		end,
 	},
 	
 	State{

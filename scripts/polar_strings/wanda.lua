@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "It's some thing or other..."
+	DESCRIBE.TUMBLEWEED_POLAR = "I don't have time to chase snowflakes."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.ICEBURRITO = "I'm still figuring things out."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Why do I feel like it's going to explode at any moment?"
+	DESCRIBE.BLUEGEM_SHARDS = "I prefer to work with smaller pieces anyway."
 	DESCRIBE.POLAR_DRYICE = "Now what can I use this for?"
 	DESCRIBE.POLARBEARFUR = "It's like holding onto warm snow."
+	DESCRIBE.POLARWARGSTOOTH = "I couldn't make a piece of flint sharper than it even if I tried!"
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Oooh, precisely what I needed!"
+	DESCRIBE.FROSTWALKERAMULET = "Good! I've had more than enough of these damnable rivers."
 	DESCRIBE.POLAR_SPEAR = "Make the most of it while it's fresh."
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		INUSE = "Actually... I might have some time to look into this.",
 		REFUEL = "Is there a leak on it somewhere?",
 	}
+	DESCRIBE.POLARICEPACK = "I should get a timepack next."
 	DESCRIBE.TURF_POLAR_CAVES = "Why am I wasting time staring at the ground?"
 	DESCRIBE.TURF_POLAR_DRYICE = "A road to where, exactly?"
 	DESCRIBE.WALL_POLAR = "I wouldn't want to punch it for certain."

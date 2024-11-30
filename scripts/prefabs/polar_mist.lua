@@ -12,15 +12,24 @@ local function OnPerish(inst)
 end
 
 local function DoMistUpdate(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local lights = TheSim:FindEntities(x, y, z, TUNING.DAYLIGHT_SEARCH_RANGE, LIGHT_TAGS, LIGHT_NOT_TAGS)
+	local perish = TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)
 	
-	for i, v in ipairs(lights) do
-		local lightrad = v.Light and v.Light:GetCalculatedRadius() * 0.75
-		if v ~= inst and v:GetDistanceSqToPoint(x, y, z) < lightrad * lightrad then
-			inst.components.perishable:SetPercent(0)
-			break
+	if not perish then
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local lights = TheSim:FindEntities(x, y, z, TUNING.DAYLIGHT_SEARCH_RANGE, LIGHT_TAGS, LIGHT_NOT_TAGS)
+		
+		for i, v in ipairs(lights) do
+			local lightrad = v.Light and v.Light:GetCalculatedRadius() * 0.75
+			if v ~= inst and v:GetDistanceSqToPoint(x, y, z) < lightrad * lightrad then
+				perish = true
+				
+				break
+			end
 		end
+	end
+	
+	if perish and inst.components.perishable then
+		inst.components.perishable:SetPercent(0)
 	end
 end
  

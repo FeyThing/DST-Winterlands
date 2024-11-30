@@ -38,6 +38,8 @@ ENV.AddPlayerPostInit(function(inst)
 		inst:AddComponent("updatelooper")
 	end
 	
+	inst:AddComponent("tumblewindattractor")
+	
 	inst:DoTaskInTime(1, function() -- Delay the first check to make sure the polarsnowlevel is synced
 		PolarSnowUpdate(inst)
 		inst.components.updatelooper:AddOnUpdateFn(PolarSnowUpdate)
