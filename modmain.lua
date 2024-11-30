@@ -56,6 +56,7 @@ local prefabs = {
 	"ents_onfreeze",
 	"polar_walking",
 	"waxed_plants",
+	"frogs"
 }
 
 local components = {
