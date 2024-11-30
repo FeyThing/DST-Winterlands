@@ -2,28 +2,46 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local Temperature = require("components/temperature")
+function Temperature:GetPolarWetnessModifier(winterInsulation, summerInsulation)
+	local level = GetPolarWetness(self.inst)
 	
-	function Temperature:GetPolarWetnessModifier(winterInsulation, summerInsulation)
-		local level = GetPolarWetness(self.inst)
+	if level ~= 0 then
+		local winterPolarI = winterInsulation * (0.5 ^ (level / 2))
+		local summerPolarI = summerInsulation * (2 ^ (level / 2))
 		
-		if level ~= 0 then
-			local winterPolarI = winterInsulation * (0.5 ^ (level / 2))
-			local summerPolarI = summerInsulation * (2 ^ (level / 2))
-			
-			return winterPolarI, summerPolarI
-		end
-		
-		return winterInsulation, summerInsulation
+		return winterPolarI, summerPolarI
 	end
 	
-	local OldGetInsulation = Temperature.GetInsulation
-	function Temperature:GetInsulation(...)
-		local winterInsulation, summerInsulation = OldGetInsulation(self, ...)
-		local winterPolarI, summerPolarI = self:GetPolarWetnessModifier(winterInsulation, summerInsulation)
-		
-		if self.inst:HasTag("heatrock") and IsInPolar(self.inst) then
-			winterPolarI = winterPolarI * TUNING.HEATROCK_INSULATION_POLARMULT
-		end
-		
-		return math.max(0, winterPolarI), math.max(0, summerPolarI)
+	return winterInsulation, summerInsulation
+end
+
+local OldGetInsulation = Temperature.GetInsulation
+function Temperature:GetInsulation(...)
+	local winterInsulation, summerInsulation = OldGetInsulation(self, ...)
+	local winterPolarI, summerPolarI = self:GetPolarWetnessModifier(winterInsulation, summerInsulation)
+	
+	if self.inst:HasTag("heatrock") and IsInPolar(self.inst) then
+		winterPolarI = winterPolarI * TUNING.HEATROCK_INSULATION_POLARMULT
 	end
+	
+	return math.max(0, winterPolarI), math.max(0, summerPolarI)
+end
+
+local OldOnUpdate = Temperature.OnUpdate
+function Temperature:OnUpdate(...)
+	if TheWorld.components.polarstorm == nil then
+		OldOnUpdate(self, ...)
+
+		return
+	end
+
+	if TheWorld.components.polarstorm:IsInPolarStorm(self.inst) then
+		if self.temperature_modifiers == nil or self.temperature_modifiers["polarblizzard"] ~= nil then
+			self:SetModifier("polarblizzard", TUNING.POLAR_STORM_TEMP_MODIFIER)
+		end
+	else
+		self:RemoveModifier("polarblizzard")
+	end
+
+	return OldOnUpdate(self, ...)
+end
