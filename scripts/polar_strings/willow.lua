@@ -27,6 +27,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		CHOPPED = "We'll meet again, tree.",
 		GENERIC = "You better burn well.",
 	}
+	DESCRIBE.ICELETTUCE_SEEDS = "Some seed."
 	
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Huh?"
@@ -35,8 +36,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Don't make me go in here."
+	DESCRIBE.TUMBLEWEED_POLAR = "I will catch you. And I will melt you!"
 	
 --	Mobs
+
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Hah, that's what you get, bear.",
 		ENRAGED = "He's got fiery temper!",
@@ -64,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.ICEBURRITO = "I don't think any hot sauce can fix this."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Hissss... stay away!!"
+	DESCRIBE.BLUEGEM_SHARDS = "Awful little splinters."
 	DESCRIBE.POLAR_DRYICE = "What's the point if it can't even melt?"
 	DESCRIBE.POLARBEARFUR = "It keeps heat well."
+	DESCRIBE.POLARWARGSTOOTH = "It frosted its last bite."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Who would leave good firewood laying around like that?"
+	DESCRIBE.FROSTWALKERAMULET = "Woah cool! I mean... that sucks, but it's kinda cool."
 	DESCRIBE.POLAR_SPEAR = "Keep your cool, if you must."
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."
 	
@@ -78,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		INUSE = "Why did you have to shake it, why?",
 		REFUEL = "And don't come back!",
 	}
+	DESCRIBE.POLARICEPACK = "Just leave it be in the fridge, whatever."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground is boring and cold"
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground is boring and cold."
 	DESCRIBE.WALL_POLAR = "I hate it."

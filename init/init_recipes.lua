@@ -47,9 +47,13 @@ end
 --	[ 		Recipes			]	--
 
 --	Refine
-PolarRecipe("polar_dryice", 		{Ingredient("ice", 3), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 							TECH.LOST, 				nil, 									{"REFINE"}, {"refined_dust"})
+PolarRecipe("shards_bluegem", 		{Ingredient("bluegem_shards", 3)}, 															TECH.SCIENCE_TWO, 		{product = "bluegem", description = "shards_bluegem"}, 	{"REFINE"}, {"purplegem"})
+PolarRecipe("polar_dryice", 		{Ingredient("ice", 3), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 							TECH.LOST, 				nil, 													{"REFINE"}, {"refined_dust"})
 
---	Structures
+--	Cooking / Food
+PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluegem_shards", 2), Ingredient("mosquito_sack", 1)}, 	TECH.SCIENCE_TWO, 		nil, 		{"COOKING"}, {"icepack"})
+
+--	Decor / Structure
 PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 	{"STRUCTURES"}, {"rabbithouse"})
 PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 						{"DECOR"}, {"turf_underrock"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 						{"DECOR"}, {"turf_dragonfly"})

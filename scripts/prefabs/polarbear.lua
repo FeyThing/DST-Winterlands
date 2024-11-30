@@ -387,7 +387,6 @@ local function fn()
 	inst.entity:AddNetwork()
 	
 	MakeCharacterPhysics(inst, 200, 0.75)
-	inst:SetPhysicsRadiusOverride(0.5)
 	
 	inst.DynamicShadow:SetSize(2, 1)
 	inst.Transform:SetFourFaced()

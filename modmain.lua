@@ -74,6 +74,7 @@ local components = {
 	"moonstormmanager",
 	"pickable",
 	"playervision",
+	"preserver",
 	"repairable",
 	"retrofitforestmap_anr",
 	"shadowcreaturespawner",

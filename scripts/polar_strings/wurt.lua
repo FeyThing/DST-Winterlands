@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "What that thing, florp?"
+	DESCRIBE.TUMBLEWEED_POLAR = "Heehee, will catch you!"
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Huh? Gluurrgh... poor fish in it."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "Ooooooooooooo!"
+	DESCRIBE.BLUEGEM_SHARDS = "Glorp, can put them back together?"
 	DESCRIBE.POLAR_DRYICE = "Why this ice not Eddy-bluh?"
 	DESCRIBE.POLARBEARFUR = "Me could eat it as revenge... but won't."
+	DESCRIBE.POLARWARGSTOOTH = "Want some like that too, florp!"
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Tree dropped this, but me keep it."
+	DESCRIBE.FROSTWALKERAMULET = "Close enough from swimming, flort."
 	DESCRIBE.POLAR_SPEAR = "But, Wicker-lady said not to play with food?"
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		INUSE = "G-glurp! Didn't do it!",
 		REFUEL = "Uh oh. Winter escaped?",
 	}
+	DESCRIBE.POLARICEPACK = "Tada! Made a friend for chilly box."
 	DESCRIBE.TURF_POLAR_CAVES = "Ground bit."
 	DESCRIBE.TURF_POLAR_DRYICE = "Make ground walk-ier!"
 	DESCRIBE.WALL_POLAR = "Brrr... don't want to live in ice castle!"

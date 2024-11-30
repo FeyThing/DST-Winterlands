@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "I know a {name} when I see one."
+	DESCRIBE.TUMBLEWEED_POLAR = "Lucky it's not hailing, eh?"
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.ICEBURRITO = "It's better to eat fresh."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "It's impossibly cold."
+	DESCRIBE.BLUEGEM_SHARDS = "Lucy is more the type to do puzzles than I am."
 	DESCRIBE.POLAR_DRYICE = "Building blocks for the cool kids."
 	DESCRIBE.POLARBEARFUR = "I should stuff my plaid with it."
+	DESCRIBE.POLARWARGSTOOTH = "My jaw hurts just by watching at it..."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "I'll just take that, eh!"
+	DESCRIBE.FROSTWALKERAMULET = "To turn the ocean into one giant hockey field."
 	DESCRIBE.POLAR_SPEAR = "Ice suppose that would hurt a little."
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		INUSE = "C'mon, I didn't mean it seriously.",
 		REFUEL = "No snow on the horizon.",
 	}
+	DESCRIBE.POLARICEPACK = "Who needs an electric freezer when you have this?"
 	DESCRIBE.TURF_POLAR_CAVES = "Just more ground, eh?"
 	DESCRIBE.TURF_POLAR_DRYICE = "Now to find ice skates in here..."
 	DESCRIBE.WALL_POLAR = "Anyone's feelin' like breaking the ice?"

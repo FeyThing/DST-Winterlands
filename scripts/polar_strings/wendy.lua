@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Come out."
+	DESCRIBE.TUMBLEWEED_POLAR = "I want to shatter it!"
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.ICEBURRITO = "My frozen heart won't feel the change."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "It's too small of a vessel for such energy."
+	DESCRIBE.BLUEGEM_SHARDS = "Broken like, hm... so many other things."
 	DESCRIBE.POLAR_DRYICE = "Ghostly."
 	DESCRIBE.POLARBEARFUR = "It carries the weight of its loss, and vermins."
+	DESCRIBE.POLARWARGSTOOTH = "How would it feel to have daggers for teeth?"
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Another tree bone."
+	DESCRIBE.FROSTWALKERAMULET = "Even the water can't escape death's cold embrace."
 	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		INUSE = "I see. Breaking it would have lasting consequences.",
 		REFUEL = "I can't shake it no more. What a pity.",
 	}
+	DESCRIBE.POLARICEPACK = "A long existence of cold and darkness awaits you in the fridge."
 	DESCRIBE.TURF_POLAR_CAVES = "Some ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold stone beneath my feet."
 	DESCRIBE.WALL_POLAR = "Alas, they won't melt easily."

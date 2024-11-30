@@ -14,13 +14,20 @@ AddRoom("PolarIsland_Village", {
 			end,
 		},
 		countprefabs = {
-			polarbearhouse = function() return math.random(2, 4) end,
+			polarbearhouse = function() return math.random(4, 5) end,
+			winter_tree_sparse = function () return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(6, 8) or 0 end,
 		},
 		
 		distributepercent = 0.04,
 		distributeprefabs = {
 			evergreen = 2,
 			evergreen_stump = 1,
+		},
+		
+		prefabdata = {
+			winter_tree_sparse = function()
+				return {growable = {stage = 5}, polar_decorate = true}
+			end,
 		},
 	}
 })

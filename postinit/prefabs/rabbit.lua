@@ -2,7 +2,8 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local function BecomePolarRabbit(inst)
-	if IsInPolar(inst) and (inst.components.timer == nil or not inst.components.timer:TimerExists("forcenightmare")) then
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) and (inst.components.timer == nil or not inst.components.timer:TimerExists("forcenightmare")) then
 		inst.AnimState:SetBuild("rabbit_winter_build")
 		if inst.components.inventoryitem then
 			inst.components.inventoryitem:ChangeImageName("rabbit_winter")

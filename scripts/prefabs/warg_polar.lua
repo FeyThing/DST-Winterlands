@@ -4,6 +4,21 @@ local assets = {
 
 local prefabs = Prefabs.warg.deps
 
+SetSharedLootTable("polarwarg",
+{
+	{"monstermeat", 		1},
+	{"monstermeat", 		1},
+	{"monstermeat", 		1},
+	{"monstermeat", 		1},
+	{"monstermeat", 		0.5},
+	{"monstermeat", 		0.5},
+
+	{"houndstooth", 		1},
+	{"houndstooth", 		0.66},
+	{"polarwargstooth", 	1},
+	{"polarwargstooth", 	0.66},
+})
+
 local OldSimulateKoalefantDrops = SimulateKoalefantDrops
 function SimulateKoalefantDrops(inst, ...)
 	local x, y, z = inst.Transform:GetWorldPosition()
@@ -102,6 +117,8 @@ local function fn()
 	inst.components.combat:SetDefaultDamage(TUNING.POLARWARG_DAMAGE)
 	
 	inst.components.health:SetMaxHealth(TUNING.POLARWARG_HEALTH)
+	
+	inst.components.lootdropper:SetChanceLootTable("polarwarg")
 	
 	inst:RemoveComponent("freezable")
 	

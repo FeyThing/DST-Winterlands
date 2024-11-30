@@ -1,9 +1,13 @@
 ﻿<Atlas>
 	<Texture filename="polarminimap.tex" />
 	<Elements>
-		<Element name="pillar_polarcave.png" u1="0.001" u2="0.499" v2="0.999" v1="0.001" />
-		<Element name="polarbearhouse.png" u1="0.501" u2="0.749" v2="0.999" v1="0.501" />
-		<Element name="polarglobe.png" u1="0.501" u2="0.749" v2="0.499" v1="0.001" />
-		<Element name="rock_polar.png" u1="0.751" u2="0.9286875" v2="0.999" v1="0.579125" />
+		<Element name="antler_tree.png" u1="0.001" u2="0.24509375" v2="0.999" v1="0.75490625" />
+		<Element name="antler_tree_burnt.png" u1="0.24709375" u2="0.4911875" v2="0.999" v1="0.75490625" />
+		<Element name="antler_tree_stump.png" u1="0.001" u2="0.24509375" v2="0.75290625" v1="0.5088125" />
+		<Element name="grass_polar.png" u1="0.24709375" u2="0.41696875" v2="0.75290625" v1="0.52053125" />
+		<Element name="pillar_polarcave.png" u1="0.4931875" u2="0.9911875" v2="0.999" v1="0.501" />
+		<Element name="polarbearhouse.png" u1="0.001" u2="0.249" v2="0.5068125" v1="0.2588125" />
+		<Element name="polarglobe.png" u1="0.001" u2="0.249" v2="0.2568125" v1="0.0088125" />
+		<Element name="rock_polar.png" u1="0.251" u2="0.42478125" v2="0.51853125" v1="0.30959375" />
 	</Elements>
 </Atlas>

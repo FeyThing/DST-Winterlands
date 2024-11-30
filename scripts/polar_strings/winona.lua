@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Whatever's under is anyone's guess."
+	DESCRIBE.TUMBLEWEED_POLAR = "They say each of 'em is unique. Outside and inside."
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Just what I needed to wrap up the day."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "I ain't holding this without gloves."
+	DESCRIBE.BLUEGEM_SHARDS = "Pretty sure the cold could glue them back itself."
 	DESCRIBE.POLAR_DRYICE = "Get it down the ice-embly line."
 	DESCRIBE.POLARBEARFUR = "It's warm, and more importantly it's mine."
+	DESCRIBE.POLARWARGSTOOTH = "I don't suppose he used those to feed on plants."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This might prove useful."
+	DESCRIBE.FROSTWALKERAMULET = "This'll keep me from slipping on the job. Ha!"
 	DESCRIBE.POLAR_SPEAR = "Pfft. Alright. Assuming you live in a freezer..."
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		INUSE = "Oh you...",
 		REFUEL = "Not sure how it leaked. But it's better that way.",
 	}
+	DESCRIBE.POLARICEPACK = "That little bit of ice went down a long way."
 	DESCRIBE.TURF_POLAR_CAVES = "That's a chunk of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "That's a chunk of road."
 	DESCRIBE.WALL_POLAR = "Yeah, that's pretty ice."

@@ -20,7 +20,7 @@ local MIST_TAGS = {"polarmist"}
 local MIST_NOT_TAGS = {"spoiled"}
 
 function PolarMistEmitter:GetMistOffset()
-	if TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(self.inst) then
+	if self.inst:IsInLimbo() or TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(self.inst) then
 		return nil, false
 	end
 	

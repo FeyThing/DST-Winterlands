@@ -81,7 +81,7 @@ local function fn()
 	inst.entity:AddMiniMapEntity()
 	inst.entity:AddNetwork()
 	
-	inst.MiniMapEntity:SetIcon("grass.png")
+	inst.MiniMapEntity:SetIcon("grass_polar.png")
 	inst.MiniMapEntity:SetPriority(-1)
 	
 	inst:AddTag("plant")

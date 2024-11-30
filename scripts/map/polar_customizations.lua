@@ -1,13 +1,16 @@
 local customizations = {
 --	WORLDSETTINGS
+--	moose_polar = 		{category = LEVELCATEGORY.SETTINGS},
 	polar_icicles = 	{category = LEVELCATEGORY.SETTINGS},
 	polarbears = 		{category = LEVELCATEGORY.SETTINGS},
 	polarfoxes = 		{category = LEVELCATEGORY.SETTINGS},
-	rocks_polar = 		{category = LEVELCATEGORY.SETTINGS},
+	tumbleweed_polar = 	{category = LEVELCATEGORY.SETTINGS},
 	
 --	WORLDGEN
 	antler_trees = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
+	grass_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
 	polarbearhouses = 	{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
+	rocks_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
 }
 
 --
@@ -16,12 +19,11 @@ local map = require("map/forest_map")
 local TRANSLATE_TO_PREFABS = map.TRANSLATE_TO_PREFABS
 local TRANSLATE_AND_OVERRIDE = map.TRANSLATE_AND_OVERRIDE
 
-TRANSLATE_TO_PREFABS["antler_trees"] = 		{"antler_tree"}
+TRANSLATE_TO_PREFABS["antler_trees"] = 		{"antler_tree", "antler_tree_burnt", "antler_tree_stump"}
+TRANSLATE_TO_PREFABS["grass_polar"] = 		{"grass_polar", "grass_polar_spawner"}
 TRANSLATE_TO_PREFABS["polarbearhouses"] = 	{"polarbearhouse"}
-TRANSLATE_TO_PREFABS["polarbears"] = 		{"polarbear"}
-TRANSLATE_TO_PREFABS["polarfoxes"] = 		{"polarfox"}
 TRANSLATE_TO_PREFABS["polar_icicles"] = 	{"polar_icicle", "polar_icicle_rock"}
-TRANSLATE_TO_PREFABS["rocks_polar"] = 		{"rock_polar", "rock_polar_med", "rock_polar_low"}
+TRANSLATE_TO_PREFABS["rocks_polar"] = 		{"rock_polar"}
 
 --
 

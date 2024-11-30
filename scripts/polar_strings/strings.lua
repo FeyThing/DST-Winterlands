@@ -18,8 +18,10 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Misc
 	NAMES.POLARSNOW_MATERIAL = "In High Snow"
 	NAMES.IN_POLARSNOW = "Snow?"
+	NAMES.TUMBLEWEED_POLAR = "Tumblewind"
 	
 --	Mobs
+	
 	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
 	NAMES.POLARBEAR = "Polar Bear"
 	NAMES.POLARFOX = "Frost Tail"
@@ -27,6 +29,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.SHADOW_ICICLER = "Shadow Spine"
 	
 --	Buildings
+	
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
 	
 --	Items
@@ -36,8 +39,11 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.ICEBURRITO = "Brrito"
 	
 	--	Crafting
+	NAMES.BLUEGEM_OVERCHARGED = "Overcharged Blue Gem"
+	NAMES.BLUEGEM_SHARDS = "Blue Gem Shards"
 	NAMES.POLAR_DRYICE = "Dry Ice"
 	NAMES.POLARBEARFUR = "Polar Fur"
+	NAMES.POLARWARGSTOOTH = "Ice Fang"
 	
 	--	Equipments
 	NAMES.ANTLER_TREE_STICK = "Bullbranch"
@@ -48,6 +54,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Others
 	NAMES.DUG_GRASS_POLAR = "Tundra Tuft"
 	NAMES.POLARGLOBE = "Strange Snowglobe"
+	NAMES.POLARICEPACK = "Icepack"
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"
 	NAMES.TURF_POLAR_DRYICE = "Cobbled Dry Ice"
 	NAMES.WALL_POLAR = "Dry Ice Wall"
@@ -145,6 +152,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "This tree has robust branches that could prove to be useful.\nHowever, axes won't cut it to take them off properly..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of carried or stored items by 25%. Can be stacked multiplicatively."
+	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "These bounce around in the blizzard and collect junk along the way.\n\nAll sorts of crazy junk.\n\nYou'd be surprised."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
 	
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
@@ -153,6 +162,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.FROSTWALKERAMULET = "Never was water this cool before!"
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
+	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
+	RECIPE_DESC.SHARDS_BLUEGEM = "Shard work pays off."
 	RECIPE_DESC.TURF_POLAR_CAVES = "The chilly stone of the chillest cave."
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
@@ -163,10 +174,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR = "The Winterlands"
 	STRINGS.UI.SANDBOXMENU.WORLDGENERATION_POLAR = "The Winterlands"
 	
+	STRINGS.UI.CUSTOMIZATIONSCREEN.MOOSE_POLAR = "Mooses"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLAR_ICICLES = "Icicles"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARBEARS = "Polar Bears"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARFOXES = "Frost Tails"
-	STRINGS.UI.CUSTOMIZATIONSCREEN.ROCKS_POLAR = "Ice Protuberances"
+	STRINGS.UI.CUSTOMIZATIONSCREEN.TUMBLEWEED_POLAR = "Tumblewinds"
 	
 	STRINGS.UI.CUSTOMIZATIONSCREEN.ANTLER_TREES = "Bullbarks"
+	STRINGS.UI.CUSTOMIZATIONSCREEN.GRASS_POLAR = "Tundra Grass"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARBEARHOUSES = "Bear Bothies"
+	STRINGS.UI.CUSTOMIZATIONSCREEN.ROCKS_POLAR = "Ice Protuberances"
+	

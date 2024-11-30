@@ -189,6 +189,7 @@ function PolarBearBrain:OnStart()
 		ChattyNode(self.inst, "POLARBEAR_RESCUE",
 			WhileNode(function() return GetFrozenLeader(self.inst) end, "Leader Frozen",
 				DoAction(self.inst, RescueLeaderAction, "Rescue Leader", true))),
+		RunAway(self.inst, "icecrackfx", 5, 7),
 		
 		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),

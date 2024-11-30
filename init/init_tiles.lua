@@ -1,3 +1,7 @@
+if WORLD_TILES.POLAR_ICE ~= nil then
+	return
+end
+
 local NOISES = require("noisetilefunctions")
 local ChangeTileRenderOrder = ChangeTileRenderOrder
 

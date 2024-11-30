@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Something hiding?"
+	DESCRIBE.TUMBLEWEED_POLAR = "Could crush it open easily."
 	
 --	Mobs
 	
@@ -65,11 +66,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgangs grip."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "It tickles in hand!"
+	DESCRIBE.BLUEGEM_SHARDS = "Is too tiny. Need to make big one!"
 	DESCRIBE.POLAR_DRYICE = "Stronger than ice."
 	DESCRIBE.POLARBEARFUR = "Ha-ha! I make carpet now."
+	DESCRIBE.POLARWARGSTOOTH = "Tooth of bigger puppy."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Good stick for walking and whacking."
+	DESCRIBE.FROSTWALKERAMULET = "Ice better not crumble under Wolfgang's mighty steps."
 	DESCRIBE.POLAR_SPEAR = "Is ice but spiky!"
 	DESCRIBE.POLARMOOSEHAT = "Mighty Hat!"
 	
@@ -79,6 +84,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		INUSE = "Wolfgang shake too hard?",
 		REFUEL = "Is only strange ball.",
 	}
+	DESCRIBE.POLARICEPACK = "Is keeping things mighty fresh for longer."
 	DESCRIBE.TURF_POLAR_CAVES = "Cold step stones."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold step stones."
 	DESCRIBE.WALL_POLAR = "I see handsome man trapped inside!"

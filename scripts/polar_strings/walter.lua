@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Huh? Woby... what's in here?"
+	DESCRIBE.TUMBLEWEED_POLAR = "The abominable snowflake! I finally found it!"
 	
 --	Mobs
 	
@@ -66,11 +67,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.ICEBURRITO = "It won't fall apart one bit."
 	
 	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "From a magic blue gem to... I don't know... a cursed blue gem, surely?"
+	DESCRIBE.BLUEGEM_SHARDS = "I bet I can piece this mystery together."
 	DESCRIBE.POLAR_DRYICE = "Let's build a snow golem!"
 	DESCRIBE.POLARBEARFUR = "Woah, check out all the fleas in it!"
+	DESCRIBE.POLARWARGSTOOTH = "Reminds me, I'll have to brush your teeth soon, girl."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "A good stick to play fetch and... for a few other things."
+	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
@@ -80,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		INUSE = "That means... I finally got my hands on an haunted trinket!",
 		REFUEL = "Where's the snow... the haunted snow?",
 	}
+	DESCRIBE.POLARICEPACK = "It won't make my jerky eternal but it's one step closer."
 	DESCRIBE.TURF_POLAR_CAVES = "A patch of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Some road that sends shivers up my legs."
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."
