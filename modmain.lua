@@ -56,6 +56,7 @@ local prefabs = {
 	"ents_onfreeze",
 	"polar_walking",
 	"waxed_plants",
+	"frogs"
 }
 
 local components = {
@@ -85,6 +86,7 @@ local components = {
 	"wavemanager",
 	"weather",
 	"wisecracker",
+	"birdspawner"
 }
 
 local stategraphs = {
