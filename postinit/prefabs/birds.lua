@@ -44,11 +44,13 @@ end
 
 local function OnPolarstormChanged(inst, active)
 	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) then
-		inst._leavestormtask = inst:DoPeriodicTask(1 + math.random() * 3, function()
-			if inst.sg and not inst.sg:HasStateTag("flight") then
-				inst:PushEvent("flyaway")
-			end
-		end)
+		if inst._leavestormtask == nil then
+			inst._leavestormtask = inst:DoPeriodicTask(1 + math.random() * 3, function()
+				if inst.sg and not inst.sg:HasStateTag("flight") then
+					inst:PushEvent("flyaway")
+				end
+			end)
+		end
 	elseif inst._leavestormtask then
 		inst._leavestormtask:Cancel()
 		inst._leavestormtask = nil

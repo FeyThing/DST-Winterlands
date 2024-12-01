@@ -77,7 +77,7 @@ return Class(function(self, inst)
 			end
 		end
 		
-		if TheWorld.has_ocean and num_herds < GetMaxHerds() and _spawntask == nil then
+		if num_herds < GetMaxHerds() and _spawntask == nil then
 			_spawntask = inst:DoTaskInTime(delay, RespawnHerd)
 		end
 	end
@@ -85,7 +85,7 @@ return Class(function(self, inst)
 	function self:OnPostInit()
 		if TUNING.PENGUINS_MAX_COLONIES > 0 and TheWorld.has_ocean then
 			inst:WatchWorldState("cycles", OnDayComplete)
-			OnDayComplete(inst)
+			OnDayComplete(inst, 0)
 		end
 	end
 	

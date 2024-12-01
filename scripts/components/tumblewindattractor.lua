@@ -23,7 +23,7 @@ local TumbleWindAttractor = Class(function(self, inst)
 end)
 
 function TumbleWindAttractor:GetSpawnRate()
-	return GetRandomMinMax(TUNING.TUMBLEWIND_SPAWN_RATES.min, TUNING.TUMBLEWIND_SPAWN_RATES.max)
+	return GetRandomMinMax(TUNING.TUMBLEWIND_SPAWNRATE_EARLY, TUNING.TUMBLEWIND_SPAWNRATE_LATER)
 end
 
 local TUMBLER_TAGS = {"tumblewind"}

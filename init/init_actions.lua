@@ -16,14 +16,14 @@ end
 
 --	Actions
 
-local POLARPLOW = PolarAction("POLARPLOW", {distance = 1, priority = 1})
+local POLARPLOW = PolarAction("POLARPLOW", {distance = 4, priority = 1})
 	POLARPLOW.fn = function(act)
 		local shovel = act.invobject or act.doer.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
 		local act_pos = act:GetActionPoint()
 		
 		if shovel and shovel.components.polarplower then
-			if shovel.components.polarplower:CanPlow(act.target, act_pos) then
-				return shovel.components.polarplower:DoPlow(act.target, act_pos)
+			if shovel.components.polarplower:CanPlow(act.doer, act_pos) then
+				return shovel.components.polarplower:DoPlow(act.doer, act_pos)
 			end
 			
 			return false

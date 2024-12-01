@@ -44,6 +44,7 @@ local prefabs = {
 	"farm_plants",
 	"flower",
 	"forest",
+	"frogs",
 	"grass",
 	"penguin",
 	"rabbit",
@@ -56,11 +57,11 @@ local prefabs = {
 	"ents_onfreeze",
 	"polar_walking",
 	"waxed_plants",
-	"frogs"
 }
 
 local components = {
 	"ambientsound",
+	"birdspawner",
 	"builder",
 	"dynamicmusic", -- : (
 	"explosive",
@@ -86,7 +87,6 @@ local components = {
 	"wavemanager",
 	"weather",
 	"wisecracker",
-	"birdspawner"
 }
 
 local stategraphs = {

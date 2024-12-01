@@ -8,6 +8,7 @@ local prefabs = {
 
 local snowhuntPrefabs = {
 	rabbit = 7,
+	robin_winter = 6,
 	mole = 1,
 }
 
@@ -88,6 +89,11 @@ local function OnPlayerNear(inst, player)
 		
 		inst.last_wake_time = GetTime()
 		inst.wantstoalert = true
+		
+		if inst.components.timer and not inst.components.timer:TimerExists("escapedivecooldown") then
+			inst.wantstodive = nil
+			inst.components.timer:StartTimer("escapedivecooldown", 3)
+		end
 		
 		if inst.components.sleeper and inst.components.sleeper:IsAsleep() then
 			inst.components.sleeper:WakeUp()
@@ -206,6 +212,10 @@ local function SleepTest(inst)
 		inst.nap_length = math.random(TUNING.MIN_CATNAP_LENGTH, TUNING.MAX_CATNAP_LENGTH)
 		inst.last_sleep_time = GetTime()
 		
+		if inst.components.knownlocations then
+			--inst.components.knownlocations:RememberLocation("respawnpoint")
+		end
+		
 		return true
 	end
 end
@@ -252,6 +262,12 @@ local function HuntRandomPrey(inst, tier)
 		
 		if prey then
 			prey.Transform:SetPosition((pt + offset):Get())
+			
+			local prey_sound = prey.components.health and prey.components.health.murdersound
+			if prey_sound then
+				inst.SoundEmitter:PlaySound(FunctionOrValue(prey_sound, prey, inst), "prey_sound")
+			end
+			prey:PushEvent("stunbomb")
 		end
 		TheWorld:PushEvent("spawned_snowhuntprey", {prey = prey, hunter = inst})
 	end
@@ -276,6 +292,14 @@ local function OnAttacked(inst, data)
 	end
 end
 
+local function OnDeath(inst)
+	if TheWorld.components.polarfoxrespawner then
+		local pt = inst.components.knownlocations and inst.components.knownlocations:GetLocation("respawnpoint") or inst:GetPosition()
+		
+		TheWorld.components.polarfoxrespawner:ScheduleFoxSpawn(pt)
+	end
+end
+
 local function OnLootPrefabSpawned(inst, data)
 	if data and data.loot and data.loot.prefab == "manrabbit_tail" then
 		inst.AnimState:HideSymbol("tail")
@@ -283,7 +307,14 @@ local function OnLootPrefabSpawned(inst, data)
 end
 
 local function OnTimerDone(inst, data)
-	-- TODO: time to hunt for bunnies in the snow... also cooldown for bird hunting
+	if data.name == "escapedivecooldown" then
+		inst.wantstodive = inst.components.locomotor:WantsToRun()
+	elseif data.name == "huntdivecooldown" then
+		inst.wantstodive = true
+		inst.components.timer:StartTimer("huntperiod", 10)
+	elseif data.name == "huntperiod" then
+		inst.components.timer:StartTimer("huntdivecooldown", TUNING.POLARFOX_HUNT_COOLDOWN)
+	end
 end
 
 --
@@ -309,6 +340,10 @@ local function TailTask(inst)
 	if inst._tailswip == nil then
 		TailSwip(inst)
 	end
+end
+
+local function RememberKnownLocation(inst)
+	inst.components.knownlocations:RememberLocation("respawnpoint", inst:GetPosition(), true)
 end
 
 local function fn()
@@ -399,6 +434,7 @@ local function fn()
 	inst.components.sleeper:SetSleepTest(SleepTest)
 	
 	inst:AddComponent("timer")
+	inst.components.timer:StartTimer("huntdivecooldown", TUNING.POLARFOX_HUNT_COOLDOWN)
 	
 	inst:AddComponent("trader")
 	inst.components.trader:SetAcceptTest(ShouldAcceptItem)
@@ -422,9 +458,11 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	
+	inst:DoTaskInTime(0, RememberKnownLocation)
 	inst:DoTaskInTime(0, TailTask)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
+	inst:ListenForEvent("death", OnDeath)
 	inst:ListenForEvent("loot_prefab_spawned", OnLootPrefabSpawned)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	

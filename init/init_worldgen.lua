@@ -1,19 +1,30 @@
 require("map/tasks/polar")
+
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
+local polar_optional = {"Polar Floe"}
+
 local STRINGS = GLOBAL.STRINGS
 
 --	Add Islands and Boons
 
 AddTaskSetPreInitAny(function(self)
 	if self.location == "forest" and self.tasks and #self.tasks > 1 then
-		for i, v in ipairs(polar_tasks) do
-			table.insert(self.tasks, v)
+		for i, task in ipairs(polar_tasks) do
+			table.insert(self.tasks, task)
+		end
+		for i, optional_task in ipairs(polar_optional) do
+			local task_chance = TUNING.POLAR_TASKS_OPTIONALITY[optional_task] or 0
+			if math.random() < task_chance then
+				table.insert(self.tasks, optional_task)
+			end
 		end	
 		
 		local bear_town = "BearTown"..math.random(2)
 		
 		self.set_pieces[bear_town] = {count = 1, tasks = {"Polar Village"}}
 		self.set_pieces["IcicleSkeleton"] = {count = 1, tasks = {"Polar Caves"}}
+		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
+		self.set_pieces["PolarFox_Solo"] = {count = 4, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
 	end
 end)
 

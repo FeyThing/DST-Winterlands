@@ -10,13 +10,15 @@ AddPrefabPostInit("forest", function(inst)
 		return
 	end
 	
-	inst:AddComponent("polarstorm")
+	inst:AddComponent("polarfoxrespawner")
 	
 	inst:AddComponent("polarice_manager")
 	
 	inst:AddComponent("polarpenguinspawner")
 	
 	inst:AddComponent("polarsnow_manager")
+	
+	inst:AddComponent("polarstorm")
 end)
 
 --

@@ -123,8 +123,11 @@ local function HasPlowTool(inst)
 	return tool and tool.components.polarplower
 end
 
+local PLOW_BLOCKER_TAGS = {"wall", "structure"} -- Don't plow around frequent things with colliders
+
 local function HasPolarSnow(pt)
 	return TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z)
+		and #TheSim:FindEntities(pt.x, pt.y, pt.z, 1.5, PLOW_BLOCKER_TAGS) == 0
 end
 
 local function DoPlowingAction(inst)

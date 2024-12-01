@@ -18,10 +18,11 @@ AddRoom("PolarIsland_Village", {
 			winter_tree_sparse = function () return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(6, 8) or 0 end,
 		},
 		
-		distributepercent = 0.04,
+		distributepercent = 0.055,
 		distributeprefabs = {
 			evergreen = 2,
 			evergreen_stump = 1,
+			grass_polar = 1,
 		},
 		
 		prefabdata = {
@@ -66,6 +67,8 @@ AddRoom("PolarIsland_Lakes", {
 	random_node_entrance_weight = 0,
 	contents = {
 		countprefabs = {
+			skeleton_notplayer_1 = function() return math.random() < 0.01 and 1 or 0 end,
+			skeleton_notplayer_2 = function() return math.random() < 0.01 and 1 or 0 end,
 			snowwave_itemrespawner = function() return math.random(6, 9) end,
 			rocks = 4,
 		},
@@ -94,6 +97,60 @@ AddRoom("PolarIsland_Walrus", {
 	}
 })
 
+-- Optionals
+
+AddRoom("PolarIsland_BurntForest", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_LAKES_NOISE,
+	contents = {
+		countprefabs = {
+			polarbearhouse = function() return math.random(0, 2) end,
+			snowwave_itemrespawner = function() return math.random(12, 20) end,
+		},
+		
+		distributepercent = 0.28,
+		distributeprefabs = {
+			evergreen = 0.5,
+			evergreen_sparse = 1,
+			evergreen_stump = 0.05,
+			antler_tree_burnt = 0.01,
+		},
+		
+		prefabdata = {
+			polarbearhouse = {burnt = true},
+			evergreen = function() return {burnt = math.random() < 0.8} end,
+			evergreen_sparse = function() return {burnt = math.random() < 0.8} end,
+			snowwave_itemrespawner = {canspawnsnowitem = true},
+		},
+	}
+})
+
+AddRoom("PolarIsland_FloeField", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_FLOE_NOISE,
+	random_node_entrance_weight = 0,
+	contents = {
+		countprefabs = {
+			icelettuce_spawner = 2,
+			snowwave_itemrespawner = 4,
+		},
+		
+		distributepercent = 0.1,
+		distributeprefabs = {
+			marsh_bush = 1,
+			rock_ice = 2,
+		},
+		
+		prefabdata = {
+			evergreen = function() return {burnt = math.random() < 0.8} end,
+			evergreen_sparse = function() return {burnt = math.random() < 0.8} end,
+			snowwave_itemrespawner = {canspawnsnowitem = true},
+		},
+	}
+})
+
+-- BG
+
 AddRoom("PolarIsland_BG", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_TUNDRA_NOISE,
@@ -104,13 +161,13 @@ AddRoom("PolarIsland_BG", {
 			snowwave_itemrespawner = function() return math.random(6, 9) end,
 		},
 		
-		distributepercent = 0.07,
+		distributepercent = 0.06,
 		distributeprefabs = {
-			grass_polar_spawner = 1,
+			grass_polar_spawner = 0.8,
 			antler_tree = 1.25,
 			antler_tree_stump = 0.25,
-			marsh_bush = 1,
-			rock_ice = 1,
+			marsh_bush = 1.5,
+			rock_ice = 0.8,
 		},
 		
 		prefabdata = {

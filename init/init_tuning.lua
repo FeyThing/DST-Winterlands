@@ -10,6 +10,10 @@ local night_time = seg_time * night_segs
 --	Worldgen
 	TUNING.POLAR_RETROFIT = GetModConfigData("biome_retrofit") or 0
 	
+	TUNING.POLAR_TASKS_OPTIONALITY = {
+		["Polar Floe"] = 0.32,
+	}
+	
 	TUNING.ICELETTUCE_SPAWNER_CHANCE = 0.25
 	TUNING.ICELETTUCE_SPAWNER_MIN = 3
 	TUNING.ICELETTUCE_SPAWNER_TIME = {min = day_time, max = total_day_time * 5}
@@ -19,6 +23,7 @@ local night_time = seg_time * night_segs
 	TUNING.POLAR_ICICLE_DAMAGE = 300
 	TUNING.POLAR_ICICLE_MINE = 3
 	TUNING.POLAR_ICICLE_BREAK_CHANCE = 0.33
+	TUNING.POLAR_ICICLE_ENABLED = true
 	TUNING.POLAR_ICICLE_GROWTIME = seg_time * 2
 	TUNING.POLAR_ICICLE_GROWTIME_VARIANCE = total_day_time
 	TUNING.POLAR_ICICLE_SPAWNTIME = seg_time
@@ -27,7 +32,8 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_ROCK_MINE_TALL = 10
 	
-	TUNING.TUMBLEWIND_SPAWN_RATES = {min = 1, max = 6}
+	TUNING.TUMBLEWIND_SPAWNRATE_EARLY = 1
+	TUNING.TUMBLEWIND_SPAWNRATE_LATER = 6
 	TUNING.TUMBLEWIND_MAX_DENSITY = 15
 	TUNING.TUMBLEWIND_ENABLED = true
 	TUNING.TUMBLEWIND_NUMLOOT = 3
@@ -78,6 +84,7 @@ local night_time = seg_time * night_segs
 	TUNING.POLARFOX_LEADER_RUN_DIST = 14 * 14
 	TUNING.POLARFOX_LOYALTY_PER_FOOD = total_day_time + seg_time
 	TUNING.POLARFOX_LOYALTY_MAXTIME = total_day_time * 3
+	TUNING.POLARFOX_HUNT_COOLDOWN = seg_time * 2
 	
 	TUNING.POLARFOX_SPAWN_TIME = total_day_time
 	TUNING.POLARFOX_SPAWN_TIME_VARIATION = total_day_time
@@ -158,20 +165,19 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLARPLOW_BLOCKER_DURATION = total_day_time * 0.8
 	TUNING.POLARPLOW_BLOCKER_STORMCUT = 0.25
-	TUNING.POLARPLOW_USE = 4
+	TUNING.POLARPLOW_USE = 2
 	
 	TUNING.SHADE_POLAR_RANGE = 22
 	TUNING.SHADE_POLAR_SCALE = 3.8
+	
+	TUNING.POLAR_STORM_COOLDOWN_MIN = total_day_time * 8 -- Every 8 - 30 days a blizzard will happen
+	TUNING.POLAR_STORM_COOLDOWN_MAX = total_day_time * 30
+	TUNING.POLAR_STORM_LENGTH_MIN = total_day_time * 0.5 -- Blizzards blizzard for 0.5 - 1 day
+	TUNING.POLAR_STORM_LENGTH_MAX = total_day_time * 1
+	TUNING.POLAR_STORM_TEMP_MODIFIER = -10
 	
 	TUNING.POLAR_MIST_TIME = 15
 	TUNING.POLAR_MIST_TWEENTIME = 1.5
 	
 	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
 	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false
-
-	TUNING.POLAR_STORM_TEMP_MODIFIER = -10
-
-	TUNING.BLIZZARD_COOLDOWN_MIN = total_day_time * 8 -- Every 8 - 30 days a blizzard will happen
-	TUNING.BLIZZARD_COOLDOWN_MAX = total_day_time * 30
-	TUNING.BLIZZARD_LENGTH_MIN = total_day_time * 0.5 -- Blizzards blizzard for 0.5 - 1 day
-	TUNING.BLIZZARD_LENGTH_MAX = total_day_time * 1

@@ -17,6 +17,7 @@ local function fn()
 	inst.AnimState:PlayAnimation("idle")
 	
 	inst:AddTag("frozen")
+	inst:AddTag("show_spoilage")
 	--inst:AddTag("blowpipeammo")
 	--inst:AddTag("reloaditem_ammo")
 	

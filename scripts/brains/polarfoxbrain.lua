@@ -80,6 +80,72 @@ local function FindFoodAction(inst)
 	return (target and BufferedAction(inst, target, ACTIONS.EAT)) or nil
 end
 
+--
+
+local DIVE_AVOID_TAGS = {"wall", "structure", "hostile"}
+
+local function IsValidDivingPos(pt, inst)
+	if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+		and #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, DIVE_AVOID_TAGS) == 0 then
+		
+		if not (inst.components.follower and inst.components.follower.leader) then
+			local players = FindPlayersInRangeSq(pt.x, pt.y, pt.z, 10, true)
+			local dist = inst:GetDistanceSqToPoint(pt:Get())
+			
+			for i, v in ipairs(players) do
+				if v:GetDistanceSqToPoint(pt:Get()) + 1 <= dist then
+					return false
+				end
+			end
+		end
+		
+		return true
+	end
+	
+	return false
+end
+
+local function GetDivingPointPos(inst)
+	if inst.wantstodive or inst.wantstodive_forced then
+		local dive_pt = inst.divept
+		
+		if dive_pt == nil or not IsValidDivingPos(dive_pt, inst) then
+			local pt = inst:GetPosition()
+			local dive_offset = FindWalkableOffset(pt, math.random() * TWOPI, math.random(2, 4), 4, true, false, function(_pt) return IsValidDivingPos(_pt, inst) end)
+			
+			if dive_offset then
+				dive_pt = pt + dive_offset
+			end
+		end
+		
+		if dive_pt then
+			inst.divept = dive_pt
+		end
+	end
+	
+	return (inst.wantstodive or inst.wantstodive_forced) and inst.divept or nil
+end
+
+local function ShouldRunToDivingPos(inst)
+	return inst.wantstoalert or inst.wantstodive_forced
+end
+
+local function TryDive(inst)
+	if inst.wantstodive or inst.wantstodive_forced then
+		if inst.divept == nil then
+			GetDivingPointPos(inst)
+		end
+		
+		if inst.divept and inst:GetDistanceSqToPoint(inst.divept:Get()) <= 4 * 4 then
+			inst:PushEvent("dofoxdive")
+			
+			return inst.divept
+		else
+			inst.divept = nil
+		end
+	end
+end
+
 local function ShouldRunAway(target, inst)
 	local dist = inst:GetDistanceSqToInst(target)
 	local leader = GetLeader(inst)
@@ -96,36 +162,39 @@ local function ShouldRunAway(target, inst)
 	
 	if inst.components.combat and inst.components.combat.target == target and dist < RUN_AWAY_COMBAT_DIST * RUN_AWAY_COMBAT_DIST then
 		inst._trusted_foods = {}
+		
 		return true
 	end
 	
 	if dist < RUN_AWAY_DIST * RUN_AWAY_DIST then
 		inst._trusted_foods = {}
+		
 		return true
 	end
 	
 	return false
 end
 
-local function WanderPointFn(pt) -- TODO: I guess that doesn't work the way I thought
-	if pt and TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z) then
-		return true
-	end
-	
-	return false
+local function ShouldDive(inst)
+	return TryDive(inst)
 end
 
 function PolarFoxBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicWhenScared(self.inst, 1),
 		BrainCommon.PanicTrigger(self.inst),
-		RunAway(self.inst, {fn = ShouldRunAway, oneoftags = AVOID_TAGS, notags = AVOID_NOT_TAGS}, RUN_AWAY_COMBAT_DIST, STOP_RUN_AWAY_DIST),
+		
+		RunAway(self.inst, {fn = ShouldRunAway, oneoftags = AVOID_TAGS, notags = AVOID_NOT_TAGS}, RUN_AWAY_COMBAT_DIST, STOP_RUN_AWAY_DIST, nil, nil, nil, nil, ShouldDive),
+		IfNode(function() return TryDive(self.inst) end, "TryToDive",
+			ActionNode(function() self.inst:PushEvent("dofoxdive") end)),
 		WhileNode(function() return GetFarLeader(self.inst) end, "LeaderIsFar",
 			Follow(self.inst, GetFarLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST, true)),
 		Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST, false),
+		
 		DoAction(self.inst, FindFoodAction, "Eat Food"),
-		WhileNode(function() return CanChill(self.inst) end, "Chilling",
-			Wander(self.inst, nil, 5, wandertimes, nil, nil, WanderPointFn)),
+		WhileNode(function() return not CanChill(self.inst) end, "Watching",
+			StandStill(self.inst)),
+		Wander(self.inst, nil, 5, wandertimes),
 	}, 0.25)
 	
 	self.bt = BT(self.inst, root)

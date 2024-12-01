@@ -7,10 +7,10 @@ return Class(function(self, inst)
 	-- [ Private fields ] --
     local _polarstormactive = false
 
-    local _blizzard_cooldown_min = TUNING.BLIZZARD_COOLDOWN_MIN
-    local _blizzard_cooldown_max = TUNING.BLIZZARD_COOLDOWN_MAX
-    local _blizzard_length_min = TUNING.BLIZZARD_LENGTH_MIN
-    local _blizzard_length_max = TUNING.BLIZZARD_LENGTH_MAX
+    local _blizzard_cooldown_min = TUNING.POLAR_STORM_COOLDOWN_MIN
+    local _blizzard_cooldown_max = TUNING.POLAR_STORM_COOLDOWN_MAX
+    local _blizzard_length_min = TUNING.POLAR_STORM_LENGTH_MIN
+    local _blizzard_length_max = TUNING.POLAR_STORM_LENGTH_MAX
 
     local _blizzard_cd_task
     local _blizzard_time_task

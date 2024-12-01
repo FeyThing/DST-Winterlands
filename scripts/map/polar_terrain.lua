@@ -42,7 +42,7 @@ local polar_addedtiles = {
 	rock1 = {WORLD_TILES.POLAR_ICE},
 	rock2 = {WORLD_TILES.POLAR_ICE},
 	rock_flintless = {WORLD_TILES.POLAR_ICE},
-	rock_ice = {WORLD_TILES.POLAR_SNOW},
+	rock_ice = {WORLD_TILES.POLAR_ICE},
 }
 
 for terrain, tiles in pairs(polar_filters) do

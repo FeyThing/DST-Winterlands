@@ -111,6 +111,17 @@ return {
 				},
 				{
 					name = "",
+					type = "meatrack",
+					shape = "rectangle",
+					x = 106,
+					y = 224,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				--[[{
+					name = "",
 					type = "wall_wood",
 					shape = "rectangle",
 					x = 314,
@@ -185,17 +196,6 @@ return {
 				},
 				{
 					name = "",
-					type = "meatrack",
-					shape = "rectangle",
-					x = 106,
-					y = 224,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
 					type = "wall_wood",
 					shape = "rectangle",
 					x = 314,
@@ -245,18 +245,7 @@ return {
 					properties = {
 						["data.health.percent"] = "0"
 					}
-				},
-				{
-					name = "",
-					type = "wall_polar",
-					shape = "rectangle",
-					x = 410,
-					y = 618,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
+				},]]
 				{
 					name = "",
 					type = "wall_polar",
@@ -289,6 +278,17 @@ return {
 					shape = "rectangle",
 					x = 426,
 					y = 602,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "wall_polar",
+					shape = "rectangle",
+					x = 410,
+					y = 618,
 					width = 0,
 					height = 0,
 					visible = true,

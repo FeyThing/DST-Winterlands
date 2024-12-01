@@ -20,10 +20,11 @@ local TRANSLATE_TO_PREFABS = map.TRANSLATE_TO_PREFABS
 local TRANSLATE_AND_OVERRIDE = map.TRANSLATE_AND_OVERRIDE
 
 TRANSLATE_TO_PREFABS["antler_trees"] = 		{"antler_tree", "antler_tree_burnt", "antler_tree_stump"}
-TRANSLATE_TO_PREFABS["grass_polar"] = 		{"grass_polar", "grass_polar_spawner"}
-TRANSLATE_TO_PREFABS["polarbearhouses"] = 	{"polarbearhouse"}
+TRANSLATE_TO_PREFABS["polarbearhouses"] = 	{"polarbearhouse", "winter_tree_sparse"}
 TRANSLATE_TO_PREFABS["polar_icicles"] = 	{"polar_icicle", "polar_icicle_rock"}
 TRANSLATE_TO_PREFABS["rocks_polar"] = 		{"rock_polar"}
+
+TRANSLATE_AND_OVERRIDE["grass_polar"] = 	{"grass_polar", "grass_polar_spawner"}
 
 --
 
@@ -36,6 +37,17 @@ local function OverrideTuningVariables(tuning)
 			TUNING[k] = v
 		end
 	end
+end
+
+WSO.Pre.polar_icicles = function(difficulty)
+	local tuning_vars = {
+		never = 	{POLAR_ICICLE_ENABLED = false},
+		few = 		{POLAR_MAX_ICICLES = 3, POLAR_WORLD_MAXICICLES = 30},
+		--default = {POLAR_MAX_ICICLES = 6, POLAR_WORLD_MAXICICLES = 120},
+		many = 		{POLAR_MAX_ICICLES = 8},
+		always = 	{POLAR_MAX_ICICLES = 10},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
 end
 
 WSO.Pre.polarbears = function(difficulty)
@@ -56,6 +68,17 @@ WSO.Pre.polarfoxes = function(difficulty)
 		--default = {POLARFOX_SPAWN_TIME = TUNING.TOTAL_DAY_TIME},
 		many = 		{POLARFOX_SPAWN_TIME = TUNING.TOTAL_DAY_TIME / 2},
 		always = 	{POLARFOX_SPAWN_TIME = TUNING.TOTAL_DAY_TIME / 4},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
+end
+
+WSO.Pre.tumbleweed_polar = function(difficulty)
+	local tuning_vars = {
+		never = 	{TUMBLEWIND_ENABLED = false},
+		few = 		{TUMBLEWIND_SPAWNRATE_EARLY = 4, TUMBLEWIND_SPAWNRATE_LATER = 20},
+		--default = {TUMBLEWIND_SPAWNRATE_EARLY = 1, TUMBLEWIND_SPAWNRATE_LATER = 6},
+		many = 		{TUMBLEWIND_SPAWNRATE_EARLY = 1, TUMBLEWIND_SPAWNRATE_LATER = 4},
+		always = 	{TUMBLEWIND_SPAWNRATE_EARLY = 1, TUMBLEWIND_SPAWNRATE_LATER = 2},
 	}
 	OverrideTuningVariables(tuning_vars[difficulty])
 end

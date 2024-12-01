@@ -43,7 +43,18 @@ local events = {
 			end
 		end
 	end),
+	EventHandler("dofoxdive", function(inst)
+		if not inst.sg:HasStateTag("busy") then
+			inst.sg:GoToState("foxdive_pre")
+		end
+	end),
 }
+
+local EXITSNOW_BLOCKER_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "character", "structure", "wall"}
+
+local function SnowHasSpace(pt)
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 5, nil, nil, EXITSNOW_BLOCKER_TAGS) == 0 and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true)
+end
 
 local states = {
 	State{
@@ -52,6 +63,15 @@ local states = {
 		
 		onenter = function(inst, data)
 			inst.sg.statemem.alerted = data and data.alerted and inst.wantstoalert
+			
+			local temperature = TheWorld.state.temperature
+			if not (inst.components.follower and inst.components.follower.leader) and ((temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP)
+				or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst))) then
+				
+				inst.wantstodive_forced = true
+			else
+				inst.wantstodive_forced = nil
+			end
 			
 			inst.AnimState:PlayAnimation(inst.sg.statemem.alerted and "idle_alerted" or "idle")
 			inst.Physics:Stop()
@@ -115,7 +135,15 @@ local states = {
 			EventHandler("animover", function(inst)
 				inst.wantstosit = math.random() < 0.9 and not inst.wantstoalert
 				
-				inst.sg:GoToState((inst.wantstoalert and "sit") or (inst.wantstosit and "sitting") or "sit")
+				local temperature = TheWorld.state.temperature
+				if not (inst.components.follower and inst.components.follower.leader) and ((temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP)
+					or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst))) then
+					inst.wantstosit = nil
+					
+					inst.sg:GoToState("sit")
+				else
+					inst.sg:GoToState((inst.wantstoalert and "sit") or (inst.wantstosit and "sitting") or "sit")
+				end
 			end),
 		},
 	},
@@ -352,11 +380,149 @@ local states = {
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("run_pst")
 			inst.components.locomotor:StopMoving()
+			
+			inst.wantstodive = nil
+			inst.divept = nil
 		end,
 		
 		events = {
 			EventHandler("animover", function(inst)
 				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
+		name = "foxdive_pre",
+		tags = {"busy", "nointerrupt"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("jump_pre")
+			inst.AnimState:PushAnimation("jump_loop", false)
+			PlayFootstep(inst)
+			
+			inst.wantstohunt = inst.components.timer and inst.components.timer:TimerExists("huntperiod")
+		end,
+		
+		timeline = {
+			TimeEvent(4 * FRAMES, function(inst)
+				inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive")
+				inst.Physics:SetMotorVelOverride(6, 0, 0)
+			end),
+			TimeEvent(12 * FRAMES, function(inst)
+				inst.AnimState:PlayAnimation("dive_pre", false)
+				inst.AnimState:PushAnimation("dive_loop", false)
+				inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive_hit")
+				inst.Physics:ClearMotorVelOverride()
+				inst.Physics:Stop()
+				
+				inst.sg.statemem.dig_pos = inst:GetPosition()
+			end),
+			TimeEvent(16 * FRAMES, function(inst)
+				local pt = inst.sg.statemem.dig_pos
+				SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+			end),
+			TimeEvent(20 * FRAMES, function(inst)
+				local pt = inst.sg.statemem.dig_pos
+				SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+			end),
+			TimeEvent(24 * FRAMES, function(inst)
+				local pt = inst.sg.statemem.dig_pos
+				SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+			end),
+			TimeEvent(28 * FRAMES, function(inst)
+				local pt = inst.sg.statemem.dig_pos
+				SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+			end),
+		},
+		
+		events = {
+			EventHandler("animqueueover", function(inst)
+				if inst.AnimState:IsCurrentAnimation("dive_loop") then
+					inst.sg:GoToState("foxdive_loop")
+				end
+			end),
+		},
+	},
+	
+	State{
+		name = "foxdive_loop",
+		tags = {"busy", "noattack", "nointerrupt"},
+		
+		onenter = function(inst, stay_put, hunt_stuff)
+			inst:Hide()
+			inst.DynamicShadow:Enable(false)
+			
+			inst.wantstodive = nil
+			inst.wantstodive_forced = nil
+			
+			if not stay_put then
+				local pt = inst:GetPosition()
+				local dist = (inst.components.follower and inst.components.follower.leader ~= nil) and GetRandomMinMax(4, 12) or GetRandomMinMax(10, 20)
+				
+				local offset = FindWalkableOffset(pt, math.random() * TWOPI, dist, 12, false, true, SnowHasSpace)
+				if offset then
+					inst.Transform:SetPosition((pt + offset):Get())
+				end
+			end
+			
+			local ignore_blizzard = inst.components.follower and inst.components.follower.leader ~= nil
+			if ignore_blizzard or not (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)) then
+				inst.sg.statemem.exit_dive = true
+			end
+			
+			inst.sg:SetTimeout(1 + math.random(3))
+		end,
+		
+		ontimeout = function(inst)
+			if inst.sg.statemem.exit_dive then
+				inst.sg:GoToState("foxdive_pst")
+			else
+				inst.sg:GoToState("foxdive_loop", true)
+			end
+		end,
+	},
+	
+	State{
+		name = "foxdive_pst",
+		tags = {"busy", "nointerrupt"},
+		
+		onenter = function(inst)
+			inst:Show()
+			inst.DynamicShadow:Enable(true)
+			
+			inst.AnimState:PlayAnimation("jump_pre")
+			inst.AnimState:PushAnimation("jump_loop", false)
+			inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive_hit")
+			
+			-- if inst.wantstohunt then
+			-- TODO: Frost Tails should be able to hunt on their own but because they currently don't attack I'd rather not have them litter the place too much
+			--		 or maybe we can make them insta-kill their prey if they aren't befriended...
+			if inst.wantstohunt and inst.components.follower and inst.components.follower.leader then
+				inst:HuntRandomPrey()
+				inst.wantstohunt = nil
+			end
+			
+			SpawnPrefab("polar_splash").Transform:SetPosition(inst.Transform:GetWorldPosition())
+		end,
+		
+		timeline = {
+			TimeEvent(6 * FRAMES, function(inst)
+				inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive")
+				inst.Physics:SetMotorVelOverride(6, 0, 0)
+			end),
+			TimeEvent(12 * FRAMES, function(inst)
+				inst.AnimState:PlayAnimation("jump_pst")
+				inst.Physics:ClearMotorVelOverride()
+				inst.Physics:Stop()
+			end),
+		},
+		
+		events = {
+			EventHandler("animqueueover", function(inst)
+				if inst.AnimState:IsCurrentAnimation("jump_pst") then
+					inst.sg:GoToState("idle")
+				end
 			end),
 		},
 	},

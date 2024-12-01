@@ -198,9 +198,11 @@ local function OnPolarstormChanged(inst, active)
 	local child = inst.components.spawner and inst.components.spawner.child
 	
 	if child and active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(child) then
-		inst._leavestormtask = inst:DoPeriodicTask(1 + math.random() * 3, function()
-			child:PushEvent("gohome")
-		end)
+		if inst._leavestormtask == nil then
+			inst._leavestormtask = inst:DoPeriodicTask(1 + math.random() * 3, function()
+				child:PushEvent("gohome")
+			end)
+		end
 	elseif inst._leavestormtask then
 		inst._leavestormtask:Cancel()
 		inst._leavestormtask = nil

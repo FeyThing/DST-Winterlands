@@ -10,13 +10,6 @@ local prefabs = {
 
 local ANGLE_VARIANCE = 10
 
-local function OnPlayerProx(inst)
-	if not inst.last_prox_sfx_time or (GetTime() - inst.last_prox_sfx_time > 5) then
-		inst.last_prox_sfx_time = GetTime()
-		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_choir")
-	end
-end
-
 local function OnPicked(inst, picker)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
@@ -78,14 +71,14 @@ end
 
 local function MakeLoot(inst)
 	local loot_groups = {
-		{weight = 88, items = {"ice"}},
-		{weight = 5.5, items = {"furtuft", "bluegem_shards", "seeds"}},
-		{weight = 3, items = {"berries", "icelettuce", "icelettuce_seeds"}},
-		{weight = 1.5, items = {"boneshard", "dug_marsh_bush", "dug_grass", "feather_crow", "feather_robin_winter", "houndstooth", "polarbearfur"}},
-		{weight = 1, items = {"bluegem", "bird_egg", "rottenegg", "spoiled_fish", "spoiled_fish_small", "blowdart_pipe"}},
-		{weight = 0.5, items = {"mole", "rabbit", "spider_dropper", "wobster_sheller_land"}}, -- TODO: add fleas
-		{weight = 0.35, items = {"antler_tree_stick", "blueprint", "cookingrecipecard", "fishsticks", "scrapbook_page"}},
-		{weight = 0.15, items = {"purplegem", "greengem"}},
+		{weight = 85, 	items = {"ice"}},
+		{weight = 6.5, 	items = {"furtuft", "bluegem_shards", "seeds"}},
+		{weight = 4, 	items = {"berries", "icelettuce", "icelettuce_seeds"}},
+		{weight = 2, 	items = {"boneshard", "dug_marsh_bush", "dug_grass", "feather_crow", "feather_robin_winter", "houndstooth", "polarbearfur"}},
+		{weight = 1.2, 	items = {"bluegem", "bird_egg", "rottenegg", "spoiled_fish", "spoiled_fish_small", "blowdart_pipe"}},
+		{weight = 0.75, items = {"mole", "polarfox", "rabbit", "spider_dropper", "wobster_sheller_land"}}, -- TODO: add fleas here or over
+		{weight = 0.35, items = {"antler_tree_stick", "blueprint", "cookingrecipecard", "fishsticks", "scrapbook_page"}}, -- TODO: warmly dressed gnome trinkets here ?
+		{weight = 0.2, 	items = {"purplegem", "greengem"}},
 	}
 	
 	local loot_aggros = {"spider_dropper", "polarflea"}
@@ -135,10 +128,10 @@ end
 local function OnEntityWake(inst)
 	inst.AnimState:PlayAnimation("move_loop", true)
 	
-	inst.bouncepretask = inst:DoTaskInTime(10 * FRAMES, function(inst)
-		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_bounce")
-		inst.bouncetask = inst:DoPeriodicTask(24 * FRAMES, function(inst)
-			inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_bounce")
+	inst.bouncepretask = inst:DoTaskInTime(6 * FRAMES, function(inst)
+		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
+		inst.bouncetask = inst:DoPeriodicTask(27 * FRAMES, function(inst)
+			inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
 			CheckGround(inst)
 		end)
 	end)
@@ -157,23 +150,15 @@ local function CancelRunningTasks(inst)
 		inst.restartmovementtask:Cancel()
 		inst.restartmovementtask = nil
 	end
-	if inst.bouncepst1 then
-	   inst.bouncepst1:Cancel()
-		inst.bouncepst1 = nil
-	end
-	if inst.bouncepst2 then
-		inst.bouncepst2:Cancel()
-		inst.bouncepst2 = nil
-	end
 end
 
 local function StartMoving(inst)
 	inst.AnimState:PushAnimation("move_loop", true)
 	
-	inst.bouncepretask = inst:DoTaskInTime(10 * FRAMES, function(inst)
-		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_bounce")
-		inst.bouncetask = inst:DoPeriodicTask(24 * FRAMES, function(inst)
-			inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_bounce")
+	inst.bouncepretask = inst:DoTaskInTime(6 * FRAMES, function(inst)
+		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
+		inst.bouncetask = inst:DoPeriodicTask(27 * FRAMES, function(inst)
+			inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
 			CheckGround(inst)
 		end)
 	end)
@@ -191,15 +176,6 @@ local function OnLongAction(inst)
 	inst:RemoveEventCallback("animover", StartMoving)
 	CancelRunningTasks(inst)
 	
-	inst.bouncepst1 = inst:DoTaskInTime(4 * FRAMES, function(inst)
-		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_bounce")
-		inst.bouncepst1 = nil
-	end)
-	inst.bouncepst2 = inst:DoTaskInTime(10 * FRAMES, function(inst)
-		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/tumbleweed_bounce")
-		inst.bouncepst2 = nil
-	end)
-	
 	inst.AnimState:PushAnimation("idle", true)
 	inst.restartmovementtask = inst:DoTaskInTime(math.random(2, 6), function(inst)
 		if inst and inst.components.blowinwind then
@@ -211,6 +187,11 @@ local function OnLongAction(inst)
 end
 
 local function DoDirectionChange(inst, data)
+	--[[if not inst.last_dir_sfx_time or (GetTime() - inst.last_dir_sfx_time > 5) then
+		inst.last_dir_sfx_time = GetTime()
+		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_choir")
+	end]]
+	
 	if not inst.entity:IsAwake() then
 		return
 	end
@@ -242,10 +223,10 @@ local function fn()
 	inst.DynamicShadow:SetSize(1.7, 0.8)
 	
 	MakeCharacterPhysics(inst, 0.5, 1)
-	inst.Physics:ClearCollisionMask()
+	--[[inst.Physics:ClearCollisionMask()
 	inst.Physics:CollidesWith(COLLISION.GROUND)
 	inst.Physics:CollidesWith(COLLISION.OBSTACLES)
-	inst.Physics:CollidesWith(COLLISION.SMALLOBSTACLES)
+	inst.Physics:CollidesWith(COLLISION.SMALLOBSTACLES)]]
 	
 	inst.AnimState:SetRayTestOnBB(true)
 	inst.AnimState:SetBank("tumbleweed_polar")
@@ -274,10 +255,6 @@ local function fn()
 	inst.angle = (TheWorld and TheWorld.components.worldwind) and TheWorld.components.worldwind:GetWindAngle() or nil
 	
 	inst:AddComponent("lootdropper")
-	
-	inst:AddComponent("playerprox")
-	inst.components.playerprox:SetOnPlayerNear(OnPlayerProx)
-	inst.components.playerprox:SetDist(5, 10)
 	
 	inst:AddComponent("pickable")
 	inst.components.pickable.onpickedfn = OnPicked
