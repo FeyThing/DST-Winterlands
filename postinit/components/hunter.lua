@@ -10,7 +10,7 @@ ENV.AddComponentPostInit("hunter", function(self)
 		local beast = OldGetHuntedBeast(self, hunt, spawn_pt, ...)
 		
 		if not self._overridepolar and spawn_pt and GetClosestPolarTileToPoint(spawn_pt.x, 0, spawn_pt.z, 32) ~= nil then
-			return "polarwarg"
+			return math.random() <= TUNING.HUNT_ALTERNATE_BEAST_CHANCE_MAX and "polarwarg" or "moose_polar"
 		end
 		
 		return beast

@@ -113,9 +113,9 @@ local function OnGetItemFromPlayer(inst, giver, item)
 				giver:PushEvent("makefriend")
 				giver.components.leader:AddFollower(inst)
 				
-				inst.components.follower:AddLoyaltyTime(item.components.edible:GetHunger() * TUNING.PIG_LOYALTY_PER_HUNGER)
+				inst.components.follower:AddLoyaltyTime(item.components.edible:GetHunger() * TUNING.POLARBEAR_LOYALTY_PER_HUNGER)
 				inst.components.follower.maxfollowtime = giver:HasTag("polite")
-					and TUNING.PIG_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS or TUNING.PIG_LOYALTY_MAXTIME
+					and TUNING.POLARBEAR_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS or TUNING.POLARBEAR_LOYALTY_MAXTIME
 			end
 		end
 		
@@ -365,6 +365,10 @@ local function OnIsEnraged(inst)
 	end
 end
 
+local function CLIENT_HostileToPlayerTest(inst, player)
+	return false -- So we don't show Attack when befriended bears go psycho mode
+end
+
 local function OnTalk(inst, script)
 	inst.SoundEmitter:PlaySound(inst.sounds.talk)
 end
@@ -415,6 +419,8 @@ local function fn()
 	
 	inst._isenraged = net_bool(inst.GUID, "polarbear._isenraged", "isenraged")
 	
+	inst.HostileToPlayerTest = CLIENT_HostileToPlayerTest
+	
 	inst.entity:SetPristine()
 	
 	inst:ListenForEvent("isenraged", OnIsEnraged)
@@ -437,7 +443,7 @@ local function fn()
 	inst.components.eater:SetStrongStomach(true)
 	
 	inst:AddComponent("follower")
-	inst.components.follower.maxfollowtime = TUNING.PIG_LOYALTY_MAXTIME
+	inst.components.follower.maxfollowtime = TUNING.POLARBEAR_LOYALTY_MAXTIME
 	
 	inst:AddComponent("health")
 	inst.components.health:SetMaxHealth(TUNING.POLARBEAR_HEALTH)

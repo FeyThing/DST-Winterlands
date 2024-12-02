@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
+		ANTLER = "Hm. Not too mysterious looking! But maybe if it was white and hiding in a blizzard...",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Sir? Sir I think you need our help!",
 		ENRAGED = "What big fangs you have!",

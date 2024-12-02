@@ -13,8 +13,9 @@ local POLAR_SCRAPBOOK = {
 	wall_polar_item = {type = "item", subcat = "wall", stacksize = 20, build = "wall_polar", bank = "wall", anim = "idle", deps = {"polar_dryice", "wall_polar"}, specialinfo = "WALL_POLAR"},
 	
 	--	Creatures / Giants
+	moose_polar = {type = "creature", health = 1000, damage = "35-50", build = "moose_polar", bank = "deer", anim = "idle", hide = {"CHAIN"}, overridesymbol = {{"swap_neck_collar", "moose_polar", "swap_neck"}, {"swap_antler_red", "moose_polar", "swap_antler1"}}, deps = {"boneshard", "meat", "antler_tree", "antler_tree_stick"}},
 	polarbear = {type = "creature", health = 800, damage = "50-75", hide = {"hat", "ARM_carry_up"}, build = "polarbear_build", bank = "pigman", anim = "idle_loop", deps = {"meat", "polarbearfur"}},
-	polarfox = {type = "creature", health = 200, damage = 30, build = "polarfox", bank = "polarfox", anim = "idle", animoffsety = -20, deps = {"smallmeat", "manrabbit_tail"}},
+	polarfox = {type = "creature", health = 200, build = "polarfox", bank = "polarfox", anim = "idle", animoffsety = -20, deps = {"smallmeat", "manrabbit_tail"}},
 	polarwarg = {type = "creature", health = 1300, damage = 60, build = "warg_polar", bank = "warg", anim = "idle_loop", deps = {"houndstooth", "icehound", "monstermeat"}},
 	shadow_icicler = {type = "creature", subcat = "shadow", health = 200, damage = 35, build = "shadow_polar_basic", bank = "shadowcreaturepolar", anim = "idle_loop", deps = {"nightmarefuel"}, notes = {shadow_aligned = true}},
 	

@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "It's hardly intimidating now.",
+		ANTLER = "Big antlers, big attitude.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Nature will take care of the rest of you.",
 		ENRAGED = "Oh good. They're pulling the teeth.",

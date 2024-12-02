@@ -254,7 +254,7 @@ end
 
 local function HuntRandomPrey(inst, tier)
 	local pt = inst:GetPosition()
-	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 2, 8, true, false, NoHoles)
+	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 1, 8, true, false, NoHoles)
 	
 	if offset then
 		local preyfab = weighted_random_choice(inst.snowhuntPrefabs)

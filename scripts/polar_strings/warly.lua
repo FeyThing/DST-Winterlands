@@ -39,6 +39,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "It lost its garnish.",
+		ANTLER = "A grand beast, sure to yield robust, gamey flavors.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "I can finally sell its fur.",
 		ENRAGED = "It's hungry for a fight!",

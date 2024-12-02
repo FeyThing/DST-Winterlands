@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Ran headfirst into trouble, huh?",
+		ANTLER = "Looks tough. Time to find out if it really is.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Down for the count!",
 		ENRAGED = "Yeesh, we've got bear problems!",

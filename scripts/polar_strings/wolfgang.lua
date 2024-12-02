@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Is sobbing little ice cubes.",
+		ANTLER = "Fun beast to wrestle with.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Bear man was strong. But Wolfgang is stronger!",
 		ENRAGED = "Is... a bit intimidating.",

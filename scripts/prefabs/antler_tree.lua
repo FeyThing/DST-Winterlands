@@ -27,7 +27,7 @@ local function ChopTree(inst, chopper, chops)
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/use_axe_tree")
 	end
 	
-	if chopper and chopper:HasTag("deer") or chopper:HasTag("weremoose") then -- TODO: Mooses won't have deer tag later
+	if chopper and chopper:HasTag("moose") or chopper:HasTag("weremoose") then
 		local valid_sticcs = {}
 		for k, v in pairs(inst.sticcs) do
 			if v then
@@ -215,6 +215,7 @@ local function MakeHornyTree(data)
 		
 		inst:AddTag("plant")
 		inst:AddTag("tree")
+		inst:AddTag("antlertree")
 		
 		inst.AnimState:SetBuild("antler_tree")
 		inst.AnimState:SetBank("antler_tree")

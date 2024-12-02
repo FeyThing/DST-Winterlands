@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Me want horn bit to grow back too, florp.",
+		ANTLER = "Would like have big horns like this...",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Good. Won't eat fishie now.",
 		ENRAGED = "GLORPT! RUN!!",

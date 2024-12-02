@@ -38,7 +38,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Mmm?"
 	
 --	Mobs
-
+	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Lesson learned. Should not fight friend",
+		ANTLER = "Got big branches!",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Uh oh...",
 		ENRAGED = "Need to chill!",

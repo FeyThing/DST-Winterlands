@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "It moose be tough to cope with antler loss.",
+		ANTLER = "I'd rather stay clear from its path.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "A pile of snow... no, wait.",
 		ENRAGED = "He's got as much bark as bite!",

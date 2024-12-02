@@ -1,5 +1,7 @@
 local POLAR_NAUGHTY_VALUE = {
+	moose_polar = 4,
 	polarbear = 3,
+	polarfox = 6,
 }
 
 for k, v in pairs(POLAR_NAUGHTY_VALUE) do

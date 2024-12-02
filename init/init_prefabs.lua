@@ -7,6 +7,7 @@ PrefabFiles = {
 	"frosty",
 	"grass_polar",
 	"icelettuce_spawner",
+	"moose_polar",
 	"polar_dryice",
 	"polar_icicles",
 	"polar_mist",

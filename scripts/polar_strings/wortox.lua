@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Don't worry, my dear, they will grow back.",
+		ANTLER = "What large horns you have! Can I have them?",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Back to dust! Or snow, if you prefer.",
 		ENRAGED = "They don't like pranks one bite!",

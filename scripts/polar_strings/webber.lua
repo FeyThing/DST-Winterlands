@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "It bumped its head! Poor moosey...",
+		ANTLER = "They're much bigger than what we imagined!",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Ew... it's covered in fleas.",
 		ENRAGED = "Sorry! Sorry!",

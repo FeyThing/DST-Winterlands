@@ -3,7 +3,7 @@ local function OnBlizzardLevelChanged(inst, data)
 	local self = inst.components.tumblewindattractor
 	
 	if self then
-		if self.enabled and level <= 0 then
+		if self.enabled and level < TUNING.SANDSTORM_FULL_LEVEL then
 			self:Enable(false)
 		elseif not self.enabled and level >= TUNING.SANDSTORM_FULL_LEVEL then
 			self:Enable(true)

@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Bah! 'Thou hath disarmed thyself!",
+		ANTLER = "Freya's grace touches even these frozen lands.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "May thy soul ascend in Valhalla.",
 		ENRAGED = "Fight me with all your might!",

@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Well. Does that mean you won?",
+		ANTLER = "Probably more susceptible to hold its ground than the other ones.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "At least he will be well preserved here.",
 		ENRAGED = "You want to see ME lose my cool?!",

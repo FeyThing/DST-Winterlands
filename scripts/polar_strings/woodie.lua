@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Hmph, amateur. Lemme show you how it's done.",
+		ANTLER = "Big, bold, and proud of his woods like I am!",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "You would make a fine rug.",
 		ENRAGED = "Now we're fightin'!",

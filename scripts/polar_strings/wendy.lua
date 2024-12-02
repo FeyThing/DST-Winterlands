@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Heehee...",
+		ANTLER = "Those antlers look dear to you, hm?",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "You will be missed, perhaps.",
 		ENRAGED = "I knew this was too easy.",

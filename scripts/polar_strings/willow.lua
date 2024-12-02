@@ -39,7 +39,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.TUMBLEWEED_POLAR = "I will catch you. And I will melt you!"
 	
 --	Mobs
-
+	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Pfft, look who's extra stupid now.",
+		ANTLER = "Oh great, another stupid deer of some sort.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Hah, that's what you get, bear.",
 		ENRAGED = "He's got fiery temper!",

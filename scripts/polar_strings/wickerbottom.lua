@@ -40,6 +40,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 --	Mobs
 	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "Make no mistake, it can still hold a fight.",
+		ANTLER = "A fine specimen with defenses fit for the wilds.",
+	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Remarkable, but lifeless.",
 		ENRAGED = "Now that's a \"force of nature\". Tsk!",
