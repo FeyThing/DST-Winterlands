@@ -6,6 +6,15 @@ local function OnSnowBlockRangeDirty(inst, data)
 	end
 end
 
+local function OnPlayerDespawn(inst)
+	local self = inst.components.snowwaver
+	
+	if self and self.enabled then
+		self:Enable(false)
+		self:RemoveWaves()
+	end
+end
+
 local function OnInPolar(inst, enable)
 	local self = inst.components.snowwaver
 	
@@ -19,8 +28,8 @@ local SnowWaver = Class(function(self, inst)
 	self.inst = inst
 	
 	self.enabled = false
-	self.lines = 46
-	self.rows = 46
+	self.lines = 40
+	self.rows = 40
 	self.spacing_x = TILE_SCALE / 2
 	self.spacing_y = TILE_SCALE / 2
 	
@@ -146,12 +155,15 @@ function SnowWaver:Enable(enabled)
 		self:SpawnWaves()
 		self.inst:StartUpdatingComponent(self)
 		
-		self.update_internal = self.inst:DoPeriodicTask(1, function() self.blocker_update = true end) -- For fires or other blockers that don't update the client
+		-- For fires or other blockers that don't update the client
+		self.update_internal = self.inst:DoPeriodicTask(TUNING.POLAR_SNOW_UPDATE_RATE, function() self.blocker_update = true end)
 		self.inst:ListenForEvent("snowwave_blockerupdate", OnSnowBlockRangeDirty)
+		self.inst:ListenForEvent("onremove", OnPlayerDespawn)
 	elseif self.update_internal then
 		self.update_internal:Cancel()
 		self.update_internal = nil
 		self.inst:RemoveEventCallback("snowwave_blockerupdate", OnSnowBlockRangeDirty)
+		self.inst:RemoveEventCallback("onremove", OnPlayerDespawn)
 	end
 end
 

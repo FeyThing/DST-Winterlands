@@ -56,6 +56,7 @@ local prefabs = {
 	
 	"ents_onfreeze",
 	"polar_walking",
+	"snow_heaters",
 	"waxed_plants",
 }
 

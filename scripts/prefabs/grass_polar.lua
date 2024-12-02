@@ -39,6 +39,13 @@ local function OnPickedFn(inst, picker)
 	inst.SoundEmitter:PlaySound("dontstarve/wilson/pickup_reeds")
 	inst.AnimState:PlayAnimation("fall")
 	
+	if picker and math.random() <= TUNING.GRASS_POLAR_REEDS_CHANCE then
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local loot = SpawnPrefab("cutreeds")
+		
+		loot.components.inventoryitem:InheritMoisture(TheWorld.state.wetness, TheWorld.state.iswet)
+		loot.components.inventoryitem:DoDropPhysics(x, y, z, true)
+	end
 	if inst.components.pickable:IsBarren() then
 		inst.AnimState:PushAnimation("empty_to_dead")
 		inst.AnimState:PushAnimation("idle_dead", false)

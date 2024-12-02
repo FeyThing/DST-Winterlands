@@ -3201,6 +3201,50 @@ return {
 					height = 0,
 					visible = true,
 					properties = {}
+				},
+				{
+					name = "",
+					type = "polarfox",
+					shape = "rectangle",
+					x = 3040,
+					y = 672,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "polarfox",
+					shape = "rectangle",
+					x = 1760,
+					y = 3424,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "polarfox",
+					shape = "rectangle",
+					x = 3827,
+					y = 3699,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "polarfox",
+					shape = "rectangle",
+					x = 3856,
+					y = 3728,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
 				}
 			}
 		}

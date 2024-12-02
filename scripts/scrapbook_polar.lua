@@ -22,7 +22,7 @@ local POLAR_SCRAPBOOK = {
 	--	Things / POI
 	antler_tree = {type = "thing", subcat = "tree", workable = "CHOP", burnable = true, build = "antler_tree", bank = "antler_tree", anim = "idle", deps = {"antler_tree_stick", "charcoal", "log", "twigs"}, specialinfo = "ANTLER_TREE"},
 	farm_plant_icelettuce = {type = "thing", subcat = "farmplant", workable = "DIG", burnable = true, speechname = "FARM_PLANT", build = "farm_plant_icelettuce", bank = "farm_plant_icelettuce", anim = "crop_full", overridesymbol = {"soil01", "farm_soil", "soil01"}, deps = {"spoiled_food", "icelettuce", "icelettuce_seeds"}},
-	grass_polar = {type = "thing", workable = "DIG", pickable = true, burnable = true, build = "grass_polar", bank = "grass_tall", anim = "idle", deps = {"cutgrass", "dug_grass"}, specialinfo = "NEEDFERTILIZER"},
+	grass_polar = {type = "thing", workable = "DIG", pickable = true, burnable = true, build = "grass_polar", bank = "grass_tall", anim = "idle", deps = {"cutgrass", "cutreeds", "dug_grass"}, specialinfo = "NEEDFERTILIZER"},
 	polar_icicle = {type = "thing", damage = 300, build = "icicle_roof", bank = "icicle_roof", anim = "idle_med", deps = {"polar_icicle_rock"}},
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},
 	polarbearhouse = {type = "thing", subcat = "structure", workable = "HAMMER", burnable = true, build = "polarbearhouse", bank = "polarbearhouse", anim = "idle", deps = {"boards", "polar_dryice", "polarbear", "polarbearfur"}},

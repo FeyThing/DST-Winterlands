@@ -1,12 +1,20 @@
 name = "The Winterlands"
-author = "Feything, Gearless, LukaS, ADM, Notka"
+author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "moose"
-local info_version = "󰀔 [ Version "..version.." ]\n"
+version = "1.0.0"
+local info_version = "󰀔 [ Version "..version.." ]"
 
-description = info_version..[[
+description = info_version..[[ Freshly Released !
 
-It's a frozen island with stuff on it.]]
+
+󰀛 Set sails to a perilous frozen island -
+
+Where winter reigns eternal, and deadlier than ever... amid the snow lies a world brimming with untamed beauty to undig.
+
+
+󰀏 Best experienced with Winter's Feast enabled!
+
+Look up your configs + new world settings before starting ⬇]]
 
 forumthread = ""
 api_version = 10
