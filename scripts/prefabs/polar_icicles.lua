@@ -123,6 +123,23 @@ local function OnInit(inst)
 	end
 end
 
+local function IsValidVictim(victim)
+	return victim and victim.components.health and victim.components.combat and not ((victim:HasTag("prey") and not victim:HasTag("hostile"))
+		or victim:HasAnyTag(NON_LIFEFORM_TARGET_TAGS)
+		or victim:HasTag("companion"))
+end
+
+local function OnKilled(inst, data)
+	local victim = data and data.victim
+	
+	if IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and inst.components.lootdropper
+		and inst.IsValidVictim(victim) and math.random() <= TUNING.POLAR_ICICLE_ORNAMENT_CHANCE then
+		
+		local ornament = GetRandomPolarWinterOrnament()
+		inst.components.lootdropper:SpawnLootPrefab(ornament)
+	end
+end
+
 local function OnTimerDone(inst, data)
 	if data.name == "grow_icicle" then
 		local break_early = math.random() <= TUNING.POLAR_ICICLE_BREAK_CHANCE
@@ -175,6 +192,7 @@ local function fn()
 	
 	inst:AddComponent("timer")
 	
+	inst.IsValidVictim = IsValidVictim
 	inst.DoBreak = DoBreak
 	inst.DoGrow = DoGrow
 	inst.GetGrowTime = GetGrowTime
@@ -186,6 +204,7 @@ local function fn()
 	
 	inst:DoTaskInTime(0, OnInit)
 	
+	inst:ListenForEvent("killed", OnKilled)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	return inst

@@ -22,10 +22,18 @@ local function OnPicked(inst, picker)
 		end
 		
 		if math.random() < TUNING.WINTER_ORNAMENT_TUMBLEWIND_CHANCE then
+			local ornament
 			local rnd = math.random(6)
-			local ornament = rnd <= 3 and GetRandomBasicWinterOrnament()
-				or rnd <= 5 and GetRandomFancyWinterOrnament()
-				or GetRandomLightWinterOrnament()
+			
+			if rnd <= 2 then
+				ornament = GetRandomBasicWinterOrnament()
+			elseif rnd == 3 then
+				ornament = GetRandomFancyWinterOrnament()
+			elseif rnd == 4 then
+				ornament = GetRandomLightWinterOrnament()
+			else
+				ornament = GetRandomPolarWinterOrnament()
+			end
 			
 			table.insert(inst.loot, ornament)
 			table.insert(inst.lootaggro, false)
@@ -77,7 +85,7 @@ local function MakeLoot(inst)
 		{weight = 2, 	items = {"boneshard", "dug_marsh_bush", "dug_grass", "feather_crow", "feather_robin_winter", "houndstooth", "polarbearfur"}},
 		{weight = 1.2, 	items = {"bluegem", "bird_egg", "rottenegg", "spoiled_fish", "spoiled_fish_small", "blowdart_pipe"}},
 		{weight = 0.75, items = {"mole", "polarfox", "rabbit", "spider_dropper", "wobster_sheller_land"}}, -- TODO: add fleas here or over
-		{weight = 0.35, items = {"antler_tree_stick", "blueprint", "cookingrecipecard", "fishsticks", "scrapbook_page"}}, -- TODO: warmly dressed gnome trinkets here ?
+		{weight = 0.35, items = {"antler_tree_stick", "blueprint", "cookingrecipecard", "fishsticks", "polartrinket_1", "polartrinket_2", "scrapbook_page"}},
 		{weight = 0.2, 	items = {"purplegem", "greengem"}},
 	}
 	

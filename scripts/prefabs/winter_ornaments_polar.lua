@@ -6,11 +6,17 @@ local LIGHT_DATA = {
 
 function GetAllPolarWinterOrnamentPrefabs()
 	local decor = {
-		"winter_ornament_boss_icicle_blue",
-		"winter_ornament_boss_icicle_white",
+		"winter_ornament_polar_icicle_blue",
+		"winter_ornament_polar_icicle_white",
 	}
 	
 	return decor
+end
+
+function GetRandomPolarWinterOrnament()
+	local decor = GetAllPolarWinterOrnamentPrefabs()
+	
+    return decor[math.random(#decor)]
 end
 
 local function UpdateLight(inst, data)

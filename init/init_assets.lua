@@ -73,7 +73,7 @@ end
 
 local SCRAPBOOK_POLAR = require("scrapbook_polar")
 for k, v in pairs(SCRAPBOOK_POLAR) do
-	v.name = k
+	v.name = v.name or k
 	v.prefab = k
 	v.tex = k..".tex"
 	v.type = v.type or "things"

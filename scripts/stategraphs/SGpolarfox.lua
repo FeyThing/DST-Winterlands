@@ -399,7 +399,10 @@ local states = {
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("jump_pre")
 			inst.AnimState:PushAnimation("jump_loop", false)
+			
 			PlayFootstep(inst)
+			inst.Physics:ClearCollisionMask()
+			inst.Physics:CollidesWith(COLLISION.GROUND)
 			
 			inst.wantstohunt = inst.components.timer and inst.components.timer:TimerExists("huntperiod")
 		end,
@@ -453,6 +456,9 @@ local states = {
 			inst:Hide()
 			inst.DynamicShadow:Enable(false)
 			
+			inst.Physics:ClearCollisionMask()
+			inst.Physics:CollidesWith(COLLISION.GROUND)
+			
 			inst.wantstodive = nil
 			inst.wantstodive_forced = nil
 			
@@ -490,6 +496,13 @@ local states = {
 		onenter = function(inst)
 			inst:Show()
 			inst.DynamicShadow:Enable(true)
+			
+			inst.Physics:ClearCollisionMask()
+			inst.Physics:CollidesWith(COLLISION.WORLD)
+			inst.Physics:CollidesWith(COLLISION.OBSTACLES)
+			inst.Physics:CollidesWith(COLLISION.SMALLOBSTACLES)
+			inst.Physics:CollidesWith(COLLISION.CHARACTERS)
+			inst.Physics:CollidesWith(COLLISION.GIANTS)
 			
 			inst.AnimState:PlayAnimation("jump_pre")
 			inst.AnimState:PushAnimation("jump_loop", false)
