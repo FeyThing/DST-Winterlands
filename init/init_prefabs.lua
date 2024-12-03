@@ -22,6 +22,7 @@ PrefabFiles = {
 	"polarice_terraformer",
 	"polaricepack",
 	"polarmoosehat",
+	"polartrinkets",
 	"polarwargstooth",
 	"rock_polar",
 	"shadowcreature_polar",
@@ -33,6 +34,7 @@ PrefabFiles = {
 	"walls_polar",
 	"warg_polar",
 	"waxed_polar_plants",
+	"winter_ornaments_polar",
 	"winter_tree_sparse",
 	
 	"polarskinprefabs",

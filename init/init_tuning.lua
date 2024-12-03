@@ -14,6 +14,9 @@ local night_time = seg_time * night_segs
 		["Polar Floe"] = 0.32,
 	}
 	
+	TUNING.ANTLER_TREE_CHOPS = 10
+	TUNING.ANTLER_TREE_CHOPS_REGEN_TIME = total_day_time
+	
 	TUNING.ICELETTUCE_SPAWNER_CHANCE = 0.25
 	TUNING.ICELETTUCE_SPAWNER_MIN = 3
 	TUNING.ICELETTUCE_SPAWNER_TIME = {min = day_time, max = total_day_time * 5}
@@ -152,6 +155,11 @@ local night_time = seg_time * night_segs
 	
 	TUNING.HEATROCK_INSULATION_POLARMULT = 0.5
 	
+	TUNING.GOLD_VALUES.POLARTRINKETS = {
+		5, --[1] Snuggy Gnome
+		5, --[2] Snuggy Gnomette
+	}
+	
 --	Buffs
 	TUNING.POLAR_IMMUNITY_DURATION = total_day_time
 	
@@ -190,10 +198,10 @@ local night_time = seg_time * night_segs
 	TUNING.SHADE_POLAR_RANGE = 22
 	TUNING.SHADE_POLAR_SCALE = 3.8
 	
-	TUNING.POLAR_STORM_COOLDOWN_MIN = total_day_time * 8 -- Every 8 - 30 days a blizzard will happen
-	TUNING.POLAR_STORM_COOLDOWN_MAX = total_day_time * 30
-	TUNING.POLAR_STORM_LENGTH_MIN = total_day_time * 0.5 -- Blizzards blizzard for 0.5 - 1 day
-	TUNING.POLAR_STORM_LENGTH_MAX = total_day_time * 1
+	TUNING.POLAR_STORM_COOLDOWN_MIN = total_day_time * 5 -- Every 5 - 15 days a blizzard will happen
+	TUNING.POLAR_STORM_COOLDOWN_MAX = total_day_time * 15
+	TUNING.POLAR_STORM_LENGTH_MIN = total_day_time * 0.5 -- Blizzards blizzard for 0.5 - 1.5 day
+	TUNING.POLAR_STORM_LENGTH_MAX = total_day_time * 1.5
 	TUNING.POLAR_STORM_TEMP_MODIFIER = -10
 	
 	TUNING.POLAR_MIST_TIME = 15

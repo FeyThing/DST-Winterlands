@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		REFUEL = "It shall be refilled with the driest ice.",
 	}
 	DESCRIBE.POLARICEPACK = "Our treasured feast will last a little longer."
+	DESCRIBE.POLARTRINKET_1 = "A small, bizarre man."
+	DESCRIBE.POLARTRINKET_2 = "A small, bizarre woman."
 	DESCRIBE.TURF_POLAR_CAVES = "A piece of the battlefield."
 	DESCRIBE.TURF_POLAR_DRYICE = "This road leads me home."
 	DESCRIBE.WALL_POLAR = "Cold and unyielding, as is my resolve!"
 	DESCRIBE.WALL_POLAR_ITEM = "Fortifications made of an ice giant."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "A frigid token fit for the halls of Valhalla."

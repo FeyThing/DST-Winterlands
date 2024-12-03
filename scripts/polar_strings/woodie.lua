@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		REFUEL = "No snow on the horizon.",
 	}
 	DESCRIBE.POLARICEPACK = "Who needs an electric freezer when you have this?"
+	DESCRIBE.POLARTRINKET_1 = "Warly would like that scarf."
+	DESCRIBE.POLARTRINKET_2 = "Eh? Oh, it's just that she looks like family, a bit."
 	DESCRIBE.TURF_POLAR_CAVES = "Just more ground, eh?"
 	DESCRIBE.TURF_POLAR_DRYICE = "Now to find ice skates in here..."
 	DESCRIBE.WALL_POLAR = "Anyone's feelin' like breaking the ice?"
 	DESCRIBE.WALL_POLAR_ITEM = "How aboot we build some igloo, eh Lucy?"
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "That one's perfect."

@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		REFUEL = "It needs some special snow.",
 	}
 	DESCRIBE.POLARICEPACK = "It's funny to hold... f-for a while at least."
+	DESCRIBE.POLARTRINKET_1 = "We want big clothes like that too!"
+	DESCRIBE.POLARTRINKET_2 = "We want big clothes like that too!"
 	DESCRIBE.TURF_POLAR_CAVES = "Some ground that we dug up."
 	DESCRIBE.TURF_POLAR_DRYICE = "Don't step on the cracks!"
 	DESCRIBE.WALL_POLAR = "The walls of our Frosty Fort!"
 	DESCRIBE.WALL_POLAR_ITEM = "First rule of the Frosty Fort: do not lick the walls."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "We like to keep it (a bit) simple."

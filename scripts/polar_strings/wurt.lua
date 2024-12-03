@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		REFUEL = "Uh oh. Winter escaped?",
 	}
 	DESCRIBE.POLARICEPACK = "Tada! Made a friend for chilly box."
+	DESCRIBE.POLARTRINKET_1 = "Weirder tiny man."
+	DESCRIBE.POLARTRINKET_2 = "Weirder tiny lady."
 	DESCRIBE.TURF_POLAR_CAVES = "Ground bit."
 	DESCRIBE.TURF_POLAR_DRYICE = "Make ground walk-ier!"
 	DESCRIBE.WALL_POLAR = "Brrr... don't want to live in ice castle!"
 	DESCRIBE.WALL_POLAR_ITEM = "Will make big ice castle, flort."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Want to keep it!"

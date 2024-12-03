@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		REFUEL = "Not sure how it leaked. But it's better that way.",
 	}
 	DESCRIBE.POLARICEPACK = "That little bit of ice went down a long way."
+	DESCRIBE.POLARTRINKET_1 = "Nice scarf you got there. Sure wish I had one too."
+	DESCRIBE.POLARTRINKET_2 = "Er, looks like they had a mixup with two production lines."
 	DESCRIBE.TURF_POLAR_CAVES = "That's a chunk of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "That's a chunk of road."
 	DESCRIBE.WALL_POLAR = "Yeah, that's pretty ice."
 	DESCRIBE.WALL_POLAR_ITEM = "Assembly time."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Nothin' says winter like this one."

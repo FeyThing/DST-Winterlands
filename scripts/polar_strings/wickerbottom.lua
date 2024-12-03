@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		REFUEL = "It would be wise to lock away this... thing.",
 	}
 	DESCRIBE.POLARICEPACK = "Works wonders when sealed up in an airtight space."
+	DESCRIBE.POLARTRINKET_1 = "Quite the cozy odd little fellow."
+	DESCRIBE.POLARTRINKET_2 = "Quite the cozy odd little lady."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground. You step on it."
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground. You step on it."
 	DESCRIBE.WALL_POLAR = "Barriers of ice, frigid and formidable."
 	DESCRIBE.WALL_POLAR_ITEM = "Structural components for glacial barriers."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "One must not forget the classics."

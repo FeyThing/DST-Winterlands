@@ -41,7 +41,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It lost its garnish.",
-		ANTLER = "A grand beast, sure to yield robust, gamey flavors.",
+		ANTLER = "A grand beast sure to yield robust, gamey flavors.",
 	}
 	DESCRIBE.POLARBEAR = {
 		DEAD = "I can finally sell its fur.",
@@ -89,7 +89,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		REFUEL = "Ah non! You aren't getting your snow back.",
 	}
 	DESCRIBE.POLARICEPACK = "Some fortification against my worst enemy."
+	DESCRIBE.POLARTRINKET_1 = "Were there flowers growing in your snowy garden?"
+	DESCRIBE.POLARTRINKET_2 = "I take it your lawn wasn't green all year round."
 	DESCRIBE.TURF_POLAR_CAVES = "It's like an ingredient for the ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "It's like an ingredient for the ground."
 	DESCRIBE.WALL_POLAR = "Aaah. Isn't that ice?"
 	DESCRIBE.WALL_POLAR_ITEM = "I trust it won't melt anytime soon."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Frosting for our festive tree."

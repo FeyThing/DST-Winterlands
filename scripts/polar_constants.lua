@@ -1,3 +1,5 @@
+NUM_POLARTRINKETS = 2
+
 local POLAR_NAUGHTY_VALUE = {
 	moose_polar = 4,
 	polarbear = 3,

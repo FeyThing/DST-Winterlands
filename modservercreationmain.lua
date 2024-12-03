@@ -34,8 +34,6 @@ local modname_polar = ENV.modname
 
 if tostring(ServerCreationScreen) == "ServerCreationScreen" and ServerCreationScreen.world_tabs then
 	staticScheduler:ExecuteInTime(0, function()
-		LoadPolarFEAssets()
-		
 		local freeze_sounds = {
 			"dontstarve/winter/freeze_1st",
 			"dontstarve/winter/freeze_2nd",
@@ -59,8 +57,8 @@ if tostring(ServerCreationScreen) == "ServerCreationScreen" and ServerCreationSc
 			play_sounds = freeze_sounds
 		end
 		
-		TheFrontEnd:GetSound():PlaySound(play_sounds[math.random(#play_sounds)])
-		if IceOver_Polar_FE ~= nil and TheGlobalInstance.iceover_polar == nil then
+		if IceOver_Polar_FE ~= nil and TheGlobalInstance.iceover_polar == nil and KnownModIndex:IsModEnabled(modname_polar) then
+			TheFrontEnd:GetSound():PlaySound(play_sounds[math.random(#play_sounds)])
 			TheGlobalInstance.iceover_polar = ServerCreationScreen:AddChild(IceOver_Polar_FE(ServerCreationScreen))
 		end
 	end)

@@ -89,7 +89,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		REFUEL = "Is only strange ball.",
 	}
 	DESCRIBE.POLARICEPACK = "Is keeping things mighty fresh for longer."
+	DESCRIBE.POLARTRINKET_1 = "Too proud of moustache to tuck it from the cold!"
+	DESCRIBE.POLARTRINKET_2 = "Tiny snowwoman is not afraid of the cold."
 	DESCRIBE.TURF_POLAR_CAVES = "Cold step stones."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold step stones."
 	DESCRIBE.WALL_POLAR = "I see handsome man trapped inside!"
 	DESCRIBE.WALL_POLAR_ITEM = "Big ice chunk!"
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Is pretty. Pretty fragile."

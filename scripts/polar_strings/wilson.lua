@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		REFUEL = "Where did the snow go?",
 	}
 	DESCRIBE.POLARICEPACK = "Alas, it won't preserve me any better."
+	DESCRIBE.POLARTRINKET_1 = "An artifact steeped in wintry legends, surely."
+	DESCRIBE.POLARTRINKET_2 = "An artifact steeped in wintry legends, surely."
 	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
 	DESCRIBE.TURF_POLAR_DRYICE = "Tougher than most ice around here."
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."
 	DESCRIBE.WALL_POLAR_ITEM = "Useful to keep one's cool."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "This one should spruce up the tree just right."

@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		REFUEL = "It's empty... not that it makes me unhappy.",
 	}
 	DESCRIBE.POLARICEPACK = "Must I sacrifice space for mere mortal food?"
+	DESCRIBE.POLARTRINKET_1 = "I see no soul within, no no."
+	DESCRIBE.POLARTRINKET_2 = "I see no soul within, no no."
 	DESCRIBE.TURF_POLAR_CAVES = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.TURF_POLAR_DRYICE = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or it?"
 	DESCRIBE.WALL_POLAR_ITEM = "It's of no use there on the ground."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Daring today, are we?"

@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		REFUEL = "And don't come back!",
 	}
 	DESCRIBE.POLARICEPACK = "Just leave it be in the fridge, whatever."
+	DESCRIBE.POLARTRINKET_1 = "He looks like he doesn't like the cold much either."
+	DESCRIBE.POLARTRINKET_2 = "She looks like she doesn't like the cold much either."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground is boring and cold"
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground is boring and cold."
 	DESCRIBE.WALL_POLAR = "I hate it."
 	DESCRIBE.WALL_POLAR_ITEM = "Maybe I'll give it a chance."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Not quite my favorite."

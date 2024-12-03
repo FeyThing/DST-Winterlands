@@ -50,10 +50,14 @@ local ITEMS = {
 	"polaricepack",
 	"polarmoosehat",
 	"polarsnow_material",
+	"polartrinket_1",
+	"polartrinket_2",
 	"polarwargstooth",
 	"turf_polar_caves",
 	"turf_polar_dryice",
 	"wall_polar_item",
+	"winter_ornament_polar_icicle_blue",
+	"winter_ornament_polar_icicle_white",
 	
 	"ms_polarmoosehat_white",
 }

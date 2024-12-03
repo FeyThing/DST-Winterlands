@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		REFUEL = "I can't shake it no more. What a pity.",
 	}
 	DESCRIBE.POLARICEPACK = "A long existence of cold and darkness awaits you in the fridge."
+	DESCRIBE.POLARTRINKET_1 = "I'd carry this to the end of the world."
+	DESCRIBE.POLARTRINKET_2 = "I'd carry this to the end of the world."
 	DESCRIBE.TURF_POLAR_CAVES = "Some ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold stone beneath my feet."
 	DESCRIBE.WALL_POLAR = "Alas, they won't melt easily."
 	DESCRIBE.WALL_POLAR_ITEM = "Parts of an icy prison to lock myself away."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Some baubles are heartwarming, while others..."

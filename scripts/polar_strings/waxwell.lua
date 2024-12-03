@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		REFUEL = "I should throw you at sea.",
 	}
 	DESCRIBE.POLARICEPACK = "This will keep the bacterias away for longer."
+	DESCRIBE.POLARTRINKET_1 = "There really is nowhere to escape from these guys."
+	DESCRIBE.POLARTRINKET_2 = "There really is nowhere to escape from these gals."
 	DESCRIBE.TURF_POLAR_CAVES = "Turf."
 	DESCRIBE.TURF_POLAR_DRYICE = "At least this one is useful."
 	DESCRIBE.WALL_POLAR = "I like them for their atmospheric touch."
 	DESCRIBE.WALL_POLAR_ITEM = "Wall-sized ice cubes. Yup."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "It's subtle but quaint."

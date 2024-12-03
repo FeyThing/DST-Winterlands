@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		REFUEL = "Where's the snow... the haunted snow?",
 	}
 	DESCRIBE.POLARICEPACK = "It won't make my jerky eternal but it's one step closer."
+	DESCRIBE.POLARTRINKET_1 = "He seems ready for a snowball fight. And so am I!"
+	DESCRIBE.POLARTRINKET_2 = "Wait... I know you."
 	DESCRIBE.TURF_POLAR_CAVES = "A patch of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Some road that sends shivers up my legs."
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."
 	DESCRIBE.WALL_POLAR_ITEM = "Don't you dare lick it, Woby!"
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it match the season."

@@ -9,8 +9,12 @@ local POLAR_SCRAPBOOK = {
 	polarbearfur = {type = "item", stacksize = 20, build = "polarbearfur", bank = "polarbearfur", anim = "idle", fueltype = "BURNABLE", fuelvalue = 45, burnable = true},
 	polaricepack = {type = "item", perishable = 28800, build = "polaricepack", bank = "polaricepack", anim = "idle", deps = {"bluegem_shards", "polar_dryice", "mosquito_sack"}, specialinfo = "POLARICEPACK"},
 	polarmoosehat = {type = "item", subcat = "hat", insulator = 240, insulator_type = "winter", waterproofer = 0.2, dapperness = 0.022222222222222, fueledmax = 2400, fueledrate = 1, fueledtype1 = "USAGE", sewable = true, build = "hat_polarmoose", bank = "polarmoosehat", anim = "anim"},
+	polartrinket_1 = {type = "item", subcat = "trinket", stacksize = 40, build = "polartrinkets", bank = "polartrinkets", anim = "1"},
+	polartrinket_2 = {type = "item", subcat = "trinket", stacksize = 40, build = "polartrinkets", bank = "polartrinkets", anim = "2"},
 	polarwargstooth = {type = "item", stacksize = 10, perishable = 7200, build = "polarwarg_tooth", bank = "polarwarg_tooth", anim = "idle"},
 	wall_polar_item = {type = "item", subcat = "wall", stacksize = 20, build = "wall_polar", bank = "wall", anim = "idle", deps = {"polar_dryice", "wall_polar"}, specialinfo = "WALL_POLAR"},
+	winter_ornament_polar_icicle_blue = {type = "item", subcat = "ornament", name = "winter_ornamentpolar", speechname = "winter_ornamentpolar", stacksize = 40, build = "winter_ornaments_polar", bank = "winter_ornaments_polar", anim = "polar_icicle_blue", deps = {"tumbleweed_polar"}, specialinfo = "WINTERTREE_ORNAMENT"},
+	winter_ornament_polar_icicle_white = {type = "item", subcat = "ornament", name = "winter_ornamentpolar", speechname = "winter_ornamentpolar", stacksize = 40, build = "winter_ornaments_polar", bank = "winter_ornaments_polar", anim = "polar_icicle_white", deps = {"tumbleweed_polar"}, specialinfo = "WINTERTREE_ORNAMENT"},
 	
 	--	Creatures / Giants
 	moose_polar = {type = "creature", health = 1000, damage = "35-50", build = "moose_polar", bank = "deer", anim = "idle", hide = {"CHAIN"}, overridesymbol = {{"swap_neck_collar", "moose_polar", "swap_neck"}, {"swap_antler_red", "moose_polar", "swap_antler1"}}, deps = {"boneshard", "meat", "antler_tree", "antler_tree_stick"}},
@@ -27,7 +31,7 @@ local POLAR_SCRAPBOOK = {
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},
 	polarbearhouse = {type = "thing", subcat = "structure", workable = "HAMMER", burnable = true, build = "polarbearhouse", bank = "polarbearhouse", anim = "idle", deps = {"boards", "polar_dryice", "polarbear", "polarbearfur"}},
 	rock_polar = {type = "thing", workable = "MINE", build = "rock_polar", bank = "rock_polar", anim = "idle_full", deps = {"bluegem", "bluegem_shards", "ice"}},
-	tumbleweed_polar = {type = "thing", pickable = true, build = "tumbleweed_polar", bank = "tumbleweed_polar", anim = "idle", deps = {"antler_tree_stick", "berries", "bird_egg", "blowdart_pipe", "bluegem", "bluegem_shards", "blueprint", "boneshard", "cookingrecipecard", "dug_grass", "dug_marsh_bush", "feather_crow", "feather_robin_winter", "fishsticks", "furtuft", "greengem", "houndstooth", "ice", "icelettuce", "icelettuce_seeds", "mole", "polarbearfur", "polarfox", "purplegem", "rabbit", "rottenegg", "scrapbook_page", "seeds", "spider_dropper", "spoiled_fish", "spoiled_fish_small", "wobster_sheller_land"}},
+	tumbleweed_polar = {type = "thing", pickable = true, build = "tumbleweed_polar", bank = "tumbleweed_polar", anim = "idle", deps = {"antler_tree_stick", "berries", "bird_egg", "blowdart_pipe", "bluegem", "bluegem_shards", "blueprint", "boneshard", "cookingrecipecard", "dug_grass", "dug_marsh_bush", "feather_crow", "feather_robin_winter", "fishsticks", "furtuft", "greengem", "houndstooth", "ice", "icelettuce", "icelettuce_seeds", "mole", "polarbearfur", "polarfox", "polartrinket_1", "polartrinket_2", "purplegem", "rabbit", "rottenegg", "scrapbook_page", "seeds", "spider_dropper", "spoiled_fish", "spoiled_fish_small", "wobster_sheller_land"}},
 	wall_polar = {type = "thing", subcat = "wall", health = 600, repairitems = {"polar_dryice", "wall_polar_item"}, workable = "HAMMER", build = "wall_polar", bank = "wall", anim = "half", deps = {"wall_polar_item"}, specialinfo = "WALL_POLAR"},
 }
 

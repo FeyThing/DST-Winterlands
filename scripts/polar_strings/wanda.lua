@@ -90,7 +90,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		REFUEL = "Is there a leak on it somewhere?",
 	}
 	DESCRIBE.POLARICEPACK = "I should get a timepack next."
+	DESCRIBE.POLARTRINKET_1 = "Oooh, I do love a festive knickknack."
+	DESCRIBE.POLARTRINKET_2 = "Oooh, I do love a festive knickknack."
 	DESCRIBE.TURF_POLAR_CAVES = "Why am I wasting time staring at the ground?"
 	DESCRIBE.TURF_POLAR_DRYICE = "A road to where, exactly?"
 	DESCRIBE.WALL_POLAR = "I wouldn't want to punch it for certain."
 	DESCRIBE.WALL_POLAR_ITEM = "That shouldn't melt anytime soon."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "So lifelike I'd swear it would melt... very... soon..."

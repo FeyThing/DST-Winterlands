@@ -27,6 +27,14 @@ local function ChopTree(inst, chopper, chops)
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/use_axe_tree")
 	end
 	
+	if inst.components.timer then
+		if not inst.components.timer:TimerExists("regenworkleft") then
+			inst.components.timer:StartTimer("regenworkleft", TUNING.ANTLER_TREE_CHOPS_REGEN_TIME)
+		else
+			inst.components.timer:SetTimeLeft("regenworkleft", TUNING.ANTLER_TREE_CHOPS_REGEN_TIME)
+		end
+	end
+	
 	if chopper and chopper:HasTag("moose") or chopper:HasTag("weremoose") then
 		local valid_sticcs = {}
 		for k, v in pairs(inst.sticcs) do
@@ -178,12 +186,18 @@ local function SetSticcs(inst)
 end
 
 local function OnTimerDone(inst, data)
+	if inst:HasTag("stump") or inst:HasTag("burnt") then
+		return
+	end
+	
 	if data.name == "regensticc" then
 		inst.sticcs = {}
 		for i, v in ipairs(tree_sticcs) do
 			inst.sticcs[v] = true
 		end
 		inst:SetSticcs()
+	elseif data.name == "regenworkleft" then
+		inst.components.workable:SetWorkLeft(TUNING.ANTLER_TREE_CHOPS)
 	end
 end
 
@@ -250,7 +264,7 @@ local function MakeHornyTree(data)
 		
 		inst:AddComponent("workable")
 		inst.components.workable:SetWorkAction(ACTIONS.CHOP)
-		inst.components.workable:SetWorkLeft(10)
+		inst.components.workable:SetWorkLeft(TUNING.ANTLER_TREE_CHOPS)
 		inst.components.workable:SetOnWorkCallback(ChopTree)
 		inst.components.workable:SetOnFinishCallback(ChopDownTree)
 		

@@ -56,10 +56,13 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.DUG_GRASS_POLAR = "Tundra Tuft"
 	NAMES.POLARGLOBE = "Strange Snowglobe"
 	NAMES.POLARICEPACK = "Icepack"
+	NAMES.POLARTRINKET_1 = "Snuggy Gnome"
+	NAMES.POLARTRINKET_2 = "Snuggy Gnomette"
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"
 	NAMES.TURF_POLAR_DRYICE = "Cobbled Dry Ice"
 	NAMES.WALL_POLAR = "Dry Ice Wall"
 	NAMES.WALL_POLAR_ITEM = "Dry Ice Wall"
+	NAMES.WINTER_ORNAMENTPOLAR = "Chilly Adornment"
 	
 --	Skins
 	

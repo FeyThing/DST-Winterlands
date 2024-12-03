@@ -89,7 +89,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		REFUEL = "Finally sleeping?",
 	}
 	DESCRIBE.POLARICEPACK = "Keeps belly stuff more?"
+	DESCRIBE.POLARTRINKET_1 = "Cozy little man"
+	DESCRIBE.POLARTRINKET_2 = "Pointy hat girl need help?"
 	DESCRIBE.TURF_POLAR_CAVES = "Ice"
 	DESCRIBE.TURF_POLAR_DRYICE = "Ice"
 	DESCRIBE.WALL_POLAR = "Slippery"
 	DESCRIBE.WALL_POLAR_ITEM = "Slurp"
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Don't want to make friend cold... oh. Not cold"
