@@ -19,7 +19,7 @@ local StaticLayout = require("map/static_layout")
 local polar_layouts = {
 	"BearTown1", "BearTown2", "PolarTuskTown", "PolarFlea_Farm",
 	"IcicleSkeleton", "PolarCave_Pillar", "PolarCave_SmallPillar",
-	"PolarFox_Duo", "PolarFox_Solo",
+	"PolarFox_Duo", "PolarFox_Solo", "PolarLake",
 }
 
 for _, layout in ipairs(polar_layouts) do

@@ -230,7 +230,7 @@ local function fn()
 	inst:AddTag("snowblocker")
 	
 	inst._snowblockrange = net_tinybyte(inst.GUID, "polarbearhouse._snowblockrange")
-	inst._snowblockrange:set(4)
+	inst._snowblockrange:set(5)
 	
 	MakeSnowCoveredPristine(inst)
 	

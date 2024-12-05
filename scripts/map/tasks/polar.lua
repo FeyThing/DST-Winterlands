@@ -71,3 +71,17 @@ AddTask("Polar Floe", {
 	cove_room_max_edges = 2,
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
+
+AddTask("Polar Lake", {
+	locks = {LOCKS.ISLAND_TIERPOLAR},
+	keys_given = {LOCKS.ISLAND_TIER2},
+	region_id = "polarlands",
+	level_set_piece_blocker = true,
+	room_tags = {"RoadPoison", "polararea", "not_mainland"},
+	room_choices = {
+		["PolarIsland_BigLake"] = 1,
+	},
+	room_bg = WORLD_TILES.POLAR_SNOW,
+	background_room = "PolarIsland_BG",
+	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
+})

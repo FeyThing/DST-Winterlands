@@ -8,6 +8,7 @@ local AddPrefabPostInit = ENV.AddPrefabPostInit
 local POLAR_WALKHELPERS = {
 	cane = 				2,
 	orangestaff = 		4,
+	armordragonfly = 	true,
 	beargervest = 		true,
 	raincoat = 			4,
 	sweatervest = 		4,
@@ -15,6 +16,7 @@ local POLAR_WALKHELPERS = {
 	trunkvest_winter =	true,
 	walking_stick = 	6,
 	catcoonhat = 		4,
+	deserthat = 		2,
 	
 	armormarble = 		-2,
 	backpack = 			-1,
@@ -41,10 +43,10 @@ end
 --	Adding slowdown to things that deserve it. Bouncing, sliding, all the funny walking mobs typically gets away with it, or if they're cool, chilly even
 
 local POLAR_WALKERS = {
-	"krampus", "pigguard", "pigman", "rocky",
-	"catcoon", "deer", "deer_red", "grassgekko", "koalefant_summer", "monkey",
-	"hound", "firehound", "mutatedhound", "spat", "warg", "wobybig", "wobysmall",
-	"mossling", "perd", "rabbit",
+	"pigguard", "pigman", "rocky",
+	"catcoon", "grassgekko", "monkey",
+	"hound", "firehound", "mutatedhound", "warg", "wobybig", "wobysmall",
+	"mossling", "perd", "spat"
 }
 
 for i, v in pairs(POLAR_WALKERS) do

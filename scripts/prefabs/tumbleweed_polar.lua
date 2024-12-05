@@ -63,6 +63,7 @@ local function OnPicked(inst, picker)
 	end
 	
 	SpawnPrefab("tumbleweed_polarbreakfx").Transform:SetPosition(x, y, z)
+	inst.SoundEmitter:PlaySound("meta3/sharkboi/ice_spike")
 	
 	return true
 end

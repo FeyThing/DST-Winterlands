@@ -30,6 +30,11 @@ local function OnPolarInit(inst)
 end
 
 ENV.AddPrefabPostInit("rock_ice", function(inst)
+	inst:AddTag("snowblocker")
+	
+	inst._snowblockrange = net_tinybyte(inst.GUID, "rock_ice._snowblockrange")
+	inst._snowblockrange:set(3)
+	
 	if not TheWorld.ismastersim then
 		return
 	end

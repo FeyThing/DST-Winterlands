@@ -12,6 +12,7 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_TASKS_OPTIONALITY = {
 		["Polar Floe"] = 0.32,
+		--["Polar Lake"] = 0.4,
 	}
 	
 	TUNING.ANTLER_TREE_CHOPS = 10
@@ -191,6 +192,17 @@ local night_time = seg_time * night_segs
 	TUNING.POLAR_COVERTIME = {min = 3, max = 10}
 	TUNING.POLAR_SNOW_MELT_TEMP = 60
 	TUNING.POLAR_SNOW_UPDATE_RATE = 1
+	
+	TUNING.SNOW_PLOW_RANGES = {
+		SHOVEL = 4,
+		GOLDENSHOVEL = 5,
+		SHOVEL_LUNARPLANT = 6,
+	}
+	
+	TUNING.POLAR_SNOW_FORGIVENESS = {
+		PLOWING = -1,
+		SNOWWAVE = -1,
+	}
 	
 	TUNING.POLARPLOW_BLOCKER_DURATION = total_day_time * 0.8
 	TUNING.POLARPLOW_BLOCKER_STORMCUT = 0.25

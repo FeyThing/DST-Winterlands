@@ -190,6 +190,8 @@ local function fn()
 	
 	inst:AddComponent("inspectable")
 	
+	inst:AddComponent("lootdropper")
+	
 	inst:AddComponent("timer")
 	
 	inst.IsValidVictim = IsValidVictim

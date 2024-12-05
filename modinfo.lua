@@ -4,7 +4,7 @@ author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 version = "1.0.0"
 local info_version = "󰀔 [ Version "..version.." ]"
 
-description = info_version..[[ Freshly Released !
+description = info_version..[[ Freshly Released
 
 
 󰀛 Set sails to a perilous frozen island -

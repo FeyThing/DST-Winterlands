@@ -1,11 +1,11 @@
 require("map/tasks/polar")
 
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
-local polar_optional = {"Polar Floe"}
+local polar_optional = {"Polar Floe"} -- "Polar Lake"
 
 local STRINGS = GLOBAL.STRINGS
 
---	Add Islands and Boons
+--	Add Islands, Boons, ...
 
 AddTaskSetPreInitAny(function(self)
 	if self.location == "forest" and self.tasks and #self.tasks > 1 then

@@ -149,6 +149,24 @@ AddRoom("PolarIsland_FloeField", {
 	}
 })
 
+AddRoom("PolarIsland_BigLake", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_SNOW,
+	contents = {
+		countstaticlayouts = {
+			["PolarLake"] = 1,
+		},
+		
+		distributepercent = 0.1,
+		distributeprefabs = {
+			antler_tree = 1,
+			grass_polar_spawner = 0.5,
+			marsh_bush = 1.5,
+			rock_ice = 1,
+		},
+	}
+})
+
 -- BG
 
 AddRoom("PolarIsland_BG", {

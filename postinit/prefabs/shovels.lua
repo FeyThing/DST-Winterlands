@@ -1,10 +1,12 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local RANGES = TUNING.SNOW_PLOW_RANGES
+
 local SHOVELS = {
-	shovel = 4,
-	goldenshovel = 5,
-	shovel_lunarplant = 6,
+	shovel = RANGES.SHOVEL,
+	goldenshovel = RANGES.GOLDENSHOVEL,
+	shovel_lunarplant = RANGES.SHOVEL_LUNARPLANT,
 }
 
 for shovel, range in pairs(SHOVELS) do

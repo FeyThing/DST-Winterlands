@@ -116,7 +116,8 @@ function SnowWaver:SetWaves()
 				local pt_str = string.format("%.2f_%.2f", pt.x, pt.z)
 				
 				local wave = self.waves_positions[pt_str]
-				local insnow = TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+				local insnow = TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
+					and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z, TUNING.POLAR_SNOW_FORGIVENESS.SNOWWAVE)
 				
 				if wave == nil and valid_positions[pt_str] then
 					wave = SpawnPrefab("snowwave")

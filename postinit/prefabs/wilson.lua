@@ -7,9 +7,11 @@ local AddPrefabPostInit = ENV.AddPrefabPostInit
 
 local function PolarSnowUpdate(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local polarsnowlevel = TheWorld.components.polarsnow_manager:GetDataAtPoint(x, y, z)
+	local polarsnowlevel = TheWorld.components.polarsnow_manager and TheWorld.components.polarsnow_manager:GetDataAtPoint(x, y, z)
 	
-	inst.player_classified.polarsnowlevel:set(polarsnowlevel)
+	if polarsnowlevel then
+		inst.player_classified.polarsnowlevel:set(polarsnowlevel)
+	end
 end
 
 ENV.AddPlayerPostInit(function(inst)

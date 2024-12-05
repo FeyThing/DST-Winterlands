@@ -2,9 +2,12 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local SNOW_HEATERS = {
-	emberlight = 8,
+	emberlight = 7,
 	dragonflyfurnace = 6,
+	lava_pond = 6,
+	lavae_pet = 6,
 	saladfurnace = 6,
+	stafflight = 10,
 }
 
 for heater, range in pairs(SNOW_HEATERS) do
