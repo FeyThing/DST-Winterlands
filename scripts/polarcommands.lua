@@ -18,7 +18,7 @@ function c_polartime(player)
 			for i, v in pairs(items) do
 				local amt = i > 5 and 20 or 1
 				local need, has = player.components.inventory:Has(v, amt)
-				local item = c_give(v, amt - has)
+				local item = c_give(v, amt - has, true)
 				
 				local equipslot = (item and item.components.equippable) and item.components.equippable.equipslot
 				if equipslot and player.components.inventory:GetEquippedItem(equipslot) == nil then
@@ -40,6 +40,30 @@ function c_blizzard(duration)
 		elseif not active or (duration and duration > 0) then
 			TheWorld.components.polarstorm:PushBlizzard(duration or 480)
 			print((active and "Changed Blizzard duration to " or "Activating Blizzard for ")..(duration and duration.." seconds" or "a day"))
+		end
+	end
+end
+
+--	Time for arts and crafts
+function c_teethnecklace(player)
+	player = ListingOrConsolePlayer(player)
+	
+	local items = {"rope"}
+	for k, v in pairs(POLARAMULET_PARTS) do
+		if not v.ornament then
+			table.insert(items, k)
+		end
+	end
+	
+	if player then
+		c_select(player)
+		
+		if player.components.inventory then
+			for i, v in ipairs(items) do
+				local need, has = player.components.inventory:Has(v, 3)
+				
+				c_give(v, 3 - has, true)
+			end
 		end
 	end
 end

@@ -66,6 +66,7 @@ local components = {
 	"builder",
 	"dynamicmusic", -- : (
 	"explosive",
+	"follower",
 	"groundpounder",
 	"hounded",
 	"hullhealth",

@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Curious location for a commerce... or who knows what.",
+		OPEN = "I still have all my teeth, dear, and I intend to keep them.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "It has succumbed to flames.",
 		GENERIC = "A den, though hardly thermally insulated.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "It's the right shape for a few applications."
 	DESCRIBE.FROSTWALKERAMULET = "Fascinating. It solidifies water through rapid thermal regulation."
 	DESCRIBE.POLAR_SPEAR = "Crude, but highly durable in the cold."
+	DESCRIBE.POLARAMULET = "I would qualify these curios as absurd, in normal times."
 	DESCRIBE.POLARMOOSEHAT = "To keep one's warmth while the cold rages on."
 	
 	--	Others

@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "I'm very offended.",
+		OPEN = "I don't need your curses.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Guess it was only built to withstand the cold.",
 		GENERIC = "I used to say: you live in what you eat, eh.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "I'll just take that, eh!"
 	DESCRIBE.FROSTWALKERAMULET = "To turn the ocean into one giant hockey field."
 	DESCRIBE.POLAR_SPEAR = "Ice suppose that would hurt a little."
+	DESCRIBE.POLARAMULET = "How wild do I look with it, eh?"
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
 	
 	--	Others

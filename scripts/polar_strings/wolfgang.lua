@@ -58,6 +58,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Got a bad feeling about this.",
+		OPEN = "Is a little d-dark in here...",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Big fish had tough life.",
 		GENERIC = "Bear man have defeated big fish.",
@@ -80,7 +84,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Good stick for walking and whacking."
 	DESCRIBE.FROSTWALKERAMULET = "Ice better not crumble under Wolfgang's mighty steps."
 	DESCRIBE.POLAR_SPEAR = "Is ice but spiky!"
-	DESCRIBE.POLARMOOSEHAT = "Mighty Hat!"
+	DESCRIBE.POLARAMULET = "Wolfgang wears it best!"
+	DESCRIBE.POLARMOOSEHAT = "Bear man lost hat?"
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {

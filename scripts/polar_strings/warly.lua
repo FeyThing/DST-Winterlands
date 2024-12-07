@@ -58,6 +58,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Must be a veritable boucherie inside...",
+		OPEN = "You can have what I don't plan on cooking.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Thought I smelled sardines.",
 		GENERIC = "Would that really withstand a snowstorm?",
@@ -80,6 +84,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
 	DESCRIBE.FROSTWALKERAMULET = "This takes frosting to the next level!"
 	DESCRIBE.POLAR_SPEAR = "It's all fun until it starts dripping."
+	DESCRIBE.POLARAMULET = "You wouldn't want to be around when I get my fangs out."
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."
 	
 	--	Others

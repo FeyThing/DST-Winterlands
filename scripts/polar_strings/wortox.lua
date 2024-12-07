@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Full of mischief, no doubt!",
+		OPEN = "Oh my, friend, what tricksy smile you have!",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Even this frosty den couldn't escape a fiery end.",
 		GENERIC = "An hiding place to warm the soul.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
 	DESCRIBE.FROSTWALKERAMULET = "New paths unfold when the water grows cold."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
+	DESCRIBE.POLARAMULET = "What matters is that you believe in it, hyuyu!"
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
 	
 	--	Others

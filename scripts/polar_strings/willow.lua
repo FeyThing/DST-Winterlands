@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Burning this place down would be doing it a favor.",
+		OPEN = "So that's how the Tooth Fairy looks like... oh well.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Ha ha! Your fish house stood no chance!",
 		GENERIC = "Ugh, it smells like fish.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Who would leave good firewood laying around like that?"
 	DESCRIBE.FROSTWALKERAMULET = "Woah cool! I mean... that sucks, but it's kinda cool."
 	DESCRIBE.POLAR_SPEAR = "Keep your cool, if you must."
+	DESCRIBE.POLARAMULET = "It's... just a phase."
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."
 	
 	--	Others

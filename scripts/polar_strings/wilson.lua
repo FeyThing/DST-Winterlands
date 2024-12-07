@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "It's a mystery how it holds together.",
+		OPEN = "Er, my mistake. Wrong adress.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Holy mackerel!",
 		GENERIC = "I doubt it's much warmer in there.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Science says this stick is perfect."
 	DESCRIBE.FROSTWALKERAMULET = "Science can explain this phenomenon... but I won't."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
+	DESCRIBE.POLARAMULET = "It's doing... things, most certainly."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
 	--	Others

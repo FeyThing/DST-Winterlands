@@ -50,7 +50,7 @@ local function RescueLeaderAction(inst)
 	return BufferedAction(inst, GetFrozenLeader(inst), ACTIONS.ATTACK)
 end
 
---	Eatin'
+--	Eatin' & Stealin'
 
 local function GetTraderFn(inst)
 	return FindEntity(inst, TRADE_DIST, function(target)
@@ -75,11 +75,23 @@ local function FindFoodAction(inst)
 	
 	if not target then
 		target = FindEntity(inst, SEE_FOOD_DIST, function(item)
-			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 8 and item:IsOnPassablePoint()
+			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 4 and item:IsOnPassablePoint()
 		end, nil, FINDFOOD_CANT_TAGS)
 	end
 	
 	return (target and BufferedAction(inst, target, ACTIONS.EAT)) or nil
+end
+
+local function FindToothAction(inst)
+	if inst.sg:HasStateTag("busy") then
+		return
+	end
+	
+	local target = FindEntity(inst, SEE_FOOD_DIST, function(item)
+		return POLARAMULET_PARTS[item.prefab] ~= nil and not POLARAMULET_PARTS[item.prefab].ornament and item:GetTimeAlive() >= 4 and item:IsOnPassablePoint()
+	end, nil, FINDFOOD_CANT_TAGS)
+	
+	return (target and BufferedAction(inst, target, ACTIONS.PICKUP)) or nil
 end
 
 --	Housin'
@@ -196,6 +208,8 @@ function PolarBearBrain:OnStart()
 		
 		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),
+		ChattyNode(self.inst, "POLARBEAR_FIND_TOOTH",
+			DoAction(self.inst, FindToothAction, nil, true)),
 		ChattyNode(self.inst, "POLARBEAR_FIND_FOOD",
 			DoAction(self.inst, FindFoodAction)),
 		ChattyNode(self.inst, "POLARBEAR_FOLLOWWILSON",

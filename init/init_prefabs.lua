@@ -8,6 +8,8 @@ PrefabFiles = {
 	"grass_polar",
 	"icelettuce_spawner",
 	"moose_polar",
+	"polar_amulet",
+	"polar_amulet_station",
 	"polar_dryice",
 	"polar_icicles",
 	"polar_mist",

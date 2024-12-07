@@ -31,8 +31,11 @@ end
 
 --	[ 	Station 	Defs	]	--
 
-PROTOTYPER_DEFS["polarsnow"] = {icon_atlas = CRAFTING_ICONS_ATLAS, icon_image = "station_none.tex", is_crafting_station = false}
+local POLAR_CRAFTING_ATLAS = "images/crafting_menu_polar.xml"
 
+PROTOTYPER_DEFS["polarsnow"] = {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "station_none.tex", is_crafting_station = false}
+PROTOTYPER_DEFS["polaramulet_station"] = {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "polaramulet_station.tex", action_str = "TRADE", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION}
+	
 local POLAR_TECHING = {"polarsnow_material"}
 
 local OldIsTechIngredient = IsTechIngredient
@@ -50,6 +53,9 @@ end
 PolarRecipe("shards_bluegem", 		{Ingredient("bluegem_shards", 3)}, 															TECH.SCIENCE_TWO, 		{product = "bluegem", description = "shards_bluegem"}, 	{"REFINE"}, {"purplegem"})
 PolarRecipe("polar_dryice", 		{Ingredient("ice", 6), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 							TECH.LOST, 				nil, 													{"REFINE"}, {"refined_dust"})
 
+--	Armor / Clothing
+PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 								TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+
 --	Cooking / Food
 PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluegem_shards", 2), Ingredient("mosquito_sack", 1)}, 	TECH.SCIENCE_TWO, 		nil, 		{"COOKING"}, {"icepack"})
 
@@ -58,7 +64,7 @@ PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryi
 PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 						{"DECOR"}, {"turf_underrock"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 						{"DECOR"}, {"turf_dragonfly"})
 PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 						{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
-																													--	TODO:	^ change to lost when Emperor Pengull and blueprints are
+																													--	TODO:	^ change these 2 to lost when Emperor Pengull is here and blueprints are dropped from towers
 --	Deconstruction
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe
 

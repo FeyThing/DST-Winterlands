@@ -3245,6 +3245,61 @@ return {
 					height = 0,
 					visible = true,
 					properties = {}
+				},
+				{
+					name = "",
+					type = "polaramulet_station",
+					shape = "rectangle",
+					x = 1920,
+					y = 2432,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "evergreen_sparse",
+					shape = "rectangle",
+					x = 1862,
+					y = 2483,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "evergreen_sparse",
+					shape = "rectangle",
+					x = 1882,
+					y = 2355,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "evergreen_sparse",
+					shape = "rectangle",
+					x = 1965,
+					y = 2394,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "evergreen_sparse",
+					shape = "rectangle",
+					x = 1958,
+					y = 2509,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
 				}
 			}
 		}

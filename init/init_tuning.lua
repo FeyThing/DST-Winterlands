@@ -1,3 +1,5 @@
+local TechTree = require("techtree")
+
 local seg_time = TUNING.SEG_TIME
 local day_segs = TUNING.DAY_SEGS_DEFAULT
 local dusk_segs = TUNING.DUSK_SEGS_DEFAULT
@@ -151,6 +153,21 @@ local night_time = seg_time * night_segs
 	TUNING.FROSTWALKERAMULET_ICE_STAY_TIME = 4
 	TUNING.FROSTWALKERAMULET_SLIPPINESS = TUNING.WILSON_RUN_SPEED * 6
 	
+	TUNING.POLARAMULET = {
+		HOUNDSTOOTH = {
+			DAMAGE = 6.66,
+			MOVEMENT_SPEED = 0.1,
+		},
+		POLARWARGSTOOTH = {
+			MOVEMENT_SPEED = 0.2,
+			PERISHTIME = total_day_time * 5,
+		},
+		WALRUS_TUSK = {
+			LOYALTY_MULT = 2,
+		},
+	}
+	TUNING.POLARAMULET_PERISHATIME = total_day_time * 5
+	
 	TUNING.POLARMOOSEHAT_PERISHTIME = total_day_time * 5
 	
 	TUNING.POLARICEPACK_PRESERVE_MULT = 0.75
@@ -182,6 +199,8 @@ local night_time = seg_time * night_segs
 	TUNING.POLARBEARHOUSE_SPAWN_TIME = total_day_time * 4
 	
 	TUNING.POLARWALL_HEALTH = 600
+	
+	TUNING.POLARAMULET_STATION_SPEAKTIME = 2
 	
 --	Misc
 	TUNING.ANCHOR_DEPTH_TIMES.POLAR = 5
@@ -222,3 +241,9 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
 	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false
+	
+--	Tech
+	
+	TUNING.PROTOTYPER_TREES.POLARAMULET_STATION = TechTree.Create({
+		POLARAMULET_STATION = 2,
+	})

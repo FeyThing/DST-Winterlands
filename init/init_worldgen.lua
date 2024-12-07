@@ -22,9 +22,14 @@ AddTaskSetPreInitAny(function(self)
 		local bear_town = "BearTown"..math.random(2)
 		
 		self.set_pieces[bear_town] = {count = 1, tasks = {"Polar Village"}}
+		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Village"}}
 		self.set_pieces["IcicleSkeleton"] = {count = 1, tasks = {"Polar Caves"}}
 		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
 		self.set_pieces["PolarFox_Solo"] = {count = 4, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
+		
+		if self.required_prefabs then
+			table.insert(self.required_prefabs, "polaramulet_station")
+		end
 	end
 end)
 

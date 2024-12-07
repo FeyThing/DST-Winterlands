@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Why would anyone want to live here of all places?",
+		OPEN = "Do as you wish, but I like my workshop with less... shadows.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Burnt yet cold.",
 		GENERIC = "Very cliché, as if I lived in a clock tower. No wait... I don't eat clocks!",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Oooh, precisely what I needed!"
 	DESCRIBE.FROSTWALKERAMULET = "Good! I've had more than enough of these damnable rivers."
 	DESCRIBE.POLAR_SPEAR = "Make the most of it while it's fresh."
+	DESCRIBE.POLARAMULET = "I went through that phase already. Or did I?"
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."
 	
 	--	Others

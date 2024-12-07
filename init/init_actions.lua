@@ -29,7 +29,14 @@ local POLARPLOW = PolarAction("POLARPLOW", {distance = 4, priority = 1})
 			return false
 		end
 	end
-
+	
+local POLARAMULET_CRAFT = PolarAction("POLARAMULET_CRAFT", {mount_valid = true, priority = 1})
+	POLARAMULET_CRAFT.fn = function(act)
+		if act.target and act.target.MakeAmulet then
+			return act.target:MakeAmulet(act.doer)
+		end
+	end
+	
 local TURNONSTR = ACTIONS.TURNON.stroverridefn
 	ACTIONS.TURNON.stroverridefn = function(act, ...)
 		local target = act.invobject or act.target

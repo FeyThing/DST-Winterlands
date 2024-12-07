@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "A most intriguing hall of trade.",
+		OPEN = "Those wares gleam with the promise of battle's aid.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "The house fish has gone into smoke.",
 		GENERIC = "T'would be impressive if 'twas a real catch!",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
 	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
+	DESCRIBE.POLARAMULET = "An invigorating pendant made of my fallen enemies."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	
 	--	Others

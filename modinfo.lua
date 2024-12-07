@@ -39,6 +39,7 @@ local configs = {
 }
 
 local descs = {
+	language = "More soon... you can help us if you'd like!",
 	biome_retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
 	misc_shader = "It's always winter in here, visually speaking.",
 	misc_snow = "Waves of snow will hide away small things in them.\nBut it all melts during hot days, go look inside!",

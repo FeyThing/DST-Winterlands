@@ -58,6 +58,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Someone home?",
+		OPEN = "Hello...! Hello?",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Smells fishy",
 		GENERIC = "Glub Glub house",
@@ -80,6 +84,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Dropped something?"
 	DESCRIBE.FROSTWALKERAMULET = "Now water, now rock?"
 	DESCRIBE.POLAR_SPEAR = "Spiky"
+	DESCRIBE.POLARAMULET = "Ouchie Neck Thing"
 	DESCRIBE.POLARMOOSEHAT = "Axe friend?"
 	
 	--	Others

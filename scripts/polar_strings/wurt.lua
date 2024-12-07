@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Probably... safe.",
+		OPEN = "Hello? You not Bearfolk?",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Yesss, one less!",
 		GENERIC = "Not wanna see what in here...",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Tree dropped this, but me keep it."
 	DESCRIBE.FROSTWALKERAMULET = "Close enough from swimming, flort."
 	DESCRIBE.POLAR_SPEAR = "But, Wicker-lady said not to play with food?"
+	DESCRIBE.POLARAMULET = "Yay! Dead folk make me fancy!"
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"
 	
 	--	Others

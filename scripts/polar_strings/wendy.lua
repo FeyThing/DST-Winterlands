@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "It's away from the others for a reason.",
+		OPEN = "Can you teach me your art?",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "No longer a refuge from the biting cold.",
 		GENERIC = "They made their graves here.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Another tree bone."
 	DESCRIBE.FROSTWALKERAMULET = "Even the water can't escape death's cold embrace."
 	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."
+	DESCRIBE.POLARAMULET = "Macabre but well deserved."
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	
 	--	Others

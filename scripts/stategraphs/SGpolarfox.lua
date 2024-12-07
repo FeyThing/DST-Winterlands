@@ -423,19 +423,27 @@ local states = {
 			end),
 			TimeEvent(16 * FRAMES, function(inst)
 				local pt = inst.sg.statemem.dig_pos
-				SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+					SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				end
 			end),
 			TimeEvent(20 * FRAMES, function(inst)
 				local pt = inst.sg.statemem.dig_pos
-				SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+					SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+				end
 			end),
 			TimeEvent(24 * FRAMES, function(inst)
 				local pt = inst.sg.statemem.dig_pos
-				SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+					SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				end
 			end),
 			TimeEvent(28 * FRAMES, function(inst)
 				local pt = inst.sg.statemem.dig_pos
-				SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+					SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+				end
 			end),
 		},
 		
@@ -516,7 +524,10 @@ local states = {
 				inst.wantstohunt = nil
 			end
 			
-			SpawnPrefab("polar_splash").Transform:SetPosition(inst.Transform:GetWorldPosition())
+			local pt = inst:GetPosition()
+			if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+				SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+			end
 		end,
 		
 		timeline = {

@@ -52,13 +52,17 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "We're in this together now.",
-		FRIEND = "Long time no see, Pal.",
+		FRIEND = "Long time no see, pal.",
 		GENERIC = "Be on your way.",
 	}
 	DESCRIBE.POLARWARG = "What wonderful adaptation."
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Well, well. Talk about a hospitable-looking dwelling.",
+		OPEN = "...I will pretend I didn't see what's inside.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "If only the scorching sun would spare this place.",
 		GENERIC = "I smell something rotten inside. Ugh.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Ah, that can be useful."
 	DESCRIBE.FROSTWALKERAMULET = "A pity for the fish in my wake. But oh well."
 	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear trough my suit."
+	DESCRIBE.POLARAMULET = "They worked some magic on the string. What exactly, I'm not sure."
 	DESCRIBE.POLARMOOSEHAT = "Hm. Very... rustic."
 	
 	--	Others

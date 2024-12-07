@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "I'm better outside than in this shoddy shack.",
+		OPEN = "Buddy, ever heard of proper lighting? It's creepy in here.",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Hm. Probably another wildfire.",
 		GENERIC = "There something fishy about it.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "This might prove useful."
 	DESCRIBE.FROSTWALKERAMULET = "This'll keep me from slipping on the job. Ha!"
 	DESCRIBE.POLAR_SPEAR = "Pfft. Alright. Assuming you live in a freezer..."
+	DESCRIBE.POLARAMULET = "It said they're all unique or somethin' like that."
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"
 	
 	--	Others

@@ -73,7 +73,7 @@ local function FindFoodAction(inst)
 	
 	if not target and (not time_since_eat or time_since_eat > TUNING.SEG_TIME) then
 		target = FindEntity(inst, SEE_FOOD_DIST, function(item)
-			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 8 and item:IsOnPassablePoint()
+			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 4 and item:IsOnPassablePoint()
 		end, nil, FINDFOOD_CANT_TAGS)
 	end
 	
@@ -85,7 +85,9 @@ end
 local DIVE_AVOID_TAGS = {"wall", "structure", "hostile"}
 
 local function IsValidDivingPos(pt, inst)
-	if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+	local insnow = TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+	
+	if ((not inst._mainlanded and insnow) or (inst._mainlanded and not insnow))
 		and #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, DIVE_AVOID_TAGS) == 0 then
 		
 		if not (inst.components.follower and inst.components.follower.leader) then

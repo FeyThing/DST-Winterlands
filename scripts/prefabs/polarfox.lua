@@ -1,5 +1,6 @@
 local assets = {
 	Asset("ANIM", "anim/polarfox.zip"),
+	Asset("ANIM", "anim/polarfox_grey.zip"),
 }
 
 local prefabs = {
@@ -240,11 +241,19 @@ local function OnSave(inst, data)
 	if inst._trusted_survivors and not IsTableEmpty(inst._trusted_survivors) then
 		data.trusted_survivors = inst._trusted_survivors
 	end
+	if inst._mainlanded then
+		data.mainlanded = true
+	end
 end
 
 local function OnLoad(inst, data)
 	if data then
 		inst._trusted_survivors = data.trusted_survivors
+		inst._mainlanded = data.mainlanded
+		
+		if inst._mainlanded then
+			inst.AnimState:SetBuild("polarfox_grey")
+		end
 	end
 end
 
@@ -312,8 +321,22 @@ local function OnTimerDone(inst, data)
 	elseif data.name == "huntdivecooldown" then
 		inst.wantstodive = true
 		inst.components.timer:StartTimer("huntperiod", 10)
-	elseif data.name == "huntperiod" then
+	elseif data.name == "huntperiod" and not inst.components.timer:TimerExists("huntdivecooldown") then
 		inst.components.timer:StartTimer("huntdivecooldown", TUNING.POLARFOX_HUNT_COOLDOWN)
+	end
+end
+
+local function OnSeasonChange(inst, season)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local mainlanded = GetClosestPolarTileToPoint(x, 0, z, 32) == nil or nil
+	
+	if mainlanded ~= inst._mainlanded then
+		inst._mainlanded = mainlanded
+		inst.AnimState:SetBuild(inst._mainlanded and "polarfox_grey" or "polarfox")
+		
+		if inst.tail then
+			inst.tail:PlayTailAnim("swip", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
+		end
 	end
 end
 
@@ -344,6 +367,7 @@ end
 
 local function RememberKnownLocation(inst)
 	inst.components.knownlocations:RememberLocation("respawnpoint", inst:GetPosition(), true)
+	OnSeasonChange(inst, TheWorld.state.season)
 end
 
 local function fn()
@@ -466,6 +490,8 @@ local function fn()
 	inst:ListenForEvent("loot_prefab_spawned", OnLootPrefabSpawned)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
+	inst:WatchWorldState("season", OnSeasonChange)
+	
 	inst:SetStateGraph("SGpolarfox")
 	inst:SetBrain(polarfox_brain)
 	
@@ -516,6 +542,13 @@ end
 local function SetTailAnim(inst, anim, push, loop)
 	for i, v in ipairs(inst.fx or {}) do
 		v.AnimState:PlayAnimation(anim, loop)
+		
+		local owner = inst.entity:GetParent()
+		local build = owner and owner.AnimState:GetBuild()
+		if build then
+			v.AnimState:SetBuild(build)
+		end
+		
 		if not loop and push and push ~= "__" then
 			v.AnimState:PushAnimation(push, true)
 		end

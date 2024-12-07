@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Oooh, this gotta be that dental museum I've heard about!",
+		OPEN = "Hi! Are you open to visitors?",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "That's a frostburn if I ever saw one. Heh.",
 		GENERIC = "You think they make furnitures out of snow?",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "A good stick to play fetch and... for a few other things."
 	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
+	DESCRIBE.POLARAMULET = "A little something from the souvenir shop."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
 	--	Others

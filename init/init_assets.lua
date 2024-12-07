@@ -15,9 +15,14 @@ Assets = {
 	Asset("IMAGE", "images/scrapbook_polar.tex"),
 	Asset("ATLAS", "images/scrapbook_polar.xml"),
 	
+	Asset("ATLAS", "images/crafting_menu_polar.xml"),
+	Asset("IMAGE", "images/crafting_menu_polar.tex"),
+	
 	Asset("ANIM", "anim/meter_polar_over.zip"),
 	
 	Asset("ANIM", "anim/polarstorm_over.zip"),
+	
+	Asset("ANIM", "anim/polar_amulet_ui.zip"),
 	
 	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
 	Asset("ATLAS", "images/rain_polar.xml"),
@@ -44,6 +49,7 @@ local ITEMS = {
 	"icelettuce",
 	"icelettuce_seeds",
 	"polar_dryice",
+	"polaramulet",
 	"polarbearfur",
 	"polarbearhouse",
 	"polarglobe",
@@ -71,6 +77,8 @@ for i, v in pairs(ITEMS) do
 	RegisterInventoryItemAtlas("images/polarimages.xml", v..".tex")
 end
 
+POLARAMULET_PARTS = GLOBAL.rawget(GLOBAL, "POLARAMULET_PARTS") or {}
+
 local SCRAPBOOK_POLAR = require("scrapbook_polar")
 for k, v in pairs(SCRAPBOOK_POLAR) do
 	v.name = v.name or k
@@ -80,6 +88,11 @@ for k, v in pairs(SCRAPBOOK_POLAR) do
 	
 	if not (v.type == "item" or v.type == "food") then
 		RegisterScrapbookIconAtlas(GLOBAL.resolvefilepath("images/scrapbook_polar.xml"), v.tex)
+	end
+	
+	if v.subcat == "ornament" then
+		local sym = string.gsub(k, "^winter_ornament_", "")
+		POLARAMULET_PARTS[k] = {build = v.build, ornament = true, symbol = sym}
 	end
 	
 	scrapbook_prefabs[k] = true

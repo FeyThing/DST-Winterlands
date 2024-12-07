@@ -31,6 +31,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 --	Buildings
 	
+	NAMES.POLARAMULET_STATION = "\"The Polar Exchange\""
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
 	
 --	Items
@@ -50,6 +51,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.ANTLER_TREE_STICK = "Bullbranch"
 	NAMES.FROSTWALKERAMULET = "Chillest Amulet"
 	NAMES.POLAR_SPEAR = "Stalagspear"
+	NAMES.POLARAMULET = "Teeth Necklace"
+	NAMES.POLARAMULET_BUILDER = "Teeth Necklace"
 	NAMES.POLARMOOSEHAT = "Ushanka"
 	
 	--	Others
@@ -138,6 +141,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARBEAR_PLOWSNOW = {"GOODBYE SNOW", "SO MUCH SNOW...", "HUFF", "BRR...", "ALWAYS MORE SNOW...", "SNOWIER THAN BEFORE..."}
 	STRINGS.POLARBEAR_FIGHT = {"RAAAAAAAAWRR", "RAAAWRRRRRRRR!", "GRRRRAAAWWW", "FIGHT, YOU MINNOW", "WILL TEAR YOU DOWN", "WILL SLICE YOU!", "COME BACK HERE", "FIGHT! FIGHT!", "YOU COME HERE"}
 	STRINGS.POLARBEAR_FIND_FOOD = {"MMM... FOOD", "HO HO!", "WHAT NICE SMELL!", "THIS LOOK'S GOOD", "SLURP... FOOD", "OH HO HO YES!"}
+	STRINGS.POLARBEAR_FIND_TOOTH = {"THIS IS WORTH IT!", "WILL MAKE A NICE ONE", "WHAT NICE TOOTH!", "MINE, MINE!"}
 	STRINGS.POLARBEAR_REFUSE_FOOD = {"NUH HUH", "BLECH!", "THIS BEARLY A BITE"}
 	STRINGS.POLARBEAR_GOHOME = {"YAAAWN!", "GETTING EEPY...", "CAN'T BEAR THE DARK!", "HIBERNATION TIME", "SO LATE...", "NIGHT SO COLD..."}
 	STRINGS.POLARBEAR_BLIZZARD = {"BBBRRRRR", "BRR... TOO COLD!", "NOT AGAIN", "IT'S COOOMING!", "THERE'S NO PLOWING THIS", "NO FISHING TODAY"}
@@ -146,9 +150,22 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARBEAR_PANICHOUSEFIRE = {"OH NO NO NO!", "ANYBODY COOKING FISH?", "MY HOME MELTING!", "HOME TOO HOT!"}
 	STRINGS.POLARBEAR_RESCUE = {"NEED A PAW?", "COMING, COMING!", "HO HO!"}
 	
+	STRINGS.POLARAMULET_STATION_WAITING = {"...got the... stuff?", "...", "...so... uhh.", {"...no I won't buy fish...", "...sorry."}, {"...if you got ropes...", "...and... pretty fangs...", "...we can make this work."}, "...you look... different."}
+	STRINGS.POLARAMULET_STATION_PENDING = {"...still got your ropes.", {"...finally got those...", "...hmm, lovely teeth?"}, {"...ready to complete...", "...our, uhh... trade?"}}
+	STRINGS.POLARAMULET_STATION_BUILDER_PRE = {"...excellent!", "...that is fine ropes...", {"...and now...", "...for the best part."}, "...now... if you got teeth."}
+	STRINGS.POLARAMULET_STATION_BUILDER_LOOP = {"...you can... fishing later...", "...", "...I will be... waiting."}
+	STRINGS.POLARAMULET_STATION_BUILDER_PST = {"...yes... yes!", "...thank you... kindly.", {"...", "...come back soon?"}, "...it's... beautiful!", "...you can be... proud, of this one."}
+	STRINGS.POLARAMULET_STATION_TOOTH_TIPS = {
+		{"...gnarwail's horn might...", "...help you at sea...", "...they're teeth yknow?"},
+		{"...hound's tooth would...", "...make you... stronger, yes."},
+		{"...ice fang will...", "...protect you... from the cold."},
+		{"...walrus tusk is...", "...highly... hmm, prized, here."},
+	}
+	
 --	UI
 	
 	--	Actions
+	STRINGS.ACTIONS.POLARAMULET_CRAFT = "Exchange"
 	STRINGS.ACTIONS.POLARPLOW = "Plow"
 	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	
@@ -156,6 +173,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "This tree has robust branches that could prove to be useful.\nHowever, axes won't cut it to take them off properly..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of carried or stored items by 25%. Can be stacked multiplicatively."
 	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "These flutter in the blizzard and collect junk along the way.\n\nAll sorts of crazy junk.\n\nYou'd be surprised."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
@@ -165,6 +184,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Recipes
 	RECIPE_DESC.FROSTWALKERAMULET = "Never was water this cool before!"
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
+	RECIPE_DESC.POLARAMULET_BUILDER = "Assemble your own traditional necklace."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
 	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
 	RECIPE_DESC.SHARDS_BLUEGEM = "Shard work pays off."
@@ -173,6 +193,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
 	
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"
+	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"The Polar Exchange\""
 	
 	--	Misc
 	STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR = "The Winterlands"

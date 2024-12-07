@@ -59,6 +59,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "Looks like the cabin Walter described around the fire!",
+		OPEN = "Can you stop looking at our fangs?",
+	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Rest in peace... to the spider on the ceiling.",
 		GENERIC = "We would be better indoor than outhere.",
@@ -81,6 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "After all these years... the perfect stick!"
 	DESCRIBE.FROSTWALKERAMULET = "Better to have cold legs than soggy."
 	DESCRIBE.POLAR_SPEAR = "It's like a giant icicle on a stick!"
+	DESCRIBE.POLARAMULET = "No spiders were harmed in the process."
 	DESCRIBE.POLARMOOSEHAT = "A hat made of Mr. Woodie's friends."
 	
 	--	Others

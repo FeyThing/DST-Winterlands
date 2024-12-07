@@ -1,6 +1,54 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+--	[ 		Containers		]	--
+	
+	local containers = require("containers")
+	local params = containers.params
+
+--	Necklace "Shop"
+	params.polaramulet_station =  {
+		widget = {
+			slotpos = {
+				Vector3(-(64 + 12), 0, 0),
+				Vector3(0, 0, 0),
+				Vector3(64 + 12, 0, 0),
+			},
+			slotbg = {
+					{image = "houndstooth_ammo_slot.tex", atlas = "images/hud2.xml"},
+					{image = "houndstooth_ammo_slot.tex", atlas = "images/hud2.xml"},
+					{image = "houndstooth_ammo_slot.tex", atlas = "images/hud2.xml"},
+				},
+			buttoninfo = {
+				text = STRINGS.ACTIONS.POLARAMULET_CRAFT,
+				position = Vector3(0, -65, 0),
+			},
+			animbank = "ui_chest_3x1",
+			animbuild = "ui_chest_3x1",
+			pos = Vector3(200, 0, 0),
+			side_align_tip = 100,
+		},
+		type = "cooker",
+		acceptsstacks = false,
+		excludefromcrafting = true,
+	}
+	
+	function params.polaramulet_station.itemtestfn(container, item, slot)
+		return POLARAMULET_PARTS[item.prefab] ~= nil and not item:HasTag("lightbattery") -- TODO: this will need more work but it should definitively be added
+	end
+
+	function params.polaramulet_station.widget.buttoninfo.fn(inst, doer)
+		if inst.components.container ~= nil then
+			BufferedAction(doer, inst, ACTIONS.POLARAMULET_CRAFT):Do()
+		elseif inst.replica.container ~= nil and not inst.replica.container:IsBusy() then
+			SendRPCToServer(RPC.DoWidgetButtonAction, ACTIONS.POLARAMULET_CRAFT.code, inst, ACTIONS.POLARAMULET_CRAFT.mod_name)
+		end
+	end
+
+	function params.polaramulet_station.widget.buttoninfo.validfn(inst)
+		return inst.replica.container and inst.replica.container:IsFull()
+	end
+	
 --	[ 		Screens			]	--
 
 local AddClassPostConstruct = ENV.AddClassPostConstruct
@@ -86,3 +134,40 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 		end
 	end)
 end)
+
+--	Show stuff on necklace
+	
+	local AMULET_PARTS = {
+		"left",
+		"middle",
+		"right",
+	}
+	
+	AddClassPostConstruct("widgets/itemtile", function(self, invitem)
+		function self:SetAmuletParts()
+			local img = self.image:AddChild(UIAnim())
+			img:GetAnimState():SetBank("polar_amulet_ui")
+			img:GetAnimState():SetBuild("torso_polar_amulet") -- Shouldn't matter
+			img:GetAnimState():PlayAnimation("idle")
+			img:SetScale(1, 0.8)
+			img:SetClickable(false)
+			
+			for i, v in ipairs(AMULET_PARTS) do
+				local item = invitem.amulet_parts[v]:value()
+				
+				local build = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].build
+				local sym = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].symbol
+				local ornament = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].ornament
+				
+				if build then
+					img:GetAnimState():OverrideSymbol((ornament and "ornament_" or "teeth_")..v, build, sym or "swap_"..item)
+				end
+			end
+			
+			self.amulet_parts = img
+		end
+		
+		if invitem.amulet_parts and not self.amulet_parts then
+			self:SetAmuletParts()
+		end
+	end)
