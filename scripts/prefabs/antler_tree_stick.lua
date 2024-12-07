@@ -116,6 +116,7 @@ local function fn()
 	inst.components.fueled.fueltype = FUELTYPE.USAGE
 	inst.components.fueled.no_sewing = true
 	inst.components.fueled:InitializeFuelLevel(TUNING.ANTLER_TREE_STICK_PERISHTIME)
+	inst.components.fueled:SetDepletedFn(inst.Remove)
 	
 	inst:AddComponent("inspectable")
 	
