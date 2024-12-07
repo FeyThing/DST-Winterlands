@@ -128,7 +128,7 @@ function GetPolarWetness(inst)
 	return 0, false
 end
 
-function HasPolarImmunity(inst, ignorewaterproof)
+function HasPolarDebuffImmunity(inst, ignorewaterproof)
 	if inst:HasTag("polarimmune") or inst:HasTag("wereplayer") then
 		return true
 	end
@@ -142,4 +142,20 @@ function HasPolarImmunity(inst, ignorewaterproof)
 	end
 	
 	return (not ignorewaterproof and inst.components.moisture and inst.components.moisture:GetWaterproofness() >= TUNING.POLAR_WETNESS_MIN_PROOFNESS) or false
+end
+
+function HasPolarSnowImmunity(inst)
+	if inst:HasTag("polarimmune") then
+		return true
+	end
+	
+	if inst.components.inventory then
+		for k, v in pairs(inst.components.inventory.equipslots) do
+			if v:HasTag("polarsnowimmunity") then
+				return true, v
+			end
+		end
+	end
+	
+	return false
 end

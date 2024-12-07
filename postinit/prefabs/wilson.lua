@@ -32,6 +32,7 @@ ENV.AddPlayerPostInit(function(inst)
 	
 	if inst.components.areaaware then
 		inst.components.areaaware:StartWatchingTile(WORLD_TILES.POLAR_ICE)
+		inst.components.areaaware:StartWatchingTile(WORLD_TILES.POLAR_SNOW)
 	end
 	
 	inst:AddComponent("polarwalker")

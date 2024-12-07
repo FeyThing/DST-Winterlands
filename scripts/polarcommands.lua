@@ -60,9 +60,10 @@ function c_teethnecklace(player)
 		
 		if player.components.inventory then
 			for i, v in ipairs(items) do
-				local need, has = player.components.inventory:Has(v, 3)
+				local amt = v == "rope" and 9 or 3
+				local need, has = player.components.inventory:Has(v, amt)
 				
-				c_give(v, 3 - has, true)
+				c_give(v, amt - has, true)
 			end
 		end
 	end

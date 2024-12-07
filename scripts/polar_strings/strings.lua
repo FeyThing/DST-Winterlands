@@ -150,16 +150,47 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARBEAR_PANICHOUSEFIRE = {"OH NO NO NO!", "ANYBODY COOKING FISH?", "MY HOME MELTING!", "HOME TOO HOT!"}
 	STRINGS.POLARBEAR_RESCUE = {"NEED A PAW?", "COMING, COMING!", "HO HO!"}
 	
-	STRINGS.POLARAMULET_STATION_WAITING = {"...got the... stuff?", "...", "...so... uhh.", {"...no I won't buy fish...", "...sorry."}, {"...if you got ropes...", "...and... pretty fangs...", "...we can make this work."}, "...you look... different."}
-	STRINGS.POLARAMULET_STATION_PENDING = {"...still got your ropes.", {"...finally got those...", "...hmm, lovely teeth?"}, {"...ready to complete...", "...our, uhh... trade?"}}
-	STRINGS.POLARAMULET_STATION_BUILDER_PRE = {"...excellent!", "...that is fine ropes...", {"...and now...", "...for the best part."}, "...now... if you got teeth."}
-	STRINGS.POLARAMULET_STATION_BUILDER_LOOP = {"...you can... fishing later...", "...", "...I will be... waiting."}
-	STRINGS.POLARAMULET_STATION_BUILDER_PST = {"...yes... yes!", "...thank you... kindly.", {"...", "...come back soon?"}, "...it's... beautiful!", "...you can be... proud, of this one."}
+	STRINGS.POLARAMULET_STATION_WAITING = {
+		"...",
+		"...got the... stuff?",
+		"...so... hmm.",
+		"...you look... different.",
+		{"...if you got ropes...", "...and... prrretty fangs...", "...we can make this work."},
+		{"...no I won't buy fish...", "...sorry."},
+	}
+	STRINGS.POLARAMULET_STATION_PENDING = {
+		"...still got your ropes.",
+		{"...finally got those...", "...hmm, prrretty teeth?"},
+		{"...ready to complete...", "...our, hmm... trade?"},
+	}
+	STRINGS.POLARAMULET_STATION_BUILDER_PRE = {
+		"...ahh... perrrfect.",
+		"...ho ho!",
+		"...now... if you got teeth.",
+		"...perrrfect!",
+		"...this rope... is perrrfect.",
+		"...those are fine ropes.",
+		{"...and now...", "...for the best part."},
+	}
+	STRINGS.POLARAMULET_STATION_BUILDER_LOOP = {
+		"...",
+		"...are you... inspired yet?",
+		"...you can... fishing later.",
+		{"...this can... wait...", "...if you need."},
+	}
+	STRINGS.POLARAMULET_STATION_BUILDER_PST = {
+		"...it's... beautiful!",
+		"...my thanks.",
+		"...yes... yes!", 
+		"...you can be... prrroud, of this one.",
+		{"...", "...come back soon?"},
+		{"...it will go so well...", "...around your prrretty neck."},
+	}
 	STRINGS.POLARAMULET_STATION_TOOTH_TIPS = {
 		{"...gnarwail's horn might...", "...help you at sea...", "...they're teeth yknow?"},
 		{"...hound's tooth would...", "...make you... stronger, yes."},
 		{"...ice fang will...", "...protect you... from the cold."},
-		{"...walrus tusk is...", "...highly... hmm, prized, here."},
+		{"...walrus tusk is...", "...highly... hmm, prrrized, here."},
 	}
 	
 --	UI

@@ -37,6 +37,26 @@ local function ShadeSay(inst, line, rdm, no_override)
 	DoTalkQueue(inst)
 end
 
+local function ClearShadeChat(inst)
+	inst.speech_queue = {}
+	if inst._welcometask then
+		inst._welcometask:Cancel()
+		inst._welcometask = nil
+	end
+	if inst._tiptask then
+		inst._tiptask:Cancel()
+		inst._tiptask = nil
+	end
+	if inst._activatetask then
+		inst._activatetask:Cancel()
+		inst._activatetask = nil
+	end
+	
+	if inst.components.timer:TimerExists("speak_time") then
+		inst.components.timer:StopTimer("speak_time")
+	end
+end
+
 local function OnOpen(inst, data)
 	local doer = data and data.doer
 	
@@ -49,15 +69,21 @@ local function OnOpen(inst, data)
 end
 
 local function OnActivate(inst, doer, recipe)
-	if inst._welcometask then
-		inst._welcometask:Cancel()
-	end
+	ClearShadeChat(inst)
 	
 	if recipe and recipe.name == "polaramulet_builder" then
 		inst.amulet_building = true
 		inst:MakePrototyper(true)
 		
-		inst:ShadeSay(STRINGS.POLARAMULET_STATION_BUILDER_PRE, true)
+		if #inst.speech_queue == 0 then
+			inst:ShadeSay(STRINGS.POLARAMULET_STATION_BUILDER_PRE, true)
+		end
+		
+		inst._activatetask = inst:DoTaskInTime(6 + math.random(4), function()
+			if #inst.speech_queue == 0 then
+				inst:ShadeSay(STRINGS.POLARAMULET_STATION_BUILDER_LOOP, true)
+			end
+		end)
 		
 		if inst.components.container and doer and doer:HasTag("player") then
 			inst.components.container:Open(doer)
@@ -66,6 +92,10 @@ local function OnActivate(inst, doer, recipe)
 end
 
 local function OpenShack(inst)
+	if not inst._open then
+		return
+	end
+	
 	inst.AnimState:PlayAnimation("open")
 	inst.AnimState:PushAnimation("opened", true)
 	
@@ -80,13 +110,16 @@ local function OpenShack(inst)
 		end
 	end)
 	
-	if inst._welcometask then
-		inst._welcometask:Cancel()
-	end
+	ClearShadeChat(inst)
 	
 	inst._welcometask = inst:DoTaskInTime(2 + math.random(3), function()
 		if #inst.speech_queue == 0 then
 			inst:ShadeSay(inst.amulet_building and STRINGS.POLARAMULET_STATION_PENDING or STRINGS.POLARAMULET_STATION_WAITING, true)
+		end
+	end)
+	inst._tiptask = inst:DoTaskInTime(12 + math.random(3), function()
+		if #inst.speech_queue == 0 then
+			inst:ShadeSay(STRINGS.POLARAMULET_STATION_TOOTH_TIPS, true)
 		end
 	end)
 end
@@ -101,32 +134,36 @@ local function OnPlayerNear(inst, player)
 end
 
 local function OnPlayerFar(inst, player)
-	inst.speech_queue = {}
-	if inst._welcometask then
-		inst._welcometask:Cancel()
-	end
-	
 	if inst._open then
-		inst.AnimState:PlayAnimation("close")
-		inst.SoundEmitter:PlaySound("polarsounds/shack/door_creak")
+		ClearShadeChat(inst)
 		
-		inst:DoTaskInTime(0.3, function()
-			inst.SoundEmitter:PlaySound("polarsounds/shack/step")
-		end)
-		
-		if math.random() < 0.4 then
-			inst.AnimState:PushAnimation("idle1")
-		else
-			inst.AnimState:PushAnimation("close_pst"..math.random(2))
-			inst.AnimState:PushAnimation("idle1")
-			
-			inst:DoTaskInTime(0.6, function()
-				inst.SoundEmitter:PlaySound("polarsounds/shack/plank_fall")
-			end)
-			
-			inst:DoTaskInTime(1.1, function()
+		if not (inst.AnimState:IsCurrentAnimation("idle1") or inst.AnimState:IsCurrentAnimation("idle2")) then
+			if inst.AnimState:IsCurrentAnimation("open") then
+				inst.AnimState:PlayAnimation("idle1")
 				inst.SoundEmitter:PlaySound("polarsounds/shack/step")
-			end)
+			else
+				inst.AnimState:PlayAnimation("close")
+				inst.SoundEmitter:PlaySound("polarsounds/shack/door_creak")
+				
+				inst:DoTaskInTime(0.3, function()
+					inst.SoundEmitter:PlaySound("polarsounds/shack/step")
+				end)
+				
+				if math.random() < 0.4 then
+					inst.AnimState:PushAnimation("idle1")
+				else
+					inst.AnimState:PushAnimation("close_pst"..math.random(2))
+					inst.AnimState:PushAnimation("idle1")
+					
+					inst:DoTaskInTime(0.6, function()
+						inst.SoundEmitter:PlaySound("polarsounds/shack/plank_fall")
+					end)
+					
+					inst:DoTaskInTime(1.1, function()
+						inst.SoundEmitter:PlaySound("polarsounds/shack/step")
+					end)
+				end
+			end
 		end
 		
 		inst:MakePrototyper(true)
@@ -145,6 +182,8 @@ end
 --
 
 local function MakeAmulet(inst, doer)
+	ClearShadeChat(inst)
+	
 	if inst.components.container and inst.components.container:IsFull() then
 		local amulet = SpawnPrefab("polaramulet")
 		local parts = {}
@@ -156,7 +195,7 @@ local function MakeAmulet(inst, doer)
 			v:Remove()
 		end
 		
-		amulet:SetAmuletParts(parts, doer)
+		amulet:SetAmuletParts(parts, {doer = doer})
 		if doer and doer.components.inventory then
 			doer.components.inventory:GiveItem(amulet, nil, inst:GetPosition())
 			doer:PushEvent("finish_polarnecklace", amulet)
@@ -341,7 +380,7 @@ local function UpdateSpeech(inst)
 	local fade_time = TUNING.POLARAMULET_STATION_SPEAKTIME + 2
 	local shrink_time = 0.5
 	local base_size = 25
-	local elevate_rate = 0.7
+	local elevate_rate = 0.8
 	
 	local font_size = time_alive <= 0.5 and Lerp(fade_time, base_size, time_alive * 2)
 		or time_alive <= fade_time and base_size

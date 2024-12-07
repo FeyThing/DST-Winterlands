@@ -65,6 +65,7 @@ local components = {
 	"birdspawner",
 	"builder",
 	"dynamicmusic", -- : (
+	"expertsailor",
 	"explosive",
 	"follower",
 	"groundpounder",

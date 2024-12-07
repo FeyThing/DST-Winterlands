@@ -85,7 +85,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
 	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
-	DESCRIBE.POLARAMULET = "An invigorating pendant made of my fallen enemies."
+	DESCRIBE.POLARAMULET = "An invigorating pendant made of the fallens."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	
 	--	Others

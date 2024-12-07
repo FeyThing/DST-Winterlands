@@ -30,7 +30,7 @@ function PolarWalker:ShouldSlow()
 		return false, "MELTED"
 	end
 	
-	if self.inst:HasTag("polarimmune") then
+	if HasPolarSnowImmunity(self.inst) then
 		return false, "IMMUNE"
 	end
 	
@@ -158,7 +158,7 @@ function PolarWalker:SetWetness()
 		self._learndryice = self.inst:DoTaskInTime(1 + math.random(), LearnDryIceRecipe)
 	end
 	
-	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarImmunity(self.inst) then
+	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarDebuffImmunity(self.inst) then
 		return
 	end
 	

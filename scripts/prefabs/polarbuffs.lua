@@ -42,7 +42,7 @@ local function wetness_ontick(inst, target)
 			target.components.temperature:SetModifier("polarwetness", TUNING.POLARWETNESS_DEBUFF_TEMP_MODIFIER * level)
 		end
 		
-		local immune = HasPolarImmunity(target)
+		local immune = HasPolarDebuffImmunity(target)
 		local waterproofness = immune and 1 or (target.components.moisture and target.components.moisture:GetWaterproofness() or 0)
 		inst.components.temperature.inherentinsulation = TUNING.POLAR_WETNESS_MAX_INSULATION * waterproofness * (immune and 4 or 1)
 		

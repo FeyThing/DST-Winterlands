@@ -60,7 +60,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Buildings
 	
 	DESCRIBE.POLARAMULET_STATION = {
-		GENERIC = "It's a mystery how it holds together.",
+		GENERIC = "It's a mystery how this shack holds together.",
 		OPEN = "Er, my mistake. Wrong adress.",
 	}
 	DESCRIBE.POLARBEARHOUSE = {

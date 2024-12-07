@@ -29,7 +29,7 @@ end
 local TUMBLER_TAGS = {"tumblewind"}
 
 function TumbleWindAttractor:CanSpawnTumbler(pt)
-	return not TheWorld.Map:IsPointNearHole(pt) and #FindPlayersInRange(pt.x, pt.y, pt.z, self.spawndist) == 0
+	return GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil and not TheWorld.Map:IsPointNearHole(pt) and #FindPlayersInRange(pt.x, pt.y, pt.z, self.spawndist) == 0
 		and #TheSim:FindEntities(pt.x, pt.y, pt.z, self.spawndist + 1, TUMBLER_TAGS) < TUNING.TUMBLEWIND_MAX_DENSITY
 end
 

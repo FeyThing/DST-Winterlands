@@ -9,7 +9,61 @@ local AMULET_PARTS = {
 	"right",
 }
 
+local function OnPolarTiles(inst, owner, on_polar, force_disable)
+	local tile, tileinfo = owner:GetCurrentTileType()
+	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15))
+	
+	on_polar = not force_disable and (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(owner) or in_snow) or false
+	
+	if owner.components.locomotor then
+		if on_polar then
+			local polarwargstooth = inst:GetAmuletParts("polarwargstooth")
+			if polarwargstooth > 0 then
+				owner.components.locomotor:SetExternalSpeedMultiplier(owner, "polaramulet", 1 + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED))
+			end
+		else
+			owner.components.locomotor:RemoveExternalSpeedMultiplier(owner, "polaramulet")
+		end
+	end
+end
+
 local function OnEquip(inst, owner)
+	local parts = inst:GetAmuletParts()
+	
+	local gnarwail_horn = #parts["gnarwail_horn"]
+	if gnarwail_horn > 0 and owner.components.expertsailor == nil then
+		owner:AddComponent("expertsailor")
+	end
+	
+	local houndstooth = #parts["houndstooth"]
+	if houndstooth > 0 and owner.components.combat then
+		owner.components.combat.externaldamagemultipliers:SetModifier(inst, 1 + (houndstooth * TUNING.POLARAMULET.HOUNDSTOOTH.DAMAGE_MULT))
+	end
+	
+	local polarwargstooth = #parts["polarwargstooth"]
+	if polarwargstooth > 0 and owner.components.areaaware then
+		inst._onpolartiles = function(owner, data, amulet, force_disable)
+			OnPolarTiles(inst or amulet, owner, data, force_disable)
+		end
+		
+		inst.onpolarstormchanged = function(src, data)
+			if data and data.stormtype == STORM_TYPES.POLARSTORM then
+				inst._onpolartiles(owner, nil, inst)
+			end
+		end
+		
+		inst._onpolartiles(owner, nil, inst)
+		--inst:ListenForEvent("on_POLAR_ICE_tile", inst._onpolartiles, owner)
+		inst:ListenForEvent("on_POLAR_SNOW_tile", inst._onpolartiles, owner)
+		inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
+	end
+	
+	if inst.components.fueled then
+		inst.components.fueled:StartConsuming()
+	end
+	
+	--
+	
 	if inst.fx then
 		inst.fx:Remove()
 	end
@@ -20,6 +74,25 @@ local function OnEquip(inst, owner)
 end
 
 local function OnUnequip(inst, owner)
+	if owner.components.combat then
+		owner.components.combat.externaldamagemultipliers:RemoveModifier(inst)
+	end
+	
+	if inst._onpolartiles then
+		--inst:RemoveEventCallback("on_POLAR_ICE_tile",  inst._onpolartiles, owner)
+		inst:RemoveEventCallback("on_POLAR_SNOW_tile", inst._onpolartiles, owner)
+		inst:RemoveEventCallback("ms_stormchanged", inst.onpolarstormchanged, owner)
+		inst._onpolartiles(owner, nil, inst, true)
+		inst._onpolartiles = nil
+		inst.onpolarstormchanged = nil
+	end
+	
+	if inst.components.fueled then
+		inst.components.fueled:StopConsuming()
+	end
+	
+	--
+	
 	if inst.fx then
 		inst.fx:Remove()
 		inst.fx = nil
@@ -34,17 +107,25 @@ local function OnSave(inst, data)
 		table.insert(parts, part)
 	end
 	
+	if inst.components.fueled then
+		data.amulet_fueled = inst.components.fueled:GetPercent()
+	elseif inst.components.perishable then
+		data.amulet_perishable = inst.components.perishable:GetPercent()
+	end
+	
 	data.amulet_parts = parts
 end
 
 local function OnLoad(inst, data)
-	if data and data.amulet_parts then
-		inst:SetAmuletParts(data.amulet_parts)
+	if data then
+		if data.amulet_parts then
+			inst:SetAmuletParts(data.amulet_parts, {fueled = data.amulet_fueled, perishable = data.amulet_perishable})
+		end
 	end
 end
 
 local function GetAmuletParts(inst, name)
-	local parts = {}
+	local parts = {ornament = {}}
 	if name == nil then
 		for k, v in pairs(POLARAMULET_PARTS) do
 			parts[k] = {}
@@ -53,17 +134,21 @@ local function GetAmuletParts(inst, name)
 	
 	for k, v in pairs(inst.amulet_parts) do
 		local part = v:value()
-		if name and part == name then
+		local is_ornament = POLARAMULET_PARTS[part].ornament
+		
+		if name and (part == name or (name == "ornament" and is_ornament)) then
 			table.insert(parts, part)
 		elseif name == nil then
-			table.insert(parts[part], part)
+			table.insert(parts[is_ornament and "ornament" or part], part)
 		end
 	end
 	
 	return name and #parts or parts
 end
 
-local function SetAmuletParts(inst, parts, doer, build_overrides)
+local function SetAmuletParts(inst, parts, data)
+	data = data or {}
+	
 	for i, item in ipairs(parts) do
 		local part = AMULET_PARTS[i]
 		inst.amulet_parts[part]:set(item)
@@ -75,13 +160,65 @@ local function SetAmuletParts(inst, parts, doer, build_overrides)
 		inst.AnimState:OverrideSymbol((ornament and "ornament_" or "tooth_")..part, build, sym or "swap_"..item)
 	end
 	
-	inst:SetAmuletPower(doer)
+	inst:SetAmuletPower(data)
 end
 
-local function SetAmuletPower(inst, doer)
+local function SetAmuletPower(inst, data)
 	local parts = inst:GetAmuletParts()
+	local add_fueled = true
 	
 	local houndstooth = #parts["houndstooth"]
+	if houndstooth > 0 then
+		if inst.components.equippable then
+			inst.components.equippable.walkspeedmult = 1 + (houndstooth * TUNING.POLARAMULET.HOUNDSTOOTH.MOVEMENT_SPEED)
+		end
+	end
+	
+	local polarwargstooth = #parts["polarwargstooth"]
+	if polarwargstooth > 0 then
+		add_fueled = false
+		
+		inst:AddTag("polarimmunity")
+		inst:AddTag("polarsnowimmunity")
+		inst:AddTag("show_spoilage")
+		
+		inst:AddComponent("perishable")
+		inst.components.perishable:SetPerishTime(TUNING.POLARAMULET_PERISHATIME + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.PERISHTIME))
+		inst.components.perishable:StartPerishing()
+		
+		if data.perishable then
+			inst.components.perishable:SetPercent(data.perishable)
+		end
+	end
+	
+	local walrus_tusk = #parts["walrus_tusk"]
+	if walrus_tusk > 0 then
+		if inst.components.equippable then
+			inst.components.equippable.dapperness = walrus_tusk * TUNING.POLARAMULET.WALRUS_TUSK.DAPERNESS
+		end
+		if inst.components.insulator == nil then
+			inst:AddComponent("insulator")
+		end
+		inst.components.insulator:SetInsulation(walrus_tusk * TUNING.POLARAMULET.WALRUS_TUSK.INSULATION)
+	end
+	
+	local ornament = #parts["ornament"]
+	if ornament >= #AMULET_PARTS then
+		add_fueled = false
+	end
+	
+	if add_fueled then
+		if inst.components.fueled == nil then
+			inst:AddComponent("fueled")
+			inst.components.fueled.fueltype = FUELTYPE.MAGIC
+			inst.components.fueled:InitializeFuelLevel(TUNING.POLARAMULET_PERISHATIME)
+			inst.components.fueled:SetDepletedFn(inst.Remove)
+			inst.components.fueled:SetFirstPeriod(TUNING.TURNON_FUELED_CONSUMPTION, TUNING.TURNON_FULL_FUELED_CONSUMPTION)
+		end
+		if data.fueled then
+			inst.components.fueled:SetPercent(data.fueled)
+		end
+	end
 end
 
 local function fn()
