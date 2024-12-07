@@ -45,4 +45,92 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 			 inst.SoundEmitter:PlaySound("polarsounds/antler_tree/swoop", nil, nil, true)
 		end
 	end
+
+	sg.states["polar_castspell"] = State{
+		name = "polar_castspell",
+		tags = { "doing", "busy", "canrotate" },
+
+        onenter = function(inst)
+            if inst.components.playercontroller then
+                inst.components.playercontroller:Enable(false)
+            end
+
+            inst.AnimState:PlayAnimation("polar_castspell")
+            inst.components.locomotor:Stop()
+        end,
+
+        timeline = {
+            TimeEvent(13 * FRAMES, function(inst)
+                inst:PerformBufferedAction()
+            end),
+
+			TimeEvent(20 * FRAMES, function(inst)
+				inst.sg:RemoveStateTag("busy")
+				if inst.components.playercontroller then
+					inst.components.playercontroller:Enable(true)
+				end
+			end)
+        },
+
+        events = {
+            EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+            end)
+        },
+
+        onexit = function(inst)
+            if inst.components.playercontroller then
+                inst.components.playercontroller:Enable(true)
+            end
+        end
+	}
+
+	local old_CASTSPELL_fn = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
+	sg.actionhandlers[ACTIONS.CASTSPELL].deststate = function(inst, action, ...)
+		if action.invobject and action.invobject:HasTag("frostaurastaff") then
+			return "polar_castspell"
+		end
+
+		return old_CASTSPELL_fn(inst, action, ...)
+	end
+end)
+
+ENV.AddStategraphPostInit("wilson_client", function(sg)
+	sg.states["polar_castspell"] = State{
+		name = "polar_castspell",
+		tags = { "doing", "busy", "canrotate" },
+		server_states = { "polar_castspell" },
+
+        onenter = function(inst)
+            inst.components.locomotor:Stop()
+            inst.AnimState:PlayAnimation("polar_castspell")
+
+            inst:PerformPreviewBufferedAction()
+            inst.sg:SetTimeout(2)
+        end,
+
+        onupdate = function(inst)
+			if inst.sg:ServerStateMatches() then
+                if inst.entity:FlattenMovementPrediction() then
+                    inst.sg:GoToState("idle", "noanim")
+                end
+            elseif inst.bufferedaction == nil then
+                inst.sg:GoToState("idle")
+            end
+        end,
+
+        ontimeout = function(inst)
+            inst:ClearBufferedAction()
+            inst.sg:GoToState("idle")
+        end
+	}
+
+	local old_CASTSPELL_fn = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
+	sg.actionhandlers[ACTIONS.CASTSPELL].deststate = function(inst, action, ...)
+		if action.invobject and action.invobject:HasTag("frostaurastaff") then
+			return "polar_castspell"
+		end
+		
+		return old_CASTSPELL_fn(inst, action, ...)
+	end
 end)

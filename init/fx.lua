@@ -52,6 +52,14 @@ local POLAR_FX = {
 			PolarSplashFn(inst, 3)
 		end,
 	},
+	{
+		name = "iciclestaff_icicle_break_fx",
+		bank = "mining_fx",
+		build = "mining_ice_fx",
+		anim = "anim",
+        sound = "dontstarve/creatures/together/antlion/sfx/sand_to_glass",
+		sounddelay = FRAMES * 2
+	}
 }
 
 require("fx")

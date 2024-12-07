@@ -31,6 +31,10 @@ Assets = {
 	Asset("ANIM", "anim/polar_snow.zip"),
 	
 	Asset("IMAGE", "images/polarpillar.tex"),
+
+	Asset("ANIM", "anim/iciclestaff_icicle.zip"),
+
+	Asset("ANIM", "anim/polar_castspell.zip"),
 	
 	-- Sounds
 	Asset("SOUNDPACKAGE", "sound/polarsounds.fev"),
