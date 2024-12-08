@@ -47,7 +47,7 @@ local function OnEquip(inst, owner)
 		end
 		
 		inst.onpolarstormchanged = function(src, data)
-			if data and data.stormtype == STORM_TYPES.POLARSTORM then
+			if data and data.stormtype == STORM_TYPES.POLARSTORM and inst._onpolartiles then
 				inst._onpolartiles(owner, nil, inst)
 			end
 		end
@@ -184,6 +184,7 @@ local function SetAmuletPower(inst, data)
 		
 		inst:AddComponent("perishable")
 		inst.components.perishable:SetPerishTime(TUNING.POLARAMULET_PERISHATIME + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.PERISHTIME))
+		inst.components.perishable:SetOnPerishFn(inst.Remove)
 		inst.components.perishable:StartPerishing()
 		
 		if data.perishable then
@@ -212,8 +213,8 @@ local function SetAmuletPower(inst, data)
 			inst:AddComponent("fueled")
 			inst.components.fueled.fueltype = FUELTYPE.MAGIC
 			inst.components.fueled:InitializeFuelLevel(TUNING.POLARAMULET_PERISHATIME)
-			inst.components.fueled:SetDepletedFn(inst.Remove)
 			inst.components.fueled:SetFirstPeriod(TUNING.TURNON_FUELED_CONSUMPTION, TUNING.TURNON_FULL_FUELED_CONSUMPTION)
+			inst.components.fueled:SetDepletedFn(inst.Remove)
 		end
 		if data.fueled then
 			inst.components.fueled:SetPercent(data.fueled)

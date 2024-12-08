@@ -30,7 +30,7 @@ function c_polartime(player)
 end
 
 --	Toggle Blizzard
-function c_blizzard(duration)
+function c_blizzard(duration, in_cooldown)
 	if TheWorld.components.polarstorm then
 		local active = TheWorld.components.polarstorm:IsPolarStormActive()
 		
@@ -38,8 +38,13 @@ function c_blizzard(duration)
 			TheWorld.components.polarstorm:PushBlizzard(0)
 			print("Removing Blizzard")
 		elseif not active or (duration and duration > 0) then
-			TheWorld.components.polarstorm:PushBlizzard(duration or 480)
-			print((active and "Changed Blizzard duration to " or "Activating Blizzard for ")..(duration and duration.." seconds" or "a day"))
+			if in_cooldown then
+				TheWorld.components.polarstorm:RequeueBlizzard(duration or 480)
+				print("Blizzard will start in "..(duration and duration.." seconds" or "a day"))
+			else
+				TheWorld.components.polarstorm:PushBlizzard(duration or 480)
+				print((active and "Changed Blizzard duration to " or "Activating Blizzard for ")..(duration and duration.." seconds" or "a day"))
+			end
 		end
 	end
 end

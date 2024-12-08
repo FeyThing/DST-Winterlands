@@ -360,9 +360,9 @@ end
 --
 
 local function SetSpeech(inst, target, str)
-	if target then
+	--[[if target then
 		inst.Follower:FollowSymbol(target.GUID, "face", 0, 0, 0)
-	end
+	end]]
 	
 	if str then
 		inst.speech_pos = {GetRandomMinMax(-25, 25), 0, 0}
@@ -408,7 +408,7 @@ local function speech()
 	
 	inst.Label:SetFontSize(1)
 	inst.Label:SetFont(TALKINGFONT)
-	inst.Label:SetWorldOffset(0, 1, 0)
+	inst.Label:SetWorldOffset(0, 2.35, 0) -- If following head, just 1
 	inst.Label:SetUIOffset(0, 0, 0)
 	inst.Label:SetColour(colour / 255, colour / 255, colour / 255)
 	inst.Label:Enable(true)

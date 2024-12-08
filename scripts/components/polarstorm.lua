@@ -22,6 +22,7 @@ return Class(function(self, inst)
 
     local _blizzard_cd_task
     local _blizzard_time_task
+	local _blizzard_start_time
     
 	-- [ Functions ] --
     local function OnSeasonChange(_, season)
@@ -44,6 +45,8 @@ return Class(function(self, inst)
         end
 
         _polarstormactive = true
+		_blizzard_start_time = nil
+		
         inst:PushEvent("ms_stormchanged", { stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive })
     end
 
@@ -82,7 +85,8 @@ return Class(function(self, inst)
     -- [ Methods ] --
     function self:RequeueBlizzard(cooldown) -- Requeues a blizzard to happen after [cooldown], length is random, next blizzard will set the default cooldown
         RestartTasks()
-
+		
+		_blizzard_start_time = GetTime() + cooldown
         _blizzard_cd_task = inst:DoTaskInTime(cooldown, function()
             StartBlizzard()
             _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max) * _blizzard_season_mult[_season].length_mult, function()
@@ -129,7 +133,15 @@ return Class(function(self, inst)
     function self:IsPolarStormActive()
         return _polarstormactive
     end
-
+	
+	function self:GetTimeLeft()
+		if self:IsPolarStormActive() then
+			return _blizzard_time_task and GetTaskRemaining(_blizzard_time_task) or 0
+		else
+			return _blizzard_cd_task and GetTaskRemaining(_blizzard_cd_task) or 0
+		end
+	end
+	
     -- [ Save / Load ] --
     function self:OnSave()
         if _blizzard_time_task then -- If (for some reason) both timers exist prioritize blizzard time left
@@ -148,4 +160,18 @@ return Class(function(self, inst)
             end
         end
     end
+	
+	function self:LongUpdate(dt)
+		local time_left = self:GetTimeLeft()
+		if time_left == nil or dt == nil or dt < 5 then
+			return
+		end
+		
+		local time_updated = time_left - dt
+		if _blizzard_time_task then
+			self:PushBlizzard(time_updated)
+		elseif _blizzard_cd_task then
+			self:RequeueBlizzard(time_updated)
+		end
+	end
 end)

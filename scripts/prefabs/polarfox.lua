@@ -318,7 +318,7 @@ end
 local function OnTimerDone(inst, data)
 	if data.name == "escapedivecooldown" then
 		inst.wantstodive = inst.components.locomotor:WantsToRun()
-	elseif data.name == "huntdivecooldown" then
+	elseif data.name == "huntdivecooldown" and not inst.components.timer:TimerExists("huntperiod") then
 		inst.wantstodive = true
 		inst.components.timer:StartTimer("huntperiod", 10)
 	elseif data.name == "huntperiod" and not inst.components.timer:TimerExists("huntdivecooldown") then

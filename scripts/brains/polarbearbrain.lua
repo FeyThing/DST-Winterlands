@@ -166,13 +166,40 @@ local function DoPlowingAction(inst)
 end
 
 local function GetFaceTargetNearestPlayerFn(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
+	if inst.components.combat and inst.components.combat.target then
+		return
+	end
 	
+	local x, y, z = inst.Transform:GetWorldPosition()
 	return FindClosestPlayerInRange(x, y, z, MIN_FOLLOW_DIST, true)
 end
 
 local function KeepFaceTargetNearestPlayerFn(inst, target)
 	return GetFaceTargetNearestPlayerFn(inst) == target
+end
+
+--
+
+local function GetChatterLines(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and TheWorld.components.polarstorm and not TheWorld.components.polarstorm:IsPolarStormActive() then
+		local time_before_storm = TheWorld.components.polarstorm:GetTimeLeft()
+		
+		if time_before_storm and time_before_storm <= TUNING.POLARBEAR_BLIZZARD_WARNTIME then
+			return STRINGS.POLARBEAR_BLIZZARDSOON[math.random(#STRINGS.POLARBEAR_BLIZZARDSOON)]
+		end
+	end
+	
+	return STRINGS.POLARBEAR_LOOKATWILSON[math.random(#STRINGS.POLARBEAR_LOOKATWILSON)]
+end
+
+local function GetCombatLines(inst)
+	local target = inst.components.combat and inst.components.combat.target
+	if not inst.enraged and target and (target:HasTag("fish") or target:HasTag("merm") or target:HasTag("shark")) then
+		return STRINGS.POLARBEAR_FISHFIGHT[math.random(#STRINGS.POLARBEAR_FISHFIGHT)]
+	end
+	
+	return STRINGS.POLARBEAR_FIGHT[math.random(#STRINGS.POLARBEAR_FIGHT)]
 end
 
 --
@@ -190,7 +217,7 @@ function PolarBearBrain:OnStart()
 			ChattyNode(self.inst, "POLARBEAR_PANICFIRE",
 				Panic(self.inst))),
 		
-		ChattyNode(self.inst, "POLARBEAR_FIGHT",
+		ChattyNode(self.inst, GetCombatLines,
 			WhileNode(function() return not self.inst.components.combat:InCooldown() end, "AttackMomentarily",
 				ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST))),
 		WhileNode(function() return IsHomeOnFire(self.inst) end, "OnFire",
@@ -223,7 +250,7 @@ function PolarBearBrain:OnStart()
 			WhileNode(function() return TheWorld.state.iscavenight or not self.inst:IsInLight() end, "NightTime",
 				DoAction(self.inst, GoHomeAction, "go home", true))),
 		Leash(self.inst, GetNoLeaderHomePos, LEASH_MAX_DIST, LEASH_RETURN_DIST),
-		ChattyNode(self.inst, "POLARBEAR_LOOKATWILSON",
+		ChattyNode(self.inst, GetChatterLines,
 			FaceEntity(self.inst, GetFaceTargetNearestPlayerFn, KeepFaceTargetNearestPlayerFn)),
 		Wander(self.inst, GetNoLeaderHomePos, MAX_WANDER_DIST)
 	}, 0.5)
