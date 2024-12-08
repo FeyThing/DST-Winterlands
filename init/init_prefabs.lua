@@ -38,6 +38,10 @@ PrefabFiles = {
 	"waxed_polar_plants",
 	"winter_ornaments_polar",
 	"winter_tree_sparse",
+	"iciclestaff",
+	"iciclestaff_icicle",
+	"frostaurastaff",
+	"frostaura",
 	
 	"polarskinprefabs",
 }

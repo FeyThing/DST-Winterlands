@@ -12,11 +12,33 @@ return Class(function(self, inst)
     local _blizzard_length_min = TUNING.POLAR_STORM_LENGTH_MIN
     local _blizzard_length_max = TUNING.POLAR_STORM_LENGTH_MAX
 
+    local _season = SEASONS.AUTUMN
+    local _blizzard_season_mult = {
+        autumn = { cooldown_mult = 1,    length_mult = 1 },
+        winter = { cooldown_mult = 0.66, length_mult = 1.33 },
+        spring = { cooldown_mult = 1,    length_mult = 1.2 },
+        summer = { cooldown_mult = 2,    length_mult = 0.66 }
+    }
+
     local _blizzard_cd_task
     local _blizzard_time_task
 	local _blizzard_start_time
     
 	-- [ Functions ] --
+    local function OnSeasonChange(_, season)
+        _season = season
+
+        if _blizzard_time_task then -- Update task period
+            local timeleft = _blizzard_time_task.period * _blizzard_season_mult[season].cooldown_mult
+            _blizzard_time_task.period = timeleft
+        end
+
+        if _blizzard_cd_task then -- Update task period
+            local timeleft = _blizzard_cd_task.period * _blizzard_season_mult[season].length_mult
+            _blizzard_cd_task.period = timeleft
+        end
+    end
+
     local function StartBlizzard()
         if _polarstormactive then
             return
@@ -51,33 +73,38 @@ return Class(function(self, inst)
     end
 
 	-- [ Initialization ] --
+    inst:WatchWorldState("season", OnSeasonChange)
+    OnSeasonChange(inst, inst.state.season)
+
     function self:OnPostInit()
         if _blizzard_cd_task == nil and _blizzard_time_task == nil then
-            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max))
+            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult)
         end
     end
 
     -- [ Methods ] --
-    function self:RequeueBlizzard(cooldown)
+    function self:RequeueBlizzard(cooldown) -- Requeues a blizzard to happen after [cooldown], length is random, next blizzard will set the default cooldown
         RestartTasks()
 		
 		_blizzard_start_time = GetTime() + cooldown
         _blizzard_cd_task = inst:DoTaskInTime(cooldown, function()
             StartBlizzard()
-            _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max), function()
+            _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max) * _blizzard_season_mult[_season].length_mult, function()
                 StopBlizzard()
-                self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max))
+                self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult)
             end)
+
+            _blizzard_cd_task = nil
         end)
     end
 
-    function self:PushBlizzard(length)
+    function self:PushBlizzard(length) -- Forces an instant blizzard of length [length], the next blizzard will roll the default length
         RestartTasks()
         
         StartBlizzard()
         _blizzard_time_task = inst:DoTaskInTime(length, function()
             StopBlizzard()
-            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max))
+            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult)
         end)
     end
     
