@@ -4,12 +4,10 @@ local function OnBlizzardLevelChanged(inst, data)
 	
 	if self then
 		if level >= TUNING.SANDSTORM_FULL_LEVEL then
-			print("enable")
 			if not self.enabled then
 				self:Enable(true)
 			end
 		elseif self.enabled then
-			print("disable")
 			self:Enable(false)
 		end
 	end
