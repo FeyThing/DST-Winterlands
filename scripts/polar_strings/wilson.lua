@@ -84,8 +84,11 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Science says this stick is perfect."
 	DESCRIBE.FROSTWALKERAMULET = "Science can explain this phenomenon... but I won't."
+	DESCRIBE.ICICLESTAFF = "Always useful. If we forget about the \"incident\"."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
 	DESCRIBE.POLARAMULET = "It's doing... things, most certainly."
+	DESCRIBE.POLARCROWNHAT = "And what protects me from the brain freeze?"
+	DESCRIBE.POLARICESTAFF = "I like all my staves but this one is frost among equals."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
 	--	Others
@@ -97,6 +100,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Alas, it won't preserve me any better."
 	DESCRIBE.POLARTRINKET_1 = "An artifact steeped in wintry legends, surely."
 	DESCRIBE.POLARTRINKET_2 = "An artifact steeped in wintry legends, surely."
+	DESCRIBE.TRAP_POLARTEETH = "Now that's a cold reception..."
 	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
 	DESCRIBE.TURF_POLAR_DRYICE = "Tougher than most ice around here."
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."

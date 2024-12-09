@@ -84,8 +84,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Oooh, precisely what I needed!"
 	DESCRIBE.FROSTWALKERAMULET = "Good! I've had more than enough of these damnable rivers."
+	DESCRIBE.ICICLESTAFF = "Beware of friendly fire... and friendly ice. All elements would want us dead!"
 	DESCRIBE.POLAR_SPEAR = "Make the most of it while it's fresh."
 	DESCRIBE.POLARAMULET = "I went through that phase already. Or did I?"
+	DESCRIBE.POLARCROWNHAT = "I hope it was worth it."
+	DESCRIBE.POLARICESTAFF = "Everyone, and I mean EVERYONE deserves a break."
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."
 	
 	--	Others
@@ -97,6 +100,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.POLARICEPACK = "I should get a timepack next."
 	DESCRIBE.POLARTRINKET_1 = "Oooh, I do love a festive knickknack."
 	DESCRIBE.POLARTRINKET_2 = "Oooh, I do love a festive knickknack."
+	DESCRIBE.TRAP_POLARTEETH = "I don't know many things worse than being stuck in place."
 	DESCRIBE.TURF_POLAR_CAVES = "Why am I wasting time staring at the ground?"
 	DESCRIBE.TURF_POLAR_DRYICE = "A road to where, exactly?"
 	DESCRIBE.WALL_POLAR = "I wouldn't want to punch it for certain."

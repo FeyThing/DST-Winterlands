@@ -6,6 +6,26 @@ local function ListingOrConsolePlayer(input)
 	return input or ConsoleCommandPlayer()
 end
 
+--	Toggle Blizzard
+function c_blizzard(duration, in_cooldown)
+	if TheWorld.components.polarstorm then
+		local active = TheWorld.components.polarstorm:IsPolarStormActive()
+		
+		if active and (duration == nil or duration <= 0) then
+			TheWorld.components.polarstorm:PushBlizzard(0)
+			print("Removing Blizzard")
+		elseif not active or (duration and duration > 0) then
+			if in_cooldown then
+				TheWorld.components.polarstorm:RequeueBlizzard(duration or 480)
+				print("Blizzard will start in "..(duration and duration.." seconds" or "a day"))
+			else
+				TheWorld.components.polarstorm:PushBlizzard(duration or 480)
+				print((active and "Changed Blizzard duration to " or "Activating Blizzard for ")..(duration and duration.." seconds" or "a day"))
+			end
+		end
+	end
+end
+
 --	Gives the stuff to brave this frosty place
 function c_polartime(player)
 	player = ListingOrConsolePlayer(player)
@@ -29,21 +49,26 @@ function c_polartime(player)
 	end
 end
 
---	Toggle Blizzard
-function c_blizzard(duration, in_cooldown)
-	if TheWorld.components.polarstorm then
-		local active = TheWorld.components.polarstorm:IsPolarStormActive()
+--	We love casting spellz
+function c_icewizard(player)
+	player = ListingOrConsolePlayer(player)
+	
+	local items = {"polaricestaff", "iciclestaff", "polarcrownhat", "frostwalkeramulet"}
+	if player then
+		c_select(player)
 		
-		if active and (duration == nil or duration <= 0) then
-			TheWorld.components.polarstorm:PushBlizzard(0)
-			print("Removing Blizzard")
-		elseif not active or (duration and duration > 0) then
-			if in_cooldown then
-				TheWorld.components.polarstorm:RequeueBlizzard(duration or 480)
-				print("Blizzard will start in "..(duration and duration.." seconds" or "a day"))
-			else
-				TheWorld.components.polarstorm:PushBlizzard(duration or 480)
-				print((active and "Changed Blizzard duration to " or "Activating Blizzard for ")..(duration and duration.." seconds" or "a day"))
+		if player.components.inventory then
+			for i, v in ipairs(items) do
+				local need, has = player.components.inventory:Has(v, 1)
+				
+				if has == 0 then
+					local item = c_give(v, nil, true)
+					
+					local equipslot = (item and item.components.equippable) and item.components.equippable.equipslot
+					if equipslot and player.components.inventory:GetEquippedItem(equipslot) == nil then
+						player.components.inventory:Equip(item, nil, true)
+					end
+				end
 			end
 		end
 	end

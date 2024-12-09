@@ -8,12 +8,12 @@ local AddPrefabPostInit = ENV.AddPrefabPostInit
 local POLAR_WALKHELPERS = {
 	cane = 				2,
 	orangestaff = 		4,
-	armordragonfly = 	true,
-	beargervest = 		true,
+	armordragonfly = 	"polarimmunity",
+	beargervest = 		"polarimmunity",
 	raincoat = 			4,
 	sweatervest = 		4,
 	trunkvest_summer = 	8,
-	trunkvest_winter =	true,
+	trunkvest_winter =	"polarimmunity",
 	walking_stick = 	6,
 	catcoonhat = 		4,
 	deserthat = 		2,
@@ -35,7 +35,7 @@ for k, v in pairs(POLAR_WALKHELPERS) do
 				inst.components.equippable.polar_slowtime = v -- Peak slowdown delayers
 			end
 		else
-			inst:AddTag("polarimmunity") -- Immunity prevents debuff, not slowdown
+			inst:AddTag(v) -- "polarimmunity" prevents only debuff, "polarsnowimmunity" is for slowdown (only)
 		end
 	end)
 end

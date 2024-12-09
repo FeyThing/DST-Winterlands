@@ -13,6 +13,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Rocks and stones
 	NAMES.POLAR_ICICLE = "Icicle"
 	NAMES.POLAR_ICICLE_ROCK = "Icicle"
+	NAMES.POLAR_ICICLE_STAFF = "Icicle"
 	NAMES.ROCK_POLAR = "Ice Protuberance"
 	
 	--	Misc
@@ -50,9 +51,12 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Equipments
 	NAMES.ANTLER_TREE_STICK = "Bullbranch"
 	NAMES.FROSTWALKERAMULET = "Chillest Amulet"
+	NAMES.ICICLESTAFF = "Icicle Staff"
 	NAMES.POLAR_SPEAR = "Stalagspear"
 	NAMES.POLARAMULET = "Teeth Necklace"
 	NAMES.POLARAMULET_BUILDER = "Teeth Necklace"
+	NAMES.POLARCROWNHAT = "Frozen Crown"
+	NAMES.POLARICESTAFF = "Winter Wand"
 	NAMES.POLARMOOSEHAT = "Ushanka"
 	
 	--	Others
@@ -61,6 +65,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARICEPACK = "Icepack"
 	NAMES.POLARTRINKET_1 = "Snuggy Gnome"
 	NAMES.POLARTRINKET_2 = "Snuggy Gnomette"
+	NAMES.TRAP_POLARTEETH = "Ice Fang Trap"
 	NAMES.TURF_POLAR_CAVES = "Ice Cave Turf"
 	NAMES.TURF_POLAR_DRYICE = "Cobbled Dry Ice"
 	NAMES.WALL_POLAR = "Dry Ice Wall"
@@ -205,10 +210,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Scrapbook, Cookbook
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "This tree has robust branches that could prove to be useful.\nHowever, axes won't cut it to take them off properly..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held."
+	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "Keeps nearby water frozen and improves stability on ice."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
+	STRINGS.SCRAPBOOK.SPECIALINFO.ICICLESTAFF = "Creates a salvo of 15 Icicles.\n\nNote to self: Keep clear from the area."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
-	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of carried or stored items by 25%. Can be stacked multiplicatively."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of other carried or stored items by 25%. Can be stacked multiplicatively."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICESTAFF = "Sends a freezing shockwave in a large range."
 	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "These flutter in the blizzard and collect junk along the way.\n\nAll sorts of crazy junk.\n\nYou'd be surprised."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
 	
@@ -216,11 +225,15 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Recipes
 	RECIPE_DESC.FROSTWALKERAMULET = "Never was water this cool before!"
+	RECIPE_DESC.ICICLESTAFF = "Summon the very things you swore to destroy."
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
 	RECIPE_DESC.POLARAMULET_BUILDER = "Assemble your own traditional necklace."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
+	RECIPE_DESC.POLARCROWNHAT = "Rule over the blizzard."
 	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
+	RECIPE_DESC.POLARICESTAFF = "Freeze all enemies in your track!"
 	RECIPE_DESC.SHARDS_BLUEGEM = "Shard work pays off."
+	RECIPE_DESC.TRAP_POLARTEETH = "Pops up and freezes whoever steps on it."
 	RECIPE_DESC.TURF_POLAR_CAVES = "The chilly stone of the chillest cave."
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."

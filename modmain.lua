@@ -54,6 +54,7 @@ local prefabs = {
 	"walrus",
 	"wilson",
 	
+	"blizzard_fires",
 	"ents_onfreeze",
 	"polar_walking",
 	"snow_heaters",

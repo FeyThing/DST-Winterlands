@@ -84,8 +84,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Who would leave good firewood laying around like that?"
 	DESCRIBE.FROSTWALKERAMULET = "Woah cool! I mean... that sucks, but it's kinda cool."
+	DESCRIBE.ICICLESTAFF = "Never thought I'd fight side by side with ice."
 	DESCRIBE.POLAR_SPEAR = "Keep your cool, if you must."
 	DESCRIBE.POLARAMULET = "It's... just a phase."
+	DESCRIBE.POLARCROWNHAT = "Oww! Nope."
+	DESCRIBE.POLARICESTAFF = "Next time we're going someplace else...\nlike where I can get myself an Inferno Wand and all that!"
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."
 	
 	--	Others
@@ -97,6 +100,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Just leave it be in the fridge, whatever."
 	DESCRIBE.POLARTRINKET_1 = "He looks like he doesn't like the cold much either."
 	DESCRIBE.POLARTRINKET_2 = "She looks like she doesn't like the cold much either."
+	DESCRIBE.TRAP_POLARTEETH = "Would still be better with fire."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground is boring and cold"
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground is boring and cold."
 	DESCRIBE.WALL_POLAR = "I hate it."

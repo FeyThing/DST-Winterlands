@@ -49,7 +49,7 @@ local function OnAttack(inst, attacker, target)
 		inst.components.fueled:DoDelta(-TUNING.ANTLER_TREE_STICK_ATTACK_PERCENT * inst.components.fueled.maxfuel)
 	end
 	
-	if target and target.SoundEmitter then
+	if target and target.SoundEmitter and not target:HasTag("shadowcreature") and not target:HasTag("brightmare") then
 		target.SoundEmitter:PlaySound("polarsounds/antler_tree/bonk", nil, nil, true)
 	end
 end

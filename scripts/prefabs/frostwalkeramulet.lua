@@ -1,6 +1,5 @@
 local assets = {
-	Asset("ANIM", "anim/amulets.zip"),
-	Asset("ANIM", "anim/torso_amulets.zip")
+	Asset("ANIM", "anim/torso_frostwalker_amulet.zip"),
 }
 
 local ICE_FORMING_BLOCKER_TAGS = { "shadecanopy", "crabking", "boat" }
@@ -29,9 +28,9 @@ local function OnEquip(inst, owner)
 	local skin_build = inst:GetSkinBuild()
 	if skin_build then
 		owner:PushEvent("equipskinneditem", inst:GetSkinName())
-		owner.AnimState:OverrideSymbol("swap_body", skin_build or "torso_amulets", "blueamulet")
+		owner.AnimState:OverrideSymbol("swap_body", skin_build or "torso_frostwalker_amulet", "swap_amulet")
 	else
-		owner.AnimState:OverrideSymbol("swap_body", "torso_amulets", "blueamulet")
+		owner.AnimState:OverrideSymbol("swap_body", "torso_frostwalker_amulet", "swap_amulet")
 	end
 	
 	if inst.icebrigde_task then
@@ -116,9 +115,9 @@ local function fn()
 	
 	MakeInventoryPhysics(inst)
 	
-	inst.AnimState:SetBank("amulets")
-	inst.AnimState:SetBuild("amulets")
-	inst.AnimState:PlayAnimation("blueamulet")
+	inst.AnimState:SetBank("torso_frostwalker_amulet")
+	inst.AnimState:SetBuild("torso_frostwalker_amulet")
+	inst.AnimState:PlayAnimation("idle")
 	
 	inst.foleysound = "dontstarve/movement/foley/jewlery"
 	

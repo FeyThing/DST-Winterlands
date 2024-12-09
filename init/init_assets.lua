@@ -28,13 +28,11 @@ Assets = {
 	Asset("ATLAS", "images/rain_polar.xml"),
 	
 	-- Anims / Builds
+	Asset("ANIM", "anim/player_polarcast.zip"),
+	
 	Asset("ANIM", "anim/polar_snow.zip"),
 	
 	Asset("IMAGE", "images/polarpillar.tex"),
-
-	Asset("ANIM", "anim/iciclestaff_icicle.zip"),
-
-	Asset("ANIM", "anim/polar_castspell.zip"),
 	
 	-- Sounds
 	Asset("SOUNDPACKAGE", "sound/polarsounds.fev"),
@@ -50,19 +48,24 @@ local ITEMS = {
 	"bluegem_overcharged",
 	"bluegem_shards",
 	"dug_grass_polar",
+	"frostwalkeramulet",
 	"icelettuce",
 	"icelettuce_seeds",
+	"iciclestaff",
 	"polar_dryice",
 	"polaramulet",
 	"polarbearfur",
 	"polarbearhouse",
+	"polarcrownhat",
 	"polarglobe",
 	"polaricepack",
+	"polaricestaff",
 	"polarmoosehat",
 	"polarsnow_material",
 	"polartrinket_1",
 	"polartrinket_2",
 	"polarwargstooth",
+	"trap_polarteeth",
 	"turf_polar_caves",
 	"turf_polar_dryice",
 	"wall_polar_item",

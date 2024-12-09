@@ -84,8 +84,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Ah, that can be useful."
 	DESCRIBE.FROSTWALKERAMULET = "A pity for the fish in my wake. But oh well."
+	DESCRIBE.ICICLESTAFF = "A fate worse than rotten tomatoes."
 	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear trough my suit."
 	DESCRIBE.POLARAMULET = "They worked some magic on the string. What exactly, I'm not sure."
+	DESCRIBE.POLARCROWNHAT = "Powerful and elegant, but also uncomfortable."
+	DESCRIBE.POLARICESTAFF = "The right spell, in wrong hands."
 	DESCRIBE.POLARMOOSEHAT = "Hm. Very... rustic."
 	
 	--	Others
@@ -97,6 +100,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.POLARICEPACK = "This will keep the bacterias away for longer."
 	DESCRIBE.POLARTRINKET_1 = "There really is nowhere to escape from these guys."
 	DESCRIBE.POLARTRINKET_2 = "There really is nowhere to escape from these gals."
+	DESCRIBE.TRAP_POLARTEETH = "Malicious. I like it!"
 	DESCRIBE.TURF_POLAR_CAVES = "Turf."
 	DESCRIBE.TURF_POLAR_DRYICE = "At least this one is useful."
 	DESCRIBE.WALL_POLAR = "I like them for their atmospheric touch."

@@ -84,8 +84,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Another tree bone."
 	DESCRIBE.FROSTWALKERAMULET = "Even the water can't escape death's cold embrace."
+	DESCRIBE.ICICLESTAFF = "Be careful around it, Abigail."
 	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."
 	DESCRIBE.POLARAMULET = "Macabre but well deserved."
+	DESCRIBE.POLARCROWNHAT = "I shall spread winter's embrace."
+	DESCRIBE.POLARICESTAFF = "An effortful pulse of cold. Much like my heart."
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	
 	--	Others
@@ -97,6 +100,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARICEPACK = "A long existence of cold and darkness awaits you in the fridge."
 	DESCRIBE.POLARTRINKET_1 = "I'd carry this to the end of the world."
 	DESCRIBE.POLARTRINKET_2 = "I'd carry this to the end of the world."
+	DESCRIBE.TRAP_POLARTEETH = "Can you let me finish them off? Pretty please?"
 	DESCRIBE.TURF_POLAR_CAVES = "Some ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold stone beneath my feet."
 	DESCRIBE.WALL_POLAR = "Alas, they won't melt easily."
