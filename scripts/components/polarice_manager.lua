@@ -69,7 +69,7 @@ return Class(function(self, inst)
 			for y = 0, HEIGHT - 1 do
 				local i = _icebasestrengthgrid:GetIndex(x, y)
 				local strength = self:GetBaseAtTile(x, y)
-				SetCurrentIceStrength(i, math.sqrt(strength) * mult + add)
+				SetCurrentIceStrength(i, strength * mult + add)
 			end
 		end
 
