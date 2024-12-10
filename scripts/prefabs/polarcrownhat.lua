@@ -105,7 +105,7 @@ local function StartForceField(inst, owner)
 	inst._fx.Transform:SetPosition(0, -2, 0)
 	
 	if inst._owner then
-		owner:AddTag("icicleimmune")
+		inst._owner:AddTag("icicleimmune")
 		inst:ListenForEvent("attacked", inst.breakfn, inst._owner)
 		
 		if inst._freezytask == nil then
