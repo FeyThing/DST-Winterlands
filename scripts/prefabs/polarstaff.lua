@@ -206,7 +206,7 @@ local function polarice()
 		return inst
 	end
 	
-	inst.components.equippable.polar_slowtime = 4
+	inst.components.equippable.polar_slowtime = 8
 	inst.components.equippable.walkspeedmult = TUNING.ANTLER_TREE_STICK_SPEED_MULT
 	
 	inst.components.finiteuses:SetMaxUses(TUNING.POLARICESTAFF_USES)

@@ -172,10 +172,12 @@ local function shadefn()
 	inst.AnimState:SetBuild("pillar_icecave")
 	inst.AnimState:PlayAnimation("idle")
 	
+	inst:AddTag("blizzardprotection")
 	inst:AddTag("icecaveshelter")
 	
 	inst.MiniMapEntity:SetIcon("pillar_polarcave.png")
 	
+	inst.blizzardprotect_rad = TUNING.SHADE_POLAR_RANGE
 	inst.rainprotect_rad = TUNING.SHADE_POLAR_RANGE
 	
 	if not TheNet:IsDedicated() then

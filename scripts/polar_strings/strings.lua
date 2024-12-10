@@ -163,7 +163,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"...so... hmm.",
 		"...you look... different.",
 		{"...if you got ropes...", "...and... prrretty fangs...", "...we can make this work."},
-		{"...no I won't buy fish...", "...sorry."},
+		{"...no I won't trade fish...", "...sorry."},
 	}
 	STRINGS.POLARAMULET_STATION_PENDING = {
 		"...still got your ropes.",
@@ -224,6 +224,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
 	
 	--	Recipes
+	RECIPE_DESC.BLUEGEM_OVERCHARGED = "TEMP RECIPE!\nIt will be a loot later."
 	RECIPE_DESC.FROSTWALKERAMULET = "Never was water this cool before!"
 	RECIPE_DESC.ICICLESTAFF = "Summon the very things you swore to destroy."
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."

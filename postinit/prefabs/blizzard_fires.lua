@@ -1,13 +1,20 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local FUELMULT = TUNING.POLAR_STORM_FUELEDMULT
+local PROTECTION = TUNING.POLAR_STORM_PROTECTION
+
 local BLIZZARED_FIRES = {
-	campfire = TUNING.POLAR_STORM_FUELEDMULT.CAMPFIRE,
-	cotl_tabernacle_level1 = TUNING.POLAR_STORM_FUELEDMULT.CAMPFIRE,
-	cotl_tabernacle_level2 = TUNING.POLAR_STORM_FUELEDMULT.FIREPIT,
-	cotl_tabernacle_level3 = TUNING.POLAR_STORM_FUELEDMULT.RESISTANT,
-	firepit = TUNING.POLAR_STORM_FUELEDMULT.FIREPIT,
-	torch = TUNING.POLAR_STORM_FUELEDMULT.TORCH,
+	campfire = 					{fuel_rate = FUELMULT.CAMPFIRE},
+	cotl_tabernacle_level1 = 	{fuel_rate = FUELMULT.CAMPFIRE},
+	cotl_tabernacle_level2 = 	{fuel_rate = FUELMULT.FIREPIT},
+	cotl_tabernacle_level3 = 	{fuel_rate = FUELMULT.FIREPIT},
+	firepit = 					{fuel_rate = FUELMULT.FIREPIT},
+	torch = 					{fuel_rate = FUELMULT.TORCH},
+	
+	campfirefire = 				{prot_range = PROTECTION.FIRE},
+	fire = 						{prot_range = PROTECTION.FIRE},
+	torchfire = 				{prot_range = PROTECTION.TORCH},
 }
 
 local function SetPolarstormRate(inst)
@@ -31,22 +38,30 @@ local function OnPolarstormChanged(inst, active)
 	end
 end
 
-for prefab, mult in pairs(BLIZZARED_FIRES) do
+for prefab, blizzard_data in pairs(BLIZZARED_FIRES) do
 	ENV.AddPrefabPostInit(prefab, function(inst)
+		if blizzard_data.prot_range then
+			inst:AddTag("blizzardprotection")
+			
+			inst.blizzardprotect_rad = blizzard_data.prot_range
+		end
+		
 		if not TheWorld.ismastersim then
 			return
 		end
 		
-		inst.polarstorm_fuelmod = mult
-		inst.onpolarstormchanged = function(src, data)
-			if data and data.stormtype == STORM_TYPES.POLARSTORM then
-				OnPolarstormChanged(inst, data.setting)
+		if blizzard_data.fuel_rate then
+			inst.polarstorm_fuelmod = blizzard_data.fuel_rate
+			inst.onpolarstormchanged = function(src, data)
+				if data and data.stormtype == STORM_TYPES.POLARSTORM then
+					OnPolarstormChanged(inst, data.setting)
+				end
 			end
-		end
-		
-		inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
-		if TheWorld.components.polarstorm then
-			OnPolarstormChanged(inst, TheWorld.components.polarstorm:IsPolarStormActive())
+			
+			inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
+			if TheWorld.components.polarstorm then
+				OnPolarstormChanged(inst, TheWorld.components.polarstorm:IsPolarStormActive())
+			end
 		end
 	end)
 end

@@ -1,7 +1,7 @@
 local POLAR_SCRAPBOOK = {
 	--	Items / Foods
 	antler_tree_stick = {type = "item", subcat = "weapon", weapondamage = 48, finiteuses = 625, fueledmax = 4800, fueledrate = 1, fueledtype1 = "USAGE", build = "antler_tree_stick", bank = "antler_tree_stick", anim = "idle", specialinfo = "ANTLER_TREE_STICK"},
-	bluegem_overcharged = {type = "item", subcat = "element", stacksize = 40, hungervalue = 1, healthvalue = 10, sanityvalue = 0, foodtype = "ELEMENTAL", build = "bluegem_overcharged", bank = "bluegem_overcharged", anim = "idle"},
+	bluegem_overcharged = {type = "item", subcat = "element", stacksize = 40, hungervalue = 1, healthvalue = 10, sanityvalue = 0, foodtype = "ELEMENTAL", build = "bluegem_overcharged", bank = "bluegem_overcharged", deps = {"bluegem_shards", "polaramulet_station"}, anim = "idle"},
 	bluegem_shards = {type = "item", subcat = "element", stacksize = 40, hungervalue = 1, healthvalue = 10, sanityvalue = 0, foodtype = "ELEMENTAL", build = "bluegem_shards", bank = "bluegem_shards", anim = "idle", deps = {"bluegem"}},
 	frostwalkeramulet = {type = "item", subcat = "clothing", dapperness = 0.033333333333333, fueledmax = 360, fueledrate = 1, fueledtype1 = "MAGIC", build = "torso_frostwalker_amulet", bank = "torso_frostwalker_amulet", anim = "idle", deps = {"bluegem_overcharged", "bluegem_shards", "researchlab3"}, specialinfo = "FROSTWALKERAMULET"},
 	icelettuce = {type = "food", stacksize = 40, hungervalue = 18.75, healthvalue = 10, sanityvalue = 5, foodtype = "VEGGIE", perishable = 1440, burnable = true, build = "icelettuce", bank = "icelettuce", anim = "idle", deps = {"icelettuce_seeds"}, specialinfo = "ICELETTUCE"},
@@ -10,7 +10,7 @@ local POLAR_SCRAPBOOK = {
 	polar_dryice = {type = "item", subcat = "element", stacksize = 40, hungervalue = 9.375, healthvalue = 2, sanityvalue = 0, foodtype = "ELEMENTAL", build = "polar_dryice", bank = "polar_dryice", anim = "f1", perishable = 19200, deps = {"ice"}},
 	polaramulet = {type = "item", subcat = "clothing", fueledmax = 2400, fueledrate = 1, fueledtype1 = "MAGIC", build = "torso_polar_amulet", bank = "torso_polar_amulet", anim = "idle", deps = {"houndstooth", "gnarwail_horn", "polarwargstooth", "rope", "walrus_tusk"}, specialinfo = "POLARAMULET"},
 	polarbearfur = {type = "item", stacksize = 20, build = "polarbearfur", bank = "polarbearfur", anim = "idle", fueltype = "BURNABLE", fuelvalue = 45, burnable = true},
-	polarcrownhat = {type = "item", subcat = "armor", armor = 840, absorb_percent = 0.7, insulator = 180, insulator_type = "summer", build = "hat_polarcrown", bank = "polarcrown", anim = "anim", deps = {"bluegem_shards", "ice", "researchlab3"}, specialinfo = "POLARCROWNHAT"},
+	polarcrownhat = {type = "item", subcat = "armor", armor = 420, absorb_percent = 0.7, insulator = 180, insulator_type = "summer", scale = 1.2, build = "hat_polarcrown", bank = "polarcrown", anim = "anim", deps = {"bluegem_overcharged", "ice", "researchlab3"}, specialinfo = "POLARCROWNHAT"},
 	polaricepack = {type = "item", perishable = 28800, build = "polaricepack", bank = "polaricepack", anim = "idle", deps = {"bluegem_shards", "polar_dryice", "mosquitosack", "researchlab2"}, specialinfo = "POLARICEPACK"},
 	polaricestaff = {type = "item", subcat = "weapon", weapondamage = 17, weaponrange = 10, finiteuses = 20, build = "polarstaffs", bank = "polarstaffs", anim = "polaricestaff", deps = {"bluegem_overcharged", "antler_tree_stick", "researchlab3"}, specialinfo = "POLARICESTAFF"},
 	polarmoosehat = {type = "item", subcat = "hat", insulator = 240, insulator_type = "winter", waterproofer = 0.2, dapperness = 0.022222222222222, fueledmax = 2400, fueledrate = 1, fueledtype1 = "USAGE", sewable = true, build = "hat_polarmoose", bank = "polarmoosehat", anim = "anim"},
@@ -33,7 +33,7 @@ local POLAR_SCRAPBOOK = {
 	
 	--	Things / POI
 	antler_tree = {type = "thing", subcat = "tree", workable = "CHOP", burnable = true, build = "antler_tree", bank = "antler_tree", anim = "idle", deps = {"antler_tree_stick", "charcoal", "log", "twigs"}, specialinfo = "ANTLER_TREE"},
-	farm_plant_icelettuce = {type = "thing", subcat = "farmplant", workable = "DIG", burnable = true, speechname = "FARM_PLANT", build = "farm_plant_icelettuce", bank = "farm_plant_icelettuce", anim = "crop_full", overridesymbol = {"soil01", "farm_soil", "soil01"}, deps = {"spoiled_food", "icelettuce", "icelettuce_seeds"}},
+	farm_plant_icelettuce = {type = "thing", subcat = "farmplant", workable = "DIG", burnable = true, speechname = "FARM_PLANT", animoffsety = -10, scale = 1.3, build = "farm_plant_icelettuce", bank = "farm_plant_icelettuce", anim = "crop_full", overridesymbol = {"soil01", "farm_soil", "soil01"}, deps = {"spoiled_food", "icelettuce", "icelettuce_seeds"}},
 	grass_polar = {type = "thing", workable = "DIG", pickable = true, burnable = true, build = "grass_polar", bank = "grass_tall", anim = "idle", deps = {"cutgrass", "cutreeds", "dug_grass"}, specialinfo = "NEEDFERTILIZER"},
 	polar_icicle = {type = "thing", damage = 300, build = "icicle_roof", bank = "icicle_roof", anim = "idle_med", deps = {"polar_icicle_rock", "winter_ornament_polar_icicle_blue", "winter_ornament_polar_icicle_white"}},
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},

@@ -62,10 +62,6 @@ function PolarPlower:DoPlow(doer, pos)
 		self.onplowfn(self.inst, doer, pos, blocker, blockers)
 	end
 	
-	if self.inst.components.finiteuses then
-		self.inst.components.finiteuses:Use(self.plow_use or TUNING.POLARPLOW_USE)
-	end
-	
 	return true, blocker, blockers
 end
 

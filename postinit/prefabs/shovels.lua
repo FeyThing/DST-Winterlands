@@ -15,6 +15,12 @@ for shovel, range in pairs(SHOVELS) do
 			return
 		end
 		
+		if inst.components.finiteuses then
+			local dig_use = inst.components.finiteuses.consumption[ACTIONS.DIG] or 1
+			
+			inst.components.finiteuses:SetConsumption(ACTIONS.POLARPLOW, dig_use * TUNING.POLARPLOW_USE)
+		end
+		
 		if inst.components.polarplower == nil then
 			inst:AddComponent("polarplower")
 			inst.components.polarplower.plow_range = range

@@ -73,7 +73,8 @@ PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("blu
 
 --	[ 		Crafting Station	]	--
 
-PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 	TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("bluegem_overcharged", 	{Ingredient("bluegem", 10)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 													{"CRAFTING_STATION"})
 
 --	[ 		Deconstruction		]	--
 

@@ -22,7 +22,7 @@ local function Break(inst)
 end
 
 local MUST_TAGS = {"_combat"}
-local CANT_TAGS = {"INLIMBO", "playerghost", "flight"}
+local CANT_TAGS = {"INLIMBO", "playerghost", "flight", "icicleimmune"}
 
 local function DoDamage(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
