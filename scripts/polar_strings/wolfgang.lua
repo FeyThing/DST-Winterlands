@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Is sobbing little ice cubes.",
 		ANTLER = "Fun beast to wrestle with.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Got a spooky face."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Bear man was strong. But Wolfgang is stronger!",
 		ENRAGED = "Is... a bit intimidating.",

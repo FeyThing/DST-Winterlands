@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "It's hardly intimidating now.",
 		ANTLER = "Big antlers, big attitude.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "An aquarist acquaintance of mine would pay a fortune for it."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Nature will take care of the rest of you.",
 		ENRAGED = "Oh good. They're pulling the teeth.",

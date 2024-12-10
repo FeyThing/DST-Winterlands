@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		GENERIC = "It lost its garnish.",
 		ANTLER = "A grand beast sure to yield robust, gamey flavors.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Poisson frais!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "I can finally sell its fur.",
 		ENRAGED = "It's hungry for a fight!",

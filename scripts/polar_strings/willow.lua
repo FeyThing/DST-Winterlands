@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		GENERIC = "Pfft, look who's extra stupid now.",
 		ANTLER = "Oh great, another stupid deer of some sort.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Gotcha you out of this frozen hell, you're welcome."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Hah, that's what you get, bear.",
 		ENRAGED = "He's got fiery temper!",

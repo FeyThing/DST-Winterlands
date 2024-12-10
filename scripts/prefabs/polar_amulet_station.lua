@@ -181,6 +181,14 @@ end
 
 --
 
+local function UnlockTrade(inst, item)
+	local part = POLARAMULET_PARTS[item]
+	
+	if inst.components.craftingstation and part and part.unlock_recipe and not inst.components.craftingstation:KnowsItem(part.unlock_recipe) then
+		inst.components.craftingstation:LearnItem(part.unlock_recipe, part.unlock_recipe)
+	end
+end
+
 local function MakeAmulet(inst, doer)
 	ClearShadeChat(inst)
 	
@@ -192,6 +200,7 @@ local function MakeAmulet(inst, doer)
 		for i, v in ipairs(items) do
 			table.insert(parts, v.prefab)
 			
+			inst:UnlockTrade(v.prefab)
 			v:Remove()
 		end
 		
@@ -329,6 +338,8 @@ local function fn()
 	inst.components.container.onopenfn = OnOpen
 	inst.components.container.canbeopened = false
 	
+	inst:AddComponent("craftingstation")
+	
 	inst:AddComponent("inspectable")
 	inst.components.inspectable.getstatus = GetStatus
 	
@@ -350,6 +361,7 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	inst.ShadeSay = ShadeSay
+	inst.UnlockTrade = UnlockTrade
 	
 	inst:ListenForEvent("animover", OnAnimOver)
 	inst:ListenForEvent("timerdone", OnTimerDone)

@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		GENERIC = "Ran headfirst into trouble, huh?",
 		ANTLER = "Looks tough. Time to find out if it really is.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Bit too flashy to my liking, but it's still on the menu."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Down for the count!",
 		ENRAGED = "Yeesh, we've got bear problems!",

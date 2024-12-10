@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		GENERIC = "It bumped its head! Poor moosey...",
 		ANTLER = "They're much bigger than what we imagined!",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "We fished a treasure from the depths!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Ew... it's covered in fleas.",
 		ENRAGED = "Sorry! Sorry!",

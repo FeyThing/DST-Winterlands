@@ -2,17 +2,8 @@ require("prefabs/veggies")
 
 local PLANT_DEFS = require("prefabs/farm_plant_defs").PLANT_DEFS
 
-local function IceLettuce_Fruut(inst, eater)
-	if eater.components.freezable then
-		eater.components.freezable:AddColdness(TUNING.ICELETTUCE_FREEZABLE_COLDNESS)
-	end
-	
-	local temperature = eater.components.temperature and eater.components.temperature.current or nil
-	if temperature then
-		eater.components.temperature:SetTemperature(temperature + TUNING.ICELETTUCE_COOLING)
-	end
-	
-	eater:AddDebuff("buff_polarimmunity", "buff_polarimmunity")
+local function OnEat_IceLettuce(inst, eater)
+	EatIceLettuce(inst, eater, TUNING.POLAR_IMMUNITY_DURATION, TUNING.ICELETTUCE_FREEZABLE_COLDNESS, TUNING.ICELETTUCE_COOLING)
 end
 
 local function MakeVegStats(seedweight, hunger, health, perish_time, sanity, cooked_hunger, cooked_health, cooked_perish_time, cooked_sanity, float_settings, cooked_float_settings, dryable, oneatfn, secondary_foodtype)
@@ -35,8 +26,8 @@ local function MakeVegStats(seedweight, hunger, health, perish_time, sanity, coo
 end
 
 local POLAR_VEGGIES = {
-	icelettuce = MakeVegStats(0, TUNING.CALORIES_MEDSMALL, TUNING.HEALING_MED / 2, TUNING.PERISH_SUPERFAST, TUNING.SANITY_TINY,
-		nil, nil, nil, nil, {nil, 0.1, 0.75}, nil, nil, IceLettuce_Fruut),
+	icelettuce = MakeVegStats(0, TUNING.CALORIES_MEDSMALL, TUNING.HEALING_MED / 2, TUNING.PERISH_SUPERFAST, 0,
+		nil, nil, nil, nil, {nil, 0.1, 0.75}, nil, nil, OnEat_IceLettuce),
 }
 
 for k, v in pairs(POLAR_VEGGIES) do

@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		GENERIC = "It moose be tough to cope with antler loss.",
 		ANTLER = "I'd rather stay clear from its path.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Those eyes would be worth a fortune!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "A pile of snow... no, wait.",
 		ENRAGED = "He's got as much bark as bite!",

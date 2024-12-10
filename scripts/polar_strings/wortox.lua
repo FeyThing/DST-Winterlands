@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		GENERIC = "Don't worry, my dear, they will grow back.",
 		ANTLER = "What large horns you have! Can I have them?",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "A prismatic swimmer from deep icy water."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Back to dust! Or snow, if you prefer.",
 		ENRAGED = "They don't like pranks one bite!",

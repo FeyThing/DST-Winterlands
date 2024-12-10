@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
 		ANTLER = "Hm. Not too mysterious looking! But maybe if it was white and hiding in a blizzard...",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Hey, look at those creepy eyes!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Sir? Sir I think you need our help!",
 		ENRAGED = "What big fangs you have!",

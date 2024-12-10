@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		GENERIC = "Bah! 'Thou hath disarmed thyself!",
 		ANTLER = "Freya's grace touches even these frozen lands.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Its shine foretells a fine feast."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "May thy soul ascend in Valhalla.",
 		ENRAGED = "Fight me with all your might!",

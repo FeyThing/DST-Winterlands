@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "Me want horn bit to grow back too, florp.",
 		ANTLER = "Would like have big horns like this...",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "It sooo prettyyy!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Good. Won't eat fishie now.",
 		ENRAGED = "GLORPT! RUN!!",

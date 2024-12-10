@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "Hmph, amateur. Lemme show you how it's done.",
 		ANTLER = "Big, bold, and proud of his woods like I am!",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Has anyone told ya you got pretty eyes, eh?"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "You would make a fine rug.",
 		ENRAGED = "Now we're fightin'!",

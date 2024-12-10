@@ -9,8 +9,8 @@ Assets = {
 	Asset("ATLAS", "images/polarminimap.xml"),
 	
 	-- UI
-	--Asset("IMAGE", "images/cookbook_polar.tex"),
-	--Asset("ATLAS", "images/cookbook_polar.xml"),
+	Asset("IMAGE", "images/cookbook_polar.tex"),
+	Asset("ATLAS", "images/cookbook_polar.xml"),
 	
 	Asset("IMAGE", "images/scrapbook_polar.tex"),
 	Asset("ATLAS", "images/scrapbook_polar.xml"),
@@ -49,9 +49,11 @@ local ITEMS = {
 	"bluegem_shards",
 	"dug_grass_polar",
 	"frostwalkeramulet",
+	"iceburrito",
 	"icelettuce",
 	"icelettuce_seeds",
 	"iciclestaff",
+	"oceanfish_medium_polar1_inv",
 	"polar_dryice",
 	"polaramulet",
 	"polarbearfur",

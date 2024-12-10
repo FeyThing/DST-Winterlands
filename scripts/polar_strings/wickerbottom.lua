@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Make no mistake, it can still hold a fight.",
 		ANTLER = "A fine specimen with defenses fit for the wilds.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "I wonder how the world would look through pearly oculars."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Remarkable, but lifeless.",
 		ENRAGED = "Now that's a \"force of nature\". Tsk!",

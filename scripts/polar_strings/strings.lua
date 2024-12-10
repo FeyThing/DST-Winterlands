@@ -24,6 +24,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Mobs
 	
 	NAMES.MOOSE_POLAR = "Moose"
+	NAMES.OCEANFISH_MEDIUM_POLAR1 = "Boreal Bass"
+	NAMES.OCEANFISH_MEDIUM_POLAR1_INV = "Boreal Bass"
 	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
 	NAMES.POLARBEAR = "Polar Bear"
 	NAMES.POLARFOX = "Frost Tail"
@@ -208,6 +210,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	
 	--	Scrapbook, Cookbook
+	STRINGS.UI.COOKBOOK.FOOD_EFFECTS_ICELETTUCE = "Accustoms the body to snow"
+	
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "This tree has robust branches that could prove to be useful.\nHowever, axes won't cut it to take them off properly..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held."
 	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "Keeps nearby water frozen and improves stability on ice."
@@ -239,6 +243,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
 	
+	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading teeth with some shady individual!"
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"
 	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"The Polar Exchange\""
 	

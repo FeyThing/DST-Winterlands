@@ -6,28 +6,30 @@
 		<Element name="bluegem_shards.tex" u1="0.001" u2="0.124" v2="0.749" v1="0.501" />
 		<Element name="dug_grass_polar.tex" u1="0.126" u2="0.249" v2="0.749" v1="0.501" />
 		<Element name="frostwalkeramulet.tex" u1="0.251" u2="0.374" v2="0.999" v1="0.751" />
-		<Element name="icelettuce.tex" u1="0.251" u2="0.374" v2="0.749" v1="0.501" />
-		<Element name="icelettuce_seeds.tex" u1="0.376" u2="0.499" v2="0.999" v1="0.751" />
-		<Element name="iciclestaff.tex" u1="0.376" u2="0.499" v2="0.749" v1="0.501" />
-		<Element name="ms_polarmoosehat_white.tex" u1="0.001" u2="0.124" v2="0.499" v1="0.251" />
-		<Element name="polar_dryice.tex" u1="0.001" u2="0.124" v2="0.249" v1="0.001" />
-		<Element name="polaramulet.tex" u1="0.126" u2="0.249" v2="0.499" v1="0.251" />
-		<Element name="polarbearfur.tex" u1="0.251" u2="0.374" v2="0.499" v1="0.251" />
-		<Element name="polarbearhouse.tex" u1="0.126" u2="0.249" v2="0.249" v1="0.001" />
-		<Element name="polarcrownhat.tex" u1="0.251" u2="0.374" v2="0.249" v1="0.001" />
-		<Element name="polarglobe.tex" u1="0.376" u2="0.483375" v2="0.499" v1="0.251" />
-		<Element name="polaricepack.tex" u1="0.376" u2="0.499" v2="0.249" v1="0.001" />
-		<Element name="polaricestaff.tex" u1="0.501" u2="0.624" v2="0.999" v1="0.751" />
-		<Element name="polarmoosehat.tex" u1="0.626" u2="0.749" v2="0.999" v1="0.751" />
-		<Element name="polarsnow_material.tex" u1="0.501" u2="0.624" v2="0.749" v1="0.501" />
-		<Element name="polartrinket_1.tex" u1="0.485375" u2="0.608375" v2="0.499" v1="0.251" />
-		<Element name="polartrinket_2.tex" u1="0.626" u2="0.749" v2="0.749" v1="0.501" />
-		<Element name="polarwargstooth.tex" u1="0.751" u2="0.86228125" v2="0.999" v1="0.81740625" />
-		<Element name="trap_polarteeth.tex" u1="0.751" u2="0.874" v2="0.81540625" v1="0.56740625" />
-		<Element name="turf_polar_caves.tex" u1="0.610375" u2="0.733375" v2="0.499" v1="0.251" />
-		<Element name="turf_polar_dryice.tex" u1="0.501" u2="0.624" v2="0.249" v1="0.001" />
-		<Element name="wall_polar_item.tex" u1="0.751" u2="0.874" v2="0.56540625" v1="0.31740625" />
-		<Element name="winter_ornament_polar_icicle_blue.tex" u1="0.876" u2="0.999" v2="0.999" v1="0.751" />
-		<Element name="winter_ornament_polar_icicle_white.tex" u1="0.876" u2="0.999" v2="0.749" v1="0.501" />
+		<Element name="iceburrito.tex" u1="0.251" u2="0.374" v2="0.749" v1="0.501" />
+		<Element name="icelettuce.tex" u1="0.376" u2="0.499" v2="0.999" v1="0.751" />
+		<Element name="icelettuce_seeds.tex" u1="0.376" u2="0.499" v2="0.749" v1="0.501" />
+		<Element name="iciclestaff.tex" u1="0.001" u2="0.124" v2="0.499" v1="0.251" />
+		<Element name="ms_polarmoosehat_white.tex" u1="0.001" u2="0.124" v2="0.249" v1="0.001" />
+		<Element name="oceanfish_medium_polar1_inv.tex" u1="0.126" u2="0.249" v2="0.499" v1="0.251" />
+		<Element name="polar_dryice.tex" u1="0.251" u2="0.374" v2="0.499" v1="0.251" />
+		<Element name="polaramulet.tex" u1="0.126" u2="0.249" v2="0.249" v1="0.001" />
+		<Element name="polarbearfur.tex" u1="0.251" u2="0.374" v2="0.249" v1="0.001" />
+		<Element name="polarbearhouse.tex" u1="0.376" u2="0.499" v2="0.499" v1="0.251" />
+		<Element name="polarcrownhat.tex" u1="0.376" u2="0.499" v2="0.249" v1="0.001" />
+		<Element name="polarglobe.tex" u1="0.501" u2="0.608375" v2="0.999" v1="0.751" />
+		<Element name="polaricepack.tex" u1="0.610375" u2="0.733375" v2="0.999" v1="0.751" />
+		<Element name="polaricestaff.tex" u1="0.501" u2="0.624" v2="0.749" v1="0.501" />
+		<Element name="polarmoosehat.tex" u1="0.735375" u2="0.858375" v2="0.999" v1="0.751" />
+		<Element name="polarsnow_material.tex" u1="0.626" u2="0.749" v2="0.749" v1="0.501" />
+		<Element name="polartrinket_1.tex" u1="0.501" u2="0.624" v2="0.499" v1="0.251" />
+		<Element name="polartrinket_2.tex" u1="0.860375" u2="0.983375" v2="0.999" v1="0.751" />
+		<Element name="polarwargstooth.tex" u1="0.626" u2="0.73728125" v2="0.499" v1="0.31740625" />
+		<Element name="trap_polarteeth.tex" u1="0.501" u2="0.624" v2="0.249" v1="0.001" />
+		<Element name="turf_polar_caves.tex" u1="0.751" u2="0.874" v2="0.749" v1="0.501" />
+		<Element name="turf_polar_dryice.tex" u1="0.626" u2="0.749" v2="0.31540625" v1="0.06740625" />
+		<Element name="wall_polar_item.tex" u1="0.876" u2="0.999" v2="0.749" v1="0.501" />
+		<Element name="winter_ornament_polar_icicle_blue.tex" u1="0.751" u2="0.874" v2="0.499" v1="0.251" />
+		<Element name="winter_ornament_polar_icicle_white.tex" u1="0.876" u2="0.999" v2="0.499" v1="0.251" />
 	</Elements>
 </Atlas>

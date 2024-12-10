@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "Heehee...",
 		ANTLER = "Those antlers look dear to you, hm?",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "What pretty eyes your sockets hold."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "You will be missed, perhaps.",
 		ENRAGED = "I knew this was too easy.",
