@@ -12,6 +12,14 @@ return Class(function(self, inst)
     local _blizzard_length_min = TUNING.POLAR_STORM_LENGTH_MIN
     local _blizzard_length_max = TUNING.POLAR_STORM_LENGTH_MAX
 
+    local _blizzard_configs = {
+        [-2] = 0,   -- Doesn't really matter, polarstorm is not added to the world if None is selected
+        [-1] = 0.5, -- Less
+        [0] = 1,    -- Default
+        [1] = 2,    -- More
+        [2] = 4     -- Most
+    }
+
     local _season = SEASONS.AUTUMN
     local _blizzard_season_mult = {
         autumn = { cooldown_mult = 1,    length_mult = 1 },
@@ -78,7 +86,7 @@ return Class(function(self, inst)
 
     function self:OnPostInit()
         if _blizzard_cd_task == nil and _blizzard_time_task == nil then
-            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult)
+            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
         end
     end
 
@@ -89,9 +97,9 @@ return Class(function(self, inst)
 		_blizzard_start_time = GetTime() + cooldown
         _blizzard_cd_task = inst:DoTaskInTime(cooldown, function()
             StartBlizzard()
-            _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max) * _blizzard_season_mult[_season].length_mult, function()
+            _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max) * _blizzard_season_mult[_season].length_mult * _blizzard_configs[POLAR_BLIZZARDS_CONFIG], function()
                 StopBlizzard()
-                self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult)
+                self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
             end)
 
             _blizzard_cd_task = nil
@@ -104,7 +112,7 @@ return Class(function(self, inst)
         StartBlizzard()
         _blizzard_time_task = inst:DoTaskInTime(length, function()
             StopBlizzard()
-            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult)
+            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
         end)
     end
     

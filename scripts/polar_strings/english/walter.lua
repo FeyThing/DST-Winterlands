@@ -86,7 +86,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
 	DESCRIBE.POLARAMULET = "A little something from the souvenir shop."
-	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
+	DESCRIBE.POLARMOOSEHAT = "Let's hope Woby won't catch any fleas."
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {
@@ -101,4 +101,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.TURF_POLAR_DRYICE = "Some road that sends shivers up my legs."
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."
 	DESCRIBE.WALL_POLAR_ITEM = "Don't you dare lick it, Woby!"
-	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it match the season."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it matches the season."

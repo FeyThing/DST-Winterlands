@@ -46,7 +46,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARBEAR = {
 		DEAD = "I can finally sell its fur.",
 		ENRAGED = "It's hungry for a fight!",
-		FOLLOWER = "It got quite the insatiable appetite.",
+		FOLLOWER = "It's got quite the insatiable appetite.",
 		GENERIC = "We're both eager to find out how the other taste like\n... or is it just me?",
 	}
 	DESCRIBE.POLARFOX = {

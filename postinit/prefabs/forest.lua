@@ -18,7 +18,9 @@ AddPrefabPostInit("forest", function(inst)
 	
 	inst:AddComponent("polarsnow_manager")
 	
-	inst:AddComponent("polarstorm")
+	if POLAR_BLIZZARDS_CONFIG ~= -2 then
+		inst:AddComponent("polarstorm")
+	end
 end)
 
 --
