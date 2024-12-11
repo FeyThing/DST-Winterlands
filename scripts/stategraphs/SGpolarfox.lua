@@ -265,6 +265,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("death")
+			inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_short", nil, 0.3)
 			inst.Physics:Stop()
 			
 			if inst.tail then
@@ -480,8 +481,10 @@ local states = {
 				end
 			end
 			
-			local ignore_blizzard = inst.components.follower and inst.components.follower.leader ~= nil
-			if ignore_blizzard or not (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)) then
+			local temperature = TheWorld.state.temperature
+			if inst.components.follower and inst.components.follower.leader or not ((temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP)
+				or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst))) then
+				
 				inst.sg.statemem.exit_dive = true
 			end
 			
@@ -552,7 +555,11 @@ local states = {
 	},
 }
 
-CommonStates.AddSimpleState(states, "hit", "hit")
+CommonStates.AddSimpleState(states, "hit", "hit", nil, nil, {
+	TimeEvent(1 * FRAMES, function(inst) 
+		inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_cut", nil, 0.5)
+	end),
+})
 CommonStates.AddSleepExStates(states, {
 	sleeptimeline = {
 		TimeEvent(26 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_low", nil, 0.1 + (math.random() * 0.4)) end),

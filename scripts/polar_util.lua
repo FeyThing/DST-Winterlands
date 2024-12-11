@@ -177,7 +177,10 @@ function IsTooDeepInSnow(inst, viewer)
 	
 	if TUNING.POLAR_WAVES_ENABLED and inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
 		local x, y, z = inst.Transform:GetWorldPosition()
+		local temperature = TheWorld.state.temperature
+		
 		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
+			and temperature and temperature < TUNING.POLAR_SNOW_MELT_TEMP
 		
 		if insnow and not inst:HasTag("snowhidden") then
 			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()

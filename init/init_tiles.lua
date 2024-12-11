@@ -6,14 +6,14 @@ local NOISES = require("noisetilefunctions")
 local ChangeTileRenderOrder = ChangeTileRenderOrder
 
 local POLAR_COLOR = {
-	primary_color = 		{5, 	15, 	90, 	255},
-	secondary_color = 		{5, 	20, 	95, 	200},
-	secondary_color_dusk = 	{0, 	2, 		35, 	125},
-	minimap_color = 		{19, 	41, 	62, 	154},
+	primary_color = 		{5, 	20, 	95, 	200},
+	secondary_color = 		{40, 	170, 	215, 	230},
+	secondary_color_dusk = 	{30, 	150, 	195, 	200},
+	minimap_color = 		{15, 	90, 	120, 	170},
 }
 
 local POLAR_WAVETINTS = {
-	winter = {249, 180, 45} 	-- {1, 	0.20, 	0.10}
+	winter = {215, 255, 255},
 }
 
 --	Lands

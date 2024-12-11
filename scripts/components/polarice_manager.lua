@@ -362,17 +362,24 @@ return Class(function(self, inst)
 
 		local old_tile = WORLD_TILES.OCEAN_POLAR
 		local undertile = inst.components.undertile
-
+		local dx, dy, dz = _map:GetTileCenterPoint(tx, ty)
+		
 		if undertile then
 			old_tile = undertile:GetTileUnderneath(tx, ty)
+			
 			if old_tile then
 				undertile:ClearTileUnderneath(tx, ty)
+				
+				if GetClosestPolarTileToPoint(dx, dy, dz, TUNING.OCEAN_POLAR_CONVERT_RANGE) ~= nil and (old_tile == WORLD_TILES.OCEAN_COASTAL_SHORE
+					or old_tile == WORLD_TILES.OCEAN_COASTAL) then
+					
+					old_tile = WORLD_TILES.OCEAN_POLAR
+				end
 			else
 				old_tile = WORLD_TILES.OCEAN_POLAR
 			end
 		end
 
-		local dx, dy, dz = _map:GetTileCenterPoint(tx, ty)
 		-- THIS IS HACKED IN TO SAVE THE PLAYER FOR NOW!
 		local hypotenuseSq = 8 + 1 -- buffer.
 		local players = FindPlayersInRangeSq(dx, 0, dz, hypotenuseSq, true)

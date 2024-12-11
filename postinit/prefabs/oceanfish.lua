@@ -53,21 +53,23 @@ FISH_DATA.fish["oceanfish_medium_polar1"] = {
 --
 
 FISH_DATA.school[SEASONS.AUTUMN][WORLD_TILES.OCEAN_POLAR] = {
-	oceanfish_small_2 = 1,
-	oceanfish_medium_polar1 = 4,
+	oceanfish_small_4 = 1,
+	oceanfish_medium_2 = 1,
+	oceanfish_medium_polar1 = 8,
 }
 
 FISH_DATA.school[SEASONS.WINTER][WORLD_TILES.OCEAN_POLAR] = {
-	oceanfish_medium_polar1 = 4,
+	oceanfish_medium_polar1 = 1,
 }
 
 FISH_DATA.school[SEASONS.SPRING][WORLD_TILES.OCEAN_POLAR] = {
-	oceanfish_medium_polar1 = 4,
+	oceanfish_medium_polar1 = 1,
 }
 
 FISH_DATA.school[SEASONS.SUMMER][WORLD_TILES.OCEAN_POLAR] = {
-	oceanfish_small_2 = 1,
-	oceanfish_medium_polar1 = 4,
+	oceanfish_small_4 = 1,
+	oceanfish_medium_2 = 1,
+	oceanfish_medium_polar1 = 8,
 }
 
 --
