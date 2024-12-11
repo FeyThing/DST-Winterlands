@@ -106,4 +106,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.TURF_POLAR_DRYICE = "Some road that sends shivers up my legs."
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."
 	DESCRIBE.WALL_POLAR_ITEM = "Don't you dare lick it, Woby!"
-	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it match the season."
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it matches the season."

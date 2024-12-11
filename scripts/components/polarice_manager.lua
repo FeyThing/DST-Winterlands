@@ -1,5 +1,14 @@
 local WIDTH, HEIGHT
-local MAX_GRADIENT_DEPTH = 5
+
+local gradient_configs = {
+	[-2] = 0, -- None
+	[-1] = 3, -- Less
+	[0] = 5,  -- Default
+	[1] = 7,  -- More
+	[2] = 10  -- Most, that's a LOT of ice
+}
+
+local MAX_GRADIENT_DEPTH = gradient_configs[POLAR_ICEGEN_CONFIG]
 
 local STRENGTH_UPDATE_TIME = 10
 
@@ -18,6 +27,8 @@ return Class(function(self, inst)
 	self.inst = inst
 
 	-- [ Private fields ] --
+	local initial_load = true -- The first ever ice load should generate ice instantly to decrease lag
+
 	local _map = inst.Map
 	local _icebasestrengthgrid -- Stores [0 - 1] values defining the base strength of ice tiles in the world
 	local _gradient_indeces = {  } -- Indeces for the next iteration of the gradient
@@ -49,6 +60,27 @@ return Class(function(self, inst)
 				self:QueueMeltIceAtTile(tx, ty)
 			end
 		end
+	end
+
+	local function InitialLoad() -- Similar to the normal Update fn but skips the ice tile queueing to reduce lag
+		local mult = Lerp(1, 4, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
+		local add = Lerp(0, -3, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
+
+		for x = 0, WIDTH - 1 do
+			for y = 0, HEIGHT - 1 do
+				local i = _icebasestrengthgrid:GetIndex(x, y)
+				local base_strength = self:GetBaseAtTile(x, y)
+				local current_strength = math.clamp(base_strength * mult + add, 0, 1)
+				_icecurrentstrengthgrid:SetDataAtIndex(i, current_strength)
+				
+				local tx, ty, tz = _map:GetTileCenterPoint(x, y)
+				if current_strength >= 0.1 and _map:IsOceanTileAtPoint(tx, ty, tz) then
+					self:CreateIceAtTile(x, y)
+				end
+			end
+		end
+
+		initial_load = false
 	end
 
 	local DoUpdate
@@ -186,9 +218,16 @@ return Class(function(self, inst)
 			end
 		end
 
-		GenerateIceGradient(MAX_GRADIENT_DEPTH)
+		if MAX_GRADIENT_DEPTH > 0 then -- Can be 0 with None in the configurations
+			GenerateIceGradient(MAX_GRADIENT_DEPTH)
 
-		self:StartUpdatingIceTiles()
+			if initial_load then
+				InitialLoad()
+				InitialLoad = nil
+			end
+
+			self:StartUpdatingIceTiles()
+		end
 
 		inst:RemoveEventCallback("winterlands_initialized", InitializeDataGrids)
 	end
@@ -480,11 +519,23 @@ return Class(function(self, inst)
 
 		DoUpdate(true)
 	end	
-		
+
 	function self:StopUpdatingIceTiles()
 		if _update_task then
 			_update_task:Cancel()
 			_update_task = nil
+		end
+	end
+
+	function self:OnSave()
+		return {
+			initial_load = initial_load
+		}
+	end
+
+	function self:OnLoad(data)
+		if data and data.initial_load ~= nil then
+			initial_load = data.initial_load
 		end
 	end
 end)

@@ -8,8 +8,15 @@ local modimport = ENV.modimport
 modimport("init/init_tuning")
 modimport("init/init_tiles")
 
+local languages = {
+	["en"] = "english",
+	["pl"] = "polish"
+}
+
+POLAR_LANG = ENV.GetModConfigData("language")
+
 require("map/polar_terrain")
-require("polar_strings/strings")
+require("polar_strings/"..languages[POLAR_LANG].."/strings")
 
 --	Setpieces
 

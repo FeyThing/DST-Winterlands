@@ -1,21 +1,19 @@
 --	Strings, Translations
-	
-	require("polar_strings/strings")
-	
-	local characters = {"wilson", "willow", "wolfgang", "wendy", "wx78", "wickerbottom", "woodie", "waxwell", "wathgrithr", "webber", "winona", "warly", "wortox", "wormwood", "wurt", "walter", "wanda"}
-	local translation = GetModConfigData("language")
-	
-	for i, character in ipairs(characters) do
-		require("polar_strings/"..character)
-	end
-	
-	if translation then
-		require("polar_strings/translation_"..translation.."/strings")
-		
-		for i, character in ipairs(characters) do
-			require("polar_strings/translation_"..translation.."/"..character)
-		end
-	end
+local characters = {"wilson", "willow", "wolfgang", "wendy", "wx78", "wickerbottom", "woodie", "waxwell", "wathgrithr", "webber", "winona", "warly", "wortox", "wormwood", "wurt", "walter", "wanda"}
+local languages = {
+	["en"] = "english",
+	["pl"] = "polish"
+}
+
+POLAR_LANG = GetModConfigData("language")
+GLOBAL.POLAR_ICEGEN_CONFIG = GetModConfigData("biome_icegen")
+GLOBAL.POLAR_BLIZZARDS_CONFIG = GetModConfigData("biome_blizzards")
+
+require("polar_strings/"..languages[POLAR_LANG].."/strings")
+
+for i, character in ipairs(characters) do
+	require("polar_strings/"..languages[POLAR_LANG].."/"..character)
+end
 	
 --	Main, Postinits
 
