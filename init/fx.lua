@@ -57,7 +57,7 @@ local POLAR_FX = {
 		bank = "mining_fx",
 		build = "mining_ice_fx",
 		anim = "anim",
-        sound = "dontstarve/creatures/together/antlion/sfx/sand_to_glass",
+		sound = "dontstarve/creatures/together/antlion/sfx/sand_to_glass",
 		sounddelay = FRAMES * 2
 	}
 }

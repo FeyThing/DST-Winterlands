@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		GENERIC = "Bah! 'Thou hath disarmed thyself!",
 		ANTLER = "Freya's grace touches even these frozen lands.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Its shine foretells a fine feast."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "May thy soul ascend in Valhalla.",
 		ENRAGED = "Fight me with all your might!",
@@ -84,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
 	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
+	DESCRIBE.ICICLESTAFF = "Calls upon a rain of ice spears."
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
 	DESCRIBE.POLARAMULET = "An invigorating pendant made of the fallens."
+	DESCRIBE.POLARCROWNHAT = "To freeze my foes like Draugrs of old!"
+	DESCRIBE.POLARICESTAFF = "Steer clear, or stay put."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	
 	--	Others
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Our treasured feast will last a little longer."
 	DESCRIBE.POLARTRINKET_1 = "A small, bizarre man."
 	DESCRIBE.POLARTRINKET_2 = "A small, bizarre woman."
+	DESCRIBE.TRAP_POLARTEETH = "Dangers lurk beneath the snow."
 	DESCRIBE.TURF_POLAR_CAVES = "A piece of the battlefield."
 	DESCRIBE.TURF_POLAR_DRYICE = "This road leads me home."
 	DESCRIBE.WALL_POLAR = "Cold and unyielding, as is my resolve!"

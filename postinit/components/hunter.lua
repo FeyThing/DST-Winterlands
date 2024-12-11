@@ -10,7 +10,16 @@ ENV.AddComponentPostInit("hunter", function(self)
 		local beast = OldGetHuntedBeast(self, hunt, spawn_pt, ...)
 		
 		if not self._overridepolar and spawn_pt and GetClosestPolarTileToPoint(spawn_pt.x, 0, spawn_pt.z, 32) ~= nil then
-			return math.random() <= TUNING.HUNT_ALTERNATE_BEAST_CHANCE_MAX and "polarwarg" or "moose_polar"
+			if TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsPolarStormActive() then
+				return "moose_specter"
+			end
+			
+			local season = TheWorld.state.season
+			local surprise_chance = (season == "winter" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE_MAX)
+				or (season == "summer" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE)
+				or TUNING.HUNT_ALTERNATE_POLAR_CHANCE
+			
+			return math.random() < surprise_chance and "polarwarg" or "moose_polar"
 		end
 		
 		return beast

@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		GENERIC = "Ran headfirst into trouble, huh?",
 		ANTLER = "Looks tough. Time to find out if it really is.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Bit too flashy to my liking, but it's still on the menu."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Down for the count!",
 		ENRAGED = "Yeesh, we've got bear problems!",
@@ -84,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This might prove useful."
 	DESCRIBE.FROSTWALKERAMULET = "This'll keep me from slipping on the job. Ha!"
+	DESCRIBE.ICICLESTAFF = "I wouldn't overlook the wind conditions with this thing."
 	DESCRIBE.POLAR_SPEAR = "Pfft. Alright. Assuming you live in a freezer..."
 	DESCRIBE.POLARAMULET = "It said they're all unique or somethin' like that."
+	DESCRIBE.POLARCROWNHAT = "Can't break a sweat if you can't sweat at all."
+	DESCRIBE.POLARICESTAFF = "You gotta freeze to please."
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"
 	
 	--	Others
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.POLARICEPACK = "That little bit of ice went down a long way."
 	DESCRIBE.POLARTRINKET_1 = "Nice scarf you got there. Sure wish I had one too."
 	DESCRIBE.POLARTRINKET_2 = "Er, looks like they had a mixup with two production lines."
+	DESCRIBE.TRAP_POLARTEETH = "Cruel but clever."
 	DESCRIBE.TURF_POLAR_CAVES = "That's a chunk of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "That's a chunk of road."
 	DESCRIBE.WALL_POLAR = "Yeah, that's pretty ice."

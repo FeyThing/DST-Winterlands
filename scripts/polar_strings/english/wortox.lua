@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		GENERIC = "Don't worry, my dear, they will grow back.",
 		ANTLER = "What large horns you have! Can I have them?",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "A prismatic swimmer from deep icy water."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Back to dust! Or snow, if you prefer.",
 		ENRAGED = "They don't like pranks one bite!",
@@ -84,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
 	DESCRIBE.FROSTWALKERAMULET = "New paths unfold when the water grows cold."
+	DESCRIBE.ICICLESTAFF = "Look sharp! For spikes could leave a naughty mark."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
 	DESCRIBE.POLARAMULET = "What matters is that you believe in it, hyuyu!"
+	DESCRIBE.POLARCROWNHAT = "Cold on the outside, freezing on the inside."
+	DESCRIBE.POLARICESTAFF = "It's not nice to leave our guests trapped in ice!"
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
 	
 	--	Others
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Must I sacrifice space for mere mortal food?"
 	DESCRIBE.POLARTRINKET_1 = "I see no soul within, no no."
 	DESCRIBE.POLARTRINKET_2 = "I see no soul within, no no."
+	DESCRIBE.TRAP_POLARTEETH = "Cruel? Maybe. Fun? Certainly!"
 	DESCRIBE.TURF_POLAR_CAVES = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.TURF_POLAR_DRYICE = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or it?"

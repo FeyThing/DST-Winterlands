@@ -8,11 +8,16 @@ local SNOW_HEATERS = {
 	lavae_pet = 6,
 	saladfurnace = 6,
 	stafflight = 10,
+	
+	mermthrone = 5,
+	winona_teleport_pad = 4,
 }
 
 for heater, range in pairs(SNOW_HEATERS) do
 	ENV.AddPrefabPostInit(heater, function(inst)
 		if inst._snowblockrange == nil then
+			inst:AddTag("snowblocker")
+			
 			inst._snowblockrange = net_tinybyte(inst.GUID, heater.."._snowblockrange")
 			inst._snowblockrange:set(range)
 		end

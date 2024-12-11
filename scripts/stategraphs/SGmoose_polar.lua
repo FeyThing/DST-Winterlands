@@ -148,9 +148,29 @@ local states = {
 			inst.components.locomotor:StopMoving()
 			
 			inst.charge_pos = inst:GetPosition()
+			
+			local target = inst.components.combat and inst.components.combat.target
+			if target and inst:HasTag("spectermoose") and inst.DoCast then
+				inst.sg.mem.casttarget = target
+				inst.sg.statemem.fx = SpawnPrefab("deer_ice_charge")
+				inst.sg.statemem.fx.entity:SetParent(inst.entity)
+				inst.sg.statemem.fx.entity:AddFollower()
+				inst.sg.statemem.fx.Follower:FollowSymbol(inst.GUID, "swap_antler_red", 0, 0, 0)
+			end
+		end,
+		
+		onexit = function(inst)
+			if inst.sg.statemem.fx and inst.sg.statemem.fx:IsValid() then
+				inst.sg.statemem.fx:KillFX()
+			end
 		end,
 		
 		timeline = {
+			TimeEvent(1, function(inst)
+				if inst.sg.mem.casttarget and inst.sg.mem.casttarget:IsValid() then
+					inst:DoCast(inst.sg.mem.casttarget)
+				end
+			end),
 			TimeEvent(1.2, function(inst) inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/scratch") end),
 			TimeEvent(1.9, function(inst) inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/scratch") end),
 			TimeEvent(2.4, function(inst) inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/scratch") end),
@@ -325,12 +345,13 @@ CommonStates.AddCombatStates(states, {
 		TimeEvent(23 * FRAMES, function(inst)
 			inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/bodyfall_2")
 			if inst.hasantler then
+				local loot = inst:HasTag("spectermoose") and "moose_polar_antler" or "boneshard"
 				local pt = inst:GetPosition()
 				pt.y = 1
 				
 				inst:SetAntlered(nil, false)
 				for i = 1, math.random(2) do
-					inst.components.lootdropper:SpawnLootPrefab("boneshard", pt)
+					inst.components.lootdropper:SpawnLootPrefab(loot, pt)
 				end
 			end
 		end),

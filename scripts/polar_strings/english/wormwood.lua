@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Mmm?"
+	DESCRIBE.TUMBLEWEED_POLAR = "Slow down!"
 	
 --	Mobs
 	
@@ -43,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		GENERIC = "Lesson learned. Should not fight friend",
 		ANTLER = "Got big branches!",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Shiny Glub Glub!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Uh oh...",
 		ENRAGED = "Need to chill!",
@@ -83,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Dropped something?"
 	DESCRIBE.FROSTWALKERAMULET = "Now water, now rock?"
+	DESCRIBE.ICICLESTAFF = "Makes Ouchie-Ouch-Ouch Rain"
 	DESCRIBE.POLAR_SPEAR = "Spiky"
 	DESCRIBE.POLARAMULET = "Ouchie Neck Thing"
+	DESCRIBE.POLARCROWNHAT = "Head Thing want warmer?"
+	DESCRIBE.POLARICESTAFF = "Everything go Brrr"
 	DESCRIBE.POLARMOOSEHAT = "Axe friend?"
 	
 	--	Others
@@ -96,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Keeps belly stuff more?"
 	DESCRIBE.POLARTRINKET_1 = "Cozy little man"
 	DESCRIBE.POLARTRINKET_2 = "Pointy hat girl need help?"
+	DESCRIBE.TRAP_POLARTEETH = "Chilly Spikes"
 	DESCRIBE.TURF_POLAR_CAVES = "Ice"
 	DESCRIBE.TURF_POLAR_DRYICE = "Ice"
 	DESCRIBE.WALL_POLAR = "Slippery"

@@ -97,6 +97,35 @@ function MakeNoGrowInWinter(inst, ...)
 	end
 end
 
+--	Add buff from eating Ice Lettuce things
+
+function EatIceLettuce(inst, eater, duration, freeziness, temperature)
+	if freeziness and eater.components.freezable then
+		eater.components.freezable:AddColdness(freeziness)
+	end
+	
+	if temperature and eater.components.temperature and eater.components.temperature.current then
+		eater.components.temperature:SetTemperature(eater.components.temperature.current + temperature)
+	end
+	
+	if eater.components.debuffable == nil then
+		eater:AddComponent("debuffable")
+	end
+	
+	if not duration then
+		return
+	end
+	
+	local buff = eater.components.debuffable:GetDebuff("buff_polarimmunity") or eater.components.debuffable:AddDebuff("buff_polarimmunity", "buff_polarimmunity")
+	local timeleft = (buff and buff.components.timer) and buff.components.timer:GetTimeLeft("buffover") or nil
+	
+	if timeleft and duration and duration > timeleft then
+		buff.components.timer:SetTimeLeft("buffover", duration)
+	end
+	
+	return buff
+end
+
 --	Descs get sneazy while having the snow debuff
 
 function PolarifySpeech(ret, inst)
@@ -148,7 +177,10 @@ function IsTooDeepInSnow(inst, viewer)
 	
 	if TUNING.POLAR_WAVES_ENABLED and inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
 		local x, y, z = inst.Transform:GetWorldPosition()
+		local temperature = TheWorld.state.temperature
+		
 		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
+			and temperature and temperature < TUNING.POLAR_SNOW_MELT_TEMP
 		
 		if insnow and not inst:HasTag("snowhidden") then
 			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
@@ -195,7 +227,8 @@ function PlayFootstep(inst, volume, ispredicted, ...)
 	if inst.components.polarwalker then
 		local x, y, z = inst.Transform:GetWorldPosition()
 		
-		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z) then
+		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z)
+			and (TheWorld.state.temperature or 0) <= TUNING.POLAR_SNOW_MELT_TEMP then
 			local splash_fx = (inst:HasTag("epic") and inst:HasTag("largecreature")) and "polar_splash_epic"
 				or (inst:HasTag("epic") or inst:HasTag("largecreature")) and "polar_splash_large"
 				or "polar_splash"

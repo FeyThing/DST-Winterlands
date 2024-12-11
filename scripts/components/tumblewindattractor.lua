@@ -1,13 +1,11 @@
 local function OnBlizzardLevelChanged(inst, data)
-	local level = data and data.level or 0
 	local self = inst.components.tumblewindattractor
+	local in_storm = TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)
 	
 	if self then
-		if level >= TUNING.SANDSTORM_FULL_LEVEL then
-			if not self.enabled then
-				self:Enable(true)
-			end
-		elseif self.enabled then
+		if in_storm and not self.enabled then
+			self:Enable(true)
+		elseif not in_storm and self.enabled then
 			self:Enable(false)
 		end
 	end
@@ -45,8 +43,12 @@ function TumbleWindAttractor:SpawnTumbler()
 	end
 	
 	if self.enabled then
-		local spawntime = self:GetSpawnRate()
+		if TheWorld.components.polarstorm and not TheWorld.components.polarstorm:IsInPolarStorm(self.inst) then
+			self:Enable(false)
+			return
+		end
 		
+		local spawntime = self:GetSpawnRate()
 		self._spawntask = self.inst:DoTaskInTime(spawntime, function()
 			self:SpawnTumbler()
 		end)

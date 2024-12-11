@@ -43,7 +43,6 @@ local function fn()
 	inst.components.perishable.onperishreplacement = "houndstooth"
 	
 	inst:AddComponent("stackable")
-	inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
 	
 	MakeHauntableLaunchAndSmash(inst)
 	

@@ -21,10 +21,10 @@ TECH.POLARAMULET_STATION = {POLARAMULET_STATION = 1}
 POLARAMULET_PARTS = rawget(_G, "POLARAMULET_PARTS") or {}
 
 local AMULET_PARTS = {
-	gnarwail_horn = {build = "polar_amulet_items"},
-	houndstooth = {build = "polar_amulet_items"},
-	polarwargstooth = {build = "polar_amulet_items"},
-	walrus_tusk = {build = "polar_amulet_items"},
+	gnarwail_horn = {build = "polar_amulet_items", unlock_recipe = "frostwalkeramulet"},
+	houndstooth = {build = "polar_amulet_items", unlock_recipe = "polaricestaff"},
+	polarwargstooth = {build = "polar_amulet_items", unlock_recipe = "polarcrownhat"},
+	walrus_tusk = {build = "polar_amulet_items", unlock_recipe = "iciclestaff"},
 }
 
 local scrapbookdata = require("screens/redux/scrapbookdata")

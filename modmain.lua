@@ -22,6 +22,7 @@ require("polarmain")
 local inits = {
 	"init_actions",
 	"init_assets",
+	"init_cooking",
 	"init_prefabs",
 	"init_recipes",
 	"init_retrofit",
@@ -44,6 +45,7 @@ local prefabs = {
 	"forest",
 	"frogs",
 	"grass",
+	"oceanfish",
 	"penguin",
 	"rabbit",
 	"rock_ice",
@@ -52,10 +54,12 @@ local prefabs = {
 	"walrus",
 	"wilson",
 	
+	"blizzard_fires",
 	"ents_onfreeze",
 	"polar_walking",
 	"snow_heaters",
 	"waxed_plants",
+	"wx78_modules",
 }
 
 local components = {

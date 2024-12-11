@@ -1,0 +1,6 @@
+﻿<Atlas>
+	<Texture filename="cookbook_polar.tex" />
+	<Elements>
+		<Element name="cookbook_iceburrito.tex" u1="0.001" u2="0.999" v2="0.999" v1="0.001" />
+	</Elements>
+</Atlas>

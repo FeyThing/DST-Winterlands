@@ -8,6 +8,8 @@ SetSharedLootTable("polar_icicle", {
 })
 
 local BREAK_IGNORE_TAGS = {"INLIMBO", "icicleimmune"}
+local BREAK_SAFETY_TAGS = {"icicleimmune"}
+local CAVEPILLAR_TAGS = {"icecaveshelter"}
 
 local ICICLE_STAGES = {"small", "med", "large"}
 local ICICLE_ROCK_TAGS = {"rockicicle"}
@@ -19,6 +21,11 @@ local function DoBreak(inst)
 	if inst.AnimState:IsCurrentAnimation("fall_"..anim) then
 		inst.AnimState:PlayAnimation("fx_"..anim, false)
 		inst.SoundEmitter:PlaySound("dontstarve/creatures/together/antlion/sfx/glass_break")
+		
+		if FindEntity(inst, 4, nil, BREAK_SAFETY_TAGS) then
+			inst.SoundEmitter:PlaySound("dontstarve/common/staff_dissassemble")
+			return
+		end
 		
 		local ents = TheSim:FindEntities(x, y, z, 2, nil, BREAK_IGNORE_TAGS)
 		for i, v in ipairs(ents) do
@@ -54,8 +61,8 @@ local function DoBreak(inst)
 		if numworks > 0 and rock.components.workable then
 			rock.components.workable:WorkedBy(inst, numworks)
 		end
-
-		if FindEntity(inst, 6, nil, {"icecaveshelter"}) ~= nil then
+		
+		if FindEntity(inst, 6, nil, CAVEPILLAR_TAGS) ~= nil then
 			return
 		end
 		

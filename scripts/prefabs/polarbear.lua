@@ -222,9 +222,13 @@ local function StartPolarPlowing(inst)
 	
 	if not plower then
 		plower = SpawnPrefab("shovel")
-		if plower.components.polarplower then
-			plower.components.polarplower.plow_use = 0 -- TODO: custom shovel instead ? (don't drop them on death otherwise!)
+		if plower.components.finiteuses then
+			plower.components.finiteuses:SetConsumption(ACTIONS.POLARPLOW, 0)
 		end
+		if plower.components.inventoryitem then
+			plower.components.inventoryitem.keepondeath = true
+		end
+		plower.persists = false
 		
 		inst.components.inventory:GiveItem(plower)
 	end

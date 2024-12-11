@@ -39,6 +39,7 @@ local SnowWaver = Class(function(self, inst)
 	if TUNING.POLAR_WAVES_ENABLED then
 		self.blocker_update = true
 		self.inst:ListenForEvent("setinpolar", OnInPolar)
+		self.inst:ListenForEvent("temperaturetick", function(src, temperature) self:OnTemperatureChanged(temperature) end, TheWorld)
 	end
 end)
 
@@ -49,10 +50,14 @@ function SnowWaver:OnRemoveFromEntity()
 end
 
 function SnowWaver:OnTemperatureChanged(temperature)
+	local x, y, z = self.inst.Transform:GetWorldPosition()
+	local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil
 	temperature = temperature or TheWorld.state.temperature
 	
 	if temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled then
-		self:Enable(true)
+		if in_polar then
+			self:Enable(true)
+		end
 	elseif temperature > TUNING.POLAR_SNOW_MELT_TEMP and self.enabled then
 		self:Enable(false)
 	end
@@ -157,7 +162,10 @@ function SnowWaver:Enable(enabled)
 		self.inst:StartUpdatingComponent(self)
 		
 		-- For fires or other blockers that don't update the client
-		self.update_internal = self.inst:DoPeriodicTask(TUNING.POLAR_SNOW_UPDATE_RATE, function() self.blocker_update = true end)
+		self.update_internal = self.inst:DoPeriodicTask(TUNING.POLAR_SNOW_UPDATE_RATE, function()
+			self.blocker_update = true
+		end)
+		
 		self.inst:ListenForEvent("snowwave_blockerupdate", OnSnowBlockRangeDirty)
 		self.inst:ListenForEvent("onremove", OnPlayerDespawn)
 	elseif self.update_internal then

@@ -32,10 +32,17 @@ return Class(function(self, inst)
     local _blizzard_time_task
 	local _blizzard_start_time
     
+	local BLIZZARD_SHELTER_TAGS = {"blizzardprotection"}
+	local BLIZZARD_SHELTER_NOT_TAGS = {"INLIMBO"}
+	
 	-- [ Functions ] --
     local function OnSeasonChange(_, season)
         _season = season
-
+		
+		if _blizzard_season_mult[season] == nil then
+			_season = "autumn"
+		end
+		
         if _blizzard_time_task then -- Update task period
             local timeleft = _blizzard_time_task.period * _blizzard_season_mult[season].cooldown_mult
             _blizzard_time_task.period = timeleft
@@ -119,25 +126,41 @@ return Class(function(self, inst)
     function self:IsInPolarStorm(ent)
         return self:GetPolarStormLevel(ent) ~= 0
     end
-    
-    function self:GetPolarStormLevel(ent)
-        local stormlevel = (ent and self:IsPolarStormActive() and TheWorld.components.polarsnow_manager) and
-        TheWorld.components.polarsnow_manager:GetDataAtPoint(ent.Transform:GetWorldPosition()) or
-        0
-
-        local x, y, z = ent.Transform:GetWorldPosition()
-        local pillars = TheSim:FindEntities(x, y, z, TUNING.SHADE_POLAR_RANGE, { "icecaveshelter" })
-        local minsq = TUNING.SHADE_POLAR_RANGE * TUNING.SHADE_POLAR_RANGE
-        for i, pillar in ipairs(pillars) do
-            local px, py, pz = pillar.Transform:GetWorldPosition()
-            if distsq(x, z, px, pz) <= minsq then
-                minsq = distsq(x, z, px, pz)
-            end
-        end
-
-        return stormlevel * math.clamp((math.sqrt(minsq) - TUNING.SHADE_POLAR_RANGE + TILE_SCALE) / TILE_SCALE, 0.2, 1)
-    end
-    
+	
+	function self:GetPolarStormLevel(ent)
+		local stormlevel = (ent and self:IsPolarStormActive() and TheWorld.components.polarsnow_manager)
+			and TheWorld.components.polarsnow_manager:GetDataAtPoint(ent.Transform:GetWorldPosition()) or 0
+		
+		if stormlevel <= 0 then
+			return 0
+		end
+		
+		local x, y, z = ent.Transform:GetWorldPosition()
+		local shelters = TheSim:FindEntities(x, y, z, 30, nil, BLIZZARD_SHELTER_NOT_TAGS, BLIZZARD_SHELTER_TAGS)
+		
+		local minsq = math.huge
+		local shelterrad_edge = 0
+		
+		for i, shelter in ipairs(shelters) do
+			local px, py, pz = shelter.Transform:GetWorldPosition()
+			local shelterrad = (shelter.blizzardprotect_rad or 0) * 2
+			local distancesq = distsq(x, z, px, pz)
+			
+			if shelterrad > shelterrad_edge then
+				shelterrad_edge = shelterrad * 0.5
+			end
+			if distancesq <= shelterrad * shelterrad then
+				minsq = math.min(minsq, distancesq)
+			end
+		end
+		
+		if minsq == math.huge then
+			return stormlevel
+		end
+		
+		return stormlevel * math.clamp((math.sqrt(minsq) - shelterrad_edge + TILE_SCALE) / TILE_SCALE, 0.2, 1)
+	end
+	
     function self:IsPolarStormActive()
         return _polarstormactive
     end

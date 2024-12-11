@@ -30,17 +30,20 @@ function PolarWalker:ShouldSlow()
 		return false, "MELTED"
 	end
 	
-	if HasPolarSnowImmunity(self.inst) then
-		return false, "IMMUNE"
-	end
-	
 	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
 		return false, "RIDING"
 	end
 	
 	local pt = self.inst:GetPosition()
 	if IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt) then
-		return not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z), "SNOW"
+		local in_snow = not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z)
+		local debuff_immunity = not in_snow or self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst)
+		
+		if HasPolarSnowImmunity(self.inst) then
+			return false, debuff_immunity and "IMMUNE" or "IMMUNE_DEBUFF"
+		end
+		
+		return in_snow, debuff_immunity and "SNOW" or "SNOW_DEBUFF"
 	end
 	
 	return false
@@ -96,11 +99,12 @@ function PolarWalker:IsPolarSlowed()
 		self.slow_time = 0
 		self.start_time = nil
 		
-		return false, false
+		return false, false, false
 	end
 	
 	local slowed = false
-	local slowing = self:ShouldSlow()
+	local slowing, cause = self:ShouldSlow()
+	local debuffed = cause and string.sub(cause, -6) == "DEBUFF"
 	
 	if slowing then
 		if self.start_time == nil then
@@ -117,7 +121,7 @@ function PolarWalker:IsPolarSlowed()
 		self.start_time = nil
 	end
 	
-	return slowed, slowing
+	return slowed, slowing, debuffed
 end
 
 function PolarWalker:IsSlowed(fully)
@@ -159,7 +163,7 @@ function PolarWalker:SetWetness()
 	end
 	
 	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarDebuffImmunity(self.inst) then
-		return
+		return -- Only immunity to debuff, not slowdown
 	end
 	
 	self.inst:AddDebuff("buff_polarwetness", "buff_polarwetness")
@@ -170,7 +174,7 @@ function PolarWalker:OnUpdate()
 		return
 	end
 	
-	local slowed, slowing = self:IsPolarSlowed()
+	local slowed, slowing, debuffed = self:IsPolarSlowed()
 	
 	local locomotor = self.inst.components.locomotor
 	local carefulwalker = self.inst.components.carefulwalker
@@ -212,7 +216,7 @@ function PolarWalker:OnUpdate()
 		end
 	end
 	
-	if slowing and self.inst.components.moisture then
+	if debuffed then
 		self:SetWetness()
 	end
 	

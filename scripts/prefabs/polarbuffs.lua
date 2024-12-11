@@ -32,7 +32,8 @@ local function wetness_ontick(inst, target)
 		local heat_sources = TheSim:FindEntities(x, y, z, 10, HEATSOURCE_TAGS, HEATSOURCE_NOT_TAGS)
 		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z) -- TODO: Ignore blockers if source of snow is blizard
 		
-		if in_snow or #heat_sources > 0 then
+		local immune = HasPolarDebuffImmunity(target)
+		if not immune and (in_snow or #heat_sources > 0) then
 			inst.components.temperature:SetTemp(nil)
 		else
 			inst.components.temperature:SetTemp(temperature)
@@ -42,7 +43,6 @@ local function wetness_ontick(inst, target)
 			target.components.temperature:SetModifier("polarwetness", TUNING.POLARWETNESS_DEBUFF_TEMP_MODIFIER * level)
 		end
 		
-		local immune = HasPolarDebuffImmunity(target)
 		local waterproofness = immune and 1 or (target.components.moisture and target.components.moisture:GetWaterproofness() or 0)
 		inst.components.temperature.inherentinsulation = TUNING.POLAR_WETNESS_MAX_INSULATION * waterproofness * (immune and 4 or 1)
 		

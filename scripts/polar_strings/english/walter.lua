@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
 		ANTLER = "Hm. Not too mysterious looking! But maybe if it was white and hiding in a blizzard...",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Hey, look at those creepy eyes!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Sir? Sir I think you need our help!",
 		ENRAGED = "What big fangs you have!",
@@ -84,9 +85,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "A good stick to play fetch and... for a few other things."
 	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
+	DESCRIBE.ICICLESTAFF = "How about we sling a shot? Heh. Good one, Walter."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
+	DESCRIBE.POLARCROWNHAT = "So, when are we building my ice castle?"
 	DESCRIBE.POLARAMULET = "A little something from the souvenir shop."
-	DESCRIBE.POLARMOOSEHAT = "Let's hope Woby won't catch any fleas."
+	DESCRIBE.POLARICESTAFF = "I feel sorry for all the bugs around, just minding their own business."
+	DESCRIBE.POLARMOOSEHAT = "Moose fur, no doubt. Did you smell it?"
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.POLARICEPACK = "It won't make my jerky eternal but it's one step closer."
 	DESCRIBE.POLARTRINKET_1 = "He seems ready for a snowball fight. And so am I!"
 	DESCRIBE.POLARTRINKET_2 = "Wait... I know you."
+	DESCRIBE.TRAP_POLARTEETH = "If this doesn't catch the Werebeaver, I quit!"
 	DESCRIBE.TURF_POLAR_CAVES = "A patch of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Some road that sends shivers up my legs."
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."

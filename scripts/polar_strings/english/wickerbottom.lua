@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Make no mistake, it can still hold a fight.",
 		ANTLER = "A fine specimen with defenses fit for the wilds.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "I wonder how the world would look through pearly oculars."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Remarkable, but lifeless.",
 		ENRAGED = "Now that's a \"force of nature\". Tsk!",
@@ -84,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "It's the right shape for a few applications."
 	DESCRIBE.FROSTWALKERAMULET = "Fascinating. It solidifies water through rapid thermal regulation."
+	DESCRIBE.ICICLESTAFF = "An accurate cast is worth two errant ones."
 	DESCRIBE.POLAR_SPEAR = "Crude, but highly durable in the cold."
 	DESCRIBE.POLARAMULET = "I would qualify these curios as absurd, in normal times."
+	DESCRIBE.POLARCROWNHAT = "It utilizes gradients of cold to shield and attack as particles compress."
+	DESCRIBE.POLARICESTAFF = "A good clunk brings everyone back to their manners."
 	DESCRIBE.POLARMOOSEHAT = "To keep one's warmth while the cold rages on."
 	
 	--	Others
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Works wonders when sealed up in an airtight space."
 	DESCRIBE.POLARTRINKET_1 = "Quite the cozy odd little fellow."
 	DESCRIBE.POLARTRINKET_2 = "Quite the cozy odd little lady."
+	DESCRIBE.TRAP_POLARTEETH = "An interesting application of cryogenics."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground. You step on it."
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground. You step on it."
 	DESCRIBE.WALL_POLAR = "Barriers of ice, frigid and formidable."

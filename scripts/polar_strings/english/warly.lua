@@ -36,6 +36,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Anything edible in here?"
+	DESCRIBE.TUMBLEWEED_POLAR = "Maybe venturing out there wasn't all bad!"
 	
 --	Mobs
 	
@@ -43,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		GENERIC = "It lost its garnish.",
 		ANTLER = "A grand beast sure to yield robust, gamey flavors.",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Poisson frais!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "I can finally sell its fur.",
 		ENRAGED = "It's hungry for a fight!",
@@ -83,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
 	DESCRIBE.FROSTWALKERAMULET = "This takes frosting to the next level!"
+	DESCRIBE.ICICLESTAFF = "Il pleut il mouille? No, it kills!"
 	DESCRIBE.POLAR_SPEAR = "It's all fun until it starts dripping."
 	DESCRIBE.POLARAMULET = "You wouldn't want to be around when I get my fangs out."
+	DESCRIBE.POLARCROWNHAT = "Was anyone afraid I'd finally lose my cool?"
+	DESCRIBE.POLARICESTAFF = "Pardon, but I need to breathe some fresh air."
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."
 	
 	--	Others
@@ -96,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Some fortification against my worst enemy."
 	DESCRIBE.POLARTRINKET_1 = "Were there flowers growing in your snowy garden?"
 	DESCRIBE.POLARTRINKET_2 = "I take it your lawn wasn't green all year round."
+	DESCRIBE.TRAP_POLARTEETH = "Grips like a fork, cuts like a butcher knife."
 	DESCRIBE.TURF_POLAR_CAVES = "It's like an ingredient for the ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "It's like an ingredient for the ground."
 	DESCRIBE.WALL_POLAR = "Aaah. Isn't that ice?"

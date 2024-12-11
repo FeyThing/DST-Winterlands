@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "Me want horn bit to grow back too, florp.",
 		ANTLER = "Would like have big horns like this...",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "It sooo prettyyy!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Good. Won't eat fishie now.",
 		ENRAGED = "GLORPT! RUN!!",
@@ -84,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Tree dropped this, but me keep it."
 	DESCRIBE.FROSTWALKERAMULET = "Close enough from swimming, flort."
+	DESCRIBE.ICICLESTAFF = "Makes super heavy rain drops."
 	DESCRIBE.POLAR_SPEAR = "But, Wicker-lady said not to play with food?"
 	DESCRIBE.POLARAMULET = "Yay! Dead folk make me fancy!"
+	DESCRIBE.POLARCROWNHAT = "Wurt rules all over sea of snow!!"
+	DESCRIBE.POLARICESTAFF = "Got all of winter in a stick, florp."
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"
 	
 	--	Others
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Tada! Made a friend for chilly box."
 	DESCRIBE.POLARTRINKET_1 = "Weirder tiny man."
 	DESCRIBE.POLARTRINKET_2 = "Weirder tiny lady."
+	DESCRIBE.TRAP_POLARTEETH = "And now me watch. Hee-hee!"
 	DESCRIBE.TURF_POLAR_CAVES = "Ground bit."
 	DESCRIBE.TURF_POLAR_DRYICE = "Make ground walk-ier!"
 	DESCRIBE.WALL_POLAR = "Brrr... don't want to live in ice castle!"

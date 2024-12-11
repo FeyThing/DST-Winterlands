@@ -44,6 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "Hmph, amateur. Lemme show you how it's done.",
 		ANTLER = "Big, bold, and proud of his woods like I am!",
 	}
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Has anyone told ya you got pretty eyes, eh?"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "You would make a fine rug.",
 		ENRAGED = "Now we're fightin'!",
@@ -84,8 +85,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "I'll just take that, eh!"
 	DESCRIBE.FROSTWALKERAMULET = "To turn the ocean into one giant hockey field."
+	DESCRIBE.ICICLESTAFF = "That will mess you up more than a whole falling tree."
 	DESCRIBE.POLAR_SPEAR = "Ice suppose that would hurt a little."
 	DESCRIBE.POLARAMULET = "How wild do I look with it, eh?"
+	DESCRIBE.POLARCROWNHAT = "I can see myself wearing this one, actually."
+	DESCRIBE.POLARICESTAFF = "Makes me feel right at home, eh."
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
 	
 	--	Others
@@ -97,6 +101,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.POLARICEPACK = "Who needs an electric freezer when you have this?"
 	DESCRIBE.POLARTRINKET_1 = "Warly would like that scarf."
 	DESCRIBE.POLARTRINKET_2 = "Eh? Oh, it's just that she looks like family, a bit."
+	DESCRIBE.TRAP_POLARTEETH = "It's one step further in trickery."
 	DESCRIBE.TURF_POLAR_CAVES = "Just more ground, eh?"
 	DESCRIBE.TURF_POLAR_DRYICE = "Now to find ice skates in here..."
 	DESCRIBE.WALL_POLAR = "Anyone's feelin' like breaking the ice?"
