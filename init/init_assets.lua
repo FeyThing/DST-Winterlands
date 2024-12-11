@@ -53,6 +53,7 @@ local ITEMS = {
 	"icelettuce",
 	"icelettuce_seeds",
 	"iciclestaff",
+	"moose_polar_antler",
 	"oceanfish_medium_polar1_inv",
 	"polar_dryice",
 	"polaramulet",

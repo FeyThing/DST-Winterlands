@@ -24,6 +24,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Mobs
 	
 	NAMES.MOOSE_POLAR = "Moose"
+	NAMES.MOOSE_SPECTER = "Spectral Moose"
 	NAMES.OCEANFISH_MEDIUM_POLAR1 = "Boreal Bass"
 	NAMES.OCEANFISH_MEDIUM_POLAR1_INV = "Boreal Bass"
 	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
@@ -46,6 +47,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Crafting
 	NAMES.BLUEGEM_OVERCHARGED = "Overcharged Blue Gem"
 	NAMES.BLUEGEM_SHARDS = "Blue Gem Shards"
+	NAMES.MOOSE_POLAR_ANTLER = "Spectral Antler"
 	NAMES.POLAR_DRYICE = "Dry Ice"
 	NAMES.POLARBEARFUR = "Polar Fur"
 	NAMES.POLARWARGSTOOTH = "Ice Fang"
@@ -184,7 +186,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARAMULET_STATION_BUILDER_LOOP = {
 		"...",
 		"...are you... inspired yet?",
-		"...you can... fishing later.",
+		"...you can... finish later.",
 		{"...this can... wait...", "...if you need."},
 	}
 	STRINGS.POLARAMULET_STATION_BUILDER_PST = {
@@ -228,7 +230,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
 	
 	--	Recipes
-	RECIPE_DESC.BLUEGEM_OVERCHARGED = "TEMP RECIPE!\nIt will be a loot later."
+	RECIPE_DESC.BLUEGEM_OVERCHARGED = "...hunt it down...\n...it hides in the storm."
 	RECIPE_DESC.FROSTWALKERAMULET = "Never was water this cool before!"
 	RECIPE_DESC.ICICLESTAFF = "Summon the very things you swore to destroy."
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
@@ -243,7 +245,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
 	
-	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading teeth with some shady individual!"
+	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading with some shady individual!"
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"
 	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"The Polar Exchange\""
 	

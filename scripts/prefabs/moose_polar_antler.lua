@@ -1,5 +1,5 @@
 local assets = {
-	Asset("ANIM", "anim/polarwarg_tooth.zip"),
+	Asset("ANIM", "anim/moose_polar_antler.zip"),
 }
 
 local function fn()
@@ -12,14 +12,9 @@ local function fn()
 	
 	MakeInventoryPhysics(inst)
 	
-	inst.AnimState:SetBank("polarwarg_tooth")
-	inst.AnimState:SetBuild("polarwarg_tooth")
+	inst.AnimState:SetBank("moose_polar_antler")
+	inst.AnimState:SetBuild("moose_polar_antler")
 	inst.AnimState:PlayAnimation("idle")
-	
-	inst:AddTag("frozen")
-	inst:AddTag("show_spoilage")
-	--inst:AddTag("blowpipeammo")
-	--inst:AddTag("reloaditem_ammo")
 	
 	inst.pickupsound = "rock"
 	
@@ -35,18 +30,12 @@ local function fn()
 	
 	inst:AddComponent("inventoryitem")
 	
-	--inst:AddComponent("reloaditem")
-	
-	inst:AddComponent("perishable")
-	inst.components.perishable:SetPerishTime(TUNING.PERISH_SLOW)
-	inst.components.perishable:StartPerishing()
-	inst.components.perishable.onperishreplacement = "houndstooth"
-	
 	inst:AddComponent("stackable")
+	inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
 	
 	MakeHauntableLaunchAndSmash(inst)
 	
 	return inst
 end
 
-return Prefab("polarwargstooth", fn, assets)
+return Prefab("moose_polar_antler", fn, assets)

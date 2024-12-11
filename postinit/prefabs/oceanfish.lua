@@ -20,33 +20,42 @@ FISH_DATA.fish["oceanfish_medium_polar1"] = {
 	build = "oceanfish_medium_polar1",
 	weight_min = 172.41,
 	weight_max = 228.88,
-	walkspeed = 2.5,
-	runspeed = 2.5,
+	
+	walkspeed = 1.1,
+	runspeed = 1.1,
 	stamina = {
-		drain_rate = 		0.25,
-		recover_rate = 		0.05,
-		struggle_times = 	{low = 2, r_low = 0, high = 2, r_high = 1},
-		tired_times = 		{low = 4, r_low = 1, high = 2, r_high = 1},
-		tiredout_angles = 	{has_tention = 15, low_tention = 15},
+		drain_rate = 		0.15,
+		recover_rate = 		0.1,
+		struggle_times = 	{low = 4, r_low = 1, high = 4, r_high = 2},
+		tired_times = 		{low = 4, r_low = 0, high = 4, r_high = 1},
+		tiredout_angles = 	{has_tention = 30, low_tention = 60},
 	},
+	
 	schoolmin = 2,
 	schoolmax = 5,
 	schoolrange = 3,
 	schoollifetimemin = 480,
 	schoollifetimemax = 960,
+	
 	herdwandermin = 30,
 	herdwandermax = 60,
 	herdarrivedist = 8,
 	herdwanderdelaymin = 30,
 	herdwanderdelaymax = 60,
+	
 	set_hook_time = SET_HOOK_TIME_MEDIUM,
 	breach_fx = BREACH_FX_MEDIUM,
+	loot = {"fishmeat"},
+	heavy_loot = {"fishmeat", "fishmeat_small"},
+	cooking_product = "fishmeat_cooked",
 	perish_product = "fishmeat_small",
 	fishtype = "meat",
-	lures = TUNING.OCEANFISH_LURE_PREFERENCE.MEAT,
-	diet = DIET.MEAT,
+	
+	lures = TUNING.OCEANFISH_LURE_PREFERENCE.OMNI,
+	diet = DIET.OMNI,
 	cooker_ingredient_value = {meat = 1, fish = 1, frozen = 1},
 	edible_values = {health = TUNING.HEALING_MEDSMALL, hunger = TUNING.CALORIES_MED, sanity = 0, foodtype = FOODTYPE.MEAT},
+	
 	dynamic_shadow = SHADOW_MEDIUM,
 }
 

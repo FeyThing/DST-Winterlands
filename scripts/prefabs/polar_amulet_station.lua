@@ -313,6 +313,7 @@ local function fn()
 	inst.AnimState:PlayAnimation("idle1")
 	
 	inst:AddTag("snowblocker")
+	inst:AddTag("snowshack")
 	
 	inst.SoundEmitter:PlaySound("polarsounds/shack/woowoo", "woowoo")
 	

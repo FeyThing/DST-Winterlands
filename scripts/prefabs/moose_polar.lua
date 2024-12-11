@@ -1,4 +1,4 @@
-local assets = {
+local assets_normal = {
 	Asset("ANIM", "anim/moose_polar.zip"),
 	Asset("ANIM", "anim/moose_polar_eye.zip"),
 	
@@ -6,8 +6,17 @@ local assets = {
 	Asset("ANIM", "anim/deer_action.zip"),
 }
 
+local assets_specter = {
+	Asset("ANIM", "anim/moose_specter.zip"),
+	Asset("ANIM", "anim/moose_specter_eye.zip"),
+	
+	Asset("ANIM", "anim/deer_basic.zip"),
+	Asset("ANIM", "anim/deer_action.zip"),
+}
+
 local prefabs = {
 	"meat",
+	"moose_polar_antler",
 }
 
 local brain = require("brains/moose_polarbrain")
@@ -58,11 +67,13 @@ end
 
 local function OnShedAntler(inst, other)
 	if ValidShedAntlerTarget(inst, other) then
-		if other:HasTag("antlertree") then
-			inst:SetAntlered(false, false)
-		end
-		if not (inst.components.health:IsDead() or inst.sg:HasStateTag("busy")) then
-			inst.sg:GoToState("knockoffantler")
+		if not inst:HasTag("spectermoose") then
+			if other:HasTag("antlertree") then
+				inst:SetAntlered(false, false)
+			end
+			if not (inst.components.health:IsDead() or inst.sg:HasStateTag("busy")) then
+				inst.sg:GoToState("knockoffantler")
+			end
 		end
 		
 		inst.charge_pos = inst:GetPosition()
@@ -78,10 +89,24 @@ local function OnCollide(inst, other)
 	end
 end
 
+--
+
+local function DoCast(inst, target)
+	if target == nil or inst.castfx == nil then
+		return
+	end
+	
+	local x, y, z = target.Transform:GetWorldPosition()
+	local spell = SpawnPrefab(inst.castfx)
+	
+	spell.Transform:SetPosition(x, 0, z)
+	spell:DoTaskInTime(inst.castduration, spell.KillFX)
+end
+
 local function ShowAntler(inst)
 	if inst.hasantler then
 		inst.AnimState:Show("swap_antler")
-		inst.AnimState:OverrideSymbol("swap_antler_red", "moose_polar", "swap_antler1")
+		inst.AnimState:OverrideSymbol("swap_antler_red", "moose_"..(inst:HasTag("spectermoose") and "specter" or "polar"), "swap_antler1")
 	else
 		inst.AnimState:Hide("swap_antler")
 	end
@@ -124,101 +149,119 @@ local function OnTimerDone(inst, data)
 	end
 end
 
-local function fn()
-	local inst = CreateEntity()
-	
-	inst.entity:AddTransform()
-	inst.entity:AddAnimState()
-	inst.entity:AddSoundEmitter()
-	inst.entity:AddDynamicShadow()
-	inst.entity:AddNetwork()
-	
-	inst.Transform:SetSixFaced()
-	
-	inst.DynamicShadow:SetSize(1.75, 0.75)
-	
-	MakeCharacterPhysics(inst, 200, 0.5)
-	
-	inst.AnimState:SetBank("deer")
-	inst.AnimState:SetBuild("moose_polar")
-	inst.AnimState:PlayAnimation("idle_loop", true)
-	inst.AnimState:OverrideSymbol("swap_neck_collar", "moose_polar", "swap_neck")
-	inst.AnimState:OverrideSymbol("swap_antler_red", "moose_polar", "swap_antler1")
-	inst.AnimState:SetScale(1.2, 1.2)
-	inst.AnimState:Hide("CHAIN")
-	
-	inst:AddTag("animal")
-	inst:AddTag("moose")
-	inst:AddTag("saltlicker")
-	
-	inst.entity:SetPristine()
-	
-	if not TheWorld.ismastersim then
+local function MakeMoose(name, assets)
+	local function fn()
+		local inst = CreateEntity()
+		
+		inst.entity:AddTransform()
+		inst.entity:AddAnimState()
+		inst.entity:AddSoundEmitter()
+		inst.entity:AddDynamicShadow()
+		inst.entity:AddNetwork()
+		
+		inst.Transform:SetSixFaced()
+		
+		inst.DynamicShadow:SetSize(1.75, 0.75)
+		
+		MakeCharacterPhysics(inst, 200, 0.5)
+		
+		local scale = 1.2
+		inst.AnimState:SetBank("deer")
+		inst.AnimState:SetBuild("moose_"..name)
+		inst.AnimState:PlayAnimation("idle_loop", true)
+		inst.AnimState:OverrideSymbol("swap_neck_collar", "moose_"..name, "swap_neck")
+		inst.AnimState:OverrideSymbol("swap_antler_red", "moose_"..name, "swap_antler1")
+		inst.AnimState:Hide("CHAIN")
+		
+		if name == "specter" then
+			inst.AnimState:SetBloomEffectHandle("shaders/anim_bloom_ghost.ksh")
+			scale = 1.4
+		end
+		inst.AnimState:SetScale(scale, scale)
+		
+		inst:AddTag("animal")
+		inst:AddTag("deergemresistance")
+		inst:AddTag("moose")
+		inst:AddTag(name.."moose")
+		inst:AddTag("saltlicker")
+		
+		inst.entity:SetPristine()
+		
+		if not TheWorld.ismastersim then
+			return inst
+		end
+		
+		inst.Physics:SetCollisionCallback(OnCollide)
+		
+		inst:AddComponent("combat")
+		inst.components.combat:SetDefaultDamage(TUNING.POLAR_MOOSE_DAMAGE)
+		inst.components.combat:SetAttackPeriod(TUNING.POLAR_MOOSE_ATTACK_PERIOD)
+		inst.components.combat:SetRange(TUNING.POLAR_MOOSE_ATTACK_RANGE, TUNING.POLAR_MOOSE_ANTLER_HIT_RANGE)
+		inst.components.combat:SetKeepTargetFunction(KeepTargetFn)
+		inst.components.combat:SetRetargetFunction(6, RetargetFn)
+		inst.components.combat:SetHurtSound("dontstarve/creatures/together/deer/hit")
+		inst.components.combat.hiteffectsymbol = "deer_torso"
+		
+		inst:AddComponent("drownable")
+		
+		inst:AddComponent("health")
+		inst.components.health:SetMaxHealth(TUNING.POLAR_MOOSE_HEALTH)
+		
+		inst:AddComponent("inspectable")
+		inst.components.inspectable.getstatus = GetStatus
+		
+		inst:AddComponent("knownlocations")
+		
+		inst:AddComponent("locomotor")
+		inst.components.locomotor.walkspeed = TUNING.POLAR_MOOSE_WALK_SPEED
+		inst.components.locomotor.runspeed = TUNING.POLAR_MOOSE_RUN_SPEED
+		
+		inst:AddComponent("lootdropper")
+		inst.components.lootdropper:SetChanceLootTable("moose_polar")
+		
+		inst:AddComponent("timer")
+		
+		inst:AddComponent("saltlicker")
+		inst.components.saltlicker:SetUp(TUNING.SALTLICK_DEER_USES)
+		
+		inst:AddComponent("sleeper")
+		inst.components.sleeper:SetResistance(4)
+		
+		inst.hasantler = true
+		
+		if name == "specter" then
+			inst.castfx = "deer_ice_circle"
+			inst.castduration = 6
+			inst.castcd = TUNING.DEER_ICE_CAST_CD
+			
+			inst.DoCast = DoCast
+		else
+			MakeHauntablePanic(inst)
+			MakeMediumBurnableCharacter(inst, "deer_torso")
+			MakeMediumFreezableCharacter(inst, "deer_torso")
+		end
+		
+		inst.OnSave = OnSave
+		inst.OnLoad = OnLoad
+		inst.SetAntlered = SetAntlered
+		inst.ShowAntler = ShowAntler
+		
+		inst:SetBrain(brain)
+		inst:SetStateGraph("SGmoose_polar")
+		
+		if inst._eye then
+			inst._eye:Remove()
+		end
+		inst._eye = SpawnPrefab("moose_polar_eye")
+		inst._eye:AttachToOwner(inst)
+		
+		inst:ListenForEvent("attacked", OnAttacked)
+		inst:ListenForEvent("timerdone", OnTimerDone)
+		
 		return inst
 	end
 	
-	inst.Physics:SetCollisionCallback(OnCollide)
-	
-	inst:AddComponent("combat")
-	inst.components.combat:SetDefaultDamage(TUNING.POLAR_MOOSE_DAMAGE)
-	inst.components.combat:SetAttackPeriod(TUNING.POLAR_MOOSE_ATTACK_PERIOD)
-	inst.components.combat:SetRange(TUNING.POLAR_MOOSE_ATTACK_RANGE, TUNING.POLAR_MOOSE_ANTLER_HIT_RANGE)
-	inst.components.combat:SetKeepTargetFunction(KeepTargetFn)
-	inst.components.combat:SetRetargetFunction(6, RetargetFn)
-	inst.components.combat:SetHurtSound("dontstarve/creatures/together/deer/hit")
-	inst.components.combat.hiteffectsymbol = "deer_torso"
-	
-	inst:AddComponent("drownable")
-	
-	inst:AddComponent("health")
-	inst.components.health:SetMaxHealth(TUNING.POLAR_MOOSE_HEALTH)
-	
-	inst:AddComponent("inspectable")
-	inst.components.inspectable.getstatus = GetStatus
-	
-	inst:AddComponent("knownlocations")
-	
-	inst:AddComponent("locomotor")
-	inst.components.locomotor.walkspeed = TUNING.POLAR_MOOSE_WALK_SPEED
-	inst.components.locomotor.runspeed = TUNING.POLAR_MOOSE_RUN_SPEED
-	
-	inst:AddComponent("lootdropper")
-	inst.components.lootdropper:SetChanceLootTable("moose_polar")
-	
-	inst:AddComponent("timer")
-	
-	inst:AddComponent("saltlicker")
-	inst.components.saltlicker:SetUp(TUNING.SALTLICK_DEER_USES)
-	
-	inst:AddComponent("sleeper")
-	inst.components.sleeper:SetResistance(4)
-	
-	MakeMediumBurnableCharacter(inst, "deer_torso")
-	
-	MakeMediumFreezableCharacter(inst, "deer_torso")
-	
-	MakeHauntablePanic(inst)
-	
-	inst.hasantler = true
-	
-	inst.OnSave = OnSave
-	inst.OnLoad = OnLoad
-	inst.SetAntlered = SetAntlered
-	inst.ShowAntler = ShowAntler
-	
-	inst:SetBrain(brain)
-	inst:SetStateGraph("SGmoose_polar")
-	
-	if inst._eye then
-		inst._eye:Remove()
-	end
-	inst._eye = SpawnPrefab("moose_polar_eye")
-	inst._eye:AttachToOwner(inst)
-	
-	inst:ListenForEvent("attacked", OnAttacked)
-	inst:ListenForEvent("timerdone", OnTimerDone)
-	
-	return inst
+	return Prefab("moose_"..name, fn, assets, prefabs)
 end
 
 --
@@ -259,6 +302,15 @@ local function fx_OnUpdate(inst)
 	local owner = inst.entity:GetParent()
 	local isclosed = owner and owner:HasTag("sleeping") or owner:HasTag("isdead")
 	
+	if inst._specterbuild == nil and owner then
+		inst._specterbuild = owner:HasTag("spectermoose")
+		
+		if inst._specterbuild then
+			for i, v in ipairs(inst.fx) do
+				v.AnimState:SetBuild("moose_specter_eye")
+			end
+		end
+	end
 	if isclosed ~= inst.wasclosed then
 		for i, v in ipairs(inst.fx) do
 			v.AnimState:PlayAnimation((isclosed and "close" or "idle")..tostring(i))
@@ -272,7 +324,7 @@ local function fx_SpawnFxForOwner(inst, owner)
 	inst.fx = {}
 	local frame
 	for i = 1, 10 do
-		local fx = CreateFxFollowFrame(i)
+		local fx = CreateFxFollowFrame(i, owner and owner.prefab)
 		fx.entity:SetParent(owner.entity)
 		fx.Follower:FollowSymbol(owner.GUID, "deer_head", nil, nil, nil, true, nil, i - 1)
 		fx.components.highlightchild:SetOwner(owner)
@@ -328,5 +380,6 @@ local function eyefx()
 	return inst
 end
 
-return Prefab("moose_polar", fn, assets, prefabs),
-	Prefab("moose_polar_eye", eyefx, assets)
+return MakeMoose("polar", assets_normal),
+	MakeMoose("specter", assets_specter),
+	Prefab("moose_polar_eye", eyefx)
