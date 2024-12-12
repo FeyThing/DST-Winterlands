@@ -8,8 +8,12 @@ local prefabs = {
 }
 
 local snowhuntPrefabs = {
-	rabbit = 7,
-	robin_winter = 6,
+	rabbit = 2,
+	robin_winter = 3,
+}
+
+local dirthuntPrefabs = {
+	rabbit = 4,
 	mole = 1,
 }
 
@@ -266,9 +270,10 @@ local function HuntRandomPrey(inst, tier)
 	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 1, 8, true, false, NoHoles)
 	
 	if offset then
-		local preyfab = weighted_random_choice(inst.snowhuntPrefabs)
-		local prey = SpawnPrefab(preyfab)
+		local preyfab = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil and weighted_random_choice(inst.snowhuntPrefabs)
+			or weighted_random_choice(inst.dirthuntPrefabs)
 		
+		local prey = SpawnPrefab(preyfab)
 		if prey then
 			prey.Transform:SetPosition((pt + offset):Get())
 			
@@ -476,6 +481,8 @@ local function fn()
 	inst.components.freezable:SetDefaultWearOffTime(3)
 	
 	inst.snowhuntPrefabs = snowhuntPrefabs
+	inst.dirthuntPrefabs = dirthuntPrefabs
+	
 	inst.HuntRandomPrey = HuntRandomPrey
 	inst.ListenForPlayerDrops = ListenForPlayerDrops
 	inst.OnPlayerDrop = function(player, data) OnPlayerDrop(inst, player, data) end

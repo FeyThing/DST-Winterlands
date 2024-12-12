@@ -8,6 +8,49 @@ local prefabs = {
 
 local WAXED_PLANTS = require("prefabs/waxed_plant_common")
 
+local function OnAnimOverStorm(inst)
+	if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") and inst:HasTag("pickable")
+		and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		
+		inst.AnimState:PlayAnimation("blown_loop"..math.random(2))
+	end
+end
+
+local function OnPolarstormChanged(inst, active)
+	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		if inst:HasTag("pickable") and inst._blizzardbreak == nil then
+			inst:ListenForEvent("animover", OnAnimOverStorm)
+			inst.AnimState:PushAnimation("blown_pre", false)
+			inst.AnimState:PushAnimation("blown_loop"..math.random(2), false)
+			
+			inst._blizzardbreak = inst:DoTaskInTime(2 + math.random(10), function()
+				if math.random() < TUNING.GRASS_POLAR_BLIZZARDPICK_CHANCE and inst.components.pickable and inst:HasTag("pickable") then
+					inst.components.pickable:MakeEmpty()
+					
+					inst.AnimState:PlayAnimation("fall")
+					if inst.components.pickable:IsBarren() then
+						inst.AnimState:PushAnimation("empty_to_dead")
+						inst.AnimState:PushAnimation("idle_dead", false)
+					else
+						inst.AnimState:PushAnimation("picked", false)
+					end
+				end
+			end)
+		end
+	elseif inst._blizzardbreak and not active then
+		inst:RemoveEventCallback("animover", OnAnimOverStorm)
+		if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") then
+			inst.AnimState:PushAnimation("blown_pst", false)
+			inst.AnimState:PushAnimation("idle", true)
+		end
+		
+		inst._blizzardbreak:Cancel()
+		inst._blizzardbreak = nil
+	end
+end
+
+--
+
 local function OnTransplantFn(inst)
 	inst.components.pickable:MakeBarren()
 end
@@ -15,6 +58,11 @@ end
 local function OnRegenFn(inst)
 	inst.AnimState:PlayAnimation("grow")
 	inst.AnimState:PushAnimation("idle", true)
+	inst:TryGetFlea()
+	
+	if inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		OnPolarstormChanged(inst, true)
+	end
 end
 
 local function MakeEmptyFn(inst)
@@ -24,6 +72,8 @@ local function MakeEmptyFn(inst)
 	else
 		inst.AnimState:PlayAnimation("picked")
 	end
+	
+	inst:ReleaseFlea()
 end
 
 local function MakeBarrenFn(inst, wasempty)
@@ -52,6 +102,8 @@ local function OnPickedFn(inst, picker)
 	else
 		inst.AnimState:PushAnimation("picked", false)
 	end
+	
+	inst:ReleaseFlea()
 end
 
 local function DigUp(inst, worker)
@@ -79,6 +131,31 @@ local function OnPreLoad(inst, data)
 	end
 end
 
+local function TryGetFlea(inst)
+	if math.random() < TUNING.GRASS_POLAR_FLEA_CHANCE and (TheWorld._numfleas or 0) < TUNING.POLARFLEA_WORLD_MAXFLEAS then
+		local flea = SpawnPrefab("polarflea")
+		flea.Transform:SetPosition(inst.Transform:GetWorldPosition())
+		
+		if flea.SetHost then
+			flea:SetHost(inst)
+		end
+	end
+end
+
+local function ReleaseFlea(inst)
+	if inst._snowfleas then
+		for i, v in ipairs(inst._snowfleas) do
+			if v.SetHost then
+				v:SetHost(nil, true) -- Be free!!
+			end
+		end
+	end
+end
+
+local function GetFleaCapacity(inst)
+	return inst:HasTag("pickable") and TUNING.POLARFLEA_HOST_MAXFLEAS or 0
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -91,6 +168,7 @@ local function fn()
 	inst.MiniMapEntity:SetIcon("grass_polar.png")
 	inst.MiniMapEntity:SetPriority(-1)
 	
+	inst:AddTag("fleahosted")
 	inst:AddTag("plant")
 	inst:AddTag("lunarplant_target")
 	
@@ -103,6 +181,8 @@ local function fn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst._fleacapacity = GetFleaCapacity
 	
 	inst:AddComponent("inspectable")
 	inst.components.inspectable:SetNameOverride("grass") -- TODO: Lazy ?
@@ -139,11 +219,21 @@ local function fn()
 	
 	inst.OnSave = OnSave
 	inst.OnPreLoad = OnPreLoad
+	inst.TryGetFlea = TryGetFlea
+	inst.ReleaseFlea = ReleaseFlea
 	
 	local color = 0.75 + math.random() * 0.25
 	inst.AnimState:SetMultColour(color, color, color, 1)
 	
 	inst.AnimState:SetFrame(math.random(inst.AnimState:GetCurrentAnimationNumFrames()) - 1)
+	
+	inst.onpolarstormchanged = function(src, data)
+		if data and data.stormtype == STORM_TYPES.POLARSTORM then
+			OnPolarstormChanged(inst, data.setting)
+		end
+	end
+	
+	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	
 	return inst
 end
@@ -166,6 +256,7 @@ local function OnInit(inst)
 		if offset then
 			local grass = SpawnPrefab("grass_polar")
 			grass.Transform:SetPosition((pt + offset):Get())
+			grass:TryGetFlea()
 		end
 	end
 	

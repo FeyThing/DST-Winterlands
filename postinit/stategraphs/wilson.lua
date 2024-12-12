@@ -1,6 +1,12 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local events = {
+	EventHandler("gotpolarflea", function(inst)
+		inst.sg:GoToState("hit")
+	end),
+}
+
 local states = {
 	State{
 		name = "polarcast",
@@ -70,6 +76,10 @@ local states = {
 ENV.AddStategraphPostInit("wilson", function(sg)
 	for _, state in pairs(states) do
 		sg.states[state.name] = state
+	end
+	
+	for _, event in pairs(events) do
+		sg.events[event.name] = event
 	end
 	
 	--	actions

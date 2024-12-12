@@ -8,6 +8,7 @@ local gradient_configs = {
 	[2] = 10  -- Most, that's a LOT of ice
 }
 
+local POLAR_ICEGEN_CONFIG = TUNING.POLAR_ICEGEN_CONFIG
 local MAX_GRADIENT_DEPTH = gradient_configs[POLAR_ICEGEN_CONFIG]
 
 local STRENGTH_UPDATE_TIME = 10

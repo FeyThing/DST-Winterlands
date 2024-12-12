@@ -8,6 +8,7 @@ local module_definitions = WX78_MODULES_DEF.module_definitions
 
 local WX78_POLARMOBS_SCAN = {
 	moose_polar = {module = "movespeed2", amt = 2},
+	moose_specter = {module = "movespeed2", amt = 4},
 	polarfox = {module = "nightvision", amt = 4},
 	polarwarg = {module = "cold", amt = 6},
 	shadow_icicler = {module = "maxsanity", amt = 3},

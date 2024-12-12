@@ -60,6 +60,7 @@ local ITEMS = {
 	"polarbearfur",
 	"polarbearhouse",
 	"polarcrownhat",
+	"polarflea",
 	"polarglobe",
 	"polaricepack",
 	"polaricestaff",

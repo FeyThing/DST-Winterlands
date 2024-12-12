@@ -8,11 +8,28 @@ ENV.AddComponentPostInit("hounded", function(self)
 	self._polarify = false
 	
 	local function SummonSpawn(pt, upgrade, radius_override, ...)
+		local in_polar = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
+		
 		if pt then
-			self._polarify = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
+			self._polarify = in_polar
 		end
 		
-		return OldSummonSpawn(pt, upgrade, radius_override, ...)
+		local hound = OldSummonSpawn(pt, upgrade, radius_override, ...)
+		print("hound?", hound, hound and hound:IsValid())
+		if hound and hound:IsValid() and in_polar then
+			local num_fleas = math.random(TUNING.POLARFLEA_HOUNDED_MIN, TUNING.POLARFLEA_HOUNDED_MAX)
+			
+			for i = 1, num_fleas do
+				local flea = SpawnPrefab("polarflea")
+				flea.Transform:SetPosition(hound.Transform:GetWorldPosition())
+				
+				if flea.SetHost then
+					flea:SetHost(hound)
+				end
+			end
+		end
+		
+		return hound
 	end
 	
 	local function GetSpawnPrefab(upgrade, ...)

@@ -3,6 +3,7 @@ local customizations = {
 --	moose_polar = 		{category = LEVELCATEGORY.SETTINGS},
 	polar_icicles = 	{category = LEVELCATEGORY.SETTINGS},
 	polarbears = 		{category = LEVELCATEGORY.SETTINGS},
+	polarfleas = 		{category = LEVELCATEGORY.SETTINGS},
 	polarfoxes = 		{category = LEVELCATEGORY.SETTINGS},
 	tumbleweed_polar = 	{category = LEVELCATEGORY.SETTINGS},
 	
@@ -57,6 +58,17 @@ WSO.Pre.polarbears = function(difficulty)
 		--default = {POLARBEARHOUSE_SPAWN_TIME = TUNING.TOTAL_DAY_TIME * 4},
 		many = 		{POLARBEARHOUSE_SPAWN_TIME = TUNING.TOTAL_DAY_TIME * 2},
 		always = 	{POLARBEARHOUSE_SPAWN_TIME = TUNING.TOTAL_DAY_TIME},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
+end
+
+WSO.Pre.polarfleas = function(difficulty)
+	local tuning_vars = {
+		never = 	{POLARFLEA_WORLD_MAXFLEAS = 0, POLARFLEA_HOUNDED_MAX = 0},
+		few = 		{POLARFLEA_WORLD_MAXFLEAS = 25, GRASS_POLAR_FLEA_CHANCE = 0.1, POLARFLEA_HOUNDED_MAX = 1},
+		--default = {POLARFLEA_WORLD_MAXFLEAS = 100, GRASS_POLAR_FLEA_CHANCE = 0.2, POLARFLEA_HOUNDED_MIN = 0, POLARFLEA_HOUNDED_MAX = 3},
+		many = 		{POLARFLEA_WORLD_MAXFLEAS = 150, GRASS_POLAR_FLEA_CHANCE = 0.4, POLARFLEA_HOUNDED_MAX = 5},
+		always = 	{POLARFLEA_WORLD_MAXFLEAS = 300, GRASS_POLAR_FLEA_CHANCE = 0.8, POLARFLEA_HOUNDED_MIN = 1, POLARFLEA_HOUNDED_MAX = 5},
 	}
 	OverrideTuningVariables(tuning_vars[difficulty])
 end

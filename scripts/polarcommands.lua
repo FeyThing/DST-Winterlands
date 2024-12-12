@@ -98,3 +98,20 @@ function c_teethnecklace(player)
 		end
 	end
 end
+
+--	It tickles!
+function c_addfleas(num, target)
+	num = num or 1
+	target = target or c_select()
+	
+	if target == nil or not target:IsValid() then
+		return
+	end
+	
+	local x, y, z = target.Transform:GetWorldPosition()
+	for i = 1, num do
+		local flea = SpawnPrefab("polarflea")
+		flea.Transform:SetPosition(x, y, z)
+		flea:SetHost(target)
+	end
+end

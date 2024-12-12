@@ -6,7 +6,8 @@ return Class(function(self, inst)
 
 	-- [ Private fields ] --
     local _polarstormactive = false
-
+	
+	local POLAR_BLIZZARDS_CONFIG = TUNING.POLAR_BLIZZARDS_CONFIG
     local _blizzard_cooldown_min = TUNING.POLAR_STORM_COOLDOWN_MIN
     local _blizzard_cooldown_max = TUNING.POLAR_STORM_COOLDOWN_MAX
     local _blizzard_length_min = TUNING.POLAR_STORM_LENGTH_MIN
@@ -27,7 +28,7 @@ return Class(function(self, inst)
         spring = { cooldown_mult = 1,    length_mult = 1.2 },
         summer = { cooldown_mult = 2,    length_mult = 0.66 }
     }
-
+	
     local _blizzard_cd_task
     local _blizzard_time_task
 	local _blizzard_start_time

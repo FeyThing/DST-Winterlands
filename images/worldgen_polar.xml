@@ -8,7 +8,8 @@
 		<Element name="worldsettings_moose_polar.tex" u1="0.501" u2="0.749" v2="0.999" v1="0.751" />
 		<Element name="worldsettings_polar_icicles.tex" u1="0.501" u2="0.749" v2="0.749" v1="0.501" />
 		<Element name="worldsettings_polarbears.tex" u1="0.751" u2="0.999" v2="0.999" v1="0.751" />
-		<Element name="worldsettings_polarfoxes.tex" u1="0.751" u2="0.999" v2="0.749" v1="0.501" />
-		<Element name="worldsettings_tumbleweed_polar.tex" u1="0.001" u2="0.249" v2="0.499" v1="0.251" />
+		<Element name="worldsettings_polarfleas.tex" u1="0.751" u2="0.999" v2="0.749" v1="0.501" />
+		<Element name="worldsettings_polarfoxes.tex" u1="0.001" u2="0.249" v2="0.499" v1="0.251" />
+		<Element name="worldsettings_tumbleweed_polar.tex" u1="0.001" u2="0.249" v2="0.249" v1="0.001" />
 	</Elements>
 </Atlas>

@@ -1,0 +1,69 @@
+require "behaviours/standstill"
+require "behaviours/runaway"
+require "behaviours/doaction"
+require "behaviours/panic"
+require "behaviours/wander"
+require "behaviours/chaseandattack"
+
+local BrainCommon = require("brains/braincommon")
+
+local MAX_CHASE_TIME = 60
+local MAX_CHASE_DIST = 40
+local SEE_FOOD_DIST = 30
+local MAX_WANDER_DIST = 40
+
+local NO_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach"}
+
+local PolarFleaBrain = Class(Brain, function(self, inst)
+	Brain._ctor(self, inst)
+end)
+
+local HOST_TAGS =  {"_health"}
+local HOST_NOT_TAGS = {"INLIMBO", "fire", "wet", "outofreach"}
+
+local function FindMammal(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local ents = shuffleArray(TheSim:FindEntities(x, y, z, TUNING.POLARFLEA_HOST_RANGE, HOST_TAGS, HOST_NOT_TAGS))
+	
+	local host
+	for i, v in pairs(ents) do
+		if inst.CanBeHost and inst:CanBeHost(v) then
+			host = v
+		end
+	end
+	
+	if host and inst.components.locomotor then
+		inst._hosting_queued = true
+		
+		local action = BufferedAction(inst, host, ACTIONS.NUZZLE)
+		local clear_hosting_queued = function() inst._hosting_queued = false end
+		
+		inst:DoTaskInTime(5, clear_hosting_queued)
+		action:AddSuccessAction(clear_hosting_queued)
+		action:AddFailAction(clear_hosting_queued)
+		
+		inst.components.locomotor:PushAction(action)
+	end
+end
+
+function PolarFleaBrain:OnStart()
+	local root = PriorityNode({
+		BrainCommon.PanicTrigger(self.inst),
+		--AttackWall(self.inst),
+		
+		EventNode(self.inst, "fleafindhost",
+			ActionNode(function() return FindMammal(self.inst) end)),
+		
+		FailIfSuccessDecorator(ConditionWaitNode(function() return not self.inst._hosting_queued end, "Block While Hosting")),
+		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST),
+		Wander(self.inst, function() return self.inst.components.knownlocations:GetLocation("home") end, MAX_WANDER_DIST),
+	}, 0.25)
+
+	self.bt = BT(self.inst, root)
+end
+
+function PolarFleaBrain:OnInitializationComplete()
+	self.inst.components.knownlocations:RememberLocation("home", self.inst:GetPosition(), true)
+end
+
+return PolarFleaBrain

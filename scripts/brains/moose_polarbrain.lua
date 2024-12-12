@@ -54,7 +54,7 @@ function Moose_PolarBrain:OnStart()
 			ChaseAndAttack(self.inst, MAX_CHASE_TIME, CHASE_GIVEUP_DIST)),
 		
 		WhileNode(function() return self.inst:HasTag("spectermoose") and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "Evade",
-			RunAway(self.inst, "player", 10, 30)),
+			RunAway(self.inst, "character", 10, 30)),
 		FaceEntity(self.inst, GetFaceTargetFn, KeepFaceTargetFn),
 		
 		BrainCommon.AnchorToSaltlick(self.inst),

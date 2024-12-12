@@ -41,7 +41,7 @@ local configs = {
 }
 
 local descs = {
-	language = "Set the language of the mod!",
+	language = "More soon... you can help us if you'd like!",
 	biome_retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
 	biome_icegen = "How much ice do you want on your island?",
 	biome_blizzards = "How snow stormy should your island be?",
@@ -51,20 +51,20 @@ local descs = {
 
 local options = {
 	none = {{description = "", data = false}},
-	language = {{description = "English", data = "en"}, {description="Polish", data = "pl"}},
-	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
+	language = {{description = "English", data = false}}, -- {description = "Polish", hover = "By LukaS", data = "pl"}},
 	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
+	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},
 }
 
 configuration_options = {
 --	Language 语言
-	{name = "language",				label = configs.language,				hover = descs.language,			options = options.language, 	default = "en"},
+	{name = "language",				label = configs.language,				hover = descs.language,			options = options.language, 	default = false},
 --	Gene
 	{name = "biome",				label = configs.biome,													options = options.none, 		default = false},
-	{name = "biome_retrofit",		label = configs.biome_retrofit,			hover = descs.biome_retrofit,	options = options.retrofit,		default = 0},
-	{name = "biome_icegen",			label = configs.biome_icegen,			hover = descs.biome_icegen,		options = options.moreless,		default = 0},
 	{name = "biome_blizzards",		label = configs.biome_blizzards,		hover = descs.biome_blizzards,	options = options.moreless,		default = 0},
+	{name = "biome_icegen",			label = configs.biome_icegen,			hover = descs.biome_icegen,		options = options.moreless,		default = 0},
+	{name = "biome_retrofit",		label = configs.biome_retrofit,			hover = descs.biome_retrofit,	options = options.retrofit,		default = 0},
 --	Misc
 	{name = "misc",					label = configs.misc,													options = options.none, 		default = false},
 	{name = "misc_snow",			label = configs.misc_snow,				hover = descs.misc_snow,		options = options.toggle,		default = true},

@@ -51,7 +51,9 @@ local function OnAttacked(inst, data)
 end
 
 local function GetStatus(inst)
-	return inst.hasantler and "ANTLER" or nil
+	return (inst:HasTag("spectermoose") and "SPECTER")
+		or (inst.hasantler and "ANTLER")
+		or nil
 end
 
 --
@@ -208,7 +210,6 @@ local function MakeMoose(name, assets)
 		inst.components.health:SetMaxHealth(TUNING.POLAR_MOOSE_HEALTH)
 		
 		inst:AddComponent("inspectable")
-		inst.components.inspectable.getstatus = GetStatus
 		
 		inst:AddComponent("knownlocations")
 		
@@ -230,12 +231,18 @@ local function MakeMoose(name, assets)
 		inst.hasantler = true
 		
 		if name == "specter" then
+			
+			inst:AddComponent("sanityaura")
+			inst.components.sanityaura.aura = TUNING.SANITYAURA_SMALL
+			
 			inst.castfx = "deer_ice_circle"
 			inst.castduration = 6
 			inst.castcd = TUNING.DEER_ICE_CAST_CD
 			
 			inst.DoCast = DoCast
 		else
+			inst.components.inspectable.getstatus = GetStatus
+			
 			MakeHauntablePanic(inst)
 			MakeMediumBurnableCharacter(inst, "deer_torso")
 			MakeMediumFreezableCharacter(inst, "deer_torso")
