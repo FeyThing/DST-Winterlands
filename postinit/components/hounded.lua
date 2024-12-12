@@ -15,7 +15,6 @@ ENV.AddComponentPostInit("hounded", function(self)
 		end
 		
 		local hound = OldSummonSpawn(pt, upgrade, radius_override, ...)
-		print("hound?", hound, hound and hound:IsValid())
 		if hound and hound:IsValid() and in_polar then
 			local num_fleas = math.random(TUNING.POLARFLEA_HOUNDED_MIN, TUNING.POLARFLEA_HOUNDED_MAX)
 			
