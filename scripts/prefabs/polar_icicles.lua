@@ -260,6 +260,7 @@ local function rock()
 	inst.AnimState:SetFinalOffset(-2)
 	
 	inst:AddTag("rockicicle")
+	inst:AddTag("frozen")
 	
 	MakeObstaclePhysics(inst, 0.3)
 	
