@@ -4,6 +4,10 @@ GLOBAL.setfenv(1, GLOBAL)
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
 AddPrefabPostInit("forest", function(inst)
+	if not TheNet:IsDedicated() then
+		inst:AddComponent("snowwaver")
+	end
+	
 	inst:AddComponent("winterlands_manager")
 	
 	if not inst.ismastersim then

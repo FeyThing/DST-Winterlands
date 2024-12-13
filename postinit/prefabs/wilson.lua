@@ -20,8 +20,6 @@ ENV.AddPlayerPostInit(function(inst)
 		inst._polarsnowfx.entity:SetParent(inst.entity)
 		inst._polarsnowfx.particles_per_tick = 0
 		inst._polarsnowfx:PostInit()
-		
-		inst:AddComponent("snowwaver")
 	end
 	
 	if not TheWorld.ismastersim then

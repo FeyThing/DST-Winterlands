@@ -175,14 +175,14 @@ local function OnHostGrab(inst, host, data)
 	local item = data.item or data.victim
 	local is_grabbed = item == inst
 	
-	if is_grabbed and host and host.components.inventory then
+	if is_grabbed and host and inst._host == host and host.components.inventory then
 		host:DoTaskInTime(0, function()
 			if host.components.health and not host.components.health:IsDead() then
 				host.components.combat:GetAttacked(inst, TUNING.POLARFLEA_HOST_REMOVE_DAMAGE)
 			end
 			if inst:IsValid() then
-				host.components.inventory:DropItem(inst, true)
 				host.components.inventory:RemoveItem(inst, true)
+				host.components.inventory:DropItem(inst, true)
 			end
 		end)
 	end
@@ -200,9 +200,10 @@ local function HostingInit(inst)
 end
 
 local function OnDropped(inst)
-	if inst._host then
+	if inst._host and inst.on_host_grab then
 		inst:RemoveEventCallback("murdered", inst.on_host_grab, inst._host)
 		inst:RemoveEventCallback("newactiveitem", inst.on_host_grab, inst._host)
+		inst.on_host_grab = nil
 		
 		inst:SetHost(nil, true)
 	end
@@ -232,8 +233,12 @@ local function OnPickedUp(inst)
 		end
 	end
 	
-	inst:ListenForEvent("murdered", inst.on_host_grab, inst._host)
-	inst:ListenForEvent("newactiveitem", inst.on_host_grab, inst._host)
+	if inst.on_host_grab == nil then
+		inst.on_host_grab = function(target, data) OnHostGrab(inst, target, data) end
+		
+		inst:ListenForEvent("murdered", inst.on_host_grab, inst._host)
+		inst:ListenForEvent("newactiveitem", inst.on_host_grab, inst._host)
+	end
 	
 	inst.sg:GoToState("idle")
 	inst.SoundEmitter:KillAllSounds()
@@ -330,7 +335,6 @@ local function fn()
 	inst.SetHost = SetHost
 	
 	inst.on_host_attacked = function(target, data) OnHostAttacked(inst, target, data) end
-	inst.on_host_grab = function(target, data) OnHostGrab(inst, target, data) end
 	inst.onpolarstormchanged = function(src, data)
 		if data and data.stormtype == STORM_TYPES.POLARSTORM then
 			OnPolarstormChanged(inst, data.setting)

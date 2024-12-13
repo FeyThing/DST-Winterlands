@@ -83,9 +83,7 @@ local function OnTimerDone(inst, data)
 end
 
 local function OnSnowBlockRangeDirty(inst)
-	if ThePlayer then
-		ThePlayer:PushEvent("snowwave_blockerupdate", {blocker = inst})
-	end
+	TheWorld:PushEvent("snowwave_blockerupdate", {blocker = inst})
 end
 
 local function blocker()

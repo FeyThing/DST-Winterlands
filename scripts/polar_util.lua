@@ -21,7 +21,7 @@ function PolarUpvalue(fn, upvalue_name, set_upvalue)
 	end
 end
 
-local WINTERLANDS_MOD_ID = "DST-Winterlands" -- "workshop-????"	TODO: UPDATE WITH ID HERE WHEN UPLOADED, or match it with your mod folder name if it's local
+local WINTERLANDS_MOD_ID = "workshop-3383047161"
 
 function ChangePolarConfigs(config, value)
 	local configs = KnownModIndex:LoadModConfigurationOptions(WINTERLANDS_MOD_ID, false)

@@ -12,15 +12,15 @@ local prefabs = {
 SetSharedLootTable("rock_polar", {
 	{"ice", 			1},
 	{"ice", 			0.5},
-	{"bluegem_shards", 	1},
+	{"bluegem_shards", 	0.7},
 	{"bluegem_shards", 	0.7},
 	{"bluegem_shards", 	0.3},
 	{"bluegem", 		0.02},
 })
 
 local ROCK_POLAR_LOOTS = {
-	ice = 0.95,
-	bluegem_shards = 0.04,
+	ice = 0.85,
+	bluegem_shards = 0.14,
 	bluegem = 0.01,
 }
 
