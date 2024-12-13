@@ -45,7 +45,9 @@ local function OnWork(inst, worker, workleft, numworks)
 		local pt = inst:GetPosition()
 		inst.components.lootdropper:DropLoot(pt)
 		
-		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
+		if worker.SoundEmitter then
+			worker.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
+		end
 		
 		inst:Remove()
 	else
