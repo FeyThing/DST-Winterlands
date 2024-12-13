@@ -143,6 +143,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Koa",
 		"Ragnar",
 		"Viggo",
+		--  others
+		"Feng Min",
+		"Laser",
+		"Deyr",
+		"Otog",
+		"Iggy",
+		"Crimson",
+		"Mustafa",
 	}
 	
 	STRINGS.POLARBEAR_LOOKATWILSON = {"GOOD DAY FOR FISHING", "SNIFF", "BRR...", "ICE TO MEET YOU", "... EH?", "HO HO! SMALL LIKE PENGULL!", "YOU'RE NO WALRUS?", "WATCH THE SNOW", "IS COLD OUTSIDE", "IS COLD INSIDE TOO", "WHO'S THIS?", "GOING HUNTING SOON?"}
