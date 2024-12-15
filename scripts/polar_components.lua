@@ -23,7 +23,7 @@ function IsInPolar(inst, range)
 	return IsInPolarAtPoint(x, y, z, range)
 end
 
-function GetClosestPolarTileToPoint(x, y, z, maxdist) -- LukaS: Kinda hacky but works well and doesn't brick your pc
+function GetClosestPolarTileToPoint(x, y, z, maxdist) -- LukaS: Kinda hacky, don't overuse it or suffer the consequences of L A G
 	if TheWorld.components.winterlands_manager == nil then
 		return
 	end
