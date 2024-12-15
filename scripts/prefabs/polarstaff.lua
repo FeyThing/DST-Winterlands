@@ -172,7 +172,10 @@ local function DoFrostAura(inst, target, pos, doer)
 		local x, y, z = doer.Transform:GetWorldPosition()
 		SpawnPrefab("polar_frostaura").Transform:SetPosition(x, y, z)
 		SpawnPrefab("groundpoundring_fx").Transform:SetPosition(x, y, z)
-		inst.SoundEmitter:PlaySound("dontstarve/common/break_iceblock")
+
+		if doer.SoundEmitter then
+			doer.SoundEmitter:PlaySound("dontstarve/common/break_iceblock")
+		end
 		
 		local ents = TheSim:FindEntities(x, 0, z, 12, MUST_TAGS, CANT_TAGS)
 		for i, ent in ipairs(ents) do
