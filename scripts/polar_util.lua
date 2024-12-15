@@ -41,21 +41,19 @@ end
 --	Constant lower temperature
 
 -- Testing
--- \frac{x+25}{4}-25
--- \frac{x+25}{a+\cos\left(2t\pi\right)}-25\left\{-25\le x\le95\right\}
--- a = 3
--- t = [0, 1]
+-- \frac{x+25}{\left(a+1\right)-ac}-25\left\{-25\le x\le95\right\}
+-- a = 0 | 0 <=a <= 10, S: 0.5
+-- c = 0 | 0 <=a <= 1, S: 0.05
 
 -- local x, y, z = ThePlayer.Transform:GetWorldPosition() print(GetTemperatureAtXZ(x, z))
 -- Testing
 
 function GetPolarTemperature(temperature, x, z)
-	local _, polartile_dist = GetClosestPolarTileToPoint(x, 0, z, 32)
-	if polartile_dist then
-		local dist_factor = polartile_dist / 32
-		temperature = (temperature + 25) / (3 - 2 * dist_factor) - 25
+	if TheWorld.components.polartemperature_manager then
+		local dist_factor = 1 - TheWorld.components.polartemperature_manager:GetDataAtPoint(x, 0, z)
+		temperature = (temperature + 25) / (3.5 - 2.5 * dist_factor) - 25
 	end
-	
+
 	return temperature
 end
 

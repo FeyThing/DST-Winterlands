@@ -49,6 +49,6 @@ return Class(function(self, inst)
 			end
 		end
 
-		inst:PushEvent("winterlands_initialized")
+		inst:PushEvent("winterlands_initialized", _winterlands_grid.grid)
 	end
 end)

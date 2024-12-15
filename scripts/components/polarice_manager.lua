@@ -203,15 +203,14 @@ return Class(function(self, inst)
 	end
 
 	-- [ Initialization ] --
-	local function InitializeDataGrids()
+	local function InitializeDataGrids(_, grid)
 		if _icebasestrengthgrid or _icecurrentstrengthgrid then return end
 
 		WIDTH, HEIGHT = _map:GetSize()
 		_icebasestrengthgrid = DataGrid(WIDTH, HEIGHT)
 		_icecurrentstrengthgrid = DataGrid(WIDTH, HEIGHT)
 
-		local polartiles = inst.components.winterlands_manager:GetGrid().grid
-		for i, ispolar in pairs(polartiles) do
+		for i, ispolar in pairs(grid) do
 			local tx, ty, tz = _map:GetTileCenterPoint(_icebasestrengthgrid:GetXYFromIndex(i))
 			if ispolar and not (_map:IsOceanTileAtPoint(tx, ty, tz) or _map:GetTileAtPoint(tx, ty, tz) == WORLD_TILES.POLAR_ICE) then
 				table.insert(_gradient_indeces, i)

@@ -119,7 +119,7 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 							self.worldtempbadge_polar = in_polar
 						end
 						
-						val = in_polar and TheWorld and GetPolarTemperature(val, x, z) or val
+						val = TheWorld and GetPolarTemperature(val, x, z) or val
 						oldupdatetemp(val, ...)
 					end
 					PolarUpvalue(fn, "updatetemp", updatetemp)

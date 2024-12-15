@@ -9,6 +9,7 @@ AddPrefabPostInit("forest", function(inst)
 	end
 	
 	inst:AddComponent("winterlands_manager")
+	inst:AddComponent("polartemperature_manager")
 	
 	if not inst.ismastersim then
 		return
