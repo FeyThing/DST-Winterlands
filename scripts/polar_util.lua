@@ -41,17 +41,19 @@ end
 --	Constant lower temperature
 
 -- Testing
--- \frac{x+25}{\left(a+1\right)-ac}-25\left\{-25\le x\le95\right\}
+-- \frac{x+31}{\left(a+1\right)-ac}-31\left\{-31\le x\le100\right\}
 -- a = 0 | 0 <=a <= 10, S: 0.5
 -- c = 0 | 0 <=a <= 1, S: 0.05
 
 -- local x, y, z = ThePlayer.Transform:GetWorldPosition() print(GetTemperatureAtXZ(x, z))
 -- Testing
 
+local MIN_TEMPERATURE = -31
+-- local MAX_TEMPERATURE = 100
 function GetPolarTemperature(temperature, x, z)
 	if TheWorld.components.polartemperature_manager then
 		local dist_factor = 1 - TheWorld.components.polartemperature_manager:GetDataAtPoint(x, 0, z)
-		temperature = (temperature + 25) / (3.5 - 2.5 * dist_factor) - 25
+		temperature = (temperature - MIN_TEMPERATURE) / (3.5 - 2.5 * dist_factor) + MIN_TEMPERATURE
 	end
 
 	return temperature

@@ -18,8 +18,8 @@ local ICE_TILE_ENTBREAK_TIME = 0.1
 local ICE_TILE_UPDATE_VARIANCE = 10 -- Create/destroy tiles every 4 - 14 seconds
 local ICE_TILE_UPDATE_COOLDOWN = 120
 
-local MIN_TEMPERATURE = -25
-local MAX_TEMPERATURE = 95
+local MIN_TEMPERATURE = -31
+local MAX_TEMPERATURE = 100
 
 return Class(function(self, inst)
     assert(inst.ismastersim, "Polar Ice Manager should not exist on the client!")
@@ -51,7 +51,8 @@ return Class(function(self, inst)
 
 	local function SetCurrentIceStrength(index, strength)
 		if 0 <= index and index < WIDTH*HEIGHT then
-			_icecurrentstrengthgrid:SetDataAtIndex(index, math.clamp(strength, 0, 1))
+			strength = math.clamp(strength, 0, 1)
+			_icecurrentstrengthgrid:SetDataAtIndex(index, strength)
 
 			local tx, ty = _icecurrentstrengthgrid:GetXYFromIndex(index)
 			local x, y, z = _map:GetTileCenterPoint(tx, ty)
