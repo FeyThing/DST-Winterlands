@@ -22,7 +22,7 @@ local function Retarget(inst)
 	end, RETARGET_MUST_TAGS, RETARGET_CANT_TAGS, RETARGET_ONEOF_TAGS) or nil
 end
 
-local function OnPolarstormChanged(inst, active)
+local function OnPolarstormChanged(inst, active) -- Unused, should fleas slowly die out during the blizzard ?
 	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) and not inst.inlimbo then
 		inst.components.health:StartRegen(TUNING.POLARFLEA_STORM_REGEN, TUNING.POLARFLEA_STORM_REGEN_RATE)
 	else
@@ -86,9 +86,9 @@ local function SetHost(inst, host, kick, given)
 	if kick or host == nil then
 		inst:ReturnToScene()
 		
-		if kick and inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) then
+		--[[if kick and inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) then
 			OnPolarstormChanged(inst, true)
-		end
+		end]]
 		
 		inst._host = nil
 		return
@@ -97,9 +97,9 @@ local function SetHost(inst, host, kick, given)
 	inst._host = host
 	inst:ListenForEvent("attacked", inst.on_host_attacked, inst._host)
 	
-	if inst.components.health then
+	--[[if inst.components.health then
 		inst.components.health:StopRegen()
-	end
+	end]]
 	
 	if not given and inst._host:HasTag("player") and inst._host.components.inventory then
 		inst._host.components.inventory:GiveItem(inst, nil, inst:GetPosition())
@@ -335,13 +335,13 @@ local function fn()
 	inst.SetHost = SetHost
 	
 	inst.on_host_attacked = function(target, data) OnHostAttacked(inst, target, data) end
-	inst.onpolarstormchanged = function(src, data)
+	--[[inst.onpolarstormchanged = function(src, data)
 		if data and data.stormtype == STORM_TYPES.POLARSTORM then
 			OnPolarstormChanged(inst, data.setting)
 		end
-	end
+	end]]
 	
-	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
+	--inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	inst:ListenForEvent("onremove", OnRemove)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	

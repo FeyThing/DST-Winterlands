@@ -175,6 +175,7 @@ local function fn()
 	inst:AddTag("notraptrigger")
 	inst:AddTag("shadow_aligned")
 	inst:AddTag("shadowsubmissive")
+	inst:AddTag("NOBLOCK")
 	
 	if not TheNet:IsDedicated() then
 		inst:AddComponent("transparentonsanity")

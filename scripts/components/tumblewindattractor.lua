@@ -34,12 +34,15 @@ function TumbleWindAttractor:CanSpawnTumbler(pt)
 end
 
 function TumbleWindAttractor:SpawnTumbler()
-	local pt = self.inst:GetPosition()
-	local offset = FindWalkableOffset(pt, math.random() * TWOPI, self.spawndist, 8, true, false, function(pt) return self:CanSpawnTumbler(pt) end)
-	
-	if offset then
-		local tumbler = SpawnPrefab("tumbleweed_polar")
-		tumbler.Transform:SetPosition((pt + offset):Get())
+	if (TheWorld._numtumblers or 0) < TUNING.TUMBLEWIND_WORLD_MAX then
+		local pt = self.inst:GetPosition()
+		local offset = FindWalkableOffset(pt, math.random() * TWOPI, self.spawndist, 8, true, false, function(pt) return self:CanSpawnTumbler(pt) end)
+		
+		if offset then
+			local tumbler = SpawnPrefab("tumbleweed_polar")
+			tumbler.Transform:SetPosition((pt + offset):Get())
+			tumbler.persists = false
+		end
 	end
 	
 	if self.enabled then

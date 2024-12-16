@@ -19,12 +19,40 @@ local events = {
 	CommonHandlers.OnLocomote(false, true),
 }
 
+local function FinishExtendedSound(inst, soundid)
+	inst.SoundEmitter:KillSound("sound_"..tostring(soundid))
+	inst.sg.mem.soundcache[soundid] = nil
+	if inst.sg.statemem.readytoremove and next(inst.sg.mem.soundcache) == nil then
+		inst:Remove()
+	end
+end
+
+local function PlayExtendedSound(inst, soundname)
+	if inst.sg.mem.soundcache == nil then
+		inst.sg.mem.soundcache = {}
+		inst.sg.mem.soundid = 0
+	else
+		inst.sg.mem.soundid = inst.sg.mem.soundid + 1
+	end
+	inst.sg.mem.soundcache[inst.sg.mem.soundid] = true
+	inst.SoundEmitter:PlaySound(inst.sounds[soundname], "sound_"..tostring(inst.sg.mem.soundid))
+	inst:DoTaskInTime(5, FinishExtendedSound, inst.sg.mem.soundid)
+end
+
+local function OnAnimOverRemoveAfterSounds(inst)
+	if inst.sg.mem.soundcache == nil or next(inst.sg.mem.soundcache) == nil then
+		inst:Remove()
+	else
+		inst:Hide()
+		inst.sg.statemem.readytoremove = true
+	end
+end
+
 local function TryDropTarget(inst)
 	if inst.ShouldKeepTarget then
 		local target = inst.components.combat.target
 		if target and not inst:ShouldKeepTarget(target) then
 			inst.components.combat:DropTarget()
-			
 			return true
 		end
 	end
@@ -33,7 +61,6 @@ end
 local function TryDespawn(inst)
 	if inst.sg.mem.forcedespawn or (inst.wantstodespawn and not inst.components.combat:HasTarget()) then
 		inst.sg:GoToState("disappear")
-		
 		return true
 	end
 end
@@ -55,9 +82,6 @@ local states = {
 			if not inst.AnimState:IsCurrentAnimation("idle_loop") then
 				inst.AnimState:PlayAnimation("idle_loop", true)
 			end
-			if not inst.SoundEmitter:PlayingSound("idlesound") then
-				inst.SoundEmitter:PlaySound(inst.sounds.idle, "idle")
-			end
 			
 			inst.components.locomotor:StopMoving()
 			inst.sg:SetTimeout(inst.AnimState:GetCurrentAnimationLength())
@@ -76,7 +100,7 @@ local states = {
 			inst.AnimState:PlayAnimation("atk_pre")
 			inst.AnimState:PushAnimation("atk", false)
 			inst.AnimState:PushAnimation("atk_pst", false)
-			inst.SoundEmitter:PlaySound(inst.sounds.attack_grunt)
+			PlayExtendedSound(inst, "attack_grunt")
 			inst.Physics:Stop()
 			
 			if target and target:IsValid() then
@@ -102,7 +126,7 @@ local states = {
 		
 		timeline = {
 			TimeEvent(11 * FRAMES, function(inst)
-				inst.SoundEmitter:PlaySound(inst.sounds.attack)
+				PlayExtendedSound(inst, "attack")
 				
 				local pos = inst.sg.statemem.targetpos
 				if pos then
@@ -130,7 +154,7 @@ local states = {
 		
 		events = {
 			EventHandler("animqueueover", function(inst)
-				if math.random() < .333 then
+				if math.random() < 0.333 then
 					TryDropTarget(inst)
 					inst.forceretarget = true
 					
@@ -171,7 +195,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("taunt")
-			inst.SoundEmitter:PlaySound(inst.sounds.taunt)
+			PlayExtendedSound(inst, "taunt")
 			inst.Physics:Stop()
 		end,
 		
@@ -188,7 +212,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("disappear")
-			inst.SoundEmitter:PlaySound(inst.sounds.death)
+			PlayExtendedSound(inst, "death")
 			inst.Physics:Stop()
 			
 			RemovePhysicsColliders(inst)
@@ -197,6 +221,14 @@ local states = {
 			inst.persists = false
 			inst:AddTag("NOCLICK")
 		end,
+		
+		onexit = function(inst)
+			inst:RemoveTag("NOCLICK")
+		end,
+		
+		events = {
+			EventHandler("animover", OnAnimOverRemoveAfterSounds),
+		},
 	},
 	
 	State{
@@ -206,7 +238,7 @@ local states = {
 		onenter = function(inst)
 			TryDropTarget(inst)
 			inst.AnimState:PlayAnimation("appear")
-			inst.SoundEmitter:PlaySound(inst.sounds.appear)
+			PlayExtendedSound(inst, "appear")
 			inst.Physics:Stop()
 		end,
 		
@@ -223,7 +255,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("disappear")
-			inst.SoundEmitter:PlaySound(inst.sounds.disappear)
+			PlayExtendedSound(inst, "disappear")
 			inst.Physics:Stop()
 			
 			inst.persists = false

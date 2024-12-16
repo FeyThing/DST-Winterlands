@@ -126,24 +126,31 @@ end
 
 --
 
+local function OnLongAction(inst)
+	inst.AnimState:PlayAnimation("move_pst")
+	inst.Physics:Stop()
+	
+	inst.components.blowinwind:Stop()
+	
+	inst:RemoveEventCallback("animover", StartMoving)
+	CancelRunningTasks(inst)
+	
+	inst.AnimState:PushAnimation("idle", true)
+	inst.restartmovementtask = inst:DoTaskInTime(math.random(2, 6), function(inst)
+		if inst and inst.components.blowinwind then
+			inst.AnimState:PlayAnimation("move_pre")
+			inst.restartmovementtask = nil
+			inst:ListenForEvent("animover", StartMoving)
+		end
+	end)
+end
+
 local function CheckGround(inst)
 	if not inst:IsOnValidGround() then
 		SpawnPrefab("splash_sink").Transform:SetPosition(inst.Transform:GetWorldPosition())
 		inst:PushEvent("detachchild")
 		inst:Remove()
 	end
-end
-
-local function OnEntityWake(inst)
-	inst.AnimState:PlayAnimation("move_loop", true)
-	
-	inst.bouncepretask = inst:DoTaskInTime(6 * FRAMES, function(inst)
-		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
-		inst.bouncetask = inst:DoPeriodicTask(27 * FRAMES, function(inst)
-			inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
-			CheckGround(inst)
-		end)
-	end)
 end
 
 local function CancelRunningTasks(inst)
@@ -176,25 +183,6 @@ local function StartMoving(inst)
 	inst:RemoveEventCallback("animover", StartMoving)
 end
 
-local function OnLongAction(inst)
-	inst.AnimState:PlayAnimation("move_pst")
-	inst.Physics:Stop()
-	
-	inst.components.blowinwind:Stop()
-	
-	inst:RemoveEventCallback("animover", StartMoving)
-	CancelRunningTasks(inst)
-	
-	inst.AnimState:PushAnimation("idle", true)
-	inst.restartmovementtask = inst:DoTaskInTime(math.random(2, 6), function(inst)
-		if inst and inst.components.blowinwind then
-			inst.AnimState:PlayAnimation("move_pre")
-			inst.restartmovementtask = nil
-			inst:ListenForEvent("animover", StartMoving)
-		end
-	end)
-end
-
 local function DoDirectionChange(inst, data)
 	--[[if not inst.last_dir_sfx_time or (GetTime() - inst.last_dir_sfx_time > 5) then
 		inst.last_dir_sfx_time = GetTime()
@@ -214,6 +202,47 @@ local function DoDirectionChange(inst, data)
 			inst.components.blowinwind:ChangeDirection(inst.angle, data.velocity)
 		end
 	end
+end
+
+--
+
+local function OnEntityWake(inst)
+	inst.AnimState:PlayAnimation("move_loop", true)
+	
+	if inst.despawntask then
+		inst.despawntask:Cancel()
+		inst.despawntask = nil
+	end
+	
+	inst.bouncepretask = inst:DoTaskInTime(6 * FRAMES, function(inst)
+		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
+		inst.bouncetask = inst:DoPeriodicTask(27 * FRAMES, function(inst)
+			inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
+			CheckGround(inst)
+		end)
+	end)
+end
+
+local function OnEntitySleep(inst)
+	CancelRunningTasks(inst)
+	
+	if inst.despawntask == nil then
+		inst.despawntask = inst:DoTaskInTime(10 + math.random(3), inst.Remove)
+	end
+end
+
+local function OnRemove(inst)
+	if TheWorld._numtumblers then
+		TheWorld._numtumblers = TheWorld._numtumblers - 1
+	end
+end
+
+local function OnInit(inst)
+	if TheWorld._numtumblers == nil then
+		TheWorld._numtumblers = 0
+	end
+	
+	TheWorld._numtumblers = TheWorld._numtumblers + 1
 end
 
 --
@@ -275,8 +304,9 @@ local function fn()
 	inst.components.hauntable:SetOnHauntFn(OnHaunt)
 	
 	inst.OnEntityWake = OnEntityWake
-	inst.OnEntitySleep = CancelRunningTasks
+	inst.OnEntitySleep = OnEntitySleep
 	
+	inst:ListenForEvent("onremove", OnRemove)
 	inst:ListenForEvent("startlongaction", OnLongAction)
 	inst:ListenForEvent("windchange", function(world, data)
 		DoDirectionChange(inst, data)
@@ -288,6 +318,8 @@ local function fn()
 	else
 		inst.components.blowinwind:StartSoundLoop()
 	end
+	
+	inst:DoTaskInTime(1, OnInit)
 	
 	return inst
 end
