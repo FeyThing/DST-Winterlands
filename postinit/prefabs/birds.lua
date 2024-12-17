@@ -1,9 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local AddPrefabPostInit = ENV.AddPrefabPostInit
-
-local BIRDS = {"robin", "crow", "canary", "puffin", "robin_winter"}
+local WINTER_BIRDS = {"puffin", "robin_winter"}
 
 local OldSpawnPrefabChooser
 local function SpawnPrefabChooser(inst, ...)
@@ -18,27 +16,6 @@ local function SpawnPrefabChooser(inst, ...)
 		return nil
 	else
 		return prefab
-	end
-end
-
-local function OnInit(inst)
-	local cage = inst.components.occupier and inst.components.occupier:GetOwner()
-	local state = inst.sg and inst.sg.currentstate.name
-	
-	if cage == nil and not inst.components.inventoryitem:IsHeld() and (state == "glide" or state == "delay_glide") then
-		local x, y, z = inst.Transform:GetWorldPosition()
-		local tile_x, tile_y = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
-		local current_tile = TheWorld.Map:GetTile(tile_x, tile_y)
-		
-		if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil or current_tile == WORLD_TILES.OCEAN_POLAR then
-			if not (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)) then
-				local birb = SpawnPrefab(current_tile == WORLD_TILES.OCEAN_POLAR and "puffin" or "robin_winter")
-				birb.Transform:SetPosition(x, y, z)
-				birb.sg:HasStateTag("glide")
-			end
-			
-			inst:Remove()
-		end
 	end
 end
 
@@ -57,8 +34,8 @@ local function OnPolarstormChanged(inst, active)
 	end
 end
 
-for i, v in ipairs(BIRDS) do
-	AddPrefabPostInit(v, function(inst)
+for i, v in ipairs(WINTER_BIRDS) do
+	ENV.AddPrefabPostInit(v, function(inst)
 		if not TheWorld.ismastersim then
 			return
 		end
@@ -72,17 +49,13 @@ for i, v in ipairs(BIRDS) do
 			inst.components.periodicspawner.prefab = SpawnPrefabChooser
 		end
 		
-		if v ~= "robin_winter" and v ~= "puffin" then
-			inst:DoTaskInTime(0, OnInit)
-		else
-			inst.onpolarstormchanged = function(src, data)
-				if data and data.stormtype == STORM_TYPES.POLARSTORM then
-					OnPolarstormChanged(inst, data.setting)
-				end
+		inst.onpolarstormchanged = function(src, data)
+			if data and data.stormtype == STORM_TYPES.POLARSTORM then
+				OnPolarstormChanged(inst, data.setting)
 			end
-			
-			inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 		end
+		
+		inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	end)
 end
 
@@ -99,7 +72,7 @@ local function OnRead(inst, reader, ...)
 	end
 end
 
-AddPrefabPostInit("book_birds", function(inst)
+ENV.AddPrefabPostInit("book_birds", function(inst)
 	if not TheWorld.ismastersim then
 		return
 	end
