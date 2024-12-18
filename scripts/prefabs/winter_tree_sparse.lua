@@ -48,6 +48,10 @@ local function fn()
 		return inst
 	end
 	
+	if inst.components.container then
+		inst.components.container:WidgetSetup("winter_tree_sparse")
+	end
+	
 	inst.OnPolarDecorate = OnPolarDecorate
 	
 	if OldOnLoad == nil then

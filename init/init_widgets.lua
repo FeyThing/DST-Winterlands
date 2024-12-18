@@ -49,6 +49,10 @@ GLOBAL.setfenv(1, GLOBAL)
 		return inst.replica.container and inst.replica.container:IsFull()
 	end
 	
+--	Sparse Winter Tree
+	
+	params.winter_tree_sparse = params.winter_tree
+	
 --	[ 		Screens			]	--
 
 local AddClassPostConstruct = ENV.AddClassPostConstruct
