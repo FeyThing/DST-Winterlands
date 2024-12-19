@@ -68,7 +68,7 @@ local function DoBreak(inst)
 		
 		if TheWorld.components.polarice_manager and TheWorld.Map:GetTileAtPoint(x, y, z) == WORLD_TILES.POLAR_ICE then
 			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
-			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, inst)
+			TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, false)
 			
 			if rock and rock:IsValid() then
 				rock.Transform:SetPosition(TheWorld.Map:GetTileCenterPoint(tx, ty))

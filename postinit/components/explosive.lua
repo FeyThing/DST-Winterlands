@@ -11,7 +11,7 @@ local Explosive = require("components/explosive")
 		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
 		
 		if TheWorld.components.polarice_manager then
-			TheWorld.components.polarice_manager:QueueMeltIceAtTile(tx, ty, self.inst)
+			TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, false)
 		end
 		
 		local icicles = TheSim:FindEntities(x, y, z, self.explosiverange * 25, ICICLE_TAGS)

@@ -11,12 +11,12 @@ local gradient_configs = {
 local POLAR_ICEGEN_CONFIG = TUNING.POLAR_ICEGEN_CONFIG
 local MAX_GRADIENT_DEPTH = gradient_configs[POLAR_ICEGEN_CONFIG]
 
-local STRENGTH_UPDATE_TIME = 10
+local STRENGTH_UPDATE_TIME = 16
 
 local ICE_TILE_UPDATE_TIME = 4
 local ICE_TILE_ENTBREAK_TIME = 0.1
 local ICE_TILE_UPDATE_VARIANCE = 10 -- Create/destroy tiles every 4 - 14 seconds
-local ICE_TILE_UPDATE_COOLDOWN = 120
+local ICE_TILE_UPDATE_COOLDOWN = 240
 
 local MIN_TEMPERATURE = -31
 local MAX_TEMPERATURE = 100
@@ -353,7 +353,7 @@ return Class(function(self, inst)
 		end)
 	end
 
-	function self:QueueMeltIceAtTile(tx, ty, doer)
+	function self:QueueMeltIceAtTile(tx, ty)
 		local tile = _map:GetTile(tx, ty)
 		local x, y, z = _map:GetTileCenterPoint(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
@@ -361,14 +361,12 @@ return Class(function(self, inst)
 		end
 		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
-
-		if _recently_updated_tiles[index] ~= nil and not doer then
+		if _recently_updated_tiles[index] ~= nil then
 			return
 		end
 
 		if _updating_tiles[index] == nil then
-			local break_time = doer ~= nil and ICE_TILE_ENTBREAK_TIME or (ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE)
-			_updating_tiles[index] = inst:DoTaskInTime(break_time, function()
+			_updating_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
 				self:StartDestroyingIceAtTile(tx, ty, true)
 			end)
 		end
@@ -376,7 +374,8 @@ return Class(function(self, inst)
 
 	function self:StartDestroyingIceAtTile(tx, ty, melting)
 		local tile = _map:GetTile(tx, ty)
-		if tile ~= WORLD_TILES.POLAR_ICE then
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
+		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
 			return
 		end
 		
