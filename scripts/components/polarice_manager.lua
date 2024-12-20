@@ -11,12 +11,12 @@ local gradient_configs = {
 local POLAR_ICEGEN_CONFIG = TUNING.POLAR_ICEGEN_CONFIG
 local MAX_GRADIENT_DEPTH = gradient_configs[POLAR_ICEGEN_CONFIG]
 
-local STRENGTH_UPDATE_TIME = 10
+local STRENGTH_UPDATE_TIME = 16
 
-local ICE_TILE_UPDATE_TIME = 4
-local ICE_TILE_ENTBREAK_TIME = 0.1
-local ICE_TILE_UPDATE_VARIANCE = 10 -- Create/destroy tiles every 4 - 14 seconds
-local ICE_TILE_UPDATE_COOLDOWN = 120
+local ICE_TILE_UPDATE_TIME = 6
+local ICE_TILE_UPDATE_VARIANCE = 12 -- Create/melt tiles every 4 - 14 seconds
+local ICE_TILE_UPDATE_COOLDOWN = TUNING.TOTAL_DAY_TIME / 2
+local ICE_TILE_FORCED_UPDATE_COOLDOWN = TUNING.TOTAL_DAY_TIME
 
 local MIN_TEMPERATURE = -31
 local MAX_TEMPERATURE = 100
@@ -68,17 +68,14 @@ return Class(function(self, inst)
 		local mult = Lerp(1, 4, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 		local add = Lerp(0, -3, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 
-		for x = 0, WIDTH - 1 do
-			for y = 0, HEIGHT - 1 do
-				local i = _icebasestrengthgrid:GetIndex(x, y)
-				local base_strength = self:GetBaseAtTile(x, y)
-				local current_strength = math.clamp(base_strength * mult + add, 0, 1)
-				_icecurrentstrengthgrid:SetDataAtIndex(i, current_strength)
-				
-				local tx, ty, tz = _map:GetTileCenterPoint(x, y)
-				if current_strength >= 0.1 and _map:IsOceanTileAtPoint(tx, ty, tz) then
-					self:CreateIceAtTile(x, y)
-				end
+		for i, basestr in pairs(_icebasestrengthgrid.grid) do
+			local current_strength = math.clamp(basestr * mult + add, 0, 1)
+			_icecurrentstrengthgrid:SetDataAtIndex(i, current_strength)
+			
+			local x, y = _icecurrentstrengthgrid:GetXYFromIndex(i)
+			local tx, ty, tz = _map:GetTileCenterPoint(x, y)
+			if current_strength >= 0.1 and _map:IsOceanTileAtPoint(tx, ty, tz) then
+				self:CreateIceAtTile(x, y)
 			end
 		end
 
@@ -99,12 +96,8 @@ return Class(function(self, inst)
 		local mult = Lerp(1, 4, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 		local add = Lerp(0, -3, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 
-		for x = 0, WIDTH - 1 do
-			for y = 0, HEIGHT - 1 do
-				local i = _icebasestrengthgrid:GetIndex(x, y)
-				local strength = self:GetBaseAtTile(x, y)
-				SetCurrentIceStrength(i, strength * mult + add)
-			end
+		for i, basestr in pairs(_icebasestrengthgrid.grid) do
+			SetCurrentIceStrength(i, basestr * mult + add)
 		end
 
 		if reschedule then
@@ -129,15 +122,15 @@ return Class(function(self, inst)
 		fx:AddTag("scarytoprey")
 		fx:AddTag("icecrackfx")
 		
-		local function spawnfx(lx, lz, rot)
+		local function SpawnFx(lx, lz, rot)
 			local fx = SpawnPrefab("ice_crack_grid_fx")
 			fx.Transform:SetPosition(lx, 0, lz)
 			fx.Transform:SetRotation(rot)
 			fx.AnimState:SetScale(1.2, 1.2, 1.2)
 		end
 
-		spawnfx(cx, cz, -40 + math.random() * 80)
-		spawnfx(cx, cz, 50 + math.random() * 80)
+		SpawnFx(cx, cz, -40 + math.random() * 80)
+		SpawnFx(cx, cz, 50 + math.random() * 80)
 	end
 
 	local function TossDebris(debris_prefab, dx, dz)
@@ -353,7 +346,7 @@ return Class(function(self, inst)
 		end)
 	end
 
-	function self:QueueMeltIceAtTile(tx, ty, doer)
+	function self:QueueMeltIceAtTile(tx, ty)
 		local tile = _map:GetTile(tx, ty)
 		local x, y, z = _map:GetTileCenterPoint(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
@@ -361,14 +354,12 @@ return Class(function(self, inst)
 		end
 		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
-
-		if _recently_updated_tiles[index] ~= nil and not doer then
+		if _recently_updated_tiles[index] ~= nil then
 			return
 		end
 
 		if _updating_tiles[index] == nil then
-			local break_time = doer ~= nil and ICE_TILE_ENTBREAK_TIME or (ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE)
-			_updating_tiles[index] = inst:DoTaskInTime(break_time, function()
+			_updating_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
 				self:StartDestroyingIceAtTile(tx, ty, true)
 			end)
 		end
@@ -376,7 +367,8 @@ return Class(function(self, inst)
 
 	function self:StartDestroyingIceAtTile(tx, ty, melting)
 		local tile = _map:GetTile(tx, ty)
-		if tile ~= WORLD_TILES.POLAR_ICE then
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
+		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
 			return
 		end
 		
@@ -487,14 +479,19 @@ return Class(function(self, inst)
 				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
 				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
 			end
+
+			local index = _icebasestrengthgrid:GetIndex(tx, ty)
+			_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_FORCED_UPDATE_COOLDOWN, function()
+				_recently_updated_tiles[index] = nil
+			end)
+		else -- Melted ice refreezes faster
+			local index = _icebasestrengthgrid:GetIndex(tx, ty)
+			_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
+				_recently_updated_tiles[index] = nil
+			end)
 		end
 
 		SpawnPrefab("fx_ice_pop").Transform:SetPosition(dx, 0, dz)
-
-		local index = _icebasestrengthgrid:GetIndex(tx, ty)
-		_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
-			_recently_updated_tiles[index] = nil
-		end)
 	end
 
 	function self:GetBaseAtPoint(x, y, z)
