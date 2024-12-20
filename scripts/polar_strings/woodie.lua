@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Like biting ice cubes in a drink."
 	DESCRIBE.ICEBURRITO = "It's better to eat fresh."
+	DESCRIBE.POLARCRABLEGS = "Yer doing a fine job at cracking 'em, Luce."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It's impossibly cold."

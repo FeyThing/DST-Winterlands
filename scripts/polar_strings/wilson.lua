@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "That's a little too much seasoning."
 	DESCRIBE.ICEBURRITO = "I really dig that name."
+	DESCRIBE.POLARCRABLEGS = "The good thing about having ten legs, is that there's enough for everyone."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I take it back. THIS sparkles with cold energy!"

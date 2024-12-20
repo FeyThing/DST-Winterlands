@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Mortals will cultivate plants, no matter how mean they come by."
 	DESCRIBE.ICEBURRITO = "I suppose I could have a bite. A frostbite, hyuyu!"
+	DESCRIBE.POLARCRABLEGS = "Fine, fine, I will grab some of that crab."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "In the air or in a gem, your soul will still be mine."

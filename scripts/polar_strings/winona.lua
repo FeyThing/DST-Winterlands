@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "In mint condition? It's practically cryopreserved!"
 	DESCRIBE.ICEBURRITO = "Just what I needed to wrap up the day."
+	DESCRIBE.POLARCRABLEGS = "I'm good with only a small pinch of luxury."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I ain't holding this without gloves."

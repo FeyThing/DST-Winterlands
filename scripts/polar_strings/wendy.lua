@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "This year's harvest was most disappointing."
 	DESCRIBE.ICEBURRITO = "My frozen heart won't feel the change."
+	DESCRIBE.POLARCRABLEGS = "We removed its legs one by one!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It's too small of a vessel for such energy."

@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Do I have to wait and drink it... or?"
 	DESCRIBE.ICEBURRITO = "I'm still figuring things out."
+	DESCRIBE.POLARCRABLEGS = "They better not scuttle off my plate."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Why do I feel like it's going to explode at any moment?"

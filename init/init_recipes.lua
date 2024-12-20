@@ -67,6 +67,10 @@ PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)},
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 						{"DECOR"}, {"turf_dragonfly"})
 PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 						{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
 
+--	Events
+PolarRecipe("snowball_item_polar", 			{Ingredient("ice", 1), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 	TECH.WINTERS_FEAST, 			{product = "snowball_item", description = "snowball_item_polar", hint_msg = "NEEDSWINTERS_FEAST"}, 	{"SPECIAL_EVENT"}, {"giftwrap"})
+PolarRecipe("wintercooking_polarcrablegs",	{Ingredient("wintersfeastfuel", 1), Ingredient("polarflea", 2)}, 	TECH.WINTERSFEASTCOOKING_ONE, 	{nounlock = true, manufactured = true, actionstr = "COOK", image = "polarcrablegs.tex"}, 			{"CRAFTING_STATION"}, {"wintercooking_tourtiere"})
+
 --	[ 		Crafting Station	]	--
 
 PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})

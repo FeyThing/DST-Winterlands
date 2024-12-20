@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Non-meat made of ice."
 	DESCRIBE.ICEBURRITO = "Fish lying in its frozen bedroll!"
+	DESCRIBE.POLARCRABLEGS = "The beast ascends to Valhalla... and to my belly!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Empowered by the ice giant's death rattle."

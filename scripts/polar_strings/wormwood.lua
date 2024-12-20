@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Friend want big warm hug?"
 	DESCRIBE.ICEBURRITO = "Glub Glub sleeping in roll"
+	DESCRIBE.POLARCRABLEGS = "Won't let legs escape"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Makes more cold"

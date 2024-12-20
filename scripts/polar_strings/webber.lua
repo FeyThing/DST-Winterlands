@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Eat our greens? But it's all blue."
 	DESCRIBE.ICEBURRITO = "Legend says this burrito never falls apart!"
+	DESCRIBE.POLARCRABLEGS = "It got more legs than us to share!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Glittery-er and cooler!"

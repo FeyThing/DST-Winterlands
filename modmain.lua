@@ -53,8 +53,10 @@ local prefabs = {
 	"rock_ice",
 	"shadowworker",
 	"shovels",
+	"snowball_item",
 	"walrus",
 	"wilson",
+	"wintersfeastcookedfoods",
 	
 	"blizzard_fires",
 	"ents_onfreeze",
@@ -90,6 +92,7 @@ local components = {
 	"shadowcreaturespawner",
 	"sheltered",
 	"slipperyfeet",
+	"snowballmelting",
 	"stormwatcher",
 	"temperature",
 	"wavemanager",

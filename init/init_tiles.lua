@@ -32,7 +32,7 @@ AddTile("POLAR_ICE", "LAND",
 		snowsound = 	"dontstarve/movement/run_iceslab",
 		mudsound = 		"dontstarve/movement/run_iceslab",
 		colors = 		POLAR_COLOR,
-		cannotbedug = true,
+		cannotbedug = 	true,
 		hard = 			true,
 	},
 	{

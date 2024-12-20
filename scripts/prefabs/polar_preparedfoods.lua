@@ -157,4 +157,32 @@ for k, v in pairs(require("polar_spicedfoods")) do
 	table.insert(prefs, MakePreparedFood(v))
 end
 
+--	Masonry Oven cooker prefabs aren't added by def like their items, I'll just sneak that here
+
+local dummy_assets = {
+	Asset("ANIM", "anim/food_winters_feast_polar.zip"),
+}
+
+local function dummy_fn()
+	local inst = CreateEntity()
+	
+	inst.entity:AddTransform()
+	
+	inst:AddTag("CLASSIFIED")
+	
+	inst.entity:SetPristine()
+	
+	if not TheWorld.ismastersim then
+		return inst
+	end
+	
+	inst.persists = false
+	
+	inst:DoTaskInTime(0, inst.Remove)
+	
+	return inst
+end
+
+table.insert(prefs, Prefab("wintercooking_polarcrablegs", dummy_fn, dummy_assets))
+
 return unpack(prefs)

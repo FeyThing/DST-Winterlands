@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Brr... could use dressing..."
 	DESCRIBE.ICEBURRITO = "This is the last time I rely on Wilson to name my recipes."
+	DESCRIBE.POLARCRABLEGS = "Mwah! Simplement par-fait!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Oh my, that is too cold for my taste!"

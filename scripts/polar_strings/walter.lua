@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "Would it lettuce freeze? Get it? Because... forget it..."
 	DESCRIBE.ICEBURRITO = "It won't fall apart one bit."
+	DESCRIBE.POLARCRABLEGS = "Mmmm! Hey, anybody wants to listen to my crab horror stories?"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "From a magic blue gem to... I don't know... a cursed blue gem, surely?"

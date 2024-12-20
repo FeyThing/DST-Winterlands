@@ -42,6 +42,28 @@ local function OnLoad(inst, data)
 	end
 end
 
+local function OnPreBuilt(inst, builder, materials, recipe)
+	if builder and recipe and recipe.tech_ingredients then
+		for i, v in ipairs(recipe.tech_ingredients) do
+			if v.type == "polarsnow_material" then
+				local block_range = TUNING.SNOW_PLOW_RANGES.USED or 0
+				
+				if block_range > 0 then
+					local x, y, z = builder.Transform:GetWorldPosition()
+					local blocker = SpawnPrefab("snowwave_blocker")
+					blocker.Transform:SetPosition(x, y, z)
+					
+					if blocker.SetSnowBlockRange then
+						blocker:SetSnowBlockRange(block_range)
+					end
+				end
+				
+				break
+			end
+		end
+	end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -113,6 +135,7 @@ local function fn()
 	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	inst.onPreBuilt = OnPreBuilt
 	
 	return inst
 end

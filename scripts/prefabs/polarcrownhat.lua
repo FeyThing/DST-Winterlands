@@ -147,6 +147,8 @@ local function fn()
 	inst:AddTag("hat")
 	inst:AddTag("polarsnowimmunity")
 	
+	inst:AddComponent("snowmandecor")
+	
 	local swap_data = {bank = "polarcrown", anim = "anim"}
 	MakeInventoryFloatable(inst, "med", 0.05, 0.75)
 	

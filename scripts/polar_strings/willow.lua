@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "This is the opposite of good."
 	DESCRIBE.ICEBURRITO = "I don't think any hot sauce can fix this."
+	DESCRIBE.POLARCRABLEGS = "Never had one of these before, I'll try ten."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Hissss... stay away!!"

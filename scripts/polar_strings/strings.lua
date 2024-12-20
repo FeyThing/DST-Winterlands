@@ -44,6 +44,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Food
 	NAMES.ICELETTUCE = "Iceberg Lettuce"
 	NAMES.ICEBURRITO = "Brrito"
+	NAMES.POLARCRABLEGS = "King Crab Legs"
+	NAMES.WINTERCOOKING_POLARCRABLEGS = "King Crab Legs"
 	
 	--	Crafting
 	NAMES.BLUEGEM_OVERCHARGED = "Overcharged Blue Gem"
@@ -253,10 +255,12 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
 	RECIPE_DESC.POLARICESTAFF = "Freeze all enemies in your track!"
 	RECIPE_DESC.SHARDS_BLUEGEM = "Shard work pays off."
+	RECIPE_DESC.SNOWBALL_ITEM_POLAR = "Portable snow? How convenient!"
 	RECIPE_DESC.TRAP_POLARTEETH = "Pops up and freezes whoever steps on it."
 	RECIPE_DESC.TURF_POLAR_CAVES = "The chilly stone of the chillest cave."
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
+	RECIPE_DESC.WINTERCOOKING_POLARCRABLEGS = "Crack into coastal cuisine."
 	
 	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading with some shady individual!"
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"

@@ -155,10 +155,6 @@ local function LearnDryIceRecipe(inst)
 end
 
 function PolarWalker:SetWetness()
-	if self._learndryice == nil then
-		self._learndryice = self.inst:DoTaskInTime(1 + math.random(), LearnDryIceRecipe)
-	end
-	
 	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarDebuffImmunity(self.inst) then
 		return -- Only immunity to debuff, not slowdown
 	end
@@ -178,6 +174,10 @@ function PolarWalker:OnUpdate()
 	
 	if locomotor then
 		if slowing then
+			if self._learndryice == nil then
+				self._learndryice = self.inst:DoTaskInTime(1 + math.random(), LearnDryIceRecipe)
+			end
+			
 			locomotor:SetExternalSpeedMultiplier(self.inst, "polar_slow", self:GetSlowingMult())
 		else
 			locomotor:RemoveExternalSpeedMultiplier(self.inst, "polar_slow")

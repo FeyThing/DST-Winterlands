@@ -79,6 +79,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Food
 	DESCRIBE.ICELETTUCE = "So, we are eating crunchy water now?"
 	DESCRIBE.ICEBURRITO = "I don't assume it tastes bad but..."
+	DESCRIBE.POLARCRABLEGS = "Would be perfect with melted butter."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I'm getting back what's rightfully mine, even if it's changed a little."
