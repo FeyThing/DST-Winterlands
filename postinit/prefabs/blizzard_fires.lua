@@ -11,8 +11,9 @@ local BLIZZARED_FIRES = {
 	cotl_tabernacle_level3 = 	{fuel_rate = FUELMULT.FIREPIT},
 	firepit = 					{fuel_rate = FUELMULT.FIREPIT},
 	torch = 					{fuel_rate = FUELMULT.TORCH},
-	
-	campfirefire = 				{prot_range = PROTECTION.FIRE},
+	--
+	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE},
+	character_fire = 			{prot_range = PROTECTION.FIRE},
 	fire = 						{prot_range = PROTECTION.FIRE},
 	torchfire = 				{prot_range = PROTECTION.TORCH},
 }

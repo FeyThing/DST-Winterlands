@@ -41,6 +41,8 @@ local function OnPolarstormChanged(inst, active)
 		inst:RemoveEventCallback("animover", OnAnimOverStorm)
 		if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") then
 			inst.AnimState:PushAnimation("blown_pst", false)
+		end
+		if inst:HasTag("pickable") then
 			inst.AnimState:PushAnimation("idle", true)
 		end
 		

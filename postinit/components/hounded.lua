@@ -1,14 +1,33 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-ENV.AddComponentPostInit("hounded", function(self)
-	local OldSummonSpawn = PolarUpvalue(self.SummonSpawn, "SummonSpawn")
-	local OldGetSpawnPrefab = PolarUpvalue(OldSummonSpawn, "GetSpawnPrefab")
+local Hounded = require("components/hounded")
+local OldHounded_ctor = Hounded._ctor
+
+Hounded._ctor = function(self, ...)
+    OldHounded_ctor(self, ...)
 	
 	self._polarify = false
 	
+	local OldSummonSpawn = PolarUpvalue(self.SummonSpawn, "SummonSpawn")
+	local OldGetSpawnPrefab = PolarUpvalue(OldSummonSpawn, "GetSpawnPrefab")
+	
+	local function GetSpawnPrefab(upgrade, ...)
+		local spawn = OldGetSpawnPrefab(upgrade, ...)
+		
+		if self._polarify and spawn == "hound" or spawn == "firehound" then
+			spawn = "icehound" -- TODO: Use known winter_prefab instead ? Also disable if ice hounds are removed by world settings
+			self._polarify = false
+		end
+		
+		return spawn
+	end
+	
+	PolarUpvalue(OldSummonSpawn, "GetSpawnPrefab", GetSpawnPrefab)
+	
 	local function SummonSpawn(pt, upgrade, radius_override, ...)
 		local in_polar = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
+		local _GetSpawnPrefab = GetSpawnPrefab -- Keeping this here for simpler mod compat
 		
 		if pt then
 			self._polarify = in_polar
@@ -31,17 +50,5 @@ ENV.AddComponentPostInit("hounded", function(self)
 		return hound
 	end
 	
-	local function GetSpawnPrefab(upgrade, ...)
-		local spawn = OldGetSpawnPrefab(upgrade, ...)
-		
-		if self._polarify and spawn == "hound" or spawn == "firehound" then
-			spawn = "icehound" -- TODO: Use known winter_prefab instead ? Also disable if ice hounds are removed by world settings
-			self._polarify = false
-		end
-		
-		return spawn
-	end
-	
 	PolarUpvalue(self.SummonSpawn, "SummonSpawn", SummonSpawn)
-	PolarUpvalue(OldSummonSpawn, "GetSpawnPrefab", GetSpawnPrefab)
-end)
+end

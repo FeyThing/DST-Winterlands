@@ -33,7 +33,7 @@ local BODY_PAINTINGS = {
 }
 
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
-local RETARGET_ONEOF_TAGS = {"hound", "merm", "pirate", "walrus"}
+local RETARGET_ONEOF_TAGS = {"hound", "merm", "walrus", "pirate", "wonkey"}
 
 local function RetargetFn(inst)
 	return not inst:IsInLimbo() and FindEntity(inst, TUNING.PIG_TARGET_DIST, function(guy)

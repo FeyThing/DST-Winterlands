@@ -309,7 +309,8 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_STORM_PROTECTION = {
 		CROWN = 5,
-		FIRE = 4,
+		CAMPFIRE = 4,
+		FIRE = 5,
 		TORCH = 3,
 	}
 	

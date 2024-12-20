@@ -151,6 +151,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Iggy",
 		"Crimson",
 		"Mustafa",
+		"Herbert",
 		"Voli",
 		"Yongdong",
 	}

@@ -24,6 +24,8 @@ local function OnTransplantFn(inst, ...)
 			
 			inst:Remove()
 		end)
+	elseif OldOnTransplantFn then
+		OldOnTransplantFn(inst, ...)
 	end
 end
 

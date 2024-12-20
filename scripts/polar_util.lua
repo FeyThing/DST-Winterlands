@@ -224,7 +224,7 @@ end
 
 local OldPlayFootstep = PlayFootstep
 function PlayFootstep(inst, volume, ispredicted, ...)
-	if inst.components.polarwalker then
+	if inst.components.polarwalker and TUNING.POLAR_WAVES_ENABLED then
 		local x, y, z = inst.Transform:GetWorldPosition()
 		
 		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z)

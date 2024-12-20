@@ -142,6 +142,15 @@ local function OnLoadPostPass(inst, newents, savedata)
 	end
 end
 
+local function OnAttacked(inst, data)
+	if data and data.attacker then
+		inst.components.combat:SetTarget(data.attacker)
+		inst.components.combat:ShareTarget(data.attacker, TUNING.POLARFLEA_CHASE_RANGE, function(dude)
+			return dude:HasTag("flea") and not dude.components.health:IsDead()
+		end, 5)
+	end
+end
+
 local function OnRemove(inst)
 	if TheWorld._numfleas then
 		TheWorld._numfleas = TheWorld._numfleas - 1
@@ -163,6 +172,10 @@ local function OnHostAttacked(inst, host, data)
 	if host then
 		if (host.components.health and host.components.health:IsDead()) or math.random() < TUNING.POLARFLEA_HOST_HIT_DROPCHANCE then
 			inst:SetHost(nil, true)
+			
+			if data and data.attacker and inst.components.combat then
+				inst.components.combat:SetTarget(data.attacker)
+			end
 		end
 	end
 end
@@ -342,6 +355,7 @@ local function fn()
 	end]]
 	
 	--inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
+	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("onremove", OnRemove)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
