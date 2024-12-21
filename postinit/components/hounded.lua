@@ -15,7 +15,7 @@ Hounded._ctor = function(self, ...)
 	local function GetSpawnPrefab(upgrade, ...)
 		local spawn = OldGetSpawnPrefab(upgrade, ...)
 		
-		if self._polarify and spawn == "hound" or spawn == "firehound" then
+		if self._polarify and (spawn == "hound" or spawn == "firehound") then
 			spawn = "icehound" -- TODO: Use known winter_prefab instead ? Also disable if ice hounds are removed by world settings
 			self._polarify = false
 		end

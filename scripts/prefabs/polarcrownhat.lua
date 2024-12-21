@@ -152,6 +152,8 @@ local function fn()
 	local swap_data = {bank = "polarcrown", anim = "anim"}
 	MakeInventoryFloatable(inst, "med", 0.05, 0.75)
 	
+	inst.entity:SetPristine()
+	
 	if not TheWorld.ismastersim then
 		return inst
 	end
