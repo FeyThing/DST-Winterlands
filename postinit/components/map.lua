@@ -31,5 +31,5 @@ end
 
 local OldIsOceanIceAtPoint = Map.IsOceanIceAtPoint
 function Map:IsOceanIceAtPoint(x, y, z, ...)
-	return OldIsOceanIceAtPoint(x, y, z, ...) or self:GetTileAtPoint(x, y, z) == WORLD_TILES.POLAR_ICE
+	return OldIsOceanIceAtPoint(self, x, y, z, ...) or self:GetTileAtPoint(x, y, z) == WORLD_TILES.POLAR_ICE
 end
