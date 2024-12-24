@@ -47,8 +47,10 @@ local function CanBeHost(inst, host, capacity_mod)
 		if host:HasTag("player") then
 			return host.components.inventory and not host.components.inventory:IsFull()
 		elseif (host._snowfleas and #host._snowfleas or 0) <= inst:HostMaxFleas(host) + (capacity_mod or 0) then
-			if host:HasTag("animal") or host:HasTag("character") or host:HasTag("fleahosted") then
-				return not (host:HasAnyTag(SOULLESS_TARGET_TAGS) or host:HasTag("fleaghosted") or host:HasTag("fire") or host:HasTag("wet"))
+			if not host:HasTag("insect") and not host:HasTag("likewateroffducksback")
+				and (host:HasTag("animal") or host:HasTag("character") or host:HasTag("fleahosted") or host:HasTag("monster")) then
+				
+				return not (host:HasAnyTag(SOULLESS_TARGET_TAGS) or host:HasTag("fleaghosted") or host:HasTag("fire") or host:GetIsWet())
 			end
 		end
 	end
@@ -279,6 +281,7 @@ local function fn()
 	
 	inst:AddTag("canbetrapped")
 	inst:AddTag("flea")
+	inst:AddTag("insect")
 	inst:AddTag("hostile")
 	inst:AddTag("monster")
 	inst:AddTag("smallcreature")

@@ -229,6 +229,7 @@ local function MakeVeggie(name, has_seeds)
 		
 		if name == "icelettuce" then
 			inst.components.edible.degrades_with_spoilage = false
+			inst.components.perishable:SetOnPerishFn(inst.Remove)
 		else
 			inst.components.perishable.onperishreplacement = "spoiled_food"
 		end
