@@ -22,6 +22,10 @@ local HOST_TAGS =  {"_health"}
 local HOST_NOT_TAGS = {"INLIMBO", "fire", "wet", "outofreach"}
 
 local function FindMammal(inst)
+	if inst._host or inst.inlimbo then
+		return
+	end
+	
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local ents = shuffleArray(TheSim:FindEntities(x, y, z, TUNING.POLARFLEA_HOST_RANGE, HOST_TAGS, HOST_NOT_TAGS))
 	

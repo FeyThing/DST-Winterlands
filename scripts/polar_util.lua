@@ -163,7 +163,9 @@ end
 
 local OldSpecialCases = GetDescription_AddSpecialCases
 function GetDescription_AddSpecialCases(ret, charactertable, inst, item, modifier, ...)
-	ret = PolarifySpeech(ret, inst)
+	if inst and type(inst) == "table" then
+		ret = PolarifySpeech(ret, inst)
+	end
 	
 	return OldSpecialCases(ret, charactertable, inst, item, modifier, ...)
 end

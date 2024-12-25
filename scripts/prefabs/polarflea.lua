@@ -92,6 +92,10 @@ local function SetHost(inst, host, kick, given)
 			OnPolarstormChanged(inst, true)
 		end]]
 		
+		if inst._host and inst._host:IsValid() then
+			inst:PushEvent("fleahostkick", inst._host)
+		end
+		
 		inst._host = nil
 		return
 	end

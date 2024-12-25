@@ -155,7 +155,9 @@ local states = {
 		end,
 		
 		events = {
-			EventHandler("animover", function(inst) inst.sg:GoToState("run") end),		
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("run")
+			end),
 		},
 	},
 	
@@ -170,7 +172,9 @@ local states = {
 		end,
 		
 		events = {
-			EventHandler("animover", function(inst) inst.sg:GoToState("idle") end),
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
 		},
 	},
 	
@@ -250,6 +254,12 @@ local states = {
 				inst:SetHost(target)
 			end
 		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
 	},
 	
 	State{
