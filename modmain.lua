@@ -46,6 +46,7 @@ local prefabs = {
 	"flower",
 	"forest",
 	"frogs",
+	"heatrock",
 	"grass",
 	"oceanfish",
 	"penguin",

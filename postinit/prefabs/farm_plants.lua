@@ -246,7 +246,7 @@ for k, data in pairs(PLANT_DEFS) do
 			
 			if inst.components.growable then
 				if OLD_GROWTH_STAGES == nil then
-					OLD_GROWTH_STAGES = inst.components.growable.stages
+					OLD_GROWTH_STAGES = deepcopy(inst.components.growable.stages)
 					LettuceGrowthStagesPostInit()
 				end
 				
