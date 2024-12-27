@@ -32,9 +32,7 @@ return Class(function(self, inst)
 		temperature = temperature or TheWorld.state.temperature
 		
 		if temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled then
-			if in_polar then
-				self:Enable(true)
-			end
+			self:Enable(in_polar)
 		elseif temperature > TUNING.POLAR_SNOW_MELT_TEMP and self.enabled then
 			self:Enable(false)
 		end

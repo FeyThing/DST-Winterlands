@@ -126,6 +126,21 @@ end
 
 --
 
+local function StartMoving(inst)
+	inst.AnimState:PushAnimation("move_loop", true)
+	
+	inst.bouncepretask = inst:DoTaskInTime(6 * FRAMES, function(inst)
+		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
+		inst.bouncetask = inst:DoPeriodicTask(27 * FRAMES, function(inst)
+			inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
+			CheckGround(inst)
+		end)
+	end)
+	
+	inst.components.blowinwind:Start()
+	inst:RemoveEventCallback("animover", StartMoving)
+end
+
 local function OnLongAction(inst)
 	inst.AnimState:PlayAnimation("move_pst")
 	inst.Physics:Stop()
@@ -166,21 +181,6 @@ local function CancelRunningTasks(inst)
 		inst.restartmovementtask:Cancel()
 		inst.restartmovementtask = nil
 	end
-end
-
-local function StartMoving(inst)
-	inst.AnimState:PushAnimation("move_loop", true)
-	
-	inst.bouncepretask = inst:DoTaskInTime(6 * FRAMES, function(inst)
-		inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
-		inst.bouncetask = inst:DoPeriodicTask(27 * FRAMES, function(inst)
-			inst.SoundEmitter:PlaySound("polarsounds/common/tumblewind_bounce")
-			CheckGround(inst)
-		end)
-	end)
-	
-	inst.components.blowinwind:Start()
-	inst:RemoveEventCallback("animover", StartMoving)
 end
 
 local function DoDirectionChange(inst, data)

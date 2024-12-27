@@ -19,7 +19,7 @@ local PolarFleaBrain = Class(Brain, function(self, inst)
 end)
 
 local HOST_TAGS =  {"_health"}
-local HOST_NOT_TAGS = {"INLIMBO", "fire", "wet", "outofreach"}
+local HOST_NOT_TAGS = {"INLIMBO", "fire", "wet", "soulless", "outofreach"}
 
 local function FindMammal(inst)
 	if inst._host or inst.inlimbo then
