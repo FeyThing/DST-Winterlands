@@ -22,9 +22,15 @@ BirdSpawner._ctor = function(self, ...)
 			return
 		end
 		
-		if GetClosestPolarTileToPoint(spawnpoint.x, 0, spawnpoint.z, 32) ~= nil and prefab and table.contains(self.polarise_birds, prefab) then
-			local tile = TheWorld.Map:GetTileAtPoint(spawnpoint.x, 0, spawnpoint.z)
-			return IsLandTile(tile) and "robin_winter" or "puffin"
+		if GetClosestPolarTileToPoint(spawnpoint.x, 0, spawnpoint.z, 32) ~= nil then
+			if TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsPolarStormActive() then
+				return
+			end
+			
+			if prefab and table.contains(self.polarise_birds, prefab) then
+				local tile = TheWorld.Map:GetTileAtPoint(spawnpoint.x, 0, spawnpoint.z)
+				return IsLandTile(tile) and "robin_winter" or "puffin"
+			end
 		end
 		
 		return prefab

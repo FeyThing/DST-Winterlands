@@ -1,0 +1,115 @@
+local ANNOUNCE = STRINGS.CHARACTERS.WORMWOOD
+local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
+
+--	Announcements
+	
+	--	Actions
+	ANNOUNCE.BATTLECRY.POLARBEAR = "攻击！"
+	
+	--	World, Events
+	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
+		"不是像这里这样……",
+		"冷！冷！",
+		"不喜欢冷！",
+	}
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "哎哟 哎哟 哎哟！"
+	
+	--	Buffs
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "不！冷！"
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "啊哈，雪全没了"
+	
+--	Worldgen
+	
+	--	Plants
+	DESCRIBE.ANTLER_TREE = {
+		BURNING = "火！不！",
+		BURNT = "雪不够吗？",
+		CHOPPED = "(叹气) 为什么要打架？",
+		GENERIC = "为什么要长角？",
+	}
+	DESCRIBE.ICELETTUCE_SEEDS = "寒冷的小宝宝"
+	
+	--	Rocks and stones
+	DESCRIBE.POLAR_ICICLE = "在生长吗？"
+	DESCRIBE.POLAR_ICICLE_ROCK = "大掉落"
+	DESCRIBE.ROCK_POLAR = "冰中被困的亮晶晶？怎么回事？"
+	
+	--	Misc
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "嗯？"
+	DESCRIBE.TUMBLEWEED_POLAR = "慢一点！"
+	
+--	Mobs
+	
+	DESCRIBE.MOOSE_POLAR = {
+		GENERIC = "教训学到了。不应该和朋友打架",
+		ANTLER = "有大树枝！",
+	}
+	DESCRIBE.MOOSE_SPECTER = "树枝冷了吗？"
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "闪亮的咕噜咕噜！"
+	DESCRIBE.POLARBEAR = {
+		DEAD = "呃哦……",
+		ENRAGED = "需要冷静一下！",
+		FOLLOWER = "冷冷的毛茸茸好朋友",
+		GENERIC = "哦，冷冷的毛茸茸！",
+	}
+	DESCRIBE.POLARFLEA = {
+		GENERIC = "不想再来一次！",
+		HELD = "会很痛",
+	}
+	DESCRIBE.POLARFOX = {
+		FOLLOWER = "嘘……现在没事了",
+		FRIEND = "嗨，朋友！记得我吗？",
+		GENERIC = "啊！过来，过来！",
+	}
+	DESCRIBE.POLARWARG = "很冷的大狗狗"
+	
+--	Buildings
+	
+	DESCRIBE.POLARAMULET_STATION = {
+		GENERIC = "有人在家吗？",
+		OPEN = "你好……！你好？",
+	}
+	DESCRIBE.POLARBEARHOUSE = {
+		BURNT = "闻起来有鱼腥味",
+		GENERIC = "咕噜咕噜的房子",
+	}
+	
+--	Items
+	
+	--	Food
+	DESCRIBE.ICELETTUCE = "朋友想要大大的温暖拥抱吗？"
+	DESCRIBE.ICEBURRITO = "咕噜咕噜在卷里睡觉"
+	
+	--	Crafting
+	DESCRIBE.BLUEGEM_OVERCHARGED = "变得更冷"
+	DESCRIBE.BLUEGEM_SHARDS = "变得小小的冷"
+	DESCRIBE.MOOSE_POLAR_ANTLER = "坏掉了"
+	DESCRIBE.POLAR_DRYICE = "用来做新鲜的小吃"
+	DESCRIBE.POLARBEARFUR = "暖和"
+	DESCRIBE.POLARWARGSTOOTH = "冷！哇！"
+	
+	--	Equipments
+	DESCRIBE.ANTLER_TREE_STICK = "掉了什么？"
+	DESCRIBE.FROSTWALKERAMULET = "现在是水，现在是石头？"
+	DESCRIBE.ICICLESTAFF = "会造成痛痛雨"
+	DESCRIBE.POLAR_SPEAR = "尖尖的"
+	DESCRIBE.POLARAMULET = "痛痛的脖子东西"
+	DESCRIBE.POLARCROWNHAT = "头上的东西想要更暖和吗？"
+	DESCRIBE.POLARICESTAFF = "一切都变得冷冷的"
+	DESCRIBE.POLARMOOSEHAT = "斧头朋友？"
+	
+	--	Others
+	DESCRIBE.POLARGLOBE = {
+		GENERIC = "嗯……有人碰过吗？",
+		INUSE = "不不不，回去里面！",
+		REFUEL = "终于在睡觉了？",
+	}
+	DESCRIBE.POLARICEPACK = "能保持肚子里的东西更多？"
+	DESCRIBE.POLARTRINKET_1 = "舒适的小家伙"
+	DESCRIBE.POLARTRINKET_2 = "尖帽女孩需要帮助吗？"
+	DESCRIBE.TRAP_POLARTEETH = "寒冷的尖刺"
+	DESCRIBE.TURF_POLAR_CAVES = "冰"
+	DESCRIBE.TURF_POLAR_DRYICE = "冰"
+	DESCRIBE.WALL_POLAR = "滑滑的"
+	DESCRIBE.WALL_POLAR_ITEM = "啜饮"
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "不想让朋友冷……哦。不冷"

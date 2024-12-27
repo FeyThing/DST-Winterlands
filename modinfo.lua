@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.0.12"
+version = "1.0.13"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Freshly Released
@@ -17,6 +17,8 @@ Where winter reigns eternal, and deadlier than ever... amid the snow lies a worl
 Look up your configs + new world settings before starting ⬇]]
 
 forumthread = ""
+wiki_link = "https://winterlands.wiki.gg/"
+
 api_version = 10
 
 all_clients_require_mod = true
@@ -41,7 +43,7 @@ local configs = {
 }
 
 local descs = {
-	language = "More soon... you can help us if you'd like!",
+	language = "Translate the mod, thanks to the community help.",
 	biome_retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
 	biome_icegen = "How much ice do you want on your island?",
 	biome_blizzards = "How snow stormy should your island be?",
@@ -51,7 +53,7 @@ local descs = {
 
 local options = {
 	none = {{description = "", data = false}},
-	language = {{description = "English", data = false}}, -- {description = "Polish", hover = "By LukaS", data = "pl"}},
+	language = {{description = "English", data = false}, {description = "简体中文 (Simplified)", data = "zhs", hover = "By heavenmoon0107"}, {description = "繁體中文 (Traditional)", data = "zht", hover = "By heavenmoon0107"}}, -- {description = "Polish", hover = "By LukaS", data = "pl"}},
 	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
 	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},

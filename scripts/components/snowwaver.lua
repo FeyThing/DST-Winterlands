@@ -17,6 +17,8 @@ return Class(function(self, inst)
 	end
 	
 	local function OnInPolar(inst, enable)
+		self.in_polar = enable
+		
 		self:OnTemperatureChanged()
 	end
 	
@@ -28,12 +30,11 @@ return Class(function(self, inst)
 		end
 		
 		local x, y, z = _player.Transform:GetWorldPosition()
-		local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil
 		temperature = temperature or TheWorld.state.temperature
 		
-		if temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled then
-			self:Enable(in_polar)
-		elseif temperature > TUNING.POLAR_SNOW_MELT_TEMP and self.enabled then
+		if temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled and self.in_polar then
+			self:Enable(true)
+		elseif (not self.in_polar or temperature > TUNING.POLAR_SNOW_MELT_TEMP) and self.enabled then
 			self:Enable(false)
 		end
 	end

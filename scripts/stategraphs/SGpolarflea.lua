@@ -183,12 +183,14 @@ local states = {
 		tags = {"busy"},
 		
 		onenter = function(inst, host)
+			inst.AnimState:PlayAnimation("idle", true)
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/spawn")
+			inst.Physics:Stop()
+			
 			local pt = inst:GetPosition()
 			pt.y = pt.y + 1.5
 			
 			inst.Transform:SetPosition(pt:Get())
-			inst.AnimState:PlayAnimation("idle", true)
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/spawn")
 		end,
 		
 		onupdate = function(inst)

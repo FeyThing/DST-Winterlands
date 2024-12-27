@@ -51,7 +51,7 @@ local function OnWork(inst, worker, workleft, numworks)
 		
 		inst:Remove()
 	else
-		if numworks and numworks >= 0.8 then
+		if numworks and numworks >= 0.5 then
 			local prefab = weighted_random_choice(inst.mine_loots)
 			local loot = inst.components.lootdropper:SpawnLootPrefab(prefab)
 			
