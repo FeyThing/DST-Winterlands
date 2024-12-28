@@ -2,8 +2,8 @@ return Class(function(self, inst)
 	self.inst = inst
 	
 	self.enabled = false
-	self.lines = 40
-	self.rows = 40
+	self.lines = 50
+	self.rows = 50
 	self.spacing_x = TILE_SCALE / 2
 	self.spacing_y = TILE_SCALE / 2
 	
@@ -11,6 +11,8 @@ return Class(function(self, inst)
 	self.last_tile = {}
 	
 	local _player = nil
+	local batch_index = 1
+	local batch_total = 0
 	
 	local function OnSnowBlockRangeDirty(src, data)
 		self.blocker_update = true
@@ -18,7 +20,6 @@ return Class(function(self, inst)
 	
 	local function OnInPolar(inst, enable)
 		self.in_polar = enable
-		
 		self:OnTemperatureChanged()
 	end
 	
@@ -38,7 +39,7 @@ return Class(function(self, inst)
 			self:Enable(false)
 		end
 	end
-
+	
 	--	TODO: Angular positioning is disabled until SetWaves can recognize their old position under all camera angles, and spacing other than multiples of 2
 	function self:GetWavePosition(row, line, x, y, z)
 		local row_x = -((self.lines - 1) * self.spacing_x) / 2 + (line - 1) * self.spacing_x
@@ -70,58 +71,54 @@ return Class(function(self, inst)
 		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(TheCamera.currentpos:Get())
 		local tile_x, tile_y = TheWorld.Map:GetTileCoordsAtPoint(cx, cy, cz)
 		
-		if self.blocker_update --[[ or TheCamera:GetHeadingTarget() ~= TheCamera:GetHeading() or tile_x ~= self.last_tile[1] or tile_y ~= self.last_tile[2] ]] then
-			local valid_positions = {}
-			for row = 1, self.rows do
-				for line = 1, self.lines do
-					local pt = self:GetWavePosition(row, line, cx, cy, cz)
-					local pt_str = string.format("%.2f_%.2f", pt.x, pt.z)
-					
-					valid_positions[pt_str] = pt
-				end
-			end
-			
-			for pt_str, wave in pairs(self.waves_positions) do
-				if not valid_positions[pt_str] then
-					if wave and wave:IsValid() then
-						wave:DoWaveFade(true, wave.Remove)
-					end
-					
-					self.waves_positions[pt_str] = nil
-				end
-			end
-			
-			for row = 1, self.rows do
-				for line = 1, self.lines do
-					local pt = self:GetWavePosition(row, line, cx, cy, cz)
-					local pt_str = string.format("%.2f_%.2f", pt.x, pt.z)
-					
-					local wave = self.waves_positions[pt_str]
-					local insnow = TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
-						and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z, TUNING.POLAR_SNOW_FORGIVENESS.SNOWWAVE)
-					
-					if wave == nil and valid_positions[pt_str] then
-						wave = SpawnPrefab("snowwave")
-						if insnow then
-							wave:DoWaveFade()
-						end
-						self.waves_positions[pt_str] = wave
-					end
-					
-					if wave and wave:IsValid() then
-						wave.Transform:SetPosition(pt.x, pt.y, pt.z)
-						
-						if not insnow and not wave._fading then
-							wave:DoWaveFade(true)
-						elseif insnow and wave._fading then
-							wave:DoWaveFade()
-						end
-					end
-				end
-			end
-			
+		-- or TheCamera:GetHeadingTarget() ~= TheCamera:GetHeading()
+		if self.blocker_update or tile_x ~= self.last_tile[1] or tile_y ~= self.last_tile[2] then
+			batch_index = 1
+			batch_total = self.rows * self.lines
 			self.last_tile = {tile_x, tile_y}
 			self.blocker_update = nil
+		end
+		
+		local processed = 0
+		while processed < 200 and batch_index <= batch_total do
+			local row = math.floor((batch_index - 1) / self.lines) + 1
+			local line = (batch_index - 1) % self.lines + 1
+			local pt = self:GetWavePosition(row, line, cx, cy, cz)
+			local pt_str = string.format("%.2f_%.2f", pt.x, pt.z)
+			
+			local wave = self.waves_positions[pt_str]
+			local insnow = TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
+				and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z, TUNING.POLAR_SNOW_FORGIVENESS.SNOWWAVE)
+				
+			if wave == nil and insnow then
+				wave = SpawnPrefab("snowwave")
+				wave.Transform:SetPosition(pt.x, pt.y, pt.z)
+				self.waves_positions[pt_str] = wave
+				wave:DoWaveFade()
+			elseif wave and wave:IsValid() then
+				if not insnow and not wave._fading then
+					wave:DoWaveFade(true)
+				elseif insnow and wave._fading then
+					wave:DoWaveFade()
+				end
+			end
+			
+			batch_index = batch_index + 1
+			processed = processed + 1
+		end
+		
+		if batch_index > batch_total then
+			for pt_str, wave in pairs(self.waves_positions) do
+				if wave and wave:IsValid() then
+					local x, _, z = wave.Transform:GetWorldPosition()
+					local tile = TheWorld.Map:GetTileAtPoint(x, 0, z)
+					
+					if tile ~= WORLD_TILES.POLAR_SNOW then
+						wave:DoWaveFade(true, wave.Remove)
+						self.waves_positions[pt_str] = nil
+					end
+				end
+			end
 		end
 	end
 	
@@ -129,7 +126,7 @@ return Class(function(self, inst)
 		self:RemoveWaves()
 		self:SetWaves()
 	end
-
+	
 	function self:Enable(enabled)
 		self.enabled = enabled or false
 		
@@ -149,7 +146,7 @@ return Class(function(self, inst)
 			inst:RemoveEventCallback("snowwave_blockerupdate", OnSnowBlockRangeDirty)
 		end
 	end
-
+	
 	function self:OnUpdate(dt) -- TODO: Change to static updates so waves get replaced even when paused for camera rotations
 		if not self.enabled then
 			self:RemoveWaves()
