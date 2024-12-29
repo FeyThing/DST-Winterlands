@@ -148,7 +148,7 @@ end
 local function LearnDryIceRecipe(inst)
 	local rec = "polar_dryice"
 	
-	if not inst.components.builder:KnowsRecipe(rec) and inst.components.builder:CanLearn(rec) then
+	if inst.components.builder and not inst.components.builder:KnowsRecipe(rec) and inst.components.builder:CanLearn(rec) then
 		inst.components.builder:UnlockRecipe(rec)
 		inst:PushEvent("learnrecipe", {teacher = inst, recipe = rec})
 	end

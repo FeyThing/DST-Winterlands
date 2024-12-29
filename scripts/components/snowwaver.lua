@@ -11,8 +11,10 @@ return Class(function(self, inst)
 	self.last_tile = {}
 	
 	local _player = nil
+	
 	local batch_index = 1
 	local batch_total = 0
+	local BATCH_MAX_WAVES = 200
 	
 	local function OnSnowBlockRangeDirty(src, data)
 		self.blocker_update = true
@@ -80,7 +82,7 @@ return Class(function(self, inst)
 		end
 		
 		local processed = 0
-		while processed < 200 and batch_index <= batch_total do
+		while processed < BATCH_MAX_WAVES and batch_index <= batch_total do
 			local row = math.floor((batch_index - 1) / self.lines) + 1
 			local line = (batch_index - 1) % self.lines + 1
 			local pt = self:GetWavePosition(row, line, cx, cy, cz)

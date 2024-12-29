@@ -45,7 +45,7 @@ end
 local POLAR_WALKERS = {
 	"pigguard", "pigman", "rocky",
 	"catcoon", "grassgekko", "monkey",
-	"hound", "firehound", "mutatedhound", "warg", "wobybig", "wobysmall",
+	"hound", "firehound", "mutatedhound", "warg",
 	"mossling", "perd", "spat"
 }
 
