@@ -14,6 +14,10 @@ local function PolarSnowUpdate(inst)
 	end
 end
 
+local function OnInSnowDirty(inst)
+	inst:PushEvent("refreshcrafting")
+end
+
 ENV.AddPlayerPostInit(function(inst)
 	if not TheNet:IsDedicated() then
 		inst._polarsnowfx = SpawnPrefab("snow_polar")
@@ -22,7 +26,11 @@ ENV.AddPlayerPostInit(function(inst)
 		inst._polarsnowfx:PostInit()
 	end
 	
+	inst._inpolarsnow = net_event(inst.GUID, "localplayer._inpolarsnow")
+	
 	if not TheWorld.ismastersim then
+		inst:ListenForEvent("localplayer._inpolarsnow", OnInSnowDirty)
+		
 		return
 	end
 	

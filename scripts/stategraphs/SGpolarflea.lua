@@ -37,8 +37,6 @@ local states = {
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("idle", true)
 			inst.Physics:Stop()
-			
-			inst.sg:SetTimeout(2 * math.random() + 0.5)
 		end,
 	},
 	

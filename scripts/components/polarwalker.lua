@@ -217,11 +217,16 @@ function PolarWalker:OnUpdate()
 		self:SetWetness()
 	end
 	
-	if self.inst.components.builder and self._slowed ~= slowed then
-		self.inst:PushEvent("refreshcrafting")
+	local slow_state = slowed and "slowed" or slowing and "slowing" or nil
+	if self.inst._inpolarsnow then
+		if TheWorld.ismastersim then
+			self.inst:PushEvent("refreshcrafting")
+		end
+		
+		self.inst._inpolarsnow:push()
 	end
 	
-	self._slowed = slowed and "slowed" or slowing and "slowing" or nil
+	self._slowed = slow_state
 end
 
 function PolarWalker:OnEntitySleep()

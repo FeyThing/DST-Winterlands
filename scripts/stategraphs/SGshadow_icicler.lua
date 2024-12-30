@@ -267,9 +267,7 @@ local states = {
 		end,
 		
 		events = {
-			EventHandler("animover", function(inst)
-				inst.sg:GoToState("idle")
-			end),
+			EventHandler("animover", OnAnimOverRemoveAfterSounds),
 		},
 	},
 	

@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.0.15"
+version = "1.0.16"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Freshly Released
@@ -33,7 +33,8 @@ server_filter_tags = {
 
 local configs = {
 	language = "Language",
-	biome = "Winterlands",
+	biome = "Type",
+	biome_type = "Winterlands",
 	biome_retrofit = "Retrofit",
 	biome_icegen = "Ice Generation",
 	biome_blizzards = "Blizzards",
@@ -44,6 +45,7 @@ local configs = {
 
 local descs = {
 	language = "Translate the mod, thanks to the community help.",
+	biome_type = "How will The Winterlands generate?",
 	biome_retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
 	biome_icegen = "How much ice do you want on your island?",
 	biome_blizzards = "How snow stormy should your island be?",
@@ -56,6 +58,7 @@ local options = {
 	language = {{description = "English", data = false}, {description = "简体中文 (Simplified)", data = "zhs", hover = "By heavenmoon0107"}, {description = "繁體中文 (Traditional)", data = "zht", hover = "By heavenmoon0107"}}, -- {description = "Polish", hover = "By LukaS", data = "pl"}},
 	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
 	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
+	biometype = {{description = "Island", data = "island", hover = "As its own separated region. Recommanded!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommanded..."}, {description = "Skip", data = "skip", hover = "Will not generate (can be useful for multi-shards setup)."}},
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},
 }
 
@@ -64,6 +67,7 @@ configuration_options = {
 	{name = "language",				label = configs.language,				hover = descs.language,			options = options.language, 	default = false},
 --	Gene
 	{name = "biome",				label = configs.biome,													options = options.none, 		default = false},
+	{name = "biome_type",			label = configs.biome_type,				hover = descs.biome_type,		options = options.biometype,	default = "island"},
 	{name = "biome_blizzards",		label = configs.biome_blizzards,		hover = descs.biome_blizzards,	options = options.moreless,		default = 0},
 	{name = "biome_icegen",			label = configs.biome_icegen,			hover = descs.biome_icegen,		options = options.moreless,		default = 0},
 	{name = "biome_retrofit",		label = configs.biome_retrofit,			hover = descs.biome_retrofit,	options = options.retrofit,		default = 0},

@@ -62,7 +62,7 @@ local function ValidShedAntlerTarget(inst, other)
 	local pt = inst.charge_pos
 	
 	return inst.hasantler and other ~= nil and other:IsValid()
-		and other:HasTag("tree") and not other:HasTag("stump")
+		and (other:HasTag("tree") or other:HasTag("rockicicle")) and not other:HasTag("stump")
 		and other.components.workable and other.components.workable:CanBeWorked()
 		and (pt == nil or other:GetDistanceSqToPoint(pt.x, pt.y, pt.z) > TUNING.POLAR_MOOSE_SHED_MIN_DIST)
 end
@@ -231,7 +231,6 @@ local function MakeMoose(name, assets)
 		inst.hasantler = true
 		
 		if name == "specter" then
-			
 			inst:AddComponent("sanityaura")
 			inst.components.sanityaura.aura = TUNING.SANITYAURA_SMALL
 			
@@ -244,9 +243,10 @@ local function MakeMoose(name, assets)
 			inst.components.inspectable.getstatus = GetStatus
 			
 			MakeHauntablePanic(inst)
-			MakeMediumBurnableCharacter(inst, "deer_torso")
 			MakeMediumFreezableCharacter(inst, "deer_torso")
 		end
+		
+		MakeMediumBurnableCharacter(inst, "deer_torso")
 		
 		inst.OnSave = OnSave
 		inst.OnLoad = OnLoad

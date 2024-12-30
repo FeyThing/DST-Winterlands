@@ -1,5 +1,3 @@
-require("map/tasks/polar")
-
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
 local polar_optional = {"Polar Floe"} -- "Polar Lake"
 
@@ -7,7 +5,14 @@ local STRINGS = GLOBAL.STRINGS
 
 --	Add Islands, Boons, ...
 
+GLOBAL.WINTERLANDS_TYPE = GetModConfigData("biome_type") or "island"
+require("map/tasks/polar")
+
 AddTaskSetPreInitAny(function(self)
+	if GLOBAL.WINTERLANDS_TYPE == "skip" then
+		return
+	end
+	
 	if self.location == "forest" and self.tasks and #self.tasks > 1 then
 		for i, task in ipairs(polar_tasks) do
 			table.insert(self.tasks, task)

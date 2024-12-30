@@ -20,9 +20,9 @@ local events = {
 	
 	EventHandler("attacked", function(inst)
 		if (not inst.sg:HasStateTag("busy") or inst.sg:HasStateTag("caninterrupt")) and not inst.components.health:IsDead() then
-			if not inst.components.combat:InCooldown() then
+			--if not inst.components.combat:InCooldown() then
 				inst.sg:GoToState("hit")
-			end
+			--end
 		end
 	end),
 	EventHandler("doattack", function(inst, data)
@@ -45,16 +45,18 @@ local states = {
 		tags = {"idle", "canrotate"},
 		
 		onenter = function(inst, playanim)
+			inst.components.locomotor:StopMoving()
+			inst.AnimState:PlayAnimation("idle_loop")
+			
 			if inst.sg.mem.wantstogrowantler then
 				inst.sg:GoToState("growantler")
 			elseif inst.components.combat and inst.components.combat.target and inst.components.combat:InCooldown() and inst.hasantler then
-				inst.sg:GoToState("ram_taunt")
+				if not (inst.components.timer and inst.components.timer:TimerExists("ram_cooldown")) then
+					inst.sg:GoToState("ram_taunt")
+				end
 			elseif not (inst.components.combat and inst.components.combat.target) and math.random() < 0.15 then
 				local rdm = math.random()
 				inst.sg:GoToState(rdm < 0.7 and "idle_dig" or rdm < 0.9 and "idle_alert" or "idle_grazing")
-			else
-				inst.AnimState:PlayAnimation("idle_loop")
-				inst.components.locomotor:StopMoving()
 			end
 		end,
 		
@@ -136,14 +138,11 @@ local states = {
 	
 	State{
 		name = "ram_taunt",
-		tags = {"busy", "caninterrupt"},
+		tags = {"busy"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("atk_magic_pre")
-			inst.AnimState:PushAnimation("atk_magic_loop", false)
-			inst.AnimState:PushAnimation("atk_magic_loop", false)
-			inst.AnimState:PushAnimation("atk_magic_loop", false)
-			--inst.AnimState:PushAnimation("atk_magic_pst", false)
+			inst.AnimState:PushAnimation("atk_magic_loop") 
 			inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/huff")
 			inst.components.locomotor:StopMoving()
 			
@@ -157,6 +156,12 @@ local states = {
 				inst.sg.statemem.fx.entity:AddFollower()
 				inst.sg.statemem.fx.Follower:FollowSymbol(inst.GUID, "swap_antler_red", 0, 0, 0)
 			end
+			
+			inst.sg:SetTimeout(TUNING.POLAR_MOOSE_ATTACK_PERIOD)
+		end,
+		
+		ontimeout = function(inst)
+			inst.sg:GoToState("idle")
 		end,
 		
 		onexit = function(inst)
@@ -175,14 +180,6 @@ local states = {
 			TimeEvent(1.9, function(inst) inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/scratch") end),
 			TimeEvent(2.4, function(inst) inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/scratch") end),
 			TimeEvent(2.5, function(inst) inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/scratch") end),
-		},
-		
-		events = {
-			EventHandler("animqueueover", function(inst)
-				if inst.AnimState:AnimDone() then
-					inst.sg:GoToState("idle")
-				end
-			end),
 		},
 	},
 	
@@ -320,10 +317,17 @@ CommonStates.AddCombatStates(states, {
 			local range = inst.components.combat.hitrange
 			local ents = TheSim:FindEntities(x, y, z, range, KNOCK_TARGET_TAGS, KNOCK_TARGET_NOT_TAGS)
 			
+			local timer = TUNING.POLAR_MOOSE_KNOCK_COOLDOWN_MISS
 			for i, v in ipairs(ents) do
 				if v ~= inst and inst.components.combat:CanTarget(v) and v:IsValid() and not v:IsInLimbo() and not (v.components.health and v.components.health:IsDead()) then
-					v:PushEvent("knockback", {knocker = inst, radius = 2, strengthmult = inst.hasantler and 2 or 1, forcelanded = not inst.hasantler})
+					v:PushEvent("knockback", {knocker = inst, radius = TUNING.POLAR_MOOSE_KNOCK_RAD, strengthmult = inst.hasantler and 2 or 1, forcelanded = not inst.hasantler})
+					
+					timer = TUNING.POLAR_MOOSE_KNOCK_COOLDOWN
 				end
+			end
+			
+			if inst.components.timer and not inst.components.timer:TimerExists("ram_cooldown") then
+				inst.components.timer:StartTimer("ram_cooldown", timer)
 			end
 		end),
 		TimeEvent(23 * FRAMES, DoFootstep),

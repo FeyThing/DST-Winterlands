@@ -2,8 +2,8 @@ return Class(function(self, inst)
 	self.inst = inst
 	
 	self.enabled = false
-	self.lines = 50
-	self.rows = 50
+	self.lines = 40
+	self.rows = 40
 	self.spacing_x = TILE_SCALE / 2
 	self.spacing_y = TILE_SCALE / 2
 	
@@ -14,7 +14,7 @@ return Class(function(self, inst)
 	
 	local batch_index = 1
 	local batch_total = 0
-	local BATCH_MAX_WAVES = 200
+	local BATCH_MAX_WAVES = 100
 	
 	local function OnSnowBlockRangeDirty(src, data)
 		self.blocker_update = true

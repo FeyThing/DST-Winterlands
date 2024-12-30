@@ -262,11 +262,13 @@ local function MakeHornyTree(data)
 		
 		inst:AddComponent("timer")
 		
-		inst:AddComponent("workable")
-		inst.components.workable:SetWorkAction(ACTIONS.CHOP)
-		inst.components.workable:SetWorkLeft(TUNING.ANTLER_TREE_CHOPS)
-		inst.components.workable:SetOnWorkCallback(ChopTree)
-		inst.components.workable:SetOnFinishCallback(ChopDownTree)
+		if data ~= "stump" then
+			inst:AddComponent("workable")
+			inst.components.workable:SetWorkAction(ACTIONS.CHOP)
+			inst.components.workable:SetWorkLeft(TUNING.ANTLER_TREE_CHOPS)
+			inst.components.workable:SetOnWorkCallback(ChopTree)
+			inst.components.workable:SetOnFinishCallback(ChopDownTree)
+		end
 		
 		local color = 0.7 + math.random() * 0.3
 		inst.AnimState:SetMultColour(color, color, color, 1)
@@ -278,6 +280,11 @@ local function MakeHornyTree(data)
 		if data == "stump" then
 			inst.AnimState:PlayAnimation("stump")
 			SetStump(inst)
+			
+			inst:AddComponent("workable")
+			inst.components.workable:SetWorkAction(ACTIONS.DIG)
+			inst.components.workable:SetOnFinishCallback(DigUpStump)
+			inst.components.workable:SetWorkLeft(1)
 		elseif data == "burnt" then
 			OnBurnt(inst)
 		end

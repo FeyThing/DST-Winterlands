@@ -1,6 +1,5 @@
 local assets = {
 	Asset("ANIM", "anim/trap_polarteeth.zip"),
-	Asset("ANIM", "anim/trap_teeth.zip"),
 }
 
 local function OnFinished(inst)
@@ -104,7 +103,7 @@ local function fn()
 	
 	inst.MiniMapEntity:SetIcon("trap_polarteeth.png")
 	
-	inst.AnimState:SetBank("trap_teeth")
+	inst.AnimState:SetBank("trap_polarteeth")
 	inst.AnimState:SetBuild("trap_polarteeth")
 	inst.AnimState:PlayAnimation("idle")
 	
@@ -148,4 +147,4 @@ local function fn()
 end
 
 return Prefab("trap_polarteeth", fn, assets),
-	MakePlacer("trap_polarteeth_placer", "trap_teeth", "trap_polarteeth", "idle")
+	MakePlacer("trap_polarteeth_placer", "trap_polarteeth", "trap_polarteeth", "idle")

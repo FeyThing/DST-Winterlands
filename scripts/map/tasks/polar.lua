@@ -1,9 +1,11 @@
+local polarregion = WINTERLANDS_TYPE ~= "mainland" and "polarlands" or nil
+
 require("map/rooms/polar_rooms")
 
 AddTask("Polar Village", {
 	locks = {},
 	keys_given = {KEYS.ISLAND_TIERPOLAR},
-	region_id = "polarlands",
+	region_id = polarregion,
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
@@ -19,7 +21,7 @@ AddTask("Polar Village", {
 AddTask("Polar Lands", {
 	locks = {LOCKS.ISLAND_TIERPOLAR},
 	keys_given = {LOCKS.ISLAND_TIER2},
-	region_id = "polarlands",
+	region_id = polarregion,
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
@@ -36,7 +38,7 @@ AddTask("Polar Lands", {
 AddTask("Polar Caves", {
 	locks = {LOCKS.ISLAND_TIERPOLAR},
 	keys_given = {LOCKS.ISLAND_TIER3},
-	region_id = "polarlands",
+	region_id = polarregion,
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
@@ -52,10 +54,10 @@ AddTask("Polar Caves", {
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
-AddTask("Polar Floe", {
+AddTask("Polar Floe", { -- optional
 	locks = {LOCKS.ISLAND_TIERPOLAR, LOCKS.ISLAND_TIER3},
 	keys_given = {},
-	region_id = "polarlands",
+	region_id = polarregion,
 	level_set_piece_blocker = true,
 	entrance_room = "MoonIsland_Blank",
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
@@ -72,10 +74,10 @@ AddTask("Polar Floe", {
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
-AddTask("Polar Lake", {
+AddTask("Polar Lake", { -- unused
 	locks = {LOCKS.ISLAND_TIERPOLAR},
 	keys_given = {LOCKS.ISLAND_TIER2},
-	region_id = "polarlands",
+	region_id = polarregion,
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
