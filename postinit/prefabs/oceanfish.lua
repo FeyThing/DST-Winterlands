@@ -48,7 +48,7 @@ FISH_DATA.fish["oceanfish_medium_polar1"] = {
 	loot = {"fishmeat"},
 	heavy_loot = {"fishmeat", "fishmeat_small"},
 	cooking_product = "fishmeat_cooked",
-	perish_product = "fishmeat_small",
+	perish_product = "fishmeat",
 	fishtype = "meat",
 	
 	lures = TUNING.OCEANFISH_LURE_PREFERENCE.OMNI,

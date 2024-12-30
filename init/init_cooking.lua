@@ -3,7 +3,7 @@ local Cooking = require("cooking")
 --	Ingredients
 	
 	AddIngredientValues({"icelettuce"}, {veggie = 1, frozen = 1})
-	AddIngredientValues({"oceanfish_medium_polar1_inv"}, {meat = 1, fish = 1, frozen = 1})
+	AddIngredientValues({"oceanfish_medium_polar1_inv"}, {meat = 1, fish = 1})
 	
 --	Add Recipes
 	

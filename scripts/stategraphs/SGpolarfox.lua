@@ -19,22 +19,24 @@ local events = {
 	CommonHandlers.OnHop(),
 	CommonHandlers.OnSink(),
     CommonHandlers.OnFallInVoid(),
+	CommonHandlers.OnFreeze(),
 	CommonHandlers.OnSleepEx(),
 	CommonHandlers.OnWakeEx(),
 	
 	EventHandler("locomote", function(inst)
 		if inst.components.locomotor then
-			if inst.sg:HasStateTag("sitting") and inst.wantstosit then
-				inst.wantstosit = nil
-				inst.sg:GoToState("sit")
-				return
-			end
-			
 			local is_idling = inst.sg:HasStateTag("idle")
 			local is_moving = inst.sg:HasStateTag("moving")
 			local is_running = inst.sg:HasStateTag("running")
 			local should_move = inst.components.locomotor:WantsToMoveForward()
 			local should_run = inst.components.locomotor:WantsToRun()
+			
+			if inst.sg:HasStateTag("sitting") and inst.wantstosit and (should_move or should_run) then
+				inst.wantstosit = nil
+				inst.sg:GoToState("sit")
+				
+				return
+			end
 			
 			if is_moving and not should_move then
 				inst.sg:GoToState(is_running and "run_stop" or "walk_stop")
@@ -93,10 +95,12 @@ local states = {
 		
 		events = {
 			EventHandler("animover", function(inst)
-				local wantstoalert = inst.wantstoalert and not inst.sg.statemem.alerted
-				inst.wantstosit = math.random() < 0.1 and not (inst.sg.statemem.alerted and inst.components.follower and inst.components.follower.leader == nil)
-				
-				inst.sg:GoToState((wantstoalert and "_alert") or (inst.wantstosit and "sit") or "idle", {alerted = inst.sg.statemem.alerted})
+				if inst.AnimState:AnimDone() then
+					local wantstoalert = inst.wantstoalert and not inst.sg.statemem.alerted
+					inst.wantstosit = math.random() < 0.1 and not (inst.sg.statemem.alerted and inst.components.follower and inst.components.follower.leader == nil)
+					
+					inst.sg:GoToState((wantstoalert and "_alert") or (inst.wantstosit and "sit") or "idle", {alerted = inst.sg.statemem.alerted})
+				end
 			end),
 		},
 	},
@@ -116,8 +120,10 @@ local states = {
 		
 		events = {
 			EventHandler("animover", function(inst)
-				local wantstosit = not inst.wantstoalert and inst.wantstosit
-				inst.sg:GoToState((wantstosit and "sitting") or (inst.wantstoalert and "_alert") or "idle")
+				if inst.AnimState:AnimDone() then
+					local wantstosit = not inst.wantstoalert and inst.wantstosit
+					inst.sg:GoToState((wantstosit and "sitting") or (inst.wantstoalert and "_alert") or "idle")
+				end
 			end),
 		},
 	},
@@ -127,22 +133,24 @@ local states = {
 		tags = {"idle", "canrotate", "sitting"},
 		
 		onenter = function(inst)
+			print("sitting")
 			inst.AnimState:PlayAnimation("sit_loop")
 			inst.Physics:Stop()
 		end,
 		
 		events = {
 			EventHandler("animover", function(inst)
-				inst.wantstosit = math.random() < 0.9 and not inst.wantstoalert
-				
-				local temperature = TheWorld.state.temperature
-				if not (inst.components.follower and inst.components.follower.leader) and ((temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP)
-					or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst))) then
-					inst.wantstosit = nil
+				if inst.AnimState:AnimDone() then
+					inst.wantstosit = math.random() < 0.9 and not inst.wantstoalert
 					
-					inst.sg:GoToState("sit")
-				else
-					inst.sg:GoToState((inst.wantstoalert and "sit") or (inst.wantstosit and "sitting") or "sit")
+					local temperature = TheWorld.state.temperature
+					if not (inst.components.follower and inst.components.follower.leader) and ((temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP)
+						or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst))) then
+						inst.wantstosit = nil
+						inst.sg:GoToState("sit")
+					else
+						inst.sg:GoToState((inst.wantstoalert and "sit") or (inst.wantstosit and "sitting") or "sit")
+					end
 				end
 			end),
 		},
@@ -587,6 +595,18 @@ CommonStates.AddHopStates(states, false, nil, {
 		end),
 	}
 })
+CommonStates.AddFrozenStates(states,
+	function(inst)
+		if inst.tail then
+			inst.tail:PlayTailAnim("still")
+		end
+	end,
+	function(inst)
+		if inst.tail then
+			inst.tail:PlayTailAnim("hit", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
+		end
+	end
+)
 CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddVoidFallStates(states)
 

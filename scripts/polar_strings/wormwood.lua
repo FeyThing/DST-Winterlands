@@ -44,7 +44,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		GENERIC = "Lesson learned. Should not fight friend",
 		ANTLER = "Got big branches!",
 	}
-	DESCRIBE.MOOSE_SPECTER = "Brenches got cold?"
+	DESCRIBE.MOOSE_SPECTER = "Branches got cold?"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Shiny Glub Glub!"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Uh oh...",

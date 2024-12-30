@@ -4,8 +4,7 @@ local assets = {
 
 local prefabs = Prefabs.warg.deps
 
-SetSharedLootTable("polarwarg",
-{
+SetSharedLootTable("polarwarg", {
 	{"monstermeat", 		1},
 	{"monstermeat", 		1},
 	{"monstermeat", 		1},

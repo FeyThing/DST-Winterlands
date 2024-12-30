@@ -33,7 +33,7 @@ local POLAR_SCRAPBOOK = {
 	polarbear = {type = "creature", health = 800, damage = "50-75", hide = {"hat", "ARM_carry_up"}, build = "polarbear_build", bank = "pigman", anim = "idle_loop", deps = {"meat", "polarbearfur"}},
 	polarflea = {type = "creature", health = 60, damage = 10, sanityaura = -0.41666666666667, build = "polar_flea", bank = "polar_flea", anim = "idle", deps = {"grass_polar", "icehound", "tumbleweed_polar"}, specialinfo = "POLARFLEA"},
 	polarfox = {type = "creature", health = 200, build = "polarfox", bank = "polarfox", anim = "idle", animoffsety = -20, deps = {"smallmeat", "manrabbit_tail"}},
-	polarwarg = {type = "creature", health = 1300, damage = 60, build = "warg_polar", bank = "warg", anim = "idle_loop", deps = {"houndstooth", "icehound", "monstermeat"}},
+	polarwarg = {type = "creature", health = 1300, damage = 60, build = "warg_polar", bank = "warg", anim = "idle_loop", deps = {"houndstooth", "icehound", "monstermeat", "polarwargstooth"}},
 	shadow_icicler = {type = "creature", subcat = "shadow", health = 200, damage = 35, sanityaura = -0.41666666666667, build = "shadow_polar_basic", bank = "shadowcreaturepolar", anim = "idle_loop", deps = {"nightmarefuel"}, notes = {shadow_aligned = true}},
 	
 	--	Things / POI
