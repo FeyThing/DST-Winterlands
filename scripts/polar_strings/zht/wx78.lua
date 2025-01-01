@@ -8,7 +8,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WX78.DESCRIBE
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
-		"正在行進忠……低效的路徑",
+		"正在行進中……低效的路徑",
 		"我的底盤……不應該……在雪中",
 		"為什麼……會有人在……這種爛泥中玩？",
 	}

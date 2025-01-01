@@ -111,6 +111,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Cruel? Maybe. Fun? Certainly!"
 	DESCRIBE.TURF_POLAR_CAVES = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.TURF_POLAR_DRYICE = "Floor or ceiling, depending on your perspective."
-	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or it?"
+	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or in?"
 	DESCRIBE.WALL_POLAR_ITEM = "It's of no use there on the ground."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Daring today, are we?"

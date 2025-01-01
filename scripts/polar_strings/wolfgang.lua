@@ -78,7 +78,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Food
 	DESCRIBE.ICELETTUCE = "Leaves very crunchy..."
-	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgangs grip."
+	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgang's grip."
 	DESCRIBE.POLARCRABLEGS = "From scary leggy bug to yummy leggy bug."
 	
 	--	Crafting

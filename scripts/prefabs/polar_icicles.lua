@@ -55,6 +55,11 @@ local function DoBreak(inst)
 			end
 		end
 		
+		if not TheWorld.Map:IsPassableAtPoint(x, 0, z) then
+			SpawnPrefab("splash_sink").Transform:SetPosition(x, 0, z)
+			return
+		end
+		
 		local rock = SpawnPrefab("polar_icicle_rock")
 		local numworks = TUNING.POLAR_ICICLE_MINE - inst.stage
 		rock.Transform:SetPosition(x, y, z)
@@ -66,7 +71,7 @@ local function DoBreak(inst)
 			return
 		end
 		
-		if TheWorld.components.polarice_manager and TheWorld.Map:GetTileAtPoint(x, y, z) == WORLD_TILES.POLAR_ICE then
+		if TheWorld.components.polarice_manager and TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_ICE then
 			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
 			TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, false)
 			

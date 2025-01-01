@@ -243,6 +243,10 @@ local function MakePrototyper(inst, disable)
 end
 
 local function Creepy(inst, sound, min_time, max_time)
+	if inst._creepytasks == nil then
+		inst._creepytasks = {}
+	end
+	
 	inst.SoundEmitter:PlaySound("polarsounds/shack/"..sound)
 	inst._creepytasks[sound] = inst:DoTaskInTime(min_time + math.random(max_time), Creepy, sound, min_time, max_time)
 end

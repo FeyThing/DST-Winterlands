@@ -175,12 +175,22 @@ local function OnEntityWake(inst)
 end
 
 local function OnAttacked(inst, data)
-	if data and data.attacker and data.attacker.components.health and not data.attacker.components.health:IsDead() and data.attacker.components.freezable
-		and (data.weapon == nil or ((data.weapon.components.weapon == nil or data.weapon.components.weapon.projectile == nil) and data.weapon.components.projectile == nil))
-		and not (data.attacker.components.inventory ~= nil and data.attacker.components.inventory:IsInsulated()) then
+	local attacker = data and data.attacker
+	local weapon = data and data.weapon
+	
+	if attacker and attacker.components.health and not attacker.components.health:IsDead() and attacker.components.freezable
+		and (weapon == nil or ((weapon.components.weapon == nil or weapon.components.weapon.projectile == nil) and weapon.components.projectile == nil)) then
 		
-		data.attacker.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * 2)
-		data.attacker.components.freezable:SpawnShatterFX()
+		if attacker.components.temperature then
+			local winterInsulation, summerInsulation = attacker.components.temperature:GetInsulation()
+			
+			if winterInsulation >= TUNING.POLARWALL_FREEZE_INSULATION_MIN then
+				return
+			end
+		end
+		
+		attacker.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * 2)
+		attacker.components.freezable:SpawnShatterFX()
 	end
 end
 

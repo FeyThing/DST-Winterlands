@@ -32,7 +32,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	--	Rocks and stones
 	DESCRIBE.POLAR_ICICLE = "Huh?"
 	DESCRIBE.POLAR_ICICLE_ROCK = "Ah! I could've gotten impaled!"
-	DESCRIBE.ROCK_POLAR = "I can feel cold emanating from them."
+	DESCRIBE.ROCK_POLAR = "I can feel cold emanating from here."
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Don't make me go in here."
@@ -45,7 +45,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		ANTLER = "Oh great, another stupid deer of some sort.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "I'm going to need more darts."
-	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Gotcha you out of this frozen hell, you're welcome."
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Gotcha out of this frozen hell, you're welcome."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "Hah, that's what you get, bear.",
 		ENRAGED = "He's got fiery temper!",

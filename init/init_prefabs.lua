@@ -17,6 +17,7 @@ PrefabFiles = {
 	"polar_penguin",
 	"polar_pillars",
 	"polar_preparedfoods",
+	"polar_throne",
 	"polarbear",
 	"polarbearfur",
 	"polarbearhouse",

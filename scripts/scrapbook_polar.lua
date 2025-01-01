@@ -34,11 +34,11 @@ local POLAR_SCRAPBOOK = {
 	polarflea = {type = "creature", health = 60, damage = 10, sanityaura = -0.41666666666667, build = "polar_flea", bank = "polar_flea", anim = "idle", deps = {"grass_polar", "icehound", "tumbleweed_polar"}, specialinfo = "POLARFLEA"},
 	polarfox = {type = "creature", health = 200, build = "polarfox", bank = "polarfox", anim = "idle", animoffsety = -20, deps = {"smallmeat", "manrabbit_tail"}},
 	polarwarg = {type = "creature", health = 1300, damage = 60, build = "warg_polar", bank = "warg", anim = "idle_loop", deps = {"houndstooth", "icehound", "monstermeat", "polarwargstooth"}},
-	shadow_icicler = {type = "creature", subcat = "shadow", health = 200, damage = 35, sanityaura = -0.41666666666667, build = "shadow_polar_basic", bank = "shadowcreaturepolar", anim = "idle_loop", deps = {"nightmarefuel"}, notes = {shadow_aligned = true}},
+	shadow_icicler = {type = "creature", subcat = "shadow", health = 200, damage = 35, sanityaura = -0.41666666666667, build = "shadow_polar_basic", bank = "shadowcreaturepolar", anim = "idle_loop", animoffsety = -65, deps = {"nightmarefuel"}, notes = {shadow_aligned = true}},
 	
 	--	Things / POI
 	antler_tree = {type = "thing", subcat = "tree", workable = "CHOP", burnable = true, build = "antler_tree", bank = "antler_tree", anim = "idle", deps = {"antler_tree_stick", "charcoal", "log", "twigs"}, specialinfo = "ANTLER_TREE"},
-	farm_plant_icelettuce = {type = "thing", subcat = "farmplant", workable = "DIG", burnable = true, speechname = "FARM_PLANT", animoffsety = -10, scale = 1.3, build = "farm_plant_icelettuce", bank = "farm_plant_icelettuce", anim = "crop_full", overridesymbol = {"soil01", "farm_soil", "soil01"}, deps = {"spoiled_food", "icelettuce", "icelettuce_seeds"}},
+	farm_plant_icelettuce = {type = "thing", subcat = "farmplant", workable = "DIG", burnable = true, speechname = "FARM_PLANT", build = "farm_plant_icelettuce", bank = "farm_plant_icelettuce", anim = "crop_full", animoffsety = -10, scale = 1.3, overridesymbol = {"soil01", "farm_soil", "soil01"}, deps = {"spoiled_food", "icelettuce", "icelettuce_seeds"}},
 	grass_polar = {type = "thing", workable = "DIG", pickable = true, burnable = true, build = "grass_polar", bank = "grass_tall", anim = "idle", deps = {"cutgrass", "cutreeds", "dug_grass"}, specialinfo = "NEEDFERTILIZER"},
 	polar_icicle = {type = "thing", damage = 300, build = "icicle_roof", bank = "icicle_roof", anim = "idle_med", deps = {"polar_icicle_rock", "winter_ornament_polar_icicle_blue", "winter_ornament_polar_icicle_white"}},
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},

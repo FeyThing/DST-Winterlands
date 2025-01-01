@@ -133,7 +133,6 @@ local states = {
 		tags = {"idle", "canrotate", "sitting"},
 		
 		onenter = function(inst)
-			print("sitting")
 			inst.AnimState:PlayAnimation("sit_loop")
 			inst.Physics:Stop()
 		end,

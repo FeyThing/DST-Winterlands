@@ -67,7 +67,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "It's a mystery how this shack holds together.",
-		OPEN = "Er, my mistake. Wrong adress.",
+		OPEN = "Er, my mistake. Wrong address.",
 	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Holy mackerel!",

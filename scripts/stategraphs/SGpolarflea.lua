@@ -211,7 +211,12 @@ local states = {
 			local pt = inst:GetPosition()
 			pt.y = 0
 			
-			inst.Transform:SetPosition(pt:Get())
+			if not TheWorld.Map:IsPassableAtPoint(pt:Get()) then
+				SpawnPrefab("splash_sink").Transform:SetPosition(pt:Get())
+				inst:Remove()
+			else
+				inst.Transform:SetPosition(pt:Get())
+			end
 		end,
 	},
 	

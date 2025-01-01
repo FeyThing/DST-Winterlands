@@ -15,7 +15,7 @@ SetSharedLootTable("rock_polar", {
 	{"bluegem_shards", 	0.7},
 	{"bluegem_shards", 	0.7},
 	{"bluegem_shards", 	0.3},
-	{"bluegem", 		0.02},
+	{"bluegem", 		0.2},
 })
 
 local ROCK_POLAR_LOOTS = {

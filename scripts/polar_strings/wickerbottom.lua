@@ -25,7 +25,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		BURNING = "It is burning from roots to crown.",
 		BURNT = "A charred remnant of its former self.",
 		CHOPPED = "It had adapted to intimidate animals, not to endure them.",
-		GENERIC = "This tree appears to mimic Cervidae defences with its branches.",
+		GENERIC = "This tree appears to mimic Cervidae defenses with its branches.",
 	}
 	DESCRIBE.ICELETTUCE_SEEDS = "It can't begin growing until it's been planted, dear."
 	
