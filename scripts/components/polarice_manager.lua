@@ -230,9 +230,9 @@ return Class(function(self, inst)
 	inst:ListenForEvent("temperaturetick", function(inst, val) _world_temperature = val end)
 
     -- [ Methods ] --
-	local IGNORE_ICE_BREAKING_ONREMOVE_TAGS = { "ignorewalkableplatformdrowning", "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
-	local IGNORE_ICE_FORMING_ONREMOVE_TAGS = { "activeprojectile", "flying", "FX", "DECOR", "INLIMBO" }
-	local FLOATEROBJECT_TAGS = { "floaterobject" }
+	local IGNORE_ICE_BREAKING_ONREMOVE_TAGS = {"ignorewalkableplatformdrowning", "activeprojectile", "irreplaceable", "flying", "FX", "DECOR", "INLIMBO"}
+	local IGNORE_ICE_FORMING_ONREMOVE_TAGS = {"activeprojectile", "underwater_salvageable", "irreplaceable", "flying", "FX", "DECOR", "INLIMBO"}
+	local FLOATEROBJECT_TAGS = {"floaterobject"}
 
 	function self:QueueCreateIceAtTile(tx, ty)
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
@@ -320,10 +320,16 @@ return Class(function(self, inst)
 				LaunchAway(ent)
 				ent.components.inventoryitem:SetLanded(false, true)
 			end
-
+			
 			if ent.OnPolarFreeze then
 				ent:OnPolarFreeze(true)
-			elseif ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
+			elseif ent.components.oceanfishable then
+				local rod = ent.components.oceanfishable:GetRod()
+				
+				if rod and rod.components.oceanfishingrod then
+					rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair atm so we keep the things
+				end
+			elseif not ent:HasTag("locomotor") and ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
 				DestroyEntity(ent, inst, true, true)
 			end
 		end
@@ -447,6 +453,7 @@ return Class(function(self, inst)
 						elseif ent.components.inventoryitem then
 							ent.components.inventoryitem:SetLanded(false, true)
 						elseif not ent:HasTag("ignorewalkableplatforms") then -- Not ocean stuff
+							print("Polar Ice (Breaking) removed ent:", ent)
 							DestroyEntity(ent, inst, true, true)
 						end
 					end

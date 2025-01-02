@@ -115,6 +115,7 @@ local function fn()
 	inst:AddComponent("perishable")
 	inst.components.perishable:SetPerishTime(TUNING.PERISH_SUPERSLOW)
 	inst.components.perishable:StartPerishing()
+	inst.components.perishable:SetOnPerishFn(inst.Remove)
 	
 	inst:AddComponent("polarmistemitter")
 	inst.components.polarmistemitter.maxmist = 8

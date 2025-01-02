@@ -36,13 +36,6 @@ local function DoDamage(inst)
 				if ent:HasTag("player") and not TheNet:GetPVPEnabled() and ent ~= inst.owner then
 					-- continue
 				else
-					if ent._hit == nil then
-						ent._hit = 1
-						ent:DoTaskInTime(1.5, function() ent._hit = nil end)
-					else
-						ent._hit = ent._hit + 1
-					end
-					print("hit:", ent._hit)
 					ent.components.combat:GetAttacked(inst, TUNING.ICICLESTAFF_DAMAGE)
 				end
 			end

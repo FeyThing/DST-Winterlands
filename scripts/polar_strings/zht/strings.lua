@@ -94,7 +94,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.WALL_POLAR_ITEM = "乾冰牆"
 	NAMES.WINTER_ORNAMENTPOLAR = "深寒裝飾品"
 	
-	NAMES.SNOWBALL_ITEM_POLAR = "雪球" -- blueprint fix
+	--	Recipe Names (needed for blueprints)
+	NAMES.SHARDS_BLUEGEM = "藍寶石碎片"
+	NAMES.SNOWBALL_ITEM_POLAR = "雪球"
 	
 --	Skins
 	

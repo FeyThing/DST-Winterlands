@@ -79,7 +79,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.WALL_POLAR_ITEM = "Dry Ice Wall"
 	NAMES.WINTER_ORNAMENTPOLAR = "Chilly Adornment"
 	
-	NAMES.SNOWBALL_ITEM_POLAR = "Snowball" -- blueprint fix
+	--	Recipe Names (needed for blueprints)
+	NAMES.SHARDS_BLUEGEM = "Blue Gem Shards"
+	NAMES.SNOWBALL_ITEM_POLAR = "Snowball"
 	
 --	Skins
 	
