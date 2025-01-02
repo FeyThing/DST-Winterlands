@@ -85,5 +85,6 @@ PolarRecipe("polaricestaff", 		{Ingredient("antler_tree_stick", 1), Ingredient("
 
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe
 
-AddDeconstructRecipe("polarmoosehat", {Ingredient("cutgrass", 3), Ingredient("boneshard", 2)})
+AddDeconstructRecipe("polaramulet", {Ingredient("rope", 3), Ingredient("nightmarefuel", 1)})
+AddDeconstructRecipe("polarmoosehat", {Ingredient("cutgrass", 6), Ingredient("boneshard", 4), Ingredient("polarflea", 2)})
 --AddDeconstructRecipe("polar_spear", {Ingredient("ice", 1), Ingredient("twigs", 2)})

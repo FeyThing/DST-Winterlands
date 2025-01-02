@@ -64,6 +64,7 @@ local function fn()
 	
 	inst.AnimState:SetBank("penguin")
 	inst.AnimState:SetBuild("penguin_build")
+	inst.AnimState:PlayAnimation("idle_loop", true)
 	
 	inst:AddTag("penguin")
 	inst:AddTag("polar_penguin")

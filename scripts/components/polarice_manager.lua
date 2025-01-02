@@ -469,7 +469,7 @@ return Class(function(self, inst)
 		if not melted then -- Melting doesn't drop loot nor generate debris
 			TossDebris("ice", dx, dz)
 
-			if math.random() > 0.40 then
+			if math.random() > 0.1 then
 				TossDebris("ice", dx, dz)
 			end
 

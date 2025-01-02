@@ -85,6 +85,7 @@ local components = {
 	"map",
 	"moisture",
 	"moonstormmanager",
+	"oceanfishinghook",
 	"pickable",
 	"playervision",
 	"preserver",

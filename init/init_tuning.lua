@@ -222,6 +222,7 @@ local night_time = seg_time * night_segs
 			DAPERNESS = TUNING.DAPPERNESS_TINY,
 			INSULATION = TUNING.INSULATION_MED_LARGE,
 			LOYALTY_MULT = 2,
+			SHADOW_LEVEL = 1,
 		},
 	}
 	TUNING.POLARAMULET_PERISHATIME = total_day_time * 5

@@ -26,19 +26,32 @@ local CANT_TAGS = {"INLIMBO", "playerghost", "flight", "icicleimmune"}
 
 local function DoDamage(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, 0, z, 3, MUST_TAGS, CANT_TAGS)
+	local ents = TheSim:FindEntities(x, 0, z, 4, MUST_TAGS, CANT_TAGS)
 	for i, ent in ipairs(ents) do
 		if ent:IsValid() then
-			if ent:HasTag("player") and not TheNet:GetPVPEnabled() and ent ~= inst.owner then
-				-- continue
-			else
-				ent.components.combat:GetAttacked(inst, TUNING.ICICLESTAFF_DAMAGE)
+			local r = ent.Physics and ent.Physics:GetRadius() or 0
+			local hit_rad = r >= 0.75 and (2 + r) or 2
+			
+			if ent:GetDistanceSqToPoint(x, y, z) <= hit_rad * hit_rad then
+				if ent:HasTag("player") and not TheNet:GetPVPEnabled() and ent ~= inst.owner then
+					-- continue
+				else
+					if ent._hit == nil then
+						ent._hit = 1
+						ent:DoTaskInTime(1.5, function() ent._hit = nil end)
+					else
+						ent._hit = ent._hit + 1
+					end
+					print("hit:", ent._hit)
+					ent.components.combat:GetAttacked(inst, TUNING.ICICLESTAFF_DAMAGE)
+				end
 			end
 		end
 	end
 	
 	Break(inst)
 end
+
 
 local function fn()
 	local inst = CreateEntity()

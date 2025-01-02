@@ -27,20 +27,25 @@ local function DoBreak(inst)
 			return
 		end
 		
-		local ents = TheSim:FindEntities(x, y, z, 2, nil, BREAK_IGNORE_TAGS)
+		local ents = TheSim:FindEntities(x, y, z, 4, nil, BREAK_IGNORE_TAGS)
 		for i, v in ipairs(ents) do
 			if v ~= inst then
-				if v.components.combat and v.components.health and not v.components.health:IsDead() then
-					v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE)
-				elseif v.components.workable and v.components.workable:CanBeWorked() then
-					v.components.workable:WorkedBy(inst, 5)
-				elseif v.components.pickable and v.components.pickable:CanBePicked() then
-					v.components.pickable:Pick(TheWorld)
-				elseif v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
-					local vx, vy, vz = v.Transform:GetWorldPosition()
-					SpawnPrefab("ground_chunks_breaking").Transform:SetPosition(vx, vy, vz)
-					
-					v:Remove()
+				local r = v.Physics and v.Physics:GetRadius() or 0
+				local hit_rad = r >= 0.75 and (2 + r) or 2
+				
+				if v:GetDistanceSqToPoint(x, y, z) <= hit_rad * hit_rad then
+					if v.components.combat and v.components.health and not v.components.health:IsDead() then
+						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE)
+					elseif v.components.workable and v.components.workable:CanBeWorked() then
+						v.components.workable:WorkedBy(inst, 5)
+					elseif v.components.pickable and v.components.pickable:CanBePicked() then
+						v.components.pickable:Pick(TheWorld)
+					elseif v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
+						local vx, vy, vz = v.Transform:GetWorldPosition()
+						SpawnPrefab("ground_chunks_breaking").Transform:SetPosition(vx, vy, vz)
+						
+						v:Remove()
+					end
 				end
 			end
 		end

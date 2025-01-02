@@ -201,6 +201,10 @@ local function SetAmuletPower(inst, data)
 			inst:AddComponent("insulator")
 		end
 		inst.components.insulator:SetInsulation(walrus_tusk * TUNING.POLARAMULET.WALRUS_TUSK.INSULATION)
+		
+		if inst.components.shadowlevel then
+			inst.components.shadowlevel:SetDefaultLevel(1 + (walrus_tusk * TUNING.POLARAMULET.WALRUS_TUSK.SHADOW_LEVEL))
+		end
 	end
 	
 	local ornament = #parts["ornament"]
@@ -218,6 +222,19 @@ local function SetAmuletPower(inst, data)
 		end
 		if data.fueled then
 			inst.components.fueled:SetPercent(data.fueled)
+		end
+	end
+end
+
+local function OnDeconstructed(inst, caster)
+	if inst.components.lootdropper == nil then
+		inst:AddComponent("lootdropper")
+	end
+	
+	local parts = inst:GetAmuletParts()
+	for k, v in pairs(parts) do
+		for i, part in ipairs(v or {}) do
+			inst.components.lootdropper:SpawnLootPrefab(part)
 		end
 	end
 end
@@ -272,6 +289,8 @@ local function fn()
 	inst.GetAmuletParts = GetAmuletParts
 	inst.SetAmuletParts = SetAmuletParts
 	inst.SetAmuletPower = SetAmuletPower
+	
+	inst:ListenForEvent("ondeconstructstructure", OnDeconstructed)
 	
 	return inst
 end
