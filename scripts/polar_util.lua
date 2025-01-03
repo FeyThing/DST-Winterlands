@@ -86,7 +86,7 @@ local OldMakeNoGrowInWinter = MakeNoGrowInWinter
 function MakeNoGrowInWinter(inst, ...)
 	OldMakeNoGrowInWinter(inst, ...)
 	if not inst:HasTag("canpolargrow") and inst.components.pickable then
-		inst.components.pickable.pause_in_polar = true
+		inst.pause_grow_in_polar = true
 	end
 	
 	local load_polar = inst.polar_toggle == nil
@@ -198,6 +198,18 @@ end
 local OldGetDisplayName = EntityScript.GetDisplayName
 function EntityScript:GetDisplayName(...)
 	return IsTooDeepInSnow(self, ThePlayer) and STRINGS.NAMES.IN_POLARSNOW or OldGetDisplayName(self, ...)
+end
+
+--	Ice Cave protects from rain (this is more for the Lunar Hail than anything)
+local SHADE_ICECAVE_TAGS = {"icecaveshelter"}
+
+local OldIsUnderRainDomeAtXZ = IsUnderRainDomeAtXZ
+function IsUnderRainDomeAtXZ(x, z, ...)
+	if #TheSim:FindEntities(x, 0, z, TUNING.SHADE_POLAR_RANGE, SHADE_ICECAVE_TAGS) > 0 then
+		return true
+	end
+	
+	return OldIsUnderRainDomeAtXZ(x, z, ...)
 end
 
 --	Dryice leaves a big cloud when it sinks

@@ -74,23 +74,25 @@ end
 function OnPolarCover(inst, loading)
 	local polar = IsInPolar(inst)
 	
-	if polar then
-		if inst.components.growable then
-			if not inst:HasTag("canpolargrow") then
-				inst.components.growable:Pause("polar")
-			else
+	if inst.pause_grow_in_polar then
+		if polar then
+			if inst.components.growable then
+				if not inst:HasTag("canpolargrow") then
+					inst.components.growable:Pause("polar")
+				else
+					inst.components.growable:Resume("polar")
+				end
+			end
+			if inst.components.pickable then
+				inst.components.pickable:PolarPause(true)
+			end
+		else
+			if inst.components.growable then
 				inst.components.growable:Resume("polar")
 			end
-		end
-		if inst.components.pickable then
-			inst.components.pickable:PolarPause(true)
-		end
-	else
-		if inst.components.growable then
-			inst.components.growable:Resume("polar")
-		end
-		if inst.components.pickable then
-			inst.components.pickable:PolarPause()
+			if inst.components.pickable then
+				inst.components.pickable:PolarPause()
+			end
 		end
 	end
 	

@@ -126,6 +126,14 @@ end
 
 --
 
+local function CheckGround(inst)
+	if not inst:IsOnValidGround() then
+		SpawnPrefab("splash_sink").Transform:SetPosition(inst.Transform:GetWorldPosition())
+		inst:PushEvent("detachchild")
+		inst:Remove()
+	end
+end
+
 local function StartMoving(inst)
 	inst.AnimState:PushAnimation("move_loop", true)
 	
@@ -139,6 +147,21 @@ local function StartMoving(inst)
 	
 	inst.components.blowinwind:Start()
 	inst:RemoveEventCallback("animover", StartMoving)
+end
+
+local function CancelRunningTasks(inst)
+	if inst.bouncepretask then
+	   inst.bouncepretask:Cancel()
+		inst.bouncepretask = nil
+	end
+	if inst.bouncetask then
+		inst.bouncetask:Cancel()
+		inst.bouncetask = nil
+	end
+	if inst.restartmovementtask then
+		inst.restartmovementtask:Cancel()
+		inst.restartmovementtask = nil
+	end
 end
 
 local function OnLongAction(inst)
@@ -158,29 +181,6 @@ local function OnLongAction(inst)
 			inst:ListenForEvent("animover", StartMoving)
 		end
 	end)
-end
-
-local function CheckGround(inst)
-	if not inst:IsOnValidGround() then
-		SpawnPrefab("splash_sink").Transform:SetPosition(inst.Transform:GetWorldPosition())
-		inst:PushEvent("detachchild")
-		inst:Remove()
-	end
-end
-
-local function CancelRunningTasks(inst)
-	if inst.bouncepretask then
-	   inst.bouncepretask:Cancel()
-		inst.bouncepretask = nil
-	end
-	if inst.bouncetask then
-		inst.bouncetask:Cancel()
-		inst.bouncetask = nil
-	end
-	if inst.restartmovementtask then
-		inst.restartmovementtask:Cancel()
-		inst.restartmovementtask = nil
-	end
 end
 
 local function DoDirectionChange(inst, data)
