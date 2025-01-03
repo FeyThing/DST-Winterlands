@@ -15,16 +15,24 @@ local function OnPolarTiles(inst, owner, on_polar, force_disable)
 	
 	on_polar = not force_disable and (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(owner) or in_snow) or false
 	
-	if owner.components.locomotor then
+	--if owner.components.locomotor then
 		if on_polar then
 			local polarwargstooth = inst:GetAmuletParts("polarwargstooth")
-			if polarwargstooth > 0 then
-				owner.components.locomotor:SetExternalSpeedMultiplier(owner, "polaramulet", 1 + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED))
+			if polarwargstooth > 0 and not inst._polartile_speed then
+				local oldmult = inst.components.equippable.walkspeedmult or 1
+				inst._polartile_speed = polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED
+				
+				inst.components.equippable.walkspeedmult = oldmult + inst._polartile_speed
+				--owner.components.locomotor:SetExternalSpeedMultiplier(owner, "polaramulet", 1 + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED))
 			end
-		else
-			owner.components.locomotor:RemoveExternalSpeedMultiplier(owner, "polaramulet")
+		elseif inst._polartile_speed then
+			local oldmult = inst.components.equippable.walkspeedmult or 1
+			
+			inst.components.equippable.walkspeedmult = oldmult - inst._polartile_speed
+			inst._polartile_speed = nil
+			--owner.components.locomotor:RemoveExternalSpeedMultiplier(owner, "polaramulet")
 		end
-	end
+	--end
 end
 
 local function OnEquip(inst, owner)

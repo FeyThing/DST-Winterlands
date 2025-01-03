@@ -21,22 +21,40 @@ local function Break(inst)
 	inst:Remove()
 end
 
-local MUST_TAGS = {"_combat"}
-local CANT_TAGS = {"INLIMBO", "playerghost", "flight", "icicleimmune"}
+local TARGET_TAGS = {"_combat", "oceanfishable"}
+local TARGET_CANT_TAGS = {"INLIMBO", "playerghost", "flight", "icicleimmune"}
 
 local function DoDamage(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, 0, z, 4, MUST_TAGS, CANT_TAGS)
+	local pt = inst:GetPosition()
+	local ents = TheSim:FindEntities(pt.x, 0, pt.z, 4, nil, TARGET_CANT_TAGS, TARGET_TAGS)
+	
 	for i, ent in ipairs(ents) do
 		if ent:IsValid() then
 			local r = ent.Physics and ent.Physics:GetRadius() or 0
 			local hit_rad = r >= 0.75 and (2 + r) or 2
 			
-			if ent:GetDistanceSqToPoint(x, y, z) <= hit_rad * hit_rad then
-				if ent:HasTag("player") and not TheNet:GetPVPEnabled() and ent ~= inst.owner then
-					-- continue
-				else
-					ent.components.combat:GetAttacked(inst, TUNING.ICICLESTAFF_DAMAGE)
+			if ent:GetDistanceSqToPoint(pt.x, pt.y, pt.z) <= hit_rad * hit_rad then
+				local projectile = (not ent:HasTag("activeprojectile") and ent.components.oceanfishable) and ent.components.oceanfishable:MakeProjectile()
+				
+				if projectile then
+					local ae_cp = projectile.components.complexprojectile
+					
+					if ae_cp then
+						ae_cp:SetHorizontalSpeed(16)
+						ae_cp:SetGravity(-30)
+						ae_cp:SetLaunchOffset(Vector3(0, 0.5, 0))
+						ae_cp:SetTargetOffset(Vector3(0, 0.5, 0))
+						
+						local ent_pt = ent:GetPosition()
+						local launch_position = ent_pt + (ent_pt - pt):Normalize() * 4
+						ae_cp:Launch(launch_position, projectile, ae_cp.owningweapon)
+					end
+				elseif ent.components.combat then
+					if ent:HasTag("player") and not TheNet:GetPVPEnabled() and ent ~= inst.owner then
+						-- continue
+					else
+						ent.components.combat:GetAttacked(inst, TUNING.ICICLESTAFF_DAMAGE)
+					end
 				end
 			end
 		end

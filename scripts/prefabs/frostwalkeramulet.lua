@@ -16,7 +16,12 @@ local function FormIceBridge(inst, owner)
             local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
             if next(TheSim:FindEntities(cx, cy, cz, 10, nil, nil, ICE_FORMING_BLOCKER_TAGS)) == nil then
                 local tile = TheWorld.Map:GetTile(tx, ty)
+				
                 if TileGroupManager:IsOceanTile(tile) or tile == WORLD_TILES.POLAR_ICE then
+					if tile ~= WORLD_TILES.POLAR_ICE then
+						inst.components.fueled:DoDelta(-TUNING.FROSTWALKERAMULET_FREEZE_TILE_USE)
+					end
+					
                     TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
                 end
             end
@@ -42,9 +47,9 @@ local function OnEquip(inst, owner)
 	if owner.components.slipperyfeet then
 		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold + TUNING.FROSTWALKERAMULET_SLIPPINESS
 	end
-	if inst.components.fueled then
+	--[[if inst.components.fueled then
 		inst.components.fueled:StartConsuming()
-	end
+	end]]
 end
 
 local function OnUnequip(inst, owner)
@@ -62,17 +67,17 @@ local function OnUnequip(inst, owner)
 	if owner.components.slipperyfeet then
 		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold - TUNING.FROSTWALKERAMULET_SLIPPINESS
 	end
-	if inst.components.fueled then
+	--[[if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
-	end
+	end]]
 end
 
 local function OnEquipToModel(inst, owner, from_ground)
 	inst:RemoveEventCallback("attacked", inst.freezefn, owner)
 	
-	if inst.components.fueled then
+	--[[if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
-	end
+	end]]
 end
 
 local function OnLanded(inst)

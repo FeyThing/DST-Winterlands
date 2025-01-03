@@ -7,7 +7,7 @@ SetSharedLootTable("polar_icicle", {
 	{"ice", 1},
 })
 
-local BREAK_IGNORE_TAGS = {"INLIMBO", "icicleimmune"}
+local BREAK_IGNORE_TAGS = {"INLIMBO", "icicleimmune", "flight"}
 local BREAK_SAFETY_TAGS = {"icicleimmune"}
 local CAVEPILLAR_TAGS = {"icecaveshelter"}
 
@@ -16,7 +16,7 @@ local ICICLE_ROCK_TAGS = {"rockicicle"}
 
 local function DoBreak(inst)
 	local anim = ICICLE_STAGES[inst.stage]
-	local x, y, z = inst.Transform:GetWorldPosition()
+	local pt = inst:GetPosition()
 	
 	if inst.AnimState:IsCurrentAnimation("fall_"..anim) then
 		inst.AnimState:PlayAnimation("fx_"..anim, false)
@@ -27,19 +27,33 @@ local function DoBreak(inst)
 			return
 		end
 		
-		local ents = TheSim:FindEntities(x, y, z, 4, nil, BREAK_IGNORE_TAGS)
+		local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, 4, nil, BREAK_IGNORE_TAGS)
 		for i, v in ipairs(ents) do
 			if v ~= inst then
 				local r = v.Physics and v.Physics:GetRadius() or 0
 				local hit_rad = r >= 0.75 and (2 + r) or 2
 				
-				if v:GetDistanceSqToPoint(x, y, z) <= hit_rad * hit_rad then
+				if v:GetDistanceSqToPoint(pt.x, pt.y, pt.z) <= hit_rad * hit_rad then
 					if v.components.combat and v.components.health and not v.components.health:IsDead() then
 						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE)
 					elseif v.components.workable and v.components.workable:CanBeWorked() then
 						v.components.workable:WorkedBy(inst, 5)
 					elseif v.components.pickable and v.components.pickable:CanBePicked() then
 						v.components.pickable:Pick(TheWorld)
+					elseif v.components.oceanfishable then
+						local projectile = v.components.oceanfishable:MakeProjectile()
+						local ae_cp = projectile and projectile.components.complexprojectile
+						
+						if ae_cp then
+							ae_cp:SetHorizontalSpeed(16)
+							ae_cp:SetGravity(-30)
+							ae_cp:SetLaunchOffset(Vector3(0, 0.5, 0))
+							ae_cp:SetTargetOffset(Vector3(0, 0.5, 0))
+							
+							local v_pt = v:GetPosition()
+							local launch_position = v_pt + (v_pt - pt):Normalize() * 4
+							ae_cp:Launch(launch_position, projectile, ae_cp.owningweapon)
+						end
 					elseif v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
 						local vx, vy, vz = v.Transform:GetWorldPosition()
 						SpawnPrefab("ground_chunks_breaking").Transform:SetPosition(vx, vy, vz)
@@ -50,7 +64,7 @@ local function DoBreak(inst)
 			end
 		end
 		
-		local icicles = TheSim:FindEntities(x, y, z, 200, ICICLE_ROCK_TAGS)
+		local icicles = TheSim:FindEntities(pt.x, pt.y, pt.z, 200, ICICLE_ROCK_TAGS)
 		if #icicles >= TUNING.POLAR_WORLD_MAXICICLES then
 			for i, v in ipairs(icicles) do
 				if v:IsAsleep() then
@@ -60,14 +74,14 @@ local function DoBreak(inst)
 			end
 		end
 		
-		if not TheWorld.Map:IsPassableAtPoint(x, 0, z) then
-			SpawnPrefab("splash_sink").Transform:SetPosition(x, 0, z)
+		if not TheWorld.Map:IsPassableAtPoint(pt.x, 0, pt.z) then
+			SpawnPrefab("splash_sink").Transform:SetPosition(pt.x, 0, pt.z)
 			return
 		end
 		
 		local rock = SpawnPrefab("polar_icicle_rock")
 		local numworks = TUNING.POLAR_ICICLE_MINE - inst.stage
-		rock.Transform:SetPosition(x, y, z)
+		rock.Transform:SetPosition(pt.x, pt.y, pt.z)
 		if numworks > 0 and rock.components.workable then
 			rock.components.workable:WorkedBy(inst, numworks)
 		end
@@ -76,8 +90,8 @@ local function DoBreak(inst)
 			return
 		end
 		
-		if TheWorld.components.polarice_manager and TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_ICE then
-			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+		if TheWorld.components.polarice_manager and TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_ICE then
+			local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(pt.x, pt.y, pt.z)
 			TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, false)
 			
 			if rock and rock:IsValid() then
