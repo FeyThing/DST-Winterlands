@@ -20,14 +20,14 @@ local SnowedShader = Class(function(self, inst)
     self.submerge = net_float(inst.GUID, "snowedshader.submerge", "submergedirty")
     self.freeze = net_float(inst.GUID, "snowedshader.freeze", "freezedirty")
 
-    if not TheWorld.ismastersim then
+	if not TheNet:IsDedicated() then
         inst:ListenForEvent("submergedirty", function() UpdateFloatParams(inst, self.submerge:value(), self.freeze:value()) end)
         inst:ListenForEvent("freezedirty", function() UpdateFloatParams(inst, self.submerge:value(), self.freeze:value()) end)
     end
 end)
 
 function SnowedShader:OnRemoveFromEntity()
-	self.inst.AnimState:ClearDefaultEffectHandle() -- LukaS: Should probably accomodate for when the player has some other default shader set up
+	self.inst.AnimState:ClearDefaultEffectHandle() -- LukaS: [TODO] Should probably accomodate for when the player has some other default shader set up
     self.inst.AnimState:SetFloatParams(0, 0, 0)
 end
 

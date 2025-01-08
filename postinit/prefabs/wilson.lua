@@ -39,7 +39,7 @@ ENV.AddPlayerPostInit(function(inst)
 	inst.deepinhighsnow = net_bool(inst.GUID, "polarwalker.deepinhighsnow")
 	inst.deepinhighsnow:set(false)
     
-  inst._snowblockrange = net_tinybyte(inst.GUID, "localplayer._snowblockrange") -- Mostly for WX
+	inst._snowblockrange = net_tinybyte(inst.GUID, "localplayer._snowblockrange") -- Mostly for WX
 	inst._snowblockrange:set(0)
 
 	inst:AddComponent("snowedshader")
