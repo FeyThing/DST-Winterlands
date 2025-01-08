@@ -2,7 +2,9 @@ local SHADER_PATH = "shaders/snowed.ksh"
 
 local function UpdateFloatParams(inst, submerge, freeze)
     local pitch_offset = (TheCamera.pitch - TheCamera.mindistpitch) / (TheCamera.maxdistpitch - TheCamera.mindistpitch) -- min = 30, max = 60
-    inst.AnimState:SetFloatParams(freeze, TUNING.SNOWED_SHADER_MAX_SUBMERGE * submerge, (-0.2 - 0.25 * pitch_offset) * submerge)
+    inst.AnimState:SetFloatParams((TUNING.SNOWED_SHADER_MAX_FREEZE + 0.45 * (1 - submerge)) * freeze,
+                                  TUNING.SNOWED_SHADER_MAX_SUBMERGE * submerge,
+                                  (-0.2 - 0.25 * pitch_offset) * submerge)
     -- (-0.2 - 0.25 * pitch_offset)
     -- LukaS: This value is hard-coded, used to counteract the effects of perspective from the camera
     -- WILL NOT WORK PROPERLY IF THE CAMERA MIN/MAX PITCH VALUES ARE CHANGED, shouldn't be a problem tho

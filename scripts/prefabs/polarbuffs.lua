@@ -26,7 +26,11 @@ local function wetness_ontick(inst, target)
 		local level = GetPolarWetness(target)
 		local level_max = TUNING.POLAR_WETNESS_LVLS
 		local temperature = math.max(inst.components.temperature:GetCurrent(), 0)
-		local temperature_level = level_max - math.ceil((temperature / inst.components.temperature.overheattemp) * level_max)
+		local temperature_level = level_max - math.floor(temperature / inst.components.temperature.overheattemp * level_max)
+		
+		if target.components.snowedshader then
+			target.components.snowedshader:SetFreezeAmount(1 - temperature / inst.components.temperature.overheattemp)
+		end
 		
 		local x, y, z = target.Transform:GetWorldPosition()
 		local heat_sources = TheSim:FindEntities(x, y, z, 10, HEATSOURCE_TAGS, HEATSOURCE_NOT_TAGS)
