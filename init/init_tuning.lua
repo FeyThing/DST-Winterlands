@@ -273,7 +273,7 @@ local night_time = seg_time * night_segs
 	TUNING.OCEAN_POLAR_CONVERT_RANGE = 15
 	
 	TUNING.DEEP_IN_SNOW_PLAYERDIST = 8
-	TUNING.POLAR_SLOWMULT = 0.5
+	TUNING.POLAR_SLOWMULT = 0.6
 	TUNING.POLAR_SLOWTIME = 8
 	TUNING.POLAR_COVERTIME = {min = 3, max = 10}
 	TUNING.POLAR_SNOW_MELT_TEMP = 54
@@ -330,6 +330,9 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
 	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false
+
+	TUNING.SNOWED_SHADER_MAX_SUBMERGE = -0.6 -- LukaS: Distance, in in-game units (4 = tile), to shift the player model on the Y axis
+	TUNING.SNOWED_SHADER_MAX_FREEZE = 0.45
 	
 --	Tech
 	

@@ -26,6 +26,9 @@ Assets = {
 	
 	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
 	Asset("ATLAS", "images/rain_polar.xml"),
+
+	-- Shaders
+	Asset("SHADER", "shaders/snowed.ksh"),
 	
 	-- Anims / Builds
 	Asset("ANIM", "anim/player_polarcast.zip"),
