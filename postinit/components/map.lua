@@ -6,7 +6,7 @@ function Map:IsPolarSnowAtPoint(x, y, z, snow_only)
 end
 
 local SNOWBLOCKER_TAGS = {"snowblocker", "fire", "HASHEATER"}
-local SNOWBLOCKER_NOT_TAGS = {"INLIMBO"} -- Don't include inventory fires like torch cause that would make walking trough snow too trivial
+local SNOWBLOCKER_NOT_TAGS = {"INLIMBO", "blueflame", "fx"} -- Don't include inventory fires like torch cause that would make walking trough snow too trivial
 local SNOWBLOCKER_DIST = 10
 
 function Map:IsPolarSnowBlocked(x, y, z, range_mod)
@@ -18,16 +18,20 @@ function Map:IsPolarSnowBlocked(x, y, z, range_mod)
 			or 0
 		
 		-- Mostly use range_mod for forgiveness, snowwaves might not display due to the grid pattern while there can be microscopic gaps between blockers
-		local range = math.max(v._snowblockrange and v._snowblockrange:value() or 2, ent_range) + (range_mod or 0)
+		local range = math.max(v._snowblockrange and v._snowblockrange:value() or 0, ent_range) + (range_mod or 0)
 		local dist = v:GetDistanceSqToPoint(x, y, z)
 		
-		if dist <= range * range then
+		if range > 0 and dist <= range * range then
 			return true
 		end
 	end
 	
 	return false
 end
+
+--
+
+require("components/map")
 
 local OldIsOceanIceAtPoint = Map.IsOceanIceAtPoint
 function Map:IsOceanIceAtPoint(x, y, z, ...)

@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		"Snow... ice... all ruins a suit...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Who's playing with this accursed thing again?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "I'd rather not break that ice."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "I feel like there's a string attached."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "I'm not dressed adequately for this."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "So that's how it looks from down here?"
+	DESCRIBE.POLAR_THRONE_GIFTS = "What game is it playing this time?"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Well, well. Talk about a hospitable-looking dwelling.",
 		OPEN = "...I will pretend I didn't see what's inside.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		BURNT = "If only the scorching sun would spare this place.",
 		GENERIC = "I smell something rotten inside. Ugh.",
 	}
+	DESCRIBE.POLARICE_PLOW = "Better stand back, or you're fish food."
+	DESCRIBE.POLARICE_PLOW_ITEM = "Desperate times call for destructive measures."
 	
 --	Items
 	

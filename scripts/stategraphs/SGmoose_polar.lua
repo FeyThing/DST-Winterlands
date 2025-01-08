@@ -221,6 +221,10 @@ local states = {
 			inst.sg.mem.wantstogrowantler = nil
 		end,
 		
+		onexit = function(inst)
+			inst:ShowAntler()
+		end,
+		
 		timeline = {
 			TimeEvent(12 * FRAMES, DoFootstep),
 			TimeEvent(13 * FRAMES, function(inst)
@@ -235,14 +239,34 @@ local states = {
 					fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
 					fx.Transform:SetRotation(inst.Transform:GetRotation())
 					
-					inst.sg:GoToState("unshackle_pst")
+					inst.sg:GoToState("growantler_pst")
 				end
 			end),
 		},
+	},
+	
+	State{
+		name = "growantler_pst",
+		tags = {"busy"},
 		
-		onexit = function(inst)
-			inst:ShowAntler()
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("unshackle_pst")
+			inst.components.locomotor:StopMoving()
 		end,
+		
+		timeline = {
+			TimeEvent(30 * FRAMES, function(inst)
+				inst.sg:RemoveStateTag("busy")
+			end),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				if inst.AnimState:AnimDone() then
+					inst.sg:GoToState("idle")
+				end
+			end),
+		},
 	},
 	
 	State{

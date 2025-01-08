@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		"Hrrrrgh...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Ack! The end is nigh- or... is it?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Something tells me it's a bad idea here."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "My thanks... but now I will take my leaves."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Oh botheration! I wasn't prepared for that."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "I don't like doing what I can't do faster. And I can't sit faster."
+	DESCRIBE.POLAR_THRONE_GIFTS = "Are we doing this again? Fine..."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Why would anyone want to live here of all places?",
 		OPEN = "Do as you wish, but I like my workshop with less... shadows.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		BURNT = "Burnt yet cold.",
 		GENERIC = "Very cliché, as if I lived in a clock tower. No wait... I don't eat clocks!",
 	}
+	DESCRIBE.POLARICE_PLOW = "Come on... they're gonna escape!"
+	DESCRIBE.POLARICE_PLOW_ITEM = "Why don't we just fish somewhere less cold?"
 	
 --	Items
 	

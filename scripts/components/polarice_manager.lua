@@ -255,6 +255,14 @@ return Class(function(self, inst)
 
 		local tile = _map:GetTile(tx, ty)
 		if tile == WORLD_TILES.POLAR_ICE then
+			if _updating_tiles[index] == true then
+				_updating_tiles[index] = nil
+			end
+			
+			if _recently_updated_tiles[index] == true then
+				_recently_updated_tiles[index] = nil
+			end
+			
 			if _updating_tiles[index] and GetTaskRemaining(_updating_tiles[index]) < time then
 				local task_fn = _updating_tiles[index].fn
 				_updating_tiles[index]:Cancel()
@@ -269,6 +277,14 @@ return Class(function(self, inst)
 				_recently_updated_tiles[index] = inst:DoTaskInTime(time, task_fn)
 			end
 		else
+			if _updating_tiles[index] == true then
+				_updating_tiles[index] = nil
+			end
+			
+			if _recently_updated_tiles[index] == true then
+				_recently_updated_tiles[index] = nil
+			end
+			
 			if _updating_tiles[index] then
 				_updating_tiles[index]:Cancel()
 				_updating_tiles[index] = nil
@@ -371,7 +387,7 @@ return Class(function(self, inst)
 		end
 	end
 
-	function self:StartDestroyingIceAtTile(tx, ty, melting)
+	function self:StartDestroyingIceAtTile(tx, ty, melting, delay_override, no_ice)
 		local tile = _map:GetTile(tx, ty)
 		local x, y, z = _map:GetTileCenterPoint(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
@@ -385,14 +401,14 @@ return Class(function(self, inst)
 
 		SpawnCracks(_map:GetTileCenterPoint(tx, ty))
 
-		inst:DoTaskInTime(3.5, function()
-			self:DestroyIceAtTile(tx, ty, melting)
+		inst:DoTaskInTime(delay_override or 3.5, function()
+			self:DestroyIceAtTile(tx, ty, melting, no_ice)
 			RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
 			_updating_tiles[index] = nil
 		end)
 	end
 
-	function self:DestroyIceAtTile(tx, ty, melted)
+	function self:DestroyIceAtTile(tx, ty, melted, no_ice)
 		local tile = _map:GetTile(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE then
 			return
@@ -474,13 +490,15 @@ return Class(function(self, inst)
 		end
 
 		if not melted then -- Melting doesn't drop loot nor generate debris
-			TossDebris("ice", dx, dz)
-
-			if math.random() > 0.1 then
+			if not no_ice then
 				TossDebris("ice", dx, dz)
+
+				if math.random() > 0.1 then
+					TossDebris("ice", dx, dz)
+				end
 			end
 
-			local half_num_debris = 4
+			local half_num_debris = math.random(4)
 			local angle_per_debris = TWOPI / half_num_debris
 			for i = 1, half_num_debris do
 				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
@@ -499,6 +517,23 @@ return Class(function(self, inst)
 		end
 
 		SpawnPrefab("fx_ice_pop").Transform:SetPosition(dx, 0, dz)
+	end
+
+	function self:GetTemporaryIceTime(tx, ty, tz)
+		if tz then
+			tx, ty = TheWorld.Map:GetTileCoordsAtPoint(tx, ty, tz)
+		end
+		
+		local index = _icecurrentstrengthgrid:GetIndex(tx, ty)
+		local tile = _map:GetTile(tx, ty)
+		
+		if tile == WORLD_TILES.POLAR_ICE then
+			if _recently_updated_tiles[index] then
+				return GetTaskRemaining(_recently_updated_tiles[index])
+			end
+		end
+		
+		return false
 	end
 
 	function self:GetBaseAtPoint(x, y, z)

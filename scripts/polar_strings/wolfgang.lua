@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		"Brrr...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Was sky always so blue?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Ice already too weak here."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "I like present!"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Wolfgang does not like snow in shoes."
@@ -64,7 +66,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARWARG = "Puppy got new coat?"
 	
 --	Buildings
-	
+
+	DESCRIBE.POLAR_THRONE = "Is sit for big butt."
+	DESCRIBE.POLAR_THRONE_GIFTS = "If Wolfgang can lift, Wolfgang can take!"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Got a bad feeling about this.",
 		OPEN = "Is a little d-dark in here...",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		BURNT = "Big fish had tough life.",
 		GENERIC = "Bear man have defeated big fish.",
 	}
+	DESCRIBE.POLARICE_PLOW = "Is really that deep...?"
+	DESCRIBE.POLARICE_PLOW_ITEM = "To dig deep holes."
 	
 --	Items
 	

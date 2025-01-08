@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		"Move... stubborn hooves...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "You call this a prank? That was just rude!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "There's only so much ice to destroy, but not here!"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "See? You should trust me sometimes-"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "M-my oh my, I must stay warm and d-dry..."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "He doesn't use it much these days."
+	DESCRIBE.POLAR_THRONE_GIFTS = "Yes, yes, those are free gifts!"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Full of mischief, no doubt!",
 		OPEN = "Oh my, friend, what tricksy smile you have!",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		BURNT = "Even this frosty den couldn't escape a fiery end.",
 		GENERIC = "An hiding place to warm the soul.",
 	}
+	DESCRIBE.POLARICE_PLOW = "Watch out! The portal to the fish dimension will soon open!"
+	DESCRIBE.POLARICE_PLOW_ITEM = "Less fun but more discreet than explosives."
 	
 --	Items
 	

@@ -87,11 +87,22 @@ end
 --	Polar Wetness
 
 local MoistureMeter = require("widgets/moisturemeter")
+local WX78MoistureMeter = require("widgets/wx78moisturemeter")
+
 local PolarMoistureOverlay = require("widgets/polarmoistureoverlay")
 	
 	local MoistureOnUpdate = MoistureMeter.OnUpdate
 	function MoistureMeter:OnUpdate(dt, ...)
 		MoistureOnUpdate(self, dt, ...)
+		
+		if self.polarmoistureoverlay == nil then
+			self.polarmoistureoverlay = self.circleframe:AddChild(PolarMoistureOverlay(self.owner, self))
+		end
+	end
+	
+	local WX78MoistureOnUpdate = WX78MoistureMeter.OnUpdate
+	function WX78MoistureMeter:OnUpdate(dt, ...)
+		WX78MoistureOnUpdate(self, dt, ...)
 		
 		if self.polarmoistureoverlay == nil then
 			self.polarmoistureoverlay = self.circleframe:AddChild(PolarMoistureOverlay(self.owner, self))

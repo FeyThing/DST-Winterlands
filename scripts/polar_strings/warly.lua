@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		"Hrrrr...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Brr! Who left the freezer door open?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "I'd rather fish somewhere else."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Merci-- oh. I should have brought gifts too!"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Q-quel froid! I need a bigger coat..."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "I won't sit at a throne without table."
+	DESCRIBE.POLAR_THRONE_GIFTS = "I mean... I've been nice this year, non?"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Must be a veritable boucherie inside...",
 		OPEN = "You can have what I don't plan on cooking.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		BURNT = "Thought I smelled sardines.",
 		GENERIC = "Would that really withstand a snowstorm?",
 	}
+	DESCRIBE.POLARICE_PLOW = "I hope I brought enough bait..."
+	DESCRIBE.POLARICE_PLOW_ITEM = "A day of ice fishing sounds tempting!"
 	
 --	Items
 	

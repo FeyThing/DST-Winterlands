@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		"We don't want to loose our friends in the snow...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "The ground wobbled like jelly!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Too risky here."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Well that's quite nice-"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Mom would be upset if she saw me like this..."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "It's quite the climb."
+	DESCRIBE.POLAR_THRONE_GIFTS = "For... -W. That gotta be us!"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Looks like the cabin Walter described around the fire!",
 		OPEN = "Can you stop looking at our fangs?",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		BURNT = "Rest in peace... to the spider on the ceiling.",
 		GENERIC = "We would be better indoor than outhere.",
 	}
+	DESCRIBE.POLARICE_PLOW = "We should move back, don't want to see the fish from TOO close."
+	DESCRIBE.POLARICE_PLOW_ITEM = "A machine to free the fish from the ice."
 	
 --	Items
 	

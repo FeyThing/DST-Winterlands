@@ -23,9 +23,15 @@ local function SpawnSnowItem(inst)
 	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 6, 16, false, true, SnowHasSpace)
 	
 	if offset then
-		local x, y, z = (pt + offset):Get()
-		local item = weighted_random_choice(inst.snowwave_items)
+		local items = deepcopy(inst.snowwave_items)
+		for i, v in ipairs(AllPlayers) do
+			if v.components.builder and not v.components.builder:KnowsRecipe("polar_brazier_item") and v.components.builder:CanLearn("polar_brazier_item") then
+				items["polar_brazier_item_blueprint"] = TUNING.POLAR_BRAZIER_BLUEPRINT_CHANCE
+			end
+		end
 		
+		local x, y, z = (pt + offset):Get()
+		local item = weighted_random_choice(items)
 		inst.snowitem = SpawnPrefab(item)
 		inst.snowitem.Transform:SetPosition(x, y, z)
 		

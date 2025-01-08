@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		"Huff...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Quakes and shivers- what just happened?!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Ice should try somewhere else."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Huh. That wasn't so bad."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr...! This is snow joke!"
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "Looks comfy."
+	DESCRIBE.POLAR_THRONE_GIFTS = "Is that my name? I can't tell with that clawwriting."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "It's a mystery how this shack holds together.",
 		OPEN = "Er, my mistake. Wrong address.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		BURNT = "Holy mackerel!",
 		GENERIC = "I doubt it's much warmer in there.",
 	}
+	DESCRIBE.POLARICE_PLOW = "I'm deeply intrigued about what's under."
+	DESCRIBE.POLARICE_PLOW_ITEM = "The best fish is always the one hiding."
 	
 --	Items
 	

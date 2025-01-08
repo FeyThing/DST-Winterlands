@@ -15,6 +15,8 @@ AddPrefabPostInit("forest", function(inst)
 		return
 	end
 	
+	inst:AddComponent("icefishingsurprise")
+	
 	inst:AddComponent("polarfoxrespawner")
 	
 	inst:AddComponent("polarice_manager")

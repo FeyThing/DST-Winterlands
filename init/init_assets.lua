@@ -31,8 +31,8 @@ Assets = {
 	Asset("SHADER", "shaders/snowed.ksh"),
 	
 	-- Anims / Builds
+	Asset("ANIM", "anim/krampus_polar.zip"),
 	Asset("ANIM", "anim/player_polarcast.zip"),
-	
 	Asset("ANIM", "anim/polar_snow.zip"),
 	
 	Asset("IMAGE", "images/polarpillar.tex"),
@@ -58,6 +58,7 @@ local ITEMS = {
 	"iciclestaff",
 	"moose_polar_antler",
 	"oceanfish_medium_polar1_inv",
+	"polar_brazier_item",
 	"polar_dryice",
 	"polaramulet",
 	"polarbearfur",
@@ -66,6 +67,7 @@ local ITEMS = {
 	"polarcrownhat",
 	"polarflea",
 	"polarglobe",
+	"polarice_plow_item",
 	"polaricepack",
 	"polaricestaff",
 	"polarmoosehat",

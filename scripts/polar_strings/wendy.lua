@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		"I don't find it funny... Abigail...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Is it the end yet?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "That's one way to drown."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "...I was hoping for something else."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "The cold seeps into my very soul."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "I could sit here and freeze to death."
+	DESCRIBE.POLAR_THRONE_GIFTS = "How tempting. Maybe I'll open just one."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "It's away from the others for a reason.",
 		OPEN = "Can you teach me your art?",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		BURNT = "No longer a refuge from the biting cold.",
 		GENERIC = "They made their graves here.",
 	}
+	DESCRIBE.POLARICE_PLOW = "Mind not drowning in deep icy water now."
+	DESCRIBE.POLARICE_PLOW_ITEM = "To find fishes, and maybe more if we're unlucky."
 	
 --	Items
 	
