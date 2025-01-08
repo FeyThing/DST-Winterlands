@@ -169,7 +169,7 @@ void main()
             mask = mix(mask3, mask, mask);
             
             mask *= gl_FragColor.a;
-            mask *= (1.0 - clamp((PS_POS.y - SINK_OFFSET) / FREEZE_LVL, 0.0, 1.0));
+            mask *= (1.0 - clamp(pow((PS_POS.y - SINK_OFFSET) / FREEZE_LVL, 3.0), 0.0, 1.0));
 
             gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.89, 0.97, 1.0), mask);
         }
