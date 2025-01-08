@@ -3,6 +3,13 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
+local function OverrideIsCarefulWalking(inst)
+	local old_IsCarefulWalking = inst.IsCarefulWalking
+	inst.IsCarefulWalking = function(inst, ...)
+		return old_IsCarefulWalking(inst, ...) or inst.deepinhighsnow:value()
+	end
+end
+
 --
 
 local function PolarSnowUpdate(inst)
@@ -14,7 +21,7 @@ local function PolarSnowUpdate(inst)
 	end
 end
 
-local function OnInSnowDirty(inst)
+local function OnNearHighSnowDirty(inst)
 	inst:PushEvent("refreshcrafting")
 end
 
@@ -25,13 +32,20 @@ ENV.AddPlayerPostInit(function(inst)
 		inst._polarsnowfx.particles_per_tick = 0
 		inst._polarsnowfx:PostInit()
 	end
-	
-	inst._inpolarsnow = net_event(inst.GUID, "localplayer._inpolarsnow")
-	inst._snowblockrange = net_tinybyte(inst.GUID, "localplayer._snowblockrange") -- Mostly for WX
+
+	OverrideIsCarefulWalking(inst)
+
+	inst.nearhighsnow = net_bool(inst.GUID, "polarwalker.nearhighsnow", "nearhighsnowdirty")
+	inst.deepinhighsnow = net_bool(inst.GUID, "polarwalker.deepinhighsnow")
+	inst.deepinhighsnow:set(false)
+    
+  inst._snowblockrange = net_tinybyte(inst.GUID, "localplayer._snowblockrange") -- Mostly for WX
 	inst._snowblockrange:set(0)
-	
+
+	inst:AddComponent("snowedshader")
+
 	if not TheWorld.ismastersim then
-		inst:ListenForEvent("localplayer._inpolarsnow", OnInSnowDirty)
+		inst:ListenForEvent("nearhighsnowdirty", OnNearHighSnowDirty)
 		
 		return
 	end
@@ -107,9 +121,9 @@ local function Wolfgang_Polar_SlowMult(inst, mult)
 	return math.min(1, mult * mighty_mult)
 end
 
-local function Wolfgang_Polar_Time(inst, slowtime)
+local function Wolfgang_Polar_Time(inst)
 	if inst.components.rider and inst.components.rider:IsRiding() then
-		return slowtime
+		return
 	end
 	
 	local state = inst.components.mightiness and inst.components.mightiness:GetState() or nil
@@ -120,7 +134,7 @@ local function Wolfgang_Polar_Time(inst, slowtime)
 		or (legday and state == "normal") and TUNING.LEGDAY_POLAR_SLOWTIME
 		or 0
 	
-	return slowtime + mighty_time
+	return mighty_time
 end
 
 ENV.AddPrefabPostInit("wolfgang", function(inst)
@@ -139,8 +153,8 @@ local function Woodie_Polar_SlowMult(inst, mult)
 	return inst:HasTag("wereplayer") and math.min(1, inst:HasTag("wereplayer") and mult * TUNING.WEREMODE_POLAR_SLOWMULT) or mult
 end
 
-local function Woodie_Polar_Time(inst, slowtime)
-	return inst:HasTag("wereplayer") and (slowtime + TUNING.WEREMODE_POLAR_SLOWTIME) or slowtime
+local function Woodie_Polar_Time(inst)
+	return inst:HasTag("wereplayer") and TUNING.WEREMODE_POLAR_SLOWTIME or nil
 end
 
 ENV.AddPrefabPostInit("woodie", function(inst)

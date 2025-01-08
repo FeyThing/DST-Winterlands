@@ -30,6 +30,10 @@ local POLAR_WALKHELPERS = {
 
 for k, v in pairs(POLAR_WALKHELPERS) do
 	AddPrefabPostInit(k, function(inst)
+		if not TheWorld.ismastersim then
+			return
+		end
+		
 		if type(v) == "number" then
 			if inst.components.equippable then
 				inst.components.equippable.polar_slowtime = v -- Peak slowdown delayers
@@ -51,6 +55,10 @@ local POLAR_WALKERS = {
 
 for i, v in pairs(POLAR_WALKERS) do
 	AddPrefabPostInit(v, function(inst)
+		if not TheWorld.ismastersim then
+			return
+		end
+
 		inst:AddComponent("polarwalker")
 	end)
 end

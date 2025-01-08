@@ -1,15 +1,35 @@
+local function IsPolarTile(pt)
+	return TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true)
+end
+
+local function LearnDryIceRecipe(inst, self)
+	local rec = "polar_dryice"
+	
+	if inst.components.builder and not inst.components.builder:KnowsRecipe(rec) and inst.components.builder:CanLearn(rec) then
+		inst.components.builder:UnlockRecipe(rec)
+		inst:PushEvent("learnrecipe", {teacher = inst, recipe = rec})
+	end
+
+	self._learndryice_task = nil
+end
+
 local PolarWalker = Class(function(self, inst)
 	self.inst = inst
 	
-	self.slowed_mult = TUNING.POLAR_SLOWMULT
-	self.slowing_mult = TUNING.POLAR_SLOWMULT
+	self.max_slowdown = TUNING.POLAR_SLOWMULT
+	self.base_slow_time = TUNING.POLAR_SLOWTIME
+	self.snowdepth = 0 -- LukaS: How deep the player is in snow, [0, 1]
 	
-	self.slow_time = 0
-	self.slow_time_max = TUNING.POLAR_SLOWTIME
+	self.deepinhighsnow = false
+
+	self.updating = false
+
+	self._nextcomplain = nil
 end)
 
-local function IsPolarTile(pt)
-	return TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true)
+function PolarWalker:OnRemoveFromEntity()
+	self.inst:StopUpdatingComponent(self)
+	self.snowdepth = 0
 end
 
 function PolarWalker:IsPolarEdgeAtPoint(pt)
@@ -34,98 +54,116 @@ function PolarWalker:ShouldSlow()
 	local pt = self.inst:GetPosition()
 	if IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt) then
 		local in_snow = not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z)
-		local debuff_immunity = not in_snow or self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst)
-		
-		if HasPolarSnowImmunity(self.inst) then
-			return false, debuff_immunity and "IMMUNE" or "IMMUNE_DEBUFF"
-		end
-		
-		return in_snow, debuff_immunity and "SNOW" or "SNOW_DEBUFF"
+		return in_snow and not HasPolarSnowImmunity(self.inst)
 	end
 	
 	return false
 end
 
-function PolarWalker:GetSlowTime()
-	local slowtime = self.slow_time_max
+function PolarWalker:ShouldDebuff()
+	if TheWorld.state.temperature > TUNING.POLAR_SNOW_MELT_TEMP then
+		return false, "MELTED"
+	end
 	
+	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
+		return false, "RIDING"
+	end
+
+	local pt = self.inst:GetPosition()
+	if IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt) then
+		local not_in_snow = TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z)
+		local debuff_immunity = not_in_snow or self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst)
+		return debuff_immunity
+	end
+end
+
+function PolarWalker:GetSlowTime()
+	if self.inst.polar_slowtime then
+		return math.max(0.1, self.inst:polar_slowtime()) or self.base_slow_time
+	end
+
+	local slowtime = self.base_slow_time
 	if self.inst.components.inventory then
 		for k, v in pairs(self.inst.components.inventory.equipslots) do
 			if v.components.equippable and v.components.equippable.polar_slowtime then
-				slowtime = math.max(0.1, slowtime + v.components.equippable.polar_slowtime)
+				slowtime = slowtime + v.components.equippable.polar_slowtime
             end
 		end
-	end
-	
-	if self.inst.polar_slowtime then
-		slowtime = math.max(0.1, self.inst:polar_slowtime(slowtime))
 	end
 	
 	return slowtime
 end
 
-function PolarWalker:GetSlowedMult()
-	local mult = self.slowed_mult
-	
-	if self.inst.polar_slowedmult then
-		mult = self.inst:polar_slowedmult(mult)
-	end
-	
-	return mult
-end
-
-function PolarWalker:GetSlowingMult()
-	local mult = self.slowing_mult
-	local slowtime = self:GetSlowTime()
-	
-	if self.inst.polar_slowingmult then
-		mult = self.inst:polar_slowingmult(mult)
-	end
-	
-	if self.start_time then
-		mult = Lerp(1, mult, math.min((self.slow_time - self.start_time), slowtime) / slowtime)
-	end
-	
-	return mult
-end
-
-function PolarWalker:IsPolarSlowed()
-	if self.inst:HasTag("flying") or self.inst:HasTag("playerghost")
-		or (self.inst.components.health and self.inst.components.health:IsDead()) then
-		
-		self.slow_time = 0
-		self.start_time = nil
-		
-		return false, false, false
-	end
-	
-	local slowed = false
-	local slowing, cause = self:ShouldSlow()
-	local debuffed = cause and string.sub(cause, -6) == "DEBUFF"
-	
-	if slowing then
-		if self.start_time == nil then
-			self.start_time = GetTime()
-		end
-		
-		self.slow_time = GetTime()
-		
-		if self.slow_time - self.start_time >= self:GetSlowTime() then
-			slowed = true
-		end
-	else
-		self.slow_time = 0
-		self.start_time = nil
-	end
-	
-	return slowed, slowing, debuffed
-end
-
 function PolarWalker:IsSlowed(fully)
 	if fully then
-		return self._slowed == "slowed"
+		return self.snowdepth == 1
 	else
-		return self._slowed ~= nil
+		return self.snowdepth ~= 0
+	end
+end
+
+function PolarWalker:AddPolarWetness()
+	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarDebuffImmunity(self.inst) then
+		return -- Only immunity to debuff, not slowdown
+	end
+	
+	self.inst:AddDebuff("buff_polarwetness", "buff_polarwetness")
+end
+
+function PolarWalker:OnUpdate(dt)
+	local locomotor = self.inst.components.locomotor
+	if locomotor and locomotor:WantsToMoveForward() then
+		if self:ShouldSlow() then
+			if self._learndryice_task == nil then
+				self._learndryice_task = self.inst:DoTaskInTime(1 + math.random(), function() LearnDryIceRecipe(self.inst, self) end)
+			end
+
+			self.snowdepth = math.clamp(self.snowdepth + (dt / self:GetSlowTime()), 0, 1)
+			
+			locomotor:SetExternalSpeedMultiplier(self.inst, "polar_slow", 1 - self.max_slowdown * self.snowdepth)
+		else
+			self.snowdepth = 0
+			locomotor:RemoveExternalSpeedMultiplier(self.inst, "polar_slow")
+		end
+	end
+
+	if self.inst.components.snowedshader then
+		self.inst.components.snowedshader:SetSubmergedAmount(self.snowdepth)
+	end
+	
+	if self.snowdepth >= 0.8 then
+		if self.inst.components.wisecracker then
+			local curtime = GetTime()
+			if self._nextcomplain == nil or self._nextcomplain < curtime then
+				self._nextcomplain = curtime + math.random(6, 12)
+				
+				self.inst:PushEvent("polarwalking")
+			end
+		end
+	end
+	
+	if self.inst.deepinhighsnow then
+		local isdeepinhighsnow = self.inst.deepinhighsnow:value()
+		if isdeepinhighsnow and self.snowdepth < 0.8 or
+		not isdeepinhighsnow and self.snowdepth >= 0.8 then
+			self.inst.deepinhighsnow:set(not isdeepinhighsnow)
+		end
+	end
+	
+	if self.inst.nearhighsnow then
+		local x, y, z = self.inst.Transform:GetWorldPosition()
+		local is_near_high_snow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
+		if self.inst.nearhighsnow:value() ~= is_near_high_snow then
+			if TheWorld.ismastersim then
+				self.inst:PushEvent("refreshcrafting")
+			end
+
+			self.inst.nearhighsnow:set(is_near_high_snow)
+		end
+	end
+	
+	if self:ShouldDebuff() then
+		self:AddPolarWetness()
 	end
 end
 
@@ -145,99 +183,15 @@ function PolarWalker:Start()
 	end
 end
 
-local function LearnDryIceRecipe(inst)
-	local rec = "polar_dryice"
-	
-	if inst.components.builder and not inst.components.builder:KnowsRecipe(rec) and inst.components.builder:CanLearn(rec) then
-		inst.components.builder:UnlockRecipe(rec)
-		inst:PushEvent("learnrecipe", {teacher = inst, recipe = rec})
-	end
-end
-
-function PolarWalker:SetWetness()
-	if (self.inst.components.health and self.inst.components.health:IsInvincible()) or HasPolarDebuffImmunity(self.inst) then
-		return -- Only immunity to debuff, not slowdown
-	end
-	
-	self.inst:AddDebuff("buff_polarwetness", "buff_polarwetness")
-end
-
-function PolarWalker:OnUpdate()
-	if not self.inst:HasTag("moving") then
-		return
-	end
-	
-	local slowed, slowing, debuffed = self:IsPolarSlowed()
-	
-	local locomotor = self.inst.components.locomotor
-	local carefulwalker = self.inst.components.carefulwalker
-	
-	if locomotor then
-		if slowing then
-			if self._learndryice == nil then
-				self._learndryice = self.inst:DoTaskInTime(1 + math.random(), LearnDryIceRecipe)
-			end
-			
-			locomotor:SetExternalSpeedMultiplier(self.inst, "polar_slow", self:GetSlowingMult())
-		else
-			locomotor:RemoveExternalSpeedMultiplier(self.inst, "polar_slow")
-		end
-	end
-	
-	if carefulwalker then
-		if slowed and slowing then
-			local slowed_mult = self:GetSlowedMult()
-			
-			carefulwalker._polar_exit_speed = carefulwalker.carefulwalkingspeedmult
-			carefulwalker:SetCarefulWalkingSpeedMultiplier(slowed_mult)
-			
-			if slowed_mult <= 1 then
-				local curtime = GetTime()
-				
-				if self._slowed ~= "slowed" then
-					self._nextcomplain = curtime + math.random(6, 12)
-				end
-				
-				if self._nextcomplain == nil or self._nextcomplain < curtime then
-					self._nextcomplain = curtime + math.random(6, 12)
-					
-					self.inst:PushEvent("polarwalking")
-				end
-			end
-			
-			self.inst:PushEvent("unevengrounddetected", {inst = self.inst, radius = 30, period = 0.6})
-		elseif carefulwalker._polar_exit_speed and not slowed then
-			carefulwalker:SetCarefulWalkingSpeedMultiplier(carefulwalker._polar_exit_speed)
-			
-			self.inst:PushEvent("unevengrounddetected", {inst = self.inst, radius = 0, period = 0})
-		end
-	end
-	
-	if debuffed then
-		self:SetWetness()
-	end
-	
-	local slow_state = slowed and "slowed" or slowing and "slowing" or nil
-	if self.inst._inpolarsnow then
-		if TheWorld.ismastersim then
-			self.inst:PushEvent("refreshcrafting")
-		end
-		
-		self.inst._inpolarsnow:push()
-	end
-	
-	self._slowed = slow_state
-end
-
 function PolarWalker:OnEntitySleep()
 	if TUNING.POLAR_WAVES_ENABLED then
-		self.inst:StopUpdatingComponent(self)
+		self:Stop()
 	end
 end
 
 function PolarWalker:OnEntityWake()
 	if TUNING.POLAR_WAVES_ENABLED then
-		self.inst:StartUpdatingComponent(self)
+		self:Start()
 	end
 end
 

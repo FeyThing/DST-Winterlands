@@ -1,0 +1,186 @@
+// Fragment shader
+
+#ifdef GL_ES
+    precision mediump float;
+#endif
+
+uniform mat4 MatrixW;
+
+#ifdef TRIPLE_ATLAS
+    uniform sampler2D SAMPLER[6];
+#else
+    uniform sampler2D SAMPLER[5];
+#endif
+
+#ifndef LIGHTING_H
+    #define LIGHTING_H
+
+    varying vec3 PS_POS;
+    // xy = min, zw = max
+    uniform vec4 LIGHTMAP_WORLD_EXTENTS;
+    #define LIGHTMAP_TEXTURE SAMPLER[3]
+    #ifndef LIGHTMAP_TEXTURE
+        #error If you use lighting, you must #define the sampler that the lightmap belongs to
+    #endif
+
+    vec3 CalculateLightingContribution()
+    {
+        vec2 uv = (PS_POS.xz - LIGHTMAP_WORLD_EXTENTS.xy) * LIGHTMAP_WORLD_EXTENTS.zw;
+        return texture2D(LIGHTMAP_TEXTURE, uv).rgb;
+    }
+#endif
+
+varying vec3 PS_TEXCOORD;
+
+uniform vec3 PARAMS;
+uniform vec3 FLOAT_PARAMS;
+uniform vec4 OCEAN_BLEND_PARAMS;
+
+#define FREEZE_LVL  FLOAT_PARAMS.x
+#define SINK_DEPTH  FLOAT_PARAMS.y
+#define SINK_OFFSET FLOAT_PARAMS.z
+
+#define ALPHA_TEST PARAMS.x
+#define LIGHT_OVERRIDE PARAMS.y
+#define BLOOM_TOGGLE PARAMS.z
+
+uniform vec4 OCEAN_WORLD_EXTENTS;
+#define OCEAN_SAMPLER SAMPLER[4]
+
+#define PI 3.1415926535897932384626433832795
+
+vec3 mod289(vec3 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec2 mod289(vec2 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec3 permute(vec3 x) {
+    return mod289(((x * 34.0) + 10.0) * x);
+}
+
+float snoise(vec2 v)
+{
+    const vec4 C = vec4(0.211324865405187,
+                        0.366025403784439,
+                       -0.577350269189626,
+                        0.024390243902439);
+    vec2 i  = floor(v + dot(v, C.yy));
+    vec2 x0 = v - i + dot(i, C.xx);
+
+    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+
+    i = mod289(i);
+    vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+    vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+    m = m*m;
+    m = m*m;
+
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+    vec3 h = abs(x) - 0.5;
+    vec3 ox = floor(x + 0.5);
+    vec3 a0 = x - ox;
+
+    m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+
+    vec3 g;
+    g.x  = a0.x  * x0.x   + h.x  * x0.y;
+    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+    return 130.0 * dot(m, g);
+}
+
+void main()
+{
+    vec4 textureColor;
+    vec2 coord = PS_TEXCOORD.xy;
+    float sinkThreshold = (cos(4.0 * PI * PS_POS.x) + cos(4.0 * PI * PS_POS.z)) / 48.0 + SINK_OFFSET;
+    float aThreshhold = 0.02;
+
+    #ifdef TRIPLE_ATLAS
+        if (PS_TEXCOORD.z < 0.5)
+        {
+            textureColor = texture2D(SAMPLER[0], coord);
+        }
+        else if (PS_TEXCOORD.z < 1.5)
+        {
+            textureColor = texture2D(SAMPLER[1], coord);
+        }
+        else
+        {
+            textureColor = texture2D(SAMPLER[5], coord);
+        }
+    #else
+        if (PS_TEXCOORD.z < 0.5)
+        {
+            textureColor = texture2D(SAMPLER[0], coord);
+        }
+        else
+        {
+            textureColor = texture2D(SAMPLER[1], coord);
+        }
+    #endif
+
+	if (BLOOM_TOGGLE == 1.0)
+	{
+		gl_FragColor = vec4(0.0, 0.0, 0.0, textureColor.a);
+		return;
+	}
+
+    if (SINK_DEPTH < 0.0)
+    {
+        if (PS_POS.y < sinkThreshold - aThreshhold) // Small offset to work in some transparency
+        {
+    		discard;
+        }
+    }
+
+    if(ALPHA_TEST > 0.0)
+    {
+        if(textureColor.a >= ALPHA_TEST)
+        {
+            gl_FragColor = textureColor;
+        }
+        else
+        {
+            discard;
+        }
+    }
+    else
+    {
+        gl_FragColor = textureColor;
+
+        if (SINK_DEPTH < 0.0)
+        {
+            gl_FragColor.a *= clamp((PS_POS.y - sinkThreshold - aThreshhold) / aThreshhold, 0.0, 1.0);
+        }
+
+        if (FREEZE_LVL > 0.0 && PS_POS.y < SINK_OFFSET + FREEZE_LVL)
+        {
+            vec2 objXZ = vec2(MatrixW[3][0], MatrixW[3][2]);
+            float mask1 = clamp(0.5 + 0.5 * snoise((PS_POS.xz - objXZ) * 4.0), 0.0, 1.0);
+            float mask2 = clamp(0.5 + 0.5 * snoise(-(PS_POS.xz - objXZ) * 4.0), 0.0, 1.0);
+            float mask3 = clamp(0.5 + 0.5 * snoise((PS_POS.xz - objXZ) * 16.0), 0.0, 1.0);
+
+            float mask = max(mask1, mask2);
+            mask = mix(mask3, mask, mask);
+            
+            mask *= gl_FragColor.a;
+            mask *= (1.0 - clamp(pow((PS_POS.y - SINK_OFFSET) / FREEZE_LVL, 3.0), 0.0, 1.0));
+
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.89, 0.97, 1.0), mask);
+        }
+
+		gl_FragColor.rgb = min(gl_FragColor.rgb, gl_FragColor.a);
+
+		vec2 world_uv = (PS_POS.xz - OCEAN_WORLD_EXTENTS.xy) * OCEAN_WORLD_EXTENTS.zw;
+		vec3 world_tint = texture2D(OCEAN_SAMPLER, world_uv).rgb;
+		gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * world_tint.rgb, OCEAN_BLEND_PARAMS.x);
+
+        vec3 light = CalculateLightingContribution();
+        gl_FragColor.rgb *= max(light.rgb, vec3(LIGHT_OVERRIDE, LIGHT_OVERRIDE, LIGHT_OVERRIDE));
+    }
+}

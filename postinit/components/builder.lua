@@ -5,7 +5,7 @@ local function HasSnowIngredient(self, ingredient)
 	if ingredient.type and ingredient.type == "polarsnow_material" then
 		local x, y, z = self.inst.Transform:GetWorldPosition()
 		
-		return TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
+		return self.inst.nearhighsnow:value()
 	end
 end
 
