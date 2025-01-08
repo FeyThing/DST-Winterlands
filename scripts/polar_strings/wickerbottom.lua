@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		"Why did I not prepare better for this snowy slog?",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "This disturbance feels orchestrated, not natural."
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Making a hole here would be ill-advised."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Ooo. What a serviceable present!"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "I am ill-equipped for such conditions."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "Whoever sits here has been long absent."
+	DESCRIBE.POLAR_THRONE_GIFTS = "I'm surprised they're not covered in snow yet."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Curious location for a commerce... or who knows what.",
 		OPEN = "I still have all my teeth, dear, and I intend to keep them.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		BURNT = "It has succumbed to flames.",
 		GENERIC = "A den, though hardly thermally insulated.",
 	}
+	DESCRIBE.POLARICE_PLOW = "Seconds away to find out..."
+	DESCRIBE.POLARICE_PLOW_ITEM = "The cold ocean floor is more lively than one might think."
 	
 --	Items
 	

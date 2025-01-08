@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		"Hmph...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Ah! I already hate it here!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Here? Of all places?"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "That could've been worse."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Ack! Get this snow off me!"
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "I only know one guy who would waste his time sitting here. Actually, two."
+	DESCRIBE.POLAR_THRONE_GIFTS = "Yeah. I doubt any of this is mine."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Burning this place down would be doing it a favor.",
 		OPEN = "So that's how the Tooth Fairy looks like... oh well.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		BURNT = "Ha ha! Your fish house stood no chance!",
 		GENERIC = "Ugh, it smells like fish.",
 	}
+	DESCRIBE.POLARICE_PLOW = "I'll save you all, fishes!"
+	DESCRIBE.POLARICE_PLOW_ITEM = "Sure sucks to be stuck under the ice."
 	
 --	Items
 	

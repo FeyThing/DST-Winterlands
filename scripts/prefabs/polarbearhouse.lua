@@ -121,12 +121,38 @@ local function SpawnCheckDay(inst)
 	end
 end
 
+local BLOCKER_CANT_TAGS = {"_inventoryitem", "locomotor", "NOBLOCK", "fx"}
+
+local function customcheckfn(pt)
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, nil, BLOCKER_CANT_TAGS) == 0 and not TheWorld.Map:IsPointNearHole(pt)
+end
+
 local function OnInit(inst)
 	if inst.house_paint == nil then
 		inst:SetPainting(HOUSE_PAINTINGS[math.random(#HOUSE_PAINTINGS)])
 	end
-	inst.inittask = inst:DoTaskInTime(math.random(), SpawnCheckDay)
 	
+	if not inst.spawned_brazier and math.random() < TUNING.POLAR_BRAZIER_HOUSE_SPAWN_CHANCE then
+		local pt = inst:GetPosition()
+		local radius = 3
+		
+		local offset
+		while offset == nil and radius <= 7 do
+			offset = FindWalkableOffset(pt, math.random() * TWOPI, GetRandomMinMax(3, 7), 12, false, true, customcheckfn)
+			
+			if offset then
+				local brazier = SpawnPrefab("polar_brazier")
+				
+				brazier.Transform:SetPosition((pt + offset):Get())
+				brazier.house_paint = inst.house_paint
+			else
+				radius = radius + 1
+			end
+		end
+	end
+	inst.spawned_brazier = true
+	
+	inst.inittask = inst:DoTaskInTime(math.random(), SpawnCheckDay)
 	if inst.components.spawner and inst.components.spawner.child == nil and inst.components.spawner.childname and not inst.components.spawner:IsSpawnPending() then
 		local child = SpawnPrefab(inst.components.spawner.childname)
 		
@@ -142,6 +168,7 @@ local function OnSave(inst, data)
 		data.burnt = true
 	end
 	data.colour = inst.house_paint
+	data.spawned_brazier = inst.spawned_brazier
 end
 
 local function OnLoad(inst, data)
@@ -152,6 +179,7 @@ local function OnLoad(inst, data)
 		if data.colour then
 			inst:SetPainting(data.colour)
 		end
+		inst.spawned_brazier = data.spawned_brazier
 	end
 end
 
@@ -175,6 +203,8 @@ local function OnBuilt(inst)
 	inst.AnimState:PlayAnimation("place")
 	inst.AnimState:PushAnimation("idle")
 	inst.SoundEmitter:PlaySound("dontstarve/common/rabbit_hutch_craft")
+	
+	inst.spawned_brazier = true -- Lies!
 end
 
 local function OnBurntUp(inst)

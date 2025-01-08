@@ -92,7 +92,8 @@ local function blocker()
 	inst.entity:AddTransform()
 	inst.entity:AddNetwork()
 	
-	inst:AddTag("FX")
+	--inst:AddTag("fx")
+	inst:AddTag("NOBLOCK")
 	inst:AddTag("snowblocker")
 	
 	inst._snowblockrange = net_tinybyte(inst.GUID, "snowwave_blocker._snowblockrange", "snowblockrangedirty")

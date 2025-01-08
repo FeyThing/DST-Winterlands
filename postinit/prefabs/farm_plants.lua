@@ -119,10 +119,11 @@ PLANT_DEFS.icelettuce = {
 	pictureframeanim = {anim = "idle_shiver", time = 12 * FRAMES},
 }
 
---
+--	Changes for lettuce and other crops on island...
 
-local OLD_GROWTH_STAGES
+local GROWTH_STAGES = {}
 local LETTUCE_GROWTH_STAGES = {}
+local OLD_GROWTH_STAGES
 
 --	Freeze Tender
 
@@ -164,7 +165,7 @@ local function OnPicked(inst, data)
 	end
 end
 
---	Stress other plants when it's not hot outside
+--	Lettuces stress other plants when it's not hot outside
 
 local FREEZEJOY_MUST_TAGS = {"farm_plant_freezejoy"}
 
@@ -185,32 +186,93 @@ local function KillJoyStressTest(inst, ...)
 	return test 
 end
 
---	Lettuce has no overrized or rotten version
+--	Adjusting all crops seasonal stressor to consider the island as winter season
+
+local OldSeasonStressTest
+local function SeasonStressTest(inst, ...)
+	local test
+	
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and inst.plant_def and inst.plant_def.good_seasons then
+		return not inst.plant_def.good_seasons["winter"]
+	elseif OldSeasonStressTest then
+		return OldSeasonStressTest(inst, ...)
+	end
+end
+
+--	Applying no oversized / rotten states for Lettuce, and winter growth time for any crop on island
+
+local CalcGrowTime
+
+local OldGetGerminationTime
+local function GetGerminationTime(inst, stage_num, stage_data, ...)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and inst.plant_def and inst.plant_def.good_seasons then
+		local grow_time = inst.plant_def.grow_time[stage_data.name]
+		local is_good_season = inst.plant_def.good_seasons["winter"]
+		
+		if grow_time and inst.components.farmplantstress then
+			return GetRandomMinMax(grow_time[1], grow_time[2]) * (is_good_season and 0.5 or 1)
+		end
+	elseif OldGetGerminationTime then
+		return OldGetGerminationTime(inst, stage_num, stage_data, ...)
+	end
+end
+
+local OldGetGrowTime
+local function GetGrowTime(inst, stage_num, stage_data, ...)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and inst.plant_def and inst.plant_def.good_seasons then
+		local grow_time = inst.plant_def.grow_time[stage_data.name]
+		local is_good_season = inst.plant_def.good_seasons["winter"]
+		
+		if CalcGrowTime == nil then
+			CalcGrowTime = PolarUpvalue(OldGetGrowTime, "CalcGrowTime")
+		end
+		
+		if grow_time and inst.components.farmplantstress and CalcGrowTime then
+			return CalcGrowTime(inst.components.farmplantstress.checkpoint_stress_points, inst.components.farmplantstress.num_stressors + 1, grow_time[1], grow_time[2]) * (is_good_season and 0.5 or 1)
+		end
+	elseif OldGetGrowTime then
+		return OldGetGrowTime(inst, stage_num, stage_data, ...)
+	end
+end
 
 local lettuce_stage_names = {"seed", "sprout", "small", "med", "full"}
-local function LettuceGrowthStagesPostInit()
+
+local function GrowthStagesPostInit()
 	for i, stage in ipairs(OLD_GROWTH_STAGES) do
-		if table.contains(lettuce_stage_names, stage.name) then
+		if stage.name == "seed" and OldGetGerminationTime == nil then
+			OldGetGerminationTime = stage.time
+			stage.time = GetGerminationTime
+		elseif stage.name == "sprout" and OldGetGrowTime == nil then
+			OldGetGrowTime = stage.time
+			stage.time = GetGrowTime
+		end
+		
+		--if table.contains(lettuce_stage_names, stage.name) then
 			local OldGrowFn = stage.fn
 			stage.fn = function(inst, stage, stage_data, ...)
 				if OldGrowFn then
 					OldGrowFn(inst, stage, stage_data, ...)
 				end
 				
-				local mist_scale = math.min(inst.components.growable.stage - 1, 3.5)
-				if inst.components.polarmistemitter then
-					inst.components.polarmistemitter.scale = mist_scale
-					
-					if mist_scale >= 1 then
-						inst.components.polarmistemitter:StartMisting()
-						inst:AddTag("farm_plant_freezejoy")
-					else
-						inst.components.polarmistemitter:StopMisting()
-						inst:RemoveTag("farm_plant_freezejoy")
+				if inst:HasTag("farm_plant_icelettuce") then
+					local mist_scale = math.min(inst.components.growable.stage - 1, 3.5)
+					if inst.components.polarmistemitter then
+						inst.components.polarmistemitter.scale = mist_scale
+						
+						if mist_scale >= 1 then
+							inst.components.polarmistemitter:StartMisting()
+							inst:AddTag("farm_plant_freezejoy")
+						else
+							inst.components.polarmistemitter:StopMisting()
+							inst:RemoveTag("farm_plant_freezejoy")
+						end
 					end
+					
+					inst.no_oversized = true
 				end
-				
-				inst.no_oversized = true
 			end
 			
 			local OldPreGrowFn = stage.pregrowfn
@@ -218,11 +280,16 @@ local function LettuceGrowthStagesPostInit()
 				if OldPreGrowFn then
 					OldPreGrowFn(inst, ...)
 				end
-				inst.no_oversized = true
+				
+				if inst:HasTag("farm_plant_icelettuce") then
+					inst.no_oversized = true
+				end
 			end
 			
-			table.insert(LETTUCE_GROWTH_STAGES, stage)
-		end
+			--table.insert(LETTUCE_GROWTH_STAGES, stage)
+		--end
+		
+		table.insert(GROWTH_STAGES, stage)
 	end
 end
 
@@ -236,6 +303,19 @@ for k, data in pairs(PLANT_DEFS) do
 			return
 		end
 		
+		if inst.components.growable then
+			if OLD_GROWTH_STAGES == nil then
+				OLD_GROWTH_STAGES = deepcopy(inst.components.growable.stages)
+				GrowthStagesPostInit()
+			end
+			
+			--if is_lettuce then
+			--	inst.components.growable.stages = LETTUCE_GROWTH_STAGES
+			--else
+				inst.components.growable.stages = GROWTH_STAGES
+			--end
+		end
+		
 		if is_lettuce then
 			if inst.components.farmplanttendable then
 				if OldOnTendTo == nil then
@@ -244,28 +324,22 @@ for k, data in pairs(PLANT_DEFS) do
 				inst.components.farmplanttendable.ontendtofn = OnTendTo
 			end
 			
-			if inst.components.growable then
-				if OLD_GROWTH_STAGES == nil then
-					OLD_GROWTH_STAGES = deepcopy(inst.components.growable.stages)
-					LettuceGrowthStagesPostInit()
-				end
-				
-				inst.components.growable.stages = LETTUCE_GROWTH_STAGES
-			end
-			
 			inst:AddComponent("polarmistemitter")
 			inst.components.polarmistemitter.maxmist_range = 2
 			
 			inst.IsTenderImmune = IsTenderImmune
 			
 			inst:ListenForEvent("picked", OnPicked)
-			
-		elseif inst.components.farmplantstress then
-			if OldKillJoyStressTest == nil then
-				OldKillJoyStressTest = PolarUpvalue(Prefabs[data.prefab].fn, "KillJoyStressTest")
-			end
-			
+		end
+		
+		if OldKillJoyStressTest == nil then
+			OldKillJoyStressTest = PolarUpvalue(Prefabs[data.prefab].fn, "KillJoyStressTest")
 			PolarUpvalue(Prefabs[data.prefab].fn, "KillJoyStressTest", KillJoyStressTest)
+		end
+		
+		if OldSeasonStressTest == nil then
+			OldSeasonStressTest = PolarUpvalue(Prefabs[data.prefab].fn, "SeasonStressTest")
+			PolarUpvalue(Prefabs[data.prefab].fn, "SeasonStressTest", SeasonStressTest)
 		end
 	end)
 end

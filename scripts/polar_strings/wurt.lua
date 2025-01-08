@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		"It not like water at all!",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Glr-rpp, leave ground alone!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Maybe not here."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Best day ever, florp!"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Glurgh! Big sea of snow is wet AND cold!"
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "Can make better one with own two claws."
+	DESCRIBE.POLAR_THRONE_GIFTS = "Mine! It all mine!!"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Probably... safe.",
 		OPEN = "Hello? You not Bearfolk?",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		BURNT = "Yesss, one less!",
 		GENERIC = "Not wanna see what in here...",
 	}
+	DESCRIBE.POLARICE_PLOW = "Can't wait! Seriously, florp."
+	DESCRIBE.POLARICE_PLOW_ITEM = "Want to see the deep fishes!"
 	
 --	Items
 	

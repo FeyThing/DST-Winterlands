@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		"Brrr...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "That was... cool! Chilly even!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Let's try somewhere more stable."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Neat! Almost what I wanted."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "T-that demands for a-adequate clothing...!"
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "Doesn't it get boring after a while, Mr. Maxwell?"
+	DESCRIBE.POLAR_THRONE_GIFTS = "Maybe they're lost."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Oooh, this gotta be that dental museum I've heard about!",
 		OPEN = "Hi! Are you open to visitors?",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		BURNT = "That's a frostburn if I ever saw one. Heh.",
 		GENERIC = "You think they make furnitures out of snow?",
 	}
+	DESCRIBE.POLARICE_PLOW = "Don't worry, I know the drill."
+	DESCRIBE.POLARICE_PLOW_ITEM = "Maybe Woby could locate the fish by smell?"
 	
 --	Items
 	

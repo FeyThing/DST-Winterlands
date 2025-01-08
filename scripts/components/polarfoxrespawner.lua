@@ -59,6 +59,22 @@ return Class(function(self, inst)
 	
 	--
 	
+	function self:GetDebugString()
+		local str = ""
+		local spawns = 0
+		local t = GetTime()
+		c_countprefabs("polarfox")
+		
+		for pt, spawn_time in pairs(_foxspawns) do
+			local remaining_time = spawn_time - t
+			
+			spawns = spawns + 1
+			str = str .. string.format("	Point #%d: %.2f, %.2f | Respawn in: %2f seconds\n", spawns, pt.x, pt.z, math.max(0, remaining_time))
+		end
+		
+		return spawns > 0 and string.format("%d Respawn Points found:\n%s", spawns, str) or "No Respawn Point found"
+	end
+	
 	function self:OnSave()
 		local spawntimes = {}
 		
@@ -67,7 +83,7 @@ return Class(function(self, inst)
 			table.insert(spawntimes, {
 				x = pt.x,
 				z = pt.z,
-				remaining = _t - t,
+				remaining = t - _t,
 			})
 		end
 		
@@ -79,7 +95,7 @@ return Class(function(self, inst)
 	function self:OnLoad(data)
 		if data and data.spawntimes then
 			for i, spawn_data in ipairs(data.spawntimes) do
-				if spawn_data.remaining then
+				if spawn_data.remaining and spawn_data.remaining > 0 then
 					local pt = Vector3(spawn_data.x, 0, spawn_data.z)
 					self:ScheduleFoxSpawn(pt, spawn_data.remaining)
 				end

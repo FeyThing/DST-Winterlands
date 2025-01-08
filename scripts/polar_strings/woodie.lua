@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		"It's just a bit of snow...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Guess we'll need more firewood, eh?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "I know a better spot."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Hoo! Lucy, you shouldn't have-"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "I could use a big, warm fur right aboot now."
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "Is that made of... charcoal?"
+	DESCRIBE.POLAR_THRONE_GIFTS = "Seems we behaved quite well."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "I'm very offended.",
 		OPEN = "I don't need your curses.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		BURNT = "Guess it was only built to withstand the cold.",
 		GENERIC = "I used to say: you live in what you eat, eh.",
 	}
+	DESCRIBE.POLARICE_PLOW = "Should be a good spot!"
+	DESCRIBE.POLARICE_PLOW_ITEM = "Less time digging is more time fishing."
 	
 --	Items
 	

@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		"...Mggrmm...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Curses! The Fimbulvetr just begun!"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "'Twould be a mistake."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "What was that?"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Ullr has cast a curse upon me!"
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "The sit of an ice giant."
+	DESCRIBE.POLAR_THRONE_GIFTS = "'Tis smell like a trap."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "A most intriguing hall of trade.",
 		OPEN = "Those wares gleam with the promise of battle's aid.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		BURNT = "The house fish has gone into smoke.",
 		GENERIC = "T'would be impressive if 'twas a real catch!",
 	}
+	DESCRIBE.POLARICE_PLOW = "We raid!"
+	DESCRIBE.POLARICE_PLOW_ITEM = "Something to pierce the fish ramparts."
 	
 --	Items
 	

@@ -27,6 +27,8 @@ ENV.AddPlayerPostInit(function(inst)
 	end
 	
 	inst._inpolarsnow = net_event(inst.GUID, "localplayer._inpolarsnow")
+	inst._snowblockrange = net_tinybyte(inst.GUID, "localplayer._snowblockrange") -- Mostly for WX
+	inst._snowblockrange:set(0)
 	
 	if not TheWorld.ismastersim then
 		inst:ListenForEvent("localplayer._inpolarsnow", OnInSnowDirty)

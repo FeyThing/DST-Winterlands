@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		"Whew... I could use a breather outta there!",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Pfew! It's over. And it's... snowin'?"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Nope. Bad idea."
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "At least some bosses leave presents."
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Yeesh! I ain't dressed enough for that!"
@@ -65,6 +67,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_THRONE = "A display of power and laziness."
+	DESCRIBE.POLAR_THRONE_GIFTS = "The lil' helpers have been keeping them clean."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "I'm better outside than in this shoddy shack.",
 		OPEN = "Buddy, ever heard of proper lighting? It's creepy in here.",
@@ -73,6 +77,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		BURNT = "Hm. Probably another wildfire.",
 		GENERIC = "There something fishy about it.",
 	}
+	DESCRIBE.POLARICE_PLOW = "I should move a wee bit away."
+	DESCRIBE.POLARICE_PLOW_ITEM = "That's enough hiding from me, fishies."
 	
 --	Items
 	

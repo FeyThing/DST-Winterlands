@@ -61,7 +61,11 @@ PolarRecipe("trap_polarteeth", 		{Ingredient("ice", 1), Ingredient("cutstone", 1
 --	Cooking / Food
 PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluegem_shards", 2), Ingredient("mosquitosack", 1)}, 	TECH.SCIENCE_TWO, 		nil, 		{"COOKING"}, {"icepack"})
 
+--	Boating / Fishing
+PolarRecipe("polarice_plow_item", 	{Ingredient("log", 3), Ingredient("cutstone", 1), Ingredient("mole", 1)}, 	TECH.SEAFARING_ONE, 	nil, 	{"FISHING"}, {"ocean_trawler_kit"})
+
 --	Decor / Structure
+PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 3), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 									{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})
 PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 	{"STRUCTURES"}, {"rabbithouse"})
 PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 						{"DECOR"}, {"turf_underrock"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 						{"DECOR"}, {"turf_dragonfly"})
@@ -85,6 +89,7 @@ PolarRecipe("polaricestaff", 		{Ingredient("antler_tree_stick", 1), Ingredient("
 
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe
 
+AddDeconstructRecipe("polar_brazier", {Ingredient("boneshard", 3), Ingredient("cutstone", 1), Ingredient("rope", 1)})
 AddDeconstructRecipe("polaramulet", {Ingredient("rope", 3), Ingredient("nightmarefuel", 1)})
 AddDeconstructRecipe("polarmoosehat", {Ingredient("cutgrass", 6), Ingredient("boneshard", 4), Ingredient("polarflea", 2)})
 --AddDeconstructRecipe("polar_spear", {Ingredient("ice", 1), Ingredient("twigs", 2)})
