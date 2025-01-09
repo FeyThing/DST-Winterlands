@@ -30,7 +30,7 @@ local function OnAttacked(inst, data)
     end
 end
 
-local function OnHitOther(inst, data)
+--[[local function OnHitOther(inst, data)
 	if data.redirected or inst.sg == nil then
 		return
 	end
@@ -45,7 +45,7 @@ local function OnHitOther(inst, data)
 			item.components.inventoryitem:DoDropPhysics(x, y, z, true)
 		end
 	end
-end
+end]]
 
 local function OnTimerDone(inst, data)
 	if data.name == "throne_exit" then
@@ -74,14 +74,16 @@ local function DoThroneCombat(inst, player)
 	end
 	inst.components.knownlocations:RememberLocation("polarthrone", pt, true)
 	
-	if inst.components.thief == nil then
+	--[[if inst.components.thief == nil then
 		inst:AddComponent("thief")
-	end
+	end]]
 	
 	if inst.components.timer == nil then
 		inst:AddComponent("timer")
 	end
-	inst.components.timer:StartTimer("throne_exit", GetRandomMinMax(TUNING.THRONE_KRAMPUS_STAY_TIME_MIN, TUNING.THRONE_KRAMPUS_STAY_TIME_MIN))
+	
+	local stay_time = GetRandomMinMax(TUNING.THRONE_KRAMPUS_STAY_TIME_MIN, TUNING.THRONE_KRAMPUS_STAY_TIME_MIN)
+	inst.components.timer:StartTimer("throne_exit", stay_time + (throne._krampus_stay_addedtime or 0))
 	
 	if inst.components.teamattacker == nil then
 		inst:AddComponent("teamattacker")
@@ -95,7 +97,7 @@ local function DoThroneCombat(inst, player)
 	inst:SetBrain(throne_brain)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
-	inst:ListenForEvent("onhitother", OnHitOther)
+	--inst:ListenForEvent("onhitother", OnHitOther)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 end
 
@@ -193,6 +195,8 @@ local function OnUseKlausKey(inst, key, doer, ...)
 	if success then
 		TheWorld:PushEvent("ms_respawnthronegifts", inst)
 	end
+	
+	return success, fail_msg, consumed
 end
 
 ENV.AddPrefabPostInit("klaus_sack", function(inst)

@@ -69,10 +69,13 @@ local function DespawnGifts(inst, sack)
 end
 
 local function ReleaseKrampi(inst, opened_gift, player)
+	local added_time = 0 - (TUNING.THRONE_KRAMPUS_STAY_ADD_TIME * 3) -- Add some more time
+	
 	for gift, v in pairs(inst.throne_gifts) do
 		gift._throne_activated = true
 		
 		if gift ~= opened_gift and gift:IsValid() then
+			added_time = added_time + TUNING.THRONE_KRAMPUS_STAY_ADD_TIME
 			if gift.components.unwrappable then
 				gift.components.unwrappable.canbeunwrapped = false
 			end
@@ -83,6 +86,7 @@ local function ReleaseKrampi(inst, opened_gift, player)
 		end
 	end
 	
+	inst._krampus_stay_addedtime = added_time > 0 and added_time or nil
 	inst.waiting_for_next_sack = true
 end
 
@@ -117,6 +121,7 @@ local function OnLoadPostPass(inst, newents, savedata)
 			inst.waiting_for_sack = newents[savedata.sack_id].entity
 			
 			inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld)
+			inst:ListenForEvent("onremove", inst._onsackremoved, inst.waiting_for_sack)
 		end
 		
 		if savedata.gift_ids then
@@ -135,20 +140,21 @@ end
 --
 
 local function OnSackSpawned(inst, sack)
-	print("OnSackSpawned:", inst, sack)
 	if sack and not inst.waiting_for_sack then
 		inst.waiting_for_sack = sack
-		inst.waiting_for_next_sack = nil
 		
 		inst:DespawnGifts(sack)
-		inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld)
+		inst:ListenForEvent("onremove", inst._onsackremoved, sack) -- When removed (end of season or whatever) ... only respawn gifts if they weren't used
+		inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld) -- When opened with stash key, just respawn gifts
 	end
 end
 
-local function OnSackRemoved(inst, sack)
-	print("OnSackRemoved:", inst, sack)
+local function OnSackRemoved(inst, sack, despawned)
 	if sack then
-		inst:SpawnGifts(sack)
+		if not despawned or (despawned and not inst.waiting_for_next_sack) then
+			inst:SpawnGifts(sack)
+		end
+		inst:RemoveEventCallback("onremove", inst._onsackremoved, sack)
 		inst:RemoveEventCallback("ms_respawnthronegifts", inst._onsackopened, TheWorld)
 		
 		inst.waiting_for_sack = nil
@@ -223,6 +229,9 @@ local function fn()
 	
 	inst._onsackopened = function(src, sack)
 		OnSackRemoved(inst, sack)
+	end
+	inst._onsackremoved = function(sack)
+		OnSackRemoved(inst, sack, true)
 	end
 	inst._onsackspawned = function(src, sack)
 		OnSackSpawned(inst, sack)
@@ -322,9 +331,16 @@ local function ReleaseKrampus(inst, player)
 		krampus.SoundEmitter:PlaySound("dontstarve/common/destroy_smoke")
 		
 		local rdm = math.random()
-		krampus.sg:GoToState((rdm <= 0.33 and "throne_gift_exit")
-			or (rdm <= 0.66 and "sleep_pst")
-			or "taunt")
+		local state = (rdm <= 0.33 and "throne_gift_exit")
+			or (rdm <= 0.66 and "sleeping")
+			or "taunt"
+		
+		local sleep_time = TUNING.THRONE_KRAMPUS_SLEEP_TIME
+		if state == "sleeping" and krampus.components.sleeper and sleep_time > 0 then
+			krampus.components.sleeper:GoToSleep(sleep_time)
+			krampus.components.sleeper:WakeUp()
+		end
+		krampus.sg:GoToState(state)
 	end
 	
 	if inst.components.unwrappable and krampus.components.inventory then
@@ -376,7 +392,7 @@ local function gifts()
 	local color = 0.7 + math.random() * 0.3
 	inst.AnimState:SetMultColour(color, color, color, 1)
 	
-	local scale = 1 or -1
+	local scale = math.random() <= 0.5 and 1 or -1
 	inst.AnimState:SetScale(scale, 1)
 	
 	inst:AddComponent("inspectable")

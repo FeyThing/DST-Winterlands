@@ -4,7 +4,7 @@ GLOBAL.setfenv(1, GLOBAL)
 local states = {
 	State{
 		name = "attack_throne",
-		tags = {"attack", "weapontoss"},
+		tags = {"attack"},--, "weapontoss"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("steal_pre")
