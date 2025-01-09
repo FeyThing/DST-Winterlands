@@ -106,6 +106,7 @@ local components = {
 }
 
 local stategraphs = {
+	"krampus",
 	"penguin",
 	"wilson",
 }

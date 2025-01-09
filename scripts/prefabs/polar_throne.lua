@@ -78,7 +78,7 @@ local function ReleaseKrampi(inst, opened_gift, player)
 			end
 			
 			if gift.ReleaseKrampus then
-				gift:DoTaskInTime(math.random() * 2, gift.ReleaseKrampus, player)
+				gift:DoTaskInTime(1.5 + math.random() * 2, gift.ReleaseKrampus, player, opened_gift)
 			end
 		end
 	end
@@ -116,7 +116,7 @@ local function OnLoadPostPass(inst, newents, savedata)
 		if savedata.sack_id and newents[savedata.sack_id] then
 			inst.waiting_for_sack = newents[savedata.sack_id].entity
 			
-			inst:ListenForEvent("onremove", inst._onsackremoved, inst.waiting_for_sack)
+			inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld)
 		end
 		
 		if savedata.gift_ids then
@@ -135,19 +135,21 @@ end
 --
 
 local function OnSackSpawned(inst, sack)
-	if sack and inst.waiting_for_sack == nil then
+	print("OnSackSpawned:", inst, sack)
+	if sack and not inst.waiting_for_sack then
 		inst.waiting_for_sack = sack
 		inst.waiting_for_next_sack = nil
 		
 		inst:DespawnGifts(sack)
-		inst:ListenForEvent("onremove", inst._onsackremoved, sack)
+		inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld)
 	end
 end
 
 local function OnSackRemoved(inst, sack)
+	print("OnSackRemoved:", inst, sack)
 	if sack then
 		inst:SpawnGifts(sack)
-		inst:RemoveEventCallback("onremove", inst._onsackremoved, sack)
+		inst:RemoveEventCallback("ms_respawnthronegifts", inst._onsackopened, TheWorld)
 		
 		inst.waiting_for_sack = nil
 	end
@@ -158,7 +160,7 @@ local function OnInit(inst)
 	
 	if sack then
 		inst._onsackspawned(nil, sack)
-	elseif inst.waiting_for_sack == nil then
+	elseif not inst.waiting_for_sack and not inst.waiting_for_next_sack then
 		inst:SpawnGifts()
 	end
 end
@@ -219,7 +221,7 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass
 	
-	inst._onsackremoved = function(sack)
+	inst._onsackopened = function(src, sack)
 		OnSackRemoved(inst, sack)
 	end
 	inst._onsackspawned = function(src, sack)
@@ -256,6 +258,16 @@ local function DoGiftFade(inst, doanim, doer, skip)
 	ErodeAway(inst)
 end
 
+local function Enjoy(doer)
+	if doer.components.talker and doer.sg then
+		doer.components.talker:Say(GetString(doer, "ANNOUNCE_THRONE_GIFT_TAKEN"))
+		
+		if doer.components.combat and GetTime() - (doer.components.combat.lastwasattackedtime or 0) > 10 then
+			doer.sg:GoToState("emote", {anim = "research", randomanim = false, mounted = true})
+		end
+	end
+end
+
 local function OnWrapped(inst, num, doer)
 	
 end
@@ -270,6 +282,10 @@ local function OnUnwrapped(inst, pos, doer)
 			
 			inst.SoundEmitter:PlaySound("dontstarve/common/together/packaged")
 		end
+	end
+	
+	if doer and doer:IsValid() then
+		doer:DoTaskInTime(0.25 + math.random(), Enjoy)
 	end
 	
 	inst:DoGiftFade(true, doer)
@@ -303,7 +319,12 @@ local function ReleaseKrampus(inst, player)
 	krampus.Transform:SetPosition(x, y, z)
 	
 	if krampus.sg then
-		krampus.sg:GoToState("taunt")
+		krampus.SoundEmitter:PlaySound("dontstarve/common/destroy_smoke")
+		
+		local rdm = math.random()
+		krampus.sg:GoToState((rdm <= 0.33 and "throne_gift_exit")
+			or (rdm <= 0.66 and "sleep_pst")
+			or "taunt")
 	end
 	
 	if inst.components.unwrappable and krampus.components.inventory then

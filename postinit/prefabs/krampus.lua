@@ -19,7 +19,7 @@ end
 
 local function OnAttacked(inst, data)
 	local attacker = data and data.attacker or nil
-	if attacker == nil then
+	if attacker == nil or inst.components.teamattacker == nil then
 		return
 	end
 	
@@ -28,6 +28,34 @@ local function OnAttacked(inst, data)
     elseif inst.components.teamattacker.teamleader then
         inst.components.teamattacker.teamleader:BroadcastDistress(inst)
     end
+end
+
+local function OnHitOther(inst, data)
+	if data.redirected or inst.sg == nil then
+		return
+	end
+	
+	if inst.sg.currentstate.name == "attack_throne" and data.target and data.target.components.inventory and not data.target:HasTag("stronggrip") then
+		local item = data.target.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
+		
+		if item and not item:HasTag("nosteal") and item.components.inventoryitem then
+			data.target.components.inventory:DropItem(item)
+			
+			local x, y, z = item.Transform:GetWorldPosition()
+			item.components.inventoryitem:DoDropPhysics(x, y, z, true)
+		end
+	end
+end
+
+local function OnTimerDone(inst, data)
+	if data.name == "throne_exit" then
+		if inst:IsAsleep() then
+			inst:Remove()
+		else
+			inst.wants_to_exit_throne = true
+			inst.persists = false
+		end
+	end
 end
 
 local function DoThroneCombat(inst, player)
@@ -46,19 +74,29 @@ local function DoThroneCombat(inst, player)
 	end
 	inst.components.knownlocations:RememberLocation("polarthrone", pt, true)
 	
+	if inst.components.thief == nil then
+		inst:AddComponent("thief")
+	end
+	
+	if inst.components.timer == nil then
+		inst:AddComponent("timer")
+	end
+	inst.components.timer:StartTimer("throne_exit", GetRandomMinMax(TUNING.THRONE_KRAMPUS_STAY_TIME_MIN, TUNING.THRONE_KRAMPUS_STAY_TIME_MIN))
+	
 	if inst.components.teamattacker == nil then
 		inst:AddComponent("teamattacker")
 	end
 	inst.components.teamattacker.team_type = "thronekrampus"
 	
 	if player then
-		print("make team!")
 		MakeTeam(inst, player)
 	end
 	
 	inst:SetBrain(throne_brain)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
+	inst:ListenForEvent("onhitother", OnHitOther)
+	inst:ListenForEvent("timerdone", OnTimerDone)
 end
 
 --
@@ -83,7 +121,7 @@ local function SetPolarSweater(inst, sweater_color)
 	
 	inst.AnimState:SetSymbolMultColour("krampus_neck", r, g, b, a)
 	inst.AnimState:SetSymbolMultColour("krampus_torso", r, g, b, a)
-	inst.AnimState:SetSymbolMultColour("krampus_bag", r, g, b, a)
+	--inst.AnimState:SetSymbolMultColour("krampus_bag", r, g, b, a)
 	
 	local next_color = color + 1
 	TheWorld.cur_krampus_throne_color = next_color > #SACK_COLORS and 1 or next_color
@@ -145,6 +183,26 @@ end)
 
 --
 
+local OldOnUseKlausKey
+local function OnUseKlausKey(inst, key, doer, ...)
+	local success, fail_msg, consumed
+	if OldOnUseKlausKey then
+		success, fail_msg, consumed = OldOnUseKlausKey(inst, key, doer, ...)
+	end
+	
+	if success then
+		TheWorld:PushEvent("ms_respawnthronegifts", sack)
+	end
+end
+
 ENV.AddPrefabPostInit("klaus_sack", function(inst)
 	inst:AddTag("polarthrone_emptier")
+	
+	if not TheWorld.ismastersim then
+		return
+	end
+	
+	if inst.components.klaussacklock then
+		inst.components.klaussacklock:SetOnUseKey(onuseklauskey)
+	end
 end)
