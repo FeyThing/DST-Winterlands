@@ -11,6 +11,7 @@ local actionhandlers = {
 	ActionHandler(ACTIONS.TAKEITEM, "pickup"),
 	ActionHandler(ACTIONS.UNPIN, "pickup"),
 	ActionHandler(ACTIONS.POLARPLOW, "use_tool"),
+	ActionHandler(ACTIONS.GIVE, "give")
 }
 
 local events = {
@@ -307,6 +308,27 @@ local states = {
 		
 		timeline = {
 			TimeEvent(10 * FRAMES, function(inst)
+				inst:PerformBufferedAction()
+			end),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	State{
+		name = "give",
+		tags = {"busy"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("pig_take")
+			inst.Physics:Stop()
+		end,
+		
+		timeline = {
+			TimeEvent(13 * FRAMES, function(inst)
 				inst:PerformBufferedAction()
 			end),
 		},

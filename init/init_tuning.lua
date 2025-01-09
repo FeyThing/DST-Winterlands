@@ -111,7 +111,34 @@ local night_time = seg_time * night_segs
 	TUNING.POLARBEAR_PLOWTIME = seg_time * 2
 	TUNING.POLARBEAR_BLIZZARD_WARNTIME = total_day_time
 	TUNING.POLARBEAR_PROTECTSTUFF_RANGE = 8
-	
+
+	TUNING.POLARBEAR_TREASURES = {
+		houndstooth = {
+			spoiled_fish_small = 2,
+			fishmeat_small = 2,
+			fishmeat = 1
+		},
+		walrus_tusk = {
+			spoiled_fish_small = 1,
+			fishmeat_small = 2,
+			fishmeat = 3,
+			oceanfish_medium_polar1_inv = 3,
+			polarmoosehat = 0.5
+		},
+		gnarwail_horn = {
+			fishmeat_small = 1,
+			fishmeat = 2,
+			oceanfish_medium_polar1_inv = 3,
+			polarmoosehat = 0.5
+		},
+		polarwargstooth = {
+			fishmeat_small = 1,
+			fishmeat = 1,
+			oceanfish_medium_polar1_inv = 3,
+			polarmoosehat = 0.55
+		}
+	}
+
 	TUNING.POLARBEAR_LOYALTY_PER_HUNGER = TUNING.PIG_LOYALTY_PER_HUNGER / 2
 	TUNING.POLARBEAR_LOYALTY_MAXTIME = TUNING.PIG_LOYALTY_MAXTIME / 2
 	

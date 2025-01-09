@@ -80,6 +80,27 @@ local function IsAbleToAccept(inst, item, giver)
 	end
 end
 
+local function GetReward(item)
+	local loot_table = TUNING.POLARBEAR_TREASURES[item.prefab]
+	local weightsum = 0
+
+	for _, weight in pairs(loot_table) do
+		weightsum = weightsum + weight
+	end
+
+	local rnd = math.random() * weightsum
+	for prefab, weight in pairs(loot_table) do
+		rnd = rnd - weight
+		if rnd <= 0 then
+			return prefab
+		end
+	end
+end
+
+local function IsBearTreasure(item)
+	return TUNING.POLARBEAR_TREASURES[item.prefab] ~= nil
+end
+
 local function ShouldAcceptItem(inst, item, giver)
 	if item.components.equippable and item.components.equippable.equipslot == EQUIPSLOTS.HEAD then
 		return true
@@ -94,6 +115,8 @@ local function ShouldAcceptItem(inst, item, giver)
 			return (last_eat_time == nil or last_eat_time >= TUNING.PIG_MIN_POOP_PERIOD) and (inst.components.inventory == nil or not inst.components.inventory:Has(item.prefab, 1))
 		end
 		
+		return true
+	elseif IsBearTreasure(item) then
 		return true
 	end
 end
@@ -132,6 +155,13 @@ local function OnGetItemFromPlayer(inst, giver, item)
 		
 		inst.components.inventory:Equip(item)
 		inst.AnimState:Show("hat")
+	end
+
+	if IsBearTreasure(item) then
+		local reward_prefab = GetReward(item) -- [TODO] Give different rewards based on treasure
+		local reward = SpawnPrefab(reward_prefab)
+		local action = BufferedAction(inst, giver, ACTIONS.GIVE, reward)
+		inst.components.locomotor:PushAction(action, true)
 	end
 end
 
