@@ -66,7 +66,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARWARG = "Puppy got new coat?"
 	
 --	Buildings
-
+	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Is bowl to fill with fire.",
+		ON = "Bowl of light and heat.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Made it tiny!"
 	DESCRIBE.POLAR_THRONE = "Is sit for big butt."
 	DESCRIBE.POLAR_THRONE_GIFTS = "If Wolfgang can lift, Wolfgang can take!"
 	DESCRIBE.POLARAMULET_STATION = {

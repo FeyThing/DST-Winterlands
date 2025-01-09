@@ -45,6 +45,8 @@ local POLAR_SCRAPBOOK = {
 	polar_brazier = {type = "thing", workable = "HAMMER", fueledmax = 270, fueledrate = 1, fueledtype1 = "BURNABLE", burnable = true, build = "polar_brazier", bank = "polar_brazier", anim = "idle", overridesymbol = {"swap_fire", "campfire_fire", "flames_wide"}, specialinfo = "POLAR_BRAZIER"},
 	polar_icicle = {type = "thing", damage = 300, build = "icicle_roof", bank = "icicle_roof", anim = "idle_med", deps = {"polar_icicle_rock", "winter_ornament_polar_icicle_blue", "winter_ornament_polar_icicle_white"}},
 	polar_icicle_rock = {type = "thing", damage = 300, workable = "MINE", build = "icicle_rock", bank = "icicle_rock", anim = "med", deps = {"ice"}},
+	polar_throne = {type = "POI", build = "polar_throne", bank = "polar_throne", anim = "idle", deps = {"polar_throne_gifts"}, scale = 1.5, animoffsetx = 40, animoffsety = -20, specialinfo = "POLAR_THRONE"},
+	polar_throne_gifts = {type = "thing", burnable = true, build = "polar_throne_gifts", bank = "polar_throne_gifts", anim = "idle1", deps = {"krampus"}, specialinfo = "POLAR_THRONE_GIFTS"},
 	polaramulet_station = {type = "POI", build = "polar_amulet_station", bank = "polar_amulet_station", anim = "opened", scale = 1.3, deps = {"polaramulet"}, specialinfo = "POLARAMULET_STATION"},
 	polarbearhouse = {type = "thing", subcat = "structure", workable = "HAMMER", burnable = true, build = "polarbearhouse", bank = "polarbearhouse", anim = "idle", deps = {"boards", "polar_brazier", "polar_dryice", "polarbear", "polarbearfur"}},
 	polarice_plow = {type = "thing", workable = "HAMMER", burnable = true, build = "polarice_plow", bank = "polarice_plow", anim = "idle_place", animoffsety = -80, deps = {"polarice_plow_item"}, specialinfo = "POLARICEPLOW"},

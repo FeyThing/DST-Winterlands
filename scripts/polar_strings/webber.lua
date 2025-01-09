@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Is it on? We can't see from down here!",
+		ON = "Aaah, we needed this!",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Anywhere can be home."
 	DESCRIBE.POLAR_THRONE = "It's quite the climb."
 	DESCRIBE.POLAR_THRONE_GIFTS = "For... -W. That gotta be us!"
 	DESCRIBE.POLARAMULET_STATION = {

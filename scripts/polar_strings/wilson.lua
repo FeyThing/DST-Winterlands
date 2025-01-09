@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "A pocket sized firepit.",
+		ON = "Too hot to go in my pockets now. But some ice could help.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Science says everything is better when portable."
 	DESCRIBE.POLAR_THRONE = "Looks comfy."
 	DESCRIBE.POLAR_THRONE_GIFTS = "Is that my name? I can't tell with that clawwriting."
 	DESCRIBE.POLARAMULET_STATION = {

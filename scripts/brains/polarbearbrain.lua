@@ -195,8 +195,13 @@ end
 
 local function GetCombatLines(inst)
 	local target = inst.components.combat and inst.components.combat.target
-	if not inst.enraged and target and (target:HasTag("fish") or target:HasTag("merm") or target:HasTag("shark")) then
-		return STRINGS.POLARBEAR_FISHFIGHT[math.random(#STRINGS.POLARBEAR_FISHFIGHT)]
+	
+	if target then
+		if target.components.timer and target.components.timer:TimerExists("stealing_bear_stuff") then
+			return STRINGS.POLARBEAR_PROTECTSTUFF[math.random(#STRINGS.POLARBEAR_PROTECTSTUFF)]
+		elseif not inst.enraged and (target:HasTag("fish") or target:HasTag("merm") or target:HasTag("shark")) then
+			return STRINGS.POLARBEAR_FISHFIGHT[math.random(#STRINGS.POLARBEAR_FISHFIGHT)]
+		end
 	end
 	
 	return STRINGS.POLARBEAR_FIGHT[math.random(#STRINGS.POLARBEAR_FIGHT)]

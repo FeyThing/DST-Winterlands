@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Could use some twigs.",
+		ON = "Et voilà!",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "A good addition to my portable kitchen."
 	DESCRIBE.POLAR_THRONE = "I won't sit at a throne without table."
 	DESCRIBE.POLAR_THRONE_GIFTS = "I mean... I've been nice this year, non?"
 	DESCRIBE.POLARAMULET_STATION = {

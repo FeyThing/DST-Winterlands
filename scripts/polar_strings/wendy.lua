@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "The flame has long since gone out.",
+		ON = "Fire in a basket.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "It won't provide me much warmth in this state."
 	DESCRIBE.POLAR_THRONE = "I could sit here and freeze to death."
 	DESCRIBE.POLAR_THRONE_GIFTS = "How tempting. Maybe I'll open just one."
 	DESCRIBE.POLARAMULET_STATION = {

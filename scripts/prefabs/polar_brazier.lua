@@ -23,7 +23,14 @@ local function OnExtinguish(inst)
 	end
 end
 
-local function OnTakeFuel(inst)
+local function OnTakeFuel(inst, fuelvalue)
+	if fuelvalue >= TUNING.MED_FUEL * (inst.components.fueled.bonusmult or 1) then
+		inst.AnimState:PlayAnimation("fuel")
+		inst.AnimState:PushAnimation("idle", true)
+		if not inst.no_teeth then
+			inst.SoundEmitter:PlaySound("polarsounds/brazier/teeth")
+		end
+	end
 	inst.SoundEmitter:PlaySound("dontstarve/common/fireAddFuel")
 end
 
@@ -50,6 +57,13 @@ local function OnFuelChange(newsection, oldsection, inst, doer)
 	end
 end
 
+local function GetStatus(inst)
+	return not (inst.components.fueled and inst.components.fueled:IsEmpty()) and "ON" or nil
+end
+
+local BEAR_TAGS = {"bear"}
+local BEAR_NOT_TAGS = {"INLIMBO", "sleeping"}
+
 local function ChangeToItem(inst)
 	inst:RemoveComponent("portablestructure")
 	inst:RemoveComponent("workable")
@@ -60,13 +74,37 @@ local function ChangeToItem(inst)
 	item.Transform:SetPosition(inst.Transform:GetWorldPosition())
 	item.AnimState:PlayAnimation("disassemble")
 	item.AnimState:PushAnimation("idle_item")
-	item.SoundEmitter:PlaySound("dontstarve/characters/walter/tent/close")
+	item.SoundEmitter:PlaySound("polarsounds/brazier/drop")
 	
 	item.house_paint = inst.house_paint
 	item.no_teeth = inst.no_teeth
 end
 
+local function ProtectFromThief(inst, thief)
+	if thief and thief.components.combat and not inst.no_teeth then
+		local bear = FindEntity(inst, TUNING.POLARBEAR_PROTECTSTUFF_RANGE, function(guy)
+			return guy.components.health and not guy.components.health:IsDead() and guy.components.homeseeker and guy.components.homeseeker.home ~= nil
+				and guy.components.combat and guy.components.combat.target == nil and guy.components.combat:CanTarget(thief)
+				and not (guy.components.follower and guy.components.follower.leader)
+				
+		end, BEAR_TAGS, BEAR_NOT_TAGS)
+		
+		if bear and bear.sg then
+			if thief.components.timer and not thief.components.timer:TimerExists("stealing_bear_stuff") then
+				thief.components.timer:StartTimer("stealing_bear_stuff", 2)
+			end
+			bear.components.combat:SuggestTarget(thief)
+			bear.sg:GoToState("abandon", thief)
+		end
+	end
+end
+
 local function OnDismantle(inst, doer)
+	if not inst.no_teeth then
+		inst.SoundEmitter:PlaySound("polarsounds/brazier/teeth")
+	end
+	
+	ProtectFromThief(inst, doer)
 	ChangeToItem(inst)
 	inst:Remove()
 end
@@ -76,15 +114,21 @@ local function OnHammered(inst, worker)
 		inst.components.burnable:Extinguish()
 	end
 	
-	local fx = SpawnPrefab("collapse_big")
-	fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
-	fx:SetMaterial("stone")
+	--local fx = SpawnPrefab("collapse_big")
+	--fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
+	--fx:SetMaterial("stone")
 	
-	inst.components.lootdropper:DropLoot()
+	--inst.components.lootdropper:DropLoot()
+	ChangeToItem(inst)
 	inst:Remove()
 end
 
 local function OnHit(inst, worker)
+	if not inst.no_teeth then
+		inst.SoundEmitter:PlaySound("polarsounds/brazier/teeth")
+	end
+	
+	ProtectFromThief(inst, worker)
 	inst.AnimState:PlayAnimation("hit")
 	inst.AnimState:PushAnimation("idle", true)
 end
@@ -93,6 +137,12 @@ local function OnHaunt(inst, haunter)
 	if math.random() <= TUNING.HAUNT_CHANCE_RARE and inst.components.fueled then
 		inst.components.fueled:DoDelta(TUNING.MED_FUEL)
 		inst.components.hauntable.hauntvalue = TUNING.HAUNT_SMALL
+		
+		inst.AnimState:PlayAnimation("fuel")
+		inst.AnimState:PushAnimation("idle", true)
+		if not inst.no_teeth then
+			inst.SoundEmitter:PlaySound("polarsounds/brazier/teeth")
+		end
 		
 		return true
 	end
@@ -130,6 +180,27 @@ local function OnLoad(inst, data)
 	if data then
 		inst.stage = data.stage
 		inst.no_teeth = data.no_teeth
+	end
+end
+
+local function SetPolarstormRate(inst)
+	if inst.components.fueled then
+		if TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+			inst.components.fueled.rate_modifiers:SetModifier(inst, inst.polarstorm_fuelmod or 1, "polarstorm")
+		else
+			inst.components.fueled.rate_modifiers:RemoveModifier(inst, "polarstorm")
+		end
+	end
+end
+
+local function OnPolarstormChanged(inst, active)
+	if active then
+		if inst._update_polarstorm_rate == nil then
+			inst._update_polarstorm_rate = inst:DoPeriodicTask(1, SetPolarstormRate)
+		end
+	elseif inst._update_polarstorm_rate then
+		inst._update_polarstorm_rate:Cancel()
+		inst._update_polarstorm_rate = nil
 	end
 end
 
@@ -182,6 +253,7 @@ local function fn()
 	inst.components.fueled:SetSectionCallback(OnFuelChange)
 	
 	inst:AddComponent("inspectable")
+	inst.components.inspectable.getstatus = GetStatus
 	
 	inst:AddComponent("lootdropper")
 	
@@ -206,6 +278,18 @@ local function fn()
 	
 	inst:DoTaskInTime(0, OnInit)
 	
+	inst.polarstorm_fuelmod = TUNING.POLAR_STORM_FUELEDMULT.FIREPIT
+	inst.onpolarstormchanged = function(src, data)
+		if data and data.stormtype == STORM_TYPES.POLARSTORM then
+			OnPolarstormChanged(inst, data.setting)
+		end
+	end
+	
+	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
+	if TheWorld.components.polarstorm then
+		OnPolarstormChanged(inst, TheWorld.components.polarstorm:IsPolarStormActive())
+	end
+	
 	return inst
 end
 
@@ -222,7 +306,13 @@ local function OnDeploy(inst, pt, deployer)
 		
 		brazier.AnimState:PlayAnimation("place")
 		brazier.AnimState:PushAnimation("idle", true)
-		brazier.SoundEmitter:PlaySound("dontstarve/characters/walter/tent/open")
+		brazier.SoundEmitter:PlaySound("polarsounds/brazier/place")
+		
+		brazier:DoTaskInTime(0.6, function()
+			if not brazier.no_teeth then
+				brazier.SoundEmitter:PlaySound("polarsounds/brazier/teeth")
+			end
+		end)
 		
 		inst:Remove()
 		PreventCharacterCollisionsWithPlacedObjects(brazier)

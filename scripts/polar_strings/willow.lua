@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Transportable the day. Ablaze at night!",
+		ON = "Yesss! Burn! Burn again!",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Okay, this is pure genius right here!"
 	DESCRIBE.POLAR_THRONE = "I only know one guy who would waste his time sitting here. Actually, two."
 	DESCRIBE.POLAR_THRONE_GIFTS = "Yeah. I doubt any of this is mine."
 	DESCRIBE.POLARAMULET_STATION = {

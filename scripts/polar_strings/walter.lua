@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "A portable pit for fire.",
+		ON = "Uh... did anyone bring the portable marshmallow sack?",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "One day Woby, you will transport a whole base!"
 	DESCRIBE.POLAR_THRONE = "Doesn't it get boring after a while, Mr. Maxwell?"
 	DESCRIBE.POLAR_THRONE_GIFTS = "Maybe they're lost."
 	DESCRIBE.POLARAMULET_STATION = {

@@ -92,6 +92,20 @@ local function OnHit(inst, worker)
 	if not inst:HasTag("burnt") then
 		inst.AnimState:PlayAnimation("hit")
 		inst.AnimState:PushAnimation("idle")
+		
+		local child = inst.components.spawner and inst.components.spawner.child
+		local prot_range = TUNING.POLARBEAR_PROTECTSTUFF_RANGE
+		
+		if worker and worker.components.combat and child and child.components.combat and child.components.combat.target == nil and child.components.combat:CanTarget(worker)
+			and child.components.health and not child.components.health:IsDead() and child.sg and child:IsNear(inst, prot_range * prot_range)
+			and not (child.components.follower and child.components.follower.leader) and not (child:HasTag("INLIMBO") or child:HasTag("sleeping")) then
+			
+			if worker.components.timer and not worker.components.timer:TimerExists("stealing_bear_stuff") then
+				worker.components.timer:StartTimer("stealing_bear_stuff", 2)
+			end
+			child.components.combat:SuggestTarget(worker)
+			child.sg:GoToState("abandon", worker)
+		end
 	end
 end
 

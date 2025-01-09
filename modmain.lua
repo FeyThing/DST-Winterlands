@@ -98,6 +98,7 @@ local components = {
 	"slipperyfeet",
 	"snowballmelting",
 	"stormwatcher",
+	"teamleader",
 	"temperature",
 	"wavemanager",
 	"weather",

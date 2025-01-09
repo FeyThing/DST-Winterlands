@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Just needs some kindling.",
+		ON = "Steady now...",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Isn't that nice, eh?"
 	DESCRIBE.POLAR_THRONE = "Is that made of... charcoal?"
 	DESCRIBE.POLAR_THRONE_GIFTS = "Seems we behaved quite well."
 	DESCRIBE.POLARAMULET_STATION = {

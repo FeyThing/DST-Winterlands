@@ -67,8 +67,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "A rocky basket to hold the flame.",
+		ON = "I summon thee, O roaring flame!",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "A secured fire waiting to be."
 	DESCRIBE.POLAR_THRONE = "The sit of an ice giant."
-	DESCRIBE.POLAR_THRONE_GIFTS = "'Tis smell like a trap."
+	DESCRIBE.POLAR_THRONE_GIFTS = "'Tis smells like a trap."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "A most intriguing hall of trade.",
 		OPEN = "Those wares gleam with the promise of battle's aid.",

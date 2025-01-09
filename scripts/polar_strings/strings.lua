@@ -17,8 +17,6 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.ROCK_POLAR = "Ice Protuberance"
 	
 	--	Misc
-	NAMES.POLAR_THRONE = "Naughty Throne"
-	NAMES.POLAR_THRONE_GIFTS = "Gift Pile"
 	NAMES.POLARSNOW_MATERIAL = "In High Snow"
 	NAMES.IN_POLARSNOW = "Snow?"
 	NAMES.TUMBLEWEED_POLAR = "Tumblewind"
@@ -40,6 +38,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 
 	NAMES.POLAR_BRAZIER = "Brazier"
 	NAMES.POLAR_BRAZIER_ITEM = "Brazier"
+	NAMES.POLAR_THRONE = "Naughty Throne"
+	NAMES.POLAR_THRONE_GIFTS = "Gift Pile"
 	NAMES.POLARAMULET_STATION = "\"The Polar Exchange\""
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
 	NAMES.POLARICE_PLOW = "Ice Demoleisher"
@@ -183,6 +183,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARBEAR_PANICHAUNT = {"ACK!", "EEP!", "POSSESSED SNOW!", "OH HO OOOOO"}
 	STRINGS.POLARBEAR_PANICFIRE = {"FIIIREEE!", "NOT COOL! NOT COOL!", "MELTING!", "AAAAAA", "OH HO HO NOOO"}
 	STRINGS.POLARBEAR_PANICHOUSEFIRE = {"OH NO NO NO!", "ANYBODY COOKING FISH?", "HOME MELTING!", "HOME TOO HOT!"}
+	STRINGS.POLARBEAR_PROTECTSTUFF = {"NOT WITHOUT A FIGHT", "STOP RIGHT HERE!", "EH? DON'T TOUCH", "SCRAM, THIEF", "OH HO HO, YOU!"}
 	STRINGS.POLARBEAR_RESCUE = {"NEED A PAW?", "COMING, COMING!", "HO HO!"}
 	
 	STRINGS.POLARAMULET_STATION_WAITING = {
@@ -244,6 +245,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICICLESTAFF = "Creates a salvo of 15 Icicles.\n\nNote to self: Keep clear from the area."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_BRAZIER = "Makes light and heat while fueled and can be used to cook food.\n\nIt can be reused and even dismantled back into an inventory item when extinguished."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_THRONE = "Someone or something is often leaving presents here, although they seem to be moved elsewhere at times."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_THRONE_GIFTS = "Free gifts!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."

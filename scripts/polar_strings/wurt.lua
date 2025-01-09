@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Toss wood in it.",
+		ON = "It a bit tall but still feel warm.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Stole it from Bearfolk!"
 	DESCRIBE.POLAR_THRONE = "Can make better one with own two claws."
 	DESCRIBE.POLAR_THRONE_GIFTS = "Mine! It all mine!!"
 	DESCRIBE.POLARAMULET_STATION = {

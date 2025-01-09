@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "I won't lie, I like braziers.",
+		ON = "Tribal. However it works well.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "I'm starting to feel like a pack mule here."
 	DESCRIBE.POLAR_THRONE = "So that's how it looks from down here?"
 	DESCRIBE.POLAR_THRONE_GIFTS = "What game is it playing this time?"
 	DESCRIBE.POLARAMULET_STATION = {

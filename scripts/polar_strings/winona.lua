@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Light the fire!",
+		ON = "The design looks familiar... must be my imagination.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "A handy light source."
 	DESCRIBE.POLAR_THRONE = "A display of power and laziness."
 	DESCRIBE.POLAR_THRONE_GIFTS = "The lil' helpers have been keeping them clean."
 	DESCRIBE.POLARAMULET_STATION = {

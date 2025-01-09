@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "It needs fuel.",
+		ON = "A warm, secure flame.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "A rather basic portative fire container. Although I didn't think of it first."
 	DESCRIBE.POLAR_THRONE = "Whoever sits here has been long absent."
 	DESCRIBE.POLAR_THRONE_GIFTS = "I'm surprised they're not covered in snow yet."
 	DESCRIBE.POLARAMULET_STATION = {

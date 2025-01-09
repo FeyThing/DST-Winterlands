@@ -67,6 +67,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Mortals should have thought of this earlier! Hyuyu!",
+		ON = "Ward off the chill, dear flame.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "This should keep me warm wherever I roam."
 	DESCRIBE.POLAR_THRONE = "He doesn't use it much these days."
 	DESCRIBE.POLAR_THRONE_GIFTS = "Yes, yes, those are free gifts!"
 	DESCRIBE.POLARAMULET_STATION = {

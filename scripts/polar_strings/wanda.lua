@@ -67,8 +67,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "Right, right. It needs fuel.",
+		ON = "If it crackles, it works.",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "Oooh! It will never cease to amaze me."
 	DESCRIBE.POLAR_THRONE = "I don't like doing what I can't do faster. And I can't sit faster."
-	DESCRIBE.POLAR_THRONE_GIFTS = "Are we doing this again? Fine..."
+	DESCRIBE.POLAR_THRONE_GIFTS = "I'm not falling for this trick, again."
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "Why would anyone want to live here of all places?",
 		OPEN = "Do as you wish, but I like my workshop with less... shadows.",
