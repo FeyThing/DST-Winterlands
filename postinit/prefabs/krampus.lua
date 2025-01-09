@@ -191,7 +191,7 @@ local function OnUseKlausKey(inst, key, doer, ...)
 	end
 	
 	if success then
-		TheWorld:PushEvent("ms_respawnthronegifts", sack)
+		TheWorld:PushEvent("ms_respawnthronegifts", inst)
 	end
 end
 
