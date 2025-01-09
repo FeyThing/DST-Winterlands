@@ -203,6 +203,9 @@ ENV.AddPrefabPostInit("klaus_sack", function(inst)
 	end
 	
 	if inst.components.klaussacklock then
-		inst.components.klaussacklock:SetOnUseKey(onuseklauskey)
+		if OldOnUseKlausKey == nil then
+			OldOnUseKlausKey = inst.components.klaussacklock.onusekeyfn
+		end
+		inst.components.klaussacklock:SetOnUseKey(OnUseKlausKey)
 	end
 end)
