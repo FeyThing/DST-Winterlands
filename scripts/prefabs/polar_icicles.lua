@@ -19,12 +19,14 @@ local function DoBreak(inst)
 	local pt = inst:GetPosition()
 	
 	if inst.AnimState:IsCurrentAnimation("fall_"..anim) then
-		inst.AnimState:PlayAnimation("fx_"..anim, false)
-		inst.SoundEmitter:PlaySound("dontstarve/creatures/together/antlion/sfx/glass_break")
+		local ploof = not TheWorld.Map:IsPassableAtPoint(pt.x, 0, pt.z)
 		
 		if FindEntity(inst, 4, nil, BREAK_SAFETY_TAGS) then
 			inst.SoundEmitter:PlaySound("dontstarve/common/staff_dissassemble")
 			return
+		elseif not ploof then
+			inst.AnimState:PlayAnimation("fx_"..anim, false)
+			inst.SoundEmitter:PlaySound("dontstarve/creatures/together/antlion/sfx/glass_break")
 		end
 		
 		local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, 4, nil, BREAK_IGNORE_TAGS)
@@ -74,8 +76,10 @@ local function DoBreak(inst)
 			end
 		end
 		
-		if not TheWorld.Map:IsPassableAtPoint(pt.x, 0, pt.z) then
+		if ploof then
 			SpawnPrefab("splash_sink").Transform:SetPosition(pt.x, 0, pt.z)
+			inst:Remove()
+			
 			return
 		end
 		

@@ -1,3 +1,4 @@
+require "behaviours/attackwall"
 require "behaviours/chaseandattack"
 require "behaviours/panic"
 require "behaviours/runaway"
@@ -22,6 +23,7 @@ function Krampus_ThroneBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
 		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST),
+		AttackWall(self.inst),
 		Wander(self.inst, function() return self.inst.components.knownlocations:GetLocation("polarthrone") end, MAX_WANDER_DIST),
 	}, 0.25)
 	

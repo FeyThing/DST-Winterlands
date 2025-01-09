@@ -32,6 +32,7 @@ Assets = {
 	
 	-- Anims / Builds
 	Asset("ANIM", "anim/krampus_polar.zip"),
+	Asset("ANIM", "anim/krampus_throne_anims.zip"),
 	Asset("ANIM", "anim/player_polarcast.zip"),
 	Asset("ANIM", "anim/polar_snow.zip"),
 	

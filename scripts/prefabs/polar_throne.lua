@@ -69,20 +69,24 @@ local function DespawnGifts(inst, sack)
 end
 
 local function ReleaseKrampi(inst, opened_gift, player)
+	local added_time = 0 - (TUNING.THRONE_KRAMPUS_STAY_ADD_TIME * 3) -- Add some more time
+	
 	for gift, v in pairs(inst.throne_gifts) do
 		gift._throne_activated = true
 		
 		if gift ~= opened_gift and gift:IsValid() then
+			added_time = added_time + TUNING.THRONE_KRAMPUS_STAY_ADD_TIME
 			if gift.components.unwrappable then
 				gift.components.unwrappable.canbeunwrapped = false
 			end
 			
 			if gift.ReleaseKrampus then
-				gift:DoTaskInTime(math.random() * 2, gift.ReleaseKrampus, player)
+				gift:DoTaskInTime(1.5 + math.random() * 2, gift.ReleaseKrampus, player, opened_gift)
 			end
 		end
 	end
 	
+	inst._krampus_stay_addedtime = added_time > 0 and added_time or nil
 	inst.waiting_for_next_sack = true
 end
 
@@ -116,6 +120,7 @@ local function OnLoadPostPass(inst, newents, savedata)
 		if savedata.sack_id and newents[savedata.sack_id] then
 			inst.waiting_for_sack = newents[savedata.sack_id].entity
 			
+			inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld)
 			inst:ListenForEvent("onremove", inst._onsackremoved, inst.waiting_for_sack)
 		end
 		
@@ -135,19 +140,22 @@ end
 --
 
 local function OnSackSpawned(inst, sack)
-	if sack and inst.waiting_for_sack == nil then
+	if sack and not inst.waiting_for_sack then
 		inst.waiting_for_sack = sack
-		inst.waiting_for_next_sack = nil
 		
 		inst:DespawnGifts(sack)
-		inst:ListenForEvent("onremove", inst._onsackremoved, sack)
+		inst:ListenForEvent("onremove", inst._onsackremoved, sack) -- When removed (end of season or whatever) ... only respawn gifts if they weren't used
+		inst:ListenForEvent("ms_respawnthronegifts", inst._onsackopened, TheWorld) -- When opened with stash key, just respawn gifts
 	end
 end
 
-local function OnSackRemoved(inst, sack)
+local function OnSackRemoved(inst, sack, despawned)
 	if sack then
-		inst:SpawnGifts(sack)
+		if not despawned or (despawned and not inst.waiting_for_next_sack) then
+			inst:SpawnGifts(sack)
+		end
 		inst:RemoveEventCallback("onremove", inst._onsackremoved, sack)
+		inst:RemoveEventCallback("ms_respawnthronegifts", inst._onsackopened, TheWorld)
 		
 		inst.waiting_for_sack = nil
 	end
@@ -158,7 +166,7 @@ local function OnInit(inst)
 	
 	if sack then
 		inst._onsackspawned(nil, sack)
-	elseif inst.waiting_for_sack == nil then
+	elseif not inst.waiting_for_sack and not inst.waiting_for_next_sack then
 		inst:SpawnGifts()
 	end
 end
@@ -219,8 +227,11 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass
 	
-	inst._onsackremoved = function(sack)
+	inst._onsackopened = function(src, sack)
 		OnSackRemoved(inst, sack)
+	end
+	inst._onsackremoved = function(sack)
+		OnSackRemoved(inst, sack, true)
 	end
 	inst._onsackspawned = function(src, sack)
 		OnSackSpawned(inst, sack)
@@ -256,6 +267,16 @@ local function DoGiftFade(inst, doanim, doer, skip)
 	ErodeAway(inst)
 end
 
+local function Enjoy(doer)
+	if doer.components.talker and doer.sg then
+		doer.components.talker:Say(GetString(doer, "ANNOUNCE_THRONE_GIFT_TAKEN"))
+		
+		if doer.components.combat and GetTime() - (doer.components.combat.lastwasattackedtime or 0) > 10 then
+			doer.sg:GoToState("emote", {anim = "research", randomanim = false, mounted = true})
+		end
+	end
+end
+
 local function OnWrapped(inst, num, doer)
 	
 end
@@ -270,6 +291,10 @@ local function OnUnwrapped(inst, pos, doer)
 			
 			inst.SoundEmitter:PlaySound("dontstarve/common/together/packaged")
 		end
+	end
+	
+	if doer and doer:IsValid() then
+		doer:DoTaskInTime(0.25 + math.random(), Enjoy)
 	end
 	
 	inst:DoGiftFade(true, doer)
@@ -303,7 +328,19 @@ local function ReleaseKrampus(inst, player)
 	krampus.Transform:SetPosition(x, y, z)
 	
 	if krampus.sg then
-		krampus.sg:GoToState("taunt")
+		krampus.SoundEmitter:PlaySound("dontstarve/common/destroy_smoke")
+		
+		local rdm = math.random()
+		local state = (rdm <= 0.33 and "throne_gift_exit")
+			or (rdm <= 0.66 and "sleeping")
+			or "taunt"
+		
+		local sleep_time = TUNING.THRONE_KRAMPUS_SLEEP_TIME
+		if state == "sleeping" and krampus.components.sleeper and sleep_time > 0 then
+			krampus.components.sleeper:GoToSleep(sleep_time)
+			krampus.components.sleeper:WakeUp()
+		end
+		krampus.sg:GoToState(state)
 	end
 	
 	if inst.components.unwrappable and krampus.components.inventory then
@@ -355,7 +392,7 @@ local function gifts()
 	local color = 0.7 + math.random() * 0.3
 	inst.AnimState:SetMultColour(color, color, color, 1)
 	
-	local scale = 1 or -1
+	local scale = math.random() <= 0.5 and 1 or -1
 	inst.AnimState:SetScale(scale, 1)
 	
 	inst:AddComponent("inspectable")

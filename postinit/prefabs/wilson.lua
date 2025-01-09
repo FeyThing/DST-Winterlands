@@ -154,7 +154,7 @@ local function Woodie_Polar_SlowMult(inst, mult)
 end
 
 local function Woodie_Polar_Time(inst)
-	return inst:HasTag("wereplayer") and TUNING.WEREMODE_POLAR_SLOWTIME or nil
+	return inst:HasTag("wereplayer") and TUNING.WEREMODE_POLAR_SLOWTIME or 0
 end
 
 ENV.AddPrefabPostInit("woodie", function(inst)
