@@ -38,7 +38,7 @@ local function OnVacate(inst, child)
 			
 			local free_hat = math.random() < TUNING.POLARBEAR_HAT_CHANCE
 			if free_hat then
-				local ents = TheSim:FindEntities(x, y, z, 30, BEAR_TAGS)
+				local ents = TheSim:FindEntities(x, y, z, 50, BEAR_TAGS)
 				for i, v in ipairs(ents) do
 					local equipped_hat = v.components.inventory and v.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD) or nil
 					if equipped_hat and equipped_hat.prefab == "polarmoosehat" then

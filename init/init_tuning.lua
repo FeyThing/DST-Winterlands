@@ -71,8 +71,8 @@ local night_time = seg_time * night_segs
 --	Mobs
 	
 	TUNING.POLAR_MOOSE_HEALTH = 1000
-	TUNING.POLAR_MOOSE_DAMAGE = 50
-	TUNING.POLAR_MOOSE_DAMAGE_NOANTLER = 35
+	TUNING.POLAR_MOOSE_DAMAGE = 34
+	TUNING.POLAR_MOOSE_DAMAGE_NOANTLER = 17
 	TUNING.POLAR_MOOSE_ATTACK_PERIOD = 3
 	TUNING.POLAR_MOOSE_ATTACK_RANGE = 1.5
 	TUNING.POLAR_MOOSE_HIT_RANGE = 3
@@ -114,29 +114,32 @@ local night_time = seg_time * night_segs
 
 	TUNING.POLARBEAR_TREASURES = {
 		houndstooth = {
-			spoiled_fish_small = 2,
-			fishmeat_small = 2,
-			fishmeat = 1
+			spoiled_fish_small = 4,
+			fishmeat_small = 1,
 		},
 		walrus_tusk = {
-			spoiled_fish_small = 1,
-			fishmeat_small = 2,
-			fishmeat = 3,
-			oceanfish_medium_polar1_inv = 3,
+			spoiled_fish = 2,
+			fishmeat_small = 1,
+			oceanfish_medium_polar1_inv = 1,
 			polarmoosehat = 0.5
 		},
 		gnarwail_horn = {
-			fishmeat_small = 1,
 			fishmeat = 2,
 			oceanfish_medium_polar1_inv = 3,
-			polarmoosehat = 0.5
+			bluegem_shards = 0.5
 		},
 		polarwargstooth = {
 			fishmeat_small = 1,
-			fishmeat = 1,
-			oceanfish_medium_polar1_inv = 3,
-			polarmoosehat = 0.55
+			fishmeat = 3,
+			oceanfish_medium_polar1_inv = 1
+			-- This also gives Brazier Blueprint if not learned yet
 		}
+	}
+	TUNING.POLARBEAR_NUM_TREASURES = {
+		houndstooth = 1,
+		walrus_tusk = 3,
+		gnarwail_horn = 3,
+		polarwargstooth = 5
 	}
 
 	TUNING.POLARBEAR_LOYALTY_PER_HUNGER = TUNING.PIG_LOYALTY_PER_HUNGER / 2
@@ -197,6 +200,7 @@ local night_time = seg_time * night_segs
 	TUNING.THRONE_KRAMPUS_STAY_TIME_MIN = 45
 	TUNING.THRONE_KRAMPUS_STAY_TIME_MAX = 55
 	TUNING.THRONE_KRAMPUS_STAY_ADD_TIME = 7.5
+	TUNING.SPAWN_POLAR_THRONE = true
 	
 --  Bosses
 	

@@ -80,21 +80,83 @@ local function IsAbleToAccept(inst, item, giver)
 	end
 end
 
-local function GetReward(item)
-	local loot_table = TUNING.POLARBEAR_TREASURES[item.prefab]
-	local weightsum = 0
+local function DropTeethReward(inst, giver)
+	if inst._tooth_trade_loot == nil or #inst._tooth_trade_loot == 0 then
+		return
+	end
+	
+	local inventory = giver and giver.components.inventory
+	local x, y, z = inst.Transform:GetWorldPosition()
+	
+	for i, v in ipairs(inst._tooth_trade_loot) do
+		local reward = SpawnPrefab(v)
+		reward.Transform:SetPosition(x, y, z)
+		
+		if reward.components.inventoryitem then
+			if inventory and inventory:CanAcceptCount(reward) then
+				inventory:GiveItem(reward, nil, inst:GetPosition())
+			else
+				reward.components.inventoryitem:DoDropPhysics(x, y, z, true)
+			end
+		end
+	end
+	
+	local first_reward = inst._tooth_trade_reward
+	if giver == nil and first_reward and first_reward:IsValid() then
+		first_reward.Transform:SetPosition(x, y, z)
+		
+		if first_reward.components.inventoryitem then
+			first_reward.components.inventoryitem:DoDropPhysics(x, y, z, true)
+		end
+	elseif giver and inst.components.talker then
+		inst.components.talker:Say(STRINGS.POLARBEAR_TOOTHTRADE_PST[math.random(#STRINGS.POLARBEAR_TOOTHTRADE_PST)])
+	end
+	
+	inst._tooth_trade_giver = nil
+	inst._tooth_trade_loot = nil
+	inst._tooth_trade_reward = nil
+end
 
+local function GetTeethReward(inst, item, giver)
+	local loot = {}
+	local loot_table = deepcopy(TUNING.POLARBEAR_TREASURES[item.prefab])
+	local weightsum = 0
+	
+	if item.prefab == "polarwargstooth" and not inst.components.timer:TimerExists("gave_blueprint") and giver
+		and giver.components.builder and not giver.components.builder:KnowsRecipe("polar_brazier_item")  and giver.components.builder:CanLearn("polar_brazier_item") then
+
+		table.insert(loot, "polar_brazier_item_blueprint")
+		inst.components.timer:StartTimer("gave_blueprint", TUNING.TOTAL_DAY_TIME)
+	end
+	
 	for _, weight in pairs(loot_table) do
 		weightsum = weightsum + weight
 	end
-
-	local rnd = math.random() * weightsum
-	for prefab, weight in pairs(loot_table) do
-		rnd = rnd - weight
-		if rnd <= 0 then
-			return prefab
+	
+	local amt = TUNING.POLARBEAR_NUM_TREASURES[item.prefab] or 1
+	for i = 1, amt do
+		local rnd = math.random() * weightsum
+		
+		for prefab, weight in pairs(loot_table) do
+			rnd = rnd - weight
+			if rnd <= 0 then
+				table.insert(loot, prefab)
+				break
+			end
 		end
 	end
+	
+	if #loot > 0 and inst._snowfleas and #inst._snowfleas > 0 then
+		for i, v in ipairs(inst._snowfleas) do
+			if v:IsValid() then
+				table.insert(loot, "polarflea")
+				v:Remove()
+				break
+			end
+		end
+	end
+	
+	return loot
 end
 
 local function IsBearTreasure(item)
@@ -158,10 +220,22 @@ local function OnGetItemFromPlayer(inst, giver, item)
 	end
 
 	if IsBearTreasure(item) then
-		local reward_prefab = GetReward(item) -- [TODO] Give different rewards based on treasure
-		local reward = SpawnPrefab(reward_prefab)
-		local action = BufferedAction(inst, giver, ACTIONS.GIVE, reward)
-		inst.components.locomotor:PushAction(action, true)
+		if inst._tooth_trade_loot and #inst._tooth_trade_loot > 0 then
+			inst:DropTeethReward()
+		end
+		
+		local loot = inst:GetTeethReward(item, giver)
+		if #loot > 0 then
+			inst._tooth_trade_loot = loot
+			inst._tooth_trade_giver = giver
+			
+			if inst.components.talker then
+				inst.components.talker:Say(STRINGS.POLARBEAR_TOOTHTRADE_PRE[math.random(#STRINGS.POLARBEAR_TOOTHTRADE_PRE)])
+			end
+		end
+		
+		inst.sg:GoToState("tradetooth")
+		item:Remove()
 	end
 end
 
@@ -534,6 +608,8 @@ local function fn()
 	MakeHauntablePanic(inst)
 	
 	inst.DoGrowl = DoGrowl
+	inst.DropTeethReward = DropTeethReward
+	inst.GetTeethReward = GetTeethReward
 	inst.OnEntitySleep = OnEntitySleep
 	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave

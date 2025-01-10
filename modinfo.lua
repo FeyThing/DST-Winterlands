@@ -1,10 +1,10 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.0.21"
+version = "1.1.0"
 local info_version = "󰀔 [ Version "..version.." ]"
 
-description = info_version..[[ Freshly Released
+description = info_version..[[ Something Fishy
 
 
 󰀛 Set sails to a perilous frozen island -

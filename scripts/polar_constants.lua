@@ -54,6 +54,16 @@ for k, v in pairs(POLAR_NAUGHTY_VALUE) do
 	NAUGHTY_VALUE[k] = v
 end
 
+KRAMPUS_UGLY_SWEATERS = {
+	{}, 														-- white
+	{hue = 0.6, 	colormult = {0.8, 	0, 		0, 		1}}, 	-- red
+	{hue = 0.4, 	colormult = {0.4, 	0.5, 	0.8, 	1}}, 	-- blue
+	{hue = 0.35, 	colormult = {0.6, 	0.8, 	0.3, 	1}}, 	-- green
+	{hue = 0.2, 	colormult = {0.8, 	0.6, 	0.3, 	1}}, 	-- yellow
+	{hue = 0.85, 	colormult = {0.35, 	0.3, 	0.1, 	1}}, 	-- brown
+	{hue = 0.8, 	colormult = {0.8, 	0.4, 	0.7, 	1}}, 	-- pink
+}
+
 FUELTYPE.DRYICE = "DRYICE"
 
 MATERIALS.DRYICE = "dryice"

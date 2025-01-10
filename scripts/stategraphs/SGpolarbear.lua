@@ -6,12 +6,12 @@ local actionhandlers = {
 	ActionHandler(ACTIONS.DROP, "dropitem"),
 	ActionHandler(ACTIONS.EAT, "eat"),
 	ActionHandler(ACTIONS.EQUIP, "pickup"),
+	ActionHandler(ACTIONS.GIVE, "give"),
 	ActionHandler(ACTIONS.GOHOME, "gohome"),
 	ActionHandler(ACTIONS.PICKUP, "pickup"),
 	ActionHandler(ACTIONS.TAKEITEM, "pickup"),
 	ActionHandler(ACTIONS.UNPIN, "pickup"),
 	ActionHandler(ACTIONS.POLARPLOW, "use_tool"),
-	ActionHandler(ACTIONS.GIVE, "give")
 }
 
 local events = {
@@ -85,6 +85,31 @@ local states = {
 			if leader and leader:IsValid() then
 				inst:FacePoint(leader:GetPosition())
 			end
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
+		name = "tradetooth",
+		tags = {"busy", "toothtrading"},
+		
+		onenter = function(inst)
+			inst:SetEnraged(false)
+			if inst.components.timer then
+				if inst.components.timer:TimerExists("pause_chatty") then
+					inst.components.timer:SetTimeLeft("pause_chatty", 5)
+				else
+					inst.components.timer:StartTimer("pause_chatty", 5)
+				end
+			end
+			
+			inst.AnimState:PlayAnimation("bearadmire")
+			inst.Physics:Stop()
 		end,
 		
 		events = {
@@ -211,7 +236,7 @@ local states = {
 					end
 				end
 			end
-        end,
+		end,
 		
 		events = {
 			EventHandler("animover", function(inst)
@@ -298,27 +323,6 @@ local states = {
 	},
 	
 	State{
-		name = "dropitem",
-		tags = {"busy"},
-		
-		onenter = function(inst)
-			inst.AnimState:PlayAnimation("pig_pickup")
-			inst.Physics:Stop()
-		end,
-		
-		timeline = {
-			TimeEvent(10 * FRAMES, function(inst)
-				inst:PerformBufferedAction()
-			end),
-		},
-		
-		events = {
-			EventHandler("animover", function(inst)
-				inst.sg:GoToState("idle")
-			end),
-		},
-	},
-	State{
 		name = "give",
 		tags = {"busy"},
 		
@@ -329,6 +333,28 @@ local states = {
 		
 		timeline = {
 			TimeEvent(13 * FRAMES, function(inst)
+				inst:PerformBufferedAction()
+			end),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
+		name = "dropitem",
+		tags = {"busy"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("pig_pickup")
+			inst.Physics:Stop()
+		end,
+		
+		timeline = {
+			TimeEvent(10 * FRAMES, function(inst)
 				inst:PerformBufferedAction()
 			end),
 		},

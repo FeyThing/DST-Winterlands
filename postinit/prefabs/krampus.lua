@@ -103,30 +103,22 @@ end
 
 --
 
-local SACK_COLORS = {
-	{0.9, 	0.4, 	0.4, 	1}, -- red
-	{0.4, 	0.5, 	0.8, 	1}, -- blue
-	{0.6, 	0.8, 	0.3, 	1}, -- green
-	{0.8, 	0.6, 	0.3, 	1}, -- yellow
-	{0.6, 	0.5, 	0.3, 	1}, -- brown
-	{0.8, 	0.4, 	0.7, 	1}, -- pink
-	{1, 	1, 		1, 		1}, -- white
-}
-
-local function SetPolarSweater(inst, sweater_color)
-	local color = sweater_color or TheWorld.cur_krampus_throne_color or 1
-	inst.polar_sweater_color = color
+local function SetPolarSweater(inst, sweater_color, remove_sweater)
+	if inst.krampus_ugly_sweater then
+		inst.krampus_ugly_sweater:Remove()
+		inst.krampus_ugly_sweater = nil
+	end
+	if remove_sweater then
+		return
+	end
 	
-	local r, g, b, a = unpack(SACK_COLORS[color])
-	inst.AnimState:OverrideSymbol("krampus_neck", "krampus_polar", "krampus_neck")
-	inst.AnimState:OverrideSymbol("krampus_torso", "krampus_polar", "krampus_torso")
-	
-	inst.AnimState:SetSymbolMultColour("krampus_neck", r, g, b, a)
-	inst.AnimState:SetSymbolMultColour("krampus_torso", r, g, b, a)
-	--inst.AnimState:SetSymbolMultColour("krampus_bag", r, g, b, a)
-	
+	local color = sweater_color or TheWorld.cur_krampus_ugly_sweater or 1
 	local next_color = color + 1
-	TheWorld.cur_krampus_throne_color = next_color > #SACK_COLORS and 1 or next_color
+	TheWorld.cur_krampus_ugly_sweater = next_color > #KRAMPUS_UGLY_SWEATERS and 1 or next_color
+	
+	inst.krampus_ugly_sweater = SpawnPrefab("krampus_ugly_sweater")
+	inst.krampus_ugly_sweater:AttachToOwner(inst)
+	inst.krampus_ugly_sweater.sweater_id:set(color)
 end
 
 local OldOnSave
@@ -137,7 +129,7 @@ local function OnSave(inst, data, ...)
 	if inst:HasTag("thronekrampus") then
 		data.throne_combat = true
 	end
-	data.polar_sweater_color = inst.polar_sweater_color
+	data.krampus_ugly_sweater = inst.krampus_ugly_sweater
 end
 
 local OldOnLoad
@@ -146,8 +138,8 @@ local function OnLoad(inst, data, ...)
 		OldOnLoad(inst, data, ...)
 	end
 	if data then
-		if data.polar_sweater_color then
-			inst:SetPolarSweater(data.polar_sweater_color)
+		if data.krampus_ugly_sweater then
+			inst:SetPolarSweater(data.krampus_ugly_sweater)
 		end
 		if data.throne_combat then
 			inst:DoThroneCombat()

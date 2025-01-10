@@ -7,6 +7,7 @@ PrefabFiles = {
 	"frosty",
 	"grass_polar",
 	"icelettuce_spawner",
+	"krampus_ugly_sweater",
 	"moose_polar",
 	"moose_polar_antler",
 	"polar_amulet",

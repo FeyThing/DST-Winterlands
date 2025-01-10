@@ -168,6 +168,14 @@ local function OnAttacked(inst, data)
 end
 
 local function OnRemove(inst)
+	if inst._host and inst._host._snowfleas then
+		for i, v in ipairs(inst._host._snowfleas) do
+			if v == inst then
+				table.remove(inst._host._snowfleas, i)
+				break
+			end
+		end
+	end
 	if TheWorld._numfleas then
 		TheWorld._numfleas = TheWorld._numfleas - 1
 	end

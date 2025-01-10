@@ -58,10 +58,10 @@ local prefabs = {
 	"shovels",
 	"snowball_item",
 	"walrus",
-	"bear_treasures",
 	"wilson",
 	"wintersfeastcookedfoods",
 	
+	"bear_treasures",
 	"blizzard_fires",
 	"ents_onfreeze",
 	"polar_walking",

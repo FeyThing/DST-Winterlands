@@ -328,6 +328,11 @@ local function fn()
 	
 	MakeSnowCoveredPristine(inst)
 	
+	if not TheNet:IsDedicated() then
+		inst:AddComponent("pointofinterest")
+		inst.components.pointofinterest:SetHeight(300)
+	end
+	
 	inst.entity:SetPristine()
 	
 	if not TheWorld.ismastersim then

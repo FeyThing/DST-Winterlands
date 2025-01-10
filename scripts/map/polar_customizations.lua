@@ -2,6 +2,7 @@ local customizations = {
 --	WORLDSETTINGS
 --	moose_polar = 		{category = LEVELCATEGORY.SETTINGS},
 	polar_icicles = 	{category = LEVELCATEGORY.SETTINGS},
+	polar_throne = 		{category = LEVELCATEGORY.SETTINGS, desc = "yesno_descriptions"},
 	polarbears = 		{category = LEVELCATEGORY.SETTINGS},
 	polarfleas = 		{category = LEVELCATEGORY.SETTINGS},
 	polarfoxes = 		{category = LEVELCATEGORY.SETTINGS},
@@ -47,6 +48,14 @@ WSO.Pre.polar_icicles = function(difficulty)
 		--default = {POLAR_MAX_ICICLES = 6, POLAR_WORLD_MAXICICLES = 120},
 		many = 		{POLAR_MAX_ICICLES = 8},
 		always = 	{POLAR_MAX_ICICLES = 10},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
+end
+
+WSO.Pre.polar_throne = function(difficulty)
+	local tuning_vars = {
+		never = {SPAWN_POLAR_THRONE = false},
+		--default = {SPAWN_POLAR_THRONE = true},
 	}
 	OverrideTuningVariables(tuning_vars[difficulty])
 end

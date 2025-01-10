@@ -201,6 +201,11 @@ local function fn()
 	inst._snowblockrange = net_tinybyte(inst.GUID, "polar_throne._snowblockrange")
 	inst._snowblockrange:set(12)
 	
+	if not TheNet:IsDedicated() then
+		inst:AddComponent("pointofinterest")
+		inst.components.pointofinterest:SetHeight(270)
+	end
+	
 	inst.entity:SetPristine()
 	
 	if not TheWorld.ismastersim then
@@ -237,9 +242,12 @@ local function fn()
 		OnSackSpawned(inst, sack)
 	end
 	
-	inst._gifttask = inst:DoTaskInTime(1, OnInit)
-	
-	inst:ListenForEvent("ms_registerklaussack", inst._onsackspawned, TheWorld)
+	if not TUNING.SPAWN_POLAR_THRONE then
+		inst:RemoveFromScene()
+	else
+		inst._gifttask = inst:DoTaskInTime(1, OnInit)
+		inst:ListenForEvent("ms_registerklaussack", inst._onsackspawned, TheWorld)
+	end
 	
 	return inst
 end
@@ -331,7 +339,7 @@ local function ReleaseKrampus(inst, player)
 		krampus.SoundEmitter:PlaySound("dontstarve/common/destroy_smoke")
 		
 		local rdm = math.random()
-		local state = (rdm <= 0.33 and "throne_gift_exit")
+		local state = (rdm <= 0.33 and "idle")
 			or (rdm <= 0.66 and "sleeping")
 			or "taunt"
 		
@@ -410,6 +418,10 @@ local function gifts()
 	
 	inst.DoGiftFade = DoGiftFade
 	inst.ReleaseKrampus = ReleaseKrampus
+	
+	if not TUNING.SPAWN_POLAR_THRONE then
+		inst:RemoveFromScene()
+	end
 	
 	return inst
 end

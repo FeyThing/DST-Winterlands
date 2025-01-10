@@ -2,7 +2,6 @@ require "behaviours/attackwall"
 require "behaviours/chaseandattack"
 require "behaviours/panic"
 require "behaviours/runaway"
-require "behaviours/standstill"
 require "behaviours/wander"
 
 local BrainCommon = require("brains/braincommon")

@@ -60,6 +60,7 @@ return Class(function(self, inst)
 		for name, def in pairs(ICE_SURPRISE_RESULTS) do
 			local weight = def.weight and FunctionOrValue(def.weight, max_pt, max_rad) or 0
 			
+			-- TODO: Certain mobs should change weight based on world settings
 			if weight > 0 and (def.rad and FunctionOrValue(def.rad, max_pt, max_rad) or 0.5) <= max_rad then
 				if def.canspawnfn == nil or def.canspawnfn(max_pt, plow) then
 					result_candidates[name] = weight

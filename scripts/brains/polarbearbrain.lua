@@ -94,6 +94,41 @@ local function FindToothAction(inst)
 	return (target and BufferedAction(inst, target, ACTIONS.PICKUP)) or nil
 end
 
+local function DoToothTrade(inst)
+	local target = inst._tooth_trade_giver
+	if target == nil or inst.sg:HasStateTag("busy") then
+		return
+	end
+	
+	if inst._tooth_trade_loot and #inst._tooth_trade_loot > 0 and target:IsValid() then
+		if inst._tooth_trade_reward == nil then
+			inst._tooth_trade_reward = SpawnPrefab(inst._tooth_trade_loot[1])
+			table.remove(inst._tooth_trade_loot, 1)
+		end
+		
+		local action = BufferedAction(inst, target, ACTIONS.GIVE, inst._tooth_trade_reward)
+		inst._tooth_trade_queued = true
+		
+		local clear_trade_queued = function(inst, success)
+			if inst._tooth_trade_queued then
+				inst:DropTeethReward(success and target or nil)
+				inst._tooth_trade_queued = false
+			end
+		end
+		
+		action:AddSuccessAction(function()
+			clear_trade_queued(inst, true)
+		end)
+		inst:DoTaskInTime(5, clear_trade_queued)
+		
+		action:AddFailAction(function()
+			clear_trade_queued(inst, false)
+		end)
+		
+		inst.components.locomotor:PushAction(action, true)
+	end
+end
+
 --	Housin'
 
 local function HasValidHome(inst)
@@ -181,6 +216,10 @@ end
 --
 
 local function GetChatterLines(inst)
+	if inst.components.timer and inst.components.timer:TimerExists("pause_chatty") then
+		return
+	end
+	
 	local x, y, z = inst.Transform:GetWorldPosition()
 	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and TheWorld.components.polarstorm and not TheWorld.components.polarstorm:IsPolarStormActive() then
 		local time_before_storm = TheWorld.components.polarstorm:GetTimeLeft()
@@ -194,6 +233,9 @@ local function GetChatterLines(inst)
 end
 
 local function GetCombatLines(inst)
+	if inst.components.timer and inst.components.timer:TimerExists("pause_chatty") then
+		return
+	end
 	local target = inst.components.combat and inst.components.combat.target
 	
 	if target then
@@ -232,14 +274,18 @@ function PolarBearBrain:OnStart()
 			Panic(self.inst)),
 		EventNode(self.inst, "gohome",
 			ChattyNode(self.inst, "POLARBEAR_BLIZZARD",
-				DoAction(self.inst, GoHomeAction, "Go Home", true))),
+				DoAction(self.inst, GoHomeAction, "run home", true))),
 		ChattyNode(self.inst, "POLARBEAR_RESCUE",
 			WhileNode(function() return GetFrozenLeader(self.inst) end, "Leader Frozen",
 				DoAction(self.inst, RescueLeaderAction, "Rescue Leader", true))),
 		RunAway(self.inst, "icecrackfx", 5, 7),
 		
-		ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
-			FaceEntity(self.inst, GetTraderFn, KeepTraderFn)),
+		FailIfSuccessDecorator(ActionNode(function() DoToothTrade(self.inst) end, "Tooth Trade")),
+		FailIfSuccessDecorator(ConditionWaitNode(function() return not self.inst._tooth_trade_queued end, "Block While Doing Tooth Trade")),
+		
+		IfNode(function() return not self.inst.sg:HasStateTag("toothtrading") end, "Other Trade",
+			ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
+				FaceEntity(self.inst, GetTraderFn, KeepTraderFn))),
 		ChattyNode(self.inst, "POLARBEAR_FIND_TOOTH",
 			DoAction(self.inst, FindToothAction, nil, true)),
 		ChattyNode(self.inst, "POLARBEAR_FIND_FOOD",
