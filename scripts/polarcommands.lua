@@ -115,3 +115,9 @@ function c_addfleas(num, target)
 		flea:SetHost(target)
 	end
 end
+
+function c_icefishingsurprise(name)
+	if TheWorld.components.icefishingsurprise then
+		TheWorld.components.icefishingsurprise.debug_surprise = name
+	end
+end

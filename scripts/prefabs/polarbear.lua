@@ -88,6 +88,7 @@ local function DropTeethReward(inst, giver)
 	local inventory = giver and giver.components.inventory
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
+	local take_time = GetTime() + TUNING.POLARBEAR_IGNORE_TREASURE_TIME
 	for i, v in ipairs(inst._tooth_trade_loot) do
 		local reward = SpawnPrefab(v)
 		reward.Transform:SetPosition(x, y, z)
@@ -97,6 +98,7 @@ local function DropTeethReward(inst, giver)
 				inventory:GiveItem(reward, nil, inst:GetPosition())
 			else
 				reward.components.inventoryitem:DoDropPhysics(x, y, z, true)
+				reward._tooth_trade_taketime = take_time
 			end
 		end
 	end
@@ -107,6 +109,7 @@ local function DropTeethReward(inst, giver)
 		
 		if first_reward.components.inventoryitem then
 			first_reward.components.inventoryitem:DoDropPhysics(x, y, z, true)
+			first_reward._tooth_trade_taketime = take_time
 		end
 	elseif giver and inst.components.talker then
 		inst.components.talker:Say(STRINGS.POLARBEAR_TOOTHTRADE_PST[math.random(#STRINGS.POLARBEAR_TOOTHTRADE_PST)])

@@ -233,6 +233,11 @@ local RESULTS = {
 				chance = function(pt, radius, ...) return FNS.SpawnIfLarger(pt, radius, 3, 0.5, nil, ...) end,
 				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, ...) end},
 		},
+		onstarted = function(pt, radius, ...)
+			if math.random() <= 0.5 then
+				return FNS.SpawnShoal(pt, radius, ...)
+			end
+		end,
 		rad = 0.5,
 		weight = 2,
 	},

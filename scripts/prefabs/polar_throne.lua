@@ -54,10 +54,17 @@ local function SpawnGifts(inst, sack)
 				gift.components.unwrappable:WrapItems(items)
 				gift._throne = inst
 				
+				gift.AnimState:PlayAnimation("pick"..gift.anim_var)
+				gift.AnimState:PlayAnimation("idle"..gift.anim_var)
+				
 				table.remove(loot, loot_i)
 			end
 		end
 	end
+	
+	inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/bell")
+	inst.SoundEmitter:PlaySound("dontstarve/creatures/together/deer/chain")
+	inst.SoundEmitter:PlaySound("dontstarve/common/dropGeneric")
 end
 
 local function DespawnGifts(inst, sack)
@@ -346,7 +353,6 @@ local function ReleaseKrampus(inst, player)
 		local sleep_time = TUNING.THRONE_KRAMPUS_SLEEP_TIME
 		if state == "sleeping" and krampus.components.sleeper and sleep_time > 0 then
 			krampus.components.sleeper:GoToSleep(sleep_time)
-			krampus.components.sleeper:WakeUp()
 		end
 		krampus.sg:GoToState(state)
 	end

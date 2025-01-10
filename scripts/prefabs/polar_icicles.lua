@@ -22,6 +22,7 @@ local function DoBreak(inst)
 		local ploof = not TheWorld.Map:IsPassableAtPoint(pt.x, 0, pt.z)
 		
 		if FindEntity(inst, 4, nil, BREAK_SAFETY_TAGS) then
+			inst.AnimState:PlayAnimation("fx_"..anim, false)
 			inst.SoundEmitter:PlaySound("dontstarve/common/staff_dissassemble")
 			return
 		elseif not ploof then

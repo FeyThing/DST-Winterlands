@@ -50,6 +50,12 @@ local function OnAttacked(inst, data)
 	inst.components.combat:ShareTarget(data.attacker, 12, ShareTargetFn, 3)
 end
 
+local function OnNoCombatTarget(inst)
+	if inst.components.timer and not inst.components.timer:TimerExists("restarttaunt") then
+		inst.components.timer:StartTimer("restarttaunt", 3)
+	end
+end
+
 local function GetStatus(inst)
 	return (inst:HasTag("spectermoose") and "SPECTER")
 		or (inst.hasantler and "ANTLER")
@@ -145,9 +151,24 @@ local function OnLoad(inst, data)
 	end
 end
 
+local function ChargeRam(inst)
+	if (inst.components.health and inst.components.health:IsDead()) or inst._wantstotaunt or inst._charging_ram or (inst.sg and inst.sg:HasStateTag("moving")) then
+		return false
+	end
+	
+	local target = inst.components.combat and inst.components.combat.target
+	
+	if target and target:IsValid() and inst:IsNear(target, TUNING.POLAR_MOOSE_RAM_MIN_DIST) then
+		inst._charging_ram = true
+		return true
+	end
+end
+
 local function OnTimerDone(inst, data)
 	if data.name == "regrowantler" then
 		inst:SetAntlered(true, true)
+	elseif data.name == "restarttaunt" then
+		inst._wantstotaunt = true
 	end
 end
 
@@ -194,6 +215,7 @@ local function MakeMoose(name, assets)
 		end
 		
 		inst.Physics:SetCollisionCallback(OnCollide)
+		inst._wantstotaunt = true
 		
 		inst:AddComponent("combat")
 		inst.components.combat:SetDefaultDamage(TUNING.POLAR_MOOSE_DAMAGE)
@@ -203,6 +225,7 @@ local function MakeMoose(name, assets)
 		inst.components.combat:SetRetargetFunction(6, RetargetFn)
 		inst.components.combat:SetHurtSound("dontstarve/creatures/together/deer/hit")
 		inst.components.combat.hiteffectsymbol = "deer_torso"
+		inst.components.combat.battlecryenabled = false
 		
 		inst:AddComponent("drownable")
 		
@@ -248,6 +271,7 @@ local function MakeMoose(name, assets)
 		
 		MakeMediumBurnableCharacter(inst, "deer_torso")
 		
+		inst.ChargeRam = ChargeRam
 		inst.OnSave = OnSave
 		inst.OnLoad = OnLoad
 		inst.SetAntlered = SetAntlered
@@ -263,6 +287,7 @@ local function MakeMoose(name, assets)
 		inst._eye:AttachToOwner(inst)
 		
 		inst:ListenForEvent("attacked", OnAttacked)
+		inst:ListenForEvent("losttarget", OnNoCombatTarget)
 		inst:ListenForEvent("timerdone", OnTimerDone)
 		
 		return inst

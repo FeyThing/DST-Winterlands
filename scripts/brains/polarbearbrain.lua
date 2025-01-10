@@ -72,9 +72,15 @@ local function FindFoodAction(inst)
 	end
 	
 	local target = (inst.components.inventory and inst.components.eater and inst.components.inventory:FindItem(inst._can_eat_test)) or nil
+	local t = GetTime()
 	
 	if not target then
 		target = FindEntity(inst, SEE_FOOD_DIST, function(item)
+			local take_time = item._tooth_trade_taketime
+			if take_time and take_time > t then
+				return false
+			end
+			
 			return item.components.edible and inst.components.eater:CanEat(item) and item:GetTimeAlive() >= 4 and item:IsOnPassablePoint()
 		end, nil, FINDFOOD_CANT_TAGS)
 	end
@@ -215,8 +221,12 @@ end
 
 --
 
+local function ShouldPauseChatty(inst)
+	return inst.components.timer and inst.components.timer:TimerExists("pause_chatty")
+end
+
 local function GetChatterLines(inst)
-	if inst.components.timer and inst.components.timer:TimerExists("pause_chatty") then
+	if ShouldPauseChatty(inst) then
 		return
 	end
 	
@@ -233,7 +243,7 @@ local function GetChatterLines(inst)
 end
 
 local function GetCombatLines(inst)
-	if inst.components.timer and inst.components.timer:TimerExists("pause_chatty") then
+	if ShouldPauseChatty(inst) then
 		return
 	end
 	local target = inst.components.combat and inst.components.combat.target
@@ -283,7 +293,7 @@ function PolarBearBrain:OnStart()
 		FailIfSuccessDecorator(ActionNode(function() DoToothTrade(self.inst) end, "Tooth Trade")),
 		FailIfSuccessDecorator(ConditionWaitNode(function() return not self.inst._tooth_trade_queued end, "Block While Doing Tooth Trade")),
 		
-		IfNode(function() return not self.inst.sg:HasStateTag("toothtrading") end, "Other Trade",
+		IfNode(function() return not ShouldPauseChatty(self.inst) end, "Other Trade",
 			ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 				FaceEntity(self.inst, GetTraderFn, KeepTraderFn))),
 		ChattyNode(self.inst, "POLARBEAR_FIND_TOOTH",

@@ -6,8 +6,11 @@ require "behaviours/runaway"
 
 local BrainCommon = require("brains/braincommon")
 
-local MAX_CHASE_TIME = 3
-local MAX_CHARGE_DIST = 20
+local MAX_CHARGE_TIME = nil
+local MAX_CHARGE_DIST = 12
+local CHARGE_GIVEUP_DIST = 20
+
+local MAX_CHASE_TIME = 5
 local CHASE_GIVEUP_DIST = 10
 
 local START_FACE_DIST = 8
@@ -16,8 +19,8 @@ local KEEP_FACE_DIST = 10
 local wandertimes = {
 	minwalktime = 3,
 	randwalktime = 5,
-	minwaittime = 10,
-	randwaittime = 20,
+	minwaittime = 5,
+	randwaittime = 10,
 }
 
 local function GetFaceTargetFn(inst)
@@ -49,12 +52,12 @@ function Moose_PolarBrain:OnStart()
 		BrainCommon.PanicTrigger(self.inst),
 		
 		WhileNode(function() return self.inst.hasantler and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "RamAttack",
-			ChaseAndRam(self.inst, MAX_CHASE_TIME, CHASE_GIVEUP_DIST, MAX_CHARGE_DIST)),
+			ChaseAndRam(self.inst, MAX_CHARGE_TIME, CHARGE_GIVEUP_DIST, MAX_CHARGE_DIST)),
 		WhileNode(function() return not self.inst.hasantler end, "CringeAttack",
 			ChaseAndAttack(self.inst, MAX_CHASE_TIME, CHASE_GIVEUP_DIST)),
 		
 		WhileNode(function() return self.inst:HasTag("spectermoose") and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "Evade",
-			RunAway(self.inst, "character", 10, 30)),
+			RunAway(self.inst, "character", 5, 25)),
 		FaceEntity(self.inst, GetFaceTargetFn, KeepFaceTargetFn),
 		
 		BrainCommon.AnchorToSaltlick(self.inst),

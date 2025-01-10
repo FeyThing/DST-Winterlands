@@ -30,7 +30,7 @@ local function OnAttacked(inst, data)
     end
 end
 
---[[local function OnHitOther(inst, data)
+local function OnHitOther(inst, data)
 	if data.redirected or inst.sg == nil then
 		return
 	end
@@ -45,7 +45,7 @@ end
 			item.components.inventoryitem:DoDropPhysics(x, y, z, true)
 		end
 	end
-end]]
+end
 
 local function OnTimerDone(inst, data)
 	if data.name == "throne_exit" then
@@ -74,9 +74,9 @@ local function DoThroneCombat(inst, player)
 	end
 	inst.components.knownlocations:RememberLocation("polarthrone", pt, true)
 	
-	--[[if inst.components.thief == nil then
+	if inst.components.thief == nil then
 		inst:AddComponent("thief")
-	end]]
+	end
 	
 	if inst.components.timer == nil then
 		inst:AddComponent("timer")
@@ -97,7 +97,7 @@ local function DoThroneCombat(inst, player)
 	inst:SetBrain(throne_brain)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
-	--inst:ListenForEvent("onhitother", OnHitOther)
+	inst:ListenForEvent("onhitother", OnHitOther)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 end
 
@@ -129,7 +129,9 @@ local function OnSave(inst, data, ...)
 	if inst:HasTag("thronekrampus") then
 		data.throne_combat = true
 	end
-	data.krampus_ugly_sweater = inst.krampus_ugly_sweater
+	if inst.krampus_ugly_sweater then
+		data.krampus_ugly_sweater = inst.krampus_ugly_sweater.sweater_id:value()
+	end
 end
 
 local OldOnLoad

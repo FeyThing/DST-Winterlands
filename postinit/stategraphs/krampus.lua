@@ -4,7 +4,7 @@ GLOBAL.setfenv(1, GLOBAL)
 local states = {
 	State{
 		name = "attack_throne",
-		tags = {"attack"},--, "weapontoss"},
+		tags = {"attack", "weapontoss"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("steal_pre")
@@ -14,6 +14,8 @@ local states = {
 			
 			inst.sg.statemem.hitrange = inst.components.combat.hitrange
 			inst.components.combat.hitrange = inst.sg.statemem.hitrange * TUNING.THRONE_KRAMPUS_RANGE_MULT
+			inst.components.combat.externaldamagemultipliers:SetModifier(inst, TUNING.THRONE_KRAMPUS_DAMAGE_MULT)
+			
 			inst.components.combat:StartAttack()
 		end,
 		
@@ -22,7 +24,8 @@ local states = {
 				inst:PerformBufferedAction()
 				
 				inst.components.combat:DoAttack()
-				inst.components.combat.hitrange = inst.sg.statemem.hitrange
+				inst.components.combat.hitrange = inst.sg.statemem.hitrange or 3
+				inst.components.combat.externaldamagemultipliers:RemoveModifier(inst)
 			end),
 			TimeEvent(14 * FRAMES, function(inst)
 				inst.SoundEmitter:PlaySound("dontstarve/creatures/krampus/bag_swing")

@@ -11,13 +11,45 @@ local function DoFootstepRun(inst, volume)
 end
 
 local events = {
-	CommonHandlers.OnLocomote(true, true),
 	CommonHandlers.OnSink(),
 	CommonHandlers.OnSleepEx(),
 	CommonHandlers.OnWakeEx(),
 	CommonHandlers.OnFreeze(),
 	CommonHandlers.OnDeath(),
 	
+	EventHandler("locomote", function(inst)
+		if inst:ChargeRam() then
+			inst.sg:GoToState("ram_taunt")
+			return
+		end
+		
+		if (inst._wantstotaunt and inst.components.combat and inst.components.combat.target ~= nil)
+			or not inst.sg:HasStateTag("idle") and not inst.sg:HasStateTag("moving") then
+			
+			return
+		end
+		
+		local is_moving = inst.sg:HasStateTag("moving")
+		local is_running = inst.sg:HasStateTag("running")
+		local should_move = inst.components.locomotor:WantsToMoveForward()
+		local should_run = inst.components.locomotor:WantsToRun()
+			
+		if not should_move then
+			if not inst.sg:HasStateTag("idle") then
+				if not inst.sg:HasStateTag("running") then
+					inst.sg:GoToState("idle")
+				elseif is_moving then
+					inst.sg:GoToState(is_running and "run_stop" or "walk_stop")
+				else
+					inst.sg:GoToState("idle")
+				end
+			end
+		else
+			if not inst.sg:HasStateTag("moving") then
+				inst.sg:GoToState(should_run and "run_start" or "walk_start")
+			end
+		end
+	end),
 	EventHandler("attacked", function(inst)
 		if (not inst.sg:HasStateTag("busy") or inst.sg:HasStateTag("caninterrupt")) and not inst.components.health:IsDead() then
 			--if not inst.components.combat:InCooldown() then
@@ -26,7 +58,7 @@ local events = {
 		end
 	end),
 	EventHandler("doattack", function(inst, data)
-		if not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
+		if not inst._wantstotaunt and not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
 			inst.sg:GoToState("attack", data and data.target or nil)
 		end
 	end),
@@ -48,15 +80,13 @@ local states = {
 			inst.components.locomotor:StopMoving()
 			inst.AnimState:PlayAnimation("idle_loop")
 			
+			local has_target = inst.components.combat and inst.components.combat.target ~= nil
 			if inst.sg.mem.wantstogrowantler then
 				inst.sg:GoToState("growantler")
-			elseif inst.components.combat and inst.components.combat.target and inst.components.combat:InCooldown() and inst.hasantler then
-				if not (inst.components.timer and inst.components.timer:TimerExists("ram_cooldown")) then
-					inst.sg:GoToState("ram_taunt")
-				end
-			elseif not (inst.components.combat and inst.components.combat.target) and math.random() < 0.15 then
-				local rdm = math.random()
-				inst.sg:GoToState(rdm < 0.7 and "idle_dig" or rdm < 0.9 and "idle_alert" or "idle_grazing")
+			elseif inst._wantstotaunt and has_target then
+				inst.sg:GoToState("taunt")
+			elseif not has_target and math.random() < 0.15 then
+				inst.sg:GoToState(math.random() < 0.5 and "idle_dig" or "idle_alert")
 			end
 		end,
 		
@@ -190,6 +220,7 @@ local states = {
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("taunt")
 			inst.components.locomotor:StopMoving()
+			inst._wantstotaunt = nil
 		end,
 		
 		timeline = {
@@ -331,6 +362,7 @@ CommonStates.AddCombatStates(states, {
 		end),
 		TimeEvent(12 * FRAMES, function(inst)
 			inst.components.combat:DoAttack(inst.sg.statemem.target)
+			inst._charging_ram = nil
 			
 			local x, y, z = inst.Transform:GetWorldPosition()
 			--local rotation = inst.Transform:GetRotation() * DEGREES
@@ -341,17 +373,10 @@ CommonStates.AddCombatStates(states, {
 			local range = inst.components.combat.hitrange
 			local ents = TheSim:FindEntities(x, y, z, range, KNOCK_TARGET_TAGS, KNOCK_TARGET_NOT_TAGS)
 			
-			local timer = TUNING.POLAR_MOOSE_KNOCK_COOLDOWN_MISS
 			for i, v in ipairs(ents) do
 				if v ~= inst and inst.components.combat:CanTarget(v) and v:IsValid() and not v:IsInLimbo() and not (v.components.health and v.components.health:IsDead()) then
 					v:PushEvent("knockback", {knocker = inst, radius = TUNING.POLAR_MOOSE_KNOCK_RAD, strengthmult = inst.hasantler and 2 or 1, forcelanded = not inst.hasantler})
-					
-					timer = TUNING.POLAR_MOOSE_KNOCK_COOLDOWN
 				end
-			end
-			
-			if inst.components.timer and not inst.components.timer:TimerExists("ram_cooldown") then
-				inst.components.timer:StartTimer("ram_cooldown", timer)
 			end
 		end),
 		TimeEvent(23 * FRAMES, DoFootstep),

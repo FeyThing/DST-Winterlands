@@ -61,13 +61,14 @@ return Class(function(self, inst)
 			local weight = def.weight and FunctionOrValue(def.weight, max_pt, max_rad) or 0
 			
 			-- TODO: Certain mobs should change weight based on world settings
-			if weight > 0 and (def.rad and FunctionOrValue(def.rad, max_pt, max_rad) or 0.5) <= max_rad then
+			if (self.debug_surprise == nil or self.debug_surprise == name) and weight > 0 and (def.rad and FunctionOrValue(def.rad, max_pt, max_rad) or 0.5) <= max_rad then
 				if def.canspawnfn == nil or def.canspawnfn(max_pt, plow) then
 					result_candidates[name] = weight
 				end
 			end
 		end
 		
+		self.debug_surprise = nil
 		if not IsTableEmpty(result_candidates) then
 			return weighted_random_choice(result_candidates), max_pt, max_rad
 		end
