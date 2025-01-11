@@ -56,11 +56,11 @@ end
 
 KRAMPUS_UGLY_SWEATERS = {
 	{}, 																			-- white
-	{hue = 0.6, 	colormult = {204 / 255, 	0, 				0, 			1}}, 	-- red
+	{hue = 0.6, 	colormult = {157 / 255, 	72 / 255, 		64 / 255, 	1}}, 	-- red
 	{hue = 0.4, 	colormult = {102 / 255, 	127 / 255, 		204 / 255, 	1}}, 	-- blue
 	{hue = 0.35, 	colormult = {153 / 255, 	204 / 255, 		76 / 255, 	1}}, 	-- green
 	{hue = 0.2, 	colormult = {204 / 255, 	153 / 255, 		76 / 255, 	1}}, 	-- yellow
-	{hue = 0.85, 	colormult = {89 / 255, 		76 / 255, 		25 / 255, 	1}}, 	-- brown
+	{hue = 0.85, 	colormult = {119 / 255, 	106 / 255, 		55 / 255, 	1}}, 	-- brown
 	{hue = 0.8, 	colormult = {204 / 255, 	102 / 255, 		178 / 255, 	1}}, 	-- pink
 }
 

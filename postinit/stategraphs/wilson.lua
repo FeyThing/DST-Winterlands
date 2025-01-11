@@ -87,7 +87,7 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 	local old_CASTSPELL_fn = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
 	sg.actionhandlers[ACTIONS.CASTSPELL].deststate = function(inst, action, ...)
 		if action.invobject and action.invobject:HasTag("polarstaff") then
-			return "polarcast"
+			return (inst.components.rider and inst.components.rider:IsRiding()) and "quickcastspell" or "polarcast"
 		end
 		
 		return old_CASTSPELL_fn(inst, action, ...)
@@ -149,7 +149,7 @@ ENV.AddStategraphPostInit("wilson_client", function(sg)
 	local old_CASTSPELL_fn = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
 	sg.actionhandlers[ACTIONS.CASTSPELL].deststate = function(inst, action, ...)
 		if action.invobject and action.invobject:HasTag("polarstaff") then
-			return "polarcast"
+			return (inst.replica.rider and inst.replica.rider:IsRiding()) and "quickcastspell" or "polarcast"
 		end
 		
 		return old_CASTSPELL_fn(inst, action, ...)

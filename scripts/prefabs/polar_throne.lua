@@ -55,7 +55,7 @@ local function SpawnGifts(inst, sack)
 				gift._throne = inst
 				
 				gift.AnimState:PlayAnimation("pick"..gift.anim_var)
-				gift.AnimState:PlayAnimation("idle"..gift.anim_var)
+				gift.AnimState:PushAnimation("idle"..gift.anim_var, false)
 				
 				table.remove(loot, loot_i)
 			end
