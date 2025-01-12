@@ -58,6 +58,10 @@ local function SpawnGifts(inst, sack)
 				gift.AnimState:PushAnimation("idle"..gift.anim_var, false)
 				
 				table.remove(loot, loot_i)
+				
+				for i, v in ipairs(items) do
+					v:Remove()
+				end
 			end
 		end
 	end
