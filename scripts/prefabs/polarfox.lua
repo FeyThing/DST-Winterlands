@@ -9,11 +9,13 @@ local prefabs = {
 
 local snowhuntPrefabs = {
 	rabbit = 2,
-	robin_winter = 3,
+	rabbitking_lucky = 1,
+	robin_winter = 2,
 }
 
 local dirthuntPrefabs = {
-	rabbit = 4,
+	rabbit = 3,
+	rabbitking_lucky = 1,
 	mole = 1,
 }
 
@@ -443,6 +445,7 @@ local function fn()
 	inst:AddComponent("drownable")
 	
 	inst:AddComponent("lootdropper")
+	inst.components.lootdropper:AddChanceLoot("smallmeat", 1)
 	inst.components.lootdropper:AddRandomLoot("smallmeat", 3)
 	inst.components.lootdropper:AddRandomLoot("manrabbit_tail", 1)
 	inst.components.lootdropper.numrandomloot = 1

@@ -577,6 +577,7 @@ local function fn()
 	inst:AddComponent("drownable")
 	
 	inst:AddComponent("lootdropper")
+	inst.components.lootdropper:AddChanceLoot("meat", 1)
 	inst.components.lootdropper:AddRandomLoot("meat", 3)
 	inst.components.lootdropper:AddRandomLoot("polarbearfur", 1)
 	inst.components.lootdropper.numrandomloot = 1

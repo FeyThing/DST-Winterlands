@@ -121,10 +121,6 @@ PLANT_DEFS.icelettuce = {
 
 --	Changes for lettuce and other crops on island...
 
-local GROWTH_STAGES = {}
-local LETTUCE_GROWTH_STAGES = {}
-local OLD_GROWTH_STAGES
-
 --	Freeze Tender
 
 local function IsTenderImmune(inst, doer)
@@ -240,7 +236,10 @@ end
 
 local lettuce_stage_names = {"seed", "sprout", "small", "med", "full"}
 
-local function GrowthStagesPostInit()
+local function GrowthStagesPostInit(OLD_GROWTH_STAGES)
+	local GROWTH_STAGES = {}
+	--local LETTUCE_GROWTH_STAGES = {}
+	
 	for i, stage in ipairs(OLD_GROWTH_STAGES) do
 		if stage.name == "seed" and OldGetGerminationTime == nil then
 			OldGetGerminationTime = stage.time
@@ -291,6 +290,8 @@ local function GrowthStagesPostInit()
 		
 		table.insert(GROWTH_STAGES, stage)
 	end
+	
+	return GROWTH_STAGES
 end
 
 --
@@ -303,11 +304,8 @@ for k, data in pairs(PLANT_DEFS) do
 			return
 		end
 		
-		if inst.components.growable then
-			if OLD_GROWTH_STAGES == nil then
-				OLD_GROWTH_STAGES = deepcopy(inst.components.growable.stages)
-				GrowthStagesPostInit()
-			end
+		if inst.components.growable and not data.is_randomseed then
+			local GROWTH_STAGES = GrowthStagesPostInit(deepcopy(inst.components.growable.stages))
 			
 			--if is_lettuce then
 			--	inst.components.growable.stages = LETTUCE_GROWTH_STAGES
