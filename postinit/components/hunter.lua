@@ -16,7 +16,7 @@ ENV.AddComponentPostInit("hunter", function(self)
 			
 			local season = TheWorld.state.season
 			local surprise_chance = (season == "winter" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE_MAX)
-				or (season == "summer" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE)
+				or (season == "summer" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE_MIN)
 				or TUNING.HUNT_ALTERNATE_POLAR_CHANCE
 			
 			return math.random() < surprise_chance and "polarwarg" or "moose_polar"

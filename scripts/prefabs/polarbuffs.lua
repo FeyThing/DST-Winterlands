@@ -34,13 +34,30 @@ local function wetness_ontick(inst, target)
 		
 		local x, y, z = target.Transform:GetWorldPosition()
 		local heat_sources = TheSim:FindEntities(x, y, z, 10, HEATSOURCE_TAGS, HEATSOURCE_NOT_TAGS)
-		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z) -- TODO: Ignore blockers if source of snow is blizard
-
+		local warming = false
+		
+		for i, v in ipairs(heat_sources) do
+			local heat = v.components.heater and v.components.heater:GetHeat(target) or 0
+			
+			if heat > 0 then
+				warming = true
+				break
+			end
+		end
+		
+		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z)
 		local immune = HasPolarDebuffImmunity(target)
-		if (not immune and (in_snow or #heat_sources > 0)) or (immune and #heat_sources > 0) then
+		
+		if (not immune and (in_snow or warming)) or (immune and warming) then
 			inst.components.temperature:SetTemp(nil)
 		else
 			inst.components.temperature:SetTemp(temperature)
+		end
+		
+		if warming then
+			inst.components.temperature:SetModifier("meltinghelper", TUNING.POLAR_WETNESS_TEMP_MODIFIER) -- This is to avoid incapacity of melting at low-fuel campfires
+		else
+			inst.components.temperature:RemoveModifier("meltinghelper")
 		end
 		
 		if target.components.temperature then

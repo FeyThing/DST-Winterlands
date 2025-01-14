@@ -23,7 +23,7 @@ local POLAR_WALKHELPERS = {
 	--candybag = 		-1,
 	icehat = 			-2,
 	--icepack = 		-1,
-	krampus_sack = 		-2,
+	krampus_sack = 		-1,
 	piggyback = 		-2,
 	--seedpouch = 		-1,
 }

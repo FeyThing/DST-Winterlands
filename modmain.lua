@@ -62,8 +62,8 @@ local prefabs = {
 	"wintersfeastcookedfoods",
 	
 	"bear_treasures",
-	"blizzard_fires",
 	"ents_onfreeze",
+	"fires",
 	"polar_walking",
 	"snow_heaters",
 	"waxed_plants",

@@ -52,10 +52,10 @@ local function PolarThrone_Retrofitting()
 			if #points_x == 1 and #points_y == 1 then
 				local x = points_x[1]
 				local z = points_y[1]
+				
 				if TheWorld.Map:CanPlacePrefabFilteredAtPoint(x, 0, z, "polar_throne") then
 					local ents = TheSim:FindEntities(x, 0, z, 7)
 					if #ents == 0 then
-						local room = area.type and Story:GetRoom(area.type)
 						local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, 0, z)
 						
 						for dx = -1, 1 do

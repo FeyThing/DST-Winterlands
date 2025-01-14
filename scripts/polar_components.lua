@@ -109,6 +109,10 @@ end
 function SetPolarWetness(inst, level)
 	if level <= 0 then
 		inst:RemoveDebuff("buff_polarwetness")
+		
+		if inst.components.snowedshader then
+			inst.components.snowedshader:SetFreezeAmount(0)
+		end
 	end
 	
 	for i = 1, TUNING.POLAR_WETNESS_LVLS do

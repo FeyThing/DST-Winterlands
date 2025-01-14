@@ -43,27 +43,43 @@ end
 
 --
 
-local function ExtendSnowBlocker(inst)
-	if inst.components.timer and inst.components.timer:TimerExists("plowcycle") then
+local CYCLEDONE_GRADUAL_DEFAULT = TUNING.POLARPLOW_BLOCKER_DURATION_GRADUAL
+
+local function ExtendSnowBlocker(inst, doer, spawned, time_override)
+	if inst.components.timer then
 		
 		local blizzard = TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)
-		local timeleft = TUNING.POLARPLOW_BLOCKER_DURATION
+		local timeleft = (time_override or TUNING.POLARPLOW_BLOCKER_DURATION) * (blizzard and TUNING.POLARPLOW_BLOCKER_STORMCUT or 1)
 		
-		inst.components.timer:SetTimeLeft("plowcycle", timeleft * (blizzard and TUNING.POLARPLOW_BLOCKER_STORMCUT or 1))
+		if inst.components.timer:TimerExists("plowcycle") then
+			inst.components.timer:SetTimeLeft("plowcycle", timeleft)
+		else
+			inst.components.timer:StartTimer("plowcycle", timeleft)
+		end
 	end
 end
 
-local function SetSnowBlockRange(inst, range)
+local function SetSnowBlockRange(inst, range, doer)
 	inst._snowblockrange:set(range or 2)
 end
 
 local function OnSave(inst, data)
 	data.range = inst._snowblockrange:value()
+	
+	local gradual_time = inst._gradual_time or CYCLEDONE_GRADUAL_DEFAULT
+	if gradual_time ~= CYCLEDONE_GRADUAL_DEFAULT then
+		data.gradual_time = gradual_time
+	end
 end
 
 local function OnLoad(inst, data)
-	if data and data.range then
-		inst:SetSnowBlockRange(data.range)
+	if data then
+		if data.gradual_time then
+			inst._gradual_time = data.gradual_time
+		end
+		if data.range then
+			inst:SetSnowBlockRange(data.range)
+		end
 	end
 end
 
@@ -78,7 +94,16 @@ end
 
 local function OnTimerDone(inst, data)
 	if data.name == "plowcycle" then
-		inst:Remove()
+		local cur_range = inst._snowblockrange:value()
+		local gradual_time = inst._gradual_time or CYCLEDONE_GRADUAL_DEFAULT
+		
+		if cur_range > 1 and gradual_time > 0 then
+			inst._snowblockrange:set(cur_range - (inst._gradual_step or 1))
+			
+			inst:ExtendSnowBlocker(nil, nil, gradual_time)
+		else
+			inst:Remove()
+		end
 	end
 end
 

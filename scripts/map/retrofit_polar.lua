@@ -115,9 +115,8 @@ local function PolarRetrofitting_Island(map, savedata)
 				local top, left = candidate.top, candidate.left
 				local world_top, world_left = left * 4 - (map_width * 0.5 * 4), top * 4 - (map_height * 0.5 * 4)
 				local ents_to_remove = FindEntsInArea(savedata.ents, world_top - 5, world_left - 5, world_size + 10, {
-					"boat", "boat_ancient", "malbatross", "oceanfish_shoalspawner",
-					"chester_eyebone", "glommerflower", "klaussackkey",
-					"saltstack", "oceantree_pillar", "watertree_pillar"
+					"boat", "boat_ancient", "chester_eyebone", "glommerflower",
+					"oceantree_pillar", "watertree_pillar"
 				})
 				
 				if ents_to_remove ~= nil then

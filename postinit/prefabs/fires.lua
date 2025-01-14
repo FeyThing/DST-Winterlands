@@ -4,7 +4,13 @@ GLOBAL.setfenv(1, GLOBAL)
 local FUELMULT = TUNING.POLAR_STORM_FUELEDMULT
 local PROTECTION = TUNING.POLAR_STORM_PROTECTION
 
-local BLIZZARED_FIRES = {
+--[[
+	fuel_rate: Fueled fires should deplace faster in blizzard
+	prot_range: Range of safety of blizzard, for all hot flames (not u, torch)
+	snow_melt: To be given to big flames, this prevents snow from returning too soon by laying snowwave_blockers behind
+--]]
+
+local FIRES = {
 	campfire = 					{fuel_rate = FUELMULT.CAMPFIRE},
 	cotl_tabernacle_level1 = 	{fuel_rate = FUELMULT.CAMPFIRE},
 	cotl_tabernacle_level2 = 	{fuel_rate = FUELMULT.FIREPIT},
@@ -12,9 +18,9 @@ local BLIZZARED_FIRES = {
 	firepit = 					{fuel_rate = FUELMULT.FIREPIT},
 	torch = 					{fuel_rate = FUELMULT.TORCH},
 	--
-	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE},
-	character_fire = 			{prot_range = PROTECTION.FIRE},
-	fire = 						{prot_range = PROTECTION.FIRE},
+	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE, 	snow_melt = true},
+	character_fire = 			{prot_range = PROTECTION.FIRE, 		snow_melt = true},
+	fire = 						{prot_range = PROTECTION.FIRE, 		snow_melt = true},
 	torchfire = 				{prot_range = PROTECTION.TORCH},
 }
 
@@ -39,20 +45,20 @@ local function OnPolarstormChanged(inst, active)
 	end
 end
 
-for prefab, blizzard_data in pairs(BLIZZARED_FIRES) do
+for prefab, data in pairs(FIRES) do
 	ENV.AddPrefabPostInit(prefab, function(inst)
-		if blizzard_data.prot_range then
+		if data.prot_range then
 			inst:AddTag("blizzardprotection")
 			
-			inst.blizzardprotect_rad = blizzard_data.prot_range
+			inst.blizzardprotect_rad = data.prot_range
 		end
 		
 		if not TheWorld.ismastersim then
 			return
 		end
 		
-		if blizzard_data.fuel_rate then
-			inst.polarstorm_fuelmod = blizzard_data.fuel_rate
+		if data.fuel_rate then
+			inst.polarstorm_fuelmod = data.fuel_rate
 			inst.onpolarstormchanged = function(src, data)
 				if data and data.stormtype == STORM_TYPES.POLARSTORM then
 					OnPolarstormChanged(inst, data.setting)
@@ -63,6 +69,11 @@ for prefab, blizzard_data in pairs(BLIZZARED_FIRES) do
 			if TheWorld.components.polarstorm then
 				OnPolarstormChanged(inst, TheWorld.components.polarstorm:IsPolarStormActive())
 			end
+		end
+		
+		if data.snow_melt and inst.components.snowwavemelter == nil then
+			inst:AddComponent("snowwavemelter")
+			inst.components.snowwavemelter:StartMelting()
 		end
 	end)
 end

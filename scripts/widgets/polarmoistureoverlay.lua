@@ -1,10 +1,6 @@
 local UIAnim = require("widgets/uianim")
 local Widget = require("widgets/widget")
 
---TODO: add a pst anims for each levels for when debuff gets removed
-
---		also, get an access to debuff temperature, and build transparency on the overlay so player can guess current melting progress of tag level?
-
 local PolarMoistureOverlay = Class(Widget, function(self, owner, parent)
 	Widget._ctor(self, "PolarMoistureOverlay")
 	self.owner = owner
@@ -33,16 +29,26 @@ end)
 function PolarMoistureOverlay:InternalUpdate(level)
 	local polar_level = level or GetPolarWetness(self.owner)
 	
+	local wetnessactive = self.moisturemeter and self.moisturemeter.active
+	
 	local rate = self.owner and self.owner:GetMoistureRateScale()
 	if rate then
-		if rate > 0 and polar_level > 0 then
+		--[[local moisturepercent = 0
+		
+		if wetnessactive and self.moisturemeter.anim then
+			local frame = self.moisturemeter.anim:GetAnimState():GetCurrentAnimationFrame()
+			local maxframe = self.moisturemeter.anim:GetAnimState():GetCurrentAnimationNumFrames()
+			moisturepercent = math.abs(frame - maxframe / 2) / (maxframe / 2)
+		end]]
+		
+		if rate > 0 and polar_level > 0 then --and moisturepercent < 1 then
 			self.meltanim:Show()
 		else
 			self.meltanim:Hide()
 		end
 	end
 	
-	if self.moisturemeter == nil or not self.moisturemeter.active then
+	if not wetnessactive then
 		self.polaranim:Hide()
 		self.meltanim:Hide()
 	elseif polar_level ~= self.polar_level then
