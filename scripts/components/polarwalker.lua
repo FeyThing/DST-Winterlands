@@ -21,9 +21,9 @@ local PolarWalker = Class(function(self, inst)
 	self.snowdepth = 0 -- LukaS: How deep the player is in snow, [0, 1]
 	
 	self.deepinhighsnow = false
-
+	
 	self.updating = false
-
+	
 	self._nextcomplain = nil
 end)
 
@@ -71,7 +71,7 @@ function PolarWalker:ShouldDebuff()
 	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
 		return false, "RIDING"
 	end
-
+	
 	local pt = self.inst:GetPosition()
 	if (IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z, 2) then
 		if self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst) then
@@ -80,25 +80,24 @@ function PolarWalker:ShouldDebuff()
 			return true
 		end
 	end
-
+	
 	return false
 end
 
 function PolarWalker:GetSlowTime()
-	if self.inst.polar_slowtime then
-		return math.max(0.1, self.inst:polar_slowtime()) or self.base_slow_time
-	end
-
 	local slowtime = self.base_slow_time
+	
 	if self.inst.components.inventory then
 		for k, v in pairs(self.inst.components.inventory.equipslots) do
 			if v.components.equippable and v.components.equippable.polar_slowtime then
 				slowtime = slowtime + v.components.equippable.polar_slowtime
-            end
+			end
 		end
 	end
 	
-	return slowtime
+	local modtime = self.inst.polar_slowtime and self.inst:polar_slowtime(slowtime) or 0
+	
+	return math.max(0.1, slowtime + modtime)
 end
 
 function PolarWalker:IsSlowed(fully)
@@ -124,7 +123,7 @@ function PolarWalker:OnUpdate(dt)
 			if self._learndryice_task == nil then
 				self._learndryice_task = self.inst:DoTaskInTime(1 + math.random(), function() LearnDryIceRecipe(self.inst, self) end)
 			end
-
+			
 			self.snowdepth = math.clamp(self.snowdepth + (dt / self:GetSlowTime()), 0, 1)
 			
 			locomotor:SetExternalSpeedMultiplier(self.inst, "polar_slow", 1 - self.max_slowdown * self.snowdepth)
@@ -133,7 +132,7 @@ function PolarWalker:OnUpdate(dt)
 			locomotor:RemoveExternalSpeedMultiplier(self.inst, "polar_slow")
 		end
 	end
-
+	
 	if self.inst.components.snowedshader then
 		self.inst.components.snowedshader:SetSubmergedAmount(self.snowdepth)
 	end

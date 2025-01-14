@@ -44,13 +44,14 @@ for k, v in pairs(POLAR_WALKHELPERS) do
 	end)
 end
 
---	Adding slowdown to things that deserve it. Bouncing, sliding, all the funny walking mobs typically gets away with it, or if they're cool, chilly even
+--	Adding slowdown to things that deserve it. Bouncing, sliding, all the funny walking mobs typically gets away with it, or if they're large or cool, chilly even
 
 local POLAR_WALKERS = {
 	"pigguard", "pigman", "rocky",
-	"catcoon", "grassgekko", "monkey",
-	"hound", "firehound", "mutatedhound", "warg",
-	"mossling", "perd", "spat"
+	"merm", "merm_lunar", "mermguard", "mermguard_lunar",
+	"birchnutdrake", "catcoon", "grassgekko", "monkey",
+	"hedgehound", "hound", "firehound", "mutatedhound", "warg", "warglet",
+	"mossling", "perd", "spat",
 }
 
 for i, v in pairs(POLAR_WALKERS) do
@@ -58,7 +59,7 @@ for i, v in pairs(POLAR_WALKERS) do
 		if not TheWorld.ismastersim then
 			return
 		end
-
+		
 		inst:AddComponent("polarwalker")
 	end)
 end

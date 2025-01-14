@@ -103,9 +103,11 @@ AddPrefabPostInit("player_classified", function(inst)
 	end)
 end)
 
+--	TODO: Oh... we removed the speed modifiers ?
+
 --	Wolfgang beats snow when mighty, not when wimpy :<
 
-local function Wolfgang_Polar_SlowMult(inst, mult)
+--[[local function Wolfgang_Polar_SlowMult(inst, mult)
 	if inst.components.rider and inst.components.rider:IsRiding() then
 		return mult
 	end
@@ -119,9 +121,9 @@ local function Wolfgang_Polar_SlowMult(inst, mult)
 		or 1
 	
 	return math.min(1, mult * mighty_mult)
-end
+end]]
 
-local function Wolfgang_Polar_Time(inst)
+local function Wolfgang_Polar_Time(inst, slowtime)
 	if inst.components.rider and inst.components.rider:IsRiding() then
 		return
 	end
@@ -142,19 +144,19 @@ ENV.AddPrefabPostInit("wolfgang", function(inst)
 		return
 	end
 	
-	inst.polar_slowedmult = Wolfgang_Polar_SlowMult
-	inst.polar_slowingmult = Wolfgang_Polar_SlowMult
+	--inst.polar_slowedmult = Wolfgang_Polar_SlowMult
+	--inst.polar_slowingmult = Wolfgang_Polar_SlowMult
 	inst.polar_slowtime = Wolfgang_Polar_Time
 end)
 
 --	Woodie transformations deal with snow easier (or with his cane!)
 
-local function Woodie_Polar_SlowMult(inst, mult)
+--[[local function Woodie_Polar_SlowMult(inst, mult)
 	return inst:HasTag("wereplayer") and math.min(1, inst:HasTag("wereplayer") and mult * TUNING.WEREMODE_POLAR_SLOWMULT) or mult
-end
+end]]
 
-local function Woodie_Polar_Time(inst)
-	return inst:HasTag("wereplayer") and TUNING.WEREMODE_POLAR_SLOWTIME or 0
+local function Woodie_Polar_Time(inst, slowtime)
+	return inst:HasTag("wereplayer") and (slowtime * TUNING.WEREMODE_POLAR_SLOWTIME) or 0
 end
 
 ENV.AddPrefabPostInit("woodie", function(inst)
@@ -162,7 +164,7 @@ ENV.AddPrefabPostInit("woodie", function(inst)
 		return
 	end
 	
-	inst.polar_slowedmult = Woodie_Polar_SlowMult
-	inst.polar_slowingmult = Woodie_Polar_SlowMult
+	--inst.polar_slowedmult = Woodie_Polar_SlowMult
+	--inst.polar_slowingmult = Woodie_Polar_SlowMult
 	inst.polar_slowtime = Woodie_Polar_Time
 end)
