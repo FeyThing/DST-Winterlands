@@ -38,7 +38,7 @@ local function DoBreak(inst)
 				
 				if v:GetDistanceSqToPoint(pt.x, pt.y, pt.z) <= hit_rad * hit_rad then
 					if v.components.combat and v.components.health and not v.components.health:IsDead() then
-						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE)
+						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE[inst.stage])
 					elseif v.components.workable and v.components.workable:CanBeWorked() then
 						v.components.workable:WorkedBy(inst, 5)
 					elseif v.components.pickable and v.components.pickable:CanBePicked() then
@@ -108,31 +108,30 @@ local function DoBreak(inst)
 	end
 end
 
-local function DoGrow(inst, breaking)
-	if not breaking then
-		inst.stage = math.min(#ICICLE_STAGES, inst.stage + 1)
-	end
-	
+local function StartBreaking(inst)
 	local anim = ICICLE_STAGES[inst.stage]
-	inst.AnimState:PlayAnimation("shake_"..anim, false)
+	-- inst.AnimState:PlayAnimation("shake_"..anim, false)
 	inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
+	inst.AnimState:PlayAnimation("fall_"..anim, false)
 	
-	inst.DynamicShadow:SetSize(0.5 + inst.stage, 1)
+	inst:ListenForEvent("animover", inst.DoBreak)
+end
+
+local function DoGrow(inst)
+	if inst.stage < #ICICLE_STAGES then
+		local oldanim = ICICLE_STAGES[inst.stage]
+		inst.AnimState:PlayAnimation("grow_"..oldanim, false)
+		inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
+		inst.DynamicShadow:SetSize(0.5 + inst.stage, 1)
+
+		inst.stage = math.min(#ICICLE_STAGES, inst.stage + 1)
+		local newanim = ICICLE_STAGES[inst.stage]
+		inst.AnimState:PushAnimation("idle_"..newanim, false)
 	
-	if breaking then
-		for i = 1, math.random(2, 4) do
-			inst.AnimState:PushAnimation("shake_"..anim, false)
+		if not inst.components.timer:TimerExists("ignore_icicle") then
+			inst:RemoveTag("NOCLICK")
+			inst.components.timer:StartTimer("ignore_icicle", 3)
 		end
-		inst.AnimState:PushAnimation("fall_"..anim, false)
-		
-		inst:ListenForEvent("animqueueover", inst.DoBreak)
-	else
-		inst.AnimState:PushAnimation("idle_"..anim, false)
-	end
-	
-	if not inst.components.timer:TimerExists("ignore_icicle") and not breaking then
-		inst:RemoveTag("NOCLICK")
-		inst.components.timer:StartTimer("ignore_icicle", 3)
 	end
 end
 
@@ -179,9 +178,10 @@ end
 local function OnTimerDone(inst, data)
 	if data.name == "grow_icicle" then
 		local break_early = math.random() <= TUNING.POLAR_ICICLE_BREAK_CHANCE
-		inst:DoGrow(break_early)
-		
-		if not break_early then
+		if break_early then
+			inst:StartBreaking()
+		else
+			inst:DoGrow()
 			local maxed = inst.stage >= #ICICLE_STAGES
 			local timer = maxed and "break_icicle" or "grow_icicle"
 			
@@ -190,7 +190,7 @@ local function OnTimerDone(inst, data)
 			end
 		end
 	elseif data.name == "break_icicle" then
-		inst:DoGrow(true)
+		inst:StartBreaking()
 	elseif data.name == "ignore_icicle" then
 		inst:AddTag("NOCLICK")
 	end
@@ -233,6 +233,7 @@ local function fn()
 	inst.IsValidVictim = IsValidVictim
 	inst.DoBreak = DoBreak
 	inst.DoGrow = DoGrow
+	inst.StartBreaking = StartBreaking
 	inst.GetGrowTime = GetGrowTime
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad

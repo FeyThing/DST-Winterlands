@@ -32,6 +32,7 @@ uniform mat4 MatrixW;
 
 varying vec3 PS_TEXCOORD;
 
+uniform mat4 COLOUR_XFORM;
 uniform vec3 PARAMS;
 uniform vec3 FLOAT_PARAMS;
 uniform vec4 OCEAN_BLEND_PARAMS;
@@ -151,7 +152,7 @@ void main()
     }
     else
     {
-        gl_FragColor = textureColor;
+        gl_FragColor = textureColor * COLOUR_XFORM;
 
         if (SINK_DEPTH < 0.0)
         {
