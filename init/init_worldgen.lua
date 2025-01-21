@@ -1,9 +1,15 @@
+local Levels = require("map/levels")
+local StartLocations = require("map/startlocations")
+local TaskSets = require("map/tasksets")
+
+local deepcopy = GLOBAL.deepcopy
+local STRINGS = GLOBAL.STRINGS
+require("polar_strings/strings")
+
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
 local polar_optional = {"Polar Floe"} -- "Polar Lake"
 
-local STRINGS = GLOBAL.STRINGS
-
---	Add Islands, Boons, ...
+--	Add Island, Setpieces, ...
 
 GLOBAL.WINTERLANDS_TYPE = GetModConfigData("biome_type") or "island"
 require("map/tasks/polar")
@@ -22,7 +28,7 @@ AddTaskSetPreInitAny(function(self)
 			if math.random() < task_chance then
 				table.insert(self.tasks, optional_task)
 			end
-		end	
+		end
 		
 		local bear_town = "BearTown"..math.random(2)
 		
@@ -33,10 +39,12 @@ AddTaskSetPreInitAny(function(self)
 		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
 		self.set_pieces["PolarFox_Solo"] = {count = 4, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
 		
-		if self.required_prefabs then
-			table.insert(self.required_prefabs, "polaramulet_station")
-			table.insert(self.required_prefabs, "polar_throne")
+		if self.required_prefabs == nil then
+			self.required_prefabs = {}
 		end
+		
+		table.insert(self.required_prefabs, "polaramulet_station")
+		table.insert(self.required_prefabs, "polar_throne")
 	end
 end)
 
@@ -60,3 +68,50 @@ for k, v in pairs(require("map/polar_customizations")) do
 		masteroption = v.masteroption, master_controlled = v.master_controlled, order = v.order
 	})
 end
+
+--	Winterlands Start
+
+local polar_start = deepcopy(StartLocations.GetStartLocation("default")) or {}
+
+polar_start.name = STRINGS.UI.SANDBOXMENU.POLARSTART
+
+AddStartLocation("polar", polar_start)
+
+--
+
+local polar_level = deepcopy(Levels.GetDataForLevelID("SURVIVAL_TOGETHER")) or {}
+
+polar_level.id = "SURVIVAL_POLAR"
+polar_level.name = STRINGS.UI.CUSTOMIZATIONSCREEN.PRESETLEVELS.SURVIVAL_POLAR
+polar_level.desc = STRINGS.UI.CUSTOMIZATIONSCREEN.PRESETLEVELDESC.SURVIVAL_POLAR
+
+if polar_level.overrides == nil then
+	polar_level.overrides = {}
+end
+
+polar_level.overrides.season_start = "winter"
+polar_level.overrides.start_location = "polar"
+polar_level.overrides.task_set = "polar"
+
+AddLevel(LEVELTYPE.SURVIVAL, polar_level)
+
+--
+
+local polar_taskset = deepcopy(TaskSets.GetGenTasks("default")) or {}
+
+if polar_taskset.required_prefabs == nil then
+	polar_taskset.required_prefabs = {}
+end
+
+if polar_taskset.set_pieces == nil then
+	polar_taskset.set_pieces = {}
+end
+
+table.insert(polar_taskset.required_prefabs, "spawnpoint_polar")
+
+polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
+polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village"}}
+
+--TODO: required prefab spawnpoint!!
+
+AddTaskSet("polar", polar_taskset)

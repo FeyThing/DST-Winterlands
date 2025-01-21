@@ -139,27 +139,28 @@ return Class(function(self, inst)
 		local x, y, z = ent.Transform:GetWorldPosition()
 		local shelters = TheSim:FindEntities(x, y, z, 30, nil, BLIZZARD_SHELTER_NOT_TAGS, BLIZZARD_SHELTER_TAGS)
 		
-		local minsq = math.huge
-		local shelterrad_edge = 0
-		
-		for i, shelter in ipairs(shelters) do
-			local px, py, pz = shelter.Transform:GetWorldPosition()
-			local shelterrad = (shelter.blizzardprotect_rad or 0) * 2
-			local distancesq = distsq(x, z, px, pz)
-			
-			if shelterrad > shelterrad_edge then
-				shelterrad_edge = shelterrad * 0.5
-			end
-			if distancesq <= shelterrad * shelterrad then
-				minsq = math.min(minsq, distancesq)
+		local minlevel = stormlevel
+		for _, shelter in ipairs(shelters) do
+			if not (ent.components.fueled and shelter.components.firefx) then
+				local px, py, pz = shelter.Transform:GetWorldPosition()
+				local shelterrad = shelter.blizzardprotect_rad or 0
+				local distancesq = distsq(x, z, px, pz)
+				
+				if distancesq <= shelterrad * shelterrad then
+					local shelterdist = math.sqrt(distancesq)
+					local normalizedist = math.clamp(shelterdist / shelterrad, 0, 1)
+					
+					local shelterlevel = math.clamp(0.2 + (normalizedist^2) * 0.5, 0.2, 1)
+					minlevel = math.min(minlevel, shelterlevel)
+				end
 			end
 		end
 		
-		if minsq == math.huge then
-			return stormlevel
+		if minlevel > TUNING.POLAR_STORM_LIGHTER_LEVEL and ent.components.inventory and ent.components.inventory:EquipHasTag("fire") then
+			minlevel = TUNING.POLAR_STORM_LIGHTER_LEVEL
 		end
 		
-		return stormlevel * math.clamp((math.sqrt(minsq) - shelterrad_edge + TILE_SCALE) / TILE_SCALE, 0.2, 1)
+		return minlevel
 	end
 	
     function self:IsPolarStormActive()

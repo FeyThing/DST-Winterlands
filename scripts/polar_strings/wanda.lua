@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Oooh, precisely what I needed!"
+	DESCRIBE.ARMORPOLAR = "Finally some bearable armor."
 	DESCRIBE.FROSTWALKERAMULET = "Good! I've had more than enough of these damnable rivers."
 	DESCRIBE.ICICLESTAFF = "Beware of friendly fire... and friendly ice. All elements would want us dead!"
 	DESCRIBE.POLAR_SPEAR = "Make the most of it while it's fresh."
 	DESCRIBE.POLARAMULET = "I went through that phase already. Or did I?"
+	DESCRIBE.POLARBEARHAT = "Disturbing but somewhat useful."
 	DESCRIBE.POLARCROWNHAT = "I start to think it was worth it."
 	DESCRIBE.POLARICESTAFF = "Everyone, and I mean EVERYONE deserves a break."
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."

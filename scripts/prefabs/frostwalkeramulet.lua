@@ -74,8 +74,6 @@ local function OnUnequip(inst, owner)
 end
 
 local function OnEquipToModel(inst, owner, from_ground)
-	inst:RemoveEventCallback("attacked", inst.freezefn, owner)
-	
 	--[[if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
 	end]]

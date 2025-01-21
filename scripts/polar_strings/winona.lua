@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This might prove useful."
+	DESCRIBE.ARMORPOLAR = "It's as tough as leather as I can get."
 	DESCRIBE.FROSTWALKERAMULET = "This'll keep me from slipping on the job. Ha!"
 	DESCRIBE.ICICLESTAFF = "I wouldn't overlook the wind conditions with this thing."
 	DESCRIBE.POLAR_SPEAR = "Pfft. Alright. Assuming you live in a freezer..."
 	DESCRIBE.POLARAMULET = "It said they're all unique or somethin' like that."
+	DESCRIBE.POLARBEARHAT = "Guess two heads are better than one."
 	DESCRIBE.POLARCROWNHAT = "Can't break a sweat if you can't sweat at all."
 	DESCRIBE.POLARICESTAFF = "You gotta freeze to please."
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"

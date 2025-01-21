@@ -51,7 +51,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARBEAR = {
 		DEAD = "May thy soul ascend in Valhalla.",
 		ENRAGED = "Fight me with all your might!",
-		FOLLOWER = "A compagnon from the frost land.",
+		FOLLOWER = "A companion from the frost land.",
 		GENERIC = "Stout Norse warriors, feared by all of the fish realm.",
 	}
 	DESCRIBE.POLARFLEA = {
@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
+	DESCRIBE.ARMORPOLAR = "Worthy of a Valkyrie."
 	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
 	DESCRIBE.ICICLESTAFF = "Calls upon a rain of ice spears."
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
 	DESCRIBE.POLARAMULET = "An invigorating pendant made of the fallens."
+	DESCRIBE.POLARBEARHAT = "A maw to protect me of the storm."
 	DESCRIBE.POLARCROWNHAT = "To freeze my foes like Draugrs of old!"
 	DESCRIBE.POLARICESTAFF = "Steer clear, or stay put."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."

@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
+	DESCRIBE.ARMORPOLAR = "When damage is a problem, add more fur!"
 	DESCRIBE.FROSTWALKERAMULET = "New paths unfold when the water grows cold."
 	DESCRIBE.ICICLESTAFF = "Look sharp! For spikes could leave a naughty mark."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
 	DESCRIBE.POLARAMULET = "What matters is that you believe in it, hyuyu!"
+	DESCRIBE.POLARBEARHAT = "This is oddly confortable for what it is."
 	DESCRIBE.POLARCROWNHAT = "Cold on the outside, freezing on the inside."
 	DESCRIBE.POLARICESTAFF = "It's not nice to leave our guests trapped in ice!"
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."

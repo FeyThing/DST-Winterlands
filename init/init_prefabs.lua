@@ -1,6 +1,7 @@
 PrefabFiles = {
 	"antler_tree",
 	"antler_tree_stick",
+	"armor_polar",
 	"bluegem_overcharged",
 	"bluegem_shards",
 	"frostwalkeramulet",
@@ -41,6 +42,7 @@ PrefabFiles = {
 	"snow_polar",
 	"snowwave",
 	"snowwave_itemrespawner",
+	"spawnpoint_polar",
 	"trap_polarteeth",
 	"tumbleweed_polar",
 	"veggies_polar",

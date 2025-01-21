@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Science says this stick is perfect."
+	DESCRIBE.ARMORPOLAR = "That's the stuff!"
 	DESCRIBE.FROSTWALKERAMULET = "Science can explain this phenomenon... but I won't."
 	DESCRIBE.ICICLESTAFF = "Always useful. If we forget about the \"incident\"."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
 	DESCRIBE.POLARAMULET = "It's doing... things, most certainly."
+	DESCRIBE.POLARBEARHAT = "Getting eaten has its perks."
 	DESCRIBE.POLARCROWNHAT = "And what protects me from the brain freeze?"
 	DESCRIBE.POLARICESTAFF = "I like all my staves but this one is frost among equals."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."

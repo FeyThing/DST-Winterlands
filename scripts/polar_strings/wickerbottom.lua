@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "It's the right shape for a few applications."
+	DESCRIBE.ARMORPOLAR = "Comfort and protection!"
 	DESCRIBE.FROSTWALKERAMULET = "Fascinating. It solidifies water through rapid thermal regulation."
 	DESCRIBE.ICICLESTAFF = "An accurate cast is worth two errant ones."
 	DESCRIBE.POLAR_SPEAR = "Crude, but highly durable in the cold."
 	DESCRIBE.POLARAMULET = "I would qualify these curios as absurd, in normal times."
+	DESCRIBE.POLARBEARHAT = "It's sufficiently engulfing to keep the blizzard out of my face."
 	DESCRIBE.POLARCROWNHAT = "It utilizes gradients of cold to shield and attack as particles compress."
 	DESCRIBE.POLARICESTAFF = "A good clunk brings everyone back to their manners."
 	DESCRIBE.POLARMOOSEHAT = "To keep one's warmth while the cold rages on."

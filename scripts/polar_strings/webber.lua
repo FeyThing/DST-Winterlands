@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "After all these years... the perfect stick!"
+	DESCRIBE.ARMORPOLAR = "We would like to wear it furever."
 	DESCRIBE.FROSTWALKERAMULET = "Better to have cold legs than soggy."
 	DESCRIBE.ICICLESTAFF = "Yikes! That looks sharp!"
 	DESCRIBE.POLAR_SPEAR = "It's like a giant icicle on a stick!"
 	DESCRIBE.POLARAMULET = "No spiders were harmed in the process."
+	DESCRIBE.POLARBEARHAT = "RAAAWR!! Did we scare you?"
 	DESCRIBE.POLARCROWNHAT = "Spiders aren't too fond of the cold."
 	DESCRIBE.POLARICESTAFF = "Emergency ice web."
 	DESCRIBE.POLARMOOSEHAT = "A hat made of Mr. Woodie's friends."

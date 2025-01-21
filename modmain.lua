@@ -59,13 +59,13 @@ local prefabs = {
 	"snowball_item",
 	"walrus",
 	"wilson",
+	"winona_spotlight",
 	"wintersfeastcookedfoods",
 	
 	"bear_treasures",
 	"ents_onfreeze",
-	"fires",
+	"hot_stuff",
 	"polar_walking",
-	"snow_heaters",
 	"waxed_plants",
 	"wx78_modules",
 }
@@ -90,6 +90,7 @@ local components = {
 	"moonstormmanager",
 	"oceanfishinghook",
 	"pickable",
+	"playerspawner",
 	"playervision",
 	"preserver",
 	"repairable",

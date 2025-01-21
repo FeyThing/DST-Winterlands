@@ -1,31 +1,6 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local SNOW_HEATERS = {
-	emberlight = 7,
-	dragonflyfurnace = 6,
-	lava_pond = 6,
-	lavae_pet = 6,
-	saladfurnace = 6,
-	stafflight = 10,
-	
-	mermthrone = 5,
-	winona_teleport_pad = 4,
-}
-
-for heater, range in pairs(SNOW_HEATERS) do
-	ENV.AddPrefabPostInit(heater, function(inst)
-		if inst._snowblockrange == nil then
-			inst:AddTag("snowblocker")
-			
-			inst._snowblockrange = net_tinybyte(inst.GUID, heater.."._snowblockrange")
-			inst._snowblockrange:set(range)
-		end
-	end)
-end
-
---	Spotlight...
-
 local EnableTargetSearch
 
 local OldOnIsDarkOrCold

@@ -33,6 +33,16 @@ for _, layout in ipairs(polar_layouts) do
 	Layouts[layout].ground_types = POLAR_GROUND_TYPES
 end
 
+Layouts["PolarStart"] = StaticLayout.Get("map/static_layouts/polar_start", {
+	start_mask = PLACE_MASK.IGNORE_IMPASSABLE_BARREN_RESERVED,
+	fill_mask = PLACE_MASK.IGNORE_IMPASSABLE_BARREN_RESERVED,
+	layout_position = LAYOUT_POSITION.CENTER,
+	defs = {
+		welcomitem = IsSpecialEventActive(SPECIAL_EVENTS.HALLOWED_NIGHTS) and {"pumpkin_lantern"} or {"marsh_bush"},
+	},
+})
+Layouts["PolarStart"].ground_types = POLAR_GROUND_TYPES
+
 --	Retrofit
 
 local retrofit_islands = {"retrofit_polarisland"}

@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Tree dropped this, but me keep it."
+	DESCRIBE.ARMORPOLAR = "Turned Mermfolk enemies into shirt!"
 	DESCRIBE.FROSTWALKERAMULET = "Close enough from swimming, flort."
 	DESCRIBE.ICICLESTAFF = "Makes super heavy rain drops."
 	DESCRIBE.POLAR_SPEAR = "But, Wicker-lady said not to play with food?"
 	DESCRIBE.POLARAMULET = "Yay! Dead folk make me fancy!"
+	DESCRIBE.POLARBEARHAT = "Not funny."
 	DESCRIBE.POLARCROWNHAT = "Wurt rules all over sea of snow!!"
 	DESCRIBE.POLARICESTAFF = "Got all of winter in a stick, florp."
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"

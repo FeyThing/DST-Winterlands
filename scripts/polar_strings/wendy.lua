@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Another tree bone."
+	DESCRIBE.ARMORPOLAR = "To strangle oneself with warmth."
 	DESCRIBE.FROSTWALKERAMULET = "Even the water can't escape death's cold embrace."
 	DESCRIBE.ICICLESTAFF = "Be careful around it, Abigail."
 	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."
 	DESCRIBE.POLARAMULET = "Macabre but well deserved."
+	DESCRIBE.POLARBEARHAT = "It's... fun."
 	DESCRIBE.POLARCROWNHAT = "I shall spread winter's embrace."
 	DESCRIBE.POLARICESTAFF = "An effortful pulse of cold. Much like my heart."
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."

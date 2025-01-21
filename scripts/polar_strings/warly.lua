@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
+	DESCRIBE.ARMORPOLAR = "Some furry protection."
 	DESCRIBE.FROSTWALKERAMULET = "This takes frosting to the next level!"
 	DESCRIBE.ICICLESTAFF = "Il pleut il mouille? No, it kills!"
 	DESCRIBE.POLAR_SPEAR = "It's all fun until it starts dripping."
 	DESCRIBE.POLARAMULET = "You wouldn't want to be around when I get my fangs out."
+	DESCRIBE.POLARBEARHAT = "Is that how my food sees before being eaten?"
 	DESCRIBE.POLARCROWNHAT = "Was anyone afraid I'd finally lose my cool?"
 	DESCRIBE.POLARICESTAFF = "Pardon, but I need to breathe some fresh air."
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."

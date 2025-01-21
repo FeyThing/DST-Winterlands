@@ -102,11 +102,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "A good stick to play fetch and... for a few other things."
+	DESCRIBE.ARMORPOLAR = "Armors might as well protect from other things, heh?"
 	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
 	DESCRIBE.ICICLESTAFF = "How about we sling a shot? Heh. Good one, Walter."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
 	DESCRIBE.POLARCROWNHAT = "So, when are we building my ice castle?"
 	DESCRIBE.POLARAMULET = "A little something from the souvenir shop."
+	DESCRIBE.POLARBEARHAT = "Woby won't stop growling about it..."
 	DESCRIBE.POLARICESTAFF = "I feel sorry for all the bugs around, just minding their own business."
 	DESCRIBE.POLARMOOSEHAT = "Moose fur, no doubt. Did you smell it?"
 	

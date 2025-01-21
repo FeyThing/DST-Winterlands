@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Who would leave good firewood laying around like that?"
+	DESCRIBE.ARMORPOLAR = "I'll never take it off! Unless it starts to stink."
 	DESCRIBE.FROSTWALKERAMULET = "Woah cool! I mean... that sucks, but it's kinda cool."
 	DESCRIBE.ICICLESTAFF = "Never thought I'd fight side by side with ice."
 	DESCRIBE.POLAR_SPEAR = "Keep your cool, if you must."
 	DESCRIBE.POLARAMULET = "It's... just a phase."
+	DESCRIBE.POLARBEARHAT = "Take that as a hint to not mess with me."
 	DESCRIBE.POLARCROWNHAT = "Oww! Nope."
 	DESCRIBE.POLARICESTAFF = "Next time we're going someplace else...\nlike where I can get myself an Inferno Wand and all that!"
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."

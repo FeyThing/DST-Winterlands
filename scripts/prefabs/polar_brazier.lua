@@ -185,7 +185,7 @@ end
 
 local function SetPolarstormRate(inst)
 	if inst.components.fueled then
-		if TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		if not inst.components.fueled:IsEmpty() and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
 			inst.components.fueled.rate_modifiers:SetModifier(inst, inst.polarstorm_fuelmod or 1, "polarstorm")
 		else
 			inst.components.fueled.rate_modifiers:RemoveModifier(inst, "polarstorm")

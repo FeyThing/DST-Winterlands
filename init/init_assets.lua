@@ -47,6 +47,7 @@ AddMinimapAtlas("images/polarminimap.xml")
 
 local ITEMS = {
 	"antler_tree_stick",
+	"armorpolar",
 	"bluegem_overcharged",
 	"bluegem_shards",
 	"dug_grass_polar",

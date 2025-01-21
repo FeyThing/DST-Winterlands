@@ -4,15 +4,6 @@ AddRoom("PolarIsland_Village", {
 	tags = {"Town"},
 	required_prefabs = {"wall_polar"}, -- Present in all villages, added from taskset
 	contents = {
-		countstaticlayouts = {
-			["TreeFarm"] = function() 
-				if math.random() > 0.97 then
-					return math.random(1,2)
-				end
-				
-				return 0
-			end,
-		},
 		countprefabs = {
 			polarbearhouse = function() return math.random(4, 5) end,
 			winter_tree_sparse = function () return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(6, 8) or 0 end,

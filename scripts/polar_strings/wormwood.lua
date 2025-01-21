@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Dropped something?"
+	DESCRIBE.ARMORPOLAR = "Good fuzzy clothes"
 	DESCRIBE.FROSTWALKERAMULET = "Now water, now rock?"
 	DESCRIBE.ICICLESTAFF = "Makes Ouchie-Ouch-Ouch Rain"
 	DESCRIBE.POLAR_SPEAR = "Spiky"
 	DESCRIBE.POLARAMULET = "Ouchie Neck Thing"
+	DESCRIBE.POLARBEARHAT = "Don't want to be eaten!"
 	DESCRIBE.POLARCROWNHAT = "Head Thing want warmer?"
 	DESCRIBE.POLARICESTAFF = "Everything go Brrr"
 	DESCRIBE.POLARMOOSEHAT = "Axe friend?"

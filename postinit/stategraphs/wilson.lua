@@ -71,6 +71,48 @@ local states = {
 			end),
 		},
 	},
+	
+	State{
+		name = "polarspawn",
+		tags = {"busy", "noattack", "nopredict", "nodangle"},
+		
+		onenter = function(inst)
+			inst.components.locomotor:Stop()
+			inst:ClearBufferedAction()
+			
+			inst.AnimState:OverrideSymbol("swap_frozen", "frozen", "frozen")
+			inst.AnimState:PlayAnimation("frozen")
+			
+			inst.components.inventory:Hide()
+			inst:PushEvent("ms_closepopups")
+			if inst.components.playercontroller then
+				inst.components.playercontroller:EnableMapControls(false)
+			end
+		end,
+		
+		timeline = {
+			TimeEvent(3, function(inst)
+				inst.AnimState:PlayAnimation("frozen_loop_pst", true)
+				inst.SoundEmitter:PlaySound("dontstarve/common/freezethaw", "thawing")
+			end),
+			TimeEvent(5.5, function(inst)
+				if inst.components.freezable then
+					inst.components.freezable:SpawnShatterFX()
+				end
+				inst.sg:GoToState("hit", true)
+			end)
+		},
+		
+		onexit = function(inst)
+			inst.AnimState:ClearOverrideSymbol("swap_frozen")
+			inst.SoundEmitter:KillSound("thawing")
+			
+			inst.components.inventory:Show()
+			if inst.components.playercontroller then
+				inst.components.playercontroller:EnableMapControls(true)
+			end
+		end
+	},
 }
 
 ENV.AddStategraphPostInit("wilson", function(sg)

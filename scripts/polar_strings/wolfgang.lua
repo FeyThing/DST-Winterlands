@@ -102,10 +102,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Good stick for walking and whacking."
+	DESCRIBE.ARMORPOLAR = "Don't get too cozy now, muscles."
 	DESCRIBE.FROSTWALKERAMULET = "Ice better not crumble under Wolfgang's mighty steps."
 	DESCRIBE.ICICLESTAFF = "Not as fun as throwing punches."
 	DESCRIBE.POLAR_SPEAR = "Is ice but spiky!"
 	DESCRIBE.POLARAMULET = "Wolfgang wears it best!"
+	DESCRIBE.POLARBEARHAT = "Don't worry, I'm not bear man, only Wolfgang man."
 	DESCRIBE.POLARCROWNHAT = "Keeps bad wind away and good wind inside."
 	DESCRIBE.POLARICESTAFF = "Will smash winter back into existence."
 	DESCRIBE.POLARMOOSEHAT = "Bear man lost hat?"

@@ -5,28 +5,45 @@ local FUELMULT = TUNING.POLAR_STORM_FUELEDMULT
 local PROTECTION = TUNING.POLAR_STORM_PROTECTION
 
 --[[
-	fuel_rate: Fueled fires should deplace faster in blizzard
-	prot_range: Range of safety of blizzard, for all hot flames (not u, torch)
-	snow_melt: To be given to big flames, this prevents snow from returning too soon by laying snowwave_blockers behind
+	fuel_rate: 	Fueled fires should deplace faster in blizzard
+	prot_range: Range of protection from the blizzard. To be given to actual hot flames
+	snow_block:	Prevents immediate snow around
+	snow_melt: 	Keep snow away for a little longer after we're gone
 --]]
 
 local FIRES = {
+	--	Fire sources
 	campfire = 					{fuel_rate = FUELMULT.CAMPFIRE},
 	cotl_tabernacle_level1 = 	{fuel_rate = FUELMULT.CAMPFIRE},
 	cotl_tabernacle_level2 = 	{fuel_rate = FUELMULT.FIREPIT},
 	cotl_tabernacle_level3 = 	{fuel_rate = FUELMULT.FIREPIT},
 	firepit = 					{fuel_rate = FUELMULT.FIREPIT},
 	torch = 					{fuel_rate = FUELMULT.TORCH},
-	--
+	lighter = 					{fuel_rate = FUELMULT.TORCH},
+	
+	--	Super hot
+	emberlight = 				{prot_range = PROTECTION.FIRE, 	snow_block = 7, 	snow_melt = true},
+	dragonflyfurnace = 			{snow_block = 6},
+	lava_pond = 				{snow_block = 6},
+	lavae_pet = 				{prot_range = PROTECTION.FIRE, 	snow_block = 6, 	snow_melt = true},
+	saladfurnace = 				{snow_block = 6},
+	stafflight = 				{prot_range = PROTECTION.FIRE, 	snow_block = 10, 	snow_melt = true},
+	
+	--	Just visual
+	mermthrone = 				{snow_block = 5},
+	winona_teleport_pad = 		{snow_block = 4},
+	
+	--	Actual flames
 	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE, 	snow_melt = true},
 	character_fire = 			{prot_range = PROTECTION.FIRE, 		snow_melt = true},
 	fire = 						{prot_range = PROTECTION.FIRE, 		snow_melt = true},
-	torchfire = 				{prot_range = PROTECTION.TORCH},
+	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_melt = true},
+	emberlight = 				{prot_range = PROTECTION.FIRE, 		snow_melt = true},
 }
 
 local function SetPolarstormRate(inst)
 	if inst.components.fueled then
-		if TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		if not inst.components.fueled:IsEmpty() and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
 			inst.components.fueled.rate_modifiers:SetModifier(inst, inst.polarstorm_fuelmod or 1, "polarstorm")
 		else
 			inst.components.fueled.rate_modifiers:RemoveModifier(inst, "polarstorm")
@@ -53,6 +70,13 @@ for prefab, data in pairs(FIRES) do
 			inst.blizzardprotect_rad = data.prot_range
 		end
 		
+		if data.snow_block and inst._snowblockrange == nil then
+			inst:AddTag("snowblocker")
+			
+			inst._snowblockrange = net_tinybyte(inst.GUID, prefab.."._snowblockrange")
+			inst._snowblockrange:set(data.snow_block)
+		end
+		
 		if not TheWorld.ismastersim then
 			return
 		end
@@ -73,6 +97,9 @@ for prefab, data in pairs(FIRES) do
 		
 		if data.snow_melt and inst.components.snowwavemelter == nil then
 			inst:AddComponent("snowwavemelter")
+			if data.snow_block then
+				inst.components.snowwavemelter.melt_range = snow_block
+			end
 			inst.components.snowwavemelter:StartMelting()
 		end
 	end)

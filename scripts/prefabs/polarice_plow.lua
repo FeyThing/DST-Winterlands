@@ -235,7 +235,7 @@ local function OnDeploy(inst, pt, deployer)
 		for dx = -1, 1 do
 			for dy = -1, 1 do
 				local temp_time = TheWorld.components.polarice_manager:GetTemporaryIceTime(tx + dx, ty + dy)
-				if temp_time then
+				if temp_time and type(temp_time) == "number" and temp_time <= 10 then
 					valid = false
 					break
 				end

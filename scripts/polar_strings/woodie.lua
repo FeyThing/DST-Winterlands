@@ -98,14 +98,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.MOOSE_POLAR_ANTLER = "That would look good over a fireplace."
 	DESCRIBE.POLAR_DRYICE = "Building blocks for the cool kids."
 	DESCRIBE.POLARBEARFUR = "I should stuff my plaid with it."
-	DESCRIBE.POLARWARGSTOOTH = "My jaw hurts just by watching at it..."
+	DESCRIBE.POLARWARGSTOOTH = "My jaw hurts just by staring at it..."
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "I'll just take that, eh!"
+	DESCRIBE.ARMORPOLAR = "Yup. I'm good in here."
 	DESCRIBE.FROSTWALKERAMULET = "To turn the ocean into one giant hockey field."
 	DESCRIBE.ICICLESTAFF = "That will mess you up more than a whole falling tree."
 	DESCRIBE.POLAR_SPEAR = "Ice suppose that would hurt a little."
 	DESCRIBE.POLARAMULET = "How wild do I look with it, eh?"
+	DESCRIBE.POLARBEARHAT = "That will have to do for now."
 	DESCRIBE.POLARCROWNHAT = "I can see myself wearing this one, actually."
 	DESCRIBE.POLARICESTAFF = "Makes me feel right at home, eh."
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
