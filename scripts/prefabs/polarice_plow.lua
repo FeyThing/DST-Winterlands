@@ -7,6 +7,10 @@ local prefabs = {
 	"polarice_plow_item_placer",
 }
 
+local POND_DIST = TUNING.POLARICE_PLOW_PONDDIST
+local POND_TAGS = {"pond"}
+local ICE_PROTECT_TAGS = {"icecaveshelter", "polariceplow"}
+
 local function OnHammered(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
@@ -33,6 +37,18 @@ end
 local function Finished(inst, force_fx)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
+	if inst.plow_pond then
+		inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
+		if inst.plow_pond:IsValid() and inst.plow_pond.DoPolarIcePlow then
+			inst.plow_pond:DoPolarIcePlow(inst)
+		end
+	end
+	if inst.plow_pond_fx then
+		for i, v in ipairs(inst.plow_pond_fx) do
+			v:Remove()
+		end
+	end
+	
 	if inst.deploy_item_save_record then
 		local item = SpawnSaveRecord(inst.deploy_item_save_record)
 		item._ice_harvested = inst._ice_harvested
@@ -56,10 +72,6 @@ local function Finished(inst, force_fx)
 end
 
 local function OnTerraform(inst, pt, old_tile_type, old_tile_turf_prefab)
-	local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(pt:Get())
-	local TILE_EXTENTS = TILE_SCALE * 0.9
-	local spawned_positions = {}
-	
 	Finished(inst)
 end
 
@@ -76,8 +88,10 @@ local function DoDrilling(inst)
 		fx_time = TUNING.POLARICE_PLOW_DRILLING_DURATION - inst.components.timer:GetTimeLeft("drilling")
 	end
 	
-	local pt = inst:GetPosition()
-	TheWorld:PushEvent("ms_starticefishingsurprise", {pt = pt, plow = inst})
+	if not inst.plow_pond then
+		local pt = inst:GetPosition()
+		TheWorld:PushEvent("ms_starticefishingsurprise", {pt = pt, plow = inst})
+	end
 	
 	inst:DoTaskInTime(0, inst.BreakIce)
 	inst:DoTaskInTime(2, inst.BreakIce)
@@ -86,13 +100,7 @@ end
 
 local function TimerDone(inst, data)
 	if data ~= nil and data.name == "drilling" then
-		if inst.components.terraformer ~= nil then
-			if not inst.components.terraformer:Terraform(inst:GetPosition()) then
-				Finished(inst)
-			end
-		else
-			Finished(inst)
-		end
+		Finished(inst)
 	end
 end
 
@@ -116,7 +124,7 @@ local function BreakIce(inst)
 	local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
 	local step = inst.break_step or 1
 	
-	if TheWorld.components.polarice_manager then
+	if not inst.plow_pond and TheWorld.components.polarice_manager then
 		inst._ice_demolished = 0
 		
 		if step == 1 then
@@ -143,6 +151,18 @@ local function BreakIce(inst)
 				inst._pushed_icesurprise = true
 			end
 		end
+	elseif inst.plow_pond then
+		local fx = SpawnPrefab("ice_crack_grid_fx")
+		fx.Transform:SetPosition(x, y, z)
+		fx.Transform:SetRotation(math.random(360))
+		
+		SpawnPrefab("fx_ice_crackle").Transform:SetPosition(x, y, z)
+		
+		if inst.plow_pond_fx == nil then
+			inst.plow_pond_fx = {}
+		end
+		
+		table.insert(inst.plow_pond_fx, fx)
 	end
 	
 	inst.break_step = step + 1
@@ -150,11 +170,15 @@ end
 
 local function OnSave(inst, data)
 	data.deploy_item = inst.deploy_item_save_record
+	data.haspond = inst.plow_pond ~= nil
 end
 
 local function OnLoadPostPass(inst, newents, data)
 	if data then
 		inst.deploy_item_save_record = data.deploy_item
+		if data.haspond then
+			inst.plow_pond = GetClosestInstWithTag(POND_TAGS, inst, 1)
+		end
 	end
 	
 	if inst.components.timer:TimerExists("drilling") then
@@ -195,9 +219,7 @@ local function main_fn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("terraformer")
-	inst.components.terraformer.turf = WORLD_TILES.POLAR_ICE
 	inst.components.terraformer.onterraformfn = OnTerraform
-	inst.components.terraformer.plow = true
 	
 	inst:AddComponent("timer")
 	
@@ -220,44 +242,63 @@ local function main_fn()
 	return inst
 end
 
-local ICE_PROTECT_TAGS = {"icecaveshelter", "polariceplow"}
-
 local function OnDeploy(inst, pt, deployer)
-	local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(pt:Get())
-	local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(cx, cy, cz)
+	local cx, cy, cz
 	
-	local valid = TheWorld.Map:GetTile(tx, ty) == WORLD_TILES.POLAR_ICE
-	if valid and #TheSim:FindEntities(cx, cy, cz, 12, nil, nil, ICE_PROTECT_TAGS) > 0 then
-		valid = false
+	local ponds = TheSim:FindEntities(pt.x, 0, pt.z, POND_DIST, POND_TAGS)
+	local plow_pond
+	
+	for i, v in ipairs(ponds) do
+		if v.AnimState:IsCurrentAnimation("frozen") then
+			cx, cy, cz = v.Transform:GetWorldPosition()
+			plow_pond = v
+			
+			break
+		end
 	end
 	
-	if valid then
-		for dx = -1, 1 do
-			for dy = -1, 1 do
-				local temp_time = TheWorld.components.polarice_manager:GetTemporaryIceTime(tx + dx, ty + dy)
-				if temp_time and type(temp_time) == "number" and temp_time <= 10 then
-					valid = false
-					break
+	if cz == nil then
+		cx, cy, cz = TheWorld.Map:GetTileCenterPoint(pt:Get())
+		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(cx, cy, cz)
+		
+		local valid = TheWorld.Map:GetTile(tx, ty) == WORLD_TILES.POLAR_ICE
+		if valid and #TheSim:FindEntities(cx, cy, cz, 12, nil, nil, ICE_PROTECT_TAGS) > 0 then
+			valid = false
+		end
+		
+		if valid then
+			for dx = -1, 1 do
+				for dy = -1, 1 do
+					local temp_time = TheWorld.components.polarice_manager:GetTemporaryIceTime(tx + dx, ty + dy)
+					if temp_time and type(temp_time) == "number" and temp_time <= 10 then
+						valid = false
+						break
+					end
 				end
 			end
 		end
+		
+		if not valid then
+			if deployer then
+				if deployer.components.inventory then
+					deployer.components.inventory:GiveItem(inst, nil, pt)
+				end
+				if deployer.components.talker then
+					deployer.components.talker:Say(GetString(deployer, "ANNOUNCE_POLARICE_PLOW_BAD"))
+				end
+			end
+			
+			return false
+		end
 	end
 	
-	if not valid then
-		if deployer then
-			if deployer.components.inventory then
-				deployer.components.inventory:GiveItem(inst, nil, pt)
-			end
-			if deployer.components.talker then
-				deployer.components.talker:Say(GetString(deployer, "ANNOUNCE_POLARICE_PLOW_BAD"))
-			end
-		end
-		
+	if cz == nil then
 		return false
 	end
 	
 	local obj = SpawnPrefab("polarice_plow")
 	obj.Transform:SetPosition(cx, cy, cz)
+	obj.plow_pond = plow_pond
 	
 	inst.components.finiteuses:Use(1)
 	
@@ -280,8 +321,14 @@ local function OnPickup(inst, owner)
 end
 
 local function can_plow_tile(inst, pt, mouseover, deployer)
-	local ents = TheWorld.Map:GetEntitiesOnTileAtPoint(pt.x, 0, pt.z)
+	local ponds = TheSim:FindEntities(pt.x, 0, pt.z, POND_DIST, POND_TAGS)
+	for i, v in ipairs(ponds) do
+		if v.AnimState:IsCurrentAnimation("frozen") then
+			return true
+		end
+	end
 	
+	local ents = TheWorld.Map:GetEntitiesOnTileAtPoint(pt.x, 0, pt.z)
 	for i, ent in ipairs(ents) do
 		if ent ~= inst and ent ~= deployer and (ent:HasTag("structure") or ent:HasTag("wall") or ent:HasTag("icecaveshelter")) then
 			return false
@@ -329,7 +376,7 @@ local function item_fn()
 	inst.components.finiteuses:SetUses(TUNING.POLARICE_PLOW_USES)
 	
 	inst:AddComponent("inspectable")
-
+	
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem:SetOnPutInInventoryFn(OnPickup)
 	
@@ -338,6 +385,27 @@ local function item_fn()
 	MakeSmallPropagator(inst)
 	
 	return inst
+end
+
+--
+
+local function placer_onupdatetransform(inst)
+	local pos = inst:GetPosition()
+	local ponds = TheSim:FindEntities(pos.x, 0, pos.z, POND_DIST, POND_TAGS)
+	
+	for i, v in ipairs(ponds) do
+		if v.AnimState:IsCurrentAnimation("frozen") then
+			inst.Transform:SetPosition(v.Transform:GetWorldPosition())
+			inst.outline.AnimState:SetMultColour(1, 1, 1, 0)
+			return
+		end
+	end
+	
+	inst.outline.AnimState:SetMultColour(1, 1, 1, 1)
+end
+
+local function placer_override_build_point(inst)
+	return inst:GetPosition()
 end
 
 local function placer_fn()
@@ -360,6 +428,9 @@ local function placer_fn()
 	
 	inst:AddComponent("placer")
 	inst.components.placer.snap_to_tile = true
+	
+	inst.components.placer.onupdatetransform = placer_onupdatetransform
+	inst.components.placer.override_build_point_fn = placer_override_build_point
 	
 	inst.outline = SpawnPrefab("tile_outline")
 	inst.outline.entity:SetParent(inst.entity)

@@ -171,6 +171,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	}
 	
 	STRINGS.POLARBEAR_LOOKATWILSON = {"GOOD DAY FOR FISHING", "SNIFF", "BRR...", "ICE TO MEET YOU", "... EH?", "HO HO! SMALL LIKE PENGULL!", "YOU'RE NO WALRUS?", "WATCH THE SNOW", "IS COLD OUTSIDE", "IS COLD INSIDE TOO", "WHO'S THIS?", "GOING HUNTING SOON?"}
+	STRINGS.POLARBEAR_LOOKATBEARSON = {"HMM...", "ARE YOU OKAY, BROTHER?", "YOU SMELL... WEIRD", "NO LUCK WITH FISHING TODAY", "WHAT IN THE..."}
 	STRINGS.POLARBEAR_FOLLOWWILSON = {"LET'S GO FISHING", "WHERE WE GOING?", "SNIFF SNIFFFF", "YOU'RE SMALL, BUT GOOD", "OH HO HO!", "RIGHT BEHIND YOU", "ARE YOU NOT COLD?", "EH? COMING!"}
 	STRINGS.POLARBEAR_ATTEMPT_TRADE = {"SNIFF SNIFF!", "HO HO WHAT IS IT?", "THAT SMELL..."}
 	STRINGS.POLARBEAR_PLOWSNOW = {"GOODBYE SNOW", "SO MUCH SNOW...", "HUFF", "BRR...", "ALWAYS MORE SNOW...", "SNOWIER THAN BEFORE..."}
@@ -254,7 +255,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_THRONE_GIFTS = "Free gifts!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
-	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm... also good to make others think you're an actual bear."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "These awful little buggers are everywhere! In tall grass, on mammals... have you looked inside your hairs recently?"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of other carried or stored items by 25%. Can be stacked multiplicatively."

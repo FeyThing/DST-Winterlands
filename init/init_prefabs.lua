@@ -23,6 +23,7 @@ PrefabFiles = {
 	"polar_throne",
 	"polarbear",
 	"polarbearfur",
+	"polarbearhat",
 	"polarbearhouse",
 	"polarbuffs",
 	"polarcrownhat",

@@ -20,6 +20,10 @@ local function SetStage(inst, stage, source, ...)
 	else
 		OldSetStage(inst, stage, source, ...)
 	end
+	
+	if inst.stage == "empty" then
+		inst.AnimState:Hide("snow")
+	end
 end
 
 local function OnPolarInit(inst)

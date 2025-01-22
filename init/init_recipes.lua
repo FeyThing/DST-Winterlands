@@ -58,6 +58,7 @@ PolarRecipe("trap_polarteeth", 		{Ingredient("ice", 1), Ingredient("cutstone", 1
 
 --	Armor / Clothing
 PolarRecipe("armorpolar", 			{Ingredient("polarbearfur", 3), Ingredient("pigskin", 1)}, 		TECH.SCIENCE_TWO, 		nil, 		{"ARMOUR", "WINTER"}, {"armor_bramble", "raincoat"})
+PolarRecipe("polarbearhat", 		{Ingredient("polarbearfur", 1), Ingredient("meat", 1)}, 		TECH.SCIENCE_ONE, 		nil, 		{"CLOTHING", "WINTER"}, {"beefalohat", "beefalohat"})
 
 --	Cooking / Food
 PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluegem_shards", 2), Ingredient("mosquitosack", 1)}, 	TECH.SCIENCE_TWO, 		nil, 		{"COOKING"}, {"icepack"})

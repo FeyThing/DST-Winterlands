@@ -13,7 +13,7 @@ local function KeepTargetFn(inst, target)
 end
 
 local RETARGET_MUST_TAGS = {"_combat"}
-local RETARGET_CANT_TAGS = {"INLIMBO"}
+local RETARGET_CANT_TAGS = {"INLIMBO", "bearbuddy"}
 local RETARGET_ONEOF_TAGS = {"player", "monster"}
 
 local function Retarget(inst)

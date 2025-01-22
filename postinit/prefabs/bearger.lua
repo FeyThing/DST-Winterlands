@@ -38,12 +38,20 @@ local function OnSeasonChange(inst, season, ...)
 end
 
 local function PolarInit(inst)
-	if inst.worldstatewatching["season"] then
-		if OldOnSeasonChange == nil then
-			OldOnSeasonChange = inst.worldstatewatching["season"][1]
+	if inst.worldstatewatching and inst.worldstatewatching["season"] then
+		for i, v in ipairs(inst.worldstatewatching["season"]) do
+			local IsHibernationSeason = PolarUpvalue(v, "IsHibernationSeason")
+			
+			if IsHibernationSeason then
+				if OldOnSeasonChange == nil then
+					OldOnSeasonChange = inst.worldstatewatching["season"][i]
+				end
+				inst:StopWatchingWorldState("season", OldOnSeasonChange)
+				inst:WatchWorldState("season", OnSeasonChange)
+				
+				break
+			end
 		end
-		
-		inst.worldstatewatching["season"][1] = OnSeasonChange
 	end
 	
 	if IsInPolar(inst) then

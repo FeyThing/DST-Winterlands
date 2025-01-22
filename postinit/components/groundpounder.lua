@@ -28,8 +28,8 @@ local GroundPounder = require("components/groundpounder")
 					local break_time = 0.5 * (dist / 12)
 					
 					icicle:DoTaskInTime(break_time, function()
-						if icicle:IsValid() and icicle.DoGrow then
-							icicle:DoGrow(true)
+						if icicle:IsValid() and icicle.StartBreaking then
+							icicle:StartBreaking()
 						end
 					end)
 				end

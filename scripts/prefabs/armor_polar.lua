@@ -71,7 +71,7 @@ local function fn()
 	inst:AddComponent("inventoryitem")
 	
 	inst:AddComponent("waterproofer")
-	inst.components.waterproofer:SetEffectiveness(TUNING.WATERPROOFNESS_SMALLMED)
+	inst.components.waterproofer:SetEffectiveness(TUNING.WATERPROOFNESS_MED)
 	
 	MakeHauntableLaunch(inst)
 	

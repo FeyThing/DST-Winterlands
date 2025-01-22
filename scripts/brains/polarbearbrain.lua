@@ -225,6 +225,9 @@ local function ShouldPauseChatty(inst)
 	return inst.components.timer and inst.components.timer:TimerExists("pause_chatty")
 end
 
+local BUDDY_TAGS = {"bearbuddy"}
+local BUDDY_NOT_TAGS = {"bear"}
+
 local function GetChatterLines(inst)
 	if ShouldPauseChatty(inst) then
 		return
@@ -237,6 +240,10 @@ local function GetChatterLines(inst)
 		if time_before_storm and time_before_storm <= TUNING.POLARBEAR_BLIZZARD_WARNTIME then
 			return STRINGS.POLARBEAR_BLIZZARDSOON[math.random(#STRINGS.POLARBEAR_BLIZZARDSOON)]
 		end
+	end
+	
+	if FindEntity(inst, 2, nil, BUDDY_TAGS, BUDDY_NOT_TAGS) then
+		return STRINGS.POLARBEAR_LOOKATBEARSON[math.random(#STRINGS.POLARBEAR_LOOKATBEARSON)]
 	end
 	
 	return STRINGS.POLARBEAR_LOOKATWILSON[math.random(#STRINGS.POLARBEAR_LOOKATWILSON)]

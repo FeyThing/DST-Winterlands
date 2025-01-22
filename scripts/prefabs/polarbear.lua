@@ -34,11 +34,12 @@ local BODY_PAINTINGS = {
 
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
 local RETARGET_ONEOF_TAGS = {"hound", "merm", "walrus", "pirate", "wonkey"}
+local RETARGET_NOT_TAGS = {"bearbuddy"}
 
 local function RetargetFn(inst)
 	return not inst:IsInLimbo() and FindEntity(inst, TUNING.PIG_TARGET_DIST, function(guy)
 		return inst.components.combat:CanTarget(guy)
-	end, RETARGET_MUST_TAGS, nil, RETARGET_ONEOF_TAGS) or nil
+	end, RETARGET_MUST_TAGS, RETARGET_NOT_TAGS, RETARGET_ONEOF_TAGS) or nil
 end
 
 local function KeepTargetFn(inst, target)

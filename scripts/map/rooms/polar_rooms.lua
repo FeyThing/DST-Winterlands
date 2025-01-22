@@ -53,7 +53,7 @@ AddRoom("PolarIsland_Caves", {
 
 AddRoom("PolarIsland_Lakes", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
-	value = WORLD_TILES.POLAR_LAKES_NOISE,
+	value = WORLD_TILES.POLAR_FOREST_NOISE,
 	internal_type = NODE_INTERNAL_CONNECTION_TYPE.EdgeCentroid,
 	random_node_entrance_weight = 0,
 	contents = {
@@ -79,7 +79,7 @@ AddRoom("PolarIsland_Lakes", {
 
 AddRoom("PolarIsland_Walrus", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
-	value = WORLD_TILES.POLAR_LAKES_NOISE,
+	value = WORLD_TILES.POLAR_FOREST_NOISE,
 	required_prefabs = {"walrus_camp"},
 	contents = {
 		countstaticlayouts = {
@@ -92,7 +92,7 @@ AddRoom("PolarIsland_Walrus", {
 
 AddRoom("PolarIsland_BurntForest", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
-	value = WORLD_TILES.POLAR_LAKES_NOISE,
+	value = WORLD_TILES.POLAR_FOREST_NOISE,
 	contents = {
 		countprefabs = {
 			polarbearhouse = function() return math.random(0, 2) end,
@@ -140,7 +140,7 @@ AddRoom("PolarIsland_FloeField", {
 	}
 })
 
-AddRoom("PolarIsland_BigLake", {
+AddRoom("PolarIsland_BigLake", { -- Unused
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_SNOW,
 	contents = {
@@ -164,6 +164,7 @@ AddRoom("PolarIsland_BG", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_TUNDRA_NOISE,
 	tags = {"PolarFleas"},
+	random_node_entrance_weight = 0,
 	contents = {
 		countprefabs = {
 			icelettuce_spawner = function(area) return math.max(1, math.floor(area / 42)) end,

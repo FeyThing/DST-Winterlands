@@ -172,14 +172,16 @@ local function SetPainting(inst, colour)
 end
 
 local function OnSave(inst, data)
-	data.stage = inst.stage
+	data.colour = inst.house_paint
 	data.no_teeth = inst.no_teeth
 end
 
 local function OnLoad(inst, data)
 	if data then
-		inst.stage = data.stage
 		inst.no_teeth = data.no_teeth
+		if data.colour then
+			inst:SetPainting(data.colour)
+		end
 	end
 end
 

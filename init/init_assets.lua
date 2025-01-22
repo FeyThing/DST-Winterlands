@@ -62,6 +62,8 @@ local ITEMS = {
 	"polar_dryice",
 	"polaramulet",
 	"polarbearfur",
+	"polarbearhat",
+	"polarbearhat_red",
 	"polarbearhouse",
 	"polarcrablegs",
 	"polarcrownhat",

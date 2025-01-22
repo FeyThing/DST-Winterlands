@@ -55,7 +55,9 @@ AddTask("Polar Caves", {
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
-AddTask("Polar Floe", { -- optional
+--	Optional
+
+AddTask("Polar Floe", {
 	locks = {LOCKS.ISLAND_TIERPOLAR, LOCKS.ISLAND_TIER3},
 	keys_given = {},
 	region_id = polar_region,
@@ -75,7 +77,7 @@ AddTask("Polar Floe", { -- optional
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
-AddTask("Polar Lake", { -- unused
+AddTask("Polar Lake", { -- Unused
 	locks = {LOCKS.ISLAND_TIERPOLAR},
 	keys_given = {LOCKS.ISLAND_TIER2},
 	region_id = polar_region,

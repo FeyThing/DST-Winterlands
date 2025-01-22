@@ -38,6 +38,7 @@ local events = {
 
 local BITE_TAGS = {"_combat"}
 local BITE_NOT_TAGS = {"wall", "structure", "INLIMBO", "flight", "invisible", "notarget", "noattack"}
+local BITE_AVOID_TAGS = {"bear", "bearbuddy"}
 
 local DEFAULT_PAINTING = "blue"
 
@@ -224,8 +225,11 @@ local states = {
 				
 				local not_tags = deepcopy(BITE_NOT_TAGS)
 				local target = inst.components.combat.target
-				if target == nil or (target:IsValid() and not target:HasTag("bear")) then
-					table.insert(not_tags, "bear")
+				
+				for i, tag in ipairs(BITE_AVOID_TAGS) do
+					if target == nil or (target:IsValid() and not target:HasTag(tag)) then
+						table.insert(not_tags, tag)
+					end
 				end
 				
 				local ents = TheSim:FindEntities(x, y, z, TUNING.POLARBEAR_BITE_RANGE * 0.8, nil, not_tags, BITE_TAGS)

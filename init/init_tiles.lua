@@ -115,7 +115,7 @@ AddTile("POLAR_DRYICE", "LAND",
 )
 
 AddTile("POLAR_CAVES_NOISE", "NOISE")
-AddTile("POLAR_LAKES_NOISE", "NOISE")
+AddTile("POLAR_FOREST_NOISE", "NOISE")
 AddTile("POLAR_TUNDRA_NOISE", "NOISE")
 AddTile("POLAR_FLOE_NOISE", "NOISE")
 
@@ -148,7 +148,7 @@ local function GetTileForPolarCaves(noise)
 	return noise > 0.8 and WORLD_TILES.POLAR_SNOW or noise < 0.3 and WORLD_TILES.OCEAN_POLAR or WORLD_TILES.POLAR_CAVES
 end
 
-local function GetTileForPolarLakes(noise)
+local function GetTileForPolarForest(noise)
 	return noise < 0.4 and WORLD_TILES.OCEAN_POLAR or noise < 0.55 and WORLD_TILES.PEBBLEBEACH or WORLD_TILES.POLAR_SNOW
 end
 
@@ -158,11 +158,11 @@ local function GetTileForPolarTundra(noise)
 end
 
 local function GetTileForPolarFloe(noise)
-	return noise < 0.7 and WORLD_TILES.OCEAN_POLAR or WORLD_TILES.POLAR_SNOW
+	return noise < 0.6 and WORLD_TILES.OCEAN_POLAR or WORLD_TILES.POLAR_SNOW
 end
 
 NOISES[WORLD_TILES.POLAR_CAVES_NOISE] = GetTileForPolarCaves
-NOISES[WORLD_TILES.POLAR_LAKES_NOISE] = GetTileForPolarLakes
+NOISES[WORLD_TILES.POLAR_FOREST_NOISE] = GetTileForPolarForest
 NOISES[WORLD_TILES.POLAR_TUNDRA_NOISE] = GetTileForPolarTundra
 NOISES[WORLD_TILES.POLAR_FLOE_NOISE] = GetTileForPolarFloe
 

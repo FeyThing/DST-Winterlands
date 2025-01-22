@@ -7,7 +7,7 @@ local STRINGS = GLOBAL.STRINGS
 require("polar_strings/strings")
 
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
-local polar_optional = {"Polar Floe"} -- "Polar Lake"
+local polar_optional = {"Polar Floe"}
 
 --	Add Island, Setpieces, ...
 
@@ -111,7 +111,5 @@ table.insert(polar_taskset.required_prefabs, "spawnpoint_polar")
 
 polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
 polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village"}}
-
---TODO: required prefab spawnpoint!!
 
 AddTaskSet("polar", polar_taskset)

@@ -156,7 +156,9 @@ return Class(function(self, inst)
 			end
 		end
 		
-		if minlevel > TUNING.POLAR_STORM_LIGHTER_LEVEL and ent.components.inventory and ent.components.inventory:EquipHasTag("fire") then
+		if minlevel > TUNING.POLAR_STORM_LIGHTER_LEVEL and ent.components.inventory
+			and (ent.components.inventory:EquipHasTag("fire") or ent.components.inventory:EquipHasTag("bearhead")) then
+			
 			minlevel = TUNING.POLAR_STORM_LIGHTER_LEVEL
 		end
 		
