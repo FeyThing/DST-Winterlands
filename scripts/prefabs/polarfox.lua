@@ -403,6 +403,7 @@ local function fn()
 	
 	inst:AddTag("animal")
 	inst:AddTag("fox")
+	inst:AddTag("NOBLOCK")
 	inst:AddTag("snowhidden")
 	
 	inst.entity:SetPristine()

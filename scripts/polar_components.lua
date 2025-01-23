@@ -135,7 +135,7 @@ function GetPolarWetness(inst)
 end
 
 function HasPolarDebuffImmunity(inst, ignorewaterproof)
-	if inst:HasTag("polarimmune") or inst:HasTag("wereplayer") then
+	if inst:HasTag("polarimmune") or inst:HasTag("wereplayer") or inst:HasTag("playerghost") then
 		return true
 	end
 	
@@ -151,7 +151,7 @@ function HasPolarDebuffImmunity(inst, ignorewaterproof)
 end
 
 function HasPolarSnowImmunity(inst)
-	if inst:HasTag("polarimmune") or inst:HasTag("weregoose") then
+	if inst:HasTag("polarimmune") or inst:HasTag("weregoose") or inst:HasTag("playerghost") then
 		return true
 	end
 	

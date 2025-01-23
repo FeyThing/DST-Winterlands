@@ -51,16 +51,13 @@ function PolarWalker:ShouldSlow()
 		return false, "RIDING"
 	end
 	
-	local pt = self.inst:GetPosition()
-	if (IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z, 2) then
-		if HasPolarSnowImmunity(self.inst) then
-			return false, "IMMUNE"
-		else
-			return true
-		end
+	if self.inst:HasTag("flying") or HasPolarSnowImmunity(self.inst) then
+		return false, "IMMUNE"
 	end
 	
-	return false
+	local pt = self.inst:GetPosition()
+	
+	return (IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z, 2)
 end
 
 function PolarWalker:ShouldDebuff()
@@ -72,16 +69,13 @@ function PolarWalker:ShouldDebuff()
 		return false, "RIDING"
 	end
 	
-	local pt = self.inst:GetPosition()
-	if (IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z, 2) then
-		if self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst) then
-			return false, "IMMUNE"
-		else
-			return true
-		end
+	if self.inst:HasTag("flying") or self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst) then
+		return false, "IMMUNE"
 	end
 	
-	return false
+	local pt = self.inst:GetPosition()
+	
+	return (IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z, 2)
 end
 
 function PolarWalker:GetSlowTime()

@@ -158,8 +158,8 @@ end
 
 --
 
-local MUST_TAGS = {"_combat"}
-local CANT_TAGS = {"INLIMBO", "playerghost", "player", "flight"}
+local AURA_TAGS = {"_combat", "smolder", "fire"}
+local AURA_CANT_TAGS = {"INLIMBO", "playerghost", "flight"}
 
 local function DoFrostAura(inst, target, pos, doer)
 	if doer then
@@ -172,20 +172,30 @@ local function DoFrostAura(inst, target, pos, doer)
 		local x, y, z = doer.Transform:GetWorldPosition()
 		SpawnPrefab("polar_frostaura").Transform:SetPosition(x, y, z)
 		SpawnPrefab("groundpoundring_fx").Transform:SetPosition(x, y, z)
-
+		
 		if doer.SoundEmitter then
 			doer.SoundEmitter:PlaySound("dontstarve/common/break_iceblock")
 		end
 		
-		local ents = TheSim:FindEntities(x, 0, z, 12, MUST_TAGS, CANT_TAGS)
-		for i, ent in ipairs(ents) do
-			if ent:IsValid() and ent.components.freezable and not ent:HasTag("player") then
-				ent.components.freezable:AddColdness(10, TUNING.FROSTAURASTAFF_FREEZE_TIME) -- Very high freeze value
-			end
-		end
+		local range = TUNING.POLARICESTAFF_RANGE
+		local ents = TheSim:FindEntities(x, 0, z, range, nil, AURA_CANT_TAGS, AURA_TAGS)
 		
-		if TheWorld.components.polarice_manager then
-			
+		for i, ent in ipairs(ents) do
+			if ent:IsValid() then
+				local ex, ey, ez = ent.Transform:GetWorldPosition()
+				local dist = math.sqrt(distsq(x, z, ex, ez))
+				
+				ent:DoTaskInTime(dist / range * 0.5, function()
+					if ent:IsValid() then
+						if ent.components.burnable then
+							ent.components.burnable:Extinguish(true, 0)
+						end
+						if ent.components.freezable and ent ~= doer and not (ent:HasTag("player") and not TheNet:GetPVPEnabled()) then
+							ent.components.freezable:AddColdness(10, TUNING.FROSTAURASTAFF_FREEZE_TIME) -- Very high freeze value
+						end
+					end
+				end)
+			end
 		end
 		
 		inst.components.finiteuses:Use(1)
