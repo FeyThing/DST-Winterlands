@@ -8,6 +8,15 @@ local HAT_PAINTINGS = {
 	"red",
 }
 
+local function OnAttacked(owner, data, inst)
+	if data and data.attacker and not data.attacker:HasTag("bear") and owner.components.combat then
+		owner.components.combat:SetTarget(data.attacker)
+		owner.components.combat:ShareTarget(data.attacker, 30, function(dude)
+			return dude:HasTag("bear") and dude.components.health and not dude.components.health:IsDead()
+		end, 10)
+	end
+end
+
 local function OnEquip(inst, owner)
 	if inst.hat_paint == nil then
 		inst:SetPainting(HAT_PAINTINGS[math.random(#HAT_PAINTINGS)])
@@ -32,6 +41,7 @@ local function OnEquip(inst, owner)
 		owner.AnimState:HideSymbol("beard")
 	end
 	
+	inst:ListenForEvent("attacked", inst._onblocked, owner)
 	if inst.components.fueled then
 		inst.components.fueled:StartConsuming()
 	end
@@ -57,6 +67,7 @@ local function OnUnequip(inst, owner)
 		owner.AnimState:ShowSymbol("beard")
 	end
 	
+	inst:RemoveEventCallback("attacked", inst._onblocked, owner)
 	if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
 	end
@@ -125,7 +136,7 @@ local function fn()
 	
 	inst:AddComponent("equippable")
 	inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
-	inst.components.equippable.dapperness = -TUNING.DAPPERNESS_TINY
+	inst.components.equippable.dapperness = -TUNING.DAPPERNESS_SMALL
 	inst.components.equippable.flipdapperonmerms = true
 	inst.components.equippable:SetOnEquip(OnEquip)
 	inst.components.equippable:SetOnUnequip(OnUnequip)
@@ -139,7 +150,7 @@ local function fn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("insulator")
-	inst.components.insulator:SetInsulation(TUNING.INSULATION_MED)
+	inst.components.insulator:SetInsulation(TUNING.INSULATION_SMALL)
 	
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.atlasname = POLAR_ATLAS
@@ -151,6 +162,8 @@ local function fn()
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	inst.SetPainting = SetPainting
+	
+	inst._onblocked = function(owner, data) OnAttacked(owner, data, inst) end
 	
 	inst:DoTaskInTime(0, OnInit)
 	
@@ -201,7 +214,7 @@ local function fx_SpawnFxForOwner(inst, owner)
 			local fx = CreateFxFollowFrame(j, v, inst.bearhat_colour)
 			
 			fx.entity:SetParent(owner.entity)
-			fx.Follower:FollowSymbol(owner.GUID, "headbase_hat", 0, v == "top" and -5 or 5, 0, true, nil, j - 1)
+			fx.Follower:FollowSymbol(owner.GUID, "headbase_hat", 0, -5, 0, true, nil, j - 1)
 			fx.components.highlightchild:SetOwner(owner)
 			table.insert(inst.fx, fx)
 		end

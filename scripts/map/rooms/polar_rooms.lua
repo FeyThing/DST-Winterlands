@@ -11,9 +11,10 @@ AddRoom("PolarIsland_Village", {
 		
 		distributepercent = 0.055,
 		distributeprefabs = {
-			evergreen = 2,
-			evergreen_stump = 1,
-			grass_polar = 1,
+			evergreen = 2.25,
+			evergreen_stump = 1.25,
+			grass_polar = 1.3,
+			twiggytree = 0.2,
 		},
 		
 		prefabdata = {
@@ -69,6 +70,7 @@ AddRoom("PolarIsland_Lakes", {
 			evergreen_sparse = 1.22,
 			evergreen_stump = 0.02,
 			antler_tree_stump = 0.01,
+			twiggytree = 0.05,
 		},
 		
 		prefabdata = {
@@ -80,7 +82,7 @@ AddRoom("PolarIsland_Lakes", {
 AddRoom("PolarIsland_Walrus", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_FOREST_NOISE,
-	required_prefabs = {"walrus_camp"},
+	required_prefabs = {"blowdart_pipe"},
 	contents = {
 		countstaticlayouts = {
 			["PolarTuskTown"] = 1,
@@ -105,6 +107,7 @@ AddRoom("PolarIsland_BurntForest", {
 			evergreen_sparse = 1,
 			evergreen_stump = 0.05,
 			antler_tree_burnt = 0.01,
+			twiggytree = 0.05,
 		},
 		
 		prefabdata = {
@@ -112,6 +115,7 @@ AddRoom("PolarIsland_BurntForest", {
 			evergreen = function() return {burnt = math.random() < 0.8} end,
 			evergreen_sparse = function() return {burnt = math.random() < 0.8} end,
 			snowwave_itemrespawner = {canspawnsnowitem = true},
+			twiggytree = function() return {burnt = math.random() < 0.8} end,
 		},
 	}
 })
@@ -135,6 +139,38 @@ AddRoom("PolarIsland_FloeField", {
 		prefabdata = {
 			evergreen = function() return {burnt = math.random() < 0.8} end,
 			evergreen_sparse = function() return {burnt = math.random() < 0.8} end,
+			snowwave_itemrespawner = {canspawnsnowitem = true},
+		},
+	}
+})
+
+AddRoom("PolarIsland_IceQuery", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_QUERY_NOISE,
+	tags = {"PolarFleas"},
+	contents = {
+		countprefabs = {
+			grass_polar = 6,
+			grass_polar_spawner = function() return math.random() < 0.33 and 1 or 0 end,
+			pond = function() return math.random(2, 4) end,
+			snowwave_itemrespawner = function() return math.random(3, 5) end,
+		},
+		
+		distributepercent = 0.08,
+		distributeprefabs = {
+			antler_tree = 0.2,
+			evergreen = 1,
+			twiggytree = 0.5,
+			marsh_bush = 1,
+			
+			rocks = 1,
+			flint = 1,
+			
+			rock1 = 1.5,
+			rock2 = 0.9,
+		},
+		
+		prefabdata = {
 			snowwave_itemrespawner = {canspawnsnowitem = true},
 		},
 	}

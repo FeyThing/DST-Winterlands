@@ -86,7 +86,7 @@ local function SetHost(inst, host, kick, given)
 	end
 	
 	if kick or host == nil then
-		inst.entity:SetParent(nil)
+		--inst.entity:SetParent(nil)
 		inst:ReturnToScene()
 		
 		--[[if kick and inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) then
@@ -110,7 +110,7 @@ local function SetHost(inst, host, kick, given)
 	end
 	
 	inst._host = host
-	inst.entity:SetParent(inst._host.entity)
+	--inst.entity:SetParent(inst._host.entity)
 	inst:ListenForEvent("attacked", inst.on_host_attacked, inst._host)
 	
 	--[[if inst.components.health then
@@ -195,12 +195,13 @@ end
 local function OnHostAttacked(inst, host, data)
 	if host then
 		local attacker = data and data.attacker
+		local isbuddy = attacker and attacker:HasTag("bearbuddy")
 		local isflea = attacker and attacker:HasTag("flea")
 		
 		if (host.components.health and host.components.health:IsDead()) or (math.random() < TUNING.POLARFLEA_HOST_HIT_DROPCHANCE and not isflea) then
 			inst:SetHost(nil, true)
 			
-			if attacker and not isflea and inst.components.combat then
+			if attacker and not isflea and not isbuddy and inst.components.combat then
 				inst.components.combat:SetTarget(data.attacker)
 			end
 		end

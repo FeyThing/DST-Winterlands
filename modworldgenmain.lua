@@ -24,8 +24,9 @@ local StaticLayout = require("map/static_layout")
 
 local polar_layouts = {
 	"BearTown1", "BearTown2", "PolarTuskTown", "PolarAmulet_Shack", "PolarThrone",
-	"IcicleSkeleton", "PolarCave_Pillar", "PolarCave_SmallPillar",
 	"PolarFox_Duo", "PolarFox_Solo", "PolarFlea_Farm", "PolarLake",
+	"PolarCave_Pillar", "PolarCave_SmallPillar",
+	"skeleton_icicle", "skeleton_polar",
 }
 
 for _, layout in ipairs(polar_layouts) do
@@ -34,8 +35,8 @@ for _, layout in ipairs(polar_layouts) do
 end
 
 Layouts["PolarStart"] = StaticLayout.Get("map/static_layouts/polar_start", {
-	start_mask = PLACE_MASK.IGNORE_IMPASSABLE_BARREN_RESERVED,
-	fill_mask = PLACE_MASK.IGNORE_IMPASSABLE_BARREN_RESERVED,
+	--start_mask = PLACE_MASK.IGNORE_IMPASSABLE_BARREN_RESERVED,
+	--fill_mask = PLACE_MASK.IGNORE_IMPASSABLE_BARREN_RESERVED,
 	layout_position = LAYOUT_POSITION.CENTER,
 	defs = {
 		welcomitem = IsSpecialEventActive(SPECIAL_EVENTS.HALLOWED_NIGHTS) and {"pumpkin_lantern"} or {"marsh_bush"},

@@ -11,7 +11,7 @@ AddTask("Polar Village", {
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
 		["PolarIsland_Village"] = 1,
-		["PolarIsland_BurntForest"] = function() return math.random() <= 0.1 and 1 or 0 end,
+		["PolarIsland_BurntForest"] = function() return math.random() <= 0.33 and 1 or 0 end,
 		["PolarIsland_BG"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
@@ -28,7 +28,7 @@ AddTask("Polar Lands", {
 	room_choices = {
 		["PolarIsland_Lakes"] = 2,
 		["PolarIsland_Walrus"] = 1,
-		["PolarIsland_BurntForest"] = function() return math.random() <= 0.1 and math.random(1, 2) or 0 end,
+		["PolarIsland_BurntForest"] = function() return math.random() <= 0.33 and math.random(1, 2) or 0 end,
 		["PolarIsland_BG"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
@@ -88,5 +88,20 @@ AddTask("Polar Lake", { -- Unused
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
 	background_room = "PolarIsland_BG",
+	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
+})
+
+AddTask("Polar Query", {
+	locks = {LOCKS.ISLAND_TIERPOLAR, LOCKS.ISLAND_TIER2},
+	keys_given = {LOCKS.ISLAND_TIER3},
+	region_id = polar_region,
+	level_set_piece_blocker = true,
+	room_tags = {"RoadPoison", "polararea", "not_mainland"},
+	room_choices = {
+		["PolarIsland_IceQuery"] = function() return math.random(2, 3) end,
+	},
+	entrance_room = {"Empty_Cove"},
+	room_bg = WORLD_TILES.POLAR_SNOW,
+	background_room = "PolarIsland_FloeField",
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })

@@ -80,12 +80,16 @@ PolarRecipe("wintercooking_polarcrablegs",	{Ingredient("wintersfeastfuel", 1), I
 --	[ 		Crafting Station	]	--
 
 PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
---	Those are TEMP !
-PolarRecipe("bluegem_overcharged", 	{Ingredient("moose_polar_antler", 1), Ingredient("bluegem", 1)}, 											TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 								{"CRAFTING_STATION"})
-PolarRecipe("polarcrownhat", 		{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
-PolarRecipe("frostwalkeramulet", 	{Ingredient("bluegem_shards", 3), Ingredient("bluegem_overcharged", 1)}, 									TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"blueamulet"})
-PolarRecipe("iciclestaff", 			{Ingredient("polar_dryice", 1), Ingredient("bluegem_overcharged", 1), Ingredient("deerclops_eyeball", 1)}, 	TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
-PolarRecipe("polaricestaff", 		{Ingredient("antler_tree_stick", 1), Ingredient("bluegem_overcharged", 1)}, 								TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
+
+PolarRecipe("bluegem_overcharged", 		{Ingredient("moose_polar_antler", 1), Ingredient("bluegem", 1)}, 											TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 								{"CRAFTING_STATION"})
+PolarRecipe("polarcrownhat", 			{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
+PolarRecipe("frostwalkeramulet", 		{Ingredient("bluegem_shards", 3), Ingredient("bluegem_overcharged", 1)}, 									TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"blueamulet"})
+PolarRecipe("iciclestaff", 				{Ingredient("polar_dryice", 1), Ingredient("bluegem_overcharged", 1), Ingredient("deerclops_eyeball", 1)}, 	TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
+PolarRecipe("polaricestaff", 			{Ingredient("antler_tree_stick", 1), Ingredient("bluegem_overcharged", 1)}, 								TECH.LOST, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
+
+PolarRecipe("polar_fishingrod",			{Ingredient("smallmeat", 2)}, 							TECH.POLARAMULET_STATION, 	{product = "fishingrod", image = "fishingrod.tex", nounlock = true, sg_state = "give"}, 			{"CRAFTING_STATION"})
+PolarRecipe("polar_oceanfishingrod",	{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 	TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", image = "oceanfishingrod.tex", nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("polar_birdtrap",			{Ingredient("fishmeat", 2)}, 							TECH.POLARAMULET_STATION, 	{product = "birdtrap", image = "birdtrap.tex", nounlock = true, sg_state = "give"}, 				{"CRAFTING_STATION"})
 
 --	[ 		Deconstruction		]	--
 

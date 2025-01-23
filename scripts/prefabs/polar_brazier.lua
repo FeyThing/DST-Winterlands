@@ -81,7 +81,7 @@ local function ChangeToItem(inst)
 end
 
 local function ProtectFromThief(inst, thief)
-	if thief and thief.components.combat and not inst.no_teeth then
+	if thief and not thief:HasTag("bearbuddy") and thief.components.combat and not inst.no_teeth then
 		local bear = FindEntity(inst, TUNING.POLARBEAR_PROTECTSTUFF_RANGE, function(guy)
 			return guy.components.health and not guy.components.health:IsDead() and guy.components.homeseeker and guy.components.homeseeker.home ~= nil
 				and guy.components.combat and guy.components.combat.target == nil and guy.components.combat:CanTarget(thief)

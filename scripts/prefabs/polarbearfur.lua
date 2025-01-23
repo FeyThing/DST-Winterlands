@@ -50,12 +50,17 @@ local function fn()
 		return inst
 	end
 	
+	inst:AddComponent("fuel")
+	inst.components.fuel.fuelvalue = TUNING.MED_FUEL
+	
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem:SetOnPutInInventoryFn(OnPickedUp)
 	
 	inst:AddComponent("stackable")
+	
+	inst:AddComponent("tradable")
 	
 	MakeHauntableLaunch(inst)
 	

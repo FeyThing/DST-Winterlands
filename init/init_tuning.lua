@@ -17,7 +17,7 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_TASKS_OPTIONALITY = {
 		["Polar Floe"] = 0.32,
-		--["Polar Lake"] = 0.4,
+		["Polar Query"] = 0.1,
 	}
 	
 	TUNING.ANTLER_TREE_CHOPS = 10

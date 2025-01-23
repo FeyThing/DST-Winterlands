@@ -7,7 +7,6 @@ local STRINGS = GLOBAL.STRINGS
 require("polar_strings/strings")
 
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
-local polar_optional = {"Polar Floe"}
 
 --	Add Island, Setpieces, ...
 
@@ -19,25 +18,27 @@ AddTaskSetPreInitAny(function(self)
 		return
 	end
 	
+	local winterlands_preset = self.name == STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
 	if self.location == "forest" and self.tasks and #self.tasks > 1 then
 		for i, task in ipairs(polar_tasks) do
 			table.insert(self.tasks, task)
 		end
-		for i, optional_task in ipairs(polar_optional) do
-			local task_chance = TUNING.POLAR_TASKS_OPTIONALITY[optional_task] or 0
-			if math.random() < task_chance then
-				table.insert(self.tasks, optional_task)
+		
+		for task, chance in pairs(TUNING.POLAR_TASKS_OPTIONALITY) do
+			if winterlands_preset or math.random() < chance then
+				print("AAA:", task)
+				table.insert(self.tasks, task)
 			end
 		end
 		
 		local bear_town = "BearTown"..math.random(2)
 		
 		self.set_pieces[bear_town] = {count = 1, tasks = {"Polar Village"}}
-		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Village"}}
+		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Query"}}
 		self.set_pieces["PolarThrone"] = {count = 1, tasks = {"Polar Lands", "Polar Floe"}}
-		self.set_pieces["IcicleSkeleton"] = {count = 1, tasks = {"Polar Caves"}}
-		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
-		self.set_pieces["PolarFox_Solo"] = {count = 4, tasks = {"Polar Lands", "Polar Caves", "Polar Village", "Polar Floe"}}
+		self.set_pieces["skeleton_icicle"] = {count = 1, tasks = {"Polar Caves"}}
+		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Floe", "Polar Query"}}
+		self.set_pieces["PolarFox_Solo"] = {count = 4, tasks = {"Polar Lands", "Polar Village", "Polar Floe", "Polar Query"}}
 		
 		if self.required_prefabs == nil then
 			self.required_prefabs = {}
@@ -110,6 +111,8 @@ end
 table.insert(polar_taskset.required_prefabs, "spawnpoint_polar")
 
 polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
-polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village"}}
+
+polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands"}}
+polar_taskset.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Floe", "Polar Query"}}
 
 AddTaskSet("polar", polar_taskset)

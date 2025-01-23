@@ -124,7 +124,8 @@ PLANT_DEFS.icelettuce = {
 --	Freeze Tender
 
 local function IsTenderImmune(inst, doer)
-	local immune = inst:GetDistanceSqToInst(doer) > 3 or (doer._music_modules and doer._music_modules > 0) or (doer.sg and doer.sg:HasStateTag("playing"))
+	local immune = inst:GetDistanceSqToInst(doer) > 3 or doer:HasTag("plantkin")
+		or (doer._music_modules and doer._music_modules > 0) or (doer.sg and doer.sg:HasStateTag("playing"))
 	
 	if not immune and doer.components.inventory then
 		for k, v in pairs(doer.components.inventory.equipslots) do
