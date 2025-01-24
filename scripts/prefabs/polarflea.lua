@@ -14,7 +14,7 @@ end
 
 local RETARGET_MUST_TAGS = {"_combat"}
 local RETARGET_CANT_TAGS = {"INLIMBO", "bearbuddy"}
-local RETARGET_ONEOF_TAGS = {"player", "monster"}
+local RETARGET_ONEOF_TAGS = {"player", "monster", "plant"}
 
 local function Retarget(inst)
 	return FindEntity(inst, TUNING.POLARFLEA_CHASE_RANGE, function(guy)
@@ -32,7 +32,7 @@ end
 
 local function HostMaxFleas(inst, host)
 	if host._fleacapacity then
-		return FunctionOrValue(host._fleacapacity, host)
+		return FunctionOrValue(host._fleacapacity, host, inst)
 	elseif host:HasTag("epic") or host:HasTag("largecreature") then
 		return TUNING.POLARFLEA_HOST_MAXFLEAS_LARGE
 	elseif host:HasTag("prey") then
@@ -43,10 +43,10 @@ local function HostMaxFleas(inst, host)
 end
 
 local function CanBeHost(inst, host, capacity_mod)
-	if host and host:IsValid() and host.components.health and not host.components.health:IsDead() and host.entity:IsVisible() then
+	if host and host:IsValid() and not (host.components.health and host.components.health:IsDead()) and host.entity:IsVisible() then
 		if host:HasTag("player") then
 			return host.components.inventory and not host.components.inventory:IsFull()
-		elseif (host._snowfleas and #host._snowfleas or 0) <= inst:HostMaxFleas(host) + (capacity_mod or 0) then
+		elseif (host._snowfleas and #host._snowfleas or 0) < inst:HostMaxFleas(host) + (capacity_mod or 0) then
 			if not host:HasTag("insect") and not host:HasTag("likewateroffducksback")
 				and (host:HasTag("animal") or host:HasTag("character") or host:HasTag("fleahosted") or host:HasTag("monster")) then
 				
@@ -119,7 +119,6 @@ local function SetHost(inst, host, kick, given)
 	
 	if not given and inst._host:HasTag("player") and inst._host.components.inventory then
 		inst._host.components.inventory:GiveItem(inst, nil, inst:GetPosition())
-		inst._host:PushEvent("gotpolarflea")
 	else
 		if inst._host._snowfleas == nil then
 			inst._host._snowfleas = {}
@@ -130,6 +129,8 @@ local function SetHost(inst, host, kick, given)
 		
 		inst:RemoveFromScene()
 	end
+	
+	inst._host:PushEvent("gotpolarflea", {flea = inst, given = given})
 end
 
 local function GetStatus(inst)

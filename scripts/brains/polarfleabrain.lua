@@ -9,7 +9,6 @@ local BrainCommon = require("brains/braincommon")
 
 local MAX_CHASE_TIME = 60
 local MAX_CHASE_DIST = 40
-local SEE_FOOD_DIST = 30
 local MAX_WANDER_DIST = 40
 
 local NO_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach"}
@@ -18,7 +17,7 @@ local PolarFleaBrain = Class(Brain, function(self, inst)
 	Brain._ctor(self, inst)
 end)
 
-local HOST_TAGS =  {"_health"}
+local HOST_TAGS =  {"_health", "fleahosted"}
 local HOST_NOT_TAGS = {"INLIMBO", "fire", "wet", "soulless", "outofreach", "_inventoryitem"}
 
 local function FindMammal(inst)
@@ -27,12 +26,13 @@ local function FindMammal(inst)
 	end
 	
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = shuffleArray(TheSim:FindEntities(x, y, z, TUNING.POLARFLEA_HOST_RANGE, HOST_TAGS, HOST_NOT_TAGS))
+	local ents = shuffleArray(TheSim:FindEntities(x, y, z, TUNING.POLARFLEA_HOST_RANGE, nil, HOST_NOT_TAGS, HOST_TAGS))
 	
 	local host
 	for i, v in pairs(ents) do
 		if inst.CanBeHost and inst:CanBeHost(v) then
 			host = v
+			break
 		end
 	end
 	

@@ -2,8 +2,10 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local events = {
-	EventHandler("gotpolarflea", function(inst)
-		inst.sg:GoToState("hit")
+	EventHandler("gotpolarflea", function(inst, data)
+		if data and not data.given then
+			inst.sg:GoToState("hit")
+		end
 	end),
 }
 

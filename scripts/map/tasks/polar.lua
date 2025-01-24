@@ -91,14 +91,14 @@ AddTask("Polar Lake", { -- Unused
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
-AddTask("Polar Query", {
+AddTask("Polar Quarry", {
 	locks = {LOCKS.ISLAND_TIERPOLAR, LOCKS.ISLAND_TIER2},
 	keys_given = {LOCKS.ISLAND_TIER3},
 	region_id = polar_region,
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
-		["PolarIsland_IceQuery"] = function() return math.random(2, 3) end,
+		["PolarIsland_IceQuarry"] = function() return math.random(2, 3) end,
 	},
 	entrance_room = {"Empty_Cove"},
 	room_bg = WORLD_TILES.POLAR_SNOW,

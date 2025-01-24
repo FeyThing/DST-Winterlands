@@ -73,7 +73,7 @@ for i, prefab in ipairs(ponds) do
 		inst:AddTag("ignoremouseover") -- So we can place the ice demoleisher...
 		inst:AddTag("snowblocker")
 		
-		inst._snowblockrange = net_tinybyte(inst.GUID, prefab.."._snowblockrange")
+		inst._snowblockrange = net_smallbyte(inst.GUID, prefab.."._snowblockrange")
 		inst._snowblockrange:set(5)
 		
 		if not TheWorld.ismastersim then

@@ -209,7 +209,7 @@ local function fn()
 	inst:AddTag("rotatableobject")
 	inst:AddTag("snowblocker")
 	
-	inst._snowblockrange = net_tinybyte(inst.GUID, "polar_throne._snowblockrange")
+	inst._snowblockrange = net_smallbyte(inst.GUID, "polar_throne._snowblockrange")
 	inst._snowblockrange:set(12)
 	
 	if not TheNet:IsDedicated() then
@@ -395,7 +395,7 @@ local function gifts()
 	inst:AddTag("thronegift")
 	inst:AddTag("snowblocker")
 	
-	inst._snowblockrange = net_tinybyte(inst.GUID, "polar_throne_gifts._snowblockrange")
+	inst._snowblockrange = net_smallbyte(inst.GUID, "polar_throne_gifts._snowblockrange")
 	inst._snowblockrange:set(4)
 	
 	inst.entity:SetPristine()

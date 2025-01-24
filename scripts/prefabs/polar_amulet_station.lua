@@ -321,7 +321,7 @@ local function fn()
 	
 	inst.SoundEmitter:PlaySound("polarsounds/shack/woowoo", "woowoo")
 	
-	inst._snowblockrange = net_tinybyte(inst.GUID, "polar_amulet_station._snowblockrange")
+	inst._snowblockrange = net_smallbyte(inst.GUID, "polar_amulet_station._snowblockrange")
 	inst._snowblockrange:set(7)
 	
 	inst._speechstr = net_string(inst.GUID, "polaramulet_station._speechstr", "speechstrdirty")

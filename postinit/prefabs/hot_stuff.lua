@@ -22,23 +22,21 @@ local FIRES = {
 	lighter = 					{fuel_rate = FUELMULT.TORCH},
 	
 	--	Super hot
-	emberlight = 				{prot_range = PROTECTION.FIRE, 	snow_block = 7, 	snow_melt = true},
+	emberlight = 				{prot_range = PROTECTION.FIRE, 		snow_block = 7, 	snow_melt = true},
 	dragonflyfurnace = 			{snow_block = 6},
 	lava_pond = 				{snow_block = 6},
-	lavae_pet = 				{prot_range = PROTECTION.FIRE, 	snow_block = 6, 	snow_melt = true},
+	lavae_pet = 				{prot_range = PROTECTION.FIRE, 		snow_block = 6, 	snow_melt = true},
 	saladfurnace = 				{snow_block = 6},
-	stafflight = 				{prot_range = PROTECTION.FIRE, 	snow_block = 10, 	snow_melt = true},
+	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_block = 10, 	snow_melt = true},
 	
 	--	Just visual
 	mermthrone = 				{snow_block = 5},
 	winona_teleport_pad = 		{snow_block = 4},
 	
 	--	Actual flames
-	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE, 	snow_melt = true},
-	character_fire = 			{prot_range = PROTECTION.FIRE, 		snow_melt = true},
-	fire = 						{prot_range = PROTECTION.FIRE, 		snow_melt = true},
-	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_melt = true},
-	emberlight = 				{prot_range = PROTECTION.FIRE, 		snow_melt = true},
+	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE, 						snow_melt = true},
+	character_fire = 			{prot_range = PROTECTION.FIRE, 							snow_melt = true},
+	fire = 						{prot_range = PROTECTION.FIRE, 							snow_melt = true},
 }
 
 local function SetPolarstormRate(inst)
@@ -73,7 +71,7 @@ for prefab, data in pairs(FIRES) do
 		if data.snow_block and inst._snowblockrange == nil then
 			inst:AddTag("snowblocker")
 			
-			inst._snowblockrange = net_tinybyte(inst.GUID, prefab.."._snowblockrange")
+			inst._snowblockrange = net_smallbyte(inst.GUID, prefab.."._snowblockrange")
 			inst._snowblockrange:set(data.snow_block)
 		end
 		
@@ -98,7 +96,7 @@ for prefab, data in pairs(FIRES) do
 		if data.snow_melt and inst.components.snowwavemelter == nil then
 			inst:AddComponent("snowwavemelter")
 			if data.snow_block then
-				inst.components.snowwavemelter.melt_range = snow_block
+				inst.components.snowwavemelter.melt_range = data.snow_block
 			end
 			inst.components.snowwavemelter:StartMelting()
 		end

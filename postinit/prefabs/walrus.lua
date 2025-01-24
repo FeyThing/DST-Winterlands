@@ -82,7 +82,7 @@ end
 ENV.AddPrefabPostInit("walrus_camp", function(inst)
 	inst:AddTag("snowblocker")
 	
-	inst._snowblockrange = net_tinybyte(inst.GUID, "polarbearhouse._snowblockrange")
+	inst._snowblockrange = net_smallbyte(inst.GUID, "polarbearhouse._snowblockrange")
 	inst._snowblockrange:set(5)
 	
 	if not TheWorld.ismastersim then

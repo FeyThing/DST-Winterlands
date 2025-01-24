@@ -35,13 +35,14 @@ AddRoom("PolarIsland_Caves", {
 		},
 		countprefabs = {
 			rock_polar = function() return math.random(6, 8) end,
-			rock2 = 1,
+			rock2 = function() return math.random(1, 2) end,
 			polar_icicle_rock = function() return math.random(3, 10) end,
 		},
 		
-		distributepercent = 0.12,
+		distributepercent = 0.14,
 		distributeprefabs = {
-			rock_flintless = 1.5,
+			rock1 = 0.75,
+			rock_flintless = 0.75,
 			rock_ice = 1,
 			ice = 2,
 		},
@@ -65,12 +66,14 @@ AddRoom("PolarIsland_Lakes", {
 			rocks = 4,
 		},
 		
-		distributepercent = 0.2,
+		distributepercent = 0.21,
 		distributeprefabs = {
-			evergreen_sparse = 1.22,
+			evergreen_sparse = 1.2,
 			evergreen_stump = 0.02,
 			antler_tree_stump = 0.01,
 			twiggytree = 0.05,
+			marsh_bush = 0.025,
+			rock1 = 0.015,
 		},
 		
 		prefabdata = {
@@ -144,9 +147,9 @@ AddRoom("PolarIsland_FloeField", {
 	}
 })
 
-AddRoom("PolarIsland_IceQuery", {
+AddRoom("PolarIsland_IceQuarry", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
-	value = WORLD_TILES.POLAR_QUERY_NOISE,
+	value = WORLD_TILES.POLAR_QUARRY_NOISE,
 	tags = {"PolarFleas"},
 	contents = {
 		countprefabs = {
@@ -207,13 +210,14 @@ AddRoom("PolarIsland_BG", {
 			snowwave_itemrespawner = function() return math.random(6, 9) end,
 		},
 		
-		distributepercent = 0.06,
+		distributepercent = 0.062,
 		distributeprefabs = {
 			grass_polar_spawner = 0.8,
 			antler_tree = 1.25,
 			antler_tree_stump = 0.25,
-			marsh_bush = 1.5,
-			rock_ice = 0.8,
+			marsh_bush = 1.6,
+			rock1 = 0.4,
+			rock_ice = 0.4,
 		},
 		
 		prefabdata = {

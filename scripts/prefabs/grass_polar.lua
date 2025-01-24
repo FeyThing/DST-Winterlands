@@ -144,6 +144,18 @@ local function TryGetFlea(inst)
 	end
 end
 
+local function OnGetPolarFlea(inst, data)
+	local flea = data and data.flea
+	
+	if flea and flea:IsValid() and flea:GetTimeAlive() > 2 then
+		if inst:HasTag("pickable") then
+			inst.AnimState:PlayAnimation("rustle")
+			inst.AnimState:PushAnimation("idle", true)
+		end
+		inst.SoundEmitter:PlaySound("dontstarve/wilson/pickup_reeds", nil, 0.25 + math.random() * 0.5)
+	end
+end
+
 local function ReleaseFlea(inst)
 	if inst._snowfleas then
 		for i, v in ipairs(inst._snowfleas) do
@@ -154,7 +166,13 @@ local function ReleaseFlea(inst)
 	end
 end
 
-local function GetFleaCapacity(inst)
+local function GetFleaCapacity(inst, flea)
+	if flea and flea.components.combat and flea.components.combat.target then
+		return 0
+	elseif TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		return 0
+	end
+	
 	return inst:HasTag("pickable") and TUNING.POLARFLEA_HOST_MAXFLEAS or 0
 end
 
@@ -235,6 +253,7 @@ local function fn()
 		end
 	end
 	
+	inst:ListenForEvent("gotpolarflea", OnGetPolarFlea)
 	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	
 	return inst

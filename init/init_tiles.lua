@@ -118,7 +118,7 @@ AddTile("POLAR_CAVES_NOISE", "NOISE")
 AddTile("POLAR_FOREST_NOISE", "NOISE")
 AddTile("POLAR_TUNDRA_NOISE", "NOISE")
 AddTile("POLAR_FLOE_NOISE", "NOISE")
-AddTile("POLAR_QUERY_NOISE", "NOISE")
+AddTile("POLAR_QUARRY_NOISE", "NOISE")
 
 --	Oceans
 
@@ -162,7 +162,7 @@ local function GetTileForPolarFloe(noise)
 	return noise < 0.7 and WORLD_TILES.OCEAN_POLAR or WORLD_TILES.POLAR_SNOW
 end
 
-local function GetTileForPolarQuery(noise)
+local function GetTileForPolarQuarry(noise)
 	return noise < 0.3 and WORLD_TILES.POLAR_CAVES or noise < 0.6 and WORLD_TILES.POLAR_SNOW or WORLD_TILES.POLAR_CAVES
 end
 
@@ -170,7 +170,7 @@ NOISES[WORLD_TILES.POLAR_CAVES_NOISE] = GetTileForPolarCaves
 NOISES[WORLD_TILES.POLAR_FOREST_NOISE] = GetTileForPolarForest
 NOISES[WORLD_TILES.POLAR_TUNDRA_NOISE] = GetTileForPolarTundra
 NOISES[WORLD_TILES.POLAR_FLOE_NOISE] = GetTileForPolarFloe
-NOISES[WORLD_TILES.POLAR_QUERY_NOISE] = GetTileForPolarQuery
+NOISES[WORLD_TILES.POLAR_QUARRY_NOISE] = GetTileForPolarQuarry
 
 --	Tile Order
 
