@@ -232,7 +232,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARAMULET_STATION_TOOTH_TIPS = {
 		{"...海獺的角可能...", "...在海上帮助你...", "...它们是牙齿，你知道吗？"},
 		{"...猎犬的牙齿会...", "...让你更强壮，是的。"},
-		{"...冰牙会...", "...保护你...免受寒冷。"},
+		{"...ice fang does...", "...wonderrrs... in the snow."}, -- Changed the effect, so reverted translation, sorry :<
+		{"...lavae tooth could...", "...protect you... from the cold."},
 		{"...海象的獠牙是...", "...非常...嗯，珍贵的，这里。"},
 	}
 	

@@ -25,7 +25,6 @@ local FIRES = {
 	emberlight = 				{prot_range = PROTECTION.FIRE, 		snow_block = 7, 	snow_melt = true},
 	dragonflyfurnace = 			{snow_block = 6},
 	lava_pond = 				{snow_block = 6},
-	lavae_pet = 				{prot_range = PROTECTION.FIRE, 		snow_block = 6, 	snow_melt = true},
 	saladfurnace = 				{snow_block = 6},
 	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_block = 10, 	snow_melt = true},
 	

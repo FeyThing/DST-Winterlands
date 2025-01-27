@@ -49,6 +49,7 @@ local prefabs = {
 	"grass",
 	"heatrock",
 	"krampus",
+	"lavae",
 	"oceanfish",
 	"oceanfishableflotsam",
 	"penguin",
@@ -111,6 +112,7 @@ local components = {
 
 local stategraphs = {
 	"krampus",
+	"lavae",
 	"penguin",
 	"wilson",
 }

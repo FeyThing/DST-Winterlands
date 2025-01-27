@@ -128,25 +128,31 @@ local night_time = seg_time * night_segs
 			spoiled_fish = 2,
 			fishmeat_small = 1,
 			oceanfish_medium_polar1_inv = 1,
-			polarmoosehat = 0.5
+			polarmoosehat = 0.5,
 		},
 		gnarwail_horn = {
 			fishmeat = 2,
 			oceanfish_medium_polar1_inv = 3,
-			bluegem_shards = 0.5
+			bluegem_shards = 0.5,
 		},
 		polarwargstooth = {
 			fishmeat_small = 1,
 			fishmeat = 3,
-			oceanfish_medium_polar1_inv = 1
+			oceanfish_medium_polar1_inv = 1,
 			-- This also gives Brazier Blueprint if not learned yet
-		}
+		},
+		lavae_tooth = {
+			bluegem_shards = 3,
+			gnarwail_horn = 1,
+			walrus_tusk = 1,
+		},
 	}
 	TUNING.POLARBEAR_NUM_TREASURES = {
 		houndstooth = 1,
 		walrus_tusk = 3,
 		gnarwail_horn = 3,
-		polarwargstooth = 5
+		polarwargstooth = 5,
+		lavae_tooth = 6,
 	}
 
 	TUNING.POLARBEAR_LOYALTY_PER_HUNGER = TUNING.PIG_LOYALTY_PER_HUNGER / 2
@@ -269,16 +275,31 @@ local night_time = seg_time * night_segs
 		},
 		POLARWARGSTOOTH = {
 			SNOWMOVEMENT_SPEED = 0.15,
-			PERISHTIME = total_day_time * 2,
+			PERISHTIME = total_day_time * 5,
 		},
 		WALRUS_TUSK = {
 			DAPERNESS = TUNING.DAPPERNESS_TINY,
-			INSULATION = TUNING.INSULATION_MED_LARGE,
+			INSULATION = 80,
 			LOYALTY_MULT = 2,
 			SHADOW_LEVEL = 1,
 		},
+		LAVAE_TOOTH = {
+			LAVAE_DAMAGE = 50,
+			LAVAE_HEALTH = 500,
+			STARVED_DAMAGE = 25,
+			STARVED_RATE = 200 / total_day_time,
+			
+			HOUNDSTOOTH_DAMAGE = 25,
+			GNARWAIL_HORN_SPEED_MULT = 0.2,
+			POLARWARGSTOOTH_FREEZINESS = 1,
+			POLARWARGSTOOTH_STARVE_RATE_MULT = 0.66,
+			WALRUS_TUSK_HEALTH = 500,
+			
+			PERISHTIME = total_day_time * 2,
+			FIRE_RESIST = 0.3,
+		},
 	}
-	TUNING.POLARAMULET_PERISHATIME = total_day_time * 5
+	TUNING.POLARAMULET_PERISHTIME = total_day_time * 5
 	
 	TUNING.POLARBEARHAT_PERISHTIME = total_day_time * 3
 	

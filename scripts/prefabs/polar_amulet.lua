@@ -1,6 +1,8 @@
 local assets = {
 	Asset("ANIM", "anim/torso_polar_amulet.zip"),
 	Asset("ANIM", "anim/polar_amulet_items.zip"),
+	
+	Asset("ANIM", "anim/lavae_polar_anims.zip"),
 }
 
 local AMULET_PARTS = {
@@ -8,6 +10,30 @@ local AMULET_PARTS = {
 	"middle",
 	"right",
 }
+
+local function OnAttackOther(owner, data, inst)
+	local target = data and data.target
+	
+	if target and target.components.health and not target.components.health:IsDead() and inst.components.petleash then
+		local pets = inst.components.petleash:GetPets()
+		for pet in pairs(pets) do
+			if pet.components.combat and pet.components.combat:CanTarget(target) then
+				pet.components.combat:SetTarget(target)
+			end
+		end
+	end
+end
+
+local function OnPetSpawn(inst, pet)
+	if not inst.nospawnfx then
+		pet:DoTaskInTime(0, function() SpawnPrefab("small_puff").Transform:SetPosition(pet.Transform:GetWorldPosition()) end)
+	end
+end
+
+local function OnPetDespawn(inst, pet)
+	SpawnPrefab("small_puff").Transform:SetPosition(pet.Transform:GetWorldPosition())
+	pet:Remove()
+end
 
 local function OnPolarTiles(inst, owner, on_polar, force_disable)
 	local tile, tileinfo = owner:GetCurrentTileType()
@@ -35,8 +61,16 @@ local function OnPolarTiles(inst, owner, on_polar, force_disable)
 	--end
 end
 
+--
+
 local function OnEquip(inst, owner)
 	local parts = inst:GetAmuletParts()
+	
+	if inst.components.petleash == nil then
+		inst:AddComponent("petleash")
+		inst.components.petleash:SetOnSpawnFn(OnPetSpawn)
+		inst.components.petleash:SetOnDespawnFn(OnPetDespawn)
+	end
 	
 	local gnarwail_horn = #parts["gnarwail_horn"]
 	if gnarwail_horn > 0 and owner.components.expertsailor == nil then
@@ -46,6 +80,25 @@ local function OnEquip(inst, owner)
 	local houndstooth = #parts["houndstooth"]
 	if houndstooth > 0 and owner.components.combat then
 		owner.components.combat.externaldamagemultipliers:SetModifier(inst, 1 + (houndstooth * TUNING.POLARAMULET.HOUNDSTOOTH.DAMAGE_MULT))
+	end
+	
+	local lavae_tooth = #parts["lavae_tooth"]
+	if lavae_tooth > 0 then
+		if owner.components.health then
+			owner.components.health.externalfiredamagemultipliers:SetModifier(inst, 1 - TUNING.POLARAMULET.LAVAE_TOOTH.FIRE_RESIST)
+		end
+		
+		inst.components.petleash:SetMaxPetsForPrefab("lavae_pet", lavae_tooth)
+		local pt = owner:GetPosition()
+		
+		for i = 1, inst.components.petleash:GetMaxPetsForPrefab("lavae_pet") do
+			if not inst.components.petleash:IsFullForPrefab("lavae_pet") then
+				local offset = FindWalkableOffset(pt, math.random() * TWOPI, 3, 8, true, false)
+				local pet = inst.components.petleash:SpawnPetAt(offset and (pt.x + offset.x) or pt.x, pt.y, offset and (pt.z + offset.z) or pt.z, "lavae_pet")
+				
+				pet:LinkToPolarAmulet(inst)
+			end
+		end
 	end
 	
 	local polarwargstooth = #parts["polarwargstooth"]
@@ -70,6 +123,9 @@ local function OnEquip(inst, owner)
 		inst.components.fueled:StartConsuming()
 	end
 	
+	inst._onattackother = function(owner, data) OnAttackOther(owner, data, inst) end
+	inst:ListenForEvent("onattackother", inst._onattackother, owner)
+	
 	--
 	
 	if inst.fx then
@@ -82,8 +138,16 @@ local function OnEquip(inst, owner)
 end
 
 local function OnUnequip(inst, owner)
+	if inst.components.fueled then
+		inst.components.fueled:StopConsuming()
+	end
+	
 	if owner.components.combat then
 		owner.components.combat.externaldamagemultipliers:RemoveModifier(inst)
+	end
+	
+	if owner.components.health then
+		owner.components.health.externalfiredamagemultipliers:RemoveModifier(inst)
 	end
 	
 	if inst._onpolartiles then
@@ -95,8 +159,12 @@ local function OnUnequip(inst, owner)
 		inst.onpolarstormchanged = nil
 	end
 	
-	if inst.components.fueled then
-		inst.components.fueled:StopConsuming()
+	if inst._onattackother then
+		inst:RemoveEventCallback("onattackother", inst._onattackother, owner)
+	end
+	
+	if inst.components.petleash then
+		inst.components.petleash:DespawnAllPets()
 	end
 	
 	--
@@ -173,7 +241,9 @@ end
 
 local function SetAmuletPower(inst, data)
 	local parts = inst:GetAmuletParts()
+	
 	local add_fueled = true
+	local durability = TUNING.POLARAMULET_PERISHTIME
 	
 	local houndstooth = #parts["houndstooth"]
 	if houndstooth > 0 then
@@ -182,16 +252,30 @@ local function SetAmuletPower(inst, data)
 		end
 	end
 	
+	local lavae_tooth = #parts["lavae_tooth"]
+	if lavae_tooth > 0 then
+		inst:AddTag("polarimmunity")
+		--inst:AddTag("polarsnowimmunity")
+		
+		--if inst.components.petleash then
+		--	inst.components.petleash:SetMaxPetsForPrefab("lavae_pet", lavae_tooth)
+		--end
+		
+		durability = durability + (lavae_tooth * TUNING.POLARAMULET.LAVAE_TOOTH.PERISHTIME)
+	end
+	
 	local polarwargstooth = #parts["polarwargstooth"]
 	if polarwargstooth > 0 then
 		add_fueled = false
 		
-		inst:AddTag("polarimmunity")
+		--inst:AddTag("polarimmunity")
 		inst:AddTag("polarsnowimmunity")
 		inst:AddTag("show_spoilage")
 		
-		inst:AddComponent("perishable")
-		inst.components.perishable:SetPerishTime(TUNING.POLARAMULET_PERISHATIME + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.PERISHTIME))
+		if inst.components.perishable == nil then
+			inst:AddComponent("perishable")
+		end
+		inst.components.perishable:SetPerishTime(durability + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.PERISHTIME))
 		inst.components.perishable:SetOnPerishFn(inst.Remove)
 		inst.components.perishable:StartPerishing()
 		
@@ -224,7 +308,7 @@ local function SetAmuletPower(inst, data)
 		if inst.components.fueled == nil then
 			inst:AddComponent("fueled")
 			inst.components.fueled.fueltype = FUELTYPE.MAGIC
-			inst.components.fueled:InitializeFuelLevel(TUNING.POLARAMULET_PERISHATIME)
+			inst.components.fueled:InitializeFuelLevel(durability)
 			inst.components.fueled:SetFirstPeriod(TUNING.TURNON_FUELED_CONSUMPTION, TUNING.TURNON_FULL_FUELED_CONSUMPTION)
 			inst.components.fueled:SetDepletedFn(inst.Remove)
 		end
@@ -240,9 +324,17 @@ local function OnDeconstructed(inst, caster)
 	end
 	
 	local parts = inst:GetAmuletParts()
+	local x, y, z = inst.Transform:GetWorldPosition()
+	
 	for k, v in pairs(parts) do
 		for i, part in ipairs(v or {}) do
-			inst.components.lootdropper:SpawnLootPrefab(part)
+			local item = inst.components.lootdropper:SpawnLootPrefab(part)
+			
+			if item and item:IsValid() and item.prefab == "lavae_tooth"
+				and item.components.petleash and inst.components.petleash:GetNumPets() < inst.components.petleash:GetMaxPets() then
+				
+				item.components.petleash:SpawnPetAt(x, y, z)
+			end
 		end
 	end
 end
@@ -286,6 +378,8 @@ local function fn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("inventoryitem")
+	
+	inst:AddComponent("leader")
 	
 	inst:AddComponent("shadowlevel")
 	inst.components.shadowlevel:SetDefaultLevel(TUNING.AMULET_SHADOW_LEVEL)

@@ -5,15 +5,21 @@ local Hounded = require("components/hounded")
 local OldHounded_ctor = Hounded._ctor
 
 Hounded._ctor = function(self, ...)
-    OldHounded_ctor(self, ...)
+	OldHounded_ctor(self, ...)
 	
 	self._polarify = false
 	
 	local OldSummonSpawn = PolarUpvalue(self.SummonSpawn, "SummonSpawn")
 	local OldGetSpawnPrefab = PolarUpvalue(OldSummonSpawn, "GetSpawnPrefab")
 	
+	local GetSpawnPoint = PolarUpvalue(OldSummonSpawn, "GetSpawnPoint") -- Keeping these under for simpler mod compat
+	local GetSpecialSpawnChance = PolarUpvalue(OldGetSpawnPrefab, "GetSpecialSpawnChance")
+	local _spawndata = PolarUpvalue(self.SetSpawnData, "_spawndata")
+	
 	local function GetSpawnPrefab(upgrade, ...)
 		local spawn = OldGetSpawnPrefab(upgrade, ...)
+		local spawndata = _spawndata
+		local _GetSpecialSpawnChance = GetSpecialSpawnChance
 		
 		if self._polarify and (spawn == "hound" or spawn == "firehound") then
 			spawn = "icehound" -- TODO: Use known winter_prefab instead ? Also disable if ice hounds are removed by world settings
@@ -27,7 +33,8 @@ Hounded._ctor = function(self, ...)
 	
 	local function SummonSpawn(pt, upgrade, radius_override, ...)
 		local in_polar = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
-		local _GetSpawnPrefab = GetSpawnPrefab -- Keeping this here for simpler mod compat
+		local _GetSpawnPoint = GetSpawnPoint
+		local _GetSpawnPrefab = GetSpawnPrefab
 		
 		if pt then
 			self._polarify = in_polar

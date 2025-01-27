@@ -230,9 +230,10 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	}
 	STRINGS.POLARAMULET_STATION_TOOTH_TIPS = {
 		{"...gnarwail's horn might...", "...help you at sea...", "...they're teeth yknow?"},
-		{"...hound's tooth would...", "...make you... stronger, yes."},
-		{"...ice fang will...", "...protect you... from the cold."},
-		{"...walrus tusk is...", "...highly... hmm, prrrized, here."},
+		{"...hound's tooth will...", "...make you... stronger, yes."},
+		{"...ice fang does...", "...wonderrrs... in the snow."},
+		{"...lavae tooth could...", "...protect you... from the cold."},
+		{"...walrus tusk is...", "...highly, hmm... prrrized, here."},
 	}
 	
 --	UI
@@ -273,22 +274,23 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.ICICLESTAFF = "Summon the very things you swore to destroy."
 	RECIPE_DESC.POLAR_BRAZIER_ITEM = "A campfire to take anywhere with you."
 	RECIPE_DESC.POLAR_DRYICE = "Winter, in brick shape."
+	RECIPE_DESC.POLAR_LAVAE_TOOTH = "Is parenting too much responsibilities?"
 	RECIPE_DESC.POLARAMULET_BUILDER = "Assemble your own traditional necklace."
 	RECIPE_DESC.POLARBEARHAT = "Stay ahead of the blizzard."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
-	RECIPE_DESC.POLARCROWNHAT = "Rule over the blizzard."
+	RECIPE_DESC.POLARCROWNHAT = "Rule over the blizzard!"
 	RECIPE_DESC.POLARICE_PLOW_ITEM = "Dig a hole and sea's what's under."
 	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
 	RECIPE_DESC.POLARICESTAFF = "Freeze all enemies in your track!"
 	RECIPE_DESC.SHARDS_BLUEGEM = "Shard work pays off."
-	RECIPE_DESC.SNOWBALL_ITEM_POLAR = "Portable snow? How convenient!"
+	RECIPE_DESC.SNOWBALL_ITEM_POLAR = "Portable snow?\nHow convenient!"
 	RECIPE_DESC.TRAP_POLARTEETH = "Pops up and freezes whoever steps on it."
 	RECIPE_DESC.TURF_POLAR_CAVES = "The chilly stone of the chillest cave."
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
 	RECIPE_DESC.WINTERCOOKING_POLARCRABLEGS = "Crack into coastal cuisine."
 	
-	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading with some shady individual!"
+	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading with some shady individual..."
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"
 	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"The Polar Exchange\""
 	

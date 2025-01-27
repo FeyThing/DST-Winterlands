@@ -11,7 +11,7 @@ local prefabs = {
 SetSharedLootTable("antler_tree", {
 	{"log", 	1},
 	{"log", 	0.5},
-	{"twigs", 	1},
+	{"twigs", 	0.5},
 })
 
 SetSharedLootTable("antler_tree_burnt", {
@@ -89,6 +89,12 @@ local function ChopDownTree(inst, chopper)
 	inst.SoundEmitter:PlaySound("dontstarve/forest/treeCrumble")
 	if not (chopper and chopper:HasTag("playerghost")) then
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/use_axe_tree")
+	end
+	
+	for i, v in ipairs(tree_sticcs) do
+		if inst.sticcs[v] then
+			inst.components.lootdropper:SpawnLootPrefab("twigs")
+		end
 	end
 	
 	SetStump(inst)

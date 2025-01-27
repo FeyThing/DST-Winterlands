@@ -23,6 +23,7 @@ POLARAMULET_PARTS = rawget(_G, "POLARAMULET_PARTS") or {}
 local AMULET_PARTS = {
 	gnarwail_horn = {build = "polar_amulet_items", unlock_recipe = "frostwalkeramulet"},
 	houndstooth = {build = "polar_amulet_items", unlock_recipe = "polaricestaff"},
+	lavae_tooth = {build = "polar_amulet_items", unlock_recipe = "polar_lavae_tooth"},
 	polarwargstooth = {build = "polar_amulet_items", unlock_recipe = "polarcrownhat"},
 	walrus_tusk = {build = "polar_amulet_items", unlock_recipe = "iciclestaff"},
 }
