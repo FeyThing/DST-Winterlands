@@ -51,7 +51,7 @@ local function fn()
 	end
 	
 	inst:AddComponent("fuel")
-	inst.components.fuel.fuelvalue = TUNING.MED_FUEL
+	inst.components.fuel.fuelvalue = TUNING.MED_LARGE_FUEL
 	
 	inst:AddComponent("inspectable")
 	

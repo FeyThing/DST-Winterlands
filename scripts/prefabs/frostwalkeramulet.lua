@@ -2,30 +2,20 @@ local assets = {
 	Asset("ANIM", "anim/torso_frostwalker_amulet.zip"),
 }
 
-local ICE_FORMING_BLOCKER_TAGS = { "shadecanopy", "crabking", "boat" }
+local ICE_FORMING_BLOCKER_TAGS = {"shadecanopy", "shadecanopysmall", "crabking", "boat"}
+
 local function FormIceBridge(inst, owner)
 	if TheWorld.components.polarice_manager == nil then
 		return
 	end
 	
-	local x, y, z = owner.Transform:GetWorldPosition()
-	local ox, oy = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+	local _x, _y, _z = owner.Transform:GetWorldPosition()
+	local ox, oy = TheWorld.Map:GetTileCoordsAtPoint(_x, _y, _z)
 	
 	for x = -1, 1 do
 		for y = -1, 1 do
 			local tx, ty = ox + x, oy + y
-			local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
-			if next(TheSim:FindEntities(cx, cy, cz, 10, nil, nil, ICE_FORMING_BLOCKER_TAGS)) == nil then
-				local tile = TheWorld.Map:GetTile(tx, ty)
-				
-				if TileGroupManager:IsOceanTile(tile) or tile == WORLD_TILES.POLAR_ICE then
-					if tile ~= WORLD_TILES.POLAR_ICE then
-						inst.components.fueled:DoDelta(-TUNING.FROSTWALKERAMULET_FREEZE_TILE_USE)
-					end
-					
-					TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
-				end
-			end
+			TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
 		end
 	end
 end

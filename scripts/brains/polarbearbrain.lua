@@ -100,6 +100,8 @@ local function FindToothAction(inst)
 	return (target and BufferedAction(inst, target, ACTIONS.PICKUP)) or nil
 end
 
+--	Tradin'
+
 local function DoToothTrade(inst)
 	local target = inst._tooth_trade_giver
 	if target == nil or inst.sg:HasStateTag("busy") then
@@ -165,6 +167,40 @@ local function GetNoLeaderHomePos(inst)
 		return nil
 	else
 		return GetHomePos(inst)
+	end
+end
+
+--	Fuelin'
+
+local BRAZIER_TAGS = {"canlight", "portablebrazier"}
+local BRAZIER_NOT_TAGS = {"INLIMBO", "_inventoryitem"}
+
+local function AddFuelAction(inst)
+	if TheWorld.state.isday or inst.components.timer and inst.components.timer:TimerExists("brazierfuel_cooldown") then
+		return
+	end
+	
+	local brazier = FindEntity(inst, TUNING.POLARBEAR_PROTECTSTUFF_RANGE, nil, BRAZIER_TAGS, BRAZIER_NOT_TAGS)
+	
+	if brazier and brazier.components.fueled and brazier.components.fueled:GetCurrentSection() < TUNING.POLARBEAR_REFUEL_BRAZIER_PERCENT then
+		local fuel = inst.components.inventory:FindItem(function(item) return item.prefab == "polarbearfur" end)
+		if fuel == nil then
+			fuel = SpawnPrefab("polarbearfur")
+			inst.components.inventory:GiveItem(fuel)
+			
+			fuel.components.inventoryitem:SetOnDroppedFn(fuel.Remove)
+		end
+		
+		local action = BufferedAction(inst, brazier, ACTIONS.ADDFUEL, fuel)
+		local fueled_cooldown = function()
+			if inst.components.timer and not inst.components.timer:TimerExists("brazierfuel_cooldown") then
+				inst.components.timer:StartTimer("brazierfuel_cooldown", TUNING.POLARBEAR_REFUEL_BRAZIER_COOLDOWN)
+			end
+		end
+		
+		action:AddSuccessAction(fueled_cooldown)
+		
+		return action
 	end
 end
 
@@ -311,8 +347,12 @@ function PolarBearBrain:OnStart()
 			Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST)),
 		
 		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
-			ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
-				DoAction(self.inst, DoPlowingAction, "plow snow"), 5, 10, 5, 5)),
+			PriorityNode({
+				ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
+					DoAction(self.inst, DoPlowingAction, "plow snow"), 5, 10, 5, 5),
+				ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
+					DoAction(self.inst, AddFuelAction, "add fuel"))
+			}, 0.5)),
 		
 		ChattyNode(self.inst, "POLARBEAR_GOHOME",
 			WhileNode(function() return TheWorld.state.iscavenight or not self.inst:IsInLight() end, "NightTime",

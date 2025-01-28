@@ -21,12 +21,31 @@ local ICE_TILE_FORCED_UPDATE_COOLDOWN = TUNING.TOTAL_DAY_TIME
 local MIN_TEMPERATURE = -31
 local MAX_TEMPERATURE = 100
 
+local FLOATEROBJECT_TAGS = {"floaterobject"}
+local IGNORE_ICE_TAGS = {"activeprojectile", "oceanshoalspawner", "irreplaceable", "flying", "FX", "DECOR", "INLIMBO", "NOCLICK"}
+local ICE_BLOCKER_DIST = 10
+
 return Class(function(self, inst)
     assert(inst.ismastersim, "Polar Ice Manager should not exist on the client!")
 
 	-- [ Public fields ] --
 	self.inst = inst
-
+	
+	self.IGNORE_ICE_BREAKING_ONREMOVE_TAGS = deepcopy(IGNORE_ICE_TAGS)
+	self.IGNORE_ICE_FORMING_ONREMOVE_TAGS = deepcopy(IGNORE_ICE_TAGS)
+	self.ICE_FORMING_BLOCKER_TAGS = {"shadecanopy", "shadecanopysmall", "crabking", "boat"}
+	
+	local breaking_ignore_tags = {"ignorewalkableplatformdrowning"}
+	local forming_ignore_tags = {"underwater_salvageable", "walkableplatform"}
+	
+	for i, v in ipairs(breaking_ignore_tags) do
+		table.insert(self.IGNORE_ICE_BREAKING_ONREMOVE_TAGS, v)
+	end
+	
+	for i, v in ipairs(forming_ignore_tags) do
+		table.insert(self.IGNORE_ICE_FORMING_ONREMOVE_TAGS, v)
+	end
+	
 	-- [ Private fields ] --
 	local initial_load = true -- The first ever ice load should generate ice instantly to decrease lag
 
@@ -65,8 +84,10 @@ return Class(function(self, inst)
 	end
 
 	local function InitialLoad() -- Similar to the normal Update fn but skips the ice tile queueing to reduce lag
-		local mult = Lerp(1, 4, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
-		local add = Lerp(0, -3, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
+		local _temperature = math.clamp(_world_temperature, MIN_TEMPERATURE, MAX_TEMPERATURE)
+		
+		local mult = Lerp(1, 4, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
+		local add = Lerp(0, -3, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 
 		for i, basestr in pairs(_icebasestrengthgrid.grid) do
 			local current_strength = math.clamp(basestr * mult + add, 0, 1)
@@ -93,8 +114,10 @@ return Class(function(self, inst)
 	end
 
 	DoUpdate = function(reschedule)
-		local mult = Lerp(1, 4, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
-		local add = Lerp(0, -3, (_world_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
+		local _temperature = math.clamp(_world_temperature, MIN_TEMPERATURE, MAX_TEMPERATURE)
+		
+		local mult = Lerp(1, 4, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
+		local add = Lerp(0, -3, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 
 		for i, basestr in pairs(_icebasestrengthgrid.grid) do
 			SetCurrentIceStrength(i, basestr * mult + add)
@@ -114,8 +137,8 @@ return Class(function(self, inst)
 	end
 
 	local function SpawnCracks(x, y, z)
-		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, 0, z)
-		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+		local tx, ty = _map:GetTileCoordsAtPoint(x, 0, z)
+		local cx, cy, cz = _map:GetTileCenterPoint(tx, ty)
 		local fx = SpawnPrefab("fx_ice_crackle")
 		fx.Transform:SetPosition(cx, cy, cz)
 		
@@ -230,10 +253,7 @@ return Class(function(self, inst)
 	inst:ListenForEvent("temperaturetick", function(inst, val) _world_temperature = val end)
 
     -- [ Methods ] --
-	local IGNORE_ICE_BREAKING_ONREMOVE_TAGS = {"ignorewalkableplatformdrowning", "activeprojectile", "irreplaceable", "flying", "FX", "DECOR", "INLIMBO"}
-	local IGNORE_ICE_FORMING_ONREMOVE_TAGS = {"activeprojectile", "underwater_salvageable", "irreplaceable", "flying", "FX", "DECOR", "INLIMBO"}
-	local FLOATEROBJECT_TAGS = {"floaterobject"}
-
+	
 	function self:QueueCreateIceAtTile(tx, ty)
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 		
@@ -251,8 +271,11 @@ return Class(function(self, inst)
 	end
 
 	function self:CreateTemporaryIceAtTile(tx, ty, time)
+		if not self:CanCreateIce(tx, ty) then
+			return
+		end
+		
 		local index = _icecurrentstrengthgrid:GetIndex(tx, ty)
-
 		local tile = _map:GetTile(tx, ty)
 		if tile == WORLD_TILES.POLAR_ICE then
 			if _updating_tiles[index] == true then
@@ -303,13 +326,31 @@ return Class(function(self, inst)
 			end)
 		end
 	end
-
+	
+	function self:CanCreateIce(tx, ty)
+		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+		
+		if next(TheSim:FindEntities(cx, cy, cz, ICE_BLOCKER_DIST, nil, nil, self.ICE_FORMING_BLOCKER_TAGS)) == nil then
+			local tile = TheWorld.Map:GetTile(tx, ty)
+			
+			if TileGroupManager:IsOceanTile(tile) or tile == WORLD_TILES.POLAR_ICE then
+				return true
+			end
+		end
+		
+		return false
+	end
+	
 	function self:CreateIceAtPoint(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, y, z)
 		self:CreateIceAtTile(tx, ty)
 	end
-
+	
 	function self:CreateIceAtTile(tx, ty)
+		if not self:CanCreateIce(tx, ty) then
+			return
+		end
+		
 		local current_tile = nil
 		local undertile = inst.components.undertile
 		if undertile then
@@ -318,8 +359,6 @@ return Class(function(self, inst)
 		
 		_map:SetTile(tx, ty, WORLD_TILES.POLAR_ICE)
 		
-		-- V2C: Because of a terraforming callback in farming_manager.lua, the undertile gets cleared during SetTile.
-		--      We can circumvent this for now by setting the undertile after SetTile.
 		if undertile and current_tile then
 			undertile:SetTileUnderneath(tx, ty, current_tile)
 		end
@@ -330,10 +369,12 @@ return Class(function(self, inst)
 		terraformer.Transform:SetPosition(x, 0, z)
 		
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
-		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, IGNORE_ICE_FORMING_ONREMOVE_TAGS)
+		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, self.IGNORE_ICE_FORMING_ONREMOVE_TAGS)
 		for _, ent in ipairs(entities_near_ice) do
 			if ent.components.inventoryitem and ent.Physics then
-				LaunchAway(ent)
+				if not ent.components.inventoryitem.nobounce then
+					LaunchAway(ent)
+				end
 				ent.components.inventoryitem:SetLanded(false, true)
 			end
 			
@@ -346,6 +387,7 @@ return Class(function(self, inst)
 					rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair atm so we keep the things
 				end
 			elseif not ent:HasTag("locomotor") and ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
+				print("Polar Ice (Forming) removed ent:", ent)
 				DestroyEntity(ent, inst, true, true)
 			end
 		end
@@ -454,24 +496,31 @@ return Class(function(self, inst)
 		local is_ocean_tile = IsOceanTile(old_tile)
 		if is_ocean_tile then
 			-- Behaviour pulled from walkableplatform's onremove/DestroyObjectsOnPlatform response.
-			local entities_near_ice = TheSim:FindEntities(dx, dy, dz, tile_radius_plus_overhang, nil, IGNORE_ICE_BREAKING_ONREMOVE_TAGS)
+			local entities_near_ice = TheSim:FindEntities(dx, dy, dz, tile_radius_plus_overhang, nil, self.IGNORE_ICE_BREAKING_ONREMOVE_TAGS)
 			for _, ent in ipairs(entities_near_ice) do
 				if ent:IsValid() then
-					local has_drownable = (ent.components.drownable ~= nil)
-					local shore_point = has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz)) or nil
-					ent:PushEvent("onsink", { boat = nil, shore_pt = shore_point })
+					local has_drownable = ent.components.drownable ~= nil
 					-- We're testing the overhang, so we need to verify that anything we find isn't
 					-- still on some adjacent dock or land tile or other platform after we remove ourself.
-					if not has_drownable and not ent.entity:GetParent() and not ent.components.amphibiouscreature and
-					not _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) and not ent:GetCurrentPlatform() then
+					
+					local ignore_drown = ent.entity:GetParent() or ent.components.amphibiouscreature
+						or _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) or ent:GetCurrentPlatform()
+					
+					if not has_drownable and not ignore_drown then
 						if ent.OnPolarFreeze then
 							ent:OnPolarFreeze(false)
+						elseif ent.components.submersible then
+							print("try Submerge!")
+							ent.components.submersible:Submerge()
 						elseif ent.components.inventoryitem then
 							ent.components.inventoryitem:SetLanded(false, true)
 						elseif not ent:HasTag("ignorewalkableplatforms") then -- Not ocean stuff
 							print("Polar Ice (Breaking) removed ent:", ent)
 							DestroyEntity(ent, inst, true, true)
 						end
+					elseif has_drownable and not ignore_drown then
+						local shore_point = has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz)) or nil
+						ent:PushEvent("onsink", {boat = nil, shore_pt = shore_point})
 					end
 				end
 			end
@@ -521,7 +570,7 @@ return Class(function(self, inst)
 
 	function self:GetTemporaryIceTime(tx, ty, tz)
 		if tz then
-			tx, ty = TheWorld.Map:GetTileCoordsAtPoint(tx, ty, tz)
+			tx, ty = _map:GetTileCoordsAtPoint(tx, ty, tz)
 		end
 		
 		local index = _icecurrentstrengthgrid:GetIndex(tx, ty)
