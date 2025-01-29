@@ -36,7 +36,7 @@ GLOBAL.setfenv(1, GLOBAL)
 	function params.polaramulet_station.itemtestfn(container, item, slot)
 		return POLARAMULET_PARTS[item.prefab] ~= nil and not item:HasTag("lightbattery") -- TODO: this will need more work but it should definitively be added
 	end
-
+	
 	function params.polaramulet_station.widget.buttoninfo.fn(inst, doer)
 		if inst.components.container ~= nil then
 			BufferedAction(doer, inst, ACTIONS.POLARAMULET_CRAFT):Do()
@@ -44,7 +44,7 @@ GLOBAL.setfenv(1, GLOBAL)
 			SendRPCToServer(RPC.DoWidgetButtonAction, ACTIONS.POLARAMULET_CRAFT.code, inst, ACTIONS.POLARAMULET_CRAFT.mod_name)
 		end
 	end
-
+	
 	function params.polaramulet_station.widget.buttoninfo.validfn(inst)
 		return inst.replica.container and inst.replica.container:IsFull()
 	end

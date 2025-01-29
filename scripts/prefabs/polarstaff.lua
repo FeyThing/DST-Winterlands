@@ -10,12 +10,6 @@ local polarice_prefabs = {
 	"iciclestaff_icicle",
 }
 
-local function OnEquip(inst, owner)
-	owner.AnimState:OverrideSymbol("swap_object", "swap_staffs", "swap_bluestaff")
-	owner.AnimState:Show("ARM_carry")
-	owner.AnimState:Hide("ARM_normal")
-end
-
 local function OnUnequip(inst, owner)
 	owner.AnimState:ClearOverrideSymbol("swap_object")
 	owner.AnimState:Show("ARM_normal")

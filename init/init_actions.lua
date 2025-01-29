@@ -64,6 +64,15 @@ end)
 
 local COMPONENT_ACTIONS = PolarUpvalue(EntityScript.CollectActions, "COMPONENT_ACTIONS")
 
+local oldcontainer = COMPONENT_ACTIONS.SCENE.container -- Needed for controller support
+	COMPONENT_ACTIONS.SCENE.container = function(inst, doer, actions, right, ...)
+		if right and inst:HasTag("snowshack") and inst.replica.container and inst.replica.container:IsFull() then
+			table.insert(actions, ACTIONS.POLARAMULET_CRAFT)
+		elseif oldcontainer then
+			oldcontainer(inst, doer, actions, right, ...)
+		end
+	end
+
 local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer
 	COMPONENT_ACTIONS.USEITEM.repairer = function(inst, doer, target, actions, ...)
 		if inst:HasTag("freshen_"..MATERIALS.DRYICE) and target:HasTag("repairable_"..MATERIALS.ICE) then
@@ -91,6 +100,7 @@ end
 
 local actionhandlers = {
 	POLARPLOW = "dig_start",
+	POLARAMULET_CRAFT = "give",
 }
 
 for action, state in pairs(actionhandlers) do

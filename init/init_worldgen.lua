@@ -26,7 +26,6 @@ AddTaskSetPreInitAny(function(self)
 		
 		for task, chance in pairs(TUNING.POLAR_TASKS_OPTIONALITY) do
 			if winterlands_preset or math.random() < chance then
-				print("AAA:", task)
 				table.insert(self.tasks, task)
 			end
 		end

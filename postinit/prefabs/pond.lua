@@ -9,10 +9,20 @@ local ponds = {
 local DespawnPlants
 local OldOnSnowLevel
 
-local function DoPolarIcePlow(inst, plow)
-	if inst.components.timer == nil then
-		inst:AddComponent("timer")
+local OldCanSpawn
+local function CanSpawn(inst, ...)
+	if IsInPolar(inst) then
+		return false
 	end
+	
+	if OldCanSpawn then
+		return OldCanSpawn(inst, ...)
+	end
+	
+	return true
+end
+
+local function DoPolarIcePlow(inst, plow)
 	if not inst.components.timer:TimerExists("polarice_plow_pond") then
 		inst.components.timer:StartTimer("polarice_plow_pond", TUNING.POLARICE_PLOW_PONDTIME)
 	end
@@ -68,10 +78,28 @@ local function PolarInit(inst)
 	inst:SetPolarPond()
 end
 
+local OldCanMouseThrough
+local function CanMouseThrough(inst, ...)
+	if ThePlayer and ThePlayer.components.playeractionpicker and ThePlayer.components.playercontroller then
+		local lmb, rmb = ThePlayer.components.playeractionpicker:DoGetMouseActions(inst:GetPosition(), inst)
+		local deployplacer = ThePlayer.components.playercontroller.deployplacer
+		
+		if lmb == nil and rmb == nil and deployplacer and deployplacer.prefab == "polarice_plow_item_placer" then
+			return true, true
+		end
+	end
+	
+	return OldCanMouseThrough and OldCanMouseThrough(inst, ...) or false
+end
+
 for i, prefab in ipairs(ponds) do
 	ENV.AddPrefabPostInit(prefab, function(inst)
-		inst:AddTag("ignoremouseover") -- So we can place the ice demoleisher...
 		inst:AddTag("snowblocker")
+		
+		if OldCanMouseThrough == nil then
+			OldCanMouseThrough = inst.CanMouseThrough
+		end
+		inst.CanMouseThrough = CanMouseThrough
 		
 		inst._snowblockrange = net_smallbyte(inst.GUID, prefab.."._snowblockrange")
 		inst._snowblockrange:set(5)
@@ -80,9 +108,20 @@ for i, prefab in ipairs(ponds) do
 			return
 		end
 		
+		if inst.components.childspawner then
+			if OldCanSpawn == nil then
+				OldCanSpawn = inst.components.childspawner.canspawnfn
+			end
+			inst.components.childspawner.canspawnfn = CanSpawn
+		end
+		
+		if inst.components.timer == nil then
+			inst:AddComponent("timer")
+		end
+		
 		inst.DoPolarIcePlow = DoPolarIcePlow
 		inst.SetPolarPond = SetPolarPond
 		
-		inst:DoTaskInTime(0, PolarInit)
+		inst:DoTaskInTime(0.1, PolarInit)
 	end)
 end

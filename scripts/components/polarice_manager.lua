@@ -510,7 +510,6 @@ return Class(function(self, inst)
 						if ent.OnPolarFreeze then
 							ent:OnPolarFreeze(false)
 						elseif ent.components.submersible then
-							print("try Submerge!")
 							ent.components.submersible:Submerge()
 						elseif ent.components.inventoryitem then
 							ent.components.inventoryitem:SetLanded(false, true)

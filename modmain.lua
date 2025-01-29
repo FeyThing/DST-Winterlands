@@ -50,6 +50,7 @@ local prefabs = {
 	"heatrock",
 	"krampus",
 	"lavae",
+	"moonbase",
 	"oceanfish",
 	"oceanfishableflotsam",
 	"penguin",
