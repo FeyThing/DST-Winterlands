@@ -48,6 +48,9 @@ uniform vec4 OCEAN_BLEND_PARAMS;
 uniform vec4 OCEAN_WORLD_EXTENTS;
 #define OCEAN_SAMPLER SAMPLER[4]
 
+#define SNOW_RGB vec3(0.89, 0.97, 1.0)
+#define FREEZE_RGB vec3(0.510, 0.780, 0.941)
+
 #define PI 3.1415926535897932384626433832795
 
 vec3 mod289(vec3 x) {
@@ -159,20 +162,21 @@ void main()
             gl_FragColor.a *= clamp((PS_POS.y - sinkThreshold - aThreshhold) / aThreshhold, 0.0, 1.0);
         }
 
-        if (FREEZE_LVL > 0.0 && PS_POS.y < SINK_OFFSET + FREEZE_LVL)
+        if (FREEZE_LVL > 0.0 && PS_POS.y < SINK_OFFSET + 1.4 * FREEZE_LVL)
         {
             vec2 objXZ = vec2(MatrixW[3][0], MatrixW[3][2]);
-            float mask1 = clamp(0.5 + 0.5 * snoise((PS_POS.xz - objXZ) * 4.0), 0.0, 1.0);
-            float mask2 = clamp(0.5 + 0.5 * snoise(-(PS_POS.xz - objXZ) * 4.0), 0.0, 1.0);
-            float mask3 = clamp(0.5 + 0.5 * snoise((PS_POS.xz - objXZ) * 16.0), 0.0, 1.0);
+            float mask1 = clamp(0.5 + 0.5 * snoise( (PS_POS.xz - objXZ) * 4.0),  0.0, 1.0);
+            float mask2 = clamp(0.5 + 0.5 * snoise(-(PS_POS.xz - objXZ) * 4.0),  0.0, 1.0);
+            float mask3 = clamp(0.5 + 0.5 * snoise( (PS_POS.xz - objXZ) * 16.0), 0.0, 1.0);
 
-            float mask = max(mask1, mask2);
-            mask = mix(mask3, mask, mask);
-            
-            mask *= gl_FragColor.a;
-            mask *= (1.0 - clamp(pow((PS_POS.y - SINK_OFFSET) / FREEZE_LVL, 3.0), 0.0, 1.0));
+            float yStrength = 1.0 - clamp(PS_POS.y - SINK_OFFSET + 1.0 - 1.4 * FREEZE_LVL, 0.0, 1.0);
 
-            gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.89, 0.97, 1.0), mask);
+            float snowMask = max(mask1, mask2);
+            snowMask = mix(mask3, snowMask, snowMask);
+            snowMask *= yStrength;
+
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, FREEZE_RGB, yStrength * gl_FragColor.a * 0.5);
+            gl_FragColor.rgb = mix(gl_FragColor.rgb, SNOW_RGB, snowMask * gl_FragColor.a);
         }
 
 		gl_FragColor.rgb = min(gl_FragColor.rgb, gl_FragColor.a);
