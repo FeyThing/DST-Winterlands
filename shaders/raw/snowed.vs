@@ -10,7 +10,7 @@ attribute vec4 POS2D_UV; // x, y, u + samplerIndex * 2, v
 varying vec3 PS_POS;
 varying vec3 PS_TEXCOORD;
 
-#define SINK_DEPTH  FLOAT_PARAMS.y
+#define SINK_DEPTH FLOAT_PARAMS.y
 
 void main()
 {
