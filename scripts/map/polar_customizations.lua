@@ -44,10 +44,10 @@ end
 WSO.Pre.polar_icicles = function(difficulty)
 	local tuning_vars = {
 		never = 	{POLAR_ICICLE_ENABLED = false},
-		few = 		{POLAR_MAX_ICICLES = 3, POLAR_WORLD_MAXICICLES = 30},
-		--default = {POLAR_MAX_ICICLES = 6, POLAR_WORLD_MAXICICLES = 120},
-		many = 		{POLAR_MAX_ICICLES = 8},
-		always = 	{POLAR_MAX_ICICLES = 10},
+		few = 		{POLAR_MAX_ICICLES = 2, POLAR_WORLD_MAXICICLES = 30},
+		--default = {POLAR_MAX_ICICLES = 5, POLAR_WORLD_MAXICICLES = 100},
+		many = 		{POLAR_MAX_ICICLES = 7, POLAR_WORLD_MAXICICLES = 120},
+		always = 	{POLAR_MAX_ICICLES = 9, POLAR_WORLD_MAXICICLES = 150},
 	}
 	OverrideTuningVariables(tuning_vars[difficulty])
 end

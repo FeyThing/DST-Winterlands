@@ -33,13 +33,15 @@ local BODY_PAINTINGS = {
 }
 
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
-local RETARGET_ONEOF_TAGS = {"hound", "merm", "walrus", "pirate", "wonkey"}
+local RETARGET_ONEOF_TAGS = {"hound", "walrus", "warg", "pirate", "wonkey"}
 local RETARGET_NOT_TAGS = {"bearbuddy"}
 
 local function RetargetFn(inst)
 	return not inst:IsInLimbo() and FindEntity(inst, TUNING.PIG_TARGET_DIST, function(guy)
 		return inst.components.combat:CanTarget(guy)
-	end, RETARGET_MUST_TAGS, RETARGET_NOT_TAGS, RETARGET_ONEOF_TAGS) or nil
+			and guy:HasAnyTag(RETARGET_ONEOF_TAGS) or guy:HasAnyTag(POLARBEAR_FISHY_TAGS)
+	
+	end, RETARGET_MUST_TAGS, RETARGET_NOT_TAGS) or nil
 end
 
 local function KeepTargetFn(inst, target)
@@ -59,6 +61,10 @@ end
 
 local function GetStatus(inst)
 	return (inst.enraged and "ENRAGED") or (inst.components.follower and inst.components.follower.leader ~= nil and "FOLLOWER") or nil
+end
+
+local function GetFuelMasterBonus(inst, item, target)
+	return (target and target:HasTag("portablebrazier")) and TUNING.POLARBEAR_BRAZIER_FUEL_MULT or 1
 end
 
 local function CalcSanityAura(inst, observer)
@@ -574,6 +580,9 @@ local function fn()
 	inst.components.locomotor:SetAllowPlatformHopping(true)
 	
 	inst:AddComponent("embarker")
+	
+	inst:AddComponent("fuelmaster")
+	inst.components.fuelmaster:SetBonusFn(GetFuelMasterBonus)
 	
 	inst:AddComponent("drownable")
 	

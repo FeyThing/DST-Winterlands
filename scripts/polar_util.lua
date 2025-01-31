@@ -188,7 +188,7 @@ function IsTooDeepInSnow(inst, viewer)
 			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
 			local bby = bby2 - bby1
 			
-			insnow = bby < 2 -- TODO: adapt with current snowwave size
+			insnow = bby < 2
 		end
 	end
 	

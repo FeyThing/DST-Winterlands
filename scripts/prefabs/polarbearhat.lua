@@ -138,6 +138,7 @@ local function fn()
 	inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
 	inst.components.equippable.dapperness = -TUNING.DAPPERNESS_SMALL
 	inst.components.equippable.flipdapperonmerms = true
+	inst.components.equippable.polar_slowtime = 2
 	inst.components.equippable:SetOnEquip(OnEquip)
 	inst.components.equippable:SetOnUnequip(OnUnequip)
 	inst.components.equippable:SetOnEquipToModel(OnEquipToModel)

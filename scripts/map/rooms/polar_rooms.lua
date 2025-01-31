@@ -30,7 +30,7 @@ AddRoom("PolarIsland_Caves", {
 	value = WORLD_TILES.POLAR_CAVES_NOISE,
 	contents = {
 		countstaticlayouts = {
-			["PolarCave_Pillar"] = 7,
+			["PolarCave_Pillar"] = function(area) return math.max(7, math.floor(area / 40)) end,
 			["PolarCave_SmallPillar"] = function() return math.random(1, 2) end,
 		},
 		countprefabs = {
@@ -62,7 +62,7 @@ AddRoom("PolarIsland_Lakes", {
 		countprefabs = {
 			skeleton_notplayer_1 = function() return math.random() < 0.01 and 1 or 0 end,
 			skeleton_notplayer_2 = function() return math.random() < 0.01 and 1 or 0 end,
-			snowwave_itemrespawner = function() return math.random(6, 9) end,
+			snowwave_itemrespawner = function() return math.random(8, 12) end,
 			rocks = 4,
 		},
 		
@@ -101,7 +101,7 @@ AddRoom("PolarIsland_BurntForest", {
 	contents = {
 		countprefabs = {
 			polarbearhouse = function() return math.random(0, 2) end,
-			snowwave_itemrespawner = function() return math.random(12, 20) end,
+			snowwave_itemrespawner = function() return math.random(14, 22) end,
 		},
 		
 		distributepercent = 0.28,
@@ -130,7 +130,7 @@ AddRoom("PolarIsland_FloeField", {
 	contents = {
 		countprefabs = {
 			icelettuce_spawner = 2,
-			snowwave_itemrespawner = 4,
+			snowwave_itemrespawner = 6,
 		},
 		
 		distributepercent = 0.1,
@@ -156,7 +156,7 @@ AddRoom("PolarIsland_IceQuarry", {
 			grass_polar = 6,
 			grass_polar_spawner = function() return math.random() < 0.33 and 1 or 0 end,
 			pond = function() return math.random(2, 4) end,
-			snowwave_itemrespawner = function() return math.random(3, 5) end,
+			snowwave_itemrespawner = function() return math.random(6, 10) end,
 		},
 		
 		distributepercent = 0.08,
@@ -207,7 +207,7 @@ AddRoom("PolarIsland_BG", {
 	contents = {
 		countprefabs = {
 			icelettuce_spawner = function(area) return math.max(1, math.floor(area / 42)) end,
-			snowwave_itemrespawner = function() return math.random(6, 9) end,
+			snowwave_itemrespawner = function() return math.random(10, 16) end,
 		},
 		
 		distributepercent = 0.062,

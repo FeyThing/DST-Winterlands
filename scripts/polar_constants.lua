@@ -1,3 +1,14 @@
+--	Tags, Counts
+
+NUM_POLARTRINKETS = 2
+
+POLARBEAR_FISHY_TAGS = {
+	"merm",
+	"gnarwail",
+	"shark",
+	"squid",
+}
+
 --	Crafting
 
 local TechTree = require("techtree")
@@ -16,7 +27,9 @@ TECH.NONE.POLARAMULET_STATION = 0
 
 TECH.POLARAMULET_STATION = {POLARAMULET_STATION = 1}
 
---
+TECH_INGREDIENT.POLARSNOW = "polarsnow_material"
+
+--	Teeth Stuff
 
 POLARAMULET_PARTS = rawget(_G, "POLARAMULET_PARTS") or {}
 
@@ -40,9 +53,7 @@ for k, v in pairs(AMULET_PARTS) do
 	POLARAMULET_PARTS[k] = v
 end
 
---
-
-NUM_POLARTRINKETS = 2
+--	Naughty Things
 
 local POLAR_NAUGHTY_VALUE = {
 	moose_polar = 4,
@@ -65,10 +76,10 @@ KRAMPUS_UGLY_SWEATERS = {
 	{hue = 0.8, 	colormult = {204 / 255, 	102 / 255, 		178 / 255, 	1}}, 	-- pink
 }
 
+--	Others
+
 FUELTYPE.DRYICE = "DRYICE"
 
 MATERIALS.DRYICE = "dryice"
 
 OCEAN_DEPTH.POLAR = 5
-
-TECH_INGREDIENT.POLARSNOW = "polarsnow_material"

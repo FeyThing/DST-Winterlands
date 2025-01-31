@@ -182,19 +182,20 @@ local function AddFuelAction(inst)
 	
 	local brazier = FindEntity(inst, TUNING.POLARBEAR_PROTECTSTUFF_RANGE, nil, BRAZIER_TAGS, BRAZIER_NOT_TAGS)
 	
-	if brazier and brazier.components.fueled and brazier.components.fueled:GetCurrentSection() < TUNING.POLARBEAR_REFUEL_BRAZIER_PERCENT then
+	if brazier and brazier.components.fueled and brazier.components.fueled:GetCurrentSection() < TUNING.POLARBEAR_BRAZIER_REFUEL_PERCENT then
 		local fuel = inst.components.inventory:FindItem(function(item) return item.prefab == "polarbearfur" end)
 		if fuel == nil then
 			fuel = SpawnPrefab("polarbearfur")
 			inst.components.inventory:GiveItem(fuel)
 			
 			fuel.components.inventoryitem:SetOnDroppedFn(fuel.Remove)
+			fuel.persists = false
 		end
 		
 		local action = BufferedAction(inst, brazier, ACTIONS.ADDFUEL, fuel)
 		local fueled_cooldown = function()
 			if inst.components.timer and not inst.components.timer:TimerExists("brazierfuel_cooldown") then
-				inst.components.timer:StartTimer("brazierfuel_cooldown", TUNING.POLARBEAR_REFUEL_BRAZIER_COOLDOWN)
+				inst.components.timer:StartTimer("brazierfuel_cooldown", TUNING.POLARBEAR_BRAZIER_REFUEL_COOLDOWN)
 			end
 		end
 		
@@ -294,7 +295,7 @@ local function GetCombatLines(inst)
 	if target then
 		if target.components.timer and target.components.timer:TimerExists("stealing_bear_stuff") then
 			return STRINGS.POLARBEAR_PROTECTSTUFF[math.random(#STRINGS.POLARBEAR_PROTECTSTUFF)]
-		elseif not inst.enraged and (target:HasTag("fish") or target:HasTag("merm") or target:HasTag("shark")) then
+		elseif not inst.enraged and target:HasAnyTag(POLARBEAR_FISHY_TAGS) then
 			return STRINGS.POLARBEAR_FISHFIGHT[math.random(#STRINGS.POLARBEAR_FISHFIGHT)]
 		end
 	end
@@ -348,10 +349,10 @@ function PolarBearBrain:OnStart()
 		
 		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
 			PriorityNode({
+				ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
+					DoAction(self.inst, AddFuelAction, "add fuel")),
 				ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
 					DoAction(self.inst, DoPlowingAction, "plow snow"), 5, 10, 5, 5),
-				ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
-					DoAction(self.inst, AddFuelAction, "add fuel"))
 			}, 0.5)),
 		
 		ChattyNode(self.inst, "POLARBEAR_GOHOME",

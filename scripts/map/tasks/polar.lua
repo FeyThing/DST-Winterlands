@@ -43,7 +43,7 @@ AddTask("Polar Caves", {
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
-		["PolarIsland_Caves"] = 2,
+		["PolarIsland_Caves"] = function() return math.random(2, 3) end,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
 	background_room = "Empty_Cove",
