@@ -151,38 +151,38 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 end)
 
 --	Show stuff on necklace
-	
-	local AMULET_PARTS = {
-		"left",
-		"middle",
-		"right",
-	}
-	
-	AddClassPostConstruct("widgets/itemtile", function(self, invitem)
-		function self:SetAmuletParts()
-			local img = self.image:AddChild(UIAnim())
-			img:GetAnimState():SetBank("polar_amulet_ui")
-			img:GetAnimState():SetBuild("torso_polar_amulet") -- Shouldn't matter
-			img:GetAnimState():PlayAnimation("idle")
-			img:SetScale(1, 0.8)
-			img:SetClickable(false)
+
+local AMULET_PARTS = {
+	"left",
+	"middle",
+	"right",
+}
+
+AddClassPostConstruct("widgets/itemtile", function(self, invitem)
+	function self:SetAmuletParts()
+		local img = self.image:AddChild(UIAnim())
+		img:GetAnimState():SetBank("polar_amulet_ui")
+		img:GetAnimState():SetBuild("torso_polar_amulet") -- Shouldn't matter
+		img:GetAnimState():PlayAnimation("idle")
+		img:SetScale(1, 0.8)
+		img:SetClickable(false)
+		
+		for i, v in ipairs(AMULET_PARTS) do
+			local item = invitem.amulet_parts[v]:value()
 			
-			for i, v in ipairs(AMULET_PARTS) do
-				local item = invitem.amulet_parts[v]:value()
-				
-				local build = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].build
-				local sym = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].symbol
-				local ornament = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].ornament
-				
-				if build then
-					img:GetAnimState():OverrideSymbol((ornament and "ornament_" or "teeth_")..v, build, sym or "swap_"..item)
-				end
+			local build = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].build
+			local sym = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].symbol
+			local ornament = POLARAMULET_PARTS[item] and POLARAMULET_PARTS[item].ornament
+			
+			if build then
+				img:GetAnimState():OverrideSymbol((ornament and "ornament_" or "teeth_")..v, build, sym or "swap_"..item)
 			end
-			
-			self.amulet_parts = img
 		end
 		
-		if invitem.amulet_parts and not self.amulet_parts then
-			self:SetAmuletParts()
-		end
-	end)
+		self.amulet_parts = img
+	end
+	
+	if invitem.amulet_parts and not self.amulet_parts then
+		self:SetAmuletParts()
+	end
+end)

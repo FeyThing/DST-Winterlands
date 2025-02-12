@@ -64,7 +64,7 @@ local function GetStatus(inst)
 end
 
 local function GetFuelMasterBonus(inst, item, target)
-	return (target and target:HasTag("portablebrazier")) and TUNING.POLARBEAR_BRAZIER_FUEL_MULT or 1
+	return (target and target:HasTag("portable_brazier")) and TUNING.POLARBEAR_BRAZIER_FUEL_MULT or 1
 end
 
 local function CalcSanityAura(inst, observer)

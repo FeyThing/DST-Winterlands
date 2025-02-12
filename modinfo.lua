@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.1.12"
+version = "1.1.13"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Something Fishy
@@ -58,7 +58,7 @@ local options = {
 	language = {{description = "English", data = false}, {description = "简体中文 (Simplified)", data = "zhs", hover = "By heavenmoon0107"}, {description = "繁體中文 (Traditional)", data = "zht", hover = "By heavenmoon0107"}}, -- {description = "Polish", hover = "By LukaS", data = "pl"}},
 	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
 	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
-	biometype = {{description = "Island", data = "island", hover = "As its own separated region. Recommanded!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommanded..."}, {description = "Skip", data = "skip", hover = "Will not generate (can be useful for multi-shards setup)."}},
+	biometype = {{description = "Island", data = "island", hover = "As its own separated region. Recommended!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommended..."}, {description = "Skip", data = "skip", hover = "Will not generate (can be useful for multi-shards setup)."}},
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},
 }
 

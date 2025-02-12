@@ -252,7 +252,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "Freezes the water around the wearer and under itself when dropped.\n\nAlso greatly improves stability on ice."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave the highest snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICICLESTAFF = "Creates a salvo of 15 Icicles.\n\nNote to self: Keep clear from the area."
-	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_BRAZIER = "Makes light and heat while fueled and can be used to cook food.\n\nIt can be reused and even dismantled back into an inventory item when extinguished."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_BRAZIER = "Makes light and heat while fueled and can be used to cook food.\n\nIt can be reused and even dismantled back into an inventory item."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_THRONE = "Someone or something is often leaving presents here, although they seem to be moved elsewhere at times."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_THRONE_GIFTS = "Free gifts!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
@@ -317,3 +317,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARBEARHOUSES = "Bear Bothies"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.ROCKS_POLAR = "Ice Protuberances"
 	
+--	Tweaked
+	
+	local OLDSCRAPBOOK_BOOK_RAIN = STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN or ""
+	STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN = OLDSCRAPBOOK_BOOK_RAIN.."\n\nThis book will affect the blizzard instead when used in the Winterlands."

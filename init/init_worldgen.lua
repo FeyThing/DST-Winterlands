@@ -95,6 +95,26 @@ polar_level.overrides.task_set = "polar"
 
 AddLevel(LEVELTYPE.SURVIVAL, polar_level)
 
+local OldChooseSetPieces = GLOBAL.Level.ChooseSetPieces
+GLOBAL.Level.ChooseSetPieces = function(self, ...)
+	local start_location = self.overrides and self.overrides.start_location
+	if start_location == "polar" then
+		if self.set_pieces == nil then
+			self.set_pieces = {}
+		end
+		self.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands"}}
+		
+		if self.required_prefabs == nil then
+			self.required_prefabs = {}
+		end
+		if not table.contains(self.required_prefabs, "spawnpoint_polar") then
+			table.insert(self.required_prefabs, "spawnpoint_polar")
+		end
+	end
+	
+	OldChooseSetPieces(self, ...)
+end
+
 --
 
 local polar_taskset = deepcopy(TaskSets.GetGenTasks("default")) or {}
@@ -107,11 +127,11 @@ if polar_taskset.set_pieces == nil then
 	polar_taskset.set_pieces = {}
 end
 
-table.insert(polar_taskset.required_prefabs, "spawnpoint_polar")
+--table.insert(polar_taskset.required_prefabs, "spawnpoint_polar")
 
 polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
 
-polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands"}}
+--polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands"}}		This is now added from the start_location (sorta)
 polar_taskset.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Floe", "Polar Quarry"}}
 
 AddTaskSet("polar", polar_taskset)

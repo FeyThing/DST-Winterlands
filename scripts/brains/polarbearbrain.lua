@@ -172,7 +172,8 @@ end
 
 --	Fuelin'
 
-local BRAZIER_TAGS = {"canlight", "portablebrazier"}
+local BRAZIER_TAGS = {"canlight"}
+local BRAZIER_ONE_OF_TAGS = {"portable_brazier", "portable_campfire"}
 local BRAZIER_NOT_TAGS = {"INLIMBO", "_inventoryitem"}
 
 local function AddFuelAction(inst)
@@ -180,7 +181,7 @@ local function AddFuelAction(inst)
 		return
 	end
 	
-	local brazier = FindEntity(inst, TUNING.POLARBEAR_PROTECTSTUFF_RANGE, nil, BRAZIER_TAGS, BRAZIER_NOT_TAGS)
+	local brazier = FindEntity(inst, TUNING.POLARBEAR_PROTECTSTUFF_RANGE, nil, BRAZIER_TAGS, BRAZIER_NOT_TAGS, BRAZIER_ONE_OF_TAGS)
 	
 	if brazier and brazier.components.fueled and brazier.components.fueled:GetCurrentSection() < TUNING.POLARBEAR_BRAZIER_REFUEL_PERCENT then
 		local fuel = inst.components.inventory:FindItem(function(item) return item.prefab == "polarbearfur" end)

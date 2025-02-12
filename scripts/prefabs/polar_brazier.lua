@@ -223,7 +223,7 @@ local function fn()
 	
 	inst:AddTag("campfire")
 	inst:AddTag("cooker")
-	inst:AddTag("portablebrazier")
+	inst:AddTag("portable_brazier")
 	inst:AddTag("storytellingprop")
 	inst:AddTag("structure")
 	inst:AddTag("wildfireprotected")

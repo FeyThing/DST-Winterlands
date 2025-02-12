@@ -41,6 +41,7 @@ local prefabs = {
 	"antlion_sinkhole",
 	"bearger",
 	"birds",
+	"books",
 	"evergreen",
 	"farm_plants",
 	"flower",

@@ -69,7 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "A pocket sized firepit.",
-		ON = "Too hot to go in my pockets now. But some ice could help.",
+		ON = "Too hot to go in my pockets now. Unless I quench the flame.",
 	}
 	DESCRIBE.POLAR_BRAZIER_ITEM = "Science says everything is better when portable."
 	DESCRIBE.POLAR_THRONE = "Looks comfy."

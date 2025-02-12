@@ -58,30 +58,3 @@ for i, v in ipairs(WINTER_BIRDS) do
 		inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	end)
 end
-
---
-
-local OldOnRead
-local function OnRead(inst, reader, ...)
-	if reader and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(reader) then
-		return false
-	end
-	
-	if OldOnRead then
-		return OldOnRead(inst, reader, ...)
-	end
-end
-
-ENV.AddPrefabPostInit("book_birds", function(inst)
-	if not TheWorld.ismastersim then
-		return
-	end
-	
-	if inst.components.book then
-		if OldOnRead == nil then
-			OldOnRead = inst.components.book.onread
-		end
-		
-		inst.components.book:SetOnRead(OnRead)
-	end
-end)
