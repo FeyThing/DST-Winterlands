@@ -343,6 +343,7 @@ local function fn()
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.canbepickedup = false
 	inst.components.inventoryitem.canbepickedupalive = false
+	inst.components.inventoryitem.canonlygoinpocketorpocketcontainers = true
 	inst.components.inventoryitem.nobounce = true
 	
 	inst:AddComponent("knownlocations")

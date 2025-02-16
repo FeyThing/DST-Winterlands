@@ -98,7 +98,7 @@ AddTask("Polar Quarry", {
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
-		["PolarIsland_IceQuarry"] = function() return math.random(2, 3) end,
+		["PolarIsland_IceQuarry"] = function() return math.random(3, 4) end,
 	},
 	entrance_room = {"Empty_Cove"},
 	room_bg = WORLD_TILES.POLAR_SNOW,

@@ -185,7 +185,7 @@ local function marker()
 	inst.components.workable:SetWorkLeft(1)
 	inst.components.workable:SetOnFinishCallback(OnDig)
 	
-	inst.plow_range = 5
+	inst.plow_range = 6
 	inst.persists = false
 	
 	inst:DoTaskInTime(60, inst.Remove)

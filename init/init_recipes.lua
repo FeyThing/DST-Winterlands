@@ -64,7 +64,7 @@ PolarRecipe("polarbearhat", 		{Ingredient("polarbearfur", 1), Ingredient("meat",
 PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluegem_shards", 2), Ingredient("mosquitosack", 1)}, 	TECH.SCIENCE_TWO, 		nil, 		{"COOKING"}, {"icepack"})
 
 --	Boating / Fishing
-PolarRecipe("polarice_plow_item", 	{Ingredient("log", 3), Ingredient("cutstone", 1), Ingredient("mole", 1)}, 	TECH.SEAFARING_ONE, 	nil, 	{"FISHING"}, {"ocean_trawler_kit"})
+PolarRecipe("polarice_plow_item", 	{Ingredient("log", 3), Ingredient("cutstone", 1), Ingredient("mole", 1)}, 	TECH.SEAFARING_ONE, 	nil, 	{"FISHING", "WINTER"}, {"ocean_trawler_kit", "winterometer"})
 
 --	Decor / Structure
 PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 3), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 									{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})

@@ -199,17 +199,6 @@ return {
 				},
 				{
 					name = "",
-					type = "evergreen",
-					shape = "rectangle",
-					x = 186,
-					y = 416,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
 					type = "evergreen_stump",
 					shape = "rectangle",
 					x = 884,

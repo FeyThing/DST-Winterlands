@@ -33,11 +33,11 @@ local function PolarInit(inst)
 		SetOccupied(inst, true)
 		
 		if TheWorld.event_listeners.megaflare_detonated and TheWorld.event_listeners.megaflare_detonated[inst] then
-			local OldOnMegaFlare = TheWorld.event_listeners.megaflare_detonated[inst][1]
+			local OnMegaFlare = TheWorld.event_listeners.megaflare_detonated[inst][1]
 			--	Don't TP MacTusk & Friends if it's a camp on the island !!
 			TheWorld.event_listeners.megaflare_detonated[inst][1] = function(src, data, ...)
-				if not IsInPolar(inst) and OldOnMegaFlare then
-					OldOnMegaFlare(src, data, ...)
+				if not IsInPolar(inst) and OnMegaFlare then
+					OnMegaFlare(src, data, ...)
 				end
 			end
 		end

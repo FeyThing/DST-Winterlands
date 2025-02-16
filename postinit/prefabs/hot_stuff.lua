@@ -3,11 +3,12 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local FUELMULT = TUNING.POLAR_STORM_FUELEDMULT
 local PROTECTION = TUNING.POLAR_STORM_PROTECTION
+local SNOWBLOCK = TUNING.SNOW_BLOCK_RANGES
 
 --[[
 	fuel_rate: 	Fueled fires should deplace faster in blizzard
 	prot_range: Range of protection from the blizzard. To be given to actual hot flames
-	snow_block:	Prevents immediate snow around
+	snow_block:	Prevents immediate snow around (if nil then fires have default range of 8!)
 	snow_melt: 	Keep snow away for a little longer after we're gone
 --]]
 
@@ -18,24 +19,26 @@ local FIRES = {
 	cotl_tabernacle_level2 = 	{fuel_rate = FUELMULT.FIREPIT},
 	cotl_tabernacle_level3 = 	{fuel_rate = FUELMULT.FIREPIT},
 	firepit = 					{fuel_rate = FUELMULT.FIREPIT},
-	torch = 					{fuel_rate = FUELMULT.TORCH},
+	portablefirepit = 			{fuel_rate = FUELMULT.CAMPFIRE, 	snow_block = 0}, -- snow_block done by portable_campfirefire to override default fire range
+	torch = 					{fuel_rate = FUELMULT.TORCH, 		snow_block = SNOWBLOCK.TORCH, 		snow_melt = true}, -- snow interactions work with Wilson's skills
 	lighter = 					{fuel_rate = FUELMULT.TORCH},
 	
 	--	Super hot
-	emberlight = 				{prot_range = PROTECTION.FIRE, 		snow_block = 7, 	snow_melt = true},
+	emberlight = 				{prot_range = PROTECTION.FIRE, 		snow_block = SNOWBLOCK.FIRE, 		snow_melt = true},
 	dragonflyfurnace = 			{snow_block = 6},
 	lava_pond = 				{snow_block = 6},
 	saladfurnace = 				{snow_block = 6},
-	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_block = 10, 	snow_melt = true},
+	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_block = SNOWBLOCK.STAR, 		snow_melt = true},
 	
 	--	Just visual
 	mermthrone = 				{snow_block = 5},
 	winona_teleport_pad = 		{snow_block = 4},
 	
 	--	Actual flames
-	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE, 						snow_melt = true},
-	character_fire = 			{prot_range = PROTECTION.FIRE, 							snow_melt = true},
-	fire = 						{prot_range = PROTECTION.FIRE, 							snow_melt = true},
+	campfirefire = 				{prot_range = PROTECTION.CAMPFIRE, 										snow_melt = true},
+	character_fire = 			{prot_range = PROTECTION.FIRE, 											snow_melt = true},
+	fire = 						{prot_range = PROTECTION.FIRE, 											snow_melt = true},
+	portable_campfirefire = 	{prot_range = PROTECTION.CAMPFIRE, 	snow_block = SNOWBLOCK.FIRE_SMALL, 	snow_melt = true},
 }
 
 local function SetPolarstormRate(inst)
@@ -58,6 +61,25 @@ local function OnPolarstormChanged(inst, active)
 		inst._update_polarstorm_rate = nil
 	end
 end
+
+--
+
+local oldapplyskillbrightness
+local function applyskillbrightness(inst, value, ...)
+	if oldapplyskillbrightness then
+		oldapplyskillbrightness(inst, value, ...)
+	end
+	if value and inst._snowblockrange then
+		local range = SNOWBLOCK.TORCH + (SNOWBLOCK.TORCH_BRIGHTNESS_SKILL * (value - 1))
+		inst._snowblockrange:set(range)
+		
+		if inst.components.snowwavemelter then
+			inst.components.snowwavemelter.melt_range = range
+		end
+	end
+end
+
+--
 
 for prefab, data in pairs(FIRES) do
 	ENV.AddPrefabPostInit(prefab, function(inst)
@@ -98,6 +120,13 @@ for prefab, data in pairs(FIRES) do
 				inst.components.snowwavemelter.melt_range = data.snow_block
 			end
 			inst.components.snowwavemelter:StartMelting()
+			
+			if prefab == "torch" and inst._onskillrefresh and oldapplyskillbrightness == nil then
+				local RefreshAttunedSkills = PolarUpvalue(inst._onskillrefresh, "RefreshAttunedSkills")
+				oldapplyskillbrightness = PolarUpvalue(RefreshAttunedSkills, "applyskillbrightness")
+				
+				PolarUpvalue(RefreshAttunedSkills, "applyskillbrightness", applyskillbrightness)
+			end
 		end
 	end)
 end

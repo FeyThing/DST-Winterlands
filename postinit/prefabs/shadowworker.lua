@@ -16,7 +16,7 @@ local function OnPolarInit(inst, iswinter, ...)
 			local x1 = x + MARKER_DIST * math.cos(theta)
 			local z1 = z + MARKER_DIST * math.sin(theta)
 			
-			if TheWorld.Map:IsPolarSnowAtPoint(x1, 0, z1, true) and not TheWorld.Map:IsPolarSnowBlocked(x1, 0, z1)
+			if TheWorld.Map:IsPolarSnowAtPoint(x1, 0, z1, true) and not TheWorld.Map:IsPolarSnowBlocked(x1, 0, z1, -1)
 				and #TheSim:FindEntities(x, y, z, MARKER_DIST - 1, MARKER_TAGS) == 0 then
 				
 				local marker = SpawnPrefab("snowwave_workermarker")

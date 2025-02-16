@@ -340,6 +340,7 @@ local function itemfn()
 	inst.AnimState:PlayAnimation("idle_item")
 	inst.AnimState:SetScale(0.7, 0.7)
 	
+	inst:AddTag("donotautopick")
 	inst:AddTag("portableitem")
 	
 	MakeInventoryFloatable(inst, nil, 0.05, 0.7)

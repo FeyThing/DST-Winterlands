@@ -5,6 +5,7 @@ AddRoom("PolarIsland_Village", {
 	required_prefabs = {"wall_polar"}, -- Present in all villages, added from taskset
 	contents = {
 		countprefabs = {
+			grass_polar_spawner = function() return math.random(0, 1) end,
 			polarbearhouse = function() return math.random(4, 5) end,
 			winter_tree_sparse = function () return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(6, 8) or 0 end,
 		},
@@ -157,6 +158,8 @@ AddRoom("PolarIsland_IceQuarry", {
 			grass_polar_spawner = function() return math.random() < 0.33 and 1 or 0 end,
 			pond = function() return math.random(2, 4) end,
 			snowwave_itemrespawner = function() return math.random(6, 10) end,
+			rock1 = 1,
+			rock2 = 1,
 		},
 		
 		distributepercent = 0.08,

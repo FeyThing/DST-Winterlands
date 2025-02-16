@@ -72,8 +72,8 @@ local oldcontainer = COMPONENT_ACTIONS.SCENE.container -- Needed for controller 
 			oldcontainer(inst, doer, actions, right, ...)
 		end
 	end
-
-local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer
+	
+local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer -- Dryice can repair normal ice repairable, other way around won't work tho
 	COMPONENT_ACTIONS.USEITEM.repairer = function(inst, doer, target, actions, ...)
 		if inst:HasTag("freshen_"..MATERIALS.DRYICE) and target:HasTag("repairable_"..MATERIALS.ICE) then
 			table.insert(actions, ACTIONS.REPAIR)
@@ -82,7 +82,7 @@ local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer
 		end
 	end
 	
-local oldmachine = COMPONENT_ACTIONS.INVENTORY.machine
+local oldmachine = COMPONENT_ACTIONS.INVENTORY.machine -- For unused snowglobe item
 	COMPONENT_ACTIONS.INVENTORY.machine = function(inst, doer, actions, right, ...)
 		if inst:HasTag("snowglobe") and not inst:HasTag("cooldown") and not inst:HasTag("fueldepleted") and inst:HasTag("enabled") then
 			table.insert(actions, inst:HasTag("turnedon") and ACTIONS.TURNOFF or ACTIONS.TURNON)
@@ -90,7 +90,31 @@ local oldmachine = COMPONENT_ACTIONS.INVENTORY.machine
 			oldmachine(inst, doer, actions, right, ...)
 		end
 	end
-
+	
+local oldstorytellingprop = COMPONENT_ACTIONS.SCENE.storytellingprop -- To keep action order the same with Walter, can't use portable_campfire tag or it can't be used by others
+	COMPONENT_ACTIONS.SCENE.storytellingprop = function(inst, doer, actions, right, ...)
+		local wantsleft = inst:HasTag("portable_brazier") and doer:HasTag("portable_campfire_user")
+		if inst:HasTag("storytellingprop") and doer:HasTag("storyteller") and wantsleft then
+			if not right then
+				table.insert(actions, ACTIONS.TELLSTORY)
+			end
+		elseif oldstorytellingprop then
+			oldstorytellingprop(inst, doer, actions, right, ...)
+		end
+	end
+	
+local oldportablestructure = COMPONENT_ACTIONS.SCENE.portablestructure -- Waltuh
+	COMPONENT_ACTIONS.SCENE.portablestructure = function(inst, doer, actions, right, ...)
+		if right and inst:HasTag("campfire") and inst:HasTag("portable_brazier") and doer:HasTag("portable_campfire_user")
+			and (not inst.candismantle or inst.candismantle(inst)) then
+			
+			table.insert(actions, ACTIONS.DISMANTLE)
+			return
+		elseif oldportablestructure then
+			oldportablestructure(inst, doer, actions, right, ...)
+		end
+	end
+	
 --
 
 local function AddToSGAC(action, state)

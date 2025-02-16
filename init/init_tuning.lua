@@ -416,6 +416,14 @@ local night_time = seg_time * night_segs
 		TORCH = 2, -- Unused, in hand fires now give fixated level
 	}
 	
+	TUNING.SNOW_BLOCK_RANGES = {
+		FIRE = 8,
+		FIRE_SMALL = 5,
+		STAR = 10,
+		TORCH = 4,
+		TORCH_BRIGHTNESS_SKILL = 0.67,
+	}
+	
 	TUNING.POLAR_STORM_LIGHTER_LEVEL = 0.5
 	TUNING.POLAR_STORM_BEARHEAD_LEVEL = 0.8
 	
@@ -428,7 +436,7 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
 	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false
-
+	
 	TUNING.SNOWED_SHADER_MAX_SUBMERGE = -0.6 -- LukaS: Distance, in in-game units (4 = tile), to shift the player model on the Y axis
 	TUNING.SNOWED_SHADER_MAX_FREEZE = 0.55
 	

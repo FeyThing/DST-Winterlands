@@ -1,7 +1,7 @@
 local SnowwaveMelter = Class(function(self, inst)
 	self.inst = inst
 	
-	self.melt_range = 8 -- same as fire
+	self.melt_range = TUNING.SNOW_BLOCK_RANGES.FIRE -- same as default _snowblockrange
 	self.melt_rate = 0.5
 	self.melt_time = TUNING.POLARPLOW_BLOCKER_DURATION_FIRE
 	self.min_dist = 4
@@ -12,7 +12,15 @@ end)
 local SNOWBLOCKER_TAGS = {"snowblocker"}
 local MIN_SNOWBLOCKER_DIST = 2
 
+function SnowwaveMelter:CanMelt()
+	return (self.canmeltfn and self.canmeltfn(self.inst)) or not self.inst:HasTag("INLIMBO")
+end
+
 function SnowwaveMelter:Melt()
+	if not self:CanMelt() then
+		return
+	end
+	
 	local x, y, z = self.inst.Transform:GetWorldPosition()
 	local blockers = TheSim:FindEntities(x, y, z, MIN_SNOWBLOCKER_DIST, SNOWBLOCKER_TAGS)
 	
