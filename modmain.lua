@@ -52,6 +52,7 @@ local prefabs = {
 	"krampus",
 	"lavae",
 	"moonbase",
+	"mushroom_farm",
 	"oceanfish",
 	"oceanfishableflotsam",
 	"penguin",

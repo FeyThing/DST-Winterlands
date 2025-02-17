@@ -47,7 +47,6 @@ local CYCLEDONE_GRADUAL_DEFAULT = TUNING.POLARPLOW_BLOCKER_DURATION_GRADUAL
 
 local function ExtendSnowBlocker(inst, doer, spawned, time_override)
 	if inst.components.timer then
-		
 		local blizzard = TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst)
 		local timeleft = (time_override or TUNING.POLARPLOW_BLOCKER_DURATION) * (blizzard and TUNING.POLARPLOW_BLOCKER_STORMCUT or 1)
 		

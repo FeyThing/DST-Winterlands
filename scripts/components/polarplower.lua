@@ -15,13 +15,20 @@ function PolarPlower:CanPlow(doer, pos)
 	return true
 end
 
+function PolarPlower:GetPlowDuration(doer)
+	local iscanadian = doer and doer:HasTag("polite")
+	
+	return TUNING.POLARPLOW_BLOCKER_DURATION * (iscanadian and TUNING.POLARPLOW_BLOCKER_CANADIAN_MULT or 1)
+end
+
 function PolarPlower:DoPlow(doer, pos)
 	local blockers = TheSim:FindEntities(pos.x, pos.y, pos.z, self.plow_range, SNOWBLOCKER_TAGS)
 	local dist = self.plow_range
+	local duration = self:GetPlowDuration(doer)
 	
 	for i, v in ipairs(blockers) do
 		if v.ExtendSnowBlocker then
-			v:ExtendSnowBlocker(doer)
+			v:ExtendSnowBlocker(doer, nil, duration)
 		end
 		
 		local blocker_dist = v:GetDistanceSqToPoint(pos.x, pos.y, pos.z)
@@ -37,7 +44,7 @@ function PolarPlower:DoPlow(doer, pos)
 		blocker = SpawnPrefab("snowwave_blocker")
 		blocker.Transform:SetPosition(pos.x, pos.y, pos.z)
 		
-		blocker:ExtendSnowBlocker(doer, true)
+		blocker:ExtendSnowBlocker(doer, true, duration)
 		if blocker.SetSnowBlockRange then
 			blocker:SetSnowBlockRange(self.plow_range)
 		end
