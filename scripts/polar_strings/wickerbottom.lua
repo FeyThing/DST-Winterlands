@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "His secret recipes aren't all that secret sometimes."
 	DESCRIBE.ICELETTUCE = "Frigidaria brassica. Its leaves put mint to shame."
 	DESCRIBE.ICEBURRITO = "Fresh sustenance, followed by a certain brain freeze."
 	DESCRIBE.POLARCRABLEGS = "The kids have been very crabby to try them. That means more for me!"

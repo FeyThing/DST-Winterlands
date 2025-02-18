@@ -151,7 +151,7 @@ function HasPolarDebuffImmunity(inst, ignorewaterproof)
 end
 
 function HasPolarSnowImmunity(inst)
-	if inst:HasTag("polarimmune") or inst:HasTag("weregoose") or inst:HasTag("playerghost") then
+	if inst:HasTag("polarsnowimmune") or inst:HasTag("weregoose") or inst:HasTag("playerghost") then
 		return true
 	end
 	

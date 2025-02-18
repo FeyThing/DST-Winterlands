@@ -51,6 +51,7 @@ local prefabs = {
 	"heatrock",
 	"krampus",
 	"lavae",
+	"mole",
 	"moonbase",
 	"mushroom_farm",
 	"oceanfish",

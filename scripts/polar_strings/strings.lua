@@ -48,6 +48,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Items
 	
 	--	Food
+	NAMES.DRYICECREAM = "Dry Ice Cream"
 	NAMES.ICELETTUCE = "Iceberg Lettuce"
 	NAMES.ICEBURRITO = "Brrito"
 	NAMES.POLARCRABLEGS = "King Crab Legs"

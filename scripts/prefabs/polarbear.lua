@@ -73,12 +73,18 @@ local function CalcSanityAura(inst, observer)
 		or 0
 end
 
+local function ShouldSleep(inst)
+	return DefaultSleepTest(inst) and not inst.enraged
+end
+
 local function IsAbleToAccept(inst, item, giver)
 	if inst.components.health and inst.components.health:IsDead() then
 		return false, "DEAD"
-	elseif inst.sg ~= nil and inst.sg:HasStateTag("busy") then
-		if inst.sg:HasStateTag("sleeping") then
-			return true
+	elseif inst.sg and inst.sg:HasStateTag("busy") then
+		if inst.components.sleeper:IsAsleep() then
+			inst.components.sleeper:WakeUp()
+			
+			return false, "SLEEPING"
 		else
 			return false, "BUSY"
 		end
@@ -213,10 +219,6 @@ local function OnGetItemFromPlayer(inst, giver, item)
 					and TUNING.POLARBEAR_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS or TUNING.POLARBEAR_LOYALTY_MAXTIME
 			end
 		end
-		
-		if inst.components.sleeper:IsAsleep() then
-			inst.components.sleeper:WakeUp()
-		end
 	end
 	
 	if item.components.equippable and item.components.equippable.equipslot == EQUIPSLOTS.HEAD then
@@ -252,9 +254,7 @@ end
 local function OnRefuseItem(inst, item)
 	inst.sg:GoToState("refuse")
 	
-	if inst.components.sleeper and inst.components.sleeper:IsAsleep() then
-		inst.components.sleeper:WakeUp()
-	elseif inst.components.talker and inst.components.combat and not inst.components.combat.target then
+	if inst.components.talker and inst.components.combat and not inst.components.combat.target then
 		inst.components.talker:Say(STRINGS.POLARBEAR_REFUSE_FOOD[math.random(#STRINGS.POLARBEAR_REFUSE_FOOD)])
 	end
 end
@@ -601,6 +601,7 @@ local function fn()
 	
 	inst:AddComponent("sleeper")
 	inst.components.sleeper:SetResistance(3)
+	inst.components.sleeper:SetSleepTest(ShouldSleep)
 	
 	inst:AddComponent("timer")
 	

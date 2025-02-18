@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "It won't drop even if we hold it upside down!"
 	DESCRIBE.ICELETTUCE = "Eat our greens? But it's all blue."
 	DESCRIBE.ICEBURRITO = "Legend says this burrito never falls apart!"
 	DESCRIBE.POLARCRABLEGS = "It got more legs than us to share!"

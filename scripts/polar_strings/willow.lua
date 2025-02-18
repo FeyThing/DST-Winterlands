@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Warly. Listen here."
 	DESCRIBE.ICELETTUCE = "This is the opposite of good."
 	DESCRIBE.ICEBURRITO = "I don't think any hot sauce can fix this."
 	DESCRIBE.POLARCRABLEGS = "Never had one of these before, I'll try ten."

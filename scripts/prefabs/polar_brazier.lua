@@ -353,6 +353,7 @@ local function itemfn()
 	
 	inst:AddComponent("deployable")
 	inst.components.deployable.ondeploy = OnDeploy
+	inst.components.deployable:SetDeploySpacing(DEPLOYSPACING.ONEPOINTFIVE)
 	
 	inst:AddComponent("inspectable")
 	

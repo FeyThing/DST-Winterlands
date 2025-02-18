@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Glurr- tonguh-- stuuucc!"
 	DESCRIBE.ICELETTUCE = "Is icy-cream growing in ground?!"
 	DESCRIBE.ICEBURRITO = "Huh? Gluurrgh... poor fish in it."
 	DESCRIBE.POLARCRABLEGS = "Want to eat all lemon slices!"

@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Carbon dioxide flavor is hard to best."
 	DESCRIBE.ICELETTUCE = "That's a little too much seasoning."
 	DESCRIBE.ICEBURRITO = "I really dig that name."
 	DESCRIBE.POLARCRABLEGS = "The good thing about having ten legs, is that there's enough for everyone."

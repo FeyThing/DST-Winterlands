@@ -323,6 +323,7 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_IMMUNITY_DURATION = total_day_time * 1.1
 	TUNING.POLAR_IMMUNITY_DURATION_LONG = total_day_time * 2.2
+	TUNING.POLAR_IMMUNITY_DURATION_SHORT = seg_time * 4
 	
 	TUNING.POLAR_WETNESS_LVLS = 6
 	TUNING.POLAR_WETNESS_LVL_WETNESS = -0.2

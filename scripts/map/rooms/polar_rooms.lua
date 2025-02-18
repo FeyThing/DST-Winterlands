@@ -32,19 +32,20 @@ AddRoom("PolarIsland_Caves", {
 	contents = {
 		countstaticlayouts = {
 			["PolarCave_Pillar"] = function(area) return math.max(7, math.floor(area / 40)) end,
-			["PolarCave_SmallPillar"] = function() return math.random(1, 2) end,
+			["PolarCave_SmallPillar"] = function() return math.random(0, 1) end,
 		},
 		countprefabs = {
-			rock_polar = function() return math.random(6, 8) end,
+			rock_polar = function() return math.random(4, 5) end,
 			rock2 = function() return math.random(1, 2) end,
-			polar_icicle_rock = function() return math.random(3, 10) end,
+			polar_icicle_rock = function() return math.random(3, 6) end,
 		},
 		
 		distributepercent = 0.14,
 		distributeprefabs = {
-			rock1 = 0.75,
-			rock_flintless = 0.75,
-			rock_ice = 1,
+			rock1 = 0.6,
+			rock2 = 0.2,
+			rock_flintless = 0.55,
+			rock_ice = 0.75,
 			ice = 2,
 		},
 		

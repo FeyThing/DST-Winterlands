@@ -50,6 +50,7 @@ local ITEMS = {
 	"armorpolar",
 	"bluegem_overcharged",
 	"bluegem_shards",
+	"dryicecream",
 	"dug_grass_polar",
 	"frostwalkeramulet",
 	"iceburrito",

@@ -16,7 +16,7 @@ local HEATSOURCE_TAGS = {"HASHEATER"}
 local HEATSOURCE_NOT_TAGS = {"heatrock"}
 
 local function wetness_ontick(inst, target)
-	if target.components.moisture and target.components.moisture:GetMoisturePercent() <= 0 then
+	if target.components.moisture and target.components.moisture:GetMoisturePercent() <= 0 then -- or target:HasDebuff("buff_polarimmunity") then
 		SetPolarWetness(target, 0) -- This should only be happening in case of Cordon Bleu or other witchcrafts
 		
 		return

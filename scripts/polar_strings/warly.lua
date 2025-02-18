@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Ice cream for the cool kids!"
 	DESCRIBE.ICELETTUCE = "Brr... could use dressing..."
 	DESCRIBE.ICEBURRITO = "This is the last time I rely on Wilson to name my recipes."
 	DESCRIBE.POLARCRABLEGS = "Mwah! Simplement par-fait!"

@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "And, when will you add the flavor? Ah."
 	DESCRIBE.ICELETTUCE = "Do I have to wait and drink it... or?"
 	DESCRIBE.ICEBURRITO = "I'm still figuring things out."
 	DESCRIBE.POLARCRABLEGS = "They better not scuttle off my plate."

@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Home flavored!"
 	DESCRIBE.ICELETTUCE = "Non-meat made of ice."
 	DESCRIBE.ICEBURRITO = "Fish lying in its frozen bedroll!"
 	DESCRIBE.POLARCRABLEGS = "The beast ascends to Valhalla... and to my belly!"

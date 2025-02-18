@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Is not melting, but goes psshh in air!"
 	DESCRIBE.ICELETTUCE = "Leaves very crunchy..."
 	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgang's grip."
 	DESCRIBE.POLARCRABLEGS = "From scary leggy bug to yummy leggy bug."

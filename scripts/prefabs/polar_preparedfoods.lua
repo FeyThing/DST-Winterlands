@@ -153,6 +153,10 @@ for k, v in pairs(require("polar_preparedfoods")) do
 	table.insert(prefs, MakePreparedFood(v))
 end
 
+for k, v in pairs(require("polar_preparedfoods_warly")) do
+	table.insert(prefs, MakePreparedFood(v))
+end
+
 for k, v in pairs(require("polar_spicedfoods")) do
 	table.insert(prefs, MakePreparedFood(v))
 end

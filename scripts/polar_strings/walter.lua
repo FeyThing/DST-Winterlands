@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "Ice cream, sparkling water edition."
 	DESCRIBE.ICELETTUCE = "Would it lettuce freeze? Get it? Because... forget it..."
 	DESCRIBE.ICEBURRITO = "It won't fall apart one bit."
 	DESCRIBE.POLARCRABLEGS = "Mmmm! Hey, anybody wants to listen to my crab horror stories?"

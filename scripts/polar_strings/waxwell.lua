@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "You could break a skull open with that thing."
 	DESCRIBE.ICELETTUCE = "So, we are eating crunchy water now?"
 	DESCRIBE.ICEBURRITO = "I don't assume it tastes bad but..."
 	DESCRIBE.POLARCRABLEGS = "Would be perfect with melted butter."

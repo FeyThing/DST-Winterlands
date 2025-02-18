@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "A mouthful of snowstorm."
 	DESCRIBE.ICELETTUCE = "This year's harvest was most disappointing."
 	DESCRIBE.ICEBURRITO = "My frozen heart won't feel the change."
 	DESCRIBE.POLARCRABLEGS = "We removed its legs one by one!"

@@ -20,6 +20,9 @@ local function DoBreak(inst)
 	
 	if inst.AnimState:IsCurrentAnimation("fall_"..anim) then
 		local ploof = not TheWorld.Map:IsPassableAtPoint(pt.x, 0, pt.z)
+		if not ploof then
+			inst.SoundEmitter:PlaySound("dontstarve/creatures/together/antlion/sfx/glass_break")
+		end
 		
 		if FindEntity(inst, 4, nil, BREAK_SAFETY_TAGS) then
 			inst.AnimState:PlayAnimation("fx_"..anim, false)
@@ -27,7 +30,6 @@ local function DoBreak(inst)
 			return
 		elseif not ploof then
 			inst.AnimState:PlayAnimation("fx_"..anim, false)
-			inst.SoundEmitter:PlaySound("dontstarve/creatures/together/antlion/sfx/glass_break")
 		end
 		
 		local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, 4, nil, BREAK_IGNORE_TAGS)

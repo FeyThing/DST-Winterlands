@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "I actually prefer ice cream in winter, yup."
 	DESCRIBE.ICELETTUCE = "Like biting ice cubes in a drink."
 	DESCRIBE.ICEBURRITO = "It's better to eat fresh."
 	DESCRIBE.POLARCRABLEGS = "Yer doing a fine job at cracking 'em, Luce."

@@ -5,7 +5,7 @@ local Temperature = require("components/temperature")
 function Temperature:GetPolarWetnessModifier(winterInsulation, summerInsulation)
 	local level = GetPolarWetness(self.inst)
 	
-	if level ~= 0 then
+	if level ~= 0 and not self.inst:HasDebuff("buff_polarimmunity") then
 		local winterPolarI = winterInsulation * (0.5 ^ (level / 2))
 		local summerPolarI = summerInsulation * (2 ^ (level / 2))
 		

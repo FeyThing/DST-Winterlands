@@ -88,6 +88,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "I know a prank when I see one!"
 	DESCRIBE.ICELETTUCE = "Mortals will cultivate plants, no matter how mean they come by."
 	DESCRIBE.ICEBURRITO = "I suppose I could have a bite. A frostbite, hyuyu!"
 	DESCRIBE.POLARCRABLEGS = "Fine, fine, I will grab some of that crab."
