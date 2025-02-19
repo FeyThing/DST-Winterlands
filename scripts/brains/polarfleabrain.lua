@@ -18,7 +18,7 @@ local PolarFleaBrain = Class(Brain, function(self, inst)
 end)
 
 local HOST_TAGS =  {"_health", "fleahosted"}
-local HOST_NOT_TAGS = {"INLIMBO", "fire", "wet", "soulless", "outofreach", "_inventoryitem"}
+local HOST_NOT_TAGS = {"INLIMBO", "outofreach", "_inventoryitem"}
 
 local function SortMammals(ents, pt)
 	table.sort(ents, function(a, b)

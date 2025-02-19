@@ -32,7 +32,7 @@ local Preserver = require("components/preserver")
 	local OldGetPerishRateMultiplier = Preserver.GetPerishRateMultiplier
 	function Preserver:GetPerishRateMultiplier(item, ...)
 		if self.perish_rate_multiplier == nil then
-			self.perish_rate_multiplier = 1 -- Needed until beta is released
+			self.perish_rate_multiplier = 1 -- TODO: Delete this later. Needed until beta is released
 		end
 		
 		local rate = OldGetPerishRateMultiplier(self, item, ...)

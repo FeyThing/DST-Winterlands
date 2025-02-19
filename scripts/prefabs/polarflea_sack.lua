@@ -8,6 +8,11 @@ local FLEA_TAGS = {"flea"}
 local FLEA_NOT_TAGS = {"INLIMBO"}
 
 local function UpdateFleas(inst)
+	local owner = inst.components.inventoryitem and inst.components.inventoryitem:GetGrandOwner()
+	if inst.components.container and inst.components.container:IsFull() and owner and owner.components.inventory and owner.components.inventory:IsFull() then
+		return
+	end
+	
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local ents = TheSim:FindEntities(x, y, z, TUNING.POLARFLEA_SACK_CALL_DIST, FLEA_TAGS, FLEA_NOT_TAGS)
 	
@@ -72,6 +77,10 @@ local function OnDepleted(inst)
 	end
 	
 	inst:Remove()
+end
+
+local function FleaPreserverRate(inst, item)
+	return (item and item:HasTag("flea")) and TUNING.POLARFLEA_SACK_PRESERVER_RATE or nil
 end
 
 local function OnBurnt(inst)
@@ -149,6 +158,9 @@ local function fn()
 	
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.cangoincontainer = false
+	
+	inst:AddComponent("preserver")
+	inst.components.preserver:SetPerishRateMultiplier(FleaPreserverRate)
 	
 	inst:AddComponent("waterproofer")
 	inst.components.waterproofer:SetEffectiveness(0)
