@@ -74,6 +74,29 @@ local function OnDepleted(inst)
 	inst:Remove()
 end
 
+local function OnBurnt(inst)
+	if inst.components.container then
+		inst.components.container:DropEverything()
+		inst.components.container:Close()
+	end
+	
+	SpawnPrefab("ash").Transform:SetPosition(inst.Transform:GetWorldPosition())
+	
+	inst:Remove()
+end
+
+local function OnIgnite(inst)
+	if inst.components.container then
+		inst.components.container.canbeopened = false
+	end
+end
+
+local function OnExtinguish(inst)
+	if inst.components.container then
+		inst.components.container.canbeopened = true
+	end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -129,6 +152,12 @@ local function fn()
 	
 	inst:AddComponent("waterproofer")
 	inst.components.waterproofer:SetEffectiveness(0)
+	
+	MakeSmallBurnable(inst)
+	MakeSmallPropagator(inst)
+	inst.components.burnable:SetOnBurntFn(OnBurnt)
+	inst.components.burnable:SetOnIgniteFn(OnIgnite)
+	inst.components.burnable:SetOnExtinguishFn(OnExtinguish)
 	
 	MakeHauntableLaunchAndDropFirstItem(inst)
 	

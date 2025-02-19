@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."
 	DESCRIBE.WALL_POLAR_ITEM = "Don't you dare lick it, Woby!"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it match the season."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Robot guts! Neat!"

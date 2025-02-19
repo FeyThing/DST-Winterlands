@@ -209,3 +209,24 @@ AddClassPostConstruct("widgets/itemtile", function(self, invitem)
 		self:SetAmuletParts()
 	end
 end)
+
+--	WX-78 Circuits
+
+AddClassPostConstruct("widgets/upgrademodulesdisplay", function(self)
+	local GetModuleDefinitionFromNetID = require("wx78_moduledefs").GetModuleDefinitionFromNetID
+	local OldOnModuleAdded = self.OnModuleAdded
+	function self:OnModuleAdded(moduledefinition_index, ...)
+		OldOnModuleAdded(self, moduledefinition_index, ...)
+		local module_def = GetModuleDefinitionFromNetID(moduledefinition_index)
+		if module_def == nil then
+			return
+		end
+		
+		local modname = module_def.name
+		if modname == "naughty" then
+			local new_chip = self.chip_objectpool[self.chip_poolindex - 1]
+			new_chip:GetAnimState():SetBuild("polarstatus_wx")
+			new_chip:GetAnimState():OverrideSymbol("movespeed2_chip", "polarstatus_wx", modname.."_chip")
+		end
+	end
+end)

@@ -16,9 +16,12 @@ function Map:IsPolarSnowBlocked(x, y, z, range_mod)
 		local ent_range = (v._snowblockrange == nil and v:HasTag("fire") and TUNING.SNOW_BLOCK_RANGES.FIRE) or 0
 		
 		-- Mostly use range_mod for forgiveness, snowwaves might not display due to the grid pattern while there can be microscopic gaps between blockers
-		local range = math.max(v._snowblockrange and v._snowblockrange:value() or 0, ent_range) + (range_mod or 0)
-		local dist = v:GetDistanceSqToPoint(x, y, z)
+		local range = math.max(v._snowblockrange and v._snowblockrange:value() or 0, ent_range)
+		if range > 0 then
+			range = range + (range_mod or 0)
+		end
 		
+		local dist = v:GetDistanceSqToPoint(x, y, z)
 		if range > 0 and dist <= range * range then
 			return true
 		end

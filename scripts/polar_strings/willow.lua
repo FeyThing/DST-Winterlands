@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.WALL_POLAR = "I hate it."
 	DESCRIBE.WALL_POLAR_ITEM = "Maybe I'll give it a chance."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Not quite my favorite."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Hey WX, when are you gonna install a flamethrower?"

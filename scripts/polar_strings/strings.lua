@@ -88,6 +88,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.WALL_POLAR = "Dry Ice Wall"
 	NAMES.WALL_POLAR_ITEM = "Dry Ice Wall"
 	NAMES.WINTER_ORNAMENTPOLAR = "Chilly Adornment"
+	NAMES.WX78MODULE_NAUGHTY = "Evildoer Circuit"
 	
 	--	Recipe Names (needed for blueprints)
 	NAMES.SHARDS_BLUEGEM = "Blue Gem Shards"
@@ -262,13 +263,13 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm... also good to make others think you're an actual bear."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "These awful little buggers are everywhere! In tall grass, on mammals... have you looked inside your hairs recently?"
-	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "A 10 slots cozy container loved by Snowfleas!\nThose inside will jump in and out of it without biting, and they will come out to defend their new home if threatened."
-	
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "A 10 slots cozy container loved by Snowfleas!\nThose inside will jump in and out of it without biting, and they will come out to defend their new home when threatened."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of other carried or stored items by 25%. Can be stacked multiplicatively."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPLOW = "Digs a large hole in ice that makes for an ideal fishing spot!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICESTAFF = "Sends a freezing shockwave in a large range."
 	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "These flutter in the blizzard and collect junk along the way.\n\nAll sorts of crazy junk.\n\nYou'd be surprised."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "Plugs into WX78's circuit board.\n\nRequires 1 socket and multiplies all sorts of Naughtiness gained as followed per circuit installed:\nx2 > x3 > x3.5 > x4 > x4.5 > x5"
 	
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
 	
@@ -295,6 +296,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
 	RECIPE_DESC.WINTERCOOKING_POLARCRABLEGS = "Crack into coastal cuisine."
+	RECIPE_DESC.WX78MODULE_NAUGHTY = "Makes you extra saucy."
 	
 	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading with some shady individual..."
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"

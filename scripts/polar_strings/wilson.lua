@@ -16,6 +16,9 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Ice should try somewhere else."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Huh. That wasn't so bad."
 	
+	ANNOUNCE.ANNOUNCE_WX_NAUGHTYCHIP_KRAMPUS = {"only_used_by_wx78"}
+	ANNOUNCE.ANNOUNCE_WX_NAUGHTYCHIP_RABBIT = {"only_used_by_wx78"}
+	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr...! This is snow joke!"
 	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "I'm dry. But only in terms of snow."
@@ -129,3 +132,4 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."
 	DESCRIBE.WALL_POLAR_ITEM = "Useful to keep one's cool."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "This one should spruce up the tree just right."
+	DESCRIBE.WX78MODULE_NAUGHTY = "So much science packed into one tiny gizmo."

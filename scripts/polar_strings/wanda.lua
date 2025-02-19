@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.WALL_POLAR = "I wouldn't want to punch it for certain."
 	DESCRIBE.WALL_POLAR_ITEM = "That shouldn't melt anytime soon."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "So lifelike I'd swear it would melt... very... soon..."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Aha! I was wondering when they'd started making these."

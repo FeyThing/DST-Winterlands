@@ -92,6 +92,7 @@ local components = {
 	"hullhealth",
 	"hunter",
 	"inspectable",
+	"kramped",
 	"locomotor",
 	"map",
 	"moisture",

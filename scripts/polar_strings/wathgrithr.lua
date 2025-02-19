@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Cold and unyielding, as is my resolve!"
 	DESCRIBE.WALL_POLAR_ITEM = "Fortifications made of an ice giant."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "A frigid token fit for the halls of Valhalla."
+	DESCRIBE.WX78MODULE_NAUGHTY = "These boons shall empower our metal warrior."

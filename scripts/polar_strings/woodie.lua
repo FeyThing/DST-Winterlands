@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Anyone's feelin' like breaking the ice?"
 	DESCRIBE.WALL_POLAR_ITEM = "How aboot we build some igloo, eh Lucy?"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "That one's perfect."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Some fancy robot bits."

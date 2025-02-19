@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or in?"
 	DESCRIBE.WALL_POLAR_ITEM = "It's of no use there on the ground."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Daring today, are we?"
+	DESCRIBE.WX78MODULE_NAUGHTY = "Are you the brightest bulb of the bunch?"

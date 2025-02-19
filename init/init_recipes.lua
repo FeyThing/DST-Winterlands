@@ -78,7 +78,10 @@ PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("blu
 PolarRecipe("snowball_item_polar", 			{Ingredient("ice", 1), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 	TECH.WINTERS_FEAST, 			{product = "snowball_item", description = "snowball_item_polar", hint_msg = "NEEDSWINTERS_FEAST"}, 	{"SPECIAL_EVENT"}, {"giftwrap"})
 PolarRecipe("wintercooking_polarcrablegs",	{Ingredient("wintersfeastfuel", 1), Ingredient("polarflea", 2)}, 	TECH.WINTERSFEASTCOOKING_ONE, 	{nounlock = true, manufactured = true, actionstr = "COOK", image = "polarcrablegs.tex"}, 			{"CRAFTING_STATION"}, {"wintercooking_tourtiere"})
 
---	[ 		Crafting Station	]	--
+--	Survivors
+PolarRecipe("wx78module_naughty", 			{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 			TECH.ROBOTMODULECRAFT_ONE, 		{builder_tag = "upgrademoduleowner", nounlock = false}, 	{"CHARACTER", "MAGIC"}, {"wx78module_light", "nightmarefuel"})
+
+--	[ 	Crafting Station	]	--
 
 PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 
@@ -93,7 +96,7 @@ PolarRecipe("polar_fishingrod",			{Ingredient("smallmeat", 2)}, 							TECH.POLA
 PolarRecipe("polar_oceanfishingrod",	{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 	TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", image = "oceanfishingrod.tex", nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 PolarRecipe("polar_birdtrap",			{Ingredient("fishmeat", 2)}, 							TECH.POLARAMULET_STATION, 	{product = "birdtrap", image = "birdtrap.tex", nounlock = true, sg_state = "give"}, 				{"CRAFTING_STATION"})
 
---	[ 		Deconstruction		]	--
+--	[ 	Deconstruction		]	--
 
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe
 

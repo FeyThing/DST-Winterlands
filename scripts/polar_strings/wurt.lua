@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Brrr... don't want to live in ice castle!"
 	DESCRIBE.WALL_POLAR_ITEM = "Will make big ice castle, flort."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Want to keep it!"
+	DESCRIBE.WX78MODULE_NAUGHTY = "Crunchy."

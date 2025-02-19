@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Yeah, that's pretty ice."
 	DESCRIBE.WALL_POLAR_ITEM = "Assembly time."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Nothin' says winter like this one."
+	DESCRIBE.WX78MODULE_NAUGHTY = "WX, you gotta stop leavin' this stuff lying around!"

@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.WALL_POLAR = "The walls of our Frosty Fort!"
 	DESCRIBE.WALL_POLAR_ITEM = "First rule of the Frosty Fort: do not lick the walls."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "We like to keep it (a bit) simple."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Huh. Is that what robot insides look like?"

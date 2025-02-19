@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Aaah. Isn't that ice?"
 	DESCRIBE.WALL_POLAR_ITEM = "I trust it won't melt anytime soon."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Frosting for our festive tree."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Now that is just too much zest for one mouth. Or speaker, I don't know."

@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Alas, they won't melt easily."
 	DESCRIBE.WALL_POLAR_ITEM = "Parts of an icy prison to lock myself away."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Some baubles are heartwarming, while others..."
+	DESCRIBE.WX78MODULE_NAUGHTY = "It looks so fragile... hopefully no tragic accidents befall it."

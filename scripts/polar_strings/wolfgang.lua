@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.WALL_POLAR = "I see handsome man trapped inside!"
 	DESCRIBE.WALL_POLAR_ITEM = "Big ice chunk!"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Is pretty. Pretty fragile."
+	DESCRIBE.WX78MODULE_NAUGHTY = "Is robot snacks, yes?"

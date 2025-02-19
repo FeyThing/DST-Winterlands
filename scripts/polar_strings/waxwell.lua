@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.WALL_POLAR = "I like them for their atmospheric touch."
 	DESCRIBE.WALL_POLAR_ITEM = "Wall-sized ice cubes. Yup."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "It's subtle but quaint."
+	DESCRIBE.WX78MODULE_NAUGHTY = "That robot needs to pull themselves together."

@@ -129,3 +129,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.WALL_POLAR = "Barriers of ice, frigid and formidable."
 	DESCRIBE.WALL_POLAR_ITEM = "Structural components for glacial barriers."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "One must not forget the classics."
+	DESCRIBE.WX78MODULE_NAUGHTY = "It has a bad influence on the children."

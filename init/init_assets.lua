@@ -28,7 +28,10 @@ Assets = {
 	
 	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
 	Asset("ATLAS", "images/rain_polar.xml"),
-
+	
+	Asset("ANIM", "anim/polarstatus_wx.zip"),
+	Asset("ANIM", "anim/wx_polarchips.zip"),
+	
 	-- Shaders
 	Asset("SHADER", "shaders/snowed.ksh"),
 	
@@ -87,6 +90,7 @@ local ITEMS = {
 	"wall_polar_item",
 	"winter_ornament_polar_icicle_blue",
 	"winter_ornament_polar_icicle_white",
+	"wx78module_naughty",
 	
 	"ms_polarmoosehat_white",
 }
