@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.POLARAMULET = "Yay! Dead folk make me fancy!"
 	DESCRIBE.POLARBEARHAT = "Not funny."
 	DESCRIBE.POLARCROWNHAT = "Wurt rules all over sea of snow!!"
+	DESCRIBE.POLARFLEA_SACK = "Guess they friends now, flort."
 	DESCRIBE.POLARICESTAFF = "Got all of winter in a stick, florp."
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"
 	

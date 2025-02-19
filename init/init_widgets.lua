@@ -49,6 +49,29 @@ GLOBAL.setfenv(1, GLOBAL)
 		return inst.replica.container and inst.replica.container:IsFull()
 	end
 	
+--	Itchhiker Pack
+	
+	params.polarflea_sack = {
+		widget = {
+			slotpos = {},
+			animbank = "ui_polarfleasack_2x5",
+			animbuild = "ui_piggyback_2x6",
+			pos = Vector3(-5, -90, 0),
+		},
+		issidewidget = true,
+		type = "pack",
+		openlimit = 1,
+	}
+	
+	for y = 0, 4 do
+		table.insert(params.polarflea_sack.widget.slotpos, Vector3(-162, -75 * y + 135, 0))
+		table.insert(params.polarflea_sack.widget.slotpos, Vector3(-162 + 75, -75 * y + 135, 0))
+	end
+	
+	function params.polarflea_sack.priorityfn(container, item, slot)
+		return item:HasTag("flea")
+	end
+	
 --	Sparse Winter Tree
 	
 	params.winter_tree_sparse = params.winter_tree

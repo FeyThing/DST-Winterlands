@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.POLARAMULET = "No spiders were harmed in the process."
 	DESCRIBE.POLARBEARHAT = "RAAAWR!! Did we scare you?"
 	DESCRIBE.POLARCROWNHAT = "Spiders aren't too fond of the cold."
+	DESCRIBE.POLARFLEA_SACK = "To carry a whole troop on our back."
 	DESCRIBE.POLARICESTAFF = "Emergency ice web."
 	DESCRIBE.POLARMOOSEHAT = "A hat made of Mr. Woodie's friends."
 	

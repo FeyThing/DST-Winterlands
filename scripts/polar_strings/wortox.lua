@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.POLARAMULET = "What matters is that you believe in it, hyuyu!"
 	DESCRIBE.POLARBEARHAT = "This is oddly confortable for what it is."
 	DESCRIBE.POLARCROWNHAT = "Cold on the outside, freezing on the inside."
+	DESCRIBE.POLARFLEA_SACK = "What's inside? That's a surprise!"
 	DESCRIBE.POLARICESTAFF = "It's not nice to leave our guests trapped in ice!"
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
 	

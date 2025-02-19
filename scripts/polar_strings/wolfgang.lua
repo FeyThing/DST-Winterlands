@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARAMULET = "Wolfgang wears it best!"
 	DESCRIBE.POLARBEARHAT = "Don't worry, I'm not bear man, only Wolfgang man."
 	DESCRIBE.POLARCROWNHAT = "Keeps bad wind away and good wind inside."
+	DESCRIBE.POLARFLEA_SACK = "Portable flea circus."
 	DESCRIBE.POLARICESTAFF = "Will smash winter back into existence."
 	DESCRIBE.POLARMOOSEHAT = "Bear man lost hat?"
 	

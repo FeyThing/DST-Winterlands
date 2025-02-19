@@ -73,21 +73,21 @@ local oldcontainer = COMPONENT_ACTIONS.SCENE.container -- Needed for controller 
 		end
 	end
 	
-local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer -- Dryice can repair normal ice repairable, other way around won't work tho
-	COMPONENT_ACTIONS.USEITEM.repairer = function(inst, doer, target, actions, ...)
-		if inst:HasTag("freshen_"..MATERIALS.DRYICE) and target:HasTag("repairable_"..MATERIALS.ICE) then
-			table.insert(actions, ACTIONS.REPAIR)
-		elseif oldrepairer then
-			oldrepairer(inst, doer, target, actions, ...)
-		end
-	end
-	
 local oldmachine = COMPONENT_ACTIONS.INVENTORY.machine -- For unused snowglobe item
 	COMPONENT_ACTIONS.INVENTORY.machine = function(inst, doer, actions, right, ...)
 		if inst:HasTag("snowglobe") and not inst:HasTag("cooldown") and not inst:HasTag("fueldepleted") and inst:HasTag("enabled") then
 			table.insert(actions, inst:HasTag("turnedon") and ACTIONS.TURNOFF or ACTIONS.TURNON)
 		elseif oldmachine then
 			oldmachine(inst, doer, actions, right, ...)
+		end
+	end
+	
+local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer -- Dryice can repair normal ice repairable, other way around won't work tho
+	COMPONENT_ACTIONS.USEITEM.repairer = function(inst, doer, target, actions, ...)
+		if inst:HasTag("freshen_"..MATERIALS.DRYICE) and target:HasTag("repairable_"..MATERIALS.ICE) then
+			table.insert(actions, ACTIONS.REPAIR)
+		elseif oldrepairer then
+			oldrepairer(inst, doer, target, actions, ...)
 		end
 	end
 	

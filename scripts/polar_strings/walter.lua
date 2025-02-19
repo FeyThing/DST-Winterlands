@@ -108,6 +108,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.ICICLESTAFF = "How about we sling a shot? Heh. Good one, Walter."
 	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
 	DESCRIBE.POLARCROWNHAT = "So, when are we building my ice castle?"
+	DESCRIBE.POLARFLEA_SACK = "Better watch out while you're in range of my pocket bugs."
 	DESCRIBE.POLARAMULET = "A little something from the souvenir shop."
 	DESCRIBE.POLARBEARHAT = "Woby won't stop growling about it..."
 	DESCRIBE.POLARICESTAFF = "I feel sorry for all the bugs around, just minding their own business."

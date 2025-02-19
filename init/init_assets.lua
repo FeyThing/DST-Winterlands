@@ -24,6 +24,8 @@ Assets = {
 	
 	Asset("ANIM", "anim/polar_amulet_ui.zip"),
 	
+	Asset("ANIM", "anim/ui_polarfleasack_2x5.zip"),
+	
 	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
 	Asset("ATLAS", "images/rain_polar.xml"),
 
@@ -69,6 +71,7 @@ local ITEMS = {
 	"polarcrablegs",
 	"polarcrownhat",
 	"polarflea",
+	"polarflea_sack",
 	"polarglobe",
 	"polarice_plow_item",
 	"polaricepack",

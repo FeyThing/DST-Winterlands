@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.POLARAMULET = "They worked some magic on the string. What exactly, I'm not sure."
 	DESCRIBE.POLARBEARHAT = "I am seriously revolted."
 	DESCRIBE.POLARCROWNHAT = "Powerful and elegant, but also uncomfortable."
+	DESCRIBE.POLARFLEA_SACK = "Hardly preferable over freezing to death."
 	DESCRIBE.POLARICESTAFF = "The right spell, in wrong hands."
 	DESCRIBE.POLARMOOSEHAT = "Hm. Very... rustic."
 	

@@ -10,8 +10,9 @@
 		<Element name="polar_throne.png" u1="0.001" u2="0.249" v2="0.2568125" v1="0.0088125" />
 		<Element name="polaramulet_station.png" u1="0.251" u2="0.499" v2="0.499" v1="0.251" />
 		<Element name="polarbearhouse.png" u1="0.251" u2="0.499" v2="0.249" v1="0.001" />
-		<Element name="polarglobe.png" u1="0.501" u2="0.749" v2="0.499" v1="0.251" />
-		<Element name="rock_polar.png" u1="0.501" u2="0.67478125" v2="0.249" v1="0.0400625" />
-		<Element name="trap_polarteeth.png" u1="0.751" u2="0.999" v2="0.499" v1="0.251" />
+		<Element name="polarflea_sack.png" u1="0.501" u2="0.749" v2="0.499" v1="0.251" />
+		<Element name="polarglobe.png" u1="0.501" u2="0.749" v2="0.249" v1="0.001" />
+		<Element name="rock_polar.png" u1="0.751" u2="0.92478125" v2="0.499" v1="0.2900625" />
+		<Element name="trap_polarteeth.png" u1="0.751" u2="0.999" v2="0.2880625" v1="0.0400625" />
 	</Elements>
 </Atlas>

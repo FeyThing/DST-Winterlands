@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.POLARAMULET = "It said they're all unique or somethin' like that."
 	DESCRIBE.POLARBEARHAT = "Guess two heads are better than one."
 	DESCRIBE.POLARCROWNHAT = "Can't break a sweat if you can't sweat at all."
+	DESCRIBE.POLARFLEA_SACK = "If you mess with me, you mess with my back bugs."
 	DESCRIBE.POLARICESTAFF = "You gotta freeze to please."
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"
 	

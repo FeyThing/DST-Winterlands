@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARAMULET = "It's doing... things, most certainly."
 	DESCRIBE.POLARBEARHAT = "Getting eaten has its perks."
 	DESCRIBE.POLARCROWNHAT = "And what protects me from the brain freeze?"
+	DESCRIBE.POLARFLEA_SACK = "To fill with bite-sized allies."
 	DESCRIBE.POLARICESTAFF = "I like all my staves but this one is frost among equals."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	

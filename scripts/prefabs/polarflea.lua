@@ -17,17 +17,24 @@ local RETARGET_CANT_TAGS = {"INLIMBO", "bearbuddy"}
 local RETARGET_ONEOF_TAGS = {"player", "monster", "plant"}
 
 local function Retarget(inst)
-	return FindEntity(inst, TUNING.POLARFLEA_CHASE_RANGE, function(guy)
+	local target = FindEntity(inst, TUNING.POLARFLEA_CHASE_RANGE, function(guy)
+		local fleapack
+		local inventory = guy.components.inventory
+		
+		if inventory then
+			for k, v in pairs(inventory.equipslots) do
+				if v:HasTag("fleapack") and v.components.container then
+					fleapack = v
+					break
+				end
+			end
+		end
+		
 		return not guy:HasTag("flea") and inst.components.combat:CanTarget(guy)
+			and (fleapack == nil or (fleapack and guy.components.inventory:IsFull() and fleapack.components.container:IsFull()))
 	end, RETARGET_MUST_TAGS, RETARGET_CANT_TAGS, RETARGET_ONEOF_TAGS) or nil
-end
-
-local function OnPolarstormChanged(inst, active) -- Unused, should fleas slowly die out during the blizzard ?
-	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) and not inst.inlimbo then
-		inst.components.health:StartRegen(TUNING.POLARFLEA_STORM_REGEN, TUNING.POLARFLEA_STORM_REGEN_RATE)
-	else
-		inst.components.health:StopRegen()
-	end
+	
+	return target
 end
 
 local function HostMaxFleas(inst, host)
@@ -45,11 +52,18 @@ end
 local function CanBeHost(inst, host, capacity_mod)
 	if host and host:IsValid() and not (host.components.health and host.components.health:IsDead()) and host.entity:IsVisible() then
 		if host:HasTag("player") then
-			return host.components.inventory and not host.components.inventory:IsFull()
+			local inventory = host.components.inventory
+			if inventory then
+				for k, v in pairs(inventory.equipslots) do
+					if v:HasTag("fleapack") and v.components.container and not v.components.container:IsFull() then
+						return true
+					end
+				end
+			end
+			
+			return not (host:HasAnyTag(SOULLESS_TARGET_TAGS) or host:HasTag("fire") or host:GetIsWet()) and inventory and not inventory:IsFull()
 		elseif (host._snowfleas and #host._snowfleas or 0) < inst:HostMaxFleas(host) + (capacity_mod or 0) then
-			if not host:HasTag("insect") and not host:HasTag("likewateroffducksback")
-				and (host:HasTag("animal") or host:HasTag("character") or host:HasTag("fleahosted") or host:HasTag("monster")) then
-				
+			if not host:HasTag("likewateroffducksback") and (host:HasTag("animal") or host:HasTag("character") or host:HasTag("fleahosted") or host:HasTag("monster")) then
 				return not (host:HasAnyTag(SOULLESS_TARGET_TAGS) or host:HasTag("fleaghosted") or host:HasTag("fire") or host:GetIsWet())
 			end
 		end
@@ -63,11 +77,12 @@ local function SetHost(inst, host, kick, given)
 		inst.components.timer:StopTimer("findhost")
 	end
 	if kick then
-		inst.components.timer:StartTimer("findhost", 2 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
+		inst.components.timer:StartTimer("findhost", 5 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
 	end
 	
 	if inst._host then
 		inst:RemoveEventCallback("attacked", inst.on_host_attacked, inst._host)
+		inst:RemoveEventCallback("onattackother", inst.on_host_attackother, inst._host)
 		
 		if inst._host:IsValid() then
 			inst.Transform:SetPosition(inst._host.Transform:GetWorldPosition())
@@ -86,14 +101,15 @@ local function SetHost(inst, host, kick, given)
 	end
 	
 	if kick or host == nil then
-		--inst.entity:SetParent(nil)
 		inst:ReturnToScene()
 		
-		--[[if kick and inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(inst) then
-			OnPolarstormChanged(inst, true)
-		end]]
+		if inst.components.health then
+			inst.components.health:StopRegen()
+		end
 		
-		if inst._host and inst._host:IsValid() and inst._host.components.inventory and inst.components.inventoryitem and inst.components.inventoryitem.owner == inst._host then
+		if inst._host and inst._host:IsValid() and inst._host.components.inventory and inst.components.inventoryitem
+			and (inst.components.inventoryitem:GetGrandOwner() == inst._host) then
+			
 			if inst.on_host_grab then
 				inst:RemoveEventCallback("murdered", inst.on_host_grab, inst._host)
 				inst:RemoveEventCallback("newactiveitem", inst.on_host_grab, inst._host)
@@ -110,15 +126,17 @@ local function SetHost(inst, host, kick, given)
 	end
 	
 	inst._host = host
-	--inst.entity:SetParent(inst._host.entity)
 	inst:ListenForEvent("attacked", inst.on_host_attacked, inst._host)
+	inst:ListenForEvent("onattackother", inst.on_host_attackother, inst._host)
 	
-	--[[if inst.components.health then
-		inst.components.health:StopRegen()
-	end]]
+	if inst.components.health then
+		inst.components.health:StartRegen(TUNING.POLARFLEA_POCKET_REGEN, TUNING.POLARFLEA_REGEN_RATE)
+	end
 	
 	if not given and inst._host:HasTag("player") and inst._host.components.inventory then
+		inst._try_fleapack = true
 		inst._host.components.inventory:GiveItem(inst, nil, inst:GetPosition())
+		inst._try_fleapack = nil
 	else
 		if inst._host._snowfleas == nil then
 			inst._host._snowfleas = {}
@@ -164,7 +182,7 @@ local function OnAttacked(inst, data)
 		inst.components.combat:SetTarget(data.attacker)
 		inst.components.combat:ShareTarget(data.attacker, TUNING.POLARFLEA_CHASE_RANGE, function(dude)
 			return dude:HasTag("flea") and not dude.components.health:IsDead()
-		end, 5)
+		end, 10)
 	end
 end
 
@@ -194,17 +212,32 @@ local function OnTimerDone(inst, data)
 end
 
 local function OnHostAttacked(inst, host, data)
-	if host then
+	if host and inst.components.combat then
 		local attacker = data and data.attacker
 		local isbuddy = attacker and attacker:HasTag("bearbuddy")
 		local isflea = attacker and attacker:HasTag("flea")
+		local hassack = host.components.inventory and host.components.inventory:EquipHasTag("fleapack")
 		
-		if (host.components.health and host.components.health:IsDead()) or (math.random() < TUNING.POLARFLEA_HOST_HIT_DROPCHANCE and not isflea) then
-			inst:SetHost(nil, true)
+		if (host.components.health and host.components.health:IsDead()) or ((hassack or math.random() < TUNING.POLARFLEA_HOST_HIT_DROPCHANCE) and not isflea) then
+			host.components.inventory:RemoveItem(inst, true)
+			host.components.inventory:DropItem(inst, true)
 			
-			if attacker and not isflea and not isbuddy and inst.components.combat then
+			if attacker and not isflea and not isbuddy then
 				inst.components.combat:SetTarget(data.attacker)
 			end
+		end
+	end
+end
+
+local function OnHostAttackOther(inst, host, data)
+	if host and host.components.inventory and host.components.inventory:EquipHasTag("fleapack") and inst.components.combat then
+		local target = data and data.target
+		
+		if target and not target:HasTag("flea") and not (target.components.health and target.components.health:IsDead()) then
+			host.components.inventory:RemoveItem(inst, true)
+			host.components.inventory:DropItem(inst, true)
+			
+			inst.components.combat:SetTarget(data.target)
 		end
 	end
 end
@@ -219,13 +252,17 @@ local function OnHostGrab(inst, host, data)
 	
 	if is_grabbed and host and inst._host == host and host.components.inventory then
 		host:DoTaskInTime(0, function()
-			if host.components.health and not host.components.health:IsDead() then
+			local owner = inst.components.inventory.owner
+			if not inst.skip_grab_bite and host.components.health and not host.components.health:IsDead() then
 				host.components.combat:GetAttacked(inst, TUNING.POLARFLEA_HOST_REMOVE_DAMAGE)
 			end
+			
 			if inst:IsValid() then
 				host.components.inventory:RemoveItem(inst, true)
 				host.components.inventory:DropItem(inst, true)
 			end
+			
+			inst.skip_grab_bite = nil
 		end)
 	end
 end
@@ -236,8 +273,12 @@ local function HostingInit(inst)
 	end
 	
 	TheWorld._numfleas = TheWorld._numfleas + 1
-	if inst._host == nil and inst.components.timer and not inst.components.timer:TimerExists("findhost") then
-		inst.components.timer:StartTimer("findhost", 2 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
+	if inst._host == nil then
+		if inst.components.inventoryitem and inst.components.inventoryitem:IsHeld() then
+			inst:SetHost(inst.components.inventoryitem:GetGrandOwner())
+		elseif inst.components.timer and not inst.components.timer:TimerExists("findhost") then
+			inst.components.timer:StartTimer("findhost", 2 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
+		end
 	end
 end
 
@@ -275,15 +316,26 @@ local function OnPickedUp(inst)
 		end
 	end
 	
-	if inst.on_host_grab == nil then
-		inst.on_host_grab = function(target, data) OnHostGrab(inst, target, data) end
+	if inst._host then
+		if inst.skip_grab_bite == nil then
+			local backpack = inst.components.inventoryitem.owner
+			inst.skip_grab_bite = backpack and backpack.components.container and backpack:HasTag("fleapack") or nil
+		end
 		
-		inst:ListenForEvent("murdered", inst.on_host_grab, inst._host)
-		inst:ListenForEvent("newactiveitem", inst.on_host_grab, inst._host)
+		if inst.on_host_grab == nil then
+			inst.on_host_grab = function(target, data) OnHostGrab(inst, target, data) end
+			
+			inst:ListenForEvent("murdered", inst.on_host_grab, inst._host)
+			inst:ListenForEvent("newactiveitem", inst.on_host_grab, inst._host)
+		end
 	end
 	
 	inst.sg:GoToState("idle")
 	inst.SoundEmitter:KillAllSounds()
+end
+
+local function CanMouseThrough(inst)
+	return ThePlayer and ThePlayer.replica.inventory and ThePlayer.replica.inventory:EquipHasTag("fleapack")
 end
 
 local function fn()
@@ -316,6 +368,8 @@ local function fn()
 	
 	MakeFeedableSmallLivestockPristine(inst)
 	
+	inst.CanMouseThrough = CanMouseThrough
+	
 	inst.entity:SetPristine()
 	
 	if not TheWorld.ismastersim then
@@ -343,8 +397,8 @@ local function fn()
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.canbepickedup = false
 	inst.components.inventoryitem.canbepickedupalive = false
-	inst.components.inventoryitem.canonlygoinpocketorpocketcontainers = true
 	inst.components.inventoryitem.nobounce = true
+	inst.components.inventoryitem.canonlygoinpocketorpocketcontainers = true
 	
 	inst:AddComponent("knownlocations")
 	
@@ -357,8 +411,6 @@ local function fn()
 	inst.components.sanityaura.aura = -TUNING.SANITYAURA_SMALL
 	
 	inst:AddComponent("sleeper")
-	
-	--inst:AddComponent("stackable")
 	
 	inst:AddComponent("timer")
 	
@@ -379,13 +431,8 @@ local function fn()
 	inst.SetHost = SetHost
 	
 	inst.on_host_attacked = function(target, data) OnHostAttacked(inst, target, data) end
-	--[[inst.onpolarstormchanged = function(src, data)
-		if data and data.stormtype == STORM_TYPES.POLARSTORM then
-			OnPolarstormChanged(inst, data.setting)
-		end
-	end]]
+	inst.on_host_attackother = function(target, data) OnHostAttackOther(inst, target, data) end
 	
-	--inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("onremove", OnRemove)
 	inst:ListenForEvent("timerdone", OnTimerDone)

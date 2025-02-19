@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.POLARAMULET = "How wild do I look with it, eh?"
 	DESCRIBE.POLARBEARHAT = "That will have to do for now."
 	DESCRIBE.POLARCROWNHAT = "I can see myself wearing this one, actually."
+	DESCRIBE.POLARFLEA_SACK = "They're my bugs now."
 	DESCRIBE.POLARICESTAFF = "Makes me feel right at home, eh."
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
 	

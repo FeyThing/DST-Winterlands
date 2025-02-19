@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARAMULET = "An invigorating pendant made of the fallens."
 	DESCRIBE.POLARBEARHAT = "A maw to protect me of the storm."
 	DESCRIBE.POLARCROWNHAT = "To freeze my foes like Draugrs of old!"
+	DESCRIBE.POLARFLEA_SACK = "Full of mine tiny warriors, ready for battle!"
 	DESCRIBE.POLARICESTAFF = "Steer clear, or stay put."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	

@@ -3,7 +3,7 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local events = {
 	EventHandler("gotpolarflea", function(inst, data)
-		if data and not data.given then
+		if data and not data.given and not (inst.components.inventory and inst.components.inventory:EquipHasTag("fleapack")) then
 			inst.sg:GoToState("hit")
 		end
 	end),

@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARAMULET = "Macabre but well deserved."
 	DESCRIBE.POLARBEARHAT = "It's... fun."
 	DESCRIBE.POLARCROWNHAT = "I shall spread winter's embrace."
+	DESCRIBE.POLARFLEA_SACK = "A storage for little parasites."
 	DESCRIBE.POLARICESTAFF = "An effortful pulse of cold. Much like my heart."
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	

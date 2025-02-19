@@ -81,6 +81,8 @@ local components = {
 	"birdspawner",
 	"builder",
 	"brushable",
+	"combat",
+	"container",
 	"dynamicmusic", -- : (
 	"expertsailor",
 	"explosive",

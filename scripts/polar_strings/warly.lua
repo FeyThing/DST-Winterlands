@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARAMULET = "You wouldn't want to be around when I get my fangs out."
 	DESCRIBE.POLARBEARHAT = "Is that how my food sees before being eaten?"
 	DESCRIBE.POLARCROWNHAT = "Was anyone afraid I'd finally lose my cool?"
+	DESCRIBE.POLARFLEA_SACK = "Better inside than on my skin."
 	DESCRIBE.POLARICESTAFF = "Pardon, but I need to breathe some fresh air."
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."
 	

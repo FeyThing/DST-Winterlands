@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.POLARAMULET = "I went through that phase already. Or did I?"
 	DESCRIBE.POLARBEARHAT = "Disturbing but somewhat useful."
 	DESCRIBE.POLARCROWNHAT = "I start to think it was worth it."
+	DESCRIBE.POLARFLEA_SACK = "Well, as long they jump right in, no fuss..."
 	DESCRIBE.POLARICESTAFF = "Everyone, and I mean EVERYONE deserves a break."
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."
 	

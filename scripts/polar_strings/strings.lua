@@ -72,6 +72,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARAMULET_BUILDER = "Teeth Necklace"
 	NAMES.POLARBEARHAT = "Bear Head"
 	NAMES.POLARCROWNHAT = "Frozen Crown"
+	NAMES.POLARFLEA_SACK = "Itchhiker Pack"
 	NAMES.POLARICESTAFF = "Winter Wand"
 	NAMES.POLARMOOSEHAT = "Ushanka"
 	
@@ -261,6 +262,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm... also good to make others think you're an actual bear."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "These awful little buggers are everywhere! In tall grass, on mammals... have you looked inside your hairs recently?"
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "A 10 slots cozy container loved by Snowfleas!\nThose inside will jump in and out of it without biting, and they will come out to defend their new home if threatened."
+	
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of other carried or stored items by 25%. Can be stacked multiplicatively."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPLOW = "Digs a large hole in ice that makes for an ideal fishing spot!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICESTAFF = "Sends a freezing shockwave in a large range."
@@ -281,6 +284,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.POLARBEARHAT = "Stay ahead of the blizzard."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
 	RECIPE_DESC.POLARCROWNHAT = "Rule over the blizzard!"
+	RECIPE_DESC.POLARFLEA_SACK = "Carry a ton of crawly friends!"
 	RECIPE_DESC.POLARICE_PLOW_ITEM = "Dig a hole and sea's what's under."
 	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
 	RECIPE_DESC.POLARICESTAFF = "Freeze all enemies in your track!"

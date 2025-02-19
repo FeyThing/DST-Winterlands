@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.POLARAMULET = "It's... just a phase."
 	DESCRIBE.POLARBEARHAT = "Take that as a hint to not mess with me."
 	DESCRIBE.POLARCROWNHAT = "Oww! Nope."
+	DESCRIBE.POLARFLEA_SACK = "Uhhh... why are we doing this again?"
 	DESCRIBE.POLARICESTAFF = "Next time we're going someplace else...\nlike where I can get myself an Inferno Wand and all that!"
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."
 	

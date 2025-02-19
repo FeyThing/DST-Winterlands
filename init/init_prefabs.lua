@@ -28,6 +28,7 @@ PrefabFiles = {
 	"polarbuffs",
 	"polarcrownhat",
 	"polarflea",
+	"polarflea_sack",
 	"polarfox",
 	"polarglobe",
 	"polarice_plow",

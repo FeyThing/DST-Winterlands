@@ -57,8 +57,9 @@ PolarRecipe("polar_dryice", 		{Ingredient("ice", 6), Ingredient(TECH_INGREDIENT.
 PolarRecipe("trap_polarteeth", 		{Ingredient("ice", 1), Ingredient("cutstone", 1), Ingredient("polarwargstooth", 1)}, 						TECH.SCIENCE_TWO, 		nil, 	{"WEAPONS"}, {"trap_teeth"})
 
 --	Armor / Clothing
-PolarRecipe("armorpolar", 			{Ingredient("polarbearfur", 3), Ingredient("pigskin", 1)}, 		TECH.SCIENCE_TWO, 		nil, 		{"ARMOUR", "WINTER"}, {"armor_bramble", "raincoat"})
-PolarRecipe("polarbearhat", 		{Ingredient("polarbearfur", 1), Ingredient("meat", 1)}, 		TECH.SCIENCE_ONE, 		nil, 		{"CLOTHING", "WINTER"}, {"beefalohat", "beefalohat"})
+PolarRecipe("armorpolar", 			{Ingredient("polarbearfur", 3), Ingredient("pigskin", 1)}, 								TECH.SCIENCE_TWO, 		nil, 		{"ARMOUR", "WINTER"}, {"armor_bramble", "raincoat"})
+PolarRecipe("polarbearhat", 		{Ingredient("polarbearfur", 1), Ingredient("meat", 1)}, 								TECH.SCIENCE_ONE, 		nil, 		{"CLOTHING", "WINTER"}, {"beefalohat", "beefalohat"})
+PolarRecipe("polarflea_sack", 		{Ingredient("polarbearfur", 1), Ingredient("polarflea", 2), Ingredient("cutreeds", 6)}, TECH.SCIENCE_TWO, 		nil, 		{"CONTAINERS", "WINTER"}, {"spicepack", "beargervest"})
 
 --	Cooking / Food
 PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluegem_shards", 2), Ingredient("mosquitosack", 1)}, 	TECH.SCIENCE_TWO, 		nil, 		{"COOKING"}, {"icepack"})
