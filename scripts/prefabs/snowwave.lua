@@ -97,7 +97,7 @@ local function OnTimerDone(inst, data)
 		local gradual_time = inst._gradual_time or CYCLEDONE_GRADUAL_DEFAULT
 		
 		if cur_range > 1 and gradual_time > 0 then
-			inst._snowblockrange:set(cur_range - (inst._gradual_step or 1))
+			inst:SetSnowBlockRange(cur_range - (inst._gradual_step or 1))
 			
 			inst:ExtendSnowBlocker(nil, nil, gradual_time)
 		else

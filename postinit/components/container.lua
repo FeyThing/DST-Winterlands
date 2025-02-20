@@ -7,7 +7,7 @@ local Container = require("components/container")
 	
 	local OldCanTakeItemInSlot = Container.CanTakeItemInSlot
 	function Container:CanTakeItemInSlot(item, slot, ...)
-		if item._try_fleapack and item:HasTag("flea") and self.inst:HasTag("fleapack") and (self.itemtestfn == nil or self:itemtestfn(item, slot)) then
+		if item and item._try_fleapack and item:HasTag("flea") and self.inst:HasTag("fleapack") and (self.itemtestfn == nil or self:itemtestfn(item, slot)) then
 			return true
 		end
 		
@@ -16,7 +16,7 @@ local Container = require("components/container")
 	
 	local OldShouldPrioritizeContainer = Container.ShouldPrioritizeContainer
 	function Container:ShouldPrioritizeContainer(item, ...)
-		if item._try_fleapack and item:HasTag("flea") and self.inst:HasTag("fleapack") and (self.priorityfn == nil or self:priorityfn(item)) then
+		if item and item._try_fleapack and item:HasTag("flea") and self.inst:HasTag("fleapack") and (self.priorityfn == nil or self:priorityfn(item)) then
 			return true
 		end
 		
@@ -27,7 +27,7 @@ local Inventory = require("components/inventory")
 	
 	local OldCanTakeItemInSlot_Inv = Inventory.CanTakeItemInSlot
 	function Inventory:CanTakeItemInSlot(item, slot, ...)
-		if item:HasTag("flea") then
+		if item and item:HasTag("flea") then
 			local owner = item.components.inventoryitem and item.components.inventoryitem.owner
 			
 			if owner and owner:HasTag("fleapack") then
@@ -42,7 +42,7 @@ local Inventory_Replica = require("components/inventory_replica")
 	
 	local OldCanTakeItemInSlot_Inv_Replica = Inventory_Replica.CanTakeItemInSlot
 	function Inventory_Replica:CanTakeItemInSlot(item, slot, ...)
-		if item:HasTag("flea") then
+		if item and item:HasTag("flea") then
 			return false
 		end
 		

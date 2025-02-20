@@ -219,8 +219,12 @@ local function OnHostAttacked(inst, host, data)
 		local hassack = host.components.inventory and host.components.inventory:EquipHasTag("fleapack")
 		
 		if (host.components.health and host.components.health:IsDead()) or ((hassack or math.random() < TUNING.POLARFLEA_HOST_HIT_DROPCHANCE) and not isflea) then
-			host.components.inventory:RemoveItem(inst, true)
-			host.components.inventory:DropItem(inst, true)
+			if host.components.inventory then
+				host.components.inventory:RemoveItem(inst, true)
+				host.components.inventory:DropItem(inst, true)
+			else
+				inst:SetHost(nil, true)
+			end
 			
 			if attacker and not isflea and not isbuddy then
 				inst.components.combat:SetTarget(data.attacker)
@@ -233,7 +237,8 @@ local function OnHostAttackOther(inst, host, data)
 	if host and host.components.inventory and host.components.inventory:EquipHasTag("fleapack") and inst.components.combat then
 		local target = data and data.target
 		
-		if target and not target:HasTag("flea") and not (target.components.health and target.components.health:IsDead()) then
+		if target and not target:HasTag("flea") and not (target.components.health and target.components.health:IsDead())
+			and inst.components.combat:CanTarget(target) then
 			host.components.inventory:RemoveItem(inst, true)
 			host.components.inventory:DropItem(inst, true)
 			

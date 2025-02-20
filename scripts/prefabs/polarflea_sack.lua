@@ -40,6 +40,12 @@ local function OnEquip(inst, owner)
 	end
 	
 	inst.components.container:Open(owner)
+	inst.components.container:ForEachItem(function(item)
+		if item:HasTag("flea") and item.SetHost and item._host == inst then
+			item:SetHost(owner)
+		end
+	end)
+	
 	if inst.components.fueled then
 		inst.components.fueled:StartConsuming()
 	end
@@ -56,6 +62,12 @@ local function OnUnequip(inst, owner)
 	owner.AnimState:ClearOverrideSymbol("backpack")
 	
 	inst.components.container:Close(owner)
+	inst.components.container:ForEachItem(function(item)
+		if item:HasTag("flea") and item.SetHost and item._host == owner then
+			item:SetHost(inst)
+		end
+	end)
+	
 	if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
 	end

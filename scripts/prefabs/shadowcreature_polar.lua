@@ -190,7 +190,7 @@ local function fn()
 		return inst
 	end
 	
-	inst.sanityreward = TUNING.SANITY_TINY
+	inst.sanityreward = TUNING.SANITY_SMALL
 	inst.sounds = sounds
 	
 	inst:AddComponent("combat")

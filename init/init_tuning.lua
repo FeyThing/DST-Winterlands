@@ -448,6 +448,12 @@ local night_time = seg_time * night_segs
 	TUNING.SNOWED_SHADER_MAX_SUBMERGE = -0.6 -- LukaS: Distance, in in-game units (4 = tile), to shift the player model on the Y axis
 	TUNING.SNOWED_SHADER_MAX_FREEZE = 0.55
 	
+	TUNING.KLAUSSACK_POLAR_STACKSIZES = {
+		goose_feather = 5,
+		townportaltalisman = 3,
+	--	tallbirdegg = 0, lol
+	}
+	
 --	Tech
 	
 	TUNING.PROTOTYPER_TREES.POLARAMULET_STATION = TechTree.Create({
