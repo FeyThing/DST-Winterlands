@@ -36,7 +36,9 @@ function PolarPlower:DoPlow(doer, pos)
 			v:SetSnowBlockRange(self.plow_range)
 		end
 		
-		dist = blocker_dist < dist and blocker_dist or dist
+		if v.prefab == "snowwave_blocker" then
+			dist = blocker_dist < dist and blocker_dist or dist
+		end
 	end
 	
 	local blocker

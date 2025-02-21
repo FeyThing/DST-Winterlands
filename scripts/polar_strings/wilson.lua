@@ -60,6 +60,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Time to flea!",
 		HELD = "The mandibles are already quite far under my skin.",
+		HELD_BACKPACK = "I'm positive this whole idea will go well.",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Let's play a small game.",

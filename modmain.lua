@@ -106,6 +106,7 @@ local components = {
 	"repairable",
 	"retrofitforestmap_anr",
 	"sandstorms",
+	"sentientaxe",
 	"shadowcreaturespawner",
 	"sheltered",
 	"slipperyfeet",

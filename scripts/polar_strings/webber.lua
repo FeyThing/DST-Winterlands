@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Yikes!",
 		HELD = "Next time, we keep our pockets shut!",
+		HELD_BACKPACK = "Mum always said no bugs in the schoolbag...",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Wanna make angels in the snow?",

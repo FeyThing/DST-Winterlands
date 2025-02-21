@@ -53,6 +53,7 @@ return Class(function(self, inst)
 				self:ScheduleFoxSpawn(pt)
 			end
 		elseif pt then
+			print("PolarFoxRespawner: removed respawn point because of structure at:", pt)
 			_foxspawns[pt] = nil
 		end
 	end

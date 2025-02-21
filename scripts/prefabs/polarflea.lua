@@ -152,8 +152,10 @@ local function SetHost(inst, host, kick, given)
 end
 
 local function GetStatus(inst)
-	if inst.components.inventoryitem.owner then
-		return "HELD"
+	local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
+	
+	if owner then
+		return owner:HasTag("fleapack") and "HELD_BACKPACK" or "HELD"
 	end
 end
 
@@ -287,56 +289,69 @@ local function HostingInit(inst)
 	end
 end
 
-local function OnDropped(inst)
-	if inst._host and inst.on_host_grab then
-		inst:RemoveEventCallback("murdered", inst.on_host_grab, inst._host)
-		inst:RemoveEventCallback("newactiveitem", inst.on_host_grab, inst._host)
-		inst.on_host_grab = nil
-		
-		inst:SetHost(nil, true)
-	end
-	
-	if inst.components.stackable and inst.components.stackable:IsStack() then
-		local x, y, z = inst.Transform:GetWorldPosition()
-		
-		while inst.components.stackable:IsStack() do
-			local item = inst.components.stackable:Get()
+local function OnInvRefresh(inst, picked, keep_host)
+	if picked then
+		if inst._host == nil and not keep_host then
+			local owner = inst.components.inventoryitem:GetGrandOwner()
 			
-			if item then
-				if item.components.inventoryitem then
-					item.components.inventoryitem:OnDropped()
+			if owner and owner.components.inventory then
+				inst:SetHost(owner, nil, true)
+			end
+		end
+		
+		if inst._host and not keep_host then
+			if inst.skip_grab_bite == nil then
+				local backpack = inst.components.inventoryitem.owner
+				inst.skip_grab_bite = backpack and backpack.components.container and backpack:HasTag("fleapack") or nil
+			end
+			
+			if inst.on_host_grab == nil then
+				inst.on_host_grab = function(target, data) OnHostGrab(inst, target, data) end
+				
+				inst:ListenForEvent("murdered", inst.on_host_grab, inst._host)
+				inst:ListenForEvent("newactiveitem", inst.on_host_grab, inst._host)
+			end
+		end
+		
+		inst.sg:GoToState("idle")
+		inst.SoundEmitter:KillAllSounds()
+		
+	elseif inst._host then
+		if inst.on_host_grab then
+			inst:RemoveEventCallback("murdered", inst.on_host_grab, inst._host)
+			inst:RemoveEventCallback("newactiveitem", inst.on_host_grab, inst._host)
+			inst.on_host_grab = nil
+		end
+		
+		if not keep_host then
+			inst:SetHost(nil, true)
+		else
+			return
+		end
+		
+		if inst.components.stackable and inst.components.stackable:IsStack() then
+			local x, y, z = inst.Transform:GetWorldPosition()
+			
+			while inst.components.stackable:IsStack() do
+				local item = inst.components.stackable:Get()
+				
+				if item then
+					if item.components.inventoryitem then
+						item.components.inventoryitem:OnDropped()
+					end
+					item.Physics:Teleport(x, y, z)
 				end
-				item.Physics:Teleport(x, y, z)
 			end
 		end
 	end
 end
 
+local function OnDropped(inst)
+	inst:OnInvRefresh(false, false)
+end
+
 local function OnPickedUp(inst)
-	if inst._host == nil then
-		local owner = inst.components.inventoryitem:GetGrandOwner()
-		
-		if owner and owner.components.inventory then
-			inst:SetHost(owner, nil, true)
-		end
-	end
-	
-	if inst._host then
-		if inst.skip_grab_bite == nil then
-			local backpack = inst.components.inventoryitem.owner
-			inst.skip_grab_bite = backpack and backpack.components.container and backpack:HasTag("fleapack") or nil
-		end
-		
-		if inst.on_host_grab == nil then
-			inst.on_host_grab = function(target, data) OnHostGrab(inst, target, data) end
-			
-			inst:ListenForEvent("murdered", inst.on_host_grab, inst._host)
-			inst:ListenForEvent("newactiveitem", inst.on_host_grab, inst._host)
-		end
-	end
-	
-	inst.sg:GoToState("idle")
-	inst.SoundEmitter:KillAllSounds()
+	inst:OnInvRefresh(true, false)
 end
 
 local function CanMouseThrough(inst)
@@ -431,6 +446,7 @@ local function fn()
 	inst.HostMaxFleas = HostMaxFleas
 	inst.OnEntitySleep = OnEntitySleep
 	inst.OnEntityWake = OnEntityWake
+	inst.OnInvRefresh = OnInvRefresh
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass
 	inst.SetHost = SetHost

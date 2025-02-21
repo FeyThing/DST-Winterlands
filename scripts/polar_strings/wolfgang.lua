@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Eep!",
 		HELD = "Will not let go without a fight.",
+		HELD_BACKPACK = "Wolfgang won't squish bug, if bug behaves.",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Puny but cute.",

@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "O hell no!",
 		HELD = "It can be removed, at the cost of my skin.",
+		HELD_BACKPACK = "The bugs yearn to join me in battle.",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "'Tis all fun and games until you lend me into a trap.",

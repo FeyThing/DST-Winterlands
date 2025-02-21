@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Yuck!",
 		HELD = "Get outta my hairs and feathers!",
+		HELD_BACKPACK = "They ain't so bad when you get to know them.",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Go get'em birds!",

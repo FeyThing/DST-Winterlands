@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Glurgh, it everywhere!",
 		HELD = "Go away! Go awaaaay!",
+		HELD_BACKPACK = "Got big plans for you.",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Aww, it too cute!",

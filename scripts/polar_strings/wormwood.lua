@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Not Bzzter again!",
 		HELD = "Will ouch a lot",
+		HELD_BACKPACK = "Made new friend",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "Shh... it's okay now",

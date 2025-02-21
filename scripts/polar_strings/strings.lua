@@ -240,6 +240,17 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		{"...walrus tusk is...", "...highly, hmm... prrrized, here."},
 	}
 	
+	STRINGS.LUCY.container_has_fleas = {
+		"Ack! It touched me!",
+		"Dissssgusting thing!",
+		"Don't put me in here EVER again!",
+		"Eeeep!",
+		"Get off me, stupid bugs!",
+		"Not the fleas!",
+		"What was th-- AAAA!",
+		"Yuck! I'm out of here.",
+	}
+	
 --	UI
 	
 	--	Actions

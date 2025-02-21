@@ -57,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Oh dear...",
 		HELD = "How unmannered, revolting pests!",
+		HELD_BACKPACK = "I will not tolerate any of you near my books.",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "A little food goes a long way here, right dear?",
