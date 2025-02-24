@@ -6,7 +6,6 @@ local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Something Fishy
 
-
 󰀛 Set sails to a perilous frozen island -
 
 Where winter reigns eternal, and deadlier than ever... amid the snow lies a world brimming with untamed beauty to undig.

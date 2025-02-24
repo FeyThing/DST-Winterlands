@@ -7,7 +7,7 @@ AddRoom("PolarIsland_Village", {
 		countprefabs = {
 			grass_polar_spawner = function() return math.random(0, 1) end,
 			polarbearhouse = function() return math.random(4, 5) end,
-			winter_tree_sparse = function () return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(6, 8) or 0 end,
+			winter_tree_sparse = function() return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(6, 8) or 0 end,
 		},
 		
 		distributepercent = 0.055,
@@ -142,8 +142,6 @@ AddRoom("PolarIsland_FloeField", {
 		},
 		
 		prefabdata = {
-			evergreen = function() return {burnt = math.random() < 0.8} end,
-			evergreen_sparse = function() return {burnt = math.random() < 0.8} end,
 			snowwave_itemrespawner = {canspawnsnowitem = true},
 		},
 	}
@@ -163,10 +161,10 @@ AddRoom("PolarIsland_IceQuarry", {
 			rock2 = 1,
 		},
 		
-		distributepercent = 0.08,
+		distributepercent = 0.062,
 		distributeprefabs = {
 			antler_tree = 0.2,
-			evergreen = 1,
+			evergreen_sparse = 1,
 			twiggytree = 0.5,
 			marsh_bush = 1,
 			

@@ -385,6 +385,7 @@ local function fn()
 	inst:AddTag("monster")
 	inst:AddTag("smallcreature")
 	inst:AddTag("snowhidden")
+	inst:AddTag("NOBLOCK")
 	
 	MakeFeedableSmallLivestockPristine(inst)
 	

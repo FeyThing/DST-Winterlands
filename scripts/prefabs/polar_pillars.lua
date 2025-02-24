@@ -21,7 +21,7 @@ local function OnLoad(inst, data)
 	end
 end
 
-local ICICLE_AVOID_TAGS = {"bigicicle", "birdblocker", "HAMMER_workable", "structure", "wall"}
+local ICICLE_AVOID_TAGS = {"bigicicle", "birdblocker", "HAMMER_workable", "boulder", "structure", "wall"}
 
 local function NoIcicleInRange(pt)
 	return not TheWorld.Map:IsPointNearHole(pt) and #TheSim:FindEntities(pt.x, pt.y, pt.z, 9, nil, nil, ICICLE_AVOID_TAGS) == 0

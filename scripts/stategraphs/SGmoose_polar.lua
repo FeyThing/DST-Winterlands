@@ -403,7 +403,7 @@ CommonStates.AddCombatStates(states, {
 				pt.y = 1
 				
 				inst:SetAntlered(nil, false)
-				for i = 1, math.random(2) do
+				for i = 1, 2 do
 					inst.components.lootdropper:SpawnLootPrefab(loot, pt)
 				end
 			end

@@ -14,9 +14,9 @@ local snowhuntPrefabs = {
 }
 
 local dirthuntPrefabs = {
-	rabbit = 3,
+	rabbit = 2,
 	rabbitking_lucky = 1,
-	mole = 1,
+	mole = 2,
 }
 
 local polarfox_brain = require("brains/polarfoxbrain")
