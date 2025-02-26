@@ -26,20 +26,21 @@ Assets = {
 	
 	Asset("ANIM", "anim/ui_polarfleasack_2x5.zip"),
 	
-	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status
+	Asset("IMAGE", "images/rain_polar.tex"), -- Combined Status worldtemp compat
 	Asset("ATLAS", "images/rain_polar.xml"),
 	
 	Asset("ANIM", "anim/polarstatus_wx.zip"),
 	Asset("ANIM", "anim/wx_polarchips.zip"),
 	
-	-- Shaders
+	-- Shaders / Shades
 	Asset("SHADER", "shaders/snowed.ksh"),
+	Asset("IMAGE", "images/polarpillar.tex"),
 	
 	-- Anims / Builds
 	Asset("ANIM", "anim/player_polarcast.zip"),
-	Asset("ANIM", "anim/polar_snow.zip"),
+	Asset("ANIM", "anim/player_flea_itchy.zip"),
 	
-	Asset("IMAGE", "images/polarpillar.tex"),
+	Asset("ANIM", "anim/polar_snow.zip"),
 	
 	-- Sounds
 	Asset("SOUNDPACKAGE", "sound/polarsounds.fev"),

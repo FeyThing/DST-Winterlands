@@ -145,7 +145,33 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 		
 		local equip = inst.components.inventory and inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
 		if equip and equip:HasTag("antlerstick") then
-			 inst.SoundEmitter:PlaySound("polarsounds/antler_tree/swoop", nil, nil, true)
+			inst.SoundEmitter:PlaySound("polarsounds/antler_tree/swoop", nil, nil, true)
+		end
+	end
+	
+	local oldfunnyidle = sg.states["funnyidle"].onenter
+	sg.states["funnyidle"].onenter = function(inst, ...)
+		local fleas = inst.components.inventory and inst.components.inventory:GetItemsWithTag("flea") or {}
+		local itchy_chance = 0
+		
+		for i, v in ipairs(fleas) do
+			if v.components.inventoryitem and v.components.inventoryitem.owner == inst then -- Only in inv, ignore fleas in backpack
+				if itchy_chance == 0 then
+					itchy_chance = TUNING.POLARFLEA_FUNNYIDLE_CHANCE.min
+				else
+					itchy_chance = itchy_chance + TUNING.POLARFLEA_FUNNYIDLE_CHANCE.added
+					if itchy_chance >= 1 then
+						break
+					end
+				end
+			end
+		end
+		
+		if math.random() <= itchy_chance then
+			inst.AnimState:PlayAnimation("flea_itchy")
+			inst.SoundEmitter:PlaySound("polarsounds/wilson/flea_itch")
+		else
+			oldfunnyidle(inst, ...)
 		end
 	end
 end)

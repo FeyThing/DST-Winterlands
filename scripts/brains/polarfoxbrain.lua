@@ -16,7 +16,7 @@ local TARGET_FAR_DIST = TUNING.POLARFOX_LEADER_RUN_DIST
 
 local SEE_FOOD_DIST = 10
 
-local AVOID_TAGS = {"scarytoprey", "hostile"}
+local AVOID_TAGS = {"scarytoprey", "hostile", "icecrackfx"}
 local AVOID_NOT_TAGS = {"INLIMBO", "companion", "shadowcreature", "brightmare_gestalt"}
 local FINDFOOD_CANT_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach", "show_spoiled"}
 

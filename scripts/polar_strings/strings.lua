@@ -35,7 +35,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.SHADOW_ICICLER = "Shadow Spine"
 	
 --	Buildings
-
+	
 	NAMES.POLAR_BRAZIER = "Brazier"
 	NAMES.POLAR_BRAZIER_ITEM = "Brazier"
 	NAMES.POLAR_THRONE = "Naughty Throne"
