@@ -8,7 +8,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
-		"Allez... Allezzz...!",
+		"Allez... Allezzz... !",
 		"Ça va prendre... une éternité...",
 		"Hrrrrgh...",
 	}

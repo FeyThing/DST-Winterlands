@@ -20,7 +20,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	ANNOUNCE.ANNOUNCE_WX_NAUGHTYCHIP_RABBIT = {"only_used_by_wx78"}
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr...! Flocon me sorte de là !"
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Brrr... ! Flocon me sorte de là !"
 	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Je suis sec. Mais seulement en termes de neige."
 	
 --	Worldgen
@@ -109,7 +109,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "La science dit que ce bâton est parfait."
 	DESCRIBE.ARMORPOLAR = "C'est du lourd !"
 	DESCRIBE.FROSTWALKERAMULET = "La science peut expliquer ce phénomène... mais pas moi."
-	DESCRIBE.ICICLESTAFF = "Toujours utile. Si on oublie \"l'incident\"."
+	DESCRIBE.ICICLESTAFF = "Toujours utile. Si on oublie «l'incident»."
 	DESCRIBE.POLAR_SPEAR = "C'est un gros cornet !"
 	DESCRIBE.POLARAMULET = "Ça fait... des choses, c'est certain."
 	DESCRIBE.POLARBEARHAT = "Se faire manger a ses avantages."

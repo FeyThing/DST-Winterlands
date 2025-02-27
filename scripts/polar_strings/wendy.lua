@@ -10,7 +10,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Cold chains... pulling me down...",
 		"Each step is slower than the last...",
-		"I don't find it funny... Abigail...",
+		"I don't find it funny... Abby...",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Is it the end yet?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "That's one way to drown."
@@ -26,7 +26,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.ANTLER_TREE = {
 		BURNING = "Even in flames, it stands with dignity.",
 		BURNT = "Don't crumble, let me end you.",
-		CHOPPED = "It's met its end at our hands.",
+		CHOPPED = "It met its end at our hands.",
 		GENERIC = "I think it's... pretty.",
 	}
 	DESCRIBE.ICELETTUCE_SEEDS = "It's a plant that's waiting to be."

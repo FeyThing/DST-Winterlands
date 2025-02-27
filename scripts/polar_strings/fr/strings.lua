@@ -5,10 +5,10 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Plants
 	NAMES.ANTLER_TREE = "Bramechêne"
-	NAMES.FARM_PLANT_ICELETTUCE = "Laitues iceberg"
+	NAMES.FARM_PLANT_ICELETTUCE = "Laitue iceberg"
 	NAMES.GRASS_POLAR = "Herbe arctique"
 	NAMES.ICELETTUCE_SEEDS = "Graine froide"
-	NAMES.KNOWN_ICELETTUCE_SEEDS = "Graines de laitues iceberg"
+	NAMES.KNOWN_ICELETTUCE_SEEDS = "Graines de laitue iceberg"
 	
 	--	Rocks and stones
 	NAMES.POLAR_ICICLE = "Stalactite"
@@ -40,7 +40,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLAR_BRAZIER_ITEM = "Brasero"
 	NAMES.POLAR_THRONE = "Vilain throne"
 	NAMES.POLAR_THRONE_GIFTS = "Pile de cadeaux"
-	NAMES.POLARAMULET_STATION = "\"Le Bazar Polaire\""
+	NAMES.POLARAMULET_STATION = "«Le Bazar Polaire»"
 	NAMES.POLARBEARHOUSE = "Cahute d'ours"
 	NAMES.POLARICE_PLOW = "Brise-glace"
 	NAMES.POLARICE_PLOW_ITEM = "Brise-glace"
@@ -49,7 +49,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Food
 	NAMES.DRYICECREAM = "Glace au carbone"
-	NAMES.ICELETTUCE = "Laitues iceberg"
+	NAMES.ICELETTUCE = "Laitue iceberg"
 	NAMES.ICEBURRITO = "Brrito"
 	NAMES.POLARCRABLEGS = "Pattes de crabe royal"
 	NAMES.WINTERCOOKING_POLARCRABLEGS = "Pattes de crabe royal"
@@ -73,7 +73,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARBEARHAT = "Tête d'ours"
 	NAMES.POLARCROWNHAT = "Couronne de glace"
 	NAMES.POLARFLEA_SACK = "Sac à puces"
-	NAMES.POLARICESTAFF = "Bâton d'hiver"
+	NAMES.POLARICESTAFF = "Baguette hiverale"
 	NAMES.POLARMOOSEHAT = "Ouchanka"
 	
 	--	Others
@@ -198,46 +198,46 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	STRINGS.POLARAMULET_STATION_WAITING = {
 		"...",
-		"...tu as... la marchandise ?",
-		"...hmm...",
-		"...tu as l'air... différent.",
-		{"...si tu as des cordes...", "...et de jolies crrrocs...", "...on peut s'arranger."},
-		{"...non, je n'échange pas de poisson...", "...désolé."},
+		"... tu as... la marchandise ?",
+		"... hmm...",
+		"... tu as l'air... différent.",
+		{"... si tu as des cordes...", "... et de jolies crrrocs...", "... on peut s'arranger."},
+		{"... non, je n'échange pas de poisson...", "... désolé."},
 	}
 	STRINGS.POLARAMULET_STATION_PENDING = {
-		"...j'ai toujours tes cordes.",
-		{"...tu as enfin trouvé...", "...de jolies crrrocs ?"},
-		{"...prêt à conclure...", "...notre, hmm... échange ?"},
+		"... j'ai toujours tes cordes.",
+		{"... tu as enfin trouvé...", "... de jolies crrrocs ?"},
+		{"... prêt à conclure...", "... notre, hmm... échange ?"},
 	}
 	STRINGS.POLARAMULET_STATION_BUILDER_PRE = {
-		"...ahh... parrrfait.",
-		"...ho ho !",
-		"...maintenant... si tu as des dents.",
-		"...parrrfait !",
-		"...cette corde... est parrrfaite.",
-		"...de belles cordes.",
-		{"...et maintenant...", "...le meilleur moment."},
+		"... ahh... parrrfait.",
+		"... ho ho !",
+		"... maintenant... si tu as des dents.",
+		"... parrrfait !",
+		"... cette corde... est parrrfaite.",
+		"... de belles cordes.",
+		{"... et maintenant...", "... le meilleur moment."},
 	}
 	STRINGS.POLARAMULET_STATION_BUILDER_LOOP = {
 		"...",
-		"...tu es... inspirrré, maintenant ?",
-		"...tu peux... finir plus tard.",
-		{"...ça peut... attendre...", "...si tu en as besoin."},
+		"... tu es... inspirrré, maintenant ?",
+		"... tu peux... finir plus tard.",
+		{"... ça peut... attendre...", "... si tu en as besoin."},
 	}
 	STRINGS.POLARAMULET_STATION_BUILDER_PST = {
-		"...c'est... magnifique !",
-		"...mes remerrrciements.",
-		"...oui... oui !", 
-		"...tu peux être... fierrrr, de celui-là.",
-		{"...", "...tu rrrreviendras, hein ?"},
-		{"...il ira si bien...", "...autour de ton joli cou."},
+		"... c'est... magnifique !",
+		"... mes remerrrciements.",
+		"... oui... oui !", 
+		"... tu peux être... fierrrr, de celui-là.",
+		{"...", "... tu rrrreviendras, hein ?"},
+		{"... il ira si bien...", "... autour de ton joli cou."},
 	}
 	STRINGS.POLARAMULET_STATION_TOOTH_TIPS = {
-		{"...un rostre de gnarval pourrait...", "...t'aider en mer...", "...ce sont des dents, tu sais ?"},
-		{"...une dent de molosse...", "...te rendra... plus forrrt, oui."},
-		{"...un croc de glace fait...", "...des mirrracles... dans la neige."},
-		{"...une dent de laviole pourrait...", "...te prrrotéger... du froid."},
-		{"...les défense de morse sont...", "...très prrrisée, ici."},
+		{"... un rostre de gnarval pourrait...", "... t'aider en mer...", "... ce sont des dents, tu sais ?"},
+		{"... une dent de molosse...", "... te rendra... plus forrrt, oui."},
+		{"... un croc de glace fait...", "... des mirrracles... dans la neige."},
+		{"... une dent de laviole pourrait...", "... te prrrotéger... du froid."},
+		{"... les défense de morse sont...", "... très prrrisée, ici."},
 	}
 	
 	STRINGS.LUCY.container_has_fleas = {
@@ -286,7 +286,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Recipes
 	RECIPE_DESC.ARMORPOLAR = "Protège des dégâts et du froid mordant."
-	RECIPE_DESC.BLUEGEM_OVERCHARGED = "...chasse-le...\n...il se cache dans la tempête."
+	RECIPE_DESC.BLUEGEM_OVERCHARGED = "... chasse-le...\n... il se cache dans la tempête."
 	RECIPE_DESC.FROSTWALKERAMULET = "L'eau n'a jamais été aussi cool !"
 	RECIPE_DESC.ICICLESTAFF = "Invoque les choses que tu jurais de détruire."
 	RECIPE_DESC.POLAR_BRAZIER_ITEM = "Un feu de camp à emporter partout."
@@ -311,7 +311,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Obtenu par un échange avec un individu louche..."
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "Pas assez de neige !"
-	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"Le Bazar Polaire\""
+	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "«Le Bazar Polaire»"
 	
 	--	Misc
 	STRINGS.UI.SANDBOXMENU.POLARSTART = "Terres Gelées"

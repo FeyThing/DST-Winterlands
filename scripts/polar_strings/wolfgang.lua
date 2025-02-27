@@ -24,7 +24,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Plants
 	DESCRIBE.ANTLER_TREE = {
-		BURNING = "Horns is burning!",
+		BURNING = "Horns are burning!",
 		BURNT = "Tree look more scary now.",
 		CHOPPED = "Wolfgang needs better opponents.",
 		GENERIC = "Tree with horns? Tree wants fight?",
