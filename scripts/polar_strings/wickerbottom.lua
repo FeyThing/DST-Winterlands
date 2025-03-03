@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		INUSE = "Oh dear... was everyone ready for this?",
 		REFUEL = "It would be wise to lock away this... thing.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Chances are, it's still alive."
 	DESCRIBE.POLARICEPACK = "Works wonders when sealed up in an airtight space."
 	DESCRIBE.POLARTRINKET_1 = "Quite the cozy odd little fellow."
 	DESCRIBE.POLARTRINKET_2 = "Quite the cozy odd little lady."

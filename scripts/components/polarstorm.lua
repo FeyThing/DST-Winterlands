@@ -38,19 +38,20 @@ return Class(function(self, inst)
 	
 	-- [ Functions ] --
     local function OnSeasonChange(_, season)
-        _season = season
+		local curseason = POLARRIFY_MOD_SEASONS[season]
+        _season = curseason
 		
-		if _blizzard_season_mult[season] == nil then
+		if _blizzard_season_mult[curseason] == nil then
 			_season = "autumn"
 		end
 		
         if _blizzard_time_task then -- Update task period
-            local timeleft = _blizzard_time_task.period * _blizzard_season_mult[season].cooldown_mult
+            local timeleft = _blizzard_time_task.period * _blizzard_season_mult[curseason].cooldown_mult
             _blizzard_time_task.period = timeleft
         end
 
         if _blizzard_cd_task then -- Update task period
-            local timeleft = _blizzard_cd_task.period * _blizzard_season_mult[season].length_mult
+            local timeleft = _blizzard_cd_task.period * _blizzard_season_mult[curseason].length_mult
             _blizzard_cd_task.period = timeleft
         end
     end

@@ -74,6 +74,16 @@ function c_icewizard(player)
 	end
 end
 
+--	Get a free ice cube, and fish
+function c_fishcube(name)
+	if TheWorld.components.oceanfish_in_ice_spawner then
+		local x, y, z = ConsoleWorldPosition():Get()
+		TheWorld.components.oceanfish_in_ice_spawner:SpawnIceCubeAt(x, y, z, name)
+	else
+		print("World has no oceanfish_in_ice_spawner component!")
+	end
+end
+
 --	Time for arts and crafts
 function c_teethnecklace(player)
 	player = ListingOrConsolePlayer(player)

@@ -104,7 +104,6 @@ local components = {
 	"playervision",
 	"preserver",
 	"repairable",
-	"retrofitforestmap_anr",
 	"sandstorms",
 	"sentientaxe",
 	"shadowcreaturespawner",

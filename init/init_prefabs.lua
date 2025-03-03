@@ -11,6 +11,7 @@ PrefabFiles = {
 	"krampus_ugly_sweater",
 	"moose_polar",
 	"moose_polar_antler",
+	"oceanfish_in_ice",
 	"polar_amulet",
 	"polar_amulet_station",
 	"polar_brazier",

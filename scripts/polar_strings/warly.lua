@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		INUSE = "Well. I'd better prep some soup for everyone.",
 		REFUEL = "Ah non! You aren't getting your snow back.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "There's no questioning its freshness."
 	DESCRIBE.POLARICEPACK = "Some fortification against my worst enemy."
 	DESCRIBE.POLARTRINKET_1 = "Were there flowers growing in your snowy garden?"
 	DESCRIBE.POLARTRINKET_2 = "I take it your lawn wasn't green all year round."

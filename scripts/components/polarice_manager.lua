@@ -455,8 +455,10 @@ return Class(function(self, inst)
 		if tile ~= WORLD_TILES.POLAR_ICE then
 			return
 		end
-
-		local old_tile = WORLD_TILES.OCEAN_POLAR
+		
+		local default_tile = TheWorld.worldprefab == "shipwrecked" and WORLD_TILES.OCEAN_DEEP or WORLD_TILES.OCEAN_POLAR
+		
+		local old_tile = default_tile
 		local undertile = inst.components.undertile
 		local dx, dy, dz = _map:GetTileCenterPoint(tx, ty)
 		
@@ -469,10 +471,10 @@ return Class(function(self, inst)
 				if GetClosestPolarTileToPoint(dx, dy, dz, TUNING.OCEAN_POLAR_CONVERT_RANGE) ~= nil and (old_tile == WORLD_TILES.OCEAN_COASTAL_SHORE
 					or old_tile == WORLD_TILES.OCEAN_COASTAL) then
 					
-					old_tile = WORLD_TILES.OCEAN_POLAR
+					old_tile = default_tile
 				end
 			else
-				old_tile = WORLD_TILES.OCEAN_POLAR
+				old_tile = default_tile
 			end
 		end
 
@@ -545,7 +547,11 @@ return Class(function(self, inst)
 					TossDebris("ice", dx, dz)
 				end
 			end
-
+			
+			if TheWorld.components.oceanfish_in_ice_spawner and TheWorld.components.oceanfish_in_ice_spawner:CanSpawnIceCube(dx, 0, dz) then
+				TheWorld.components.oceanfish_in_ice_spawner:SpawnIceCubeAt(dx, 0, dz)
+			end
+			
 			local half_num_debris = math.random(4)
 			local angle_per_debris = TWOPI / half_num_debris
 			for i = 1, half_num_debris do

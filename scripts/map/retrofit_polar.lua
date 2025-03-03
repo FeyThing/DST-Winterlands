@@ -3,6 +3,7 @@ require "mathutil"
 require "map/terrain"
 
 local obj_layout = require("map/object_layout")
+local ret
 
 local function FindEntsInArea(entities, left, top, size, blocking_prefabs)
 	local right, bottom = left + size, top + size
@@ -47,6 +48,15 @@ local function AddSquareTopology(topology, left, top, size, room_id, tags)
 	
 	topology.nodes[index] = node
 end
+
+local RETROFITTING_AVOID_ENTS = { -- Island is pretty big, only add in here things that are SUPER DUPER important so worlds have higher success rate
+	--dst
+	"boat", "boat_ancient", "chester_eyebone", "glommerflower",
+	"oceantree_pillar", "watertree_pillar"
+	
+	--sw
+	"bermudatriangle", "octopusking", "volcano", "packim_fishbone",
+}
 
 local function PolarRetrofitting_Island(map, savedata)
 	local topology = savedata.map.topology
@@ -114,10 +124,7 @@ local function PolarRetrofitting_Island(map, savedata)
 			for _, candidate in ipairs(candidates) do
 				local top, left = candidate.top, candidate.left
 				local world_top, world_left = left * 4 - (map_width * 0.5 * 4), top * 4 - (map_height * 0.5 * 4)
-				local ents_to_remove = FindEntsInArea(savedata.ents, world_top - 5, world_left - 5, world_size + 10, {
-					"boat", "boat_ancient", "chester_eyebone", "glommerflower",
-					"oceantree_pillar", "watertree_pillar"
-				})
+				local ents_to_remove = FindEntsInArea(savedata.ents, world_top - 5, world_left - 5, world_size + 10, ret.RETROFITTING_AVOID_ENTS)
 				
 				if ents_to_remove ~= nil then
 					print("   Removed "..tostring(#ents_to_remove).." entities for static layout:")
@@ -128,8 +135,10 @@ local function PolarRetrofitting_Island(map, savedata)
 					
 					obj_layout.Place({left, top}, name, add_fn, nil, map)
 					if layout.add_topology ~= nil then
-						AddSquareTopology(topology, world_top, world_left, world_size, "StaticLayoutIsland:Dummy", {"not_mainland"})
-						-- ^ Why ? Because adding a Layout with add_topology will cover staticlayouts in the ocean, so minimize the risks with a tagless one under first
+						AddSquareTopology(topology, world_top, world_left, world_size, "StaticLayoutIsland:Dummy_WL1", {"not_mainland"})
+						-- ^ Why ? Because adding a Layout with add_topology will cover staticlayouts in the ocean, so minimize the risks with a non-important tag one under first
+						AddSquareTopology(topology, world_top, world_left, world_size, "StaticLayoutIsland:Dummy_WL2", {"not_mainland"})
+						-- Okay, another one because SOMEWHY it still bug either moonquay or hermit island for a handful of maps, but this deals with it now
 						AddSquareTopology(topology, world_top, world_left, world_size, layout.add_topology.room_id, layout.add_topology.tags)
 					end
 					
@@ -141,7 +150,8 @@ local function PolarRetrofitting_Island(map, savedata)
 		return false
 	end
 	
-	local success = TryToAddLayout("retrofit_polarisland", 74)
+	local worldprefab = savedata.map.prefab or "forest"
+	local success = TryToAddLayout("retrofit_polarisland"..(worldprefab == "shipwrecked" and "_sw" or ""), 74)
 	
 	if success then
 		print("Retrofitting for The Winterlands - Added Winterlands to the world.")
@@ -150,6 +160,9 @@ local function PolarRetrofitting_Island(map, savedata)
 	end
 end
 
-return {
+ret = {
 	PolarRetrofitting_Island = PolarRetrofitting_Island,
+	RETROFITTING_AVOID_ENTS = RETROFITTING_AVOID_ENTS,
 }
+
+return ret

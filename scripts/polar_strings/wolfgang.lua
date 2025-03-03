@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		INUSE = "Wolfgang shake too hard?",
 		REFUEL = "Is only strange ball.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Thought ice fishing would be harder."
 	DESCRIBE.POLARICEPACK = "Is keeping things mighty fresh for longer."
 	DESCRIBE.POLARTRINKET_1 = "Too proud of moustache to tuck it from the cold!"
 	DESCRIBE.POLARTRINKET_2 = "Tiny snowwoman is not afraid of the cold."

@@ -9,26 +9,33 @@ local polarmodule_definitions = {}
 
 local function naughty_onkill(wx, data)
 	local victim = data and data.victim
-	local naughty_value = victim and NAUGHTY_VALUE[victim.prefab] or 0
 	
+	local naughtiness = victim and NAUGHTY_VALUE[victim.prefab] or 0
+	local naughty_val = FunctionOrValue(naughtiness, wx, data)
+	
+	if victim and victim.prefab == "pigman" and victim.components.werebeast and victim.components.werebeast:IsInWereState() then
+		naughty_val = 0
+	end
+	
+	local stackmult = data and data.stackmult
 	local israbbit = victim and victim:HasAnyTag("rabbit", "manrabbit")
 	local curtime = GetTime()
 	
-	if (victim == nil or not victim:HasAnyTag(SOULLESS_TARGET_TAGS)) and wx.components.talker and wx._nextnaughtytaunt == nil or wx._nextnaughtytaunt < curtime then
+	if (victim == nil or not victim:HasAnyTag(SOULLESS_TARGET_TAGS)) and wx.components.talker and (wx._nextnaughtytaunt == nil or wx._nextnaughtytaunt < curtime) then
 		wx._nextnaughtytaunt = curtime + math.random(4, 6)
 		wx.components.talker:Say(GetString(wx, israbbit and "ANNOUNCE_WX_NAUGHTYCHIP_RABBIT" or "ANNOUNCE_WX_NAUGHTYCHIP_KRAMPUS"))
 	end
 	
-	if TheWorld.components.kramped and naughty_value > 0 then
-		local naughty_total = naughty_value * TUNING.WX78_NAUGHTY_CHIPBOOSTS[math.min(wx._naughtychips or 1, #TUNING.WX78_NAUGHTY_CHIPBOOSTS)]
+	if TheWorld.components.kramped and naughty_val > 0 then
+		local naughty_total = naughty_val * TUNING.WX78_NAUGHTY_CHIPBOOSTS[math.min(wx._naughtychips or 1, #TUNING.WX78_NAUGHTY_CHIPBOOSTS)]
 		
-		TheWorld.components.kramped:AddFromWX_NaughtyModule(naughty_total, wx)
+		TheWorld.components.kramped:AddFromWX_NaughtyModule(naughty_total * (stackmult or 1), wx)
 	end
 	
-	if TheWorld.components.rabbitkingmanager and naughty_value > 0 and israbbit then
-		local naughty_total = naughty_value * TUNING.WX78_NAUGHTY_CHIPBOOSTS[math.min(wx._naughtychips or 1, #TUNING.WX78_NAUGHTY_CHIPBOOSTS)]
+	if TheWorld.components.rabbitkingmanager and naughty_val > 0 and israbbit then
+		local naughty_total = naughty_val * TUNING.WX78_NAUGHTY_CHIPBOOSTS[math.min(wx._naughtychips or 1, #TUNING.WX78_NAUGHTY_CHIPBOOSTS)]
 		
-		TheWorld.components.rabbitkingmanager:AddNaughtinessFromPlayer(wx, naughty_total)
+		TheWorld.components.rabbitkingmanager:AddNaughtinessFromPlayer(wx, naughty_total * (stackmult or 1))
 	end
 end
 

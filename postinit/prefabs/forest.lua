@@ -3,32 +3,43 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
-AddPrefabPostInit("forest", function(inst)
-	if not TheNet:IsDedicated() then
-		inst:AddComponent("snowwaver")
-	end
-	
-	inst:AddComponent("winterlands_manager")
-	inst:AddComponent("polartemperature_manager")
-	
-	if not inst.ismastersim then
-		return
-	end
-	
-	inst:AddComponent("icefishingsurprise")
-	
-	inst:AddComponent("polarfoxrespawner")
-	
-	inst:AddComponent("polarice_manager")
-	
-	inst:AddComponent("polarpenguinspawner")
-	
-	inst:AddComponent("polarsnow_manager")
-	
-	if TUNING.POLAR_BLIZZARDS_CONFIG ~= -2 then
-		inst:AddComponent("polarstorm")
-	end
-end)
+local forest_shards = {"forest", "shipwrecked", "porkland"}
+
+for i, v in ipairs(forest_shards) do
+	AddPrefabPostInit(v, function(inst)
+		if not TheNet:IsDedicated() then
+			inst:AddComponent("snowwaver")
+		end
+		
+		inst:AddComponent("winterlands_manager")
+		
+		inst:AddComponent("polartemperature_manager")
+		
+		if not inst.ismastersim then
+			return
+		end
+		
+		inst:AddComponent("icefishingsurprise")
+		
+		inst:AddComponent("oceanfish_in_ice_spawner")
+		
+		inst:AddComponent("polarfoxrespawner")
+		
+		inst:AddComponent("polarice_manager")
+		
+		inst:AddComponent("polarpenguinspawner")
+		
+		inst:AddComponent("polarsnow_manager")
+		
+		if TUNING.POLAR_BLIZZARDS_CONFIG ~= -2 then
+			inst:AddComponent("polarstorm") -- TODO: always add this, but can be disabled
+		end
+		
+		inst:AddComponent("polarwormholes")
+		
+		inst:AddComponent("retrofitforestmap_polar")
+	end)
+end
 
 --
 

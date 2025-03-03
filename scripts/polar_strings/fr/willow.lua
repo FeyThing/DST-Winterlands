@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		INUSE = "Qui l'a secoué, et pourquoi ?!",
 		REFUEL = "Et ne reviens pas !",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Je connais exactement ce qu'il te faut !"
 	DESCRIBE.POLARICEPACK = "Laisse ça dans le frigo, peu importe."
 	DESCRIBE.POLARTRINKET_1 = "Il semble pas beaucoup aimer le froid non plus."
 	DESCRIBE.POLARTRINKET_2 = "Elle semble pas beaucoup aimer le froid non plus."

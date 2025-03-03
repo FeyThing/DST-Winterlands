@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		INUSE = "Why did you have to shake it, why?",
 		REFUEL = "And don't come back!",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "I know just the thing for that, fish!"
 	DESCRIBE.POLARICEPACK = "Just leave it be in the fridge, whatever."
 	DESCRIBE.POLARTRINKET_1 = "He looks like he doesn't like the cold much either."
 	DESCRIBE.POLARTRINKET_2 = "She looks like she doesn't like the cold much either."

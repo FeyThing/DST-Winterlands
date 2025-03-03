@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		INUSE = "C'mon, I didn't mean it seriously.",
 		REFUEL = "No snow on the horizon.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Not as gratifying as reeling it by yourself..."
 	DESCRIBE.POLARICEPACK = "Who needs an electric freezer when you have this?"
 	DESCRIBE.POLARTRINKET_1 = "Warly would like that scarf."
 	DESCRIBE.POLARTRINKET_2 = "Eh? Oh, it's just that she looks like family, a bit."

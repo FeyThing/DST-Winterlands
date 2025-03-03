@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		INUSE = "What a tempting, cursed trinket!",
 		REFUEL = "It's empty... not that it makes me unhappy.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "You think you're safe from me, fishie?"
 	DESCRIBE.POLARICEPACK = "Must I sacrifice space for mere mortal food?"
 	DESCRIBE.POLARTRINKET_1 = "I see no soul within, no no."
 	DESCRIBE.POLARTRINKET_2 = "I see no soul within, no no."

@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		INUSE = "Est-ce que ça va me mettre sur la liste des enfants pas sage ?",
 		REFUEL = "Il lui faut une neige spéciale.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Il faut sauver Willy !"
 	DESCRIBE.POLARICEPACK = "C'est rigolo à tenir... p-pour un moment au moins."
 	DESCRIBE.POLARTRINKET_1 = "On veut des gros vêtements comme ça aussi !"
 	DESCRIBE.POLARTRINKET_2 = "On veut des gros vêtements comme ça aussi !"

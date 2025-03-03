@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		INUSE = "R'allez, j'étais pas sérieux.",
 		REFUEL = "Pas de neige à l'horizon.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Pas aussi gratifiant que d'le pêcher soi-même..."
 	DESCRIBE.POLARICEPACK = "Qui a besoin d'un congél quand on a ça ?"
 	DESCRIBE.POLARTRINKET_1 = "Warly aimerais bien cette écharpe."
 	DESCRIBE.POLARTRINKET_2 = "Hein ? Oh, c'est juste qu'elle ressemble à de la famille, un peu."

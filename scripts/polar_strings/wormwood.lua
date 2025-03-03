@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		INUSE = "No no no. Go back inside!",
 		REFUEL = "Finally sleeping?",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Needs bit of fire"
 	DESCRIBE.POLARICEPACK = "Keeps belly stuff more?"
 	DESCRIBE.POLARTRINKET_1 = "Cozy little man"
 	DESCRIBE.POLARTRINKET_2 = "Pointy hat girl need help?"

@@ -19,7 +19,8 @@ AddTaskSetPreInitAny(function(self)
 	end
 	
 	local winterlands_preset = self.name == STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
-	if self.location == "forest" and self.tasks and #self.tasks > 1 then
+	
+	if GLOBAL.Polar_CompatibleShard(self.location) then
 		for i, task in ipairs(polar_tasks) do
 			table.insert(self.tasks, task)
 		end
@@ -50,8 +51,8 @@ end)
 
 --	World Settings
 
-AddCustomizeGroup(LEVELCATEGORY.SETTINGS, "polar", STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR, nil, nil, 4.1)
-AddCustomizeGroup(LEVELCATEGORY.WORLDGEN, "polar", STRINGS.UI.SANDBOXMENU.WORLDGENERATION_POLAR, nil, nil, 3.1)
+--AddCustomizeGroup(LEVELCATEGORY.SETTINGS, "polar", STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR, nil, nil, 4.1)
+--AddCustomizeGroup(LEVELCATEGORY.WORLDGEN, "polar", STRINGS.UI.SANDBOXMENU.WORLDGENERATION_POLAR, nil, nil, 3.1)
 
 for k, v in pairs(require("map/polar_customizations")) do
 	if v.category == LEVELCATEGORY.SETTINGS then
@@ -59,10 +60,11 @@ for k, v in pairs(require("map/polar_customizations")) do
 	else
 		v.image = "worldgen_"..v.name
 	end
+	
 	AddCustomizeItem(v.category, v.group, v.name, {
 		value = v.value,
 		desc = GetCustomizeDescription(v.desc),
-		world = v.world or {"forest"},
+		world = v.world or {"forest", "cave", "shipwrecked", "volcanoworld", "porkland"},
 		image = v.image..".tex",
 		atlas = "images/worldgen_polar.xml",
 		masteroption = v.masteroption, master_controlled = v.master_controlled, order = v.order
@@ -128,11 +130,8 @@ if polar_taskset.set_pieces == nil then
 	polar_taskset.set_pieces = {}
 end
 
---table.insert(polar_taskset.required_prefabs, "spawnpoint_polar")
-
 polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
 
---polar_taskset.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands"}}		This is now added from the start_location (sorta)
 polar_taskset.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Floe", "Polar Quarry"}}
 
 AddTaskSet("polar", polar_taskset)

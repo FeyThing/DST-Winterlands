@@ -68,7 +68,9 @@ local function OnTimerDone(inst, data)
 end
 
 local function OnSeasonChange(inst, season)
-	if season == "summer" then
+	local curseason = POLARRIFY_MOD_SEASONS[season] or "autumn"
+	
+	if curseason == "summer" then
 		if inst.lettuce == nil and inst.canspawnlettuce then
 			if not inst.components.timer:TimerExists("spawnlettuce") then
 				inst.components.timer:StartTimer("spawnlettuce", GetRandomMinMax(TUNING.ICELETTUCE_SPAWNER_TIME.min, TUNING.ICELETTUCE_SPAWNER_TIME.max))

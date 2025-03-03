@@ -83,3 +83,20 @@ FUELTYPE.DRYICE = "DRYICE"
 MATERIALS.DRYICE = "dryice"
 
 OCEAN_DEPTH.POLAR = 5
+
+POLARRIFY_MOD_SEASONS = {
+	autumn = "autumn",
+	winter = "winter",
+	spring = "spring",
+	summer = "summer",
+	
+	mild = "autumn",
+	wet = "winter",
+	green = "spring",
+	dry = "summer",
+	
+	temperate = "autumn",
+	humid = "winter",
+	lush = "spring",
+	aporkalypse = "summer",
+}

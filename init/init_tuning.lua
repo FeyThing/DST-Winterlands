@@ -9,15 +9,21 @@ local day_time = seg_time * day_segs
 local dusk_time = seg_time * dusk_segs
 local night_time = seg_time * night_segs
 
---	Worldgen
+--	Configs
 	
-	TUNING.POLAR_ICEGEN_CONFIG = GetModConfigData("biome_icegen") or 0
-	TUNING.POLAR_BLIZZARDS_CONFIG = GetModConfigData("biome_blizzards") or 0
 	TUNING.POLAR_RETROFIT = GetModConfigData("biome_retrofit") or 0
+	TUNING.POLAR_SHARD = GetModConfigData("biome_shard") or "forest"
+	TUNING.POLAR_ICEGEN_CONFIG = GetModConfigData("polar_icegen") or 0
+	TUNING.POLAR_BLIZZARDS_CONFIG = GetModConfigData("polar_blizzards") or 0
+	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("polar_snow") ~= false
+	TUNING.POLAR_WORMHOLE_ENABLED = GetModConfigData("biome_wormhole") ~= false
+	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
+	
+--	Worldgen
 	
 	TUNING.POLAR_TASKS_OPTIONALITY = {
 		["Polar Floe"] = 0.32,
-		["Polar Quarry"] = 0.1,
+		["Polar Quarry"] = 0.32,
 	}
 	
 	TUNING.ANTLER_TREE_CHOPS = 10
@@ -317,6 +323,10 @@ local night_time = seg_time * night_segs
 	TUNING.POLARFLEA_SACK_PERISHTIME = total_day_time * 10
 	TUNING.POLARFLEA_SACK_PRESERVER_RATE = 0
 	
+	TUNING.OCEANFISH_IN_ICE_HATCH_CRACK_TIME = 3
+	TUNING.OCEANFISH_IN_ICE_HATCH_TIME = seg_time
+	TUNING.OCEANFISH_IN_ICE_SPAWN_CHANCE = 0.04
+	
 	TUNING.POLARICEPACK_PRESERVE_MULT = 0.75
 	
 	TUNING.HEATROCK_INSULATION_POLARMULT = 0.5
@@ -442,9 +452,6 @@ local night_time = seg_time * night_segs
 	
 	TUNING.POLAR_MIST_TIME = 15
 	TUNING.POLAR_MIST_TWEENTIME = 1.5
-	
-	TUNING.POLAR_CC_ENABLED = GetModConfigData("misc_shader") ~= false
-	TUNING.POLAR_WAVES_ENABLED = GetModConfigData("misc_snow") ~= false
 	
 	TUNING.SNOWED_SHADER_MAX_SUBMERGE = -0.6 -- LukaS: Distance, in in-game units (4 = tile), to shift the player model on the Y axis
 	TUNING.SNOWED_SHADER_MAX_FREEZE = 0.55

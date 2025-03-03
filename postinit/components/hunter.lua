@@ -14,7 +14,7 @@ ENV.AddComponentPostInit("hunter", function(self)
 				return "moose_specter"
 			end
 			
-			local season = TheWorld.state.season
+			local season = POLARRIFY_MOD_SEASONS[TheWorld.state.season] or "autumn"
 			local surprise_chance = (season == "winter" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE_MAX)
 				or (season == "summer" and TUNING.HUNT_ALTERNATE_POLAR_CHANCE_MIN)
 				or TUNING.HUNT_ALTERNATE_POLAR_CHANCE

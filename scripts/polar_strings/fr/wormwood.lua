@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		INUSE = "Non non non. Retourne dedans !",
 		REFUEL = "Il dort enfin ?",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Il lui faut du feu."
 	DESCRIBE.POLARICEPACK = "Pour garder le manger plus longtemps."
 	DESCRIBE.POLARTRINKET_1 = "Un petit homme douillet."
 	DESCRIBE.POLARTRINKET_2 = "La fille au chapeau pointu a besoin d'aide ?"

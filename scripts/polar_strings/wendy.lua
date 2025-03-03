@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		INUSE = "I see. Breaking it would have lasting consequences.",
 		REFUEL = "I can't shake it no more. What a pity.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "You're safer inside, fish, don't break free."
 	DESCRIBE.POLARICEPACK = "A long existence of cold and darkness awaits you in the fridge."
 	DESCRIBE.POLARTRINKET_1 = "I'd carry this to the end of the world."
 	DESCRIBE.POLARTRINKET_2 = "I'd carry this to the end of the world."

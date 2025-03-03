@@ -1,18 +1,17 @@
 local customizations = {
 --	WORLDSETTINGS
---	moose_polar = 		{category = LEVELCATEGORY.SETTINGS},
-	polar_icicles = 	{category = LEVELCATEGORY.SETTINGS},
-	polar_throne = 		{category = LEVELCATEGORY.SETTINGS, desc = "yesno_descriptions"},
-	polarbears = 		{category = LEVELCATEGORY.SETTINGS},
-	polarfleas = 		{category = LEVELCATEGORY.SETTINGS},
-	polarfoxes = 		{category = LEVELCATEGORY.SETTINGS},
-	tumbleweed_polar = 	{category = LEVELCATEGORY.SETTINGS},
+	polar_icicles = 	{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
+	polar_throne = 		{category = LEVELCATEGORY.SETTINGS, group = "global", desc = "yesno_descriptions", world = {"forest", "shipwrecked", "porkland"}, order = 13.1},
+	polarbears = 		{category = LEVELCATEGORY.SETTINGS, group = "animals"},
+	polarfleas = 		{category = LEVELCATEGORY.SETTINGS, group = "monsters"},
+	polarfoxes = 		{category = LEVELCATEGORY.SETTINGS, group = "animals", world = {"forest", "shipwrecked", "porkland"}},
+	tumbleweed_polar = 	{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	
 --	WORLDGEN
-	antler_trees = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
-	grass_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
-	polarbearhouses = 	{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
-	rocks_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions"},
+	antler_trees = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
+	grass_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
+	polarbearhouses = 	{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "animals", world = {"forest", "shipwrecked", "porkland"}},
+	rocks_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 }
 
 --
@@ -110,11 +109,10 @@ for k, v in pairs(customizations) do
 	v.name = k
 	
 	v.category = v.category
-	v.group = v.group or "polar"
+	--v.group = v.group or "polar"
 	
 	v.value = v.value or "default"
 	v.desc = v.desc or "frequency_descriptions"
-	v.world = v.world or {"forest"}
 end
 
 return customizations

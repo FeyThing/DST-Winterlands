@@ -56,6 +56,11 @@ for i, layout in ipairs(retrofit_islands) do
 		min_dist_from_land = 0,
 	})
 	Layouts[layout].ground_types = POLAR_GROUND_TYPES
+	
+	if WORLD_TILES.OCEAN_SHALLOW then -- SW requires different water tiles in retrofit
+		Layouts[layout.."_sw"] = Layouts[layout]
+		Layouts[layout.."_sw"].ground_types = POLAR_GROUND_TYPES_SW
+	end
 end
 
 --	Tags, Keys
@@ -98,5 +103,17 @@ ENV.AddGlobalClassPostConstruct("map/storygen", "Story", function(self)
 end)
 
 --	Island Gen
+
+function Polar_CompatibleShard(location)
+	location = location or "forest"
+	
+	if location == TUNING.POLAR_SHARD then
+		return true
+	elseif TUNING.POLAR_SHARD == "all" and (location == "forest" or location == "shipwrecked") then
+		return true
+	end
+	
+	return false
+end
 
 modimport("init/init_worldgen")

@@ -1,6 +1,13 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+if ENV.GetModConfigData("misc_music") == false then
+	return
+end
+
+--	NOTE: So... this definitively cause problems with "remix mods" and *could* be an issue with other mods that remap these,
+--	but I'm so done touching music with this game.
+
 local POLAR_BUSY_MUSIC = "polarsounds/music/music_work"
 
 local SEASON_BUSY_MUSIC = {

@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		INUSE = "G-glurp! J'ai rien fait !",
 		REFUEL = "Oh oh. L'hiver s'est échappé ?",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "J'vais te sauver, bouge pas !"
 	DESCRIBE.POLARICEPACK = "Tada ! Un copain pour la boîte gelée."
 	DESCRIBE.POLARTRINKET_1 = "Un petit bonhomme encore plus drôle."
 	DESCRIBE.POLARTRINKET_2 = "Une petite madame encore plus drôle."

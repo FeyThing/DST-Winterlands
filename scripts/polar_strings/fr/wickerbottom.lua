@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		INUSE = "Oh mon Dieu... Étions-nous tous préparés à ça ?",
 		REFUEL = "Il serait judicieux d'enfermer cet... objet.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Il y a de fortes chances qu'il soit encore vivant."
 	DESCRIBE.POLARICEPACK = "Ça fonctionne à merveille lorsqu'il est scellé dans un espace hermétique."
 	DESCRIBE.POLARTRINKET_1 = "Un petit bonhomme réconfortant et rocailleu."
 	DESCRIBE.POLARTRINKET_2 = "Une petite dame réconfortante et rocailleuse."

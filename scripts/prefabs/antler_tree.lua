@@ -208,9 +208,11 @@ local function OnTimerDone(inst, data)
 end
 
 local function OnSeasonChange(inst, season)
-	if season == "winter" then
+	local curseason = POLARRIFY_MOD_SEASONS[season] or "autumn"
+	
+	if curseason == "winter" then
 		if not inst.components.timer:TimerExists("regensticc") then
-			local season_time = TheWorld.state[TheWorld.state.season.."length"] * TUNING.TOTAL_DAY_TIME
+			local season_time = (TheWorld.state[curseason.."length"] or 15) * TUNING.TOTAL_DAY_TIME
 			inst.components.timer:StartTimer("regensticc", GetRandomMinMax(TUNING.TOTAL_DAY_TIME, season_time))
 		end
 	elseif inst.components.timer and inst.components.timer:TimerExists("regensticc") then

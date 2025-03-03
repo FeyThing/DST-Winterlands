@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		INUSE = "That means... I finally got my hands on an haunted trinket!",
 		REFUEL = "Where's the snow... the haunted snow?",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Maybe there's a mini mammoth in it?"
 	DESCRIBE.POLARICEPACK = "It won't make my jerky eternal but it's one step closer."
 	DESCRIBE.POLARTRINKET_1 = "He seems ready for a snowball fight. And so am I!"
 	DESCRIBE.POLARTRINKET_2 = "Wait... I know you."

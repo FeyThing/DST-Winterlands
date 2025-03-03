@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		INUSE = "Je savais que c'était une mauvaise idée.",
 		REFUEL = "Je devrais te lancer dans la mer.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "N'es-tu pas embarrassé, poisson ?"
 	DESCRIBE.POLARICEPACK = "Cela éloignera les bactéries un peu plus longtemps."
 	DESCRIBE.POLARTRINKET_1 = "Il n'y vraiment nul part où allez pour fuir ces gars."
 	DESCRIBE.POLARTRINKET_2 = "Il n'y vraiment nul part où allez pour fuir ces filles."

@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.1.13"
+version = "1.1.17"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Something Fishy
@@ -32,46 +32,69 @@ server_filter_tags = {
 
 local configs = {
 	language = "Language",
-	biome = "Type",
-	biome_type = "Winterlands",
-	biome_retrofit = "Retrofit",
-	biome_icegen = "Ice Generation",
-	biome_blizzards = "Blizzards",
+	biome = "Worldgen",
+	difficulty = "Difficulty",
 	misc = "Misc",
-	misc_shader = "Winter Shader",
-	misc_snow = "High Snow",
+	
+	biometype = "Winterlands Type ",
+	biomeshard = "Winterlands Shard ",
+	wormhole = "Wormhole ",
+	retrofit = "Retrofit ",
+	
+	blizzards = "Blizzard ",
+	icegen = "Ice Layer ",
+	snow = "High Snow ",
+	
+	menumelt = "Melt the Menu ",
+	music = "Winterlands OST ",
+	shader = "Winter Shader ",
 }
 
 local descs = {
 	language = "Translate the mod, thanks to the community help.",
-	biome_type = "How will The Winterlands generate?",
-	biome_retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
-	biome_icegen = "How much ice do you want on your island?",
-	biome_blizzards = "How snow stormy should your island be?",
-	misc_shader = "It's always winter in here, visually speaking.",
-	misc_snow = "Waves of snow will hide away small things in them.\nBut it all melts during hot days, go look inside!",
+	
+	biometype = "Set the generation style for the Winterlands.",
+	biomeshard = "Set in which world the Winterlands should generate.",
+	wormhole = "Add a pair of Wormholes that caught a cold. One in the Winterlands,\nthe other elsewhere. They respawn frequently in different places when used-up.",
+	retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
+	
+--	TODO: We might want to move those under into world settings, no ?
+	blizzards = "Ajust the frequency of Blizzards on the Winterlands.",
+	icegen = "Grow or shrink more the Ice Tiles generation around the Winterlands.",
+	snow = "Toggle for the tall waves of snow that freezes and slows you...\nfire and warm days will melt it, go look for hidden resources inside!",
+	
+	menumelt = "Turn on the heater to remove the frosty jumpscare\nwhen enabling Winterlands on your server. Brr!",
+	music = "Enable or disable the mod's soundtrack.",
+	shader = "It's always winter in here, visually speaking.",
 }
 
 local options = {
 	none = {{description = "", data = false}},
-	language = {{description = "English", data = false}, {description = "简体中文 (Simplified)", data = "zhs", hover = "By heavenmoon0107"}, {description = "繁體中文 (Traditional)", data = "zht", hover = "By heavenmoon0107"}, {description = "Français", hover = "By ADM & Steamerclaw", data = "fr"}}, -- {description = "Polski", hover = "By LukaS", data = "pl"}},
-	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
-	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
-	biometype = {{description = "Island", data = "island", hover = "As its own separated region. Recommended!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommended..."}, {description = "Skip", data = "skip", hover = "Will not generate (can be useful for multi-shards setup)."}},
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},
+	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
+	language = {{description = "English", data = false}, {description = "简体中文 (Simplified)", data = "zhs", hover = "By heavenmoon0107"}, {description = "繁體中文 (Traditional)", data = "zht", hover = "By heavenmoon0107"}, {description = "Français", hover = "By ADM & Steamerclaw", data = "fr"}}, -- {description = "Polski", hover = "By LukaS", data = "pl"}},
+	biometype = {{description = "Island", data = "island", hover = "As its own separated region. Recommended!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommended..."}, {description = "Skip", data = "skip", hover = "Will not generate (can be useful for multi-shards setup)."}},
+	shards = {{description = "Forest", data = "forest", hover = "The surface, default location"}, {description = "Shipwrecked", data = "shipwrecked", hover = "For Island Adventures"}, {description = "Anywhere Possible", data = "all", hover = "Won't generate in Caves, nor Hamlet, Volcano..."}},
+	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
 }
 
 configuration_options = {
 --	Language 语言
-	{name = "language",				label = configs.language,				hover = descs.language,			options = options.language, 	default = false},
---	Gene
-	{name = "biome",				label = configs.biome,													options = options.none, 		default = false},
-	{name = "biome_type",			label = configs.biome_type,				hover = descs.biome_type,		options = options.biometype,	default = "island"},
-	{name = "biome_blizzards",		label = configs.biome_blizzards,		hover = descs.biome_blizzards,	options = options.moreless,		default = 0},
-	{name = "biome_icegen",			label = configs.biome_icegen,			hover = descs.biome_icegen,		options = options.moreless,		default = 0},
-	{name = "biome_retrofit",		label = configs.biome_retrofit,			hover = descs.biome_retrofit,	options = options.retrofit,		default = 0},
---	Misc
-	{name = "misc",					label = configs.misc,													options = options.none, 		default = false},
-	{name = "misc_snow",			label = configs.misc_snow,				hover = descs.misc_snow,		options = options.toggle,		default = true},
-	{name = "misc_shader",			label = configs.misc_shader,			hover = descs.misc_shader,		options = options.toggle,		default = true},
+	{name = "language",				label = configs.language,			hover = descs.language,			options = options.language, 	default = false},
+--	Worldgen
+	{name = "biome",				label = configs.biome,												options = options.none, 		default = false},
+	{name = "biome_type",			label = configs.biometype,			hover = descs.biometype,		options = options.biometype,	default = "island"},
+	{name = "biome_shard",			label = configs.biomeshard,			hover = descs.biomeshard,		options = options.shards,		default = "forest"},
+	{name = "biome_wormhole",		label = configs.wormhole,			hover = descs.wormhole,			options = options.toggle,		default = false},
+	{name = "biome_retrofit",		label = configs.retrofit,			hover = descs.retrofit,			options = options.retrofit,		default = 0},
+--	Re-balance
+	{name = "difficulty",			label = configs.difficulty,											options = options.none, 		default = false},
+	{name = "polar_blizzards",		label = configs.blizzards,			hover = descs.blizzards,		options = options.moreless,		default = 0},
+	{name = "polar_icegen",			label = configs.icegen,				hover = descs.icegen,			options = options.moreless,		default = 0},
+	{name = "polar_snow",			label = configs.snow,				hover = descs.snow,				options = options.toggle,		default = true},
+--	Other
+	{name = "misc",					label = configs.misc,												options = options.none, 		default = false},
+	{name = "misc_menumelt",		label = configs.menumelt,			hover = descs.menumelt,			options = options.toggle,		default = false},
+	{name = "misc_music",			label = configs.music,				hover = descs.music,			options = options.toggle,		default = true},
+	{name = "misc_shader",			label = configs.shader,				hover = descs.shader,			options = options.toggle,		default = true},
 }

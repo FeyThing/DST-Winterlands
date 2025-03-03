@@ -79,6 +79,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Others
 	NAMES.DUG_GRASS_POLAR = "Tundra Tuft"
 	NAMES.POLARGLOBE = "Strange Snowglobe"
+	NAMES.OCEANFISH_IN_ICE = "Fishy Ice Cube"
 	NAMES.POLARICEPACK = "Icepack"
 	NAMES.POLARTRINKET_1 = "Snuggy Gnome"
 	NAMES.POLARTRINKET_2 = "Snuggy Gnomette"
@@ -275,6 +276,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "These awful little buggers are everywhere! In tall grass, on mammals... have you looked inside your hairs recently?"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "A 10 slots cozy container loved by Snowfleas!\nThose inside will jump in and out of it without biting, and they will come out to defend their new home when threatened."
+	STRINGS.SCRAPBOOK.SPECIALINFO.OCEANFISH_IN_ICE = "Looks like it could be melted... or, just maybe, collect them all?"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of other carried or stored items by 25%. Can be stacked multiplicatively."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPLOW = "Digs a large hole in ice that makes for an ideal fishing spot!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICESTAFF = "Sends a freezing shockwave in a large range."

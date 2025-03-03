@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		INUSE = "'Tis vigorous shake hath displeased the gods!",
 		REFUEL = "It shall be refilled with the driest ice.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Armored fish?"
 	DESCRIBE.POLARICEPACK = "Our treasured feast will last a little longer."
 	DESCRIBE.POLARTRINKET_1 = "A small, bizarre man."
 	DESCRIBE.POLARTRINKET_2 = "A small, bizarre woman."

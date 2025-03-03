@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		INUSE = "Actually... I might have some time to look into this.",
 		REFUEL = "Is there a leak on it somewhere?",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "What a sad way to go... but, maybe I can undo your fate."
 	DESCRIBE.POLARICEPACK = "I should get a timepack next."
 	DESCRIBE.POLARTRINKET_1 = "Oooh, I do love a festive knickknack."
 	DESCRIBE.POLARTRINKET_2 = "Oooh, I do love a festive knickknack."

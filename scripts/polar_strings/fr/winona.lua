@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		INUSE = "Oh toi...",
 		REFUEL = "Pas sur comment ça a fuie. Mais c'est mieux ainsi.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Hé bah. Un poisson gratos !"
 	DESCRIBE.POLARICEPACK = "Ce petit morceau de glace à parcouru un long chemin."
 	DESCRIBE.POLARTRINKET_1 = "Belle écharpe que t'as. J'aimerais bien en avoir une aussi."
 	DESCRIBE.POLARTRINKET_2 = "Euh, on dirait qu'ils ont mélangé deux lignes de production."

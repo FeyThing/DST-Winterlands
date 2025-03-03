@@ -1,6 +1,8 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+--	NOTE: Same as before but now handled in world component retrofitforestmap_polar...
+
 local MAX_PLACEMENT_ATTEMPTS = 99
 
 local function RetrofitPolarIsland()

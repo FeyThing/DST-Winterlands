@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		INUSE = "Quel tentant et maudit bibelot !",
 		REFUEL = "C'est vide... mais je ne vais pas m'en plaindre !",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Tu penses être à l'abri de moi, poisson ?"
 	DESCRIBE.POLARICEPACK = "Dois-je sacrifier de l'espace pour de la simple nourriture pour mortelle ?"
 	DESCRIBE.POLARTRINKET_1 = "Je ne vois aucune âme là-dedans, non, non."
 	DESCRIBE.POLARTRINKET_2 = "Je ne vois aucune âme là-dedans, non, non."

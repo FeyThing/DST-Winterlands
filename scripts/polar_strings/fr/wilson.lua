@@ -124,6 +124,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		INUSE = "Ne recommençons pas avec ce truc !",
 		REFUEL = "Où est passé la neige ?",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "C'est un poiçon."
 	DESCRIBE.POLARICEPACK = "Hélas, ça ne me préservera pas mieux."
 	DESCRIBE.POLARTRINKET_1 = "Un artefact empreint de légendes hivernales, sûrement."
 	DESCRIBE.POLARTRINKET_2 = "Un artefact empreint de légendes hivernales, sûrement."

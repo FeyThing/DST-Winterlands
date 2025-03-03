@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		INUSE = "Will that get me on the naughty list?",
 		REFUEL = "It needs some special snow.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Let's free Willy!"
 	DESCRIBE.POLARICEPACK = "It's funny to hold... f-for a while at least."
 	DESCRIBE.POLARTRINKET_1 = "We want big clothes like that too!"
 	DESCRIBE.POLARTRINKET_2 = "We want big clothes like that too!"

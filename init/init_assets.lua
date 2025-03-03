@@ -77,6 +77,7 @@ local ITEMS = {
 	"polarflea",
 	"polarflea_sack",
 	"polarglobe",
+	"oceanfish_in_ice",
 	"polarice_plow_item",
 	"polaricepack",
 	"polaricestaff",

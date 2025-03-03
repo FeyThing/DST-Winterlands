@@ -6,10 +6,12 @@ local OldBirdSpawner_ctor = BirdSpawner._ctor
 
 local ICECAVE_TAGS = {"icecaveshelter"}
 
+--	NOTE: this is not fully working in Island Adventures maps because they forbid any bird spawn outside of their known tiles :/
+
 BirdSpawner._ctor = function(self, ...)
     OldBirdSpawner_ctor(self, ...)
 	
-	self.polarise_birds = {"crow", "robin"}
+	self.polarise_birds = {"crow", "robin", "toucan", "seagull"}
 	
 	local OldPickBird = PolarUpvalue(self.SpawnBird, "PickBird")
 	local BIRD_TYPES = PolarUpvalue(OldPickBird, "BIRD_TYPES")

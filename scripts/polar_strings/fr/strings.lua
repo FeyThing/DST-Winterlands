@@ -79,6 +79,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Others
 	NAMES.DUG_GRASS_POLAR = "Touffe d'herbe arctique"
 	NAMES.POLARGLOBE = "Boule à neige bizarre"
+	NAMES.OCEANFISH_IN_ICE = "Glasson"
 	NAMES.POLARICEPACK = "Pack de glace"
 	NAMES.POLARTRINKET_1 = "Gnome douillet"
 	NAMES.POLARTRINKET_2 = "Gnomette douillette"
@@ -274,6 +275,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Améliore légèrement la visibilité lors des tempêtes... aussi utile pour faire croire aux autres que vous êtes un véritable ours polaire."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Accorde au porteur une barrière de glace qui protège du blizzard et des stalactites en dehors, mais crée un effet de gel sur les créatures à l'intérieur.\nSubir une attaque à de fortes chances d'interrompre momentanément la barrière."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "Ces horribles petites bestioles sont partout ! Dans l'herbe, sur tout mammifères... avez-vous vérifié vos cheveux récemment ?"
+	STRINGS.SCRAPBOOK.SPECIALINFO.OCEANFISH_IN_ICE = "ça pourrait fondre au coin du feu... ou, juste peut-être, collectionne les tous ?"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "Un contenant confortable de 10 emplacements adoré par les puneiges !\nCelles-ci sauteront dedans et dehors sans mordre, et viendront défendre leur nouveau domicile lorsqu'il est menacé."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Ralentit la détérioration des autres objets portés ou stockés de 25 %. L'effet est cumulable multiplicativement."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPLOW = "Creuse un grand trou dans la glace, créant un coin idéal pour pêcher !"

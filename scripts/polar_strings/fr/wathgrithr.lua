@@ -121,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		INUSE = "Ce secouage vigoureux à déplu aux dieux !",
 		REFUEL = "Elle doit être repli avec la plus sèche des glaces.",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "Un poisson cuirassé ?"
 	DESCRIBE.POLARICEPACK = "Notre précieux festin durera un peu plus longtemps."
 	DESCRIBE.POLARTRINKET_1 = "Un petit homme bizzare."
 	DESCRIBE.POLARTRINKET_2 = "Une petite femme bizzare."
