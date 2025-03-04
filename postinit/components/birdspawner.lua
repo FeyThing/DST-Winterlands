@@ -11,10 +11,16 @@ local ICECAVE_TAGS = {"icecaveshelter"}
 BirdSpawner._ctor = function(self, ...)
     OldBirdSpawner_ctor(self, ...)
 	
-	self.polarise_birds = {"crow", "robin", "toucan", "seagull"}
+	self.polarise_birds = {"crow", "robin"}
 	
 	local OldPickBird = PolarUpvalue(self.SpawnBird, "PickBird")
 	local BIRD_TYPES = PolarUpvalue(OldPickBird, "BIRD_TYPES")
+	
+	BIRD_TYPES[WORLD_TILES.OCEAN_POLAR] = {"puffin"}
+	BIRD_TYPES[WORLD_TILES.POLAR_SNOW] = {"robin"}
+	BIRD_TYPES[WORLD_TILES.POLAR_ICE] = {"puffin"}
+	BIRD_TYPES[WORLD_TILES.POLAR_CAVES] = {"crow"}
+	BIRD_TYPES[WORLD_TILES.POLAR_DRYICE] = {"crow"}
 	
 	local function PickBird(spawnpoint, ...)
 		local prefab = OldPickBird(spawnpoint, ...)
@@ -31,7 +37,7 @@ BirdSpawner._ctor = function(self, ...)
 			
 			if prefab and table.contains(self.polarise_birds, prefab) then
 				local tile = TheWorld.Map:GetTileAtPoint(spawnpoint.x, 0, spawnpoint.z)
-				return IsLandTile(tile) and "robin_winter" or "puffin"
+				return IsLandTile(tile) and "robin_winter" or "puffin" -- This logic isn't really needed anymore but it might help with certain mods
 			end
 		end
 		

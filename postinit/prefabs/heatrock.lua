@@ -12,7 +12,9 @@ local function HeatFn(inst, observer, ...)
 	if OldHeatFn then
 		test = OldHeatFn(inst, observer, ...)
 	end
-	if IsInPolar(inst) then
+	
+	local x, y, z = inst.Transform:GetPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= 4 then
 		inst.components.heater:SetThermics(true, false)
 	end
 	
@@ -26,7 +28,9 @@ local function HeatCarriedFn(inst, observer, ...)
 	if OldHeatCarriedFn then
 		test = OldHeatCarriedFn(inst, observer, ...)
 	end
-	if IsInPolar(inst) then
+	
+	local x, y, z = inst.Transform:GetPosition()
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= 4 then
 		inst.components.heater:SetThermics(true, false)
 	end
 	
@@ -41,9 +45,9 @@ local UpdateImages
 
 local OldTemperatureDelta
 local function PolarTemperatureDelta(inst, data, ...)
-	if IsInPolar(inst) then
-		local x, y, z = inst.Transform:GetWorldPosition()
-		
+	local x, y, z = inst.Transform:GetWorldPosition()
+	
+	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= 4 then
 		local ambient_temp = GetTemperatureAtXZ(x, z)
 		local cur_temp = inst.components.temperature:GetCurrent()
 		local range = GetRangeForTemperature(cur_temp, ambient_temp)

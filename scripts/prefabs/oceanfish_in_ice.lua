@@ -116,6 +116,7 @@ local function fn()
 	
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
+	inst.entity:AddFollower()
 	inst.entity:AddSoundEmitter()
 	inst.entity:AddNetwork()
 	
@@ -126,6 +127,7 @@ local function fn()
 	inst.AnimState:PlayAnimation("idle")
 	
 	inst:AddTag("fishyicecube")
+	inst:AddTag("furnituredecor")
 	
 	inst.no_wet_prefix = true
 	
@@ -138,6 +140,8 @@ local function fn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst:AddComponent("furnituredecor")
 	
 	inst:AddComponent("hatchable")
 	inst.components.hatchable:SetOnState(OnHatchState)

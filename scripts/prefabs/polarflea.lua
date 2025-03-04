@@ -179,6 +179,18 @@ local function OnLoadPostPass(inst, newents, savedata)
 	end
 end
 
+local function OnEntitySleep(inst)
+	if not inst.inlimbo and not TheWorld.Map:IsPassableAtPoint(inst.Transform:GetWorldPosition()) then
+		inst:Remove()
+	end
+end
+
+local function OnEntityWake(inst)
+	if not inst.inlimbo and not TheWorld.Map:IsPassableAtPoint(inst.Transform:GetWorldPosition()) then
+		inst:Remove()
+	end
+end
+
 local function OnAttacked(inst, data)
 	if data and data.attacker then
 		inst.components.combat:SetTarget(data.attacker)

@@ -45,7 +45,7 @@ AddTaskSetPreInitAny(function(self)
 		end
 		
 		table.insert(self.required_prefabs, "polaramulet_station")
-		table.insert(self.required_prefabs, "polar_throne")
+		--table.insert(self.required_prefabs, "polar_throne")		this will retrofit with component if not added, so we save some generation time
 	end
 end)
 
