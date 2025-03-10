@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.1.18"
+version = "1.1.21"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Something Fishy
@@ -55,7 +55,7 @@ local descs = {
 	
 	biometype = "Set the generation style for the Winterlands.",
 	biomeshard = "Set in which world the Winterlands should generate.",
-	wormhole = "Add a pair of Wormholes that caught a cold. One in the Winterlands,\nthe other elsewhere. They respawn frequently in different places when used-up.",
+	wormhole = "Add a pair of Wormholes between the Mainland & Winterlands.\nThey caught a cold, so go easy on them (but they respawn).",
 	retrofit = "Manually retrofit missing parts of the mod in old worlds.\nThe config will return to \"Updated\" automatically once finished.",
 	
 --	TODO: We might want to move those under into world settings, no ?

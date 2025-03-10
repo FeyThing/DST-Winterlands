@@ -100,11 +100,11 @@ local function StartForceField(inst, owner)
 		inst._fx = nil
 	end
 	
-	inst._fx = SpawnPrefab("polarcrownhat_forcefield")
-	inst._fx.entity:SetParent(inst._owner.entity)
-	inst._fx.Transform:SetPosition(0, -2, 0)
-	
-	if inst._owner then
+	if inst._owner and inst._owner:IsValid() then
+		inst._fx = SpawnPrefab("polarcrownhat_forcefield")
+		inst._fx.entity:SetParent(inst._owner.entity)
+		inst._fx.Transform:SetPosition(0, -2, 0)
+		
 		inst._owner:AddTag("icicleimmune")
 		inst:ListenForEvent("attacked", inst.breakfn, inst._owner)
 		

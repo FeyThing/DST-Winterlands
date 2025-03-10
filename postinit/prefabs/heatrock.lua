@@ -13,8 +13,7 @@ local function HeatFn(inst, observer, ...)
 		test = OldHeatFn(inst, observer, ...)
 	end
 	
-	local x, y, z = inst.Transform:GetPosition()
-	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= 4 then
+	if inst.inpolar then
 		inst.components.heater:SetThermics(true, false)
 	end
 	
@@ -29,8 +28,7 @@ local function HeatCarriedFn(inst, observer, ...)
 		test = OldHeatCarriedFn(inst, observer, ...)
 	end
 	
-	local x, y, z = inst.Transform:GetPosition()
-	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= 4 then
+	if inst.inpolar then
 		inst.components.heater:SetThermics(true, false)
 	end
 	
@@ -47,7 +45,7 @@ local OldTemperatureDelta
 local function PolarTemperatureDelta(inst, data, ...)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
-	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= 4 then
+	if inst.inpolar then
 		local ambient_temp = GetTemperatureAtXZ(x, z)
 		local cur_temp = inst.components.temperature:GetCurrent()
 		local range = GetRangeForTemperature(cur_temp, ambient_temp)
@@ -79,6 +77,38 @@ local function PolarTemperatureDelta(inst, data, ...)
 	end
 end
 
+--	Toggle winter mode every now and then, live update at each game tick is expensive
+
+local function UpdateInPolar(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	inst.inpolar = GetClosestPolarTileToPoint(x, 0, z, 4) ~= nil
+end
+
+local OldOnEntitySleep
+local function OnEntitySleep(inst, ...)
+	if inst._polarupdate then
+		inst._polarupdate:Cancel()
+		inst._polarupdate = nil
+	end
+	
+	if OldOnEntitySleep then
+		OldOnEntitySleep(inst, ...)
+	end
+end
+
+local OldOnEntityWake
+local function OnEntityWake(inst, ...)
+	if inst._polarupdate == nil then
+		inst._polarupdate = inst:DoPeriodicTask(10 + math.random(), inst.UpdateInPolar)
+	end
+	
+	if OldOnEntityWake then
+		OldOnEntityWake(inst, ...)
+	end
+end
+
+--
+
 ENV.AddPrefabPostInit("heatrock", function(inst)
 	if not TheWorld.ismastersim then
 		return
@@ -107,4 +137,18 @@ ENV.AddPrefabPostInit("heatrock", function(inst)
 			PolarTemperatureDelta(inst, data, ...)
 		end
 	end
+	
+	--
+	
+	inst.UpdateInPolar = UpdateInPolar
+	
+	if OldOnEntitySleep == nil then
+		OldOnEntitySleep = inst.OnEntitySleep
+	end
+	inst.OnEntitySleep = OnEntitySleep
+	
+	if OldOnEntityWake == nil then
+		OldOnEntityWake = inst.OnEntityWake
+	end
+	inst.OnEntityWake = OnEntityWake
 end)

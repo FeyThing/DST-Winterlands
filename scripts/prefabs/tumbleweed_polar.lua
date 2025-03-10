@@ -80,14 +80,14 @@ end
 
 local function MakeLoot(inst)
 	local loot_groups = {
-		{weight = 85, 	items = {"ice"}},
-		{weight = 6.5, 	items = {"furtuft", "bluegem_shards", "seeds"}},
-		{weight = 4, 	items = {"berries", "icelettuce", "icelettuce_seeds"}},
-		{weight = 2, 	items = {"boneshard", "dug_marsh_bush", "dug_grass", "feather_crow", "feather_robin_winter", "houndstooth", "polarbearfur"}},
-		{weight = 1.2, 	items = {"bluegem", "bird_egg", "rottenegg", "spoiled_fish", "spoiled_fish_small", "blowdart_pipe"}},
-		{weight = 0.75, items = {"mole", "polarflea", "polarfox", "rabbit", "spider_dropper", "wobster_sheller_land"}},
-		{weight = 0.35, items = {"antler_tree_stick", "blueprint", "cookingrecipecard", "fishsticks", "polartrinket_1", "polartrinket_2", "scrapbook_page"}},
-		{weight = 0.2, 	items = {"purplegem", "greengem"}},
+		{weight = 80, 	items = {"ice"}},
+		{weight = 7, 	items = {"furtuft", "bluegem_shards", "seeds"}},
+		{weight = 5.5, 	items = {"berries", "icelettuce", "icelettuce_seeds"}},
+		{weight = 3.5, 	items = {"boneshard", "dug_marsh_bush", "dug_grass", "feather_crow", "feather_robin_winter", "houndstooth", "polarbearfur"}},
+		{weight = 2, 	items = {"bluegem", "bird_egg", "rottenegg", "spoiled_fish", "spoiled_fish_small", "blowdart_pipe"}},
+		{weight = 1, 	items = {"mole", "polarflea", "polarfox", "rabbit", "spider_dropper", "wobster_sheller_land"}},
+		{weight = 0.65, items = {"antler_tree_stick", "blueprint", "cookingrecipecard", "fishsticks", "polartrinket_1", "polartrinket_2", "scrapbook_page"}},
+		{weight = 0.35, items = {"purplegem", "greengem"}},
 	}
 	
 	local loot_aggros = {"spider_dropper", "polarflea"}

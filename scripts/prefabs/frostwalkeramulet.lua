@@ -5,16 +5,19 @@ local assets = {
 local ICE_FORMING_BLOCKER_TAGS = {"shadecanopy", "shadecanopysmall", "crabking", "boat"}
 
 local function FormIceBridge(inst, owner)
-	if TheWorld.components.polarice_manager == nil then
+	if TheWorld.components.polarice_manager == nil or owner == nil or not owner:IsValid() then
 		return
 	end
 	
-	local _x, _y, _z = owner.Transform:GetWorldPosition()
-	local ox, oy = TheWorld.Map:GetTileCoordsAtPoint(_x, _y, _z)
+	local ox, oy = TheWorld.Map:GetTileCoordsAtPoint(owner.Transform:GetWorldPosition())
 	
 	for x = -1, 1 do
 		for y = -1, 1 do
 			local tx, ty = ox + x, oy + y
+			if inst.components.fueled and TileGroupManager:IsOceanTile(TheWorld.Map:GetTile(tx, ty)) then
+				inst.components.fueled:DoDelta(-TUNING.FROSTWALKERAMULET_FREEZE_TILE_USE)
+			end
+			
 			TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
 		end
 	end
@@ -33,14 +36,11 @@ local function OnEquip(inst, owner)
 		inst.icebrigde_task:Cancel()
 		inst.icebrigde_task = nil
 	end
-	inst.icebrigde_task = inst:DoPeriodicTask(0.25, function() FormIceBridge(inst, owner) end)
+	inst.icebrigde_task = inst:DoPeriodicTask(0.25, function() inst:FormIceBridge(owner) end)
 	
 	if owner.components.slipperyfeet then
 		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold + TUNING.FROSTWALKERAMULET_SLIPPINESS
 	end
-	--[[if inst.components.fueled then
-		inst.components.fueled:StartConsuming()
-	end]]
 end
 
 local function OnUnequip(inst, owner)
@@ -58,15 +58,6 @@ local function OnUnequip(inst, owner)
 	if owner.components.slipperyfeet then
 		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold - TUNING.FROSTWALKERAMULET_SLIPPINESS
 	end
-	--[[if inst.components.fueled then
-		inst.components.fueled:StopConsuming()
-	end]]
-end
-
-local function OnEquipToModel(inst, owner, from_ground)
-	--[[if inst.components.fueled then
-		inst.components.fueled:StopConsuming()
-	end]]
 end
 
 local function OnLanded(inst)
@@ -78,7 +69,7 @@ local function OnLanded(inst)
 		inst.landed_task:Cancel()
 		inst.landed_task = nil
 	end
-
+	
 	inst.landed_task = inst:DoPeriodicTask(0.25, function()
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
@@ -131,7 +122,6 @@ local function fn()
 	inst.components.equippable.is_magic_dapperness = true
 	inst.components.equippable:SetOnEquip(OnEquip)
 	inst.components.equippable:SetOnUnequip(OnUnequip)
-	inst.components.equippable:SetOnEquipToModel(OnEquipToModel)
 	
 	inst:AddComponent("fueled")
 	inst.components.fueled.fueltype = FUELTYPE.MAGIC
@@ -143,12 +133,14 @@ local function fn()
 	
 	inst:AddComponent("shadowlevel")
 	inst.components.shadowlevel:SetDefaultLevel(TUNING.AMULET_SHADOW_LEVEL)
-
+	
 	inst:ListenForEvent("on_landed", OnLanded)
 	inst:ListenForEvent("on_no_longer_landed", OnNoLongerLanded)
-
+	
 	MakeHauntableLaunch(inst)
-
+	
+	inst.FormIceBridge = FormIceBridge
+	
 	return inst
 end
 

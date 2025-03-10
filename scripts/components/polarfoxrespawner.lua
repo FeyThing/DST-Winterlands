@@ -50,10 +50,11 @@ return Class(function(self, inst)
 				
 				_foxspawns[pt] = nil
 			else
+				print("PolarFoxRespawner: rescheduling respawn point at ", pt)
 				self:ScheduleFoxSpawn(pt)
 			end
 		elseif pt then
-			print("PolarFoxRespawner: removed respawn point because of structure at:", pt)
+			print("PolarFoxRespawner: removed respawn point because of structure at ", pt)
 			_foxspawns[pt] = nil
 		end
 	end
@@ -103,4 +104,50 @@ return Class(function(self, inst)
 			end
 		end
 	end
+	
+	local function CanSpawnInSnow(pt)
+		return TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW and FindClosestPlayerInRange(pt.x, 0, pt.z, 20) == nil
+	end
+	
+	function self:FindSpawnPoint()
+		local radius = TheWorld.Map:GetSize() * 2 * 0.85
+		local attemps = 0
+		local pt
+		
+		while attemps < 10 and pt == nil do
+			pt = FindWalkableOffset(Vector3(0, 0, 0), math.random() * TWOPI, math.random(radius), 8, false, true, CanSpawnInSnow)
+			attemps = attemps + 1
+		end
+		
+		return pt
+	end
+	
+	self.OnSeasonChange = function(_, season)
+		local to_spawn = TUNING.POLARFOX_MIN_SPAWN_POINTS
+		
+		for k, v in pairs(Ents) do
+			if v.prefab == "polarfox" then
+				to_spawn = to_spawn - 1
+			end
+		end
+		for k, v in pairs(_foxspawns) do
+			to_spawn = to_spawn - 1
+		end
+		
+		if to_spawn > 0 then
+			print("PolarFoxRespawner: generating "..to_spawn.." new spawn points")
+			for i = 1, to_spawn do
+				local pt = self:FindSpawnPoint()
+				
+				if pt then
+					print("PolarFoxRespawner: "..i..": success, at ", pt)
+					self:RespawnFox(pt)
+				else
+					print("PolarFoxRespawner: "..i..": failed")
+				end
+			end
+		end
+	end
+	
+	self:WatchWorldState("season", self.OnSeasonChange)
 end)

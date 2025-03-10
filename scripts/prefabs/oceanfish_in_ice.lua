@@ -70,12 +70,28 @@ local function OnEntityWake(inst)
 end
 
 local function OnSave(inst, data)
+	data.cube_scale = inst.cube_scale or 1
 	data.trapped_fish = inst.trapped_fish
 end
 
 local function OnLoad(inst, data)
-	if data and data.trapped_fish then
-		inst:SetTrappedFish(data.trapped_fish)
+	if data then
+		if data.cube_scale then
+			inst.cube_scale = data.cube_scale
+			inst.AnimState:SetScale(inst.cube_scale, 1)
+		end
+		if data.trapped_fish then
+			inst:SetTrappedFish(data.trapped_fish)
+		end
+	end
+end
+
+local function OnPolarFreeze(inst, forming)
+	local spawner = TheWorld.components.oceanfish_in_ice_spawner
+	if forming and spawner and spawner.fishies_in_ice[inst] then
+		spawner:onicecubepickedup(inst)
+		
+		inst:Remove()
 	end
 end
 
@@ -167,9 +183,13 @@ local function fn()
 	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	inst.OnPolarFreeze = OnPolarFreeze
 	inst.GetFishDef = GetFishDef
 	inst.SetTrappedFish = SetTrappedFish
 	inst.SetMeltingAlpha = SetMeltingAlpha
+	
+	inst.cube_scale = math.random() > 0.5 and 1 or -1
+	inst.AnimState:SetScale(inst.cube_scale, 1)
 	
 	inst:ListenForEvent("floater_startfloating", function(inst)
 		inst.AnimState:PlayAnimation("float_"..math.random(NUM_FLOAT_ANIMS))

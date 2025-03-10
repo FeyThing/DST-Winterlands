@@ -57,7 +57,7 @@ return Class(function(self, inst)
 	end
 	
 	function self:CanSpawnIceCube(x, y, z)
-		if z == nil or FindClosestPlayerInRange(x, y, z, 15) == nil then
+		if z == nil or FindClosestPlayerInRange(x, y, z, 20) == nil then
 			return false
 		end
 		
