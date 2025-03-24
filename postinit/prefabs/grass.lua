@@ -2,7 +2,11 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local OldOnTransplantFn
+local makemorphable
+
 local function OnTransplantFn(inst, ...)
+	local _makemorphable = makemorphable -- Keeping this here for simpler mod compat
+	
 	if IsInPolar(inst) then
 		local grass = SpawnPrefab("grass_polar")
 		grass.Transform:SetPosition(inst.Transform:GetWorldPosition())
@@ -37,6 +41,7 @@ ENV.AddPrefabPostInit("grass", function(inst)
 	if inst.components.pickable then
 		if OldOnTransplantFn == nil then
 			OldOnTransplantFn = inst.components.pickable.ontransplantfn
+			makemorphable = PolarUpvalue(OldOnTransplantFn, "makemorphable")
 		end
 		
 		inst.components.pickable.ontransplantfn = OnTransplantFn

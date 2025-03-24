@@ -102,8 +102,8 @@ local ITEMS = {
 local scrapbook_prefabs = require("scrapbook_prefabs")
 local scrapbookdata = require("screens/redux/scrapbookdata")
 
-for i, v in pairs(ITEMS) do
-	RegisterInventoryItemAtlas("images/polarimages.xml", v..".tex")
+for i, v in ipairs(ITEMS) do
+	RegisterInventoryItemAtlas(GLOBAL.resolvefilepath("images/polarimages.xml"), v..".tex")
 end
 
 POLARAMULET_PARTS = GLOBAL.rawget(GLOBAL, "POLARAMULET_PARTS") or {}
