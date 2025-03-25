@@ -210,12 +210,14 @@ local function fx_SpawnFxForOwner(inst, owner)
 	inst.fx = {}
 	
 	local parts = {"jaw", "top"}
+	local follow_sym = owner.AnimState:BuildHasSymbol("headbase_hat") and "headbase_hat" or "swap_hat"
+	
 	for i, v in ipairs(parts) do
 		for j = 1, 3 do
 			local fx = CreateFxFollowFrame(j, v, inst.bearhat_colour)
 			
 			fx.entity:SetParent(owner.entity)
-			fx.Follower:FollowSymbol(owner.GUID, "headbase_hat", 0, -5, 0, true, nil, j - 1)
+			fx.Follower:FollowSymbol(owner.GUID, follow_sym, 0, -5, 0, true, nil, j - 1)
 			fx.components.highlightchild:SetOwner(owner)
 			table.insert(inst.fx, fx)
 		end

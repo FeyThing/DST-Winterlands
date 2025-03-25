@@ -150,7 +150,7 @@ local RESULTS = {
 	["Just Shoal"] = {
 		onstarted = FNS.SpawnShoal,
 		rad = 1.5,
-		weight = 3,
+		weight = 2,
 	},
 	["Now With Birds"] = {
 		onstarted = function(pt, radius, ...) FNS.SpawnShoal(pt, radius, ...) FNS.SpawnBirds(pt, radius, 2, 5, ...) end,
@@ -193,17 +193,17 @@ local RESULTS = {
 	["Wobster Party"] = {
 		ents = {
 			{prefab = "wobster_sheller", 					state = "spawn_in", 		spawntime = FNS.SpawnShort},
+			{prefab = "wobster_sheller", 	chance = 0.8, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
+			{prefab = "wobster_sheller", 	chance = 0.7, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
 			{prefab = "wobster_sheller", 	chance = 0.6, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
-				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 2, ...) end},
 			{prefab = "wobster_sheller", 	chance = 0.5, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
-				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 2, ...) end},
 			{prefab = "wobster_sheller", 	chance = 0.4, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
-				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 2, ...) end},
-			{prefab = "wobster_sheller", 	chance = 0.3, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
-				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 2, ...) end},
-			{prefab = "wobster_sheller", 	chance = 0.2, 	state = "spawn_in", 		spawntime = FNS.SpawnVariable,
 				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
-			{prefab = "wobster_sheller", 	chance = 0.1, 	state = "spawn_in", 		spawntime = FNS.SpawnLong,
+			{prefab = "wobster_sheller", 	chance = 0.3, 	state = "spawn_in", 		spawntime = FNS.SpawnLong,
 				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
 		},
 		rad = 1.5,
@@ -271,6 +271,21 @@ local RESULTS = {
 		},
 		rad = 1.5,
 		weight = 2,
+	},
+	["Mosquitoes"] = {
+		ents = {
+			{prefab = "mosquito", 								state = "wake", 	offset = 2,		spawntime = FNS.SpawnShort, 	onspawn = FNS.AttackOther},
+			{prefab = "mosquito", 								state = "wake", 	offset = 3,		spawntime = FNS.SpawnShort, 	onspawn = FNS.AttackOther},
+			{prefab = "mosquito", 			chance = 0.5, 		state = "wake", 	offset = 2,		spawntime = FNS.SpawnShort, 	onspawn = FNS.AttackOther},
+			{prefab = "mosquito", 			chance = 0.5, 		state = "wake", 	offset = 3,		spawntime = FNS.SpawnVariable, 	onspawn = FNS.AttackOther},
+		},
+		onstarted = function(pt, radius, ...)
+			if radius >= 1.5 then
+				return FNS.SpawnShoal(pt, radius, ...)
+			end
+		end,
+		rad = 0.5,
+		weight = function(pt, radius, ...) return FNS.AvoidIfLarger(pt, radius, 3, 1, 0) end,
 	},
 	["Squids"] = {
 		ents = {

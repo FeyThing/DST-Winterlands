@@ -136,7 +136,7 @@ return Class(function(self, inst)
 		end
 		
 		if def.onstarted then
-			def.onstarted(pt, ents)
+			def.onstarted(pt, radius, ents)
 		end
 		
 		TheWorld:PushEvent("ms_icefishingsurprise", {ents = ents, name = surprise, pt = pt})
