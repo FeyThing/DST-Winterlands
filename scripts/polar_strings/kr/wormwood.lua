@@ -1,0 +1,136 @@
+local ANNOUNCE = STRINGS.CHARACTERS.WORMWOOD
+local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
+
+-- 알림
+
+-- 행동
+ANNOUNCE.BATTLECRY.POLARBEAR = "공격!"
+
+-- 세계, 이벤트
+ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
+	"여기 싫어...",
+	"추워! 추워!",
+	"차가운 거 싫어!",
+}
+ANNOUNCE.ANNOUNCE_POLARGLOBE = "아야 아야 아야!"
+ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "여기 아냐?"
+ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "야호!"
+
+-- 버프
+ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "안돼! 차가워!"
+ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "아아~ 눈 다 사라졌어."
+
+-- 월드 생성
+
+-- 식물
+DESCRIBE.ANTLER_TREE = {
+	BURNING = "불! 안 돼에에!",
+	BURNT = "눈도 못 막았어?",
+	CHOPPED = "(한숨) 왜 싸워야 해?",
+	GENERIC = "뿔 왜 자라지?",
+}
+DESCRIBE.ICELETTUCE_SEEDS = "차가운 아기씨앗"
+
+-- 바위와 돌
+DESCRIBE.POLAR_ICICLE = "자라는 중?"
+DESCRIBE.POLAR_ICICLE_ROCK = "우르르 쿵"
+DESCRIBE.ROCK_POLAR = "차가운 반짝이 갇혔어? 어떻게?"
+
+-- 기타
+ANNOUNCE.DESCRIBE_IN_POLARSNOW = "음?"
+DESCRIBE.TUMBLEWEED_POLAR = "천천히 가~!"
+
+-- 몬스터
+
+DESCRIBE.MOOSE_POLAR = {
+	GENERIC = "배웠어. 친구랑 싸우면 안 돼.",
+	ANTLER = "큰 가지 있다!",
+}
+DESCRIBE.MOOSE_SPECTER = "가지가 차가워졌어?"
+DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "반짝이 글럽글럽!"
+DESCRIBE.POLARBEAR = {
+	DEAD = "어... 안돼...",
+	ENRAGED = "진정해야 해!",
+	FOLLOWER = "차가운 털복숭이 좋은 친구",
+	GENERIC = "오. 차가운 털복숭이!",
+}
+DESCRIBE.POLARFLEA = {
+	GENERIC = "또 버즈터 아니야!",
+	HELD = "많이 아플 거야",
+	HELD_BACKPACK = "새 친구 생겼다!",
+}
+DESCRIBE.POLARFOX = {
+	FOLLOWER = "쉬잇... 이제 괜찮아.",
+	FRIEND = "안녕 친구! 기억나?",
+	GENERIC = "우와! 이리 와, 이리 와~!",
+}
+DESCRIBE.POLARWARG = "크고 차가운 멍멍이"
+
+-- 건물
+
+DESCRIBE.POLAR_BRAZIER = {
+	GENERIC = "추워?",
+	ON = "뜨거워!",
+}
+DESCRIBE.POLAR_BRAZIER_ITEM = "불 나중에 쓰기"
+DESCRIBE.POLAR_THRONE = "앉는 곳, 못 닿아..."
+DESCRIBE.POLAR_THRONE_GIFTS = "나 주는 거야?"
+
+DESCRIBE.POLARAMULET_STATION = {
+	GENERIC = "누구 있어?",
+	OPEN = "안녕...? 아무도 없지?",
+}
+DESCRIBE.POLARBEARHOUSE = {
+	BURNT = "비린내 나...",
+	GENERIC = "글럽글럽 집",
+}
+DESCRIBE.POLARICE_PLOW = "물 나온다!"
+DESCRIBE.POLARICE_PLOW_ITEM = "파는 거야?"
+
+-- 아이템
+
+-- 음식
+DESCRIBE.DRYICECREAM = "(핥짝) 브르르! (핥짝) 브르르르~"
+DESCRIBE.ICELETTUCE = "친구야, 큰 따뜻한 포옹 해줄까?"
+DESCRIBE.ICEBURRITO = "글럽글럽 이불 속에 쏙"
+DESCRIBE.POLARCRABLEGS = "다리 못 도망가게 해!"
+
+-- 제작
+DESCRIBE.BLUEGEM_OVERCHARGED = "더 차갑게 만들어!"
+DESCRIBE.BLUEGEM_SHARDS = "작은 차가움"
+DESCRIBE.MOOSE_POLAR_ANTLER = "부러졌어"
+DESCRIBE.POLAR_DRYICE = "신선한 간식용"
+DESCRIBE.POLARBEARFUR = "따뜻해"
+DESCRIBE.POLARWARGSTOOTH = "차가워! 브르르!"
+
+-- 장비
+DESCRIBE.ANTLER_TREE_STICK = "뭔가 떨어졌어?"
+DESCRIBE.ARMORPOLAR = "좋은 털옷"
+DESCRIBE.FROSTWALKERAMULET = "물 됐다가, 돌 됐다가?"
+DESCRIBE.ICICLESTAFF = "아픈 비 쏘아!"
+DESCRIBE.POLAR_SPEAR = "뾰족뾰족"
+DESCRIBE.POLARAMULET = "아픈 목걸이"
+DESCRIBE.POLARBEARHAT = "먹히고 싶지 않아!"
+DESCRIBE.POLARCROWNHAT = "머리 따뜻하게 해?"
+DESCRIBE.POLARFLEA_SACK = "따뜻해! 좋아"
+DESCRIBE.POLARICESTAFF = "모두 브르르하게 만들어"
+DESCRIBE.POLARMOOSEHAT = "도끼 친구?"
+
+-- 기타
+DESCRIBE.POLARGLOBE = {
+	GENERIC = "음... 누가 만졌어?",
+	INUSE = "안돼 안돼. 다시 들어가!",
+	REFUEL = "드디어 잠자러 갔네?",
+}
+DESCRIBE.OCEANFISH_IN_ICE = "불 조금 필요해"
+DESCRIBE.POLARICEPACK = "배 안에 넣는 거 오래오래!"
+DESCRIBE.POLARTRINKET_1 = "포근한 작은 사람"
+DESCRIBE.POLARTRINKET_2 = "뾰족모자 친구, 도와줘야 해?"
+DESCRIBE.TRAP_POLARTEETH = "차가운 가시"
+DESCRIBE.TURF_POLAR_CAVES = "얼음"
+DESCRIBE.TURF_POLAR_DRYICE = "얼음"
+DESCRIBE.WALL_POLAR = "미끄러워"
+DESCRIBE.WALL_POLAR_ITEM = "츄릅"
+DESCRIBE.WINTER_ORNAMENTPOLAR = "친구 차갑게 만들기 싫어... 아, 안 차가워."
+DESCRIBE.WX78MODULE_NAUGHTY = "삐빕삐빕 부품"
+
