@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Come and throw paws!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Hah! I must've looked like a real fool walking around with this!"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Can't stop... won't stop... okay, stopping.",
 		"I ain't slowin'... just pacing myself...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "The mackerel of mockery strikes when we least expect it."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "Ha! Charlie loved these lil' things.",
 		INUSE = "Oh you...",

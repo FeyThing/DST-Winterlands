@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Your time is up, beast!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Wait... I had that thing on my back this whole time?"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Come on... come onnn...!",
 		"This is going to take... an eternity...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "I don't have time to play these games! (Or do I...?)"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "I don't have time to stare at this.",
 		INUSE = "Actually... I might have some time to look into this.",

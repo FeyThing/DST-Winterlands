@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "You know what they say about selling bear fur?"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Alors là! I will have my revenge!"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Aller... presque...",
 		"Bon sang... oof...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "A classic, harmless prank! Or at least it should be..."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "This makes for a good feasting table decoration.",
 		INUSE = "Well. I'd better prep some soup for everyone.",

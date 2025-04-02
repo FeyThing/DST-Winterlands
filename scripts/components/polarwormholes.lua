@@ -1,3 +1,5 @@
+--	TODO: maybe instead of always random position, we get 5 or so and always pick between these ?
+
 return Class(function(self, inst)
 	assert(TheWorld.ismastersim, "Polar wormholes should not exist on client")
 	self.inst = inst

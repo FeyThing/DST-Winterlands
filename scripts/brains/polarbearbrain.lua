@@ -206,6 +206,54 @@ local function AddFuelAction(inst)
 	end
 end
 
+--	Prankin'
+
+local PRANK_TAGS = {"player", "pig", "manrabbit"}
+local PRANK_NOT_TAGS = {"INLIMBO", "arcticfooled", "bearbuddy"}
+
+local function StickArcticFoolFishAction(inst)
+	if not IsSpecialEventActive(SPECIAL_EVENTS.ARCTIC_FOOLS)
+		or (inst.components.follower and inst.components.follower.leader)
+		or (inst.components.timer and inst.components.timer:TimerExists("arcticfooled_cooldown")) then
+		return
+	end
+	
+	local target = FindEntity(inst, TUNING.ARCTIC_FOOL_FISH_BEAR_RANGE, function(guy)
+		return guy.components.timer and not guy.components.timer:TimerExists("arcticfooledrecently")
+	end, nil, PRANK_NOT_TAGS, PRANK_TAGS)
+	
+	if target then
+		local fish = inst.components.inventory:FindItem(function(item) return item.prefab == "arctic_fool_fish" end)
+		if fish == nil then
+			fish = SpawnPrefab("arctic_fool_fish")
+			inst.components.inventory:GiveItem(fish)
+		end
+		
+		local action = BufferedAction(inst, target, ACTIONS.STICK_ARCTIC_FISH, fish)
+		inst._arctic_fooling_around = true
+		
+		local fooled_cooldown = function()
+			inst._arctic_fooling_around = nil
+			
+			if target.components.timer and not target.components.timer:TimerExists("arcticfooledrecently") then
+				target.components.timer:StartTimer("arcticfooledrecently", TUNING.ARCTIC_FOOL_FISH_PRANKER_COOLDOWN)
+			end
+			if inst.components.timer and not inst.components.timer:TimerExists("arcticfooled_cooldown") then
+				inst.components.timer:StartTimer("arcticfooled_cooldown", 60)
+			end
+			
+			inst.components.locomotor:Stop()
+			inst:ClearBufferedAction()
+		end
+		
+		action:AddSuccessAction(fooled_cooldown)
+		
+		inst:DoTaskInTime(3 + math.random(), fooled_cooldown)
+		
+		return action
+	end
+end
+
 --	Plowin'
 
 local function HasPlowTool(inst)
@@ -245,7 +293,7 @@ local function DoPlowingAction(inst)
 end
 
 local function GetFaceTargetNearestPlayerFn(inst)
-	if inst.components.combat and inst.components.combat.target then
+	if inst._arctic_fooling_around or (inst.components.combat and inst.components.combat.target) then
 		return
 	end
 	
@@ -296,6 +344,8 @@ local function GetCombatLines(inst)
 	if target then
 		if target.components.timer and target.components.timer:TimerExists("stealing_bear_stuff") then
 			return STRINGS.POLARBEAR_PROTECTSTUFF[math.random(#STRINGS.POLARBEAR_PROTECTSTUFF)]
+		elseif target:HasTag("arcticfooled") then
+			return STRINGS.POLARBEAR_FOOLFIGHT[math.random(#STRINGS.POLARBEAR_FOOLFIGHT)]
 		elseif not inst.enraged and target:HasAnyTag(POLARBEAR_FISHY_TAGS) then
 			return STRINGS.POLARBEAR_FISHFIGHT[math.random(#STRINGS.POLARBEAR_FISHFIGHT)]
 		end
@@ -350,6 +400,8 @@ function PolarBearBrain:OnStart()
 		
 		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
 			PriorityNode({
+				ChattyNode(self.inst, "POLARBEAR_STICKARCTICFISH",
+					DoAction(self.inst, StickArcticFoolFishAction, "pranking players")),
 				ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
 					DoAction(self.inst, AddFuelAction, "add fuel")),
 				ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",

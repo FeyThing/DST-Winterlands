@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Glorp, won't eat me!!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Glurgh?! Grrr, won't get me next time..."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Can't run... can't swim... no can do...",
 		"Grrrr... stupid big sea of snow!",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "Ooooh, fishie! Clown man has fun games!"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "Haha! Winter trapped inside!",
 		INUSE = "G-glurp! Didn't do it!",

@@ -4,6 +4,7 @@ GLOBAL.setfenv(1, GLOBAL)
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
 local forest_shards = {"forest", "shipwrecked", "porkland"}
+local cave_shards = {"cave", "volcano"}
 
 for i, v in ipairs(forest_shards) do
 	AddPrefabPostInit(v, function(inst)
@@ -18,6 +19,8 @@ for i, v in ipairs(forest_shards) do
 		if not inst.ismastersim then
 			return
 		end
+		
+		inst:AddComponent("arcticfoolfishsavedata")
 		
 		inst:AddComponent("icefishingsurprise")
 		
@@ -38,6 +41,16 @@ for i, v in ipairs(forest_shards) do
 		inst:AddComponent("polarwormholes")
 		
 		inst:AddComponent("retrofitforestmap_polar")
+	end)
+end
+
+for i, v in ipairs(cave_shards) do
+	ENV.AddPrefabPostInit(v, function(inst)
+		if not inst.ismastersim then
+			return inst
+		end
+		
+		inst:AddComponent("arcticfoolfishsavedata")
 	end)
 end
 

@@ -9,6 +9,7 @@ local actionhandlers = {
 	ActionHandler(ACTIONS.GIVE, "give"),
 	ActionHandler(ACTIONS.GOHOME, "gohome"),
 	ActionHandler(ACTIONS.PICKUP, "pickup"),
+	ActionHandler(ACTIONS.STICK_ARCTIC_FISH, "give"),
 	ActionHandler(ACTIONS.TAKEITEM, "pickup"),
 	ActionHandler(ACTIONS.UNPIN, "pickup"),
 	ActionHandler(ACTIONS.POLARPLOW, "use_tool"),
@@ -59,6 +60,8 @@ local states = {
 			if inst.components.follower:GetLeader() and inst.components.follower:GetLoyaltyPercent() < 0.05 then
 				inst.AnimState:PlayAnimation("hungry")
 				inst.SoundEmitter:PlaySound("dontstarve/wilson/hungry")
+			elseif inst.components.timer and inst.components.timer:TimerExists("arcticfooled_cooldown") then
+				inst.AnimState:PlayAnimation("idle_happy")
 			elseif inst.components.combat:HasTarget() then
 				inst.AnimState:PlayAnimation("idle_angry")
 			elseif inst.components.follower:GetLeader() ~= nil and inst.components.follower:GetLoyaltyPercent() > 0.3 then

@@ -12,6 +12,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		"We should head North... no, South!",
 		"Brrr...",
 	}
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Darnit... they can't keep getting away with it!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "That was... cool! Chilly even!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Let's try somewhere more stable."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Neat! Almost what I wanted."
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Moose fur, no doubt. Did you smell it?"
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "I didn't know that fish sticks! Heh, get it?"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "Hey, shake this out!",
 		INUSE = "That means... I finally got my hands on an haunted trinket!",

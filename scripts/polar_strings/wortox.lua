@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Teddy or not, here I come!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "A prank upon the prankster? This can't be!"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Hop... hop we go...!",
 		"Hyu... yu... brrrrr!",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "Ooo, Wes! You should have told me sooner about those pranks!"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "A frozen realm, mine for the shaking! Hyuyu!",
 		INUSE = "What a tempting, cursed trinket!",

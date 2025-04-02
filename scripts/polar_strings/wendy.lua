@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Let's put you to sleep."
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "It is gone. But the shame still clings to me."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Cold chains... pulling me down...",
 		"Each step is slower than the last...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "Should I write something on it? Like: \"Come and stab me\""
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "This looks so fragile...",
 		INUSE = "I see. Breaking it would have lasting consequences.",

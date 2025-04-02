@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "This may bear consequences."
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "I knew something felt off... fishy even."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Trust me... this is... a shortcut.",
 		"Hngh...",
@@ -119,6 +120,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "All I got to do is act natural."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "It's still going.",
 		INUSE = "Let's not do this again!",

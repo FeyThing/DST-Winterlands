@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Attack!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Ooh. Hello Glub Glub"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Not like here...",
 		"Cold! Cold!",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Axe friend?"
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "Put on back"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "Hmm... Someone touched?",
 		INUSE = "No no no. Go back inside!",

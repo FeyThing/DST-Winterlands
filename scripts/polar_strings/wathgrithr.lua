@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Leave me a pretty scar, will you?"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Arg! Mark me not, trickster."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"'Tis... nothing...!",
 		"I will brave you... snow!",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "Beware of the cursed sigil..."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "It contain the power to unleash the winter!",
 		INUSE = "'Tis vigorous shake hath displeased the gods!",

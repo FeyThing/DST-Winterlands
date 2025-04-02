@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Brains over paws!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Har-har. Very funny. Laugh on... now who did this?"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Don't misinterpret it... but I could use a coat... and a cane...",
 		"My servants could make this a lot easier...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Hm. Very... rustic."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "A spell for embarrassment."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "Don't. Touch. It.",
 		INUSE = "I knew this was a bad idea.",

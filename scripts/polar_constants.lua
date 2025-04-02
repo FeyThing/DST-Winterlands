@@ -25,20 +25,53 @@ end
 
 TECH.NONE.POLARAMULET_STATION = 0
 
+TECH.ARCTIC_FOOLS = {SCIENCE = 10}
 TECH.POLARAMULET_STATION = {POLARAMULET_STATION = 1}
 
 TECH_INGREDIENT.POLARSNOW = "polarsnow_material"
+
+--	Events
+
+ARCTIC_FOOLS_MOBS = {
+	daywalker = 		{sym = "ww_hunch", 			ups = {2}, 			scale = 1.4},
+	daywalker2 = 		{sym = "ww_hunch", 			ups = {2}, 			scale = 1.4},
+	hermitcrab = 		{sym = "torso", 			ups = {6, 7, 8}, 	scale = 0.7, 			offset = {0, -15, 0}},
+	klaus = 			{sym = "klaus_body", 		ups = {2}, 			scale = 1.3},
+	minotaur = 			{sym = "head", 				ups = {2}, 			scale = 1.4},
+	sharkboi = 			{sym = "sharkboi_cloak", 	ups = {4}, 			scale = 1.4},
+}
+
+ARCTIC_FOOLS_TAGS = {--	Prioritize important tags first
+	{tag = "player", 	sym = "torso", 				ups = {6, 7, 8}, 	scale = 0.7, 			offset = {0, -20, 0}},
+	{tag = "bearger", 	sym = "bearger_body", 		ups = {5}, 			scale = 1.4},
+	{tag = "deerclops", sym = "deerclops_body", 	ups = {1}, 			scale = 1.4},
+	{tag = "leif", 		sym = "pieces", 			ups = {18}, 		scale = 1.3, 			face_up_only = true},
+	{tag = "bear", 		sym = "pig_torso", 			ups = {2, 5}, 		scale = 1.1},
+	{tag = "manrabbit", sym = "manrabbit_torso", 	ups = {2, 4}},
+	{tag = "merm", 		sym = "pig_torso", 			ups = {2, 5}, 		nottags = {"mermking", "shadowminion"}},
+	{tag = "pig", 		sym = "pig_torso", 			ups = {2, 5}},
+	{tag = "rocky", 	sym = "hips", 				ups = {2}},
+	{tag = "walrus", 	sym = "pig_torso", 			ups = {2, 5}},
+	{tag = "bishop", 	sym = "shoulder", 			ups = {1}},
+	{tag = "knight", 	sym = "neck", 				ups = {3}},
+	{tag = "rook", 		sym = "head", 				ups = {2}, 			scale = 1.2},
+	{tag = "penguin", 	sym = "body", 				ups = {7, 8}, 		scale = 0.8, 			offset = {0, 10, 0}},
+}
+
+SPECIAL_EVENTS.ARCTIC_FOOLS = "arctic_fools"
+
+ApplyExtraEvent(SPECIAL_EVENTS.ARCTIC_FOOLS) -- Keep this around about ~ 1 Week upon April's Fool :>
 
 --	Teeth Stuff
 
 POLARAMULET_PARTS = rawget(_G, "POLARAMULET_PARTS") or {}
 
 local AMULET_PARTS = {
-	gnarwail_horn = {build = "polar_amulet_items", unlock_recipe = "frostwalkeramulet"},
-	houndstooth = {build = "polar_amulet_items", unlock_recipe = "polaricestaff"},
-	lavae_tooth = {build = "polar_amulet_items", unlock_recipe = "polar_lavae_tooth"},
-	polarwargstooth = {build = "polar_amulet_items", unlock_recipe = "polarcrownhat"},
-	walrus_tusk = {build = "polar_amulet_items", unlock_recipe = "iciclestaff"},
+	gnarwail_horn = 	{build = "polar_amulet_items", unlock_recipe = "frostwalkeramulet"},
+	houndstooth = 		{build = "polar_amulet_items", unlock_recipe = "polaricestaff"},
+	lavae_tooth = 		{build = "polar_amulet_items", unlock_recipe = "polar_lavae_tooth"},
+	polarwargstooth = 	{build = "polar_amulet_items", unlock_recipe = "polarcrownhat"},
+	walrus_tusk = 		{build = "polar_amulet_items", unlock_recipe = "iciclestaff"},
 }
 
 local scrapbookdata = require("screens/redux/scrapbookdata")

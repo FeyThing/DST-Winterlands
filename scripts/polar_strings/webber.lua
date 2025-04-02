@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "It's past your hibernation time!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "What? How? WHO?"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Are we... going circles?",
 		"Hello...? Is anyone here?",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "A hat made of Mr. Woodie's friends."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "It's all fools and games until it's on your back!"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "The snow is moving, slowly. Too slowly...",
 		INUSE = "Will that get me on the naughty list?",

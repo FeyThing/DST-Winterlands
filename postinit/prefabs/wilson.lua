@@ -25,6 +25,60 @@ local function OnNearHighSnowDirty(inst)
 	inst:PushEvent("refreshcrafting")
 end
 
+--
+
+local OldOnSave
+local function OnSave(inst, data, ...)
+	if inst:HasTag("arcticfooled") and TheWorld.components.arcticfoolfishsavedata then
+		local fish = TheWorld.components.arcticfoolfishsavedata:GetFishForTarget(inst)
+		
+		if fish and fish.components.arcticfoolfish then
+			data.arctic_fooled_by = fish.components.arcticfoolfish.pranker_id
+		end
+	end
+	
+	if OldOnSave then
+		return OldOnSave(inst, data, ...)
+	end
+end
+
+local OldOnLoad
+local function OnLoad(inst, data, ...)
+	if data and data.arctic_fooled_by then
+		local fish = SpawnPrefab("arctic_fool_fish")
+		local back = fish.components.arcticfoolfish:StickOnBack(inst)
+		
+		if back and back.components.arcticfoolfish then
+			back.components.arcticfoolfish.pranker_id = data.arctic_fooled_by
+		end
+	end
+	
+	if OldOnLoad then
+		return OldOnLoad(inst, data, ...)
+	end
+end
+
+local function RemoveArcticFoolFish(inst)
+	if inst:HasTag("arcticfooled") then
+		local fish = TheWorld.components.arcticfoolfishsavedata:GetFishForTarget(inst)
+		
+		if fish and fish.components.arcticfoolfish then
+			fish.components.arcticfoolfish:UnstickFromBack(inst)
+			fish:Remove()
+		else
+			inst:RemoveTag("arcticfooled")
+		end
+		
+		if inst.components.talker then
+			inst.components.talker:Say(GetString(inst, "ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED"))
+		end
+	end
+end
+
+local function OnUsedArcticFoolFish(inst)
+	TheFrontEnd:GetSound():PlaySound("polarsounds/arctic_fools/stick_fish")
+end
+
 ENV.AddPlayerPostInit(function(inst)
 	if not TheNet:IsDedicated() then
 		inst._polarsnowfx = SpawnPrefab("snow_polar")
@@ -32,20 +86,23 @@ ENV.AddPlayerPostInit(function(inst)
 		inst._polarsnowfx.particles_per_tick = 0
 		inst._polarsnowfx:PostInit()
 	end
-
+	
 	OverrideIsCarefulWalking(inst)
-
+	
 	inst.nearhighsnow = net_bool(inst.GUID, "polarwalker.nearhighsnow", "nearhighsnowdirty")
 	inst.deepinhighsnow = net_bool(inst.GUID, "polarwalker.deepinhighsnow")
 	inst.deepinhighsnow:set(false)
-    
+	
 	inst._snowblockrange = net_smallbyte(inst.GUID, "localplayer._snowblockrange") -- Mostly for WX
 	inst._snowblockrange:set(0)
-
+	
+	inst._usearcticfoolfish = net_event(inst.GUID, "localplayer._usearcticfoolfish")
+	
 	inst:AddComponent("snowedshader")
-
+	
 	if not TheWorld.ismastersim then
 		inst:ListenForEvent("nearhighsnowdirty", OnNearHighSnowDirty)
+		inst:ListenForEvent("localplayer._usearcticfoolfish", OnUsedArcticFoolFish)
 		
 		return
 	end
@@ -64,6 +121,17 @@ ENV.AddPlayerPostInit(function(inst)
 	end
 	
 	inst:AddComponent("tumblewindattractor")
+	
+	if OldOnSave == nil then
+		OldOnSave = inst.OnSave
+	end
+	if OldOnLoad == nil then
+		OldOnLoad = inst.OnLoad
+	end
+	
+	inst.OnSave = OnSave
+	inst.OnLoad = OnLoad
+	inst.RemoveArcticFoolFish = RemoveArcticFoolFish
 	
 	inst:DoTaskInTime(1, function() -- Delay the first check to make sure the polarsnowlevel is synced
 		PolarSnowUpdate(inst)

@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Rrraaargh!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Eh? Oh, c'mon Luce... you could've told me."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"I'm used... to this...",
 		"Grrmmmph...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "That's more my kind of headwear!"
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "I gotta find the perfect back..."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "I kinda want to go in here, eh.",
 		INUSE = "C'mon, I didn't mean it seriously.",

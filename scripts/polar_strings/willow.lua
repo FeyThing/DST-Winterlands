@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "I'll stuff Bernie with your fur!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Huh? Who put this stupid fish on me?!"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Ugh... why did it have to be... snow.",
 		"Get me out of here!",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Smells fishy."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "We should light them on fire for extra fun! No? Pfft."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "What a dumb toy.",
 		INUSE = "Why did you have to shake it, why?",

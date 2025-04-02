@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Is time for good brawl!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Hmm? Hah! You got Wolfgang good."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"Feets are cold now!",
 		"M-must... defeat snow.",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Bear man lost hat?"
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "Clownman may be strong at his game, but Wolfgang will try his best!"
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "Wolfgang likes pretty snow ball.",
 		INUSE = "Wolfgang shake too hard?",

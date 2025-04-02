@@ -7,6 +7,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "I shall prevail over brute force!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Well. It's good to see everyone laughing, at least."
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
 		"A detour would have been preferable to such a struggle!",
 		"My locomotion is severely impeded...",
@@ -116,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "To keep one's warmth while the cold rages on."
 	
 	--	Others
+	DESCRIBE.ARCTIC_FOOL_FISH = "The token of a social custom, cherished by both Ursidae and the French."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "How strange. Has anyone touched it recently?",
 		INUSE = "Oh dear... was everyone ready for this?",

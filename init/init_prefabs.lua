@@ -1,6 +1,7 @@
 PrefabFiles = {
 	"antler_tree",
 	"antler_tree_stick",
+	"arctic_fool_fish",
 	"armor_polar",
 	"bluegem_overcharged",
 	"bluegem_shards",

@@ -84,6 +84,7 @@ local Image = require("widgets/image")
 local ImageButton = require("widgets/imagebutton")
 local Text = require("widgets/text")
 local UIAnim = require("widgets/uianim")
+local UIAnimButton = require("widgets/uianimbutton")
 local Widget = require("widgets/widget")
 
 --	Blizzard
@@ -207,6 +208,62 @@ AddClassPostConstruct("widgets/itemtile", function(self, invitem)
 	
 	if invitem.amulet_parts and not self.amulet_parts then
 		self:SetAmuletParts()
+	end
+end)
+
+--	Arctic Fools' Fish on Self Inspect
+
+AddClassPostConstruct("screens/playerinfopopupscreen", function(self)
+	if self.root and self.root.bg and ThePlayer:HasTag("arcticfooled") then
+		local btn = self.root.bg:AddChild(UIAnimButton("arctic_fool_fish", "arctic_fool_fish", "idle", "walk", "idle", "run", "run"))
+		btn:SetScale(2, 2)
+		
+		btn:SetLoop("idle", true)
+		btn:SetLoop("walk", true)
+		btn:SetLoop("run", true)
+		
+		self.arcticfool_label = btn:AddChild(Text(UIFONT, 45))
+		self.arcticfool_label:SetString(STRINGS.UI.ARCTIC_FOOL_FISH_BUTTON)
+		self.arcticfool_label:SetPosition(0, 80, 0)
+		self.arcticfool_label:Hide()
+		
+		btn:SetOnGainFocus(function()
+			btn.animstate:SetAddColour(0.15, 0.15, 0.15, 0.15)
+			self.arcticfool_label:Show()
+		end)
+		btn:SetOnLoseFocus(function()
+			btn.animstate:SetAddColour(0, 0, 0, 0)
+			self.arcticfool_label:Hide()
+		end)
+		btn:SetOnClick(function()
+			if ThePlayer:HasTag("arcticfooled") then
+				if not TheWorld.ismastersim then
+					SendModRPCToServer(GetModRPC("Winterlands", "UnstickArticFoolFish"))
+				elseif ThePlayer.RemoveArcticFoolFish then
+					ThePlayer:RemoveArcticFoolFish()
+				end
+			end
+			
+			TheFrontEnd:GetSound():PlaySound("polarsounds/arctic_fools/stick_fish")
+			TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
+			TheFrontEnd:PopScreen()
+		end)
+		
+		self.arcticfool_btn = btn
+	end
+	
+	local OldOnControl = self.OnControl
+	function self:OnControl(control, down, ...)
+		if control == CONTROL_MOVE_UP then
+			if self.arcticfool_btn and not self.arcticfool_btn.focus then
+				self.arcticfool_btn:SetFocus()
+				return true
+			end
+		end
+		
+		if OldOnControl then
+			return OldOnControl(self, control, down, ...)
+		end
 	end
 end)
 

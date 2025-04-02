@@ -37,6 +37,34 @@ local POLARAMULET_CRAFT = PolarAction("POLARAMULET_CRAFT", {mount_valid = true, 
 		end
 	end
 	
+local STICK_ARCTIC_FISH = PolarAction("STICK_ARCTIC_FISH", {priority = 4})
+	STICK_ARCTIC_FISH.fn = function(act)
+		if act.invobject and act.invobject.components.arcticfoolfish then
+			if act.invobject.components.arcticfoolfish:CanStickOnBack(act.target, act.doer) then
+				act.invobject.components.arcticfoolfish:StickOnBack(act.target, act.doer)
+				
+				return true
+			end
+			
+			return false
+		end
+	end
+	
+	STICK_ARCTIC_FISH.strfn = function(act)
+		local guid = act.target and act.target.GUID
+		
+		if guid then
+			local num_vars = 0
+			for k, v in pairs(STRINGS.ACTIONS.STICK_ARCTIC_FISH) do
+				num_vars = num_vars + 1
+			end
+			
+			local var = (guid % num_vars) + 1
+			
+			return var > 1 and "VAR"..var or nil
+		end
+	end
+	
 local TURNONSTR = ACTIONS.TURNON.stroverridefn
 	ACTIONS.TURNON.stroverridefn = function(act, ...)
 		local target = act.invobject or act.target
@@ -57,6 +85,12 @@ AddComponentAction("POINT", "polarplower", function(inst, doer, pos, actions, ri
 		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) then
 			table.insert(actions, ACTIONS.POLARPLOW)
 		end
+	end
+end)
+
+AddComponentAction("USEITEM", "arcticfoolfish", function(inst, doer, target, actions)
+	if inst.components.arcticfoolfish and inst.components.arcticfoolfish:CanStickOnBack(target) then
+		table.insert(actions, ACTIONS.STICK_ARCTIC_FISH)
 	end
 end)
 
@@ -125,6 +159,7 @@ end
 local actionhandlers = {
 	POLARPLOW = "dig_start",
 	POLARAMULET_CRAFT = "give",
+	STICK_ARCTIC_FISH = "give",
 }
 
 for action, state in pairs(actionhandlers) do
