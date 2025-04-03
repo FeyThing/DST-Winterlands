@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		"哇……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "那真是……酷！甚至有點冷！"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "讓我們試試更穩固的地方。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "不錯！差不多是我想要的。"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我..我需要更厚的衣物……！"
@@ -56,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "看看這個——呃，這些酷蟲蟲！",
 		HELD = "我的手冊說……現在想把它移除已經太晚了。",
+		HELD_BACKPACK = "沒有什麼能阻止我和我的蟲子們！",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "我想他喜歡我們！",
@@ -66,6 +69,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "一個可攜式的火坑。",
+		ON = "呃...有人帶便攜式棉花糖袋嗎？",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "總有一天沃比，你會搬運整個基地！"
+	DESCRIBE.POLAR_THRONE = "你不覺得過一陣子就會感到無聊嗎，麥斯威爾先生？"
+	DESCRIBE.POLAR_THRONE_GIFTS = "東西可能不見了。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "哦，這一定是我聽說過的牙科博物館！",
 		OPEN = "嗨！你們對訪客開放嗎？",
@@ -74,12 +84,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		BURNT = "那是一種我見過的'霜烤'。呵呵。",
 		GENERIC = "你覺得他們會用雪做家具嗎？",
 	}
+	DESCRIBE.POLARICE_PLOW = "別擔心，我知道該怎麼做。"
+	DESCRIBE.POLARICE_PLOW_ITEM = "也許沃比能用氣味找到魚？"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "冰淇淋，氣泡水版本。"
 	DESCRIBE.ICELETTUCE = "這會讓萵苣結凍嗎？你明白嗎？因為……算了……"
 	DESCRIBE.ICEBURRITO = "它一點都不會散開。"
+	DESCRIBE.POLARCRABLEGS = "嗯！嘿，有人想聽我的螃蟹恐怖故事嗎？"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "從一顆魔法藍寶石到……我不知道……一顆被詛咒的藍寶石？"
@@ -91,11 +105,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "一根好棍子，可以用來玩接球和……其他幾件事。"
+	DESCRIBE.ARMORPOLAR = "護甲也可以防護其他東西，對吧？"
 	DESCRIBE.FROSTWALKERAMULET = "哦，呃……我也許應該用它做一個狗項圈。"
 	DESCRIBE.ICICLESTAFF = "我們拿來射射看吧？呵呵。好主意，沃爾特。"
 	DESCRIBE.POLAR_SPEAR = "抱歉沃比，你不能擁有這個。"
 	DESCRIBE.POLARCROWNHAT = "那麼，我們什麼時候建造我的冰城堡？"
+	DESCRIBE.POLARFLEA_SACK = "最好小心點，你正在我口袋蟲子的攻擊範圍內。"
 	DESCRIBE.POLARAMULET = "來自紀念品商店的小東西。"
+	DESCRIBE.POLARBEARHAT = "沃比一直在對它咆哮..."
 	DESCRIBE.POLARICESTAFF = "我為所有在這裡的昆蟲感到抱歉，它們只是忙著自己的事。"
 	DESCRIBE.POLARMOOSEHAT = "毫無疑問是駝鹿毛。你聞到了嗎？"
 	
@@ -105,6 +122,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		INUSE = "這意味著……我手上有個個鬧鬼的飾品！",
 		REFUEL = "雪在哪裡……鬧鬼的雪？",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "搞不好裡面藏著一隻迷你長毛象？"
 	DESCRIBE.POLARICEPACK = "這不會讓我的肉乾永不腐爛，但至少更近了一步。"
 	DESCRIBE.POLARTRINKET_1 = "他似乎準備好來打雪仗了。我也準備好了！"
 	DESCRIBE.POLARTRINKET_2 = "等等……我認得你。"

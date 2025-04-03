@@ -213,8 +213,14 @@ end)
 
 --	Arctic Fools' Fish on Self Inspect
 
-AddClassPostConstruct("screens/playerinfopopupscreen", function(self)
-	if self.root and self.root.bg and ThePlayer:HasTag("arcticfooled") then
+AddClassPostConstruct("screens/playerinfopopupscreen", function(self, owner, player_name, data)
+	local target = data and data.userid and LookupPlayerInstByUserID(data.userid)
+	
+	if self.root and self.root.bg and target and target:HasTag("arcticfooled") then
+		if target == ThePlayer then
+			ThePlayer._has_seen_arctic_fish = true
+		end
+		
 		local btn = self.root.bg:AddChild(UIAnimButton("arctic_fool_fish", "arctic_fool_fish", "idle", "walk", "idle", "run", "run"))
 		btn:SetScale(2, 2)
 		
@@ -236,17 +242,19 @@ AddClassPostConstruct("screens/playerinfopopupscreen", function(self)
 			self.arcticfool_label:Hide()
 		end)
 		btn:SetOnClick(function()
-			if ThePlayer:HasTag("arcticfooled") then
+			TheFrontEnd:GetSound():PlaySound("polarsounds/arctic_fools/stick_fish")
+			TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
+			
+			if target and target:HasTag("arcticfooled") and target == ThePlayer then
+				ThePlayer._has_seen_arctic_fish = nil
+				
 				if not TheWorld.ismastersim then
 					SendModRPCToServer(GetModRPC("Winterlands", "UnstickArticFoolFish"))
 				elseif ThePlayer.RemoveArcticFoolFish then
 					ThePlayer:RemoveArcticFoolFish()
 				end
+				TheFrontEnd:PopScreen()
 			end
-			
-			TheFrontEnd:GetSound():PlaySound("polarsounds/arctic_fools/stick_fish")
-			TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_move")
-			TheFrontEnd:PopScreen()
 		end)
 		
 		self.arcticfool_btn = btn

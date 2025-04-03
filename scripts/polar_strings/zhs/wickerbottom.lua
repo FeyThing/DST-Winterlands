@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		"我为什么没有为这场雪地的艰难旅程做更好的准备？",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "这种扰动感觉像是精心安排的，而不是自然形成的。"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "在这里挖洞是不明智的。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "哦。多么实用的礼物！"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我对这种情况准备不足。"
@@ -55,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "哦，亲爱的……",
 		HELD = "多么无礼，令人厌恶的害虫！",
+		HELD_BACKPACK = "我不会容忍任何人靠近我的书籍。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "一点食物在这里会有很大的帮助，对吧，亲爱的？",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "它需要燃料。",
+		ON = "温暖、安全的火焰。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "一个相当基本的便携式火容器。虽然我不是第一个想到它的人。"
+	DESCRIBE.POLAR_THRONE = "这王座的主人，已经很久不在了。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "我很惊讶它们还没被雪覆盖。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "这是一个奇怪的营业场所……或者谁知道是什么。",
 		OPEN = "我还有所有的牙齿，亲爱的，我打算保留它们。",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		BURNT = "它已经被火焰吞噬。",
 		GENERIC = "一个巢穴，虽然几乎没有保暖效果。",
 	}
+	DESCRIBE.POLARICE_PLOW = "很快就能发现..."
+	DESCRIBE.POLARICE_PLOW_ITEM = "寒冷的海底比人们想象的要更加生机勃勃。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "他的秘密配方有时候并不那么秘密。"
 	DESCRIBE.ICELETTUCE = "冰冷的甘蓝。它的叶子让薄荷都相形见绌。"
 	DESCRIBE.ICEBURRITO = "新鲜的食物，随之而来的是将大脑冰冻。"
+	DESCRIBE.POLARCRABLEGS = "孩子们都很嫌弃，不肯尝。这样一来，我就能多吃点了！"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "冻得无法计量。"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "它的形状适合几种用途。"
-	DESCRIBE.FROSTWALKERAMULET = "真是令人着迷。它通过快速的热调节将水凝固。"
+	DESCRIBE.ARMORPOLAR = "舒适与保护兼备！"
+	DESCRIBE.FROSTWALKERAMULET = "真是令人着迷。它透过快速的热调节将水凝固。"
 	DESCRIBE.ICICLESTAFF = "一个准确的施法胜过两个失误的施法。"
 	DESCRIBE.POLAR_SPEAR = "粗糙，但在寒冷中非常耐用。"
 	DESCRIBE.POLARAMULET = "一般来说，我会把这种奇怪的物品视为荒谬的。"
+	DESCRIBE.POLARBEARHAT = "它足够包裹，能让暴风雪远离我的脸。"
 	DESCRIBE.POLARCROWNHAT = "它利用粒子压缩时的寒冷梯度来进行防护和攻击，。"
+	DESCRIBE.POLARFLEA_SACK = "我不确定这种...昆虫驯养的事情。"
 	DESCRIBE.POLARICESTAFF = "一声响亮的撞击能让每个人都维持他们的礼貌。"
 	DESCRIBE.POLARMOOSEHAT = "在寒冷肆虐时保持温暖。"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		INUSE = "哦，亲爱的……每个人都准备好了吗？",
 		REFUEL = "把这个……东西锁起来会是明智的。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "它还活着，大概。"
 	DESCRIBE.POLARICEPACK = "如果在密封的空间里的话效果很好。"
 	DESCRIBE.POLARTRINKET_1 = "相当舒适的奇怪小家伙。"
 	DESCRIBE.POLARTRINKET_2 = "相当舒适的奇怪小女士。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.WALL_POLAR = "冰冷而强大的屏障。"
 	DESCRIBE.WALL_POLAR_ITEM = "冰冷屏障的结构组件。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "人们不应该忘记何谓经典。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "它会对孩子们产生坏榜样。"

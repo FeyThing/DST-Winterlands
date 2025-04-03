@@ -16,6 +16,11 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		"哈……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "震動和顫抖——剛剛發生了什麼？！"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "在這冰行不通，換個地方吧。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "嗯。沒有那麼糟糕嘛。"
+	
+	ANNOUNCE.ANNOUNCE_WX_NAUGHTYCHIP_KRAMPUS = {"only_used_by_wx78"}
+	ANNOUNCE.ANNOUNCE_WX_NAUGHTYCHIP_RABBIT = {"only_used_by_wx78"}
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "哇！這可不是開玩笑！"
@@ -58,6 +63,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "該逃囉！",
 		HELD = "它的下顎已經深入我的皮膚了。",
+		HELD_BACKPACK = "我對這個想法充滿信心，它一定會成功。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "來玩個小遊戲吧。",
@@ -68,6 +74,13 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "一個口袋大小的火坑。",
+		ON = "現在太熱了不能放進口袋裡。除非我熄滅火焰。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "科學表明，便攜式的東西總是更好的。"
+	DESCRIBE.POLAR_THRONE = "看起來很舒適。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "那是我的名字嗎？我看不清那爪子寫的字。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "這個小屋怎麼還不倒真是個謎。",
 		OPEN = "呃，我的錯。錯誤的地址。",
@@ -76,12 +89,16 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		BURNT = "我的魚啊！",
 		GENERIC = "我懷疑在裡面也不會比較暖和。",
 	}
+	DESCRIBE.POLARICE_PLOW = "我對下面有什麼東西非常好奇。"
+	DESCRIBE.POLARICE_PLOW_ITEM = "最好的魚總是藏起來的那條。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "二氧化碳的風味，難以超越。"
 	DESCRIBE.ICELETTUCE = "這調味有點太過頭了。"
 	DESCRIBE.ICEBURRITO = "我真喜歡這個名字。"
+	DESCRIBE.POLARCRABLEGS = "有十條腿的好處是，每個人都有份。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "我收回之前的話。這個閃耀著寒冷的能量！"
@@ -93,11 +110,14 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "科學能夠解釋為什麼這根棍子是完美的。"
+	DESCRIBE.ARMORPOLAR = "就是這個東西！"
 	DESCRIBE.FROSTWALKERAMULET = "科學知道該如何解釋這個現象……但我不知道。"
 	DESCRIBE.ICICLESTAFF = "非常有用，前提是別提那次「事故」。"
 	DESCRIBE.POLAR_SPEAR = "那是一根大冰棒！"
 	DESCRIBE.POLARAMULET = "它在做……某件事情，肯定的。"
+	DESCRIBE.POLARBEARHAT = "被吃掉也有意想不到的優點呢。"
 	DESCRIBE.POLARCROWNHAT = "那麼，什麼能保護我不腦凍呢？"
+	DESCRIBE.POLARFLEA_SACK = "用來裝那些咬人的小盟友。"
 	DESCRIBE.POLARICESTAFF = "我喜歡我所有的法杖，但這根是最冷的。"
 	DESCRIBE.POLARMOOSEHAT = "相當有藝術感的頭飾。"
 	
@@ -107,6 +127,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		INUSE = "我們不要再這樣了！",
 		REFUEL = "雪去哪裡了？",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "那是一個魚冰塊。"
 	DESCRIBE.POLARICEPACK = "遺憾的是，這對保存我的狀態沒什麼幫助。"
 	DESCRIBE.POLARTRINKET_1 = "一個浸透了冬季傳說的文物，肯定的。"
 	DESCRIBE.POLARTRINKET_2 = "一個浸透了冬季傳說的文物，肯定的。"
@@ -116,3 +137,4 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.WALL_POLAR = "我在這裡感到安全又寒冷。"
 	DESCRIBE.WALL_POLAR_ITEM = "它能讓我保持'冷'靜。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "這個應該正好能讓樹更有氣氛。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "這麼多科學知識塞進了一個小玩意兒。"

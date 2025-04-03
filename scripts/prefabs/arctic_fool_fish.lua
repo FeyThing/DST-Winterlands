@@ -43,6 +43,54 @@ end
 
 --
 
+local function CalcSanityAura(inst, observer)
+	if inst.components.arcticfoolfish then
+		if observer.userid and observer.userid == inst.components.arcticfoolfish.pranker_id then
+			return TUNING.SANITYAURA_SMALL_TINY
+		elseif inst.components.arcticfoolfish.target ~= observer then
+			return TUNING.SANITYAURA_TINY
+		end
+	end
+	
+	return 0
+end
+
+local function OnRemoved(inst)
+	local target = inst.components.arcticfoolfish and inst.components.arcticfoolfish.target
+	if target and target:IsValid() then
+		target:RemoveTag("arcticfooled")
+	end
+	
+	if inst.fx then
+		for i, v in ipairs(inst.fx) do
+			v:Remove()
+		end
+	end
+end
+
+local PRANK_TAGS = {"_combat"}
+local PRANK_NOT_TAGS = {"INLIMBO", "companion", "player"}
+
+local function PrankEm(inst)
+	local owner = inst.entity:GetParent()
+	
+	if owner and owner:IsValid() and owner.components.combat and owner.components.health and not owner.components.health:IsDead() and not owner:HasTag("playerghost") then
+		local x, y, z = inst.Transform:GetWorldPosition()
+        local ents = TheSim:FindEntities(x, y, z, TUNING.ARCTIC_FOOL_FISH_PRANK_RANGE, PRANK_TAGS, PRANK_NOT_TAGS)
+		
+		for i, v in ipairs(ents) do
+			if v ~= owner and v.components.combat and v.components.combat.target == nil and math.random() < TUNING.ARCTIC_FOOL_FISH_PRANK_CHANCE
+				and not (v.components.timer and v.components.timer:TimerExists("arcticfooled_cooldown"))
+				and not (v.components.follower and v.components.follower.leader == owner) then
+				
+				v.components.combat:SuggestTarget(owner)
+			end
+		end
+	end
+end
+
+--
+
 local function ColourChanged(inst, r, g, b, a)
 	if inst.fx then
 		for i, v in ipairs(inst.fx) do
@@ -63,7 +111,19 @@ local function OnUpdate(inst)
 	local owner = inst.entity:GetParent()
 	
 	if owner and owner:IsValid() then
-		local move_anim = owner.AnimState:IsCurrentAnimation("run_loop") and "run" or owner:HasTag("moving") and "walk" or nil
+		if ThePlayer == owner and ThePlayer._has_seen_arctic_fish ~= inst._was_seen then
+			inst._was_seen = ThePlayer._has_seen_arctic_fish
+			
+			for i, v in ipairs(inst.fx) do
+				if inst._was_seen then
+					v.components.colourtweener:StartTween({1, 1, 1, 1}, 20 * FRAMES)
+				else
+					v.components.colourtweener:StartTween({1, 1, 1, 0}, 20 * FRAMES)
+				end
+			end
+		end
+		
+		local move_anim = owner.AnimState:IsCurrentAnimation("run_loop") and "run" or (owner:HasTag("moving") or owner:HasTag("working")) and "walk" or nil
 		local wrong_side = inst.face_up_only and owner.AnimState:GetCurrentFacing() ~= FACING_UP or nil -- TODO: Maybe some mobs could also allow up-sides ?
 		
 		if move_anim ~= inst.move_anim then
@@ -128,40 +188,6 @@ local function AttachToOwner(inst, owner)
 	end
 end
 
-local function OnRemoved(inst)
-	local target = inst.components.arcticfoolfish and inst.components.arcticfoolfish.target
-	if target and target:IsValid() then
-		target:RemoveTag("arcticfooled")
-	end
-	
-	if inst.fx then
-		for i, v in ipairs(inst.fx) do
-			v:Remove()
-		end
-	end
-end
-
-local PRANK_TAGS = {"_combat"}
-local PRANK_NOT_TAGS = {"INLIMBO", "companion", "player"}
-
-local function PrankEm(inst)
-	local owner = inst.entity:GetParent()
-	
-	if owner and owner:IsValid() and owner.components.combat and owner.components.health and not owner.components.health:IsDead() and not owner:HasTag("playerghost") then
-		local x, y, z = inst.Transform:GetWorldPosition()
-        local ents = TheSim:FindEntities(x, y, z, TUNING.ARCTIC_FOOL_FISH_PRANK_RANGE, PRANK_TAGS, PRANK_NOT_TAGS)
-		
-		for i, v in ipairs(ents) do
-			if v ~= owner and v.components.combat and v.components.combat.target == nil and math.random() < TUNING.ARCTIC_FOOL_FISH_PRANK_CHANCE
-				and not (v.components.timer and v.components.timer:TimerExists("arcticfooled_cooldown"))
-				and not (v.components.follower and v.components.follower.leader == owner) then
-				
-				v.components.combat:SuggestTarget(owner)
-			end
-		end
-	end
-end
-
 local function back()
 	local inst = CreateEntity()
 	
@@ -169,7 +195,9 @@ local function back()
 	inst.entity:AddNetwork()
 	
 	inst:AddTag("arcticfoolfish")
-	inst:AddTag("FX")
+	inst:AddTag("NOBLOCK")
+	
+	inst._was_seen = false
 	
 	inst:AddComponent("arcticfoolfish")
 	
@@ -183,10 +211,13 @@ local function back()
 		return inst
 	end
 	
-	inst.persists = false
+	inst:AddComponent("sanityaura")
+	inst.components.sanityaura.aurafn = CalcSanityAura
 	
 	inst.AttachToOwner = AttachToOwner
 	inst.PrankEm = PrankEm
+	
+	inst.persists = false
 	
 	inst:ListenForEvent("onremove", OnRemoved)
 	

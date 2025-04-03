@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		"雪……冰……毀了我的西裝……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "又是誰在玩這個該死的東西？"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "我寧願不打破那冰。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "我感覺這事不單純。"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我穿得不足夠合適。"
@@ -55,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "不！不！",
 		HELD = "這會痛，但我不會把它當寵物養。",
+		HELD_BACKPACK = "你不能逼我留著那東西。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "我們現在是一體的。",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "我從不說謊，我喜歡火盆",
+		ON = "很原始。不過效果不錯。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "我開始覺得自己像個馱獸了"
+	DESCRIBE.POLAR_THRONE = "所以從這裡往下看是這樣的？"
+	DESCRIBE.POLAR_THRONE_GIFTS = "這次又在玩什麼把戲？"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "哎呀，哎呀，真是一個好客的住所。",
 		OPEN = "...我會假裝我沒看到裡面的東西。",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		BURNT = "如果炎熱的陽光能饒過這個地方就好了。",
 		GENERIC = "我聞到裡面有什麼腐爛的東西。噁。",
 	}
+	DESCRIBE.POLARICE_PLOW = "最好站遠點，否則你會變成魚食。"
+	DESCRIBE.POLARICE_PLOW_ITEM = "絕望時刻需要破壞性措施。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "你可以用那東西打碎頭骨。"
 	DESCRIBE.ICELETTUCE = "所以，我們現在吃的是脆脆的水？"
 	DESCRIBE.ICEBURRITO = "我不認為它的味道很差，但……"
+	DESCRIBE.POLARCRABLEGS = "配上融化的奶油會很完美。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "我正在拿回我應得的東西，即使它變了一點。"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "啊，這可以派上用場。"
+	DESCRIBE.ARMORPOLAR = "實用，而且挺精緻。"
 	DESCRIBE.FROSTWALKERAMULET = "對被我踩在腳下的魚來說真是可憐。不過，哦，好吧。"
 	DESCRIBE.ICICLESTAFF = "比爛番茄更糟的命運。"
 	DESCRIBE.POLAR_SPEAR = "我承認，它可能會撕裂我的西裝。"
 	DESCRIBE.POLARAMULET = "他們在繩子上施了些魔法。具體是什麼，我不太確定。"
+	DESCRIBE.POLARBEARHAT = "我真的很反感。"
 	DESCRIBE.POLARCROWNHAT = "強大而優雅，但也不舒服。"
+	DESCRIBE.POLARFLEA_SACK = "幾乎不比凍死好到哪去。"
 	DESCRIBE.POLARICESTAFF = "正確的咒語，卻在錯誤的手中。"
 	DESCRIBE.POLARMOOSEHAT = "嗯。非常……鄉村風格。"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		INUSE = "我就知道這是個壞主意。",
 		REFUEL = "我應該把你扔進海裡。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "魚，你不覺得尷尬嗎？"
 	DESCRIBE.POLARICEPACK = "這將讓細菌遠離更久一些。"
 	DESCRIBE.POLARTRINKET_1 = "這些家伙真的無處可逃。"
 	DESCRIBE.POLARTRINKET_2 = "這些女孩真的無處可逃。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.WALL_POLAR = "我喜歡它們帶來的氛圍感。"
 	DESCRIBE.WALL_POLAR_ITEM = "牆壁大小的冰塊。是的。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "這挺微妙的，但很精巧。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "那個機器人需要重新整理一下。"

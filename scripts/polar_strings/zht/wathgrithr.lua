@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		"……嗚嗚……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "該死！芬布爾之冬才剛開始！"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "那是個錯誤的決定。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "那是什麼？"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "烏爾對我施下了詛咒！"
@@ -55,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "哦，天哪！",
 		HELD = "可以移除，但要付出我的皮膚作為代價。",
+		HELD_BACKPACK = "這些小蟲子渴望與我一同作戰。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "一開始是挺好玩的遊戲，直到你把我引入陷阱。",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "一個用來盛放火焰的石頭籃子。",
+		ON = "我召喚你，噢，咆哮的火焰！",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "一個等待被點燃的安全火源。"
+	DESCRIBE.POLAR_THRONE = "冰霜巨人的王座。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "'這聞起來像是個陷阱。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "一個非常有趣的貿易大廳。",
 		OPEN = "那些商品閃耀著戰鬥的承諾。",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		BURNT = "那間魚屋已經化為煙霧。",
 		GENERIC = "若能有個好收穫，那將會令人印象深刻！",
 	}
+	DESCRIBE.POLARICE_PLOW = "我們突襲！"
+	DESCRIBE.POLARICE_PLOW_ITEM = "用來突破魚群的某種東西!"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "家鄉風味！"
 	DESCRIBE.ICELETTUCE = "由冰製成的非肉類食物。"
 	DESCRIBE.ICEBURRITO = "魚躺在的冰凍床墊上！"
+	DESCRIBE.POLARCRABLEGS = "這野獸升入瓦爾哈拉...也進入我的肚子！"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "冰霜巨人死亡時的咕嚕聲能為它賦能。"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "讓路，雪，我有棍子！"
+	DESCRIBE.ARMORPOLAR = "配得上女武神的盔甲。"
 	DESCRIBE.FROSTWALKERAMULET = "讓穿越海洋變得輕而易舉！"
 	DESCRIBE.ICICLESTAFF = "召喚冰矛的雨。"
 	DESCRIBE.POLAR_SPEAR = "這武器的威力挺短暫的。"
 	DESCRIBE.POLARAMULET = "用那些墜落者製成的振奮吊墜。"
+	DESCRIBE.POLARBEARHAT = "一個能保護我免受風暴侵襲的獸口。"
 	DESCRIBE.POLARCROWNHAT = "像古代的德勞格爾一樣凍結我的敵人！"
+	DESCRIBE.POLARFLEA_SACK = "裝滿了我的小戰士們，準備戰鬥！"
 	DESCRIBE.POLARICESTAFF = "要嘛避開，要嘛別動。"
 	DESCRIBE.POLARMOOSEHAT = "一頂用來抵禦寒冷的角盔。"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		INUSE = "這猛烈的搖晃讓神不悅！",
 		REFUEL = "它將被最乾燥的冰重新填充。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "武裝起來的魚？"
 	DESCRIBE.POLARICEPACK = "我們珍貴的盛宴將持續更久一些。"
 	DESCRIBE.POLARTRINKET_1 = "一個小而奇怪的人。"
 	DESCRIBE.POLARTRINKET_2 = "一個小而奇怪的女人。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.WALL_POLAR = "寒冷而堅韌，正如我的決心！"
 	DESCRIBE.WALL_POLAR_ITEM = "由冰霜巨人製成的防禦工事。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "適合掛在瓦爾哈拉大廳的冰冷象徵物。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "這些恩賜將賦予我們的金屬戰士力量。"

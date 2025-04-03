@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		"哼……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "啊！我已經討厭這裡了！"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "這？就偏偏是在這？"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "這可能更糟糕。"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "啊！把雪弄掉！"
@@ -55,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "糟糕糟糕！",
 		HELD = "呃！把它弄掉！",
+		HELD_BACKPACK = "嘿，威爾森！來甩甩我的包！",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "跟我來，你會看到……",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "白天可移動。晚上可燃燒！",
+		ON = "對！燒吧！再次燃燒！",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "好了，這真是純粹的天才之作！"
+	DESCRIBE.POLAR_THRONE = "我知道有個人會浪費時間坐在這裡。實際上，是兩個才對。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "沒錯，我懷疑這裡會有我的禮物。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "將這地方燒掉反而是幫了它一個忙。",
 		OPEN = "所以這就是牙仙子看起來的樣子……哦，好吧。",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		BURNT = "哈哈！你的魚屋完全沒有勝算！",
 		GENERIC = "呃，這裡聞起來都是魚味。",
 	}
+	DESCRIBE.POLARICE_PLOW = "我會救你們所有魚！"
+	DESCRIBE.POLARICE_PLOW_ITEM = "被困在冰下肯定很糟糕。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "沃利，聽著。"
 	DESCRIBE.ICELETTUCE = "這完全不是好東西。"
 	DESCRIBE.ICEBURRITO = "我不認為任何辣醬能讓它好吃一點。"
+	DESCRIBE.POLARCRABLEGS = "我從來沒吃過這個，我要吃十個。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "嘶……離我遠點！！"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "誰會把這麼好的柴火就這樣丟著？"
+	DESCRIBE.ARMORPOLAR = "我永遠不會脫下它！除非它開始發臭。"
 	DESCRIBE.FROSTWALKERAMULET = "哇，酷！我的意思是……這真糟糕，但有點酷。"
 	DESCRIBE.ICICLESTAFF = "我從未想過我會和冰並肩作戰。"
 	DESCRIBE.POLAR_SPEAR = "保持冷靜，如果你必須的話。"
 	DESCRIBE.POLARAMULET = "這……只是一個階段。"
+	DESCRIBE.POLARBEARHAT = "把這當作不要惹我的暗示。"
 	DESCRIBE.POLARCROWNHAT = "哎呀！不行。"
+	DESCRIBE.POLARFLEA_SACK = "呃...我們為什麼又要這麼做？"
 	DESCRIBE.POLARICESTAFF = "下次我們可以要點別的……\n比如弄到一根煉獄法杖之類的！"
 	DESCRIBE.POLARMOOSEHAT = "聞起來有魚腥味。"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		INUSE = "為什麼你非得搖它，為什麼？",
 		REFUEL = "別再回來！",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "我剛好知道有什麼東西適合這魚!"
 	DESCRIBE.POLARICEPACK = "就讓它在冰箱裡待著吧，隨便。"
 	DESCRIBE.POLARTRINKET_1 = "他看起來也不太喜歡寒冷。"
 	DESCRIBE.POLARTRINKET_2 = "她看起來也不太喜歡寒冷。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.WALL_POLAR = "我討厭它。"
 	DESCRIBE.WALL_POLAR_ITEM = "也許我會給它一個機會。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "這不是我會喜歡的那種。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "嘿WX，你什麼時候安裝噴火器？"

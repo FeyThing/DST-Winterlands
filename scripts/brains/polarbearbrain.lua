@@ -398,6 +398,9 @@ function PolarBearBrain:OnStart()
 		ChattyNode(self.inst, "POLARBEAR_FOLLOWWILSON",
 			Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST)),
 		
+		WhileNode(function() return self.inst.components.timer and self.inst.components.timer:TimerExists("arcticfooled_cooldown") end, "Avoid Pranked",
+			RunAway(self.inst, "arcticfooled", 4, 10, nil, nil, nil, true)),
+		
 		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
 			PriorityNode({
 				ChattyNode(self.inst, "POLARBEAR_STICKARCTICFISH",

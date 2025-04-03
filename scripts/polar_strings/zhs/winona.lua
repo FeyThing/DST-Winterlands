@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		"呼……我需要在外面喘口气！",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "呼！结束了。而且……在下雪？"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "不行。坏主意。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "至少有些BOSS会留下礼物。"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "哎呀！我穿得不够多！"
@@ -50,11 +52,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		DEAD = "彻底倒下了！",
 		ENRAGED = "哎呀，我们有熊的麻烦了！",
 		FOLLOWER = "那么，你最喜欢的鱼是什么？",
-		GENERIC = "别对我那么冷淡。",
+		GENERIC = "别对我那么冷淡。"
 	}
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "我知道我最好离它们远点。",
 		HELD = "哎呀！走开！",
+		HELD_BACKPACK = "我才是这里的老大。我说了才能咬人。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "你给我兔子，我给你晚餐，很简单吧。",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "点燃火吧！",
+		ON = "这设计看起来很熟悉...一定是我的错觉。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "一个便利的光源。"
+	DESCRIBE.POLAR_THRONE = "权力与怠惰的展示。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "小帮手们一直保持它们的干净。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "站外面都待比在这破房子里面好。",
 		OPEN = "伙计，你听说过适当的照明吗？这里太阴森了。",
@@ -76,16 +86,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		--but I couldn't think of a suitable expression in Chinese, 
 		--so I only translated the 'suspicious' meaning."
 	}
+	DESCRIBE.POLARICE_PLOW = "我应该往旁边挪一小段距离。"
+	DESCRIBE.POLARICE_PLOW_ITEM = "鱼儿们，你们躲够了。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "吃过这东西后，雪可真不算什么了。"
 	DESCRIBE.ICELETTUCE = "这是用薄荷来冷冻？它就像是被冷冻了一样！"
 	DESCRIBE.ICEBURRITO = "这卷正适合用来结束这好卷的一天。"
 	--Great, my brain cells are almost filled up with puns.
-	--This food is '卷 wrapped' up, and to make it a pun.
-	--So I translated it as: 'End this "好卷" of a day with this wrap.'
-    --'好卷' in Chinese means that during a competition, both sides become more and more exhausted from each other."
+	--This food is '捲 wrapped' up, and to make it a pun.
+	--So I translated it as: 'End this "好捲" of a day with this wrap.'
+    --'好捲' in Chinese means that during a competition, both sides become more and more exhausted from each other."
+	DESCRIBE.POLARCRABLEGS = "我只需要一点点奢侈就满足了。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "我可不敢没戴手套碰这个。"
@@ -94,19 +108,22 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.POLAR_DRYICE = "这能送上流'冰'线。"
 	--This can't be translated into Chinese with a homophone pun, 
 	--so I chose a similar word pun instead, not a typo.
-	--It should originally be 流'水'线(assembly line).
+	--It should originally be 流'水'線(assembly line).
 	DESCRIBE.POLARBEARFUR = "它很温暖，更重要的是，它是我的。"
 	DESCRIBE.POLARWARGSTOOTH = "我猜你这不是用来吃植物的对吧。"
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "这可能会派上用场。"
+	DESCRIBE.ARMORPOLAR = "这是我能弄到的最坚固的皮革了。"
 	DESCRIBE.FROSTWALKERAMULET = "这样我就不会在工作时滑倒了，哈！"
 	DESCRIBE.ICICLESTAFF = "在用这个时我可不会忽视风往哪吹。"
 	DESCRIBE.POLAR_SPEAR = "噗。好吧。假设你住在冷冻库里..."
 	DESCRIBE.POLARAMULET = "它说这些都是独一无二什么的。"
+	DESCRIBE.POLARBEARHAT = "两个头总比一个好。"
 	DESCRIBE.POLARCROWNHAT = "如果不会出汗，就不会被看出我捏了把冷汗。"
 	--n order to create a pun with synonyms, I slightly adjusted the meaning here. 
 	--In Chinese, "捏了一把冷汗(Break into a cold sweat.)" is used to describe a situation of extreme nervousness.
+	DESCRIBE.POLARFLEA_SACK = "惹我的话，也就是惹我背上的虫子们。"
 	DESCRIBE.POLARICESTAFF = "用冰冻来达成你的目的吧。"
 	DESCRIBE.POLARMOOSEHAT = "嘿，伍迪。你的尾巴毛还在吗？"
 	
@@ -116,6 +133,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		INUSE = "哦，你……",
 		REFUEL = "不确定怎么漏的。不过这样也好。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "呵。免费的鱼！"
 	DESCRIBE.POLARICEPACK = "那一小块冰的效果可大了。"
 	DESCRIBE.POLARTRINKET_1 = "你那条围巾不错。真希望我也有一条。"
 	DESCRIBE.POLARTRINKET_2 = "呃，看起来他们两条生产线混乱了。"
@@ -125,3 +143,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.WALL_POLAR = "是的，这真冰。"
 	DESCRIBE.WALL_POLAR_ITEM = "组装时间。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "没有什么比这更能代表冬天了。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "WX，你得停止到处丢这些东西！"

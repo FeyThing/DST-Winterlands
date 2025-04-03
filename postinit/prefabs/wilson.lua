@@ -69,9 +69,11 @@ local function RemoveArcticFoolFish(inst)
 			inst:RemoveTag("arcticfooled")
 		end
 		
-		if inst.components.talker then
-			inst.components.talker:Say(GetString(inst, "ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED"))
-		end
+		inst:DoTaskInTime(0.2 + math.random() * 0.5, function()
+			if inst.components.wisecracker then
+				inst:PushEvent("removearcticfoolfish")
+			end
+		end)
 	end
 end
 

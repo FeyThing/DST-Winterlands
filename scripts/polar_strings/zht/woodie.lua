@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		"只是一點雪而已……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "看來我們需要更多的柴火，對吧？"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "我知道有個更好的地方。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "嘿！露西，你不該這樣的-"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我現在需要一件大而暖和的毛皮。"
@@ -55,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "呸！",
 		HELD = "別靠近我的頭髮和羽毛！",
+		HELD_BACKPACK = "當你了解他們後，其實他們也沒那麼糟。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "去抓那些鳥！",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "還缺一些引燃用的東西。",
+		ON = "穩住了...",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "這不是很好嗎，是吧？"
+	DESCRIBE.POLAR_THRONE = "這是用...木炭做的嗎？"
+	DESCRIBE.POLAR_THRONE_GIFTS = "看來我們表現得很好。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "我感到很不爽。",
 		OPEN = "我不需要你的詛咒。",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		BURNT = "看來它只是建來抵擋寒冷的。",
 		GENERIC = "我以前常說：你吃什麼，就活成什麼樣，對吧。",
 	}
+	DESCRIBE.POLARICE_PLOW = "這應該是個好地方！"
+	DESCRIBE.POLARICE_PLOW_ITEM = "少花時間挖掘就能有更多時間釣魚。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "其實我更喜歡在冬天吃冰淇淋，沒錯。"
 	DESCRIBE.ICELETTUCE = "就像在咬飲料裡的冰塊一樣。"
 	DESCRIBE.ICEBURRITO = "還是吃新鮮的比較好。"
+	DESCRIBE.POLARCRABLEGS = "露西，把牠們敲碎的活你幹得真好。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "這冷得不可思議。"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "就選它了，對吧！"
+	DESCRIBE.ARMORPOLAR = "是的，我在這裡很舒適。"
 	DESCRIBE.FROSTWALKERAMULET = "把海洋變成一個巨大的溜冰場。"
 	DESCRIBE.ICICLESTAFF = "這比整棵樹掉下來還要麻煩。"
 	DESCRIBE.POLAR_SPEAR = "我覺得這應該會有點痛。"
 	DESCRIBE.POLARAMULET = "我戴上它會看起來狂野，對吧？"
+	DESCRIBE.POLARBEARHAT = "暫時只能這樣了。"
 	DESCRIBE.POLARCROWNHAT = "其實，我覺得這件我穿起來應該不錯。"
+	DESCRIBE.POLARFLEA_SACK = "牠們現在是我的蟲了。"
 	DESCRIBE.POLARICESTAFF = "感覺像回到家一樣，對吧。"
 	DESCRIBE.POLARMOOSEHAT = "這才是我喜歡的那種帽子！"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		INUSE = "別這樣啦，我不是認真的。",
 		REFUEL = "地平線上沒有雪。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "沒有親自釣上來那麼有成就感..."
 	DESCRIBE.POLARICEPACK = "有了這個，誰還需要電冰箱？"
 	DESCRIBE.POLARTRINKET_1 = "瓦利會喜歡那條圍巾。"
 	DESCRIBE.POLARTRINKET_2 = "咦？哦，她看起來有點像我的家人。。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.WALL_POLAR = "有誰想要打破僵局嗎？"
 	DESCRIBE.WALL_POLAR_ITEM = "我們來建個冰屋吧，露西？"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "這真完美。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "一些花俏的機器人零件。"

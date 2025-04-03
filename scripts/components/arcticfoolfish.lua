@@ -18,6 +18,8 @@ local function CreateFxFollowFrame(back_id, sym, build, scale)
 		inst.AnimState:SetScale(scale, scale)
 	end
 	
+	inst:AddComponent("colourtweener")
+	
 	inst:AddComponent("highlightchild")
 	
 	inst.persists = false
@@ -173,6 +175,10 @@ function ArcticFoolFish:StickOnBack(target, pranker)
 end
 
 function ArcticFoolFish:UnstickFromBack(target)
+	if target.components.sanity then
+		target.components.sanity:DoDelta(TUNING.ARCTIC_FOOL_FISH_PRANKED_SANITY)
+	end
+	
 	if TheWorld.components.arcticfoolfishsavedata then
 		TheWorld.components.arcticfoolfishsavedata:UpdateArcticFoolFish(self.inst, target)
 	end

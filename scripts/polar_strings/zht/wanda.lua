@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		"嗚嗚……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "啊！末日來臨了——……是嗎？"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "事情告訴我在這裡不是個好主意。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "謝謝……但現在我要離開了。"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "哦，真麻煩！我沒有準備好。"
@@ -55,6 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "啊！滾開！",
 		HELD = "這很痛，但移除它會更痛。",
+		HELD_BACKPACK = "它們像彈簧一樣被緊緊纏繞，隨時準備爆發！",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "現在我抓到你了……嗯。我不知道我到底要做什麼！",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "對，對。它需要燃料。",
+		ON = "如果它劈啪作響，說明它運作正常。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "哦！它總是讓我驚嘆不已。"
+	DESCRIBE.POLAR_THRONE = "不喜歡做那些我無法更快完成的事情。我不能'坐'得更快。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "我才不會又一次上這個當。"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "為什麼會有人想住在這裡呢？",
 		OPEN = "隨你所願，但我喜歡我的工作室別這麼……陰暗。",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		BURNT = "燒了卻還是冷的。",
 		GENERIC = "非常老套，就像我住在一座鐘樓裡。不，等等……我不吃鐘！",
 	}
+	DESCRIBE.POLARICE_PLOW = "快點……它們要逃跑了！"
+	DESCRIBE.POLARICE_PLOW_ITEM = "為什麼我們不能在不那麼冷的地方釣魚呢？"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "那麼，什麼時候添加風味呢？啊。"
 	DESCRIBE.ICELETTUCE = "我需要等待然後……喝它……?還是？"
 	DESCRIBE.ICEBURRITO = "我還在弄清這該怎麼吃。"
+	DESCRIBE.POLARCRABLEGS = "它們最好不要從我盤子上逃走。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "為什麼我覺得它隨時會爆炸？"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "哦，這正是我需要的！"
+	DESCRIBE.ARMORPOLAR = "終於有些能忍受的護甲了。"
 	DESCRIBE.FROSTWALKERAMULET = "好！我已經受夠這些該死的河流了。"
 	DESCRIBE.ICICLESTAFF = "小心友軍傷害……和那些'親切'的冰。所有元素都想讓我們死！"
 	DESCRIBE.POLAR_SPEAR = "趁它還新鮮的時候好好利用。"
 	DESCRIBE.POLARAMULET = "我已經經歷過那個階段了。我有吧？"
+	DESCRIBE.POLARBEARHAT = "令人不安但有些用處。"
 	DESCRIBE.POLARCROWNHAT = "我開始覺得這是值得的。"
+	DESCRIBE.POLARFLEA_SACK = "好吧，只要它們跳進去，不麻煩就行..."
 	DESCRIBE.POLARICESTAFF = "所有人，意思是每一個'人'都應該休息一下。"
 	DESCRIBE.POLARMOOSEHAT = "我只希望我不會被誤認為是一塊會走路的肉排……"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		INUSE = "其實……我可能有時間來看看這個。",
 		REFUEL = "這裡面有漏水嗎？",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "真是個悲慘的結局……但是，也許我可以改變你的命運。"
 	DESCRIBE.POLARICEPACK = "我接下來應該拿一個時光包裹。"
 	DESCRIBE.POLARTRINKET_1 = "哦，我真的喜歡這個節日的小玩意。"
 	DESCRIBE.POLARTRINKET_2 = "哦，我真的喜歡這個節日的小玩意。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.WALL_POLAR = "我可不想打它。"
 	DESCRIBE.WALL_POLAR_ITEM = "這不應該很快融化。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "看起來如此逼真，我敢打賭它會融化得……非常……快……"
+	DESCRIBE.WX78MODULE_NAUGHTY = "啊哈！我一直在想他們什麼時候開始製造這些東西。"

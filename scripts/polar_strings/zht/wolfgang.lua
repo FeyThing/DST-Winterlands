@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		"哇……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "一直以來天空都這麼藍嗎？"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "這裡的冰太弱了。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "我喜歡禮物！"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "沃爾夫岡不喜歡鞋子裡有雪。"
@@ -54,7 +56,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	}
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "哎呀！",
-		HELD = "不會輕易放手。"
+		HELD = "不會輕易放手。",
+		HELD_BACKPACK = "如果蟲子乖乖的，沃爾夫岡就不會捏扁牠。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "小巧但可愛。",
@@ -65,6 +68,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "這是個可以裝火的碗。",
+		ON = "一碗光明和熱量。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "把它變小了！"
+	DESCRIBE.POLAR_THRONE = "是給大屁股坐的。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "如果沃爾夫岡能舉起來，沃爾夫岡就能帶走！"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "有種不好的預感。",
 		OPEN = "這裡有點陰暗...",
@@ -73,12 +83,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		BURNT = "這條大魚有個艱難的魚生。",
 		GENERIC = "熊人擊敗了大魚。",
 	}
+	DESCRIBE.POLARICE_PLOW = "真的有那麼深嗎...？"
+	DESCRIBE.POLARICE_PLOW_ITEM = "用來挖深洞的。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "不會融化，但在空氣中發出嘶嘶聲！"
 	DESCRIBE.ICELETTUCE = "葉子非常脆……"
 	DESCRIBE.ICEBURRITO = "這是第一個沃爾夫岡捏不碎的捲餅。"
+	DESCRIBE.POLARCRABLEGS = "從可怕的多腿蟲變成美味的多腿蟲。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "手裡有點癢！"
@@ -90,11 +104,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "好棍子，適合走路和打擊。"
+	DESCRIBE.ARMORPOLAR = "肌肉們，別太鬆懈了。"
 	DESCRIBE.FROSTWALKERAMULET = "冰最好不要在沃爾夫岡的強大步伐下崩潰。"
 	DESCRIBE.ICICLESTAFF = "不如用拳頭打有趣。"
 	DESCRIBE.POLAR_SPEAR = "是冰但有刺！"
 	DESCRIBE.POLARAMULET = "沃爾夫岡穿得最好！"
+	DESCRIBE.POLARBEARHAT = "別擔心，我不是熊人，只是沃爾夫岡。"
 	DESCRIBE.POLARCROWNHAT = "能把壞風擋住，讓好風進來。"
+	DESCRIBE.POLARFLEA_SACK = "可攜式跳蚤馬戲團。"
 	DESCRIBE.POLARICESTAFF = "會把冬天打回來。"
 	DESCRIBE.POLARMOOSEHAT = "熊人丟了帽子？"
 	
@@ -104,6 +121,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		INUSE = "沃爾夫岡搖得太用力了？",
 		REFUEL = "這只是個奇怪的球。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "我以為冰釣會更難。"
 	DESCRIBE.POLARICEPACK = "這小塊冰能保持東西新鮮更久。"
 	DESCRIBE.POLARTRINKET_1 = "我驕傲的鬍鬚無法保護自己免受寒冷！"
 	DESCRIBE.POLARTRINKET_2 = "小雪人不怕寒冷。"
@@ -113,3 +131,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.WALL_POLAR = "我看到裡面有個英俊的男人！"
 	DESCRIBE.WALL_POLAR_ITEM = "大冰塊！"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "美麗。但脆弱。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "這是給機器人的點心，是嗎？"

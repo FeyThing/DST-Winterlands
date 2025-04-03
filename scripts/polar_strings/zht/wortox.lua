@@ -13,6 +13,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		"動起來……這頑固的蹄子……",
 	}
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "你叫這個惡作劇？那只是粗魯！"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "能破壞的冰塊很有限，而且不是這裡！"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "看吧？有時候你應該相信我的-"
 	
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我，我的天啊，我必須保持溫暖和乾燥……"
@@ -58,6 +60,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "哦不！不不不！",
 		HELD = "没關係，我很快就會反過來吞噬你。",
+		HELD_BACKPACK = "這是一種囤積靈魂的方式。",
 	}
 	DESCRIBE.POLARFOX = {
 		FOLLOWER = "一個狡猾的小夥伴。",
@@ -68,6 +71,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "凡人應該早點想到這個！嘻嘻！",
+		ON = "驅走寒意吧，親愛的火焰。",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "這會在我四處漫遊時保持我的溫暖。"
+	DESCRIBE.POLAR_THRONE = "他這些日子不怎麼使用它了。"
+	DESCRIBE.POLAR_THRONE_GIFTS = "是的，是的，那些都是免費禮物！"
 	DESCRIBE.POLARAMULET_STATION = {
 		GENERIC = "毫無疑問，這裡充滿了惡作劇！",
 		OPEN = "哦，我的朋友，你的微笑真狡猾！",
@@ -76,12 +86,16 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		BURNT = "即使是這個冰冷的巢穴也無法逃脫被火舌吞噬的結局。",
 		GENERIC = "一個能溫暖靈魂的藏身之處。",
 	}
+	DESCRIBE.POLARICE_PLOW = "小心！通往魚類維度的傳送門即將打開！"
+	DESCRIBE.POLARICE_PLOW_ITEM = "雖然不如炸藥有趣，但更為隱秘。"
 	
 --	Items
 	
 	--	Food
+	DESCRIBE.DRYICECREAM = "我一眼就能認出惡作劇！"
 	DESCRIBE.ICELETTUCE = "凡人會培養植物，無論它們會長成多麼卑鄙的樣子。"
 	DESCRIBE.ICEBURRITO = "我想我會咬一口。凍傷一口，哼哼！"
+	DESCRIBE.POLARCRABLEGS = "好吧，好吧，我會抓一些那螃蟹的。"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "無論是在空氣中或在寶石中，你的靈魂仍然會是我的。"
@@ -93,11 +107,14 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "這根棍子能完成工作。"
+	DESCRIBE.ARMORPOLAR = "碰到傷害問題，多一層毛皮就對了！"
 	DESCRIBE.FROSTWALKERAMULET = "當水變冷時，新的道路會展開。"
 	DESCRIBE.ICICLESTAFF = "小心！這尖刺可是會在你身上留下調皮導致的痕跡。"
 	DESCRIBE.POLAR_SPEAR = "冰和棍子是天生一對。"
 	DESCRIBE.POLARAMULET = "重要的是你了相信它，哼哼！"
+	DESCRIBE.POLARBEARHAT = "就它的材質而言，這頂帽子出乎意料地舒服。"
 	DESCRIBE.POLARCROWNHAT = "外冷，內凍。"
+	DESCRIBE.POLARFLEA_SACK = "裡面是什麼？那是個驚喜！"
 	DESCRIBE.POLARICESTAFF = "把我們的客人困在冰中可不太好！"
 	DESCRIBE.POLARMOOSEHAT = "一個毛茸茸的王冠，用來隱藏著冰冷的皺眉。"
 	
@@ -107,6 +124,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		INUSE = "多麼誘人的詛咒小玩意！",
 		REFUEL = "它是空的……這並不讓我不高興。",
 	}
+	DESCRIBE.OCEANFISH_IN_ICE = "你以為你能從我這裡安全逃脫，小魚兒？"
 	DESCRIBE.POLARICEPACK = "我必須為凡人的食物犧牲空間嗎？"
 	DESCRIBE.POLARTRINKET_1 = "裡面沒有靈魂，沒有沒有。"
 	DESCRIBE.POLARTRINKET_2 = "裡面沒有靈魂，沒有沒有。"
@@ -116,3 +134,4 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.WALL_POLAR = "它是把冷氣擋在外面，還是擋在裡面？"
 	DESCRIBE.WALL_POLAR_ITEM = "把它丟在地上是沒有用的。"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "真是大膽的一天，對吧？"
+	DESCRIBE.WX78MODULE_NAUGHTY = "你是這群人中最聰明的燈泡嗎？"

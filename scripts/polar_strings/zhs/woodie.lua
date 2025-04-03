@@ -4,112 +4,131 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 --	Announcements
 	
 	--	Actions
-	ANNOUNCE.BATTLECRY.POLARBEAR = "Rrraaargh!"
+	ANNOUNCE.BATTLECRY.POLARBEAR = "吼啊！"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
-		"我习惯了……这个……",
-		"咕噜咕噜……",
-		"这只是一点雪……",
+		"我已经习惯了……这个……",
+		"咕噜噜……",
+		"只是一点雪而已……",
 	}
-	ANNOUNCE.ANNOUNCE_POLARGLOBE = "看来我们需要更多的柴火，嗯？"
+	ANNOUNCE.ANNOUNCE_POLARGLOBE = "看来我们需要更多的柴火，对吧？"
+	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "我知道有个更好的地方。"
+	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "嘿！露西，你不该这样的-"
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我现在需要一件大而温暖的毛皮。"
-	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "好多了。"
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "我现在需要一件大而暖和的毛皮。"
+	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "这样好多了。"
 	
 --	Worldgen
 	
 	--	Plants
 	DESCRIBE.ANTLER_TREE = {
-		BURNING = "不！你不能不战而逃，伙计。",
+		BURNING = "不！你不会不战而逃的，伙计。",
 		BURNT = "懦夫。",
-		CHOPPED = "这会让他们知道。",
-		GENERIC = "现在不行，露西，我要亲自处理这个！",
+		CHOPPED = "让他们见识一下吧！",
+		GENERIC = "现在不是时候，露西，我要亲自来对付这棵树！",
 	}
 	DESCRIBE.ICELETTUCE_SEEDS = "也许我可以种下它？"
 	
 	--	Rocks and stones
-	DESCRIBE.POLAR_ICICLE = "它们在这里比老小屋那边大。"
-	DESCRIBE.POLAR_ICICLE_ROCK = "它不会再低了，嗯？"
-	DESCRIBE.ROCK_POLAR = "舔一下，你就永远被困住了。"
+	DESCRIBE.POLAR_ICICLE = "这里的冰柱比我们以前住的那还要大。"
+	DESCRIBE.POLAR_ICICLE_ROCK = "这样还能再低吗？"
+	DESCRIBE.ROCK_POLAR = "你可以试着舔看看，你就会被困住了。"
 	
 	--	Misc
-	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "我一眼就能认出一个{name}。"
-	DESCRIBE.TUMBLEWEED_POLAR = "幸好没有下冰雹，嗯？"
+	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "我一眼就能认出{name}。"
+	DESCRIBE.TUMBLEWEED_POLAR = "幸好不是在下冰雹，对吧？"
 	
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "哼，业余。让我来给你看看怎么做。",
-		ANTLER = "大方而骄傲，像我一样爱自己的森林！",
+		GENERIC = "哼，业余。让我来亲自给你示范一下。",
+		ANTLER = "他又大又威猛，对他的森林感到骄傲，就像我一样！",
 	}
-	DESCRIBE.MOOSE_SPECTER = "我也可以这样吗？"
-	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "有人告诉过你，你的眼睛很漂亮吗，嗯？"
+	DESCRIBE.MOOSE_SPECTER = "我也可以这样做吗？"
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "有人告诉过你，你的眼睛很漂亮吗？"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "你会成为一块很好的地毯。",
-		ENRAGED = "现在我们要打架了！",
-		FOLLOWER = "总是愿意去钓鱼，嗯？",
-		GENERIC = "听起来像是有人有点冷。",
+		ENRAGED = "现在我们要打起来了！",
+		FOLLOWER = "随时都可以去钓鱼，对吧？",
+		GENERIC = "听起来有人觉得有点冷喽。",
 	}
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "呸！",
-		HELD = "离我的毛发和羽毛远点！",
+		HELD = "别靠近我的头发和羽毛！",
+		HELD_BACKPACK = "当你了解他们后，其实他们也没那么糟。",
 	}
 	DESCRIBE.POLARFOX = {
-		FOLLOWER = "去抓鸟吧！",
+		FOLLOWER = "去抓那些鸟！",
 		FRIEND = "那是我老朋友。",
-		GENERIC = "在北方也是罕见的景象。",
+		GENERIC = "在北方也很少见的景象。",
 	}
 	DESCRIBE.POLARWARG = "它可以自己拉雪橇。"
 	
 --	Buildings
 	
+	DESCRIBE.POLAR_BRAZIER = {
+		GENERIC = "还缺一些引燃用的东西。",
+		ON = "稳住了...",
+	}
+	DESCRIBE.POLAR_BRAZIER_ITEM = "这不是很好吗，是吧？"
+	DESCRIBE.POLAR_THRONE = "这是用...木炭做的吗？"
+	DESCRIBE.POLAR_THRONE_GIFTS = "看来我们表现得很好。"
 	DESCRIBE.POLARAMULET_STATION = {
-		GENERIC = "我很生气。",
+		GENERIC = "我感到很不爽。",
 		OPEN = "我不需要你的诅咒。",
 	}
 	DESCRIBE.POLARBEARHOUSE = {
-		BURNT = "看来它只建得住寒冷。",
-		GENERIC = "我曾经说过：你吃什么就住什么，嗯。",
+		BURNT = "看来它只是建来抵挡寒冷的。",
+		GENERIC = "我以前常说：你吃什么，就活成什么样，对吧。",
 	}
+	DESCRIBE.POLARICE_PLOW = "这应该是个好地方！"
+	DESCRIBE.POLARICE_PLOW_ITEM = "少花时间挖掘就能有更多时间钓鱼。"
 	
 --	Items
 	
 	--	Food
-	DESCRIBE.ICELETTUCE = "就像在饮料中咬冰块。"
-	DESCRIBE.ICEBURRITO = "吃新鲜的更好。"
+	DESCRIBE.DRYICECREAM = "其实我更喜欢在冬天吃冰淇淋，没错。"
+	DESCRIBE.ICELETTUCE = "就像在咬饮料里的冰块一样。"
+	DESCRIBE.ICEBURRITO = "还是吃新鲜的比较好。"
+	DESCRIBE.POLARCRABLEGS = "露西，把它们敲碎的活你干得真好。"
 	
 	--	Crafting
-	DESCRIBE.BLUEGEM_OVERCHARGED = "冷得不可思议。"
-	DESCRIBE.BLUEGEM_SHARDS = "露西更喜欢做拼图。"
-	DESCRIBE.MOOSE_POLAR_ANTLER = "那在壁炉上看起来不错。"
-	DESCRIBE.POLAR_DRYICE = "酷孩子的积木。"
-	DESCRIBE.POLARBEARFUR = "我应该用它填充我的格子呢。"
-	DESCRIBE.POLARWARGSTOOTH = "光看着就让我下巴疼……"
+	DESCRIBE.BLUEGEM_OVERCHARGED = "这冷得不可思议。"
+	DESCRIBE.BLUEGEM_SHARDS = "露西比我还适合拼拼图。"
+	DESCRIBE.MOOSE_POLAR_ANTLER = "这放在壁炉上会很好看。"
+	DESCRIBE.POLAR_DRYICE = "酷小孩的建筑积木。"
+	DESCRIBE.POLARBEARFUR = "我应该用它塞满我的格子布。"
+	DESCRIBE.POLARWARGSTOOTH = "光看着它就让我下巴疼……"
 	
 	--	Equipments
-	DESCRIBE.ANTLER_TREE_STICK = "我就拿这个，嗯！"
-	DESCRIBE.FROSTWALKERAMULET = "把海洋变成一个巨大的冰球场。"
-	DESCRIBE.ICICLESTAFF = "这会让你比一棵倒下的树还要糟糕。"
-	DESCRIBE.POLAR_SPEAR = "冰应该会有点疼。"
-	DESCRIBE.POLARAMULET = "我戴上它看起来有多狂野，嗯？"
-	DESCRIBE.POLARCROWNHAT = "我其实可以看到自己戴上这个。"
-	DESCRIBE.POLARICESTAFF = "让我感觉像回到家，嗯。"
-	DESCRIBE.POLARMOOSEHAT = "这才是我喜欢的头饰！"
+	DESCRIBE.ANTLER_TREE_STICK = "就选它了，对吧！"
+	DESCRIBE.ARMORPOLAR = "是的，我在这里很舒适。"
+	DESCRIBE.FROSTWALKERAMULET = "把海洋变成一个巨大的溜冰场。"
+	DESCRIBE.ICICLESTAFF = "这比整棵树掉下来还要麻烦。"
+	DESCRIBE.POLAR_SPEAR = "我觉得这应该会有点痛。"
+	DESCRIBE.POLARAMULET = "我戴上它会看起来狂野，对吧？"
+	DESCRIBE.POLARBEARHAT = "暂时只能这样了。"
+	DESCRIBE.POLARCROWNHAT = "其实，我觉得这件我穿起来应该不错。"
+	DESCRIBE.POLARFLEA_SACK = "它们现在是我的虫了。"
+	DESCRIBE.POLARICESTAFF = "感觉像回到家一样，对吧。"
+	DESCRIBE.POLARMOOSEHAT = "这才是我喜欢的那种帽子！"
 	
 	--	Others
 	DESCRIBE.POLARGLOBE = {
-		GENERIC = "我有点想进去，嗯。",
-		INUSE = "来吧，我不是认真的。",
+		GENERIC = "我会进去看看的，是吧。",
+		INUSE = "别这样啦，我不是认真的。",
 		REFUEL = "地平线上没有雪。",
 	}
-	DESCRIBE.POLARICEPACK = "谁需要电冰箱，当你有这个？"
-	DESCRIBE.POLARTRINKET_1 = "瓦尔里会喜欢那条围巾。"
-	DESCRIBE.POLARTRINKET_2 = "嗯？哦，只是她看起来有点像家人。"
-	DESCRIBE.TRAP_POLARTEETH = "这是进一步欺骗的一步。"
-	DESCRIBE.TURF_POLAR_CAVES = "只是更多的地面，嗯？"
-	DESCRIBE.TURF_POLAR_DRYICE = "现在要在这里找到冰鞋……"
-	DESCRIBE.WALL_POLAR = "有没有人想打破冰块？"
-	DESCRIBE.WALL_POLAR_ITEM = "我们怎么不建个冰屋，嗯露西？"
-	DESCRIBE.WINTER_ORNAMENTPOLAR = "那个是完美的。"
+	DESCRIBE.OCEANFISH_IN_ICE = "没有亲自钓上来那么有成就感..."
+	DESCRIBE.POLARICEPACK = "有了这个，谁还需要电冰箱？"
+	DESCRIBE.POLARTRINKET_1 = "瓦利会喜欢那条围巾。"
+	DESCRIBE.POLARTRINKET_2 = "咦？哦，她看起来有点像我的家人。。"
+	DESCRIBE.TRAP_POLARTEETH = "更进一步的诡计。"
+	DESCRIBE.TURF_POLAR_CAVES = "只是更多的地面，对吧？"
+	DESCRIBE.TURF_POLAR_DRYICE = "现在要在这里找到冰鞋了…"
+	DESCRIBE.WALL_POLAR = "有谁想要打破僵局吗？"
+	DESCRIBE.WALL_POLAR_ITEM = "我们来建个冰屋吧，露西？"
+	DESCRIBE.WINTER_ORNAMENTPOLAR = "这真完美。"
+	DESCRIBE.WX78MODULE_NAUGHTY = "一些花哨的机器人零件。"
