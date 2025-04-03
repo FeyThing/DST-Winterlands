@@ -175,8 +175,13 @@ function ArcticFoolFish:StickOnBack(target, pranker)
 end
 
 function ArcticFoolFish:UnstickFromBack(target)
-	if target.components.sanity then
-		target.components.sanity:DoDelta(TUNING.ARCTIC_FOOL_FISH_PRANKED_SANITY)
+	if target.components.sanity and (target.components.timer == nil or not target.components.timer:TimerExists("revokedarcticfool")) then
+		local mult = IsSpecialEventActive(SPECIAL_EVENTS.ARCTIC_FOOLS) and TUNING.ARCTIC_FOOL_FISH_SANITY_MULT or 1
+		target.components.sanity:DoDelta(TUNING.ARCTIC_FOOL_FISH_PRANKED_SANITY * mult)
+	end
+	
+	if target.components.timer then
+		target.components.timer:StartTimer("revokedarcticfool", TUNING.ARCTIC_FOOL_FISH_PRANKED_COOLDOWN)
 	end
 	
 	if TheWorld.components.arcticfoolfishsavedata then
@@ -196,7 +201,8 @@ function ArcticFoolFish:AmusePranker()
 			end
 			
 			if v.components.sanity and not v.components.timer:TimerExists("watchedarcticfool") then
-				v.components.sanity:DoDelta(TUNING.ARCTIC_FOOL_FISH_PRANKER_SANITY)
+				local mult = IsSpecialEventActive(SPECIAL_EVENTS.ARCTIC_FOOLS) and TUNING.ARCTIC_FOOL_FISH_SANITY_MULT or 1
+				v.components.sanity:DoDelta(TUNING.ARCTIC_FOOL_FISH_PRANKER_SANITY * mult)
 				
 				v.components.timer:StartTimer("watchedarcticfool", TUNING.ARCTIC_FOOL_FISH_PRANKER_COOLDOWN)
 			end

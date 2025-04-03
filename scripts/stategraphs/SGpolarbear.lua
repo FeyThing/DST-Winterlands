@@ -309,7 +309,11 @@ local states = {
 		
 		events = {
 			EventHandler("animover", function(inst)
-				inst.sg:GoToState("idle")
+				if inst._arctic_fooling_around then
+					inst.sg:GoToState("disapproval")
+				else
+					inst.sg:GoToState("idle")
+				end
 			end),
 		},
 	},
@@ -416,6 +420,22 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("buff")
+			inst.Physics:Stop()
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
+		name = "disapproval",
+		tags = {"busy"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("idle_scared")
 			inst.Physics:Stop()
 		end,
 		

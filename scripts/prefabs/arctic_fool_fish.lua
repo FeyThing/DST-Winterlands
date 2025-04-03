@@ -45,10 +45,12 @@ end
 
 local function CalcSanityAura(inst, observer)
 	if inst.components.arcticfoolfish then
+		local mult = IsSpecialEventActive(SPECIAL_EVENTS.ARCTIC_FOOLS) and TUNING.ARCTIC_FOOL_FISH_SANITY_MULT or 1
+		
 		if observer.userid and observer.userid == inst.components.arcticfoolfish.pranker_id then
-			return TUNING.SANITYAURA_SMALL_TINY
+			return TUNING.SANITYAURA_SMALL_TINY * mult
 		elseif inst.components.arcticfoolfish.target ~= observer then
-			return TUNING.SANITYAURA_TINY
+			return TUNING.SANITYAURA_TINY * mult
 		end
 	end
 	

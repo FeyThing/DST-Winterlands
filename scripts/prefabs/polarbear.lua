@@ -49,6 +49,24 @@ local function KeepTargetFn(inst, target)
 end
 
 local function OnAttacked(inst, data)
+	local fooling_around = inst._arctic_fooling_around
+	local fish = inst.components.inventory and inst.components.inventory:FindItem(function(item) return item.prefab == "arctic_fool_fish" end)
+	
+	if fish then
+		inst.components.inventory:DropItem(fish)
+	end
+	
+	if inst.components.timer and not inst.components.timer:TimerExists("arcticfooled_cooldown") then
+		inst.components.timer:StartTimer("arcticfooled_cooldown", 60)
+	end
+	
+	if fooling_around then
+		inst:ClearBufferedAction()
+		inst.components.locomotor:Stop()
+		
+		return
+	end
+	
 	if data and data.attacker then
 		inst.components.combat:SetTarget(data.attacker)
 		inst.components.combat:ShareTarget(data.attacker, 30, function(dude)
