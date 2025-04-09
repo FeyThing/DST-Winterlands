@@ -29,3 +29,18 @@ local Submersible = require("components/submersible")
 	end
 	
 	PolarUpvalue(Submersible.Submerge, "CheckNearbyTiles", CheckNearbyTiles)
+	local SPLASH_TAG = {"FX"}
+	
+	local OldSubmerge = Submersible.Submerge
+	function Submersible:Submerge(...)
+		local has_moved = OldSubmerge(self, ...)
+		
+		if self._ice_fishing then
+			local splash = FindEntity(self.inst, 5, function(fx) return fx.prefab == "splash_green" end, SPLASH_TAG)
+			if splash then
+				splash:Remove()
+			end
+		end
+		
+		return has_moved
+	end

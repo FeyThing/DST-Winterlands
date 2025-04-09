@@ -73,13 +73,37 @@ local FNS = {
 			inst.components.health:Kill()
 		end
 	end,
-	SetFloatsamLoot = function(inst, loot)
+	SetFloatsamLoot = function(inst, loot, try_winch)
 		if inst.SetIceFishingLoot then
-			local item = weighted_random_choice(LOOT[loot or "FLOATSAM"])
+			local item
+			
+			if try_winch and math.random() < 0.66 then
+				local x, y, z = inst.Transform:GetWorldPosition()
+				local players = FindPlayersInRange(x, y, z, 20)
+				
+				for i, v in ipairs(players) do
+					if v.components.builder and not v.components.builder:KnowsRecipe("winch_blueprint") then
+						item = "winch_blueprint"
+						
+						break
+					end
+				end
+			end
+			
+			if item == nil then
+				item = weighted_random_choice(LOOT[loot or "FLOATSAM"])
+			end
 			
 			if item ~= "nothing_at_all" then
 				inst:SetIceFishingLoot(item)
 			end
+		end
+	end,
+	SetScenario = function(inst, scenario)
+		if inst.components.scenariorunner == nil and scenario then
+			inst:AddComponent("scenariorunner")
+			inst.components.scenariorunner:SetScript(scenario)
+			inst.components.scenariorunner:Run()
 		end
 	end,
 	
@@ -153,6 +177,10 @@ local RESULTS = {
 		weight = 2,
 	},
 	["Now With Birds"] = {
+		ents = {
+			{prefab = "shell_cluster", 	chance = 0.25, 	spawntime = 0,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
+		},
 		onstarted = function(pt, radius, ...) FNS.SpawnShoal(pt, radius, ...) FNS.SpawnBirds(pt, radius, 2, 5, ...) end,
 		rad = 1.5,
 		weight = 2,
@@ -162,6 +190,10 @@ local RESULTS = {
 			{prefab = FNS.GetFragment, 		chance = 0.5, 	offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
 			{prefab = FNS.GetFragment, 		chance = 0.5, 	offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
 			{prefab = FNS.GetFragment, 		chance = 0.5, 	offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
+			
+			{prefab = "sunkenchest", 	chance = 0.1, 	spawntime = 0,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end,
+				onspawn = function(inst, ...) return FNS.SetScenario(inst, "sunkenchest_oceanmonument", ...) end},
 		},
 		onstarted = FNS.SpawnShoal,
 		rad = 1.5,
@@ -205,6 +237,9 @@ local RESULTS = {
 				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
 			{prefab = "wobster_sheller", 	chance = 0.3, 	state = "spawn_in", 		spawntime = FNS.SpawnLong,
 				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
+			
+			{prefab = "shell_cluster", 	chance = 0.25, 	spawntime = 0,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
 		},
 		rad = 1.5,
 		weight = 2,
@@ -214,9 +249,9 @@ local RESULTS = {
 	["Fish and Floatsam"] = {
 		ents = {
 			{prefab = "oceanfishableflotsam_water", 					spawntime = FNS.SpawnVariable,
-				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, ...) end},
+				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, true, ...) end},
 			{prefab = "oceanfishableflotsam_water", 	offset = 2, 	spawntime = FNS.SpawnLong,
-				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, "FLOATSAM_CHUM", ...) end},
+				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, "FLOATSAM_CHUM", false, ...) end},
 		},
 		onstarted = FNS.SpawnShoal,
 		rad = 1.5,
@@ -225,13 +260,13 @@ local RESULTS = {
 	["Starfish Floatsam"] = {
 		ents = {
 			{prefab = "oceanfishableflotsam_water",
-				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, ...) end},
+				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, true, ...) end},
 			{prefab = "oceanfishableflotsam_water", offset = 2,
 				chance = function(pt, radius, ...) return FNS.SpawnIfLarger(pt, radius, 2, 1, nil, ...) end,
-				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, "FLOATSAM_STARFISH", ...) end},
+				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, "FLOATSAM_STARFISH", false, ...) end},
 			{prefab = "oceanfishableflotsam_water", offset = 3,
 				chance = function(pt, radius, ...) return FNS.SpawnIfLarger(pt, radius, 3, 0.5, nil, ...) end,
-				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, ...) end},
+				onspawn = function(inst, ...) return FNS.SetFloatsamLoot(inst, nil, false, ...) end},
 		},
 		onstarted = function(pt, radius, ...)
 			if math.random() <= 0.5 then
@@ -268,6 +303,10 @@ local RESULTS = {
 		ents = {
 			{prefab = FNS.GnarwailOrShark},
 			{prefab = FNS.GetFragment, 		chance = 0.25, 	offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, nil, ...) end},
+			
+			{prefab = "sunkenchest", 	chance = 0.2, 	spawntime = 0,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end,
+				onspawn = function(inst, ...) return FNS.SetScenario(inst, "sunkenchest_oceanmonument", ...) end},
 		},
 		rad = 1.5,
 		weight = 2,
@@ -292,6 +331,9 @@ local RESULTS = {
 			{prefab = "squid", 									state = "spawn", 	offset = 2,		spawntime = FNS.SpawnLong},
 			{prefab = "squid", 				chance = 0.5, 		state = "spawn", 	offset = 2,		spawntime = FNS.SpawnLong},
 			{prefab = "squid", 				chance = 0.25, 		state = "spawn", 	offset = 2,		spawntime = FNS.SpawnLong},
+			
+			{prefab = "shell_cluster", 	chance = 0.25, 	spawntime = 0,
+				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end},
 		},
 		onstarted = function(pt, radius, ...)
 			if math.random() <= 0.5 then

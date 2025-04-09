@@ -99,6 +99,10 @@ return Class(function(self, inst)
 				ent_def.onspawn(ent, pt, radius)
 			end
 			
+			if ent.components.submersible then
+				ent.components.submersible._ice_fishing = true
+			end
+			
 			local persists = ent_data.persists or ent_def.persists
 			if not persists and (ent.components.health or persists == false) then
 				TheWorld:ListenForEvent("entitysleep", OnEntSleep, ent)

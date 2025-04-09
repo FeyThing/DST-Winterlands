@@ -60,7 +60,7 @@ ARCTIC_FOOLS_TAGS = {--	Prioritize important tags first
 
 SPECIAL_EVENTS.ARCTIC_FOOLS = "arctic_fools"
 
-ApplyExtraEvent(SPECIAL_EVENTS.ARCTIC_FOOLS) -- Keep this around about ~ 1 Week upon April's Fool :>
+--	ApplyExtraEvent(SPECIAL_EVENTS.ARCTIC_FOOLS) -- Keep this around about ~ 1 Week upon April's Fool :>
 
 --	Teeth Stuff
 
