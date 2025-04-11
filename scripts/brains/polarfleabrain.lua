@@ -18,7 +18,7 @@ local PolarFleaBrain = Class(Brain, function(self, inst)
 end)
 
 local HOST_TAGS =  {"_health", "fleahosted"}
-local HOST_NOT_TAGS = {"INLIMBO", "outofreach", "_inventoryitem", "smallcreature"}
+local HOST_NOT_TAGS = {"INLIMBO", "hiding", "outofreach", "_inventoryitem", "smallcreature"}
 
 local function SortMammals(ents, pt)
 	table.sort(ents, function(a, b)
@@ -64,7 +64,7 @@ local function FindMammal(inst)
 		action:AddSuccessAction(clear_hosting_queued)
 		action:AddFailAction(clear_hosting_queued)
 		
-		inst.components.locomotor:PushAction(action)
+		return action
 	end
 end
 
@@ -73,7 +73,7 @@ function PolarFleaBrain:OnStart()
 		BrainCommon.PanicTrigger(self.inst),
 		
 		EventNode(self.inst, "fleafindhost",
-			ActionNode(function() return FindMammal(self.inst) end)),
+			DoAction(self.inst, FindMammal)),
 		FailIfSuccessDecorator(ConditionWaitNode(function() return not self.inst._hosting_queued end, "Block While Hosting")),
 		
 		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST),

@@ -73,11 +73,14 @@ local function CanBeHost(inst, host, capacity_mod)
 end
 
 local function SetHost(inst, host, kick, given)
-	if inst.components.timer and inst.components.timer:TimerExists("findhost") then
-		inst.components.timer:StopTimer("findhost")
-	end
-	if kick then
-		inst.components.timer:StartTimer("findhost", 5 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
+	if inst.components.timer then
+		if inst.components.timer:TimerExists("findhost") then
+			inst.components.timer:StopTimer("findhost")
+		end
+		
+		if kick then
+			inst.components.timer:StartTimer("findhost", 5 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
+		end
 	end
 	
 	if inst._host then
@@ -98,6 +101,10 @@ local function SetHost(inst, host, kick, given)
 				end
 			end
 		end
+	end
+	
+	if inst.components.knownlocations then
+		inst.components.knownlocations:RememberLocation("home", inst:GetPosition())
 	end
 	
 	if kick or host == nil then
@@ -230,12 +237,28 @@ local function OnHostAttacked(inst, host, data)
 		local attacker = data and data.attacker
 		local isbuddy = attacker and attacker:HasTag("bearbuddy")
 		local isflea = attacker and attacker:HasTag("flea")
-		local hassack = host.components.inventory and host.components.inventory:EquipHasTag("fleapack")
+		local release_chance = TUNING.POLARFLEA_HOST_HIT_DROPCHANCE
 		
-		if (host.components.health and host.components.health:IsDead()) or ((hassack or math.random() < TUNING.POLARFLEA_HOST_HIT_DROPCHANCE) and not isflea) then
-			if host.components.inventory then
-				host.components.inventory:RemoveItem(inst, true)
-				host.components.inventory:DropItem(inst, true)
+		local fleapack
+		local inventory = host.components.inventory
+		
+		if inventory then
+			for k, v in pairs(inventory.equipslots) do
+				if v:HasTag("fleapack") then
+					fleapack = v
+					break
+				end
+			end
+		end
+		
+		if fleapack then
+			release_chance = (fleapack.components.container == nil or fleapack.components.container:IsOpen()) and 1 or 0
+		end
+		
+		if (host.components.health and host.components.health:IsDead()) or ((math.random() <= release_chance) and not isflea) then
+			if inventory then
+				inventory:RemoveItem(inst, true)
+				inventory:DropItem(inst, true)
 			else
 				inst:SetHost(nil, true)
 			end
@@ -248,15 +271,35 @@ local function OnHostAttacked(inst, host, data)
 end
 
 local function OnHostAttackOther(inst, host, data)
-	if host and host.components.inventory and host.components.inventory:EquipHasTag("fleapack") and inst.components.combat then
-		local target = data and data.target
+	if host and inst.components.combat then
+		local fleapack
+		local inventory = host.components.inventory
 		
-		if target and not target:HasTag("flea") and not (target.components.health and target.components.health:IsDead())
-			and inst.components.combat:CanTarget(target) then
-			host.components.inventory:RemoveItem(inst, true)
-			host.components.inventory:DropItem(inst, true)
-			
-			inst.components.combat:SetTarget(data.target)
+		if inventory then
+			for k, v in pairs(inventory.equipslots) do
+				if v:HasTag("fleapack") then
+					fleapack = v
+					break
+				end
+			end
+		end
+		
+		if fleapack then
+			if fleapack.components.container and not fleapack.components.container:IsOpen() then
+				return
+			else
+				local target = data and data.target
+				if target and not target:HasTag("flea") and not (target.components.health and target.components.health:IsDead())
+					and inst.components.combat:CanTarget(target) then
+					
+					if inventory then
+						inventory:RemoveItem(inst, true)
+						inventory:DropItem(inst, true)
+					end
+					
+					inst.components.combat:SetTarget(data.target)
+				end
+			end
 		end
 	end
 end
@@ -287,15 +330,21 @@ local function OnHostGrab(inst, host, data)
 end
 
 local function HostingInit(inst)
+	if inst.components.inventoryitem then
+		inst.components.inventoryitem.canonlygoinpocketorpocketcontainers = true -- Do this later or Itchhiker Pack vomits us on load :<
+	end
+	
 	if TheWorld._numfleas == nil then
 		TheWorld._numfleas = 0
 	end
 	
 	TheWorld._numfleas = TheWorld._numfleas + 1
 	if inst._host == nil then
-		if inst.components.inventoryitem and inst.components.inventoryitem:IsHeld() then
+		local owner = inst.components.inventoryitem and inst.components.inventoryitem:GetGrandOwner()
+		
+		if owner and owner:HasTag("player") then
 			inst:SetHost(inst.components.inventoryitem:GetGrandOwner())
-		elseif inst.components.timer and not inst.components.timer:TimerExists("findhost") then
+		elseif owner == nil and inst.components.timer and not inst.components.timer:TimerExists("findhost") then
 			inst.components.timer:StartTimer("findhost", 2 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
 		end
 	end
@@ -431,7 +480,6 @@ local function fn()
 	inst.components.inventoryitem.canbepickedup = false
 	inst.components.inventoryitem.canbepickedupalive = false
 	inst.components.inventoryitem.nobounce = true
-	inst.components.inventoryitem.canonlygoinpocketorpocketcontainers = true
 	
 	inst:AddComponent("knownlocations")
 	
@@ -474,7 +522,7 @@ local function fn()
 	inst:SetStateGraph("SGpolarflea")
 	inst:SetBrain(brain)
 	
-	inst:DoTaskInTime(1, HostingInit)
+	inst:DoTaskInTime(0.1, HostingInit)
 	
 	return inst
 end

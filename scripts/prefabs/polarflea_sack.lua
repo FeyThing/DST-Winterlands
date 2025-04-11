@@ -41,7 +41,7 @@ local function OnEquip(inst, owner)
 	
 	inst.components.container:Open(owner)
 	inst.components.container:ForEachItem(function(item)
-		if item:HasTag("flea") and item.SetHost and item._host == inst then
+		if item:HasTag("flea") and item.SetHost and item._host == nil then
 			if item.OnInvRefresh then
 				item:OnInvRefresh(true, true)
 			end
@@ -71,8 +71,6 @@ local function OnUnequip(inst, owner)
 			if item.OnInvRefresh then
 				item:OnInvRefresh(false, true)
 			end
-			
-			item:SetHost(inst)
 		end
 	end)
 	
