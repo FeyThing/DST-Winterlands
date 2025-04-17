@@ -8,7 +8,7 @@ local BLOCKER_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "cha
 local LETTUCE_TAGS = {"farm_plant_icelettuce"}
 
 local function SnowHasSpace(pt)
-	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 10, nil, nil, BLOCKER_TAGS) == 0 and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true)
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 16, nil, nil, BLOCKER_TAGS) == 0 and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true)
 end
 
 local function SpawnLettuce(inst)
@@ -24,7 +24,7 @@ end
 local function OnSave(inst, data)
 	local ents = {}
 	
-	data.canspawnlettuce = inst.canspawnlettuce
+	data.respawnlettuce = inst.respawnlettuce
 	if inst.lettuce then
 		data.lettuce_id = inst.lettuce.GUID
 		table.insert(ents, data.lettuce_id)
@@ -39,7 +39,7 @@ local function OnLoadPostPass(inst, newents, savedata)
 			inst.lettuce = newents[savedata.lettuce_id].entity
 		end
 		
-		inst.canspawnlettuce = savedata.canspawnlettuce or inst.canspawnlettuce
+		inst.respawnlettuce = savedata.respawnlettuce or inst.respawnlettuce
 	end
 end
 
@@ -58,27 +58,35 @@ local function GetWildLettuces(inst)
 end
 
 local function OnTimerDone(inst, data)
+	local curseason = POLARRIFY_MOD_SEASONS[TheWorld.state.season] or "autumn"
+	
 	if data.name == "spawnlettuce" then
-		local spawn_chance = GetWildLettuces(inst) < TUNING.ICELETTUCE_SPAWNER_MIN and 1 or TUNING.ICELETTUCE_SPAWNER_CHANCE
-		
-		if spawn_chance >= 1 or math.random() <= spawn_chance then
-			inst:SpawnLettuce()
+		if table.contains(TUNING.ICELETTUCE_REGROWTH_SEASONS, curseason) then
+			local num_lettuces = inst:GetWildLettuces()
+			
+			local spawn_chance = (num_lettuces < TUNING.ICELETTUCE_REGROWTH_MIN_QUANTITY and 1)
+				or (num_lettuces < TUNING.ICELETTUCE_REGROWTH_MAX_QUANTITY and TUNING.ICELETTUCE_REGROWTH_CHANCE)
+				or 0
+			
+			if spawn_chance >= 1 or math.random() <= spawn_chance then
+				inst:SpawnLettuce()
+			end
 		end
+		-- TODO: Add cooldown timer until the end of the season so that reloading won't start this again if lettuce was picked
+		inst.respawnlettuce = true
 	end
 end
 
 local function OnSeasonChange(inst, season)
 	local curseason = POLARRIFY_MOD_SEASONS[season] or "autumn"
 	
-	if curseason == "summer" then
-		if inst.lettuce == nil and inst.canspawnlettuce then
+	if table.contains(TUNING.ICELETTUCE_REGROWTH_SEASONS, curseason) then
+		if inst.lettuce == nil and inst.respawnlettuce then
 			if not inst.components.timer:TimerExists("spawnlettuce") then
-				inst.components.timer:StartTimer("spawnlettuce", GetRandomMinMax(TUNING.ICELETTUCE_SPAWNER_TIME.min, TUNING.ICELETTUCE_SPAWNER_TIME.max))
-				inst.canspawnlettuce = nil
+				inst.components.timer:StartTimer("spawnlettuce", GetRandomMinMax(TUNING.ICELETTUCE_REGROWTH_TIME.min, TUNING.ICELETTUCE_REGROWTH_TIME.max))
+				inst.respawnlettuce = false
 			end
 		end
-	else
-		inst.canspawnlettuce = true
 	end
 end
 
@@ -97,8 +105,11 @@ local function fn()
 		return inst
 	end
 	
+	inst.respawnlettuce = true
+	
 	inst:AddComponent("timer")
 	
+	inst.GetWildLettuces = GetWildLettuces
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass
 	inst.SpawnLettuce = SpawnLettuce

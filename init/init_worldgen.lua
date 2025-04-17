@@ -10,7 +10,6 @@ local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
 
 --	Add Island, Setpieces, ...
 
-GLOBAL.WINTERLANDS_TYPE = GetModConfigData("biome_type") or "island"
 require("map/tasks/polar")
 
 AddTaskSetPreInitAny(function(self)

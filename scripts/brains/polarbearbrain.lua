@@ -209,7 +209,7 @@ end
 --	Prankin'
 
 local PRANK_TAGS = {"player", "pig", "manrabbit"}
-local PRANK_NOT_TAGS = {"INLIMBO", "arcticfooled", "bearbuddy"}
+local PRANK_NOT_TAGS = {"INLIMBO", "arcticfooled", "bearbuddy", "playerghost"}
 
 local function StickArcticFoolFishAction(inst)
 	if not IsSpecialEventActive(SPECIAL_EVENTS.ARCTIC_FOOLS)

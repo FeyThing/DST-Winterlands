@@ -133,9 +133,9 @@ return Class(function(self, inst)
 				end
 			end
 			
-			print("Polar Wormholes: spawned both sickholes!")
+			--print("Polar Wormholes: spawned both sickholes!")
 		else
-			print("Polar Wormholes: couldn't spawn both sickholes, got "..#wormholes_pt)
+			--print("Polar Wormholes: couldn't spawn both sickholes, got "..#wormholes_pt)
 		end
 	end
 	

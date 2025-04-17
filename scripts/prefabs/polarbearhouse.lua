@@ -135,6 +135,14 @@ local function SpawnCheckDay(inst)
 	end
 end
 
+local function OnHaunt(inst)
+	local paint = HOUSE_PAINTINGS[math.random(#HOUSE_PAINTINGS)]
+	
+	if math.random() <= TUNING.HAUNT_CHANCE_OFTEN and paint ~= inst.house_paint then
+		inst:SetPainting(paint)
+	end
+end
+
 local BLOCKER_CANT_TAGS = {"_inventoryitem", "locomotor", "NOBLOCK", "fx"}
 
 local function customcheckfn(pt)
@@ -303,7 +311,10 @@ local function fn()
 	inst:AddComponent("inspectable")
 	inst.components.inspectable.getstatus = GetStatus
 	
-	MakeHauntableWork(inst)
+	inst:AddComponent("hauntable")
+	inst.components.hauntable:SetHauntValue(TUNING.HAUNT_TINY)
+	inst.components.hauntable:SetOnHauntFn(OnHaunt)
+	
 	MakeMediumBurnable(inst, nil, nil, true)
 	MakeLargePropagator(inst)
 	MakeSnowCovered(inst)

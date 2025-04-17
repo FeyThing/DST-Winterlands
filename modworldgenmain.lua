@@ -104,6 +104,8 @@ end)
 
 --	Island Gen
 
+WINTERLANDS_TYPE = ENV.GetModConfigData("biome_type") or "island"
+
 function Polar_CompatibleShard(location)
 	location = location or "forest"
 	

@@ -1,18 +1,19 @@
 local customizations = {
 --	WORLDSETTINGS
-	arctic_fools = 		{category = LEVELCATEGORY.SETTINGS, desc = "extraevent_descriptions", group = "events", masteroption = true, master_controlled = true, order = 0.14},
-	polar_icicles = 	{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
-	polar_throne = 		{category = LEVELCATEGORY.SETTINGS, group = "global", desc = "yesno_descriptions", world = {"forest", "shipwrecked", "porkland"}, order = 13.1},
-	polarbears = 		{category = LEVELCATEGORY.SETTINGS, group = "animals"},
-	polarfleas = 		{category = LEVELCATEGORY.SETTINGS, group = "monsters"},
-	polarfoxes = 		{category = LEVELCATEGORY.SETTINGS, group = "animals", world = {"forest", "shipwrecked", "porkland"}},
-	tumbleweed_polar = 	{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
+	arctic_fools = 			{category = LEVELCATEGORY.SETTINGS, desc = "extraevent_descriptions", group = "events", masteroption = true, master_controlled = true, order = 0.14},
+	icelettuce_regrowth = 	{category = LEVELCATEGORY.SETTINGS, desc = "speed_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
+	polar_icicles = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
+	polar_throne = 			{category = LEVELCATEGORY.SETTINGS, group = "global", desc = "yesno_descriptions", world = {"forest", "shipwrecked", "porkland"}, order = 13.1},
+	polarbears = 			{category = LEVELCATEGORY.SETTINGS, group = "animals"},
+	polarfleas = 			{category = LEVELCATEGORY.SETTINGS, group = "monsters"},
+	polarfoxes = 			{category = LEVELCATEGORY.SETTINGS, group = "animals", world = {"forest", "shipwrecked", "porkland"}},
+	tumbleweed_polar = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	
 --	WORLDGEN
-	antler_trees = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
-	grass_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
-	polarbearhouses = 	{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "animals", world = {"forest", "shipwrecked", "porkland"}},
-	rocks_polar = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
+	antler_trees = 			{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
+	grass_polar = 			{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
+	polarbearhouses = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "animals", world = {"forest", "shipwrecked", "porkland"}},
+	rocks_polar = 			{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 }
 
 --
@@ -39,6 +40,18 @@ local function OverrideTuningVariables(tuning)
 			TUNING[k] = v
 		end
 	end
+end
+
+WSO.Pre.icelettuce_regrowth = function(difficulty)
+	local tuning_vars = {
+		never = 	{ICELETTUCE_REGROWTH_CHANCE = 0, ICELETTUCE_REGROWTH_MAX_QUANTITY = 0, ICELETTUCE_REGROWTH_MIN_QUANTITY = 0},
+		veryslow = 	{ICELETTUCE_REGROWTH_CHANCE = 0.1, ICELETTUCE_REGROWTH_MAX_QUANTITY = 2, ICELETTUCE_REGROWTH_MIN_QUANTITY = 1},
+		slow = 		{ICELETTUCE_REGROWTH_CHANCE = 0.18, ICELETTUCE_REGROWTH_MAX_QUANTITY = 5, ICELETTUCE_REGROWTH_MIN_QUANTITY = 2},
+		--default = {ICELETTUCE_REGROWTH_CHANCE = 0.25, ICELETTUCE_REGROWTH_MAX_QUANTITY = 10, ICELETTUCE_REGROWTH_MIN_QUANTITY = 3, ICELETTUCE_REGROWTH_SEASONS = {"summer"}},
+		fast = 		{ICELETTUCE_REGROWTH_CHANCE = 0.66, ICELETTUCE_REGROWTH_MAX_QUANTITY = 15, ICELETTUCE_REGROWTH_MIN_QUANTITY = 5, ICELETTUCE_REGROWTH_SEASONS = {"autumn", "summer"}},
+		veryfast = 	{ICELETTUCE_REGROWTH_CHANCE = 0.9, ICELETTUCE_REGROWTH_MAX_QUANTITY = 20, ICELETTUCE_REGROWTH_MIN_QUANTITY = 10, ICELETTUCE_REGROWTH_SEASONS = {"autumn", "winter", "spring", "summer"}},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
 end
 
 WSO.Pre.polar_icicles = function(difficulty)

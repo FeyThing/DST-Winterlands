@@ -3,33 +3,20 @@ local prefabs = {
 }
 
 local function MakePreparedFood(data)
-	local realname = data.basename or data.name
-	local assets = {
-		Asset("ANIM", "anim/"..realname..".zip"),
-	}
-	
-	local spicename = data.spice and string.lower(data.spice) or nil
-	if spicename then
-		table.insert(assets, Asset("ANIM", "anim/spices.zip"))
-		table.insert(assets, Asset("ANIM", "anim/plate_food.zip"))
-		table.insert(assets, Asset("INV_IMAGE", spicename.."_over"))
-	end
-	
-	local assets =
-	{
-		Asset("ANIM", "anim/"..(data.overridebuild or "cook_pot_food_polar")..".zip"),
+	local foodassets = {
+		Asset("ANIM", "anim/cook_pot_food_polar.zip"),
 		Asset("INV_IMAGE", data.name),
 	}
 	
-	local function onsave(inst, data)
-		data.anim = inst.animname
+	if data.overridebuild then
+		table.insert(foodassets, Asset("ANIM", "anim/"..data.overridebuild..".zip"))
 	end
 	
-	local function onload(inst, data)
-		if data and data.anim then
-			inst.animname = data.anim
-			inst.AnimState:PlayAnimation(inst.animname)
-		end
+	local spicename = data.spice and string.lower(data.spice) or nil
+	if spicename then
+		table.insert(foodassets, Asset("ANIM", "anim/spices.zip"))
+		table.insert(foodassets, Asset("ANIM", "anim/plate_food.zip"))
+		table.insert(foodassets, Asset("INV_IMAGE", spicename.."_over"))
 	end
 	
 	local foodprefabs = prefabs
@@ -41,7 +28,7 @@ local function MakePreparedFood(data)
 			end
 		end
 	end
-
+	
 	local function DisplayNameFn(inst)
 		return subfmt(STRINGS.NAMES[data.spice.."_FOOD"], {food = STRINGS.NAMES[string.upper(data.basename)]})
 	end
@@ -55,6 +42,7 @@ local function MakePreparedFood(data)
 		
 		MakeInventoryPhysics(inst)
 		
+		local food_symbol_build = nil
 		if spicename then
 			inst.AnimState:SetBuild("plate_food")
 			inst.AnimState:SetBank("plate_food")
@@ -62,11 +50,15 @@ local function MakePreparedFood(data)
 			
 			inst:AddTag("spicedfood")
 			
-			inst.inv_image_bg = {atlas = "images/polarimages.xml", image = (data.basename or data.name)..".tex"}
+			inst.inv_image_bg = {image = (data.basename or data.name)..".tex"}
+			inst.inv_image_bg.atlas = GetInventoryItemAtlas(inst.inv_image_bg.image)
+			
+			food_symbol_build = data.overridebuild or "cook_pot_food_polar"
 		else
 			inst.AnimState:SetBuild(data.overridebuild or "cook_pot_food_polar")
 			inst.AnimState:SetBank("cook_pot_food")
 		end
+		
 		inst.AnimState:PlayAnimation("idle")
 		inst.AnimState:OverrideSymbol("swap_food", data.overridebuild or "cook_pot_food_polar", data.basename or data.name)
 		
@@ -97,6 +89,9 @@ local function MakePreparedFood(data)
 			return inst
 		end
 		
+		inst.food_symbol_build = food_symbol_build or data.overridebuild
+		inst.food_basename = data.basename
+		
 		inst:AddComponent("edible")
 		inst.components.edible.foodtype = data.foodtype or FOODTYPE.GENERIC
 		inst.components.edible.hungervalue = data.hunger or 0
@@ -116,6 +111,7 @@ local function MakePreparedFood(data)
 		inst:AddComponent("tradable")
 		
 		inst:AddComponent("inspectable")
+		inst.wet_prefix = data.wet_prefix
 		
 		if data.perishtime and data.perishtime > 0 then
 			inst:AddComponent("perishable")
@@ -125,7 +121,9 @@ local function MakePreparedFood(data)
 		end
 		
 		inst:AddComponent("inventoryitem")
-		inst.components.inventoryitem.imagename = realname
+		if data.OnPutInInventory then
+			inst:ListenForEvent("onputininventory", data.OnPutInInventory)
+		end
 		if spicename then
 			inst.components.inventoryitem:ChangeImageName(spicename.."_over")
 		elseif data.basename then
@@ -134,9 +132,6 @@ local function MakePreparedFood(data)
 			inst.components.inventoryitem.atlasname = POLAR_ATLAS
 		end
 		
-		inst.OnSave = onsave
-		inst.OnLoad = onload
-		
 		MakeSmallBurnable(inst)
 		MakeSmallPropagator(inst)
 		MakeHauntableLaunchAndPerish(inst)
@@ -144,7 +139,7 @@ local function MakePreparedFood(data)
 		return inst
 	end
 	
-	return Prefab(data.name, fn, assets, foodprefabs)
+	return Prefab(data.name, fn, foodassets, foodprefabs)
 end
 
 local prefs = {}

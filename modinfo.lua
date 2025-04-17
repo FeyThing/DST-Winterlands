@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.2.3"
+version = "1.2.5"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ Arctic Fools
@@ -12,6 +12,7 @@ Where winter reigns eternal, and deadlier than ever... amid the snow lies a worl
 
 
 󰀏 Best experienced with Winter's Feast enabled!
+
 
 Look up your configs + new world settings before starting ⬇]]
 
@@ -85,7 +86,7 @@ configuration_options = {
 	{name = "biome",				label = configs.biome,												options = options.none, 		default = false},
 	{name = "biome_type",			label = configs.biometype,			hover = descs.biometype,		options = options.biometype,	default = "island"},
 	{name = "biome_shard",			label = configs.biomeshard,			hover = descs.biomeshard,		options = options.shards,		default = "forest"},
-	{name = "biome_wormhole",		label = configs.wormhole,			hover = descs.wormhole,			options = options.toggle,		default = false},
+	{name = "biome_wormhole",		label = configs.wormhole,			hover = descs.wormhole,			options = options.toggle,		default = true},
 	{name = "biome_retrofit",		label = configs.retrofit,			hover = descs.retrofit,			options = options.retrofit,		default = 0},
 --	Re-balance
 	{name = "difficulty",			label = configs.difficulty,											options = options.none, 		default = false},
