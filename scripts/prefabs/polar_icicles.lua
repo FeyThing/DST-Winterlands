@@ -62,7 +62,7 @@ local function DoBreak(inst)
 							ae_cp:Launch(launch_position, projectile, ae_cp.owningweapon)
 						end
 					elseif v.components.combat and v.components.health and not v.components.health:IsDead() then
-						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE[inst.stage])
+						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE[string.upper(ICICLE_STAGES[inst.stage])])
 					end
 					
 					if v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
@@ -118,8 +118,8 @@ end
 
 local function StartBreaking(inst)
 	local anim = ICICLE_STAGES[inst.stage]
-	inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
 	inst.AnimState:PlayAnimation("fall_"..anim, false)
+	inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
 	
 	inst:ListenForEvent("animover", inst.DoBreak)
 end
@@ -130,11 +130,11 @@ local function DoGrow(inst)
 		inst.AnimState:PlayAnimation("grow_"..oldanim, false)
 		inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
 		inst.DynamicShadow:SetSize(0.5 + inst.stage, 1)
-
+		
 		inst.stage = math.min(#ICICLE_STAGES, inst.stage + 1)
 		local newanim = ICICLE_STAGES[inst.stage]
 		inst.AnimState:PushAnimation("idle_"..newanim, false)
-	
+		
 		if not inst.components.timer:TimerExists("ignore_icicle") then
 			inst:RemoveTag("NOCLICK")
 			inst.components.timer:StartTimer("ignore_icicle", 3)
@@ -159,19 +159,23 @@ local function OnLoad(inst, data)
 end
 
 local function SetBlueGemTrap(inst)
-	if math.random() < 0.2 then
+	if math.random() < 0.15 then
 		inst:Remove()
 		return
 	end
 	
-	local prefab = math.random() < 0.01 and "bluegem_overcharged" or "bluegem"
-	local gem = SpawnPrefab(prefab)
+	local rdm = math.random()
+	local prefab = rdm < 0.01 and "bluegem_overcharged" or rdm < 0.85 and "bluegem" or nil
 	
-	gem.Transform:SetPosition(inst.Transform:GetWorldPosition())
-	if not gem.components.scenariorunner then
-		gem:AddComponent("scenariorunner")
-		gem.components.scenariorunner:SetScript("bluegem_shards")
-		gem.components.scenariorunner:Run()
+	if prefab then
+		local gem = SpawnPrefab(prefab)
+		
+		gem.Transform:SetPosition(inst.Transform:GetWorldPosition())
+		if not gem.components.scenariorunner then
+			gem:AddComponent("scenariorunner")
+			gem.components.scenariorunner:SetScript("bluegem_shards")
+			gem.components.scenariorunner:Run()
+		end
 	end
 	
 	inst.wait_to_grow = true

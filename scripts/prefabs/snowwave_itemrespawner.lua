@@ -8,10 +8,23 @@ local SNOWWAVE_ITEMS = {
 }
 
 local BLOCKER_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "character", "structure", "wall", "plant", "_inventoryitem"}
+local BLOCKER_NOT_TAGS = {"berrythief", "INLIMBO"}
 
 local function SnowHasSpace(pt)
-	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 6, nil, nil, BLOCKER_TAGS) == 0
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 6, nil, BLOCKER_NOT_TAGS, BLOCKER_TAGS) == 0
 		and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+end
+
+local function MoveAround(inst)
+	local pt = inst:GetPosition()
+	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 8, 16, false, true, SnowHasSpace)
+	
+	if offset then
+		local x, y, z = (pt + offset):Get()
+		inst.Transform:SetPosition(x, y, z)
+	end
+	
+	return offset ~= nil
 end
 
 local function SpawnSnowItem(inst)
@@ -19,10 +32,9 @@ local function SpawnSnowItem(inst)
 		return
 	end
 	
-	local pt = inst:GetPosition()
-	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 6, 16, false, true, SnowHasSpace)
+	local moved = MoveAround(inst)
 	
-	if offset then
+	if moved then
 		local items = deepcopy(inst.snowwave_items)
 		for i, v in ipairs(AllPlayers) do
 			if v.components.builder and not v.components.builder:KnowsRecipe("polar_brazier_item") and v.components.builder:CanLearn("polar_brazier_item") then
@@ -30,12 +42,9 @@ local function SpawnSnowItem(inst)
 			end
 		end
 		
-		local x, y, z = (pt + offset):Get()
 		local item = weighted_random_choice(items)
 		inst.snowitem = SpawnPrefab(item)
-		inst.snowitem.Transform:SetPosition(x, y, z)
-		
-		inst.Transform:SetPosition(x, y, z)
+		inst.snowitem.Transform:SetPosition(inst.Transform:GetWorldPosition())
 		
 		inst:ListenForEvent("onpickup", inst.onsnowitempicked, inst.snowitem)
 		inst:ListenForEvent("onremove", inst.onsnowitempicked, inst.snowitem)
@@ -115,6 +124,7 @@ local function fn()
 	inst.OnLoadPostPass = OnLoadPostPass
 	inst.SpawnSnowItem = SpawnSnowItem
 	
+	inst:ListenForEvent("onwenthome", MoveAround)
 	inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
 	
 	return inst

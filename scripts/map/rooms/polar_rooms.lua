@@ -57,9 +57,11 @@ local cave_data = {
 	}
 }
 
+local cave_trap_layout = math.random() < 0.5 and "BlueGem_Shards" or "BlueGem_Shards_Ice"
 local cave_data_trapped = deepcopy(cave_data)
+
+cave_data_trapped.contents.countstaticlayouts[cave_trap_layout] = 1
 cave_data_trapped.required_prefabs = {"polar_icicle_trap"}
-cave_data_trapped.contents.countstaticlayouts["BlueGem_Shards"] = 1
 
 AddRoom("PolarIsland_Caves", cave_data)
 AddRoom("PolarIsland_TrappedCaves", cave_data_trapped)

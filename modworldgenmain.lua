@@ -26,7 +26,7 @@ local polar_layouts = {
 	"BearTown1", "BearTown2", "PolarTuskTown", "PolarAmulet_Shack", "PolarThrone",
 	"PolarFox_Duo", "PolarFox_Solo", "PolarFlea_Farm", "PolarLake",
 	"PolarCave_Pillar", "PolarCave_SmallPillar",
-	"BlueGem_Shards", "skeleton_icicle", "skeleton_polar",
+	"BlueGem_Shards", "BlueGem_Shards_Ice", "skeleton_icicle", "skeleton_polar",
 }
 
 for _, layout in ipairs(polar_layouts) do

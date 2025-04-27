@@ -59,6 +59,7 @@ local prefabs = {
 	"oceanfish",
 	"oceanfishableflotsam",
 	"penguin",
+	"perd",
 	"pond",
 	"rabbit",
 	"rock_ice",
