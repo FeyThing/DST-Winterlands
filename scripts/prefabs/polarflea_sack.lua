@@ -68,9 +68,11 @@ local function OnUnequip(inst, owner)
 	inst.components.container:Close(owner)
 	inst.components.container:ForEachItem(function(item)
 		if item:HasTag("flea") and item.SetHost and item._host == owner then
+			item._ignore_kick = true
 			if item.OnInvRefresh then
-				item:OnInvRefresh(false, true)
+				item:OnInvRefresh(false, false)
 			end
+			item._ignore_kick = nil
 		end
 	end)
 	

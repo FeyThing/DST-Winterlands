@@ -21,7 +21,7 @@ local function Break(inst)
 	inst:Remove()
 end
 
-local TARGET_TAGS = {"_combat", "oceanfishable"}
+local TARGET_TAGS = {"_combat", "oceanfishable", "_inventoryitem"}
 local TARGET_CANT_TAGS = {"INLIMBO", "playerghost", "flight", "icicleimmune"}
 
 local function DoDamage(inst)
@@ -35,6 +35,7 @@ local function DoDamage(inst)
 			
 			if ent:GetDistanceSqToPoint(pt.x, pt.y, pt.z) <= hit_rad * hit_rad then
 				local projectile = (not ent:HasTag("activeprojectile") and ent.components.oceanfishable) and ent.components.oceanfishable:MakeProjectile()
+				ent:PushEvent("iciclesmashed", {icicle = inst, small = true})
 				
 				if projectile then
 					local ae_cp = projectile.components.complexprojectile

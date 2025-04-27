@@ -15,7 +15,7 @@ AddTask("Polar Village", {
 		["PolarIsland_BG"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
-	background_room = "PolarIsland_Lakes",
+	background_room = "PolarIsland_BG",
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
@@ -44,6 +44,7 @@ AddTask("Polar Caves", {
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
 		["PolarIsland_Caves"] = function() return math.random(3, 4) end,
+		["PolarIsland_TrappedCaves"] = function() return math.random() <= 0.33 and 1 or 0 end,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
 	background_room = "Empty_Cove",

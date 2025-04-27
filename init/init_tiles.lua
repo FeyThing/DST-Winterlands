@@ -146,7 +146,7 @@ AddTile("OCEAN_POLAR", "OCEAN",
 --	Noise Tiles
 
 local function GetTileForPolarCaves(noise)
-	return noise > 0.8 and WORLD_TILES.POLAR_SNOW or noise < 0.3 and WORLD_TILES.OCEAN_POLAR or WORLD_TILES.POLAR_CAVES
+	return noise < 0.3 and WORLD_TILES.OCEAN_POLAR or WORLD_TILES.POLAR_CAVES
 end
 
 local function GetTileForPolarForest(noise)

@@ -42,6 +42,7 @@ local prefabs = {
 	"bearger",
 	"birds",
 	"books",
+	"bluegem",
 	"dirtpile",
 	"evergreen",
 	"farm_plants",

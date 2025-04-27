@@ -26,7 +26,9 @@ AddRoom("PolarIsland_Village", {
 	}
 })
 
-AddRoom("PolarIsland_Caves", {
+--
+
+local cave_data = {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_CAVES_NOISE,
 	contents = {
@@ -53,7 +55,16 @@ AddRoom("PolarIsland_Caves", {
 			polar_icicle_rock = function() return {workable = {workleft = math.random(3)}} end,
 		},
 	}
-})
+}
+
+local cave_data_trapped = deepcopy(cave_data)
+cave_data_trapped.required_prefabs = {"polar_icicle_trap"}
+cave_data_trapped.contents.countstaticlayouts["BlueGem_Shards"] = 1
+
+AddRoom("PolarIsland_Caves", cave_data)
+AddRoom("PolarIsland_TrappedCaves", cave_data_trapped)
+
+--
 
 AddRoom("PolarIsland_Lakes", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},

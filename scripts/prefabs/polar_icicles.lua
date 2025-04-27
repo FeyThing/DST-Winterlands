@@ -39,13 +39,15 @@ local function DoBreak(inst)
 				local hit_rad = r >= 0.75 and (2 + r) or 2
 				
 				if v:GetDistanceSqToPoint(pt.x, pt.y, pt.z) <= hit_rad * hit_rad then
-					if v.components.combat and v.components.health and not v.components.health:IsDead() then
-						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE[inst.stage])
-					elseif v.components.workable and v.components.workable:CanBeWorked() then
+					v:PushEvent("iciclesmashed", {icicle = inst})
+					
+					if v.components.workable and v.components.workable:CanBeWorked() then
 						v.components.workable:WorkedBy(inst, 5)
 					elseif v.components.pickable and v.components.pickable:CanBePicked() then
 						v.components.pickable:Pick(TheWorld)
-					elseif v.components.oceanfishable then
+					end
+					
+					if v.components.oceanfishable then
 						local projectile = v.components.oceanfishable:MakeProjectile()
 						local ae_cp = projectile and projectile.components.complexprojectile
 						
@@ -59,7 +61,11 @@ local function DoBreak(inst)
 							local launch_position = v_pt + (v_pt - pt):Normalize() * 4
 							ae_cp:Launch(launch_position, projectile, ae_cp.owningweapon)
 						end
-					elseif v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
+					elseif v.components.combat and v.components.health and not v.components.health:IsDead() then
+						v.components.combat:GetAttacked(inst, TUNING.POLAR_ICICLE_DAMAGE[inst.stage])
+					end
+					
+					if v.components.inventoryitem and (v:HasTag("quakedebris") or v.prefab == "ice") then
 						local vx, vy, vz = v.Transform:GetWorldPosition()
 						SpawnPrefab("ground_chunks_breaking").Transform:SetPosition(vx, vy, vz)
 						
@@ -112,7 +118,6 @@ end
 
 local function StartBreaking(inst)
 	local anim = ICICLE_STAGES[inst.stage]
-	-- inst.AnimState:PlayAnimation("shake_"..anim, false)
 	inst.SoundEmitter:PlaySound("polarsounds/icicle/shake")
 	inst.AnimState:PlayAnimation("fall_"..anim, false)
 	
@@ -143,11 +148,37 @@ end
 
 local function OnSave(inst, data)
 	data.stage = inst.stage
+	data.wait_to_grow = inst.wait_to_grow
 end
 
 local function OnLoad(inst, data)
 	if data then
 		inst.stage = data.stage
+		inst.wait_to_grow = data.wait_to_grow
+	end
+end
+
+local function SetBlueGemTrap(inst)
+	if math.random() < 0.2 then
+		inst:Remove()
+		return
+	end
+	
+	local prefab = math.random() < 0.01 and "bluegem_overcharged" or "bluegem"
+	local gem = SpawnPrefab(prefab)
+	
+	gem.Transform:SetPosition(inst.Transform:GetWorldPosition())
+	if not gem.components.scenariorunner then
+		gem:AddComponent("scenariorunner")
+		gem.components.scenariorunner:SetScript("bluegem_shards")
+		gem.components.scenariorunner:Run()
+	end
+	
+	inst.wait_to_grow = true
+	for i = 1, 2 do
+		if math.random() < 0.5 then
+			inst:DoGrow()
+		end
 	end
 end
 
@@ -180,10 +211,12 @@ end
 local function OnTimerDone(inst, data)
 	if data.name == "grow_icicle" then
 		local break_early = math.random() <= TUNING.POLAR_ICICLE_BREAK_CHANCE
-		if break_early then
+		if break_early and not inst.wait_to_grow then
 			inst:StartBreaking()
 		else
-			inst:DoGrow()
+			if not inst.wait_to_grow then
+				inst:DoGrow()
+			end
 			local maxed = inst.stage >= #ICICLE_STAGES
 			local timer = maxed and "break_icicle" or "grow_icicle"
 			
@@ -250,6 +283,21 @@ local function fn()
 	
 	return inst
 end
+
+local function trap()
+	local inst = fn()
+	
+	inst:SetPrefabName("polar_icicle")
+	
+	if not TheWorld.ismastersim then
+		return inst
+	end
+	
+	inst:DoTaskInTime(0, SetBlueGemTrap)
+	
+	return inst
+end
+
 
 --
 
@@ -326,4 +374,5 @@ local function rock()
 end
 
 return Prefab("polar_icicle", fn, assets),
+	Prefab("polar_icicle_trap", trap, assets),
 	Prefab("polar_icicle_rock", rock, assets)

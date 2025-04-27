@@ -1,6 +1,6 @@
 local POLAR_SCRAPBOOK = {
 	--	Items / Foods
-	antler_tree_stick = {type = "item", subcat = "weapon", weapondamage = 48, finiteuses = 625, fueledmax = 4800, fueledrate = 1, fueledtype1 = "USAGE", fuelvalue = 180, burnable = true, build = "antler_tree_stick", bank = "antler_tree_stick", anim = "idle"},
+	antler_tree_stick = {type = "item", subcat = "weapon", weapondamage = 48, finiteuses = 1000, fueledmax = 9600, fueledrate = 1, fueledtype1 = "USAGE", fuelvalue = 180, burnable = true, build = "antler_tree_stick", bank = "antler_tree_stick", anim = "idle"},
 	arctic_fool_fish = {type = "item", stacksize = 40, fuelvalue = 15, burnable = true, build = "arctic_fool_fish", bank = "arctic_fool_fish", anim = "item", deps = {"papyrus", "silk"}},
 	armorpolar = {type = "item", subcat = "armor", armor = 630, absorb_percent = 0.85, insulator = 120, insulator_type = "winter", waterproofer = 0.5, build = "armor_polar", bank = "armor_polar", anim = "anim", deps = {"pigskin", "polarbearfur"}},
 	bluegem_overcharged = {type = "item", subcat = "element", stacksize = 40, hungervalue = 1, healthvalue = 10, sanityvalue = 0, foodtype = "ELEMENTAL", build = "bluegem_overcharged", bank = "bluegem_overcharged", deps = {"bluegem", "moose_polar_antler", "polaramulet_station"}, anim = "idle"},

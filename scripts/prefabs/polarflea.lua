@@ -108,10 +108,12 @@ local function SetHost(inst, host, kick, given)
 	end
 	
 	if kick or host == nil then
-		inst:ReturnToScene()
+		if not inst._ignore_kick then
+			inst:ReturnToScene()
 		
-		if inst.components.health then
-			inst.components.health:StopRegen()
+			if inst.components.health then
+				inst.components.health:StopRegen()
+			end
 		end
 		
 		if inst._host and inst._host:IsValid() and inst._host.components.inventory and inst.components.inventoryitem
@@ -123,8 +125,10 @@ local function SetHost(inst, host, kick, given)
 				inst.on_host_grab = nil
 			end
 			
-			inst._host.components.inventory:RemoveItem(inst, true)
-			inst._host.components.inventory:DropItem(inst, true)
+			if not inst._ignore_kick then
+				inst._host.components.inventory:RemoveItem(inst, true)
+				inst._host.components.inventory:DropItem(inst, true)
+			end
 		end
 		inst:PushEvent("fleahostkick", inst._host)
 		
@@ -334,6 +338,9 @@ local function HostingInit(inst)
 		inst.components.inventoryitem.canonlygoinpocketorpocketcontainers = true -- Do this later or Itchhiker Pack vomits us on load :<
 	end
 	
+	inst.OnEntitySleep = OnEntitySleep -- Also fix "Jesus fleas" later, this can cause certain worlds to delete fleas on migration as we load at 0,0
+	inst.OnEntityWake = OnEntityWake
+	
 	if TheWorld._numfleas == nil then
 		TheWorld._numfleas = 0
 	end
@@ -385,12 +392,12 @@ local function OnInvRefresh(inst, picked, keep_host)
 		end
 		
 		if not keep_host then
-			inst:SetHost(nil, true)
+			inst:SetHost(nil, false)
 		else
 			return
 		end
 		
-		if inst.components.stackable and inst.components.stackable:IsStack() then
+		--[[if inst.components.stackable and inst.components.stackable:IsStack() then
 			local x, y, z = inst.Transform:GetWorldPosition()
 			
 			while inst.components.stackable:IsStack() do
@@ -403,7 +410,7 @@ local function OnInvRefresh(inst, picked, keep_host)
 					item.Physics:Teleport(x, y, z)
 				end
 			end
-		end
+		end]]
 	end
 end
 
@@ -505,8 +512,6 @@ local function fn()
 	
 	inst.CanBeHost = CanBeHost
 	inst.HostMaxFleas = HostMaxFleas
-	inst.OnEntitySleep = OnEntitySleep
-	inst.OnEntityWake = OnEntityWake
 	inst.OnInvRefresh = OnInvRefresh
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass

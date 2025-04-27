@@ -17,7 +17,9 @@ local events= {
 		end
 	end),
 	EventHandler("fleahostkick", function(inst, host)
-		inst.sg:GoToState("fall", host)
+		if not inst._ignore_kick then
+			inst.sg:GoToState("fall", host)
+		end
 	end),
 	EventHandler("trapped", function(inst)
 		if not inst.sg:HasStateTag("busy") then

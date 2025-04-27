@@ -75,16 +75,16 @@ PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bl
 PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 						{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
 
 --	Events
-PolarRecipe("arctic_fool_fish", 			{Ingredient("papyrus", 1), Ingredient("silk", 1)}, 						TECH.ARCTIC_FOOLS, 			{numtogive = 4, hint_msg = "NEEDSARCTIC_FOOL"}, 													{"SPECIAL_EVENT"})
+PolarRecipe("arctic_fool_fish", 			{Ingredient("papyrus", 1), Ingredient("silk", 1)}, 						TECH.ARCTIC_FOOLS, 				{numtogive = 4, hint_msg = "NEEDSARCTIC_FOOL"}, 													{"SPECIAL_EVENT"})
 PolarRecipe("snowball_item_polar", 			{Ingredient("ice", 1), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 		TECH.WINTERS_FEAST, 			{product = "snowball_item", description = "snowball_item_polar", hint_msg = "NEEDSWINTERS_FEAST"}, 	{"SPECIAL_EVENT"}, {"giftwrap"})
 PolarRecipe("wintercooking_polarcrablegs",	{Ingredient("wintersfeastfuel", 1), Ingredient("polarflea", 2)}, 		TECH.WINTERSFEASTCOOKING_ONE, 	{nounlock = true, manufactured = true, actionstr = "COOK", image = "polarcrablegs.tex"}, 			{"CRAFTING_STATION"}, {"wintercooking_tourtiere"})
 
 --	Survivors
-PolarRecipe("wx78module_naughty", 			{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 	TECH.ROBOTMODULECRAFT_ONE, 		{builder_tag = "upgrademoduleowner", nounlock = false}, 	{"CHARACTER", "MAGIC"}, {"wx78module_light", "nightmarefuel"})
+PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 	TECH.ROBOTMODULECRAFT_ONE, 		{builder_tag = "upgrademoduleowner", nounlock = false}, 	{"CHARACTER", "MAGIC"}, {"wx78module_light", "nightmarefuel"})
 
 --	[ 	Crafting Station	]	--
 
-PolarRecipe("polaramulet_builder", 	{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("polaramulet_builder", 		{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 
 PolarRecipe("bluegem_overcharged", 		{Ingredient("moose_polar_antler", 1), Ingredient("bluegem", 1)}, 											TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 											{"CRAFTING_STATION"})
 PolarRecipe("polarcrownhat", 			{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
