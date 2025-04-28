@@ -11,7 +11,7 @@ local function FindHighSnow(inst)
 	local home = inst.components.homeseeker.home
 	local temperature = TheWorld.state.temperature
 	
-	if not (temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP) and home == nil or not home:IsValid() or inst:GetDistanceSqToInst(home) > 200 then
+	if not (temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP) and (home == nil or (home and not home:IsValid() or inst:GetDistanceSqToInst(home) > 200)) then
 		local snow = FindEntity(inst, 40, function(ent)
 			local pt = ent:GetPosition()
 			

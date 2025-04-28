@@ -67,10 +67,10 @@ return Class(function(self, inst)
 
     -- [ Methods ] --
 	function self:GetDataAtPoint(x, y, z)
-		return _tempgrid and _tempgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
+		return _tempgrid and x and _tempgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
 
 	function self:GetDataAtTile(tx, ty)
-		return _tempgrid and _tempgrid:GetDataAtPoint(tx, ty) or 0
+		return _tempgrid and tx and _tempgrid:GetDataAtPoint(tx, ty) or 0
 	end
 end)
