@@ -1,5 +1,7 @@
 local ENV = env
-GLOBAL.setfenv(1, GLOBAL)
+local _GLOBAL = GLOBAL
+_GLOBAL.modname = modname -- To fix the crashing issue for people using EnableModError() in their modsettings.lua
+GLOBAL.setfenv(1, _GLOBAL)
 
 local function LoadPolarFEAssets()
 	ENV.FrontEndAssets = {
