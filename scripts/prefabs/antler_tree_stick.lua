@@ -20,6 +20,9 @@ local function OnEquip(inst, owner)
 		inst.AnimState:PlayAnimation("idle")
 	end
 	
+	if owner.components.slipperyfeet then
+		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold + TUNING.ANTLER_TREE_STICK_SLIPPINESS
+	end
 	if inst.components.fueled then
 		inst.components.fueled:StartConsuming()
 	end
@@ -33,6 +36,9 @@ local function OnUnequip(inst, owner)
 	owner.AnimState:Hide("ARM_carry")
 	owner.AnimState:Show("ARM_normal")
 	
+	if owner.components.slipperyfeet then
+		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold - TUNING.ANTLER_TREE_STICK_SLIPPINESS
+	end
 	if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
 	end
@@ -121,6 +127,8 @@ local function fn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("inventoryitem")
+	
+	inst:AddComponent("snowmandecor")
 	
 	inst:AddComponent("tradable")
 	

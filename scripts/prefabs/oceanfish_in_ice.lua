@@ -138,6 +138,8 @@ local function fn()
 	
 	MakeInventoryPhysics(inst)
 	
+	inst:SetPhysicsRadiusOverride(2)
+	
 	inst.AnimState:SetBank("oceanfish_in_ice")
 	inst.AnimState:SetBuild("oceanfish_in_ice")
 	inst.AnimState:PlayAnimation("idle")

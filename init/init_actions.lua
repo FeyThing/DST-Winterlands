@@ -65,6 +65,17 @@ local STICK_ARCTIC_FISH = PolarAction("STICK_ARCTIC_FISH", {priority = 4})
 		end
 	end
 	
+local CASTSPELLSTR = ACTIONS.CASTSPELL.strfn
+	ACTIONS.CASTSPELL.strfn = function(act, ...)
+		if act.invobject and act.invobject:HasTag("wintersfists") and act.target == act.doer then
+			return "WINTERS_FISTS"
+		end
+		
+		if CASTSPELLSTR then
+			return CASTSPELLSTR(act, ...)
+		end
+	end
+	
 local TURNONSTR = ACTIONS.TURNON.stroverridefn
 	ACTIONS.TURNON.stroverridefn = function(act, ...)
 		local target = act.invobject or act.target
@@ -118,7 +129,12 @@ local oldmachine = COMPONENT_ACTIONS.INVENTORY.machine -- For unused snowglobe i
 	
 local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer -- Dryice can repair normal ice repairable, other way around won't work tho
 	COMPONENT_ACTIONS.USEITEM.repairer = function(inst, doer, target, actions, ...)
-		if inst:HasTag("freshen_"..MATERIALS.DRYICE) and target:HasTag("repairable_"..MATERIALS.ICE) then
+		if target:HasTag("repairable_"..MATERIALS.ICE) and
+			((inst:HasTag("work_"..MATERIALS.DRYICE) and target:HasTag("workrepairable"))
+			or (inst:HasTag("health_"..MATERIALS.DRYICE) and target:HasTag("healthrepairable"))
+			or (inst:HasTag("freshen_"..MATERIALS.DRYICE) and (target:HasTag("fresh") or target:HasTag("stale") or target:HasTag("spoiled")))
+			or (inst:HasTag("finiteuses_"..MATERIALS.DRYICE) and target:HasTag("finiteusesrepairable"))) then
+			
 			table.insert(actions, ACTIONS.REPAIR)
 		elseif oldrepairer then
 			oldrepairer(inst, doer, target, actions, ...)
@@ -127,11 +143,12 @@ local oldrepairer = COMPONENT_ACTIONS.USEITEM.repairer -- Dryice can repair norm
 	
 local oldstorytellingprop = COMPONENT_ACTIONS.SCENE.storytellingprop -- To keep action order the same with Walter, can't use portable_campfire tag or it can't be used by others
 	COMPONENT_ACTIONS.SCENE.storytellingprop = function(inst, doer, actions, right, ...)
-		local wantsleft = inst:HasTag("portable_brazier") and doer:HasTag("portable_campfire_user")
-		if inst:HasTag("storytellingprop") and doer:HasTag("storyteller") and wantsleft then
-			if not right then
+		if inst:HasTag("portable_brazier") then
+			if not right and inst:HasTag("storytellingprop") and doer:HasTag("storyteller") then
 				table.insert(actions, ACTIONS.TELLSTORY)
 			end
+			
+			return
 		elseif oldstorytellingprop then
 			oldstorytellingprop(inst, doer, actions, right, ...)
 		end
@@ -139,10 +156,11 @@ local oldstorytellingprop = COMPONENT_ACTIONS.SCENE.storytellingprop -- To keep 
 	
 local oldportablestructure = COMPONENT_ACTIONS.SCENE.portablestructure -- Waltuh
 	COMPONENT_ACTIONS.SCENE.portablestructure = function(inst, doer, actions, right, ...)
-		if right and inst:HasTag("campfire") and inst:HasTag("portable_brazier") and doer:HasTag("portable_campfire_user")
-			and (not inst.candismantle or inst.candismantle(inst)) then
+		if inst:HasTag("portable_brazier") then
+			if right and (not inst.candismantle or inst.candismantle(inst)) then
+				table.insert(actions, ACTIONS.DISMANTLE)
+			end
 			
-			table.insert(actions, ACTIONS.DISMANTLE)
 			return
 		elseif oldportablestructure then
 			oldportablestructure(inst, doer, actions, right, ...)

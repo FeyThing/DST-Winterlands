@@ -187,9 +187,9 @@ function PolarFoxBrain:OnStart()
 		BrainCommon.PanicTrigger(self.inst),
 		
 		RunAway(self.inst, {fn = ShouldRunAway, oneoftags = AVOID_TAGS, notags = AVOID_NOT_TAGS}, RUN_AWAY_COMBAT_DIST, STOP_RUN_AWAY_DIST, nil, nil, nil, nil, ShouldDive),
-		IfNode(function() return TryDive(self.inst) end, "TryToDive",
+		IfNode(function() return TryDive(self.inst) end, "Try To Dive",
 			ActionNode(function() self.inst:PushEvent("dofoxdive") end)),
-		WhileNode(function() return GetFarLeader(self.inst) end, "LeaderIsFar",
+		WhileNode(function() return GetFarLeader(self.inst) end, "Leader Is Far",
 			Follow(self.inst, GetFarLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST, true)),
 		Follow(self.inst, GetLeader, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST, false),
 		

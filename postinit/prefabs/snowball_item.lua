@@ -51,7 +51,7 @@ local Old_GrowSnowballSize
 local function _GrowSnowballSize(inst, doer, ...)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	if TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and inst.components.snowmandecoratable
-		and DetachRollingFx and SNOW_TO_GROW and _SnowballTooBigWarning then
+		and DetachRollingFx and SNOW_TO_GROW then -- and _SnowballTooBigWarning then
 		
 		if inst._nosnowtask then
 			inst._nosnowtask:Cancel()
@@ -61,7 +61,8 @@ local function _GrowSnowballSize(inst, doer, ...)
 		local oldsize = inst.components.snowmandecoratable:GetSize()
 		if oldsize == "large" then
 			inst._pushingtask:Cancel()
-			inst._pushingtask = inst:DoPeriodicTask(8, _SnowballTooBigWarning, 0.8, doer)
+			--inst._pushingtask = inst:DoPeriodicTask(8, _SnowballTooBigWarning, 0.8, doer) Don't warn, pushing removes snow on the way so it's useful
+			inst._pushingtask = nil
 		else
 			inst.snowaccum = inst.snowaccum + 1
 			
@@ -73,7 +74,8 @@ local function _GrowSnowballSize(inst, doer, ...)
 				end
 				if newsize == "large" then
 					inst._pushingtask:Cancel()
-					inst._pushingtask = inst:DoPeriodicTask(8, _SnowballTooBigWarning, 1.6, doer)
+					--inst._pushingtask = inst:DoPeriodicTask(8, _SnowballTooBigWarning, 1.6, doer)
+					inst._pushingtask = nil
 				end
 			end
 		end
@@ -90,7 +92,52 @@ local function _GrowSnowballSize(inst, doer, ...)
 	end
 end
 
+local SNOWMAN_SIZES = {"small", "med", "large"}
+local SNOWMAN_TUNING = TUNING.POLAR_SNOWMAN_DECOR
+
+local function OnPolarDecorate(inst)
+	local snowmandecoratable = inst.components.snowmandecoratable
+	
+	if snowmandecoratable then
+		for i = 1, SNOWMAN_TUNING.MAX_STACK do
+			if math.random() < (SNOWMAN_TUNING.STACK_CHANCES[i] or 0) then
+				local snowball = i > 1 and SpawnPrefab("snowman") or inst
+				snowball:SetSize(SNOWMAN_SIZES[math.random(SNOWMAN_TUNING.STACK_SIZES[i][1], SNOWMAN_TUNING.STACK_SIZES[i][2])])
+				
+				if i > 1 then
+					snowmandecoratable:Stack(nil, snowball)
+				end
+			else
+				break
+			end
+		end
+		
+		if math.random() < SNOWMAN_TUNING.HAT_CHANCE then
+			local hat = SpawnPrefab(weighted_random_choice(POLAR_SNOWMAN_HATS))
+			
+			if hat then
+				snowmandecoratable:EquipHat(hat)
+			end
+		end
+	end
+end
+
+local OldOnLoad
+local function OnLoad(inst, data, ...)
+	if OldOnLoad then
+		OldOnLoad(inst, data, ...)
+	end
+	if data and data.polar_decorate then
+		inst:OnPolarDecorate()
+	end
+end
+
 ENV.AddPrefabPostInit("snowman", function(inst)
+	inst:AddTag("snowblocker")
+	
+	inst._snowblockrange = net_smallbyte(inst.GUID, "snowman._snowblockrange")
+	inst._snowblockrange:set(3)
+	
 	if not TheWorld.ismastersim then
 		return
 	end
@@ -105,4 +152,16 @@ ENV.AddPrefabPostInit("snowman", function(inst)
 		
 		PolarUpvalue(inst.components.pushable.onstartpushingfn, "_GrowSnowballSize", _GrowSnowballSize)
 	end
+	
+	inst:AddComponent("snowwavemelter") -- Basically take the snow with you on the roll !
+	inst.components.snowwavemelter.melt_range = 3
+	inst.components.snowwavemelter.melt_rate = 0.2
+	inst.components.snowwavemelter:StartMelting()
+	
+	inst.OnPolarDecorate = OnPolarDecorate
+	
+	if OldOnLoad == nil then
+		OldOnLoad = inst.OnLoad
+	end
+	inst.OnLoad = OnLoad
 end)

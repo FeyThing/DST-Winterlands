@@ -234,13 +234,15 @@ function SinkEntity(inst, ...)
 	end
 end
 
---	Spawning FXs as we walk in high snow
+--	Spawning FXs as we walk in high snow (Also icy surfaces will do icy footsteps)
+
+local PENGUIN_ICE_TAGS = {"slipperyfeettarget"}
 
 local OldPlayFootstep = PlayFootstep
 function PlayFootstep(inst, volume, ispredicted, ...)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	
 	if inst.components.polarwalker and TUNING.POLAR_WAVES_ENABLED then
-		local x, y, z = inst.Transform:GetWorldPosition()
-		
 		if TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, y, z)
 			and (TheWorld.state.temperature or 0) <= TUNING.POLAR_SNOW_MELT_TEMP then
 			local splash_fx = (inst:HasTag("epic") and inst:HasTag("largecreature")) and "polar_splash_epic"
@@ -254,6 +256,14 @@ function PlayFootstep(inst, volume, ispredicted, ...)
 				fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
 			end
 		end
+	end
+	
+	local penguin_ice = FindEntity(inst, 12, function(target)
+		return target.components.slipperyfeettarget and target.components.slipperyfeettarget:IsSlipperyAtPosition(x, y, z)
+	end, PENGUIN_ICE_TAGS)
+	
+	if penguin_ice then
+		inst.SoundEmitter:PlaySound("dontstarve/movement/"..(inst.sg and inst.sg:HasStateTag("running") and "run" or "walk").."_iceslab")
 	end
 	
 	OldPlayFootstep(inst, volume, ispredicted, ...)

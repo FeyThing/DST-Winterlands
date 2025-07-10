@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		"Each step is slower than the last...",
 		"I don't find it funny... Abby...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "He lives another day, but now in eternal shame."
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Is it the end yet?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "That's one way to drown."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "...I was hoping for something else."
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Come out."
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "A hole that is closed... strange, isn't it?" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Do these walls have room for another cold soul?",
+		PENGUIN = "Fine. Others will perish in your place.",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "I want to shatter it!"
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Do they plan on taking over the mainland?",
+		HOSTILE = "Are you worthy, governor?",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "To be pecked by flint sounds... unpleasant."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Heehee...",
 		ANTLER = "Those antlers look dear to you, hm?",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "This screams a desperate need for admiration."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "He looks the type to juggle with the life of others."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "What has he done that deserves such appraisal?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "The world is his stage. Till it melts."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "The flame has long since gone out.",
 		ON = "Fire in a basket.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Mind not drowning in deep icy water now."
 	DESCRIBE.POLARICE_PLOW_ITEM = "To find fishes, and maybe more if we're unlucky."
+	DESCRIBE.TOWER_POLAR_FLAG = "It swims in silence, forgotten by all."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Oh, I stepped on that poor flag. I will do it again."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Are we going to die?"
+	DESCRIBE.WINTEROMETER.POLARSTORM = "The world is freezing."
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It's too small of a vessel for such energy."
 	DESCRIBE.BLUEGEM_SHARDS = "Broken like, hm... so many other things."
+	DESCRIBE.EMPEROR_EGG = "If anything's inside, it's long dead."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "But you can have this if you want."
 	DESCRIBE.POLAR_DRYICE = "Ghostly."
 	DESCRIBE.POLARBEARFUR = "It carries the weight of its loss, and vermins."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Another tree bone."
 	DESCRIBE.ARMORPOLAR = "To strangle oneself with warmth."
+	DESCRIBE.COMPASS_POLAR = "Wherever it points, it seems quite afraid of it."
+	DESCRIBE.EMPEROR_PENGUINHAT = "The crown has fallen, it shall not arise again."
 	DESCRIBE.FROSTWALKERAMULET = "Even the water can't escape death's cold embrace."
 	DESCRIBE.ICICLESTAFF = "Be careful around it, Abigail."
 	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "A storage for little parasites."
 	DESCRIBE.POLARICESTAFF = "An effortful pulse of cold. Much like my heart."
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
+	DESCRIBE.WINTERS_FISTS = "Heehee. Hey, Wolfgang, how about some arm wrestling?"
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Should I write something on it? Like: \"Come and stab me\"."

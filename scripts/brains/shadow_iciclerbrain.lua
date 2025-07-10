@@ -52,7 +52,7 @@ function Shadow_IciclerBrain:OnStart()
 		WhileNode(function() return ShouldAttack(self) end, "Attack", ChaseAndAttack(self.inst, 100)),
 		WhileNode(function() return ShouldHarass(self) end, "Harass",
 			PriorityNode({
-				WhileNode(function() return ShouldChaseAndHarass(self) end, "ChaseAndHarass",
+				WhileNode(function() return ShouldChaseAndHarass(self) end, "Chase And Harass",
 					Follow(self.inst, function() return self._harasstarget end, HARASS_MIN, HARASS_MED, HARASS_MAX)),
 				ActionNode(function()
 					self.inst.components.combat:BattleCry()
@@ -61,7 +61,7 @@ function Shadow_IciclerBrain:OnStart()
 					end
 				end),
 		}, 0.25)),
-		WhileNode(function() return self._harasstarget ~= nil and self._harasstarget:IsValid() end, "LoiterAndHarass",
+		WhileNode(function() return self._harasstarget ~= nil and self._harasstarget:IsValid() end, "Loiter And Harass",
 			Wander(self.inst, function() return self._harasstarget:GetPosition() end, 20, {minwaittime = 0, randwaittime = 0.3}, function() return GetHarassWanderDir(self) end)),
 		Follow(self.inst, function() return self.mytarget end, MIN_FOLLOW, MED_FOLLOW, MAX_FOLLOW),
 		Wander(self.inst, function() return self.mytarget and self.mytarget:GetPosition() or nil end, 20),

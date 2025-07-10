@@ -47,6 +47,9 @@ local function fn()
 	
 	MakeHauntableLaunchAndSmash(inst)
 	
+	local scale = math.random() > 0.5 and 1 or -1
+	inst.AnimState:SetScale(scale, 1)
+	
 	return inst
 end
 

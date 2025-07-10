@@ -27,13 +27,14 @@ local ICE_BLOCKER_DIST = 10
 
 return Class(function(self, inst)
     assert(inst.ismastersim, "Polar Ice Manager should not exist on the client!")
-
+	
 	-- [ Public fields ] --
 	self.inst = inst
 	
 	self.IGNORE_ICE_BREAKING_ONREMOVE_TAGS = deepcopy(IGNORE_ICE_TAGS)
 	self.IGNORE_ICE_FORMING_ONREMOVE_TAGS = deepcopy(IGNORE_ICE_TAGS)
-	self.ICE_FORMING_BLOCKER_TAGS = {"shadecanopy", "shadecanopysmall", "crabking", "boat"}
+	self.ICE_FORMING_BLOCKER_TAGS = {"shadecanopy", "shadecanopysmall", "crabking", "boat", "oceantrawler"}
+	self.ICE_DESTROY_BLOCKER_TAGS = {"icecaveshelter", "polarcave_entrance"}
 	
 	local breaking_ignore_tags = {"ignorewalkableplatformdrowning"}
 	local forming_ignore_tags = {"underwater_salvageable", "walkableplatform"}
@@ -47,32 +48,34 @@ return Class(function(self, inst)
 	end
 	
 	-- [ Private fields ] --
+	
 	local initial_load = true -- The first ever ice load should generate ice instantly to decrease lag
-
+	
 	local _map = inst.Map
 	local _icebasestrengthgrid -- Stores [0 - 1] values defining the base strength of ice tiles in the world
 	local _gradient_indeces = {  } -- Indeces for the next iteration of the gradient
-
+	
 	local _icecurrentstrengthgrid -- Stores [0 - 1] values defining the current strength of ice tiles
-
+	
 	local _updating_tiles = {  }
 	local _recently_updated_tiles = {  }
-
+	
 	local _world_temperature = TUNING.STARTING_TEMP
 	local _update_task
-
+	
 	-- [ Functions ] --
+	
 	local function SetBaseIceStrength(index, strength)
 		if 0 <= index and index < WIDTH*HEIGHT then
 			_icebasestrengthgrid:SetDataAtIndex(index, math.clamp(strength, 0, 1))
 		end
 	end
-
+	
 	local function SetCurrentIceStrength(index, strength)
 		if 0 <= index and index < WIDTH*HEIGHT then
 			strength = math.clamp(strength, 0, 1)
 			_icecurrentstrengthgrid:SetDataAtIndex(index, strength)
-
+			
 			local tx, ty = _icecurrentstrengthgrid:GetXYFromIndex(index)
 			local x, y, z = _map:GetTileCenterPoint(tx, ty)
 			if strength >= 0.1 and _map:IsOceanTileAtPoint(x, y, z) then
@@ -82,13 +85,13 @@ return Class(function(self, inst)
 			end
 		end
 	end
-
+	
 	local function InitialLoad() -- Similar to the normal Update fn but skips the ice tile queueing to reduce lag
 		local _temperature = math.clamp(_world_temperature, MIN_TEMPERATURE, MAX_TEMPERATURE)
 		
 		local mult = Lerp(1, 4, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 		local add = Lerp(0, -3, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
-
+		
 		for i, basestr in pairs(_icebasestrengthgrid.grid) do
 			local current_strength = math.clamp(basestr * mult + add, 0, 1)
 			_icecurrentstrengthgrid:SetDataAtIndex(i, current_strength)
@@ -99,43 +102,43 @@ return Class(function(self, inst)
 				self:CreateIceAtTile(x, y)
 			end
 		end
-
+		
 		initial_load = false
 	end
-
+	
 	local DoUpdate
 	local function Reschedule(time)
 		if _update_task then
 			_update_task:Cancel()
 			_update_task = nil
 		end
-
+		
 		_update_task = inst:DoTaskInTime(time, function() DoUpdate(true) end)
 	end
-
+	
 	DoUpdate = function(reschedule)
 		local _temperature = math.clamp(_world_temperature, MIN_TEMPERATURE, MAX_TEMPERATURE)
 		
 		local mult = Lerp(1, 4, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
 		local add = Lerp(0, -3, (_temperature - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE))
-
+		
 		for i, basestr in pairs(_icebasestrengthgrid.grid) do
 			SetCurrentIceStrength(i, basestr * mult + add)
 		end
-
+		
 		if reschedule then
 			Reschedule(STRENGTH_UPDATE_TIME)
 		end
 	end
-
+	
 	local function RemoveCrackedIceFx(x, y, z)
 		local cracks = TheSim:FindEntities(x, 0, z, 2, { "ice_crack_fx" })
-
+		
 		for i = #cracks, 1, -1 do
 			cracks[i]:Remove()
 		end
 	end
-
+	
 	local function SpawnCracks(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, 0, z)
 		local cx, cy, cz = _map:GetTileCenterPoint(tx, ty)
@@ -151,54 +154,54 @@ return Class(function(self, inst)
 			fx.Transform:SetRotation(rot)
 			fx.AnimState:SetScale(1.2, 1.2, 1.2)
 		end
-
+		
 		SpawnFx(cx, cz, -40 + math.random() * 80)
 		SpawnFx(cx, cz, 50 + math.random() * 80)
 	end
-
+	
 	local function TossDebris(debris_prefab, dx, dz)
 		local ice_debris = SpawnPrefab(debris_prefab)
 		ice_debris.Physics:Teleport(dx, 0.1, dz)
-
+		
 		local debris_angle = TWOPI*math.random()
 		local debris_speed = 2.5 + 2*math.random()
 		ice_debris.Physics:SetVel(debris_speed * math.cos(debris_angle), 10, debris_speed * math.sin(debris_angle))
 	end
-
+	
 	local function SpawnDegradePiece(center_x, center_z, spawn_angle)
 		spawn_angle = spawn_angle or TWOPI*math.random()
-
+		
 		local ice_degrade_fx = SpawnPrefab("degrade_fx_ice")
 		local spawn_offset = TUNING.OCEAN_ICE_RADIUS * (0.4 + 0.65 * math.sqrt(math.random()))
-
+		
 		center_x = center_x + (spawn_offset * math.cos(spawn_angle))
 		center_z = center_z + (spawn_offset * math.sin(spawn_angle))
 		ice_degrade_fx.Transform:SetPosition(center_x, 0, center_z)
 	end
-
+	
 	local INITIAL_LAUNCH_HEIGHT = 0.1
 	local SPEED = 6
 	local function LaunchAway(item, position)
 		local ix, iy, iz = item.Transform:GetWorldPosition()
 		item.Physics:Teleport(ix, iy + INITIAL_LAUNCH_HEIGHT, iz)
-	
+		
 		local cosa, sina = 0, 0
 		if position then
 			local px, py, pz = position:Get()
 			local angle = (180 - item:GetAngleToPoint(px, py, pz)) * DEGREES
 			sina, cosa = math.sin(angle), math.cos(angle)
 		end
-
+		
 		item.Physics:SetVel(SPEED * cosa, 2 + SPEED, SPEED * sina)
 	end
-
+	
 	local function GenerateIceGradient(depth)
 		assert(depth > 0, "Ice gradient depth must be positive!")
-
+		
 		local new_gradient_indeces = {  }
 		for _, i in ipairs(_gradient_indeces) do
 			local ox, oy = _icebasestrengthgrid:GetXYFromIndex(i)
-
+			
 			for x = -1, 1 do
 				for y = -1, 1 do
 					local nx, ny = ox + x, oy + y
@@ -210,23 +213,24 @@ return Class(function(self, inst)
 				end
 			end
 		end
-
+		
 		_gradient_indeces = new_gradient_indeces
-
+		
 		depth = depth - 1
 		if depth > 0 and next(_gradient_indeces) ~= nil then
 			GenerateIceGradient(depth)
 		end
 	end
-
+	
 	-- [ Initialization ] --
+	
 	local function InitializeDataGrids(_, grid)
 		if _icebasestrengthgrid or _icecurrentstrengthgrid then return end
-
+		
 		WIDTH, HEIGHT = _map:GetSize()
 		_icebasestrengthgrid = DataGrid(WIDTH, HEIGHT)
 		_icecurrentstrengthgrid = DataGrid(WIDTH, HEIGHT)
-
+		
 		for i, ispolar in pairs(grid) do
 			local tx, ty, tz = _map:GetTileCenterPoint(_icebasestrengthgrid:GetXYFromIndex(i))
 			if ispolar and not (_map:IsOceanTileAtPoint(tx, ty, tz) or _map:GetTileAtPoint(tx, ty, tz) == WORLD_TILES.POLAR_ICE) then
@@ -234,24 +238,24 @@ return Class(function(self, inst)
 				SetBaseIceStrength(i, 1) -- Solid winterlands ground tiles have max ice strength that is then expanded from using a gradient
 			end
 		end
-
+		
 		if MAX_GRADIENT_DEPTH > 0 then -- Can be 0 with None in the configurations
 			GenerateIceGradient(MAX_GRADIENT_DEPTH)
-
+			
 			if initial_load then
 				InitialLoad()
 				InitialLoad = nil
 			end
-
+			
 			self:StartUpdatingIceTiles()
 		end
-
+		
 		inst:RemoveEventCallback("winterlands_initialized", InitializeDataGrids)
 	end
-
+	
 	inst:ListenForEvent("winterlands_initialized", InitializeDataGrids)
 	inst:ListenForEvent("temperaturetick", function(inst, val) _world_temperature = val end)
-
+	
     -- [ Methods ] --
 	
 	function self:QueueCreateIceAtTile(tx, ty)
@@ -260,7 +264,7 @@ return Class(function(self, inst)
 		if _recently_updated_tiles[index] ~= nil then
 			return
 		end
-
+		
 		if _updating_tiles[index] == nil then
 			local create_time = ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE
 			_updating_tiles[index] = inst:DoTaskInTime(create_time, function()
@@ -269,7 +273,7 @@ return Class(function(self, inst)
 			end)
 		end
 	end
-
+	
 	function self:CreateTemporaryIceAtTile(tx, ty, time)
 		if not self:CanCreateIce(tx, ty) then
 			return
@@ -289,14 +293,14 @@ return Class(function(self, inst)
 			if _updating_tiles[index] and GetTaskRemaining(_updating_tiles[index]) < time then
 				local task_fn = _updating_tiles[index].fn
 				_updating_tiles[index]:Cancel()
-
+				
 				_updating_tiles[index] = inst:DoTaskInTime(time, task_fn)
 			end
-
+			
 			if _recently_updated_tiles[index] and GetTaskRemaining(_recently_updated_tiles[index]) < time then
 				local task_fn = _recently_updated_tiles[index].fn
 				_recently_updated_tiles[index]:Cancel()
-
+				
 				_recently_updated_tiles[index] = inst:DoTaskInTime(time, task_fn)
 			end
 		else
@@ -312,14 +316,14 @@ return Class(function(self, inst)
 				_updating_tiles[index]:Cancel()
 				_updating_tiles[index] = nil
 			end
-
+			
 			if _recently_updated_tiles[index] then
 				_recently_updated_tiles[index]:Cancel()
 				_recently_updated_tiles[index] = nil
 			end
-
+			
 			self:CreateIceAtTile(tx, ty)
-
+			
 			_recently_updated_tiles[index] = inst:DoTaskInTime(time, function()
 				self:DestroyIceAtTile(tx, ty, true)
 				_recently_updated_tiles[index] = nil
@@ -362,13 +366,10 @@ return Class(function(self, inst)
 		if undertile and current_tile then
 			undertile:SetTileUnderneath(tx, ty, current_tile)
 		end
-
-		local x, y, z = _map:GetTileCenterPoint(tx, ty)
-
-		local terraformer = SpawnPrefab("polarice_terraformer")
-		terraformer.Transform:SetPosition(x, 0, z)
 		
+		local x, y, z = _map:GetTileCenterPoint(tx, ty)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
+		
 		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, self.IGNORE_ICE_FORMING_ONREMOVE_TAGS)
 		for _, ent in ipairs(entities_near_ice) do
 			if ent.components.inventoryitem and ent.Physics then
@@ -384,7 +385,7 @@ return Class(function(self, inst)
 				local rod = ent.components.oceanfishable:GetRod()
 				
 				if rod and rod.components.oceanfishingrod then
-					rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair atm so we keep the things
+					rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair, so we keep the things
 				end
 			elseif not ent:HasTag("locomotor") and ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
 				print("Polar Ice (Forming) removed ent:", ent)
@@ -403,17 +404,17 @@ return Class(function(self, inst)
 				end
 			end
 		end
-
+		
 		local index = _icebasestrengthgrid:GetIndex(tx, ty)
 		_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_COOLDOWN, function()
 			_recently_updated_tiles[index] = nil
 		end)
 	end
-
+	
 	function self:QueueMeltIceAtTile(tx, ty)
 		local tile = _map:GetTile(tx, ty)
 		local x, y, z = _map:GetTileCenterPoint(tx, ty)
-		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
+		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, nil, nil, self.ICE_DESTROY_BLOCKER_TAGS)) ~= nil then
 			return
 		end
 		
@@ -421,18 +422,18 @@ return Class(function(self, inst)
 		if _recently_updated_tiles[index] ~= nil then
 			return
 		end
-
+		
 		if _updating_tiles[index] == nil then
 			_updating_tiles[index] = inst:DoTaskInTime(ICE_TILE_UPDATE_TIME + math.random() * ICE_TILE_UPDATE_VARIANCE, function()
 				self:StartDestroyingIceAtTile(tx, ty, true)
 			end)
 		end
 	end
-
+	
 	function self:StartDestroyingIceAtTile(tx, ty, melting, delay_override, no_ice)
 		local tile = _map:GetTile(tx, ty)
 		local x, y, z = _map:GetTileCenterPoint(tx, ty)
-		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, { "icecaveshelter" })) ~= nil then
+		if tile ~= WORLD_TILES.POLAR_ICE or next(TheSim:FindEntities(x, y, z, 5, nil, nil, self.ICE_DESTROY_BLOCKER_TAGS)) ~= nil then
 			return
 		end
 		
@@ -440,16 +441,16 @@ return Class(function(self, inst)
 		if _updating_tiles[index] == nil then
 			_updating_tiles[index] = true -- Ensure we have stored the updating tile when calling this method directly from the outside
 		end
-
+		
 		SpawnCracks(_map:GetTileCenterPoint(tx, ty))
-
+		
 		inst:DoTaskInTime(delay_override or 3.5, function()
 			self:DestroyIceAtTile(tx, ty, melting, no_ice)
 			RemoveCrackedIceFx(_map:GetTileCenterPoint(tx, ty))
 			_updating_tiles[index] = nil
 		end)
 	end
-
+	
 	function self:DestroyIceAtTile(tx, ty, melted, no_ice)
 		local tile = _map:GetTile(tx, ty)
 		if tile ~= WORLD_TILES.POLAR_ICE then
@@ -477,7 +478,7 @@ return Class(function(self, inst)
 				old_tile = default_tile
 			end
 		end
-
+		
 		-- THIS IS HACKED IN TO SAVE THE PLAYER FOR NOW!
 		local hypotenuseSq = 8 + 1 -- buffer.
 		local players = FindPlayersInRangeSq(dx, 0, dz, hypotenuseSq, true)
@@ -491,9 +492,9 @@ return Class(function(self, inst)
 				end
 			end
 		end
-
+		
 		_map:SetTile(tx, ty, old_tile)
-
+		
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1.0) * 1.4142
 		local is_ocean_tile = IsOceanTile(old_tile)
 		if is_ocean_tile then
@@ -526,7 +527,7 @@ return Class(function(self, inst)
 				end
 			end
 		end
-
+		
 		local floaterobjects = TheSim:FindEntities(dx, 0, dz, tile_radius_plus_overhang, FLOATEROBJECT_TAGS)
 		for _, floaterobject in ipairs(floaterobjects) do
 			if floaterobject.components.floater then
@@ -538,7 +539,7 @@ return Class(function(self, inst)
 				end
 			end
 		end
-
+		
 		if not melted then -- Melting doesn't drop loot nor generate debris
 			if not no_ice then
 				TossDebris("ice", dx, dz)
@@ -558,7 +559,7 @@ return Class(function(self, inst)
 				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
 				SpawnDegradePiece(dx, dz, (i + GetRandomWithVariance(0.50, 0.25)) * angle_per_debris)
 			end
-
+			
 			local index = _icebasestrengthgrid:GetIndex(tx, ty)
 			_recently_updated_tiles[index] = inst:DoTaskInTime(ICE_TILE_FORCED_UPDATE_COOLDOWN, function()
 				_recently_updated_tiles[index] = nil
@@ -569,10 +570,10 @@ return Class(function(self, inst)
 				_recently_updated_tiles[index] = nil
 			end)
 		end
-
+		
 		SpawnPrefab("fx_ice_pop").Transform:SetPosition(dx, 0, dz)
 	end
-
+	
 	function self:GetTemporaryIceTime(tx, ty, tz)
 		if tz then
 			tx, ty = _map:GetTileCoordsAtPoint(tx, ty, tz)
@@ -589,44 +590,44 @@ return Class(function(self, inst)
 		
 		return false
 	end
-
+	
 	function self:GetBaseAtPoint(x, y, z)
 		return _icebasestrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
-
+	
 	function self:GetBaseAtTile(tx, ty)
 		return _icebasestrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
-
+	
 	function self:GetCurrentAtPoint(x, y, z)
 		return _icecurrentstrengthgrid:GetDataAtPoint(_map:GetTileCoordsAtPoint(x, y, z)) or 0
 	end
-
+	
 	function self:GetCurrentAtTile(tx, ty)
 		return _icecurrentstrengthgrid:GetDataAtPoint(tx, ty) or 0
 	end
-
+	
 	function self:StartUpdatingIceTiles()
 		if _update_task then
 			return
 		end
-
+		
 		DoUpdate(true)
 	end	
-
+	
 	function self:StopUpdatingIceTiles()
 		if _update_task then
 			_update_task:Cancel()
 			_update_task = nil
 		end
 	end
-
+	
 	function self:OnSave()
 		return {
 			initial_load = initial_load
 		}
 	end
-
+	
 	function self:OnLoad(data)
 		if data and data.initial_load ~= nil then
 			initial_load = data.initial_load

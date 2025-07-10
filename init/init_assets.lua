@@ -37,10 +37,15 @@ Assets = {
 	Asset("IMAGE", "images/polarpillar.tex"),
 	
 	-- Anims / Builds
-	Asset("ANIM", "anim/player_polarcast.zip"),
 	Asset("ANIM", "anim/player_flea_itchy.zip"),
+	Asset("ANIM", "anim/player_polarcast.zip"),
+	Asset("ANIM", "anim/player_winterfists.zip"),
+	
+	Asset("ANIM", "anim/rain_meter_polar_anims.zip"),
+	Asset("ANIM", "anim/winter_meter_polar_anims.zip"),
 	
 	Asset("ANIM", "anim/polar_snow.zip"),
+	Asset("ANIM", "anim/polar_snowman_decor.zip"),
 	
 	-- Sounds
 	Asset("SOUNDPACKAGE", "sound/polarsounds.fev"),
@@ -57,8 +62,27 @@ local ITEMS = {
 	"armorpolar",
 	"bluegem_overcharged",
 	"bluegem_shards",
+	"chesspiece_emperor_penguin_fruity",
+	"chesspiece_emperor_penguin_fruity_moonglass",
+	"chesspiece_emperor_penguin_fruity_sketch",
+	"chesspiece_emperor_penguin_fruity_stone",
+	"chesspiece_emperor_penguin_juggle",
+	"chesspiece_emperor_penguin_juggle_moonglass",
+	"chesspiece_emperor_penguin_juggle_sketch",
+	"chesspiece_emperor_penguin_juggle_stone",
+	"chesspiece_emperor_penguin_magestic",
+	"chesspiece_emperor_penguin_magestic_moonglass",
+	"chesspiece_emperor_penguin_magestic_sketch",
+	"chesspiece_emperor_penguin_magestic_stone",
+	"chesspiece_emperor_penguin_spin",
+	"chesspiece_emperor_penguin_spin_moonglass",
+	"chesspiece_emperor_penguin_spin_sketch",
+	"chesspiece_emperor_penguin_spin_stone",
+	"compass_polar",
 	"dryicecream",
 	"dug_grass_polar",
+	"emperor_egg",
+	"emperor_penguinhat",
 	"frostwalkeramulet",
 	"iceburrito",
 	"icelettuce",
@@ -68,6 +92,7 @@ local ITEMS = {
 	"oceanfish_medium_polar1_inv",
 	"polar_brazier_item",
 	"polar_dryice",
+	"polar_spear",
 	"polaramulet",
 	"polarbearfur",
 	"polarbearhat",
@@ -87,12 +112,14 @@ local ITEMS = {
 	"polartrinket_1",
 	"polartrinket_2",
 	"polarwargstooth",
+	"tower_polar_flag_item",
 	"trap_polarteeth",
 	"turf_polar_caves",
 	"turf_polar_dryice",
 	"wall_polar_item",
 	"winter_ornament_polar_icicle_blue",
 	"winter_ornament_polar_icicle_white",
+	"winters_fists",
 	"wx78module_naughty",
 	
 	"ms_polarmoosehat_white",
@@ -111,11 +138,6 @@ POLARAMULET_PARTS = GLOBAL.rawget(GLOBAL, "POLARAMULET_PARTS") or {}
 
 local SCRAPBOOK_POLAR = require("scrapbook_polar")
 for k, v in pairs(SCRAPBOOK_POLAR) do
-	v.name = v.name or k
-	v.prefab = k
-	v.tex = k..".tex"
-	v.type = v.type or "things"
-	
 	if not (v.type == "item" or v.type == "food") then
 		RegisterScrapbookIconAtlas(GLOBAL.resolvefilepath("images/scrapbook_polar.xml"), v.tex)
 	end

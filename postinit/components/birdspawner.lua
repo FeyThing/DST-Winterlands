@@ -9,7 +9,7 @@ local ICECAVE_TAGS = {"icecaveshelter"}
 --	NOTE: this is not fully working in Island Adventures maps because they forbid any bird spawn outside of their known tiles :/
 
 BirdSpawner._ctor = function(self, ...)
-    OldBirdSpawner_ctor(self, ...)
+	OldBirdSpawner_ctor(self, ...)
 	
 	self.polarise_birds = {"crow", "robin"}
 	

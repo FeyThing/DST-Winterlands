@@ -1,7 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local TREES = {"evergreen", "evergreen_sparse"}
+local TREES = {"evergreen", "evergreen_sparse", "leif", "leif_sparse"}
 
 local function OnInit(inst)
 	if IsInPolar(inst) then

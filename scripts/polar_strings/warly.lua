@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		"Bon sang... oof...",
 		"Hrrrr...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "The king is gone! Long live the king!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Brr! Who left the freezer door open?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "I'd rather fish somewhere else."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Merci-- oh. I should have brought gifts too!"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Anything edible in here?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Ça alors... it's clsose. Maybe another time?" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "A whole ice castle? I got to respect that.",
+		PENGUIN = "I bet his meatball game is strong!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Maybe venturing out there wasn't all bad!"
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Are they hosting a banquet, or a banquise?",
+		HOSTILE = "Ah, are we overthrowing the monarchy now?",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Guess I'll find eggs someplace else..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It lost its garnish.",
 		ANTLER = "A grand beast sure to yield robust, gamey flavors.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Presentation is half the taste, n'est-ce pas?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "I've exerced juggling a little myself. Not with food, mind you!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "It's a bold serving of ego."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "It's all very nice. But... when do we eat?"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Could use some twigs.",
 		ON = "Et voilà!",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "I hope I brought enough bait..."
 	DESCRIBE.POLARICE_PLOW_ITEM = "A day of ice fishing sounds tempting!"
+	DESCRIBE.TOWER_POLAR_FLAG = "Watching it float like that makes me hungry... what?"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "I suppose they won't return to pick it up?"
+	DESCRIBE.RAINOMETER.POLARSTORM = "Something's cooking..."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Would you like a coat?"
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Oh my, that is too cold for my taste!"
 	DESCRIBE.BLUEGEM_SHARDS = "Could use a bit of glue."
+	DESCRIBE.EMPEROR_EGG = "Now that's a culinarius- er, curious find."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "I was more looking forward to try the meat."
 	DESCRIBE.POLAR_DRYICE = "What big ice cubes!"
 	DESCRIBE.POLARBEARFUR = "The coziest of snowballs."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
 	DESCRIBE.ARMORPOLAR = "Some furry protection."
+	DESCRIBE.COMPASS_POLAR = "Show me the way to the freezer, please."
+	DESCRIBE.EMPEROR_PENGUINHAT = "I'm not one to dislike fish. However..."
 	DESCRIBE.FROSTWALKERAMULET = "This takes frosting to the next level!"
 	DESCRIBE.ICICLESTAFF = "Il pleut il mouille? No, it kills!"
 	DESCRIBE.POLAR_SPEAR = "It's all fun until it starts dripping."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Better inside than on my skin."
 	DESCRIBE.POLARICESTAFF = "Pardon, but I need to breathe some fresh air."
 	DESCRIBE.POLARMOOSEHAT = "There better be no vinous hunter in these parts."
+	DESCRIBE.WINTERS_FISTS = "Now I'm seriously offhanded..."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "A classic, harmless prank! Or at least it should be..."

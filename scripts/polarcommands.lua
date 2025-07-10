@@ -6,6 +6,8 @@ local function ListingOrConsolePlayer(input)
 	return input or ConsoleCommandPlayer()
 end
 
+
+
 --	Toggle Blizzard
 function c_blizzard(duration, in_cooldown)
 	if TheWorld.components.polarstorm then
@@ -80,7 +82,7 @@ function c_fishcube(name)
 		local x, y, z = ConsoleWorldPosition():Get()
 		TheWorld.components.oceanfish_in_ice_spawner:SpawnIceCubeAt(x, y, z, name)
 	else
-		print("World has no oceanfish_in_ice_spawner component!")
+		print("World has no oceanfish_in_ice_spawner!")
 	end
 end
 
@@ -126,8 +128,50 @@ function c_addfleas(num, target)
 	end
 end
 
+--	Force the next ice fishing result
 function c_icefishingsurprise(name)
 	if TheWorld.components.icefishingsurprise then
 		TheWorld.components.icefishingsurprise.debug_surprise = name
 	end
 end
+
+--	Spawn in the Emperor and his castle
+function c_icecastle(despawn, layout)
+	if TheWorld.components.emperorpenguinspawner then
+		if despawn then
+			TheWorld.components.emperorpenguinspawner:DespawnCastle()
+		else
+			local x, y, z = ConsoleWorldPosition():Get()
+			local _pt = Vector3(x, y, z)
+			
+			local ice_ents = GetIceCastleRemovableEnts(_pt) -- postinit/prefabs/penguin
+			for i, v in ipairs(ice_ents) do
+				v:AddTag("penguinicepart")
+			end
+			
+			local pt, valid = TheWorld.components.emperorpenguinspawner:GetValidCastlePos(Vector3(x, y, z))
+			
+			if valid then
+				print(#ice_ents > 0 and "	Removing some stuff in vacinity:" or "Space is clear.")
+				
+				for i, v in ipairs(ice_ents) do
+					print("		- Removed", v)
+					v:Remove()
+				end
+				
+				local spawned = TheWorld.components.emperorpenguinspawner:SpawnCastle(pt, layout)
+				if spawned then
+					TheWorld.components.emperorpenguinspawner:SpawnEmperor()
+				end
+			else
+				for i, v in ipairs(ice_ents) do
+					v:RemoveTag("penguinicepart")
+				end
+				
+				print("Couldn't find space nearby for Ice Castle!")
+			end
+		end
+	else
+		print("Ice Castle can't be spawned in this world!")
+	end
+end	

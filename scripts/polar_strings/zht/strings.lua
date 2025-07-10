@@ -104,6 +104,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "熊說他們看起來很棒，因為他有很多'棒'!"
 	
 --	Speech, etc
+	
 	STRINGS.POLARCOLD_SNUFFING = {"(哈氣) ", "(嗅嗅) ", "(嗅嗅嗅) ", "(噴嚏) ", "(嗅嗅) ", "(嗅嗅) "}
 	
 	STRINGS.POLARBEARNAMES = {

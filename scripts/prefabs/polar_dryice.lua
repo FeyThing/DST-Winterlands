@@ -5,20 +5,16 @@ local assets = {
 local names = {"f1", "f2", "f3"}
 
 local function OnPutInInv(inst, owner)
-	if inst._droppedice and owner.components.freezable then
-		owner.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * (not owner:HasTag("player") and 4 or 1))
-	end
 	if owner.prefab == "mole" and owner.components.inventory then
 		owner.components.inventory:DropItem(inst, true, true)
+		owner.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * 4)
 	end
 	
 	inst.components.polarmistemitter:StopMisting()
-	inst._droppedice = nil
 end
 
 local function OnDropped(inst)
 	inst.components.polarmistemitter:StartMisting()
-	inst._droppedice = true
 end
 
 local function OnEntitySleep(inst)
@@ -73,7 +69,6 @@ local function fn()
 	
 	inst.AnimState:SetBank("polar_dryice")
 	inst.AnimState:SetBuild("polar_dryice")
-	inst.AnimState:SetScale(0.8, 0.8)
 	
 	inst:AddTag("molebait")
 	inst:AddTag("dryice")
@@ -124,6 +119,7 @@ local function fn()
 	
 	inst:AddComponent("repairer")
 	inst.components.repairer.repairmaterial = MATERIALS.DRYICE
+	inst.components.repairer.healthrepairvalue = TUNING.REPAIR_CUTSTONE_HEALTH
 	inst.components.repairer.perishrepairpercent = 0.25
 	
 	inst:AddComponent("smotherer")

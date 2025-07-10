@@ -7,12 +7,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Watch Woby! I'm fighting a big, scary bear!"
 	
 	--	World, Events
+	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Darnit... they can't keep getting away with it!"
 	ANNOUNCE.ANNOUNCE_POLAR_SLOW = {
-		"Woby! Where- ah, there you are!",
+		"Wobes! Where- ah, there you are!",
 		"We should head North... no, South!",
 		"Brrr...",
 	}
-	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Darnit... they can't keep getting away with it!"
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Guess that's my ice castle now!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "That was... cool! Chilly even!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Let's try somewhere more stable."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Neat! Almost what I wanted."
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Huh? Woby... what's in here?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "What's that...? \"Work in... progress\"-- Haha, that handwritting is awful!" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Would they let us go on top if we ask?",
+		PENGUIN = "Your Majesty could use some target practice!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "The abominable snowflake! I finally found it!"
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Seems to me he's just a big show-off.",
+		HOSTILE = "Uh oh... I think we just started a war, Woby.",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Think a whole regiment could take down a Deerclops?"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
 		ANTLER = "Hm. Not too mysterious looking! But maybe if it was white and hiding in a blizzard...",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "So that's what they call art? Huh."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "What's wrong, Wobers? She can't stop staring at it!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Cool, cool. But how many badges does that make you?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "I hope it doubles as a weather vane."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "A portable pit for fire.",
 		ON = "Uh... did anyone bring the portable marshmallow sack?",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Don't worry, I know the drill."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Maybe Woby could locate the fish by smell?"
+	DESCRIBE.TOWER_POLAR_FLAG = "In this base, we salute the flag!"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "I can't say I've heard of this nation before."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Must be something in the air."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Ha! It's still shaking from yesterday's story."
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "From a magic blue gem to... I don't know... a cursed blue gem, surely?"
 	DESCRIBE.BLUEGEM_SHARDS = "I bet I can piece this mystery together."
+	DESCRIBE.EMPEROR_EGG = "This thing's sturdy! Not sure how a chick could get free of it."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "It didn't have to come to this."
 	DESCRIBE.POLAR_DRYICE = "Let's build a snow golem!"
 	DESCRIBE.POLARBEARFUR = "Woah, check out all the fleas in it!"
@@ -106,15 +126,18 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "A good stick to play fetch and... for a few other things."
 	DESCRIBE.ARMORPOLAR = "Armors might as well protect from other things, heh?"
+	DESCRIBE.COMPASS_POLAR = "Err... give me a sec, I just have to average where it points."
+	DESCRIBE.EMPEROR_PENGUINHAT = "...Is this really indispensable to be a king? Oh well."
 	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
 	DESCRIBE.ICICLESTAFF = "How about we sling a shot? Heh. Good one, Walter."
-	DESCRIBE.POLAR_SPEAR = "Sorry Woby, you can't have this one."
+	DESCRIBE.POLAR_SPEAR = "Sorry Wobers, you can't have this stick."
 	DESCRIBE.POLARCROWNHAT = "So, when are we building my ice castle?"
 	DESCRIBE.POLARFLEA_SACK = "Better watch out while you're in range of my pocket bugs."
 	DESCRIBE.POLARAMULET = "A little something from the souvenir shop."
 	DESCRIBE.POLARBEARHAT = "Woby won't stop growling about it..."
 	DESCRIBE.POLARICESTAFF = "I feel sorry for all the bugs around, just minding their own business."
 	DESCRIBE.POLARMOOSEHAT = "Moose fur, no doubt. Did you smell it?"
+	DESCRIBE.WINTERS_FISTS = "I aim better with my slingshot than... my own two hands."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "I didn't know that fish sticks! Heh, get it?"

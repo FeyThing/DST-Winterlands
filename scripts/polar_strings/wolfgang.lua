@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		"M-must... defeat snow.",
 		"Brrr...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Crown was too big for puny bird shoulders."
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Was sky always so blue?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Ice already too weak here."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "I like present!"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Something hiding?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Hm... hole isn't finished yet." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Castle is strong like Wolfgang, but melts, not like Wolfgang.",
+		PENGUIN = "Stop this, friend! We can do circus show together.",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Could crush it open easily."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "He's the rinkmaster here.",
+		HOSTILE = "Muscles versus flippers!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Someone has to defend the weak."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Is sobbing little ice cubes.",
 		ANTLER = "Fun beast to wrestle with.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Is very inappropriate."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Wolfgang can do it too. With these statues!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Anyone wants to sculpt Wolfgang flexing?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Better not rest shoulder on it."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Is bowl to fill with fire.",
 		ON = "Bowl of light and heat.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Is really that deep...?"
 	DESCRIBE.POLARICE_PLOW_ITEM = "To dig deep holes."
+	DESCRIBE.TOWER_POLAR_FLAG = "Wolfgang thinks it's pretty."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "It's okay, we will get you a new home."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Is whole world shaking?"
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Why is it shaking? Am I shaking?"
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It tickles in hand!"
 	DESCRIBE.BLUEGEM_SHARDS = "Is too tiny. Need to make big one!"
+	DESCRIBE.EMPEROR_EGG = "Oh no, they left frozen baby behind!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Mighty sorry."
 	DESCRIBE.POLAR_DRYICE = "Stronger than ice."
 	DESCRIBE.POLARBEARFUR = "Ha-ha! I make carpet now."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Good stick for walking and whacking."
 	DESCRIBE.ARMORPOLAR = "Don't get too cozy now, muscles."
+	DESCRIBE.COMPASS_POLAR = "Both uncomfortable to read, and hold. Brrrr!"
+	DESCRIBE.EMPEROR_PENGUINHAT = "King of funny walking birds? Is big responsibility for Wolfgang!"
 	DESCRIBE.FROSTWALKERAMULET = "Ice better not crumble under Wolfgang's mighty steps."
 	DESCRIBE.ICICLESTAFF = "Not as fun as throwing punches."
 	DESCRIBE.POLAR_SPEAR = "Is ice but spiky!"
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Portable flea circus."
 	DESCRIBE.POLARICESTAFF = "Will smash winter back into existence."
 	DESCRIBE.POLARMOOSEHAT = "Bear man lost hat?"
+	DESCRIBE.WINTERS_FISTS = "I'm always ready to throw hands, and snowballs."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Clownman may be strong at his game, but Wolfgang will try his best!"

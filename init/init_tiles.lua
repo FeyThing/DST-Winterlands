@@ -18,7 +18,7 @@ local POLAR_WAVETINTS = {
 
 --	Lands
 
--- TODO(?) change cannotbedug to some new thing and require a special pitchfork made of charged bluegem to retrieve turfs from the island?
+-- TODO(?) change cannotbedug to some new thing and require a special pitchfork made of charged bluegem (or emperor egg	?) to retrieve turfs from the island?
 
 AddTile("POLAR_ICE", "LAND",
 	{
@@ -34,6 +34,7 @@ AddTile("POLAR_ICE", "LAND",
 		colors = 		POLAR_COLOR,
 		cannotbedug = 	true,
 		hard = 			true,
+		istemptile = 	true,
 	},
 	{
 		name = 			"map_edge",
@@ -184,7 +185,7 @@ ChangeTileRenderOrder(WORLD_TILES.POLAR_DRYICE, WORLD_TILES.WOODFLOOR)
 local POLAR_GROUND_TYPES = {
 	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_DRYICE, -- 1, 2, 3, 4, 5
 	WORLD_TILES.OCEAN_POLAR, WORLD_TILES.DIRT, WORLD_TILES.ROCKY, WORLD_TILES.UNDERROCK, WORLD_TILES.MONKEY_DOCK, -- 6, 7, 8, 9, 10
-	WORLD_TILES.OCEAN_COASTAL_SHORE, WORLD_TILES.WOODFLOOR, -- 11, 12
+	WORLD_TILES.OCEAN_COASTAL_SHORE, WORLD_TILES.WOODFLOOR, WORLD_TILES.PEBBLEBEACH -- 11, 12, 13
 }
 
 if WORLD_TILES.OCEAN_SHALLOW ~= nil then

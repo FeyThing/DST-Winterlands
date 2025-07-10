@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		"My servants could make this a lot easier...",
 		"Snow... ice... all ruins a suit...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "A ruler? Please. He juggled like a jester in feathers."
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Who's playing with this accursed thing again?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "I'd rather not break that ice."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "I feel like there's a string attached."
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "It's... a thing in the snow."
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "They're not done working on that yet." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Grand, cold, and fleeting. Just like... sigh.",
+		PENGUIN = "To built a whole stage for such a woeful performance.",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "A whimsical display, but entirely unimportant."
 	
 --	Mobs
-	
+
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "What resemblance? Is it the suit - no, the class!",
+		HOSTILE = "Definitively wasn't for his cool temper.",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "I call them \"Pawnguins\"."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It's hardly intimidating now.",
 		ANTLER = "Big antlers, big attitude.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Rest assured, there is no such statues of me. I think."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Perhaps it has a metaphorical meaning?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "I wouldn't assume he took some inspiration of my work..."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Best enjoy your days of grandeur while you have them."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "I won't lie, I like braziers.",
 		ON = "Tribal. However it works well.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Better stand back, or you're fish food."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Desperate times call for destructive measures."
+	DESCRIBE.TOWER_POLAR_FLAG = "It looked better from a distance."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Good fabric. He knew his fluff."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Here it comes."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Oh boy..."
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I'm getting back what's rightfully mine, even if it's changed a little."
 	DESCRIBE.BLUEGEM_SHARDS = "Glitters."
+	DESCRIBE.EMPEROR_EGG = "Can't make omelette with unbrekable eggs."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "I ought to extract the magic inside."
 	DESCRIBE.POLAR_DRYICE = "Reminds me... I've never had myself sculpted in ice, yet."
 	DESCRIBE.POLARBEARFUR = "Now this is- Gah! So many fleas!"
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Ah, that can be useful."
 	DESCRIBE.ARMORPOLAR = "Serviceable, and somewhat refined."
+	DESCRIBE.COMPASS_POLAR = "It promises me with something greater than North."
+	DESCRIBE.EMPEROR_PENGUINHAT = "How fowlish."
 	DESCRIBE.FROSTWALKERAMULET = "A pity for the fish in my wake. But oh well."
 	DESCRIBE.ICICLESTAFF = "A fate worse than rotten tomatoes."
 	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear through my suit. At best."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Hardly preferable over freezing to death."
 	DESCRIBE.POLARICESTAFF = "The right spell, in wrong hands."
 	DESCRIBE.POLARMOOSEHAT = "Hm. Very... rustic."
+	DESCRIBE.WINTERS_FISTS = "Only a tidbit too brutish... really."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "A spell for embarrassment."

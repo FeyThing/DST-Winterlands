@@ -45,7 +45,33 @@ local states = {
 			if inst.components.playercontroller then
 				inst.components.playercontroller:Enable(true)
 			end
-		end
+		end,
+	},
+	
+	State{
+		name = "winterfistcast",
+		tags = {"doing", "busy", "canrotate"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("winterfist_small")
+			inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+			inst.components.locomotor:Stop()
+		end,
+		
+		timeline = {
+			TimeEvent(5 * FRAMES, function(inst)
+				inst:PerformBufferedAction()
+			end),
+			TimeEvent(7 * FRAMES, function(inst)
+				inst.sg:RemoveStateTag("busy")
+			end)
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end)
+		},
 	},
 	
 	State{
@@ -113,7 +139,7 @@ local states = {
 			if inst.components.playercontroller then
 				inst.components.playercontroller:EnableMapControls(true)
 			end
-		end
+		end,
 	},
 }
 
@@ -128,13 +154,17 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 	
 	--	actions
 	
-	local old_CASTSPELL_fn = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
+	local oldCASTSPELL = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
 	sg.actionhandlers[ACTIONS.CASTSPELL].deststate = function(inst, action, ...)
-		if action.invobject and action.invobject:HasTag("polarstaff") then
-			return (inst.components.rider and inst.components.rider:IsRiding()) and "quickcastspell" or "polarcast"
+		if action.invobject then
+			if action.invobject:HasTag("polarstaff") then
+				return (inst.components.rider and inst.components.rider:IsRiding()) and "quickcastspell" or "polarcast"
+			elseif action.invobject:HasTag("wintersfists") then
+				return "winterfistcast"
+			end
 		end
 		
-		return old_CASTSPELL_fn(inst, action, ...)
+		return oldCASTSPELL(inst, action, ...)
 	end
 	
 	--	states
@@ -206,7 +236,91 @@ local states_client = {
 			inst:ClearBufferedAction()
 			inst.sg:GoToState("idle")
 		end
-	}
+	},
+	
+	State{
+		name = "winterfistcast",
+		tags = {"doing", "busy", "canrotate"},
+		server_states = {"winterfistcast"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("winterfist_small")
+			inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+			inst.components.locomotor:Stop()
+			
+			inst:PerformPreviewBufferedAction()
+			inst.sg:SetTimeout(2)
+		end,
+		
+		onupdate = function(inst)
+			if inst.sg:ServerStateMatches() then
+				if inst.entity:FlattenMovementPrediction() then
+					inst.sg:GoToState("idle", "noanim")
+				end
+			elseif inst.bufferedaction == nil then
+				inst.sg:GoToState("idle")
+			end
+		end,
+		
+		ontimeout = function(inst)
+			inst:ClearBufferedAction()
+			inst.sg:GoToState("idle")
+		end
+	},
+	
+	State{
+		name = "start_polarnecklace",
+		tags = {"doing", "nodangle"},
+		server_states = {"start_polarnecklace"},
+		
+		onenter = function(inst, resume_item)
+			inst.components.locomotor:Stop()
+			inst.AnimState:PlayAnimation("build_pre")
+			inst.AnimState:PushAnimation("build_loop")
+			inst.SoundEmitter:PlaySound("dontstarve/wilson/make_trap", "make")
+			
+			inst.sg:SetTimeout(TIMEOUT)
+		end,
+		
+		onupdate = function(inst)
+			if inst.sg:ServerStateMatches() then
+				if inst.entity:FlattenMovementPrediction() then
+					inst.sg:GoToState("idle", "noanim")
+				end
+			elseif inst.bufferedaction == nil then
+				inst.sg:GoToState("idle")
+			end
+		end,
+		
+		ontimeout = function(inst)
+			inst:ClearBufferedAction()
+			inst.sg:GoToState("idle")
+		end
+	},
+	
+	State{
+		name = "polarspawn",
+		tags = {"busy", "noattack", "nopredict", "nodangle"},
+		
+		onenter = function(inst)
+			inst.AnimState:OverrideSymbol("swap_frozen", "frozen", "frozen")
+			inst.AnimState:PlayAnimation("frozen")
+			
+			inst.entity:SetIsPredictingMovement(false)
+			inst.entity:FlattenMovementPrediction()
+			inst.sg:SetTimeout(2)
+		end,
+		
+		onupdate = function(inst)
+			if inst.sg:ServerStateMatches() and inst.entity:FlattenMovementPrediction() then
+				inst.sg:GoToState("idle", "noanim")
+			end
+		end,
+
+		ontimeout = function(inst)
+			inst.sg:GoToState("idle", "noanim")
+		end,
+	},
 }
 
 ENV.AddStategraphPostInit("wilson_client", function(sg)
@@ -218,8 +332,10 @@ ENV.AddStategraphPostInit("wilson_client", function(sg)
 	
 	local old_CASTSPELL_fn = sg.actionhandlers[ACTIONS.CASTSPELL].deststate
 	sg.actionhandlers[ACTIONS.CASTSPELL].deststate = function(inst, action, ...)
-		if action.invobject and action.invobject:HasTag("polarstaff") then
-			return (inst.replica.rider and inst.replica.rider:IsRiding()) and "quickcastspell" or "polarcast"
+		if action.invobject:HasTag("polarstaff") then
+			return (inst.components.rider and inst.components.rider:IsRiding()) and "quickcastspell" or "polarcast"
+		elseif action.invobject:HasTag("wintersfists") then
+			return "winterfistcast"
 		end
 		
 		return old_CASTSPELL_fn(inst, action, ...)

@@ -117,6 +117,23 @@ MATERIALS.DRYICE = "dryice"
 
 OCEAN_DEPTH.POLAR = 5
 
+POLAR_SNOWMAN_HATS = {
+	beefalohat = 2,
+	polarmoosehat = 2,
+	tophat = 1,
+	winterhat = 2,
+	
+	bushhat = 1,
+	deserthat = 1,
+	minerhat = 1,
+	scraphat = 1,
+	
+	cookiecutterhat = 0.5,
+	footballhat = 0.5,
+	icehat = 0.5,
+	spiderhat = 0.5,
+}
+
 POLARRIFY_MOD_SEASONS = {
 	autumn = "autumn",
 	winter = "winter",

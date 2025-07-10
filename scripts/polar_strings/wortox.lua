@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		"Hyu... yu... brrrrr!",
 		"Move... stubborn hooves...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Hee-Hee! Watch, the royal rump flees!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "You call this a prank? That was just rude!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "There's only so much ice to destroy, but not here!"
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "See? You should trust me sometimes-"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Hyuyu! What could it be?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "There's nothing down here anyway, at this moment!" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "A vantage point for vandals.",
+		PENGUIN = "How rude! What attitude!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "A frosty flake with a flair for fun!"
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "An authority figure? Ooo I wouldn't be so sure.",
+		HOSTILE = "Try and get me!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Peck me not, please!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Don't worry, my dear, they will grow back.",
 		ANTLER = "What large horns you have! Can I have them?",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "I could make this much worse with a simple trick."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Did I arrive at the jester crowning ceremony?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Hyuyu, I can puff my chest too!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Modesty? Never met her!"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Mortals should have thought of this earlier! Hyuyu!",
 		ON = "Ward off the chill, dear flame.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Watch out! The portal to the fish dimension will soon open!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Less fun but more discreet than explosives."
+	DESCRIBE.TOWER_POLAR_FLAG = "I don't get mortals love for flags. It's all puff!"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Before a pompous thing, but now it means nothing."
+	DESCRIBE.RAINOMETER.POLARSTORM = "I would best hide if even this machine can't decide."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "You're only trying to scare me! Aren't you?"
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "In the air or in a gem, your soul will still be mine."
 	DESCRIBE.BLUEGEM_SHARDS = "Whoopsie! I broke it again."
+	DESCRIBE.EMPEROR_EGG = "Would they come back for it? Mmm. Best snatch it!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Well that's too bad, for you!"
 	DESCRIBE.POLAR_DRYICE = "Cold as can be, it's perfect for me."
 	DESCRIBE.POLARBEARFUR = "A thick fur for frolicking in the snow."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
 	DESCRIBE.ARMORPOLAR = "When damage is a problem, add more fur!"
+	DESCRIBE.EMPEROR_PENGUINHAT = "Long live the fish!"
+	DESCRIBE.COMPASS_POLAR = "I have no compass-ion for this defecting thing!"
 	DESCRIBE.FROSTWALKERAMULET = "New paths unfold when the water grows cold."
 	DESCRIBE.ICICLESTAFF = "Look sharp! For spikes could leave a naughty mark."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "What's inside? That's a surprise!"
 	DESCRIBE.POLARICESTAFF = "It's not nice to leave our guests trapped in ice!"
 	DESCRIBE.POLARMOOSEHAT = "A fuzzy crown to hide one's frosty frown."
+	DESCRIBE.WINTERS_FISTS = "The difference between a prank and cold murder is so thin sometimes."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Ooo, Wes! You should have told me sooner about those pranks!"

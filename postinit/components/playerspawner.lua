@@ -23,7 +23,7 @@ ENV.AddComponentPostInit("playerspawner", function(self)
 		local fire
 		
 		for i, v in ipairs(ents) do
-			if v.prefab == "campfire" and v.components.fueled and not v.components.fueled:IsEmpty() then
+			if v.components.fueled and not v.components.fueled:IsEmpty() then
 				fire = v
 			end
 		end

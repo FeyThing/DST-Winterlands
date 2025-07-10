@@ -125,6 +125,12 @@ local function OnSave(inst, data)
 	data.was_herd = inst.components.herdmember and true or nil
 end
 
+local function OnLoad(inst, data)
+	if data and data.has_flea then
+		inst:TryGetFlea(true)
+	end
+end
+
 local function OnPreLoad(inst, data)
 	if data and data.was_herd then
 		if TheWorld.components.lunarthrall_plantspawner then
@@ -133,8 +139,8 @@ local function OnPreLoad(inst, data)
 	end
 end
 
-local function TryGetFlea(inst)
-	if math.random() < TUNING.GRASS_POLAR_FLEA_CHANCE and (TheWorld._numfleas or 0) < TUNING.POLARFLEA_WORLD_MAXFLEAS then
+local function TryGetFlea(inst, force)
+	if force or math.random() < TUNING.GRASS_POLAR_FLEA_CHANCE and (TheWorld._numfleas or 0) < TUNING.POLARFLEA_WORLD_MAXFLEAS then
 		local flea = SpawnPrefab("polarflea")
 		flea.Transform:SetPosition(inst.Transform:GetWorldPosition())
 		
@@ -238,6 +244,7 @@ local function fn()
 	MakeWaxablePlant(inst)
 	
 	inst.OnSave = OnSave
+	inst.OnLoad = OnLoad
 	inst.OnPreLoad = OnPreLoad
 	inst.TryGetFlea = TryGetFlea
 	inst.ReleaseFlea = ReleaseFlea

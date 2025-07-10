@@ -1,9 +1,8 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
---	Note:	Does your Thermal Stone suck now?
---			It's normal! This file doesn't contain all the changes for it, it's getting nerfed from components/temperature tweaks and blizzard effect :p
---			Here we are just keeping it on "Winter mode" inside of the biome.
+--	Note: This has been made useless since the Hostile Takeover update, which added local temperature tier recalculations
+--	So this is now all disabled, however other nerfs are still applied in other files (temperature postinit)
 
 local OldHeatFn
 local function HeatFn(inst, observer, ...)

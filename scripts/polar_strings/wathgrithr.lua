@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		"I will brave you... snow!",
 		"...Mggrmm...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Flee to thy fjord, foul fowl!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Curses! The Fimbulvetr just begun!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "'Twould be a mistake."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "What was that?"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Friend, or froze?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Alas 'tis isn't finished yet." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "The wind sings its praises 'round these walls.",
+		PENGUIN = "Slush? Face me with steel!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "A swirling herald of winter's might."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "What are the seabirds plotting here?",
+		HOSTILE = "Surrender while thee can!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "What hurts more between the pecking and the stabbing?"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Bah! 'Thou hath disarmed thyself!",
 		ANTLER = "Freya's grace touches even these frozen lands.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "What saga ends like this?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Let him juggle blades, then we can speak."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Such laudatory stance! But for what deeds?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Doth thy fight with as much elegance as thy dance?"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "A rocky basket to hold the flame.",
 		ON = "I summon thee, O roaring flame!",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "We raid!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Something to pierce the fish ramparts."
+	DESCRIBE.TOWER_POLAR_FLAG = "Why fly this defunct symbol?"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "The war banner of a fallen enemy."
+	DESCRIBE.RAINOMETER.POLARSTORM = "The Fimbulvetr is nigh!"
+	DESCRIBE.WINTEROMETER.POLARSTORM = "The wind is about to turn for the worse."
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Empowered by the ice giant's death rattle."
 	DESCRIBE.BLUEGEM_SHARDS = "The gem hath been defeated."
+	DESCRIBE.EMPEROR_EGG = "The cowardly bird left it."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Fare thee well..."
 	DESCRIBE.POLAR_DRYICE = "Chunks from an ice giant!"
 	DESCRIBE.POLARBEARFUR = "A pelt only the fiercest warriors can acquire."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Make way, snow, for I have the stick!"
 	DESCRIBE.ARMORPOLAR = "Worthy of a Valkyrie."
+	DESCRIBE.COMPASS_POLAR = "It hears the whispers of northern lights."
+	DESCRIBE.EMPEROR_PENGUINHAT = "It reeks of past hubris... and fish."
 	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
 	DESCRIBE.ICICLESTAFF = "Calls upon a rain of ice spears."
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Full of mine tiny warriors, ready for battle!"
 	DESCRIBE.POLARICESTAFF = "Steer clear, or stay put."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
+	DESCRIBE.WINTERS_FISTS = "Not my prefered weaponry, but it doth well on the battlefield."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Beware of the cursed sigil..."

@@ -7,6 +7,7 @@ local STRINGS = GLOBAL.STRINGS
 require("polar_strings/strings")
 
 local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
+local polar_start_required_tasks = {"Polar Floe", "Polar Quarry"}
 
 --	Add Island, Setpieces, ...
 
@@ -25,14 +26,11 @@ AddTaskSetPreInitAny(function(self)
 		end
 		
 		for task, chance in pairs(TUNING.POLAR_TASKS_OPTIONALITY) do
-			if winterlands_preset or math.random() < chance then
+			if (winterlands_preset and table.contains(polar_start_required_tasks, task)) or math.random() < chance then
 				table.insert(self.tasks, task)
 			end
 		end
 		
-		local bear_town = "BearTown"..math.random(2)
-		
-		self.set_pieces[bear_town] = {count = 1, tasks = {"Polar Village"}}
 		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		self.set_pieces["PolarThrone"] = {count = 1, tasks = {"Polar Lands", "Polar Floe"}}
 		self.set_pieces["skeleton_icicle"] = {count = 1, tasks = {"Polar Caves"}}
@@ -44,7 +42,18 @@ AddTaskSetPreInitAny(function(self)
 		end
 		
 		table.insert(self.required_prefabs, "polaramulet_station")
-		--table.insert(self.required_prefabs, "polar_throne")		this will retrofit with component if not added, so we save some generation time
+		table.insert(self.required_prefabs, "polarbearhouse_village")
+		table.insert(self.required_prefabs, "wysp_skeleton_marker")
+	end
+end)
+
+AddRoomPreInit("OceanRough", function(self)
+	if GLOBAL.Polar_CompatibleShard("forest") then
+		if self.contents.countstaticlayouts == nil then
+			self.contents.countstaticlayouts = {}
+		end
+		
+		self.contents.countstaticlayouts["BearOnIce"] = function() return math.random(0, 1) end
 	end
 end)
 
@@ -90,8 +99,8 @@ if polar_level.overrides == nil then
 	polar_level.overrides = {}
 end
 
-polar_level.overrides.prefabswaps_start = "classic"
-polar_level.overrides.season_start = "winter"
+--polar_level.overrides.prefabswaps_start = "classic"
+--polar_level.overrides.season_start = "winter"
 polar_level.overrides.start_location = "polar"
 polar_level.overrides.task_set = "polar"
 

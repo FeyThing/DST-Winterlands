@@ -97,11 +97,10 @@ local function OnLoad(inst, data)
 		end
 		if data.gridnudge then
 			local function normalize(coord)	   
-				
 				local temp = coord%0.5 
 				coord = coord + 0.5 - temp
 				
-				if  coord%1 == 0 then
+				if coord%1 == 0 then
 					coord = coord -0.5
 				end
 				
@@ -151,17 +150,11 @@ local function GetPolarMistMult(inst)
 end
 
 local function OnPutInInv(inst, owner)
-	if inst._droppedice and owner.components.freezable then
-		owner.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * (not owner:HasTag("player") and 4 or 1))
-	end
-	
 	inst.components.polarmistemitter:StopMisting()
-	inst._droppedice = nil
 end
 
 local function OnDropped(inst)
 	inst.components.polarmistemitter:StartMisting()
-	inst._droppedice = true
 end
 
 local function OnEntitySleep(inst)
@@ -178,8 +171,9 @@ local function OnAttacked(inst, data)
 	local attacker = data and data.attacker
 	local weapon = data and data.weapon
 	
-	if attacker and attacker.components.health and not attacker.components.health:IsDead() and attacker.components.freezable
-		and (weapon == nil or ((weapon.components.weapon == nil or weapon.components.weapon.projectile == nil) and weapon.components.projectile == nil)) then
+	if attacker and not attacker:HasTag("penguin") and attacker.components.health and not attacker.components.health:IsDead() and attacker.components.freezable
+		and (weapon == nil or ((weapon.components.weapon == nil or weapon.components.weapon.projectile == nil) and weapon.components.projectile == nil))
+		and not (inst.components.health and inst.components.health:GetPercent() <= 0) then
 		
 		if attacker.components.temperature then
 			local winterInsulation, summerInsulation = attacker.components.temperature:GetInsulation()
@@ -309,7 +303,7 @@ function MakeWallType(data)
 		return inst
 	end
 	
-	local function OnHit(inst)
+	local function OnHit(inst, worker)
 		if data.material then
 			inst.SoundEmitter:PlaySound(data.hitsound)
 		end
@@ -319,6 +313,21 @@ function MakeWallType(data)
 			local anim_to_play = ResolveAnimToPlay(inst, healthpercent)
 			inst.AnimState:PlayAnimation(anim_to_play.."_hit")
 			inst.AnimState:PushAnimation(anim_to_play, false)
+		end
+		
+		if worker and not worker:HasTag("penguin") and worker.components.health and not worker.components.health:IsDead() and worker.components.freezable
+			and not (inst.components.health and inst.components.health:GetPercent() <= 0) then
+			
+			if worker.components.temperature then
+				local winterInsulation, summerInsulation = worker.components.temperature:GetInsulation()
+				
+				if winterInsulation >= TUNING.POLARWALL_FREEZE_INSULATION_MIN then
+					return
+				end
+			end
+			
+			worker.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * 2)
+			worker.components.freezable:SpawnShatterFX()
 		end
 	end
 	

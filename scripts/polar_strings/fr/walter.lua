@@ -104,7 +104,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Un bon bâton pour jouer à rapporter... et quelques autres trucs."
-	DESCRIBE.ARMORPOLAR = "Les armures pourraient aussi bien protéger d’autres trucs, hein ?"
+	DESCRIBE.ARMORPOLAR = "Les armures pourraient aussi bien protéger d'autres trucs, hein ?"
 	DESCRIBE.FROSTWALKERAMULET = "Oh, euh... j'aurais peut-être dû en faire un collier pour chien."
 	DESCRIBE.ICICLESTAFF = "Et si on tirait un coup pour essayer ?"
 	DESCRIBE.POLAR_SPEAR = "Désolé Woby, tu peux pas avoir ce bâton."

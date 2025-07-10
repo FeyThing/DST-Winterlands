@@ -100,10 +100,15 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Names
 	STRINGS.SKIN_NAMES.ms_polarmoosehat_white = "Ouchanka cornée"
 	
+	STRINGS.SKIN_NAMES.ms_loading_polarfox = "Lisser dans la neige"
+	
 	--	Desc
-	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "Les ours disent c'est un truc de malade avec tous ces petites choses autour !"
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "Brindilles ou os... on fait tenir se chapeau avec ce qu'on a sous la patte !"
+	
+	STRINGS.SKIN_DESCRIPTIONS.ms_loading_polarfox = "Les ours racontent : fais un ange d'haute neige juste comme il faut, et vous ne retrouverez plus que ses empreintes le lendemain."
 	
 --	Speech, etc
+	
 	STRINGS.POLARCOLD_SNUFFING = {"*huff* ", "*sniff* ", "*sniffff* ", "*snort* ", "*snurf* ", "*snuffle* "}
 	
 	STRINGS.POLARBEARNAMES = {

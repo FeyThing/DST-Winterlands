@@ -27,7 +27,9 @@ local function SetStage(inst, stage, source, ...)
 end
 
 local function OnPolarInit(inst)
-	if IsInPolar(inst) then
+	if TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst) then
+		inst:Remove()
+	elseif IsInPolar(inst) then
 		inst._canpolarise = true
 		SetStage(inst, "tall", "grow")
 	end

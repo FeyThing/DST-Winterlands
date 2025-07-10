@@ -112,7 +112,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARBEARHAT = "Une mâchoire pour me protéger de la tempête."
 	DESCRIBE.POLARCROWNHAT = "Pour congeler mes ennemies comme d'anciens Draugrs !"
 	DESCRIBE.POLARFLEA_SACK = "À remplir de petits guerriers, prêt au combat !"
-	DESCRIBE.POLARICESTAFF = "Restez à l’écart, ou restez sur place."
+	DESCRIBE.POLARICESTAFF = "Restez à l'écart, ou restez sur place."
 	DESCRIBE.POLARMOOSEHAT = "Un casque à corne pour combattre le froid."
 	
 	--	Others

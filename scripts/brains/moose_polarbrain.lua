@@ -51,9 +51,9 @@ function Moose_PolarBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
 		
-		WhileNode(function() return self.inst.hasantler and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "RamAttack",
+		WhileNode(function() return self.inst.hasantler and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "Ram Attack",
 			ChaseAndRam(self.inst, MAX_CHARGE_TIME, CHARGE_GIVEUP_DIST, MAX_CHARGE_DIST)),
-		WhileNode(function() return not self.inst.hasantler end, "CringeAttack",
+		WhileNode(function() return not self.inst.hasantler end, "Cringe Attack",
 			ChaseAndAttack(self.inst, MAX_CHASE_TIME, CHASE_GIVEUP_DIST)),
 		
 		WhileNode(function() return self.inst:HasTag("spectermoose") and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "Evade",

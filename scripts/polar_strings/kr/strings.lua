@@ -20,7 +20,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARSNOW_MATERIAL = "깊은 눈 속"
 	NAMES.IN_POLARSNOW = "눈...인가?"
 	NAMES.TUMBLEWEED_POLAR = "바람풀"
-
+	
 --	Mobs
 	
 	NAMES.MOOSE_POLAR = "무스"
@@ -33,9 +33,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARFOX = "서리여우"
 	NAMES.POLARWARG = "얼음 바르그"
 	NAMES.SHADOW_ICICLER = "그림자 송곳니"
-
+	
 --	Buildings
-
+	
 	NAMES.POLAR_BRAZIER = "화로"
 	NAMES.POLAR_BRAZIER_ITEM = "화로"
 	NAMES.POLAR_THRONE = "말썽쟁이 왕좌"
@@ -44,16 +44,16 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARBEARHOUSE = "곰 오두막"
 	NAMES.POLARICE_PLOW = "얼음 굴착기"
 	NAMES.POLARICE_PLOW_ITEM = "얼음 굴착기"
-
+	
 --	Items
-
+	
 	--	Food
 	NAMES.DRYICECREAM = "드라이 아이스크림"
 	NAMES.ICELETTUCE = "빙산 상추"
 	NAMES.ICEBURRITO = "브리르리토"
 	NAMES.POLARCRABLEGS = "킹크랩 다리"
 	NAMES.WINTERCOOKING_POLARCRABLEGS = "킹크랩 다리"
-
+	
 	--	Crafting
 	NAMES.BLUEGEM_OVERCHARGED = "과충전된 푸른 보석"
 	NAMES.BLUEGEM_SHARDS = "푸른 보석 조각"
@@ -61,7 +61,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLAR_DRYICE = "드라이 아이스"
 	NAMES.POLARBEARFUR = "북극 털가죽"
 	NAMES.POLARWARGSTOOTH = "얼음 송곳니"
-
+	
 	--	Equipments
 	NAMES.ANTLER_TREE_STICK = "황소가지"
 	NAMES.ARMORPOLAR = "북극 털갑옷"
@@ -75,7 +75,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARFLEA_SACK = "가려움 주머니"
 	NAMES.POLARICESTAFF = "겨울 마법봉"
 	NAMES.POLARMOOSEHAT = "우샹카"
-
+	
 	--	Others
 	NAMES.DUG_GRASS_POLAR = "툰드라 잎단"
 	NAMES.POLARGLOBE = "이상한 스노우볼"
@@ -90,97 +90,97 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.WALL_POLAR_ITEM = "드라이 아이스 벽"
 	NAMES.WINTER_ORNAMENTPOLAR = "차가운 장식품"
 	NAMES.WX78MODULE_NAUGHTY = "나쁜 회로"
-
+	
 --	Skins
-
+	
 	--	Names
 	STRINGS.SKIN_NAMES.ms_polarmoosehat_white = "장식된 우샹카"
-
+	
 	--	Desc
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "곰들은 이 가지들이 들어간 모자가 멋지다고 해요!"
-
+	
 --	Speech, etc
+	
 	STRINGS.POLARCOLD_SNUFFING = {"(훗)", "(코 훌쩍)", "(크게 훌쩍)", "(킁)", "(쿨럭)", "(킁킁)"}
 	
-STRINGS.POLARBEARNAMES = {
-	-- 차가운 음식들
-	"바나나",
-	"세비체",
-	"치킨샐러드",
-	"젤라또",
-	"그라니타",
-	"마카로니",
-	"민트",
-	"아이스바",
-	"샌드위치",
-	"딸기",
-	"선데이",
-	"티라미수",
-
-	-- 산 이름들
-	"아콩카과",
-	"안데스",
-	"블랑",
-	"침보라소",
-	"코토팍시",
-	"디날리",
-	"아이거",
-	"엘브루스",
-	"유레카",
-	"에베레스트",
-	"후지",
-	"카즈벡",
-	"맘 토르",
-	"마터호른",
-	"올림푸스",
-	"오이먀콘",
-	"피레네",
-	"레이니어",
-	"스내그",
-	"타트라",
-	"울란바토르",
-	"베르호얀스크",
-
-	-- 강아지 이름 스타일 (pitbulls)
-	"컵케이크",
-	"솜방울",
-	"젤리빈",
-	"마시멜로",
-	"밀크셰이크",
-	"프린세스",
-	"스노우플레이크",
-	"슈가빈",
-	"혀니",	
-	"애햄이",
-	"어리짱",
-	"효니",	
-	"혀니콩",	
-	"혀니언트",	
-	"혀니버니",	
-
-	-- 전사 이름들
-	"알폰소",
-	"알렉산더",
-	"벨란트릭스",
-	"카히라",
-	"이고르",
-	"코아",
-	"라그나",
-	"비고",
-
-	-- 기타
-	"펑민",
-	"레이저",
-	"데이르",
-	"오톡",
-	"이기",
-	"크림슨",
-	"무스타파",
-	"허버트",
-	"볼리",
-	"용동",
-}
-
+	STRINGS.POLARBEARNAMES = {
+		-- 차가운 음식들
+		"바나나",
+		"세비체",
+		"치킨샐러드",
+		"젤라또",
+		"그라니타",
+		"마카로니",
+		"민트",
+		"아이스바",
+		"샌드위치",
+		"딸기",
+		"선데이",
+		"티라미수",
+		
+		-- 산 이름들
+		"아콩카과",
+		"안데스",
+		"블랑",
+		"침보라소",
+		"코토팍시",
+		"디날리",
+		"아이거",
+		"엘브루스",
+		"유레카",
+		"에베레스트",
+		"후지",
+		"카즈벡",
+		"맘 토르",
+		"마터호른",
+		"올림푸스",
+		"오이먀콘",
+		"피레네",
+		"레이니어",
+		"스내그",
+		"타트라",
+		"울란바토르",
+		"베르호얀스크",
+		
+		-- 강아지 이름 스타일 (pitbulls)
+		"컵케이크",
+		"솜방울",
+		"젤리빈",
+		"마시멜로",
+		"밀크셰이크",
+		"프린세스",
+		"스노우플레이크",
+		"슈가빈",
+		"혀니",	
+		"애햄이",
+		"어리짱",
+		"효니",	
+		"혀니콩",	
+		"혀니언트",	
+		"혀니버니",	
+		
+		-- 전사 이름들
+		"알폰소",
+		"알렉산더",
+		"벨란트릭스",
+		"카히라",
+		"이고르",
+		"코아",
+		"라그나",
+		"비고",
+		
+		-- 기타
+		"펑민",
+		"레이저",
+		"데이르",
+		"오톡",
+		"이기",
+		"크림슨",
+		"무스타파",
+		"허버트",
+		"볼리",
+		"용동",
+	}
 	
 	STRINGS.POLARBEAR_LOOKATWILSON = {"낚시하기 좋은 날이야", "킁킁", "부르르...", "반가워~ 얼음처럼!", "...응?", "호호! 펭귄만큼 작네!", "너 바다코끼리 아니야?", "눈을 잘 봐", "밖이 춥구나", "안도 춥다...", "이건 누구야?", "곧 사냥 나가야지?"}
 	STRINGS.POLARBEAR_LOOKATBEARSON = {"흠...", "괜찮아, 형제여?", "냄새가... 이상한데", "오늘은 낚시가 꽝이야", "이게 대체 뭐야...?"}
@@ -204,7 +204,7 @@ STRINGS.POLARBEARNAMES = {
 	STRINGS.POLARBEAR_TOOTHTRADE_PRE = {"흐음... 오호호!", "날카로워 보여!", "멋진 걸 만들 수 있겠어", "나쁘지 않네", "좋아..."}
 	STRINGS.POLARBEAR_TOOTHTRADE_PST = {"너한텐 이게 어울려", "여기, 아직 신선해", "이게 내 제안이야", "이거 가져", "받아!", "가져가, 가져가!", "훌륭한 거래였어"}
 	STRINGS.POLARBEAR_TOOTHTRADE_EMPTY = {"재고 없음", "줄 게 없어", "눈벼룩도 받아?", "다 떨어졌어"}
-
+	
 	STRINGS.POLARAMULET_STATION_WAITING = {
 		"...",
 		"...그... 물건은 가져왔나?",
@@ -248,7 +248,7 @@ STRINGS.POLARBEARNAMES = {
 		{"...용암이 이빨은...", "...추위로부터 지켜줄 수도 있어."},
 		{"...바다코끼리 엄니는...", "...여기선 굉장히... 귀한 거지."},
 	}
-
+	
 	STRINGS.LUCY.container_has_fleas = {
 		"악! 나 건드렸어!",
 		"으으으 징그러워!",
@@ -259,18 +259,17 @@ STRINGS.POLARBEARNAMES = {
 		"그게 뭐— 꺄아악!",
 		"으엑! 난 나간다!",
 	}
-
 	
 --	UI
-
+	
 	--	Actions
 	STRINGS.ACTIONS.POLARAMULET_CRAFT = "교환하기"
 	STRINGS.ACTIONS.POLARPLOW = "눈 치우기"
 	STRINGS.ACTIONS.SNOWGLOBE = "흔들기!"
-
+	
 	--	Scrapbook, Cookbook
 	STRINGS.UI.COOKBOOK.FOOD_EFFECTS_ICELETTUCE = "몸을 눈에 익숙하게 만들어줍니다"
-
+	
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "튼튼한 가지가 달린 나무입니다. 유용하게 쓰일 수 있지만, 도끼로는 제대로 자를 수 없습니다..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "깊은 눈에서도 이동 속도를 증가시키며, 들고 있을 때 이동 속도가 25% 빨라집니다."
 	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "착용자 주변의 물을 얼리며, 땅에 떨어뜨려도 주변 물이 얼어붙습니다.\n\n얼음 위에서의 안정성도 크게 향상됩니다."
@@ -292,9 +291,9 @@ STRINGS.POLARBEARNAMES = {
 	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "눈보라 속에서 굴러다니며 온갖 잡동사니를 모읍니다.\n\n정말 별의별 걸요.\n\n놀라실 겁니다."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "이 벽을 건드리는 자는... 얼음처럼 식게 될 겁니다."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "WX78 회로판에 장착 가능.\n\n소켓 1개가 필요하며, 설치한 수에 따라 장난 수치가 다음과 같이 증가합니다:\nx2 > x3 > x3.5 > x4 > x4.5 > x5"
-
+	
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "상당히 변덕스러운 채소...\n하지만 차갑다고 무시하지 마세요. -W"
-
+	
 	--	Recipes
 	RECIPE_DESC.ARMORPOLAR = "피해와 혹한으로부터 보호해줍니다."
 	RECIPE_DESC.BLUEGEM_OVERCHARGED = "...사냥하세요...\n...폭풍 속에 숨어있습니다."
@@ -319,20 +318,20 @@ STRINGS.POLARBEARNAMES = {
 	RECIPE_DESC.WALL_POLAR_ITEM = "가장 차가운 방어가 최고의 방어입니다."
 	RECIPE_DESC.WINTERCOOKING_POLARCRABLEGS = "해안 요리를 부숴서 맛보세요."
 	RECIPE_DESC.WX78MODULE_NAUGHTY = "당신을 좀 더 장난꾸러기로 만들어줍니다."
-
+	
 	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "수상한 누군가와 거래해야 해제됩니다..."
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "눈이 충분하지 않아요!"
 	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"북극 교환소\""
-
+	
 	--	Misc
 	STRINGS.UI.SANDBOXMENU.POLARSTART = "겨울나라"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR = "겨울나라"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.PRESETLEVELS.SURVIVAL_POLAR = "겨울나라"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.PRESETLEVELDESC.SURVIVAL_POLAR = "플로리드 포스턴에서 멀리 떨어진 얼어붙은 환영."
-
+	
 	STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR = "겨울나라"
 	STRINGS.UI.SANDBOXMENU.WORLDGENERATION_POLAR = "겨울나라"
-
+	
 	STRINGS.UI.CUSTOMIZATIONSCREEN.MOOSE_POLAR = "무스"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLAR_ICICLES = "고드름"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLAR_THRONE = "말썽쟁이 왕좌"
@@ -340,13 +339,13 @@ STRINGS.POLARBEARNAMES = {
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARFLEAS = "눈벼룩"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARFOXES = "서리꼬리"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.TUMBLEWEED_POLAR = "눈보라풀"
-
+	
 	STRINGS.UI.CUSTOMIZATIONSCREEN.ANTLER_TREES = "황소나무"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.GRASS_POLAR = "툰드라 풀"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.POLARBEARHOUSES = "곰 오두막"
 	STRINGS.UI.CUSTOMIZATIONSCREEN.ROCKS_POLAR = "얼음 돌기"
-
+	
 --	Tweaked
-
+	
 	local OLDSCRAPBOOK_BOOK_RAIN = STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN or ""
 	STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN = OLDSCRAPBOOK_BOOK_RAIN.."\n\n이 책은 겨울나라에서 사용 시 눈보라에 영향을 줍니다."

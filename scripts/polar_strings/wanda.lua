@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		"This is going to take... an eternity...",
 		"Hrrrrgh...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Ha! Fly off, you lot! No wait..."
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Ack! The end is nigh- or... is it?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Something tells me it's a bad idea here."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "My thanks... but now I will take my leaves."
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "It's some thing or other..."
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "I'll have to come back for this another time." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "A tower, not the clock type.",
+		PENGUIN = "Wait till I get my flippers on you!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "I don't have time to chase snowflakes."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Is he really rich if all his assets are frozen?",
+		HOSTILE = "I'd rather die fighting than end up in jail!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "You definitively can't see much in this."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Well. Does that mean you won?",
 		ANTLER = "Probably more susceptible to hold its ground than the other ones.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Ah well. Some things can't be unseen."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Even in stone, he wants to show off."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "He really thinks himself timeless..."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Is his towering ego all what he should be remembered for?"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Right, right. It needs fuel.",
 		ON = "If it crackles, it works.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Come on... they're gonna escape!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Why don't we just fish somewhere less cold?"
+	DESCRIBE.TOWER_POLAR_FLAG = "All it does is try to escape in the wind."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "I would let it carry dust, or snow, whatever."
+	DESCRIBE.RAINOMETER.POLARSTORM = "This can't be good..."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Oh botheration... what did that mean already?"
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Why do I feel like it's going to explode at any moment?"
 	DESCRIBE.BLUEGEM_SHARDS = "I prefer to work with smaller pieces anyway."
+	DESCRIBE.EMPEROR_EGG = "Nothing would come out... best use it some-how-else."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "This better be worth it."
 	DESCRIBE.POLAR_DRYICE = "Now what can I use this for?"
 	DESCRIBE.POLARBEARFUR = "It's like holding onto warm snow."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Oooh, precisely what I needed!"
 	DESCRIBE.ARMORPOLAR = "Finally some bearable armor."
+	DESCRIBE.COMPASS_POLAR = "Imagine reading a clock like that... oh, the horror."
+	DESCRIBE.EMPEROR_PENGUINHAT = "I'm not taking his place."
 	DESCRIBE.FROSTWALKERAMULET = "Good! I've had more than enough of these damnable rivers."
 	DESCRIBE.ICICLESTAFF = "Beware of friendly fire... and friendly ice. All elements would want us dead!"
 	DESCRIBE.POLAR_SPEAR = "Make the most of it while it's fresh."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Well, as long they jump right in, no fuss..."
 	DESCRIBE.POLARICESTAFF = "Everyone, and I mean EVERYONE deserves a break."
 	DESCRIBE.POLARMOOSEHAT = "I just hope I won't be mistaken for a walking steak..."
+	DESCRIBE.WINTERS_FISTS = "I wouldn't ever have to take them off if they weren't so heavy."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "I don't have time to play these games! (Or do I...?)"

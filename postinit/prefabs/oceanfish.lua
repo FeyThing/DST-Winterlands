@@ -88,6 +88,8 @@ ENV.AddPrefabPostInit("oceanfish_medium_polar1_inv", function(inst)
 		return
 	end
 	
+	inst:AddComponent("snowmandecor")
+	
 	if inst.components.tradable then
 		inst.components.tradable.goldvalue = TUNING.GOLD_VALUES.RAREMEAT
 	end

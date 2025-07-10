@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		"Grrrr... stupid big sea of snow!",
 		"It not like water at all!",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Swamp {wins}, Snow 0!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Glr-rpp, leave ground alone!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Maybe not here."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Best day ever, florp!"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "What that thing, florp?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Can't go in cave under cave yet." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Oooh big castle, like in story books!",
+		PENGUIN = "Grrr! Come back down!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Heehee, will catch you!"
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Should join forces and conquer Pigfolk!",
+		HOSTILE = "Why can't get along?",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Is protecting Snowfolk, florp!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Me want horn bit to grow back too, florp.",
 		ANTLER = "Would like have big horns like this...",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "What fruity, florp? Where fruit?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Clown man can do it better!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Did to you what you did to fishies."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Hmm. Maybe me should make Merm King statues..."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Toss wood in it.",
 		ON = "It a bit tall but still feel warm.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Can't wait! Seriously, florp."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Want to see the deep fishes!"
+	DESCRIBE.TOWER_POLAR_FLAG = "Hee-hee, is little flying fish."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Is emblem of Mermfolk kingdom now, flort."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Something coming but it not rain..."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Glurph! What that mean?"
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Ooooooooooooo!"
 	DESCRIBE.BLUEGEM_SHARDS = "Glorp, can put them back together?"
+	DESCRIBE.EMPEROR_EGG = "Left shiny behind!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Me did do it. Sorry."
 	DESCRIBE.POLAR_DRYICE = "Why this ice not Eddy-bluh?"
 	DESCRIBE.POLARBEARFUR = "Me could eat it as revenge... but won't."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Tree dropped this, but me keep it."
 	DESCRIBE.ARMORPOLAR = "Turned Mermfolk enemies into shirt!"
+	DESCRIBE.COMPASS_POLAR = "Metal fishie want me go this way."
+	DESCRIBE.EMPEROR_PENGUINHAT = "Glurp... should release poor fishies in water."
 	DESCRIBE.FROSTWALKERAMULET = "Close enough from swimming, flort."
 	DESCRIBE.ICICLESTAFF = "Makes super heavy rain drops."
 	DESCRIBE.POLAR_SPEAR = "But, Wicker-lady said not to play with food?"
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Guess they friends now, flort."
 	DESCRIBE.POLARICESTAFF = "Got all of winter in a stick, florp."
 	DESCRIBE.POLARMOOSEHAT = "Hee-hee, got your hat pbbbth!"
+	DESCRIBE.WINTERS_FISTS = "Snow is weapon? Me been eating weapons all that time!"
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Ooooh, fishie! Clown man has fun games!"

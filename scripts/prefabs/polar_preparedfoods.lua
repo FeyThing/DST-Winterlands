@@ -145,7 +145,9 @@ end
 local prefs = {}
 
 for k, v in pairs(require("polar_preparedfoods")) do
-	table.insert(prefs, MakePreparedFood(v))
+	if not v.noprefab then
+		table.insert(prefs, MakePreparedFood(v))
+	end
 end
 
 for k, v in pairs(require("polar_preparedfoods_warly")) do

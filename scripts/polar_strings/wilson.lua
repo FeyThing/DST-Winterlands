@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		"Hngh...",
 		"Huff...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "I hereby declare a new era of cool-headed leadership!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Quakes and shivers- what just happened?!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Ice should try somewhere else."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Huh. That wasn't so bad."
@@ -42,10 +43,20 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "I think I saw something in here."
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "I've got the sinking feeling this hole isn't finished yet." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Subtlety clearly wasn't in their blueprints.",
+		PENGUIN = "Drat! Snowballista!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "It defies all known science."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Could we arrange a court appointment?",
+		HOSTILE = "He's got home-ice advantage!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Looks pecky."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It moose be tough to cope with antler loss.",
 		ANTLER = "I'd rather stay clear from its path.",
@@ -72,6 +83,10 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "This anatomy model isn't all that insightful."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Impressive coordination, for someone with flippers!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "I guess art can be used to assert one's dominance."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Pretty sure I saw a statue of Maxwell just like that..."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "A pocket sized firepit.",
 		ON = "Too hot to go in my pockets now. Unless I quench the flame.",
@@ -89,6 +104,10 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "I'm deeply intrigued about what's under."
 	DESCRIBE.POLARICE_PLOW_ITEM = "The best fish is always the one hiding."
+	DESCRIBE.TOWER_POLAR_FLAG = "Do I need to know where the wind goes?"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Perfect timing, I needed a tissue!"
+	DESCRIBE.RAINOMETER.POLARSTORM = "Must be that climate change thing I've heard about."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Is it trying to warn me of something?"
 	
 --	Items
 	
@@ -101,6 +120,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I take it back. THIS sparkles with cold energy!"
 	DESCRIBE.BLUEGEM_SHARDS = "A puzzle of mineralogical intrigue."
+	DESCRIBE.EMPEROR_EGG = "I don't think it'd hatch. Just melt."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "This thing's heavy!"
 	DESCRIBE.POLAR_DRYICE = "I could build something reeeally cool with that."
 	DESCRIBE.POLARBEARFUR = "It's snuggy. Fur real!"
@@ -109,6 +129,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Science says this stick is perfect."
 	DESCRIBE.ARMORPOLAR = "That's the stuff!"
+	DESCRIBE.COMPASS_POLAR = "Am I getting warmer?"
+	DESCRIBE.EMPEROR_PENGUINHAT = "Refrigerated regal."
 	DESCRIBE.FROSTWALKERAMULET = "Science can explain this phenomenon... but I won't."
 	DESCRIBE.ICICLESTAFF = "Always useful. If we forget about the \"incident\"."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"
@@ -118,6 +140,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "To fill with bite-sized allies."
 	DESCRIBE.POLARICESTAFF = "I like all my staves but this one is frost among equals."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
+	DESCRIBE.WINTERS_FISTS = "Packed ice for packing a punch."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "All I got to do is act natural."

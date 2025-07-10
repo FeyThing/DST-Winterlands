@@ -2,26 +2,30 @@
 	<Texture filename="scrapbook_polar.tex" />
 	<Elements>
 		<Element name="antler_tree.tex" u1="0.001" u2="0.124" v2="0.999" v1="0.751" />
-		<Element name="farm_plant_icelettuce.tex" u1="0.126" u2="0.249" v2="0.999" v1="0.751" />
-		<Element name="grass_polar.tex" u1="0.001" u2="0.124" v2="0.749" v1="0.501" />
-		<Element name="moose_polar.tex" u1="0.126" u2="0.249" v2="0.749" v1="0.501" />
-		<Element name="moose_specter.tex" u1="0.251" u2="0.374" v2="0.999" v1="0.751" />
-		<Element name="oceanfish_medium_polar1_inv.tex" u1="0.251" u2="0.374" v2="0.749" v1="0.501" />
-		<Element name="polar_brazier.tex" u1="0.376" u2="0.499" v2="0.999" v1="0.751" />
-		<Element name="polar_icicle.tex" u1="0.376" u2="0.499" v2="0.749" v1="0.501" />
-		<Element name="polar_icicle_rock.tex" u1="0.001" u2="0.124" v2="0.499" v1="0.251" />
-		<Element name="polar_throne.tex" u1="0.001" u2="0.124" v2="0.249" v1="0.001" />
-		<Element name="polar_throne_gifts.tex" u1="0.126" u2="0.249" v2="0.499" v1="0.251" />
-		<Element name="polaramulet_station.tex" u1="0.251" u2="0.374" v2="0.499" v1="0.251" />
-		<Element name="polarbear.tex" u1="0.126" u2="0.249" v2="0.249" v1="0.001" />
-		<Element name="polarbearhouse.tex" u1="0.251" u2="0.374" v2="0.249" v1="0.001" />
-		<Element name="polarflea.tex" u1="0.376" u2="0.499" v2="0.499" v1="0.251" />
-		<Element name="polarfox.tex" u1="0.376" u2="0.499" v2="0.249" v1="0.001" />
-		<Element name="polarice_plow.tex" u1="0.501" u2="0.624" v2="0.999" v1="0.751" />
-		<Element name="polarwarg.tex" u1="0.626" u2="0.749" v2="0.999" v1="0.751" />
-		<Element name="rock_polar.tex" u1="0.501" u2="0.624" v2="0.749" v1="0.501" />
-		<Element name="shadow_icicler.tex" u1="0.751" u2="0.874" v2="0.999" v1="0.751" />
-		<Element name="tumbleweed_polar.tex" u1="0.626" u2="0.749" v2="0.749" v1="0.501" />
-		<Element name="wall_polar.tex" u1="0.501" u2="0.624" v2="0.499" v1="0.251" />
+		<Element name="emperor_penguin.tex" u1="0.126" u2="0.249" v2="0.999" v1="0.751" />
+		<Element name="emperor_penguin_guard.tex" u1="0.001" u2="0.124" v2="0.749" v1="0.501" />
+		<Element name="farm_plant_icelettuce.tex" u1="0.126" u2="0.249" v2="0.749" v1="0.501" />
+		<Element name="grass_polar.tex" u1="0.251" u2="0.374" v2="0.999" v1="0.751" />
+		<Element name="moose_polar.tex" u1="0.251" u2="0.374" v2="0.749" v1="0.501" />
+		<Element name="moose_specter.tex" u1="0.376" u2="0.499" v2="0.999" v1="0.751" />
+		<Element name="oceanfish_medium_polar1_inv.tex" u1="0.376" u2="0.499" v2="0.749" v1="0.501" />
+		<Element name="polar_brazier.tex" u1="0.001" u2="0.124" v2="0.499" v1="0.251" />
+		<Element name="polar_icicle.tex" u1="0.001" u2="0.124" v2="0.249" v1="0.001" />
+		<Element name="polar_icicle_rock.tex" u1="0.126" u2="0.249" v2="0.499" v1="0.251" />
+		<Element name="polar_throne.tex" u1="0.251" u2="0.374" v2="0.499" v1="0.251" />
+		<Element name="polar_throne_gifts.tex" u1="0.126" u2="0.249" v2="0.249" v1="0.001" />
+		<Element name="polaramulet_station.tex" u1="0.251" u2="0.374" v2="0.249" v1="0.001" />
+		<Element name="polarbear.tex" u1="0.376" u2="0.499" v2="0.499" v1="0.251" />
+		<Element name="polarbearhouse.tex" u1="0.376" u2="0.499" v2="0.249" v1="0.001" />
+		<Element name="polarflea.tex" u1="0.501" u2="0.624" v2="0.999" v1="0.751" />
+		<Element name="polarfox.tex" u1="0.626" u2="0.749" v2="0.999" v1="0.751" />
+		<Element name="polarice_plow.tex" u1="0.501" u2="0.624" v2="0.749" v1="0.501" />
+		<Element name="polarwarg.tex" u1="0.751" u2="0.874" v2="0.999" v1="0.751" />
+		<Element name="rock_polar.tex" u1="0.626" u2="0.749" v2="0.749" v1="0.501" />
+		<Element name="shadow_icicler.tex" u1="0.501" u2="0.624" v2="0.499" v1="0.251" />
+		<Element name="tower_polar.tex" u1="0.626" u2="0.749" v2="0.499" v1="0.251" />
+		<Element name="tower_polar_flag.tex" u1="0.501" u2="0.624" v2="0.249" v1="0.001" />
+		<Element name="tumbleweed_polar.tex" u1="0.751" u2="0.874" v2="0.749" v1="0.501" />
+		<Element name="wall_polar.tex" u1="0.876" u2="0.999" v2="0.999" v1="0.751" />
 	</Elements>
 </Atlas>

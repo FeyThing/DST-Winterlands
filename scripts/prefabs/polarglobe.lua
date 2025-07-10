@@ -3,7 +3,9 @@ local assets = {
 }
 
 local function OnGlobeShake(inst)
-	if not TheWorld.state.iswinter then
+	local curseason = POLARRIFY_MOD_SEASONS[TheWorld.state.season] or "autumn"
+	
+	if curseason ~= "winter" then
 		inst.season_data.in_use = true
 		inst.season_data.season = TheWorld.state.season
 		inst.season_data.elapsed = TheWorld.state.elapseddaysinseason
@@ -76,7 +78,9 @@ local function OnLoad(inst, data)
 end
 
 local function OnSeasonTick(inst, data)
-	if not TheWorld.state.iswinter and data and inst.season_data.in_use and data.season ~= inst.season_data.season then
+	local curseason = POLARRIFY_MOD_SEASONS[TheWorld.state.season] or "autumn"
+	
+	if curseason ~= "winter" and data and inst.season_data.in_use and data.season ~= inst.season_data.season then
 		TheWorld:PushEvent("ms_setseason", inst.season_data.season)
 		for i = 1, inst.season_data.elapsed do
 			if TheWorld.state.remainingdaysinseason > 1 then

@@ -2,6 +2,8 @@ return Class(function(self, inst)
 	self.inst = inst
 	
 	self.enabled = false
+	self.enablers = {}
+	
 	self.lines = 40
 	self.rows = 40
 	self.spacing_x = TILE_SCALE / 2
@@ -35,9 +37,10 @@ return Class(function(self, inst)
 		local x, y, z = _player.Transform:GetWorldPosition()
 		temperature = temperature or TheWorld.state.temperature
 		
-		if temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled and self.in_polar then
+		local gotenablers = not IsTableEmpty(self.enablers)
+		if (self.in_polar or gotenablers) and temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled then
 			self:Enable(true)
-		elseif (not self.in_polar or temperature > TUNING.POLAR_SNOW_MELT_TEMP) and self.enabled then
+		elseif (not self.in_polar or temperature > TUNING.POLAR_SNOW_MELT_TEMP) and self.enabled and not gotenablers then
 			self:Enable(false)
 		end
 	end
@@ -129,10 +132,22 @@ return Class(function(self, inst)
 		self:SetWaves()
 	end
 	
+	function self:IsEnabled()
+		return self.enabled or not IsTableEmpty(self.enablers)
+	end
+	
+	function self:AddEnabler(src, enabled)
+		if src then
+			self.enablers[src] = enabled or nil
+		end
+		
+		self:OnTemperatureChanged()
+	end
+	
 	function self:Enable(enabled)
 		self.enabled = enabled or false
 		
-		if self.enabled then
+		if self:IsEnabled() then
 			self:SpawnWaves()
 			inst:StartUpdatingComponent(self)
 			
@@ -150,7 +165,7 @@ return Class(function(self, inst)
 	end
 	
 	function self:OnUpdate(dt) -- TODO: Change to static updates so waves get replaced even when paused for camera rotations
-		if not self.enabled then
+		if not self:IsEnabled() then
 			self:RemoveWaves()
 			inst:StopUpdatingComponent(self)
 			return

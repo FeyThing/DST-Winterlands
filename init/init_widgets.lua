@@ -174,7 +174,29 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 	end)
 end)
 
---	Show stuff on necklace
+--	Show Chilly Compass above inv
+
+local HudCompass_Polar = require "widgets/hudcompass_polar"
+
+AddClassPostConstruct("widgets/inventorybar", function(self, owner)
+	self.hudcompass_polar = self.root:AddChild(HudCompass_Polar(owner, true))
+	self.hudcompass_polar:MoveToBack()
+	self.hudcompass_polar:SetScale(1.75, 1.75)
+	self.hudcompass_polar:SetMaster()
+	
+	local OldRebuild = self.Rebuild
+	function self:Rebuild(...)
+		local test = OldRebuild(self, ...)
+		
+		if self.hudcompass and self.hudcompass_polar then
+			self.hudcompass_polar:SetPosition(self.hudcompass:GetPosition())
+		end
+		
+		return test
+	end
+end)
+
+--	Show stuff on necklace + Dryice chesspiece material
 
 local AMULET_PARTS = {
 	"left",
@@ -208,6 +230,10 @@ AddClassPostConstruct("widgets/itemtile", function(self, invitem)
 	
 	if invitem.amulet_parts and not self.amulet_parts then
 		self:SetAmuletParts()
+	end
+	
+	if invitem.prefab and invitem.prefab:sub(1, 11) == "chesspiece_" and invitem.prefab:sub(-7) == "_dryice" then
+		self.image:SetTint(0.8, 0.65, 0.9, 0.7)
 	end
 end)
 

@@ -32,6 +32,7 @@ local FIRES = {
 	
 	--	Just visual
 	mermthrone = 				{snow_block = 5},
+	penguin_ice = 				{snow_block = 12},
 	winona_teleport_pad = 		{snow_block = 4},
 	
 	--	Actual flames

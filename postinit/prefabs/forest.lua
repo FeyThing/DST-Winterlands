@@ -6,6 +6,36 @@ local AddPrefabPostInit = ENV.AddPrefabPostInit
 local forest_shards = {"forest", "shipwrecked", "porkland"}
 local cave_shards = {"cave", "volcano"}
 
+local function Init_PolarCaveEntrance(inst)
+	local candidates = {}
+	
+	for k, ent in pairs(Ents) do
+		if ent.prefab == "rock_polar" then
+			if ent.components.worldmigrator then
+				print("Polar Cave Entrance State: found worldmigrator for", ent)
+				
+				return
+			elseif ent.MakeCaveEntrance then
+				local x, y, z = ent.Transform:GetWorldPosition()
+				local tile = TheWorld.Map:GetTileAtPoint(x, y, z)
+				
+				if IsLandTile(tile) and not TileGroupManager:IsTemporaryTile(tile) then
+					table.insert(candidates, ent)
+				end
+			end
+		end
+	end
+	
+	if #candidates > 0 then
+		local ent = candidates[math.random(#candidates)]
+		ent:MakeCaveEntrance()
+		
+		print("Polar Cave Entrance State: added worldmigrator for", ent)
+	else
+		print("Polar Cave Entrance State: no Ice Protuberances found, couldn't be added!")
+	end
+end
+
 for i, v in ipairs(forest_shards) do
 	AddPrefabPostInit(v, function(inst)
 		if not TheNet:IsDedicated() then
@@ -21,6 +51,8 @@ for i, v in ipairs(forest_shards) do
 		end
 		
 		inst:AddComponent("arcticfoolfishsavedata")
+		
+		inst:AddComponent("emperorpenguinspawner")
 		
 		inst:AddComponent("icefishingsurprise")
 		
@@ -41,6 +73,8 @@ for i, v in ipairs(forest_shards) do
 		inst:AddComponent("polarwormholes")
 		
 		inst:AddComponent("retrofitforestmap_polar")
+		
+		inst:DoTaskInTime(1, Init_PolarCaveEntrance)
 	end)
 end
 

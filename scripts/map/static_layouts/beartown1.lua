@@ -100,7 +100,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 128,
 					y = 499,
@@ -111,7 +111,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 512,
 					y = 144,
@@ -122,7 +122,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 96,
 					y = 224,
@@ -133,7 +133,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 528,
 					y = 416,
@@ -144,7 +144,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 288,
 					y = 32,
@@ -155,7 +155,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 352,
 					y = 608,

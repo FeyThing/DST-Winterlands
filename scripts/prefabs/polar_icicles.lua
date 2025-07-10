@@ -330,6 +330,22 @@ local function OnWork(inst, worker, workleft)
 	end
 end
 
+local ICEPROTUBERANCE_TAGS = {"structure", "wall", "protuberancespawnblocker"}
+
+local function OnPolarFreeze(inst, forming)
+	if not forming and IsInPolar(inst) then
+		local x, y, z = inst.Transform:GetWorldPosition()
+		
+		local ents = TheSim:FindEntities(x, y, z, 20, nil, nil, ICEPROTUBERANCE_TAGS)
+		if #ents == 0 then
+			SpawnPrefab("rock_polar_spawner").Transform:SetPosition(x, y, z)
+		end
+		
+		SpawnPrefab("ice_splash").Transform:SetPosition(x, y, z)
+		inst:Remove()
+	end
+end
+
 local function rock()
 	local inst = CreateEntity()
 	
@@ -368,6 +384,8 @@ local function rock()
 	inst.components.workable:SetWorkLeft(TUNING.POLAR_ICICLE_MINE)
 	inst.components.workable:SetOnWorkCallback(OnWork)
 	inst.components.workable.savestate = true
+	
+	inst.OnPolarFreeze = OnPolarFreeze
 	
 	local scale = math.random() > 0.5 and 1 or -1
 	inst.AnimState:SetScale(scale, 1)

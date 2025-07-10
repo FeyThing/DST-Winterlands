@@ -56,7 +56,7 @@ return {
 			objects = {
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 106,
 					y = 160,
@@ -67,7 +67,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 106,
 					y = 288,
@@ -78,7 +78,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 416,
 					y = 506,
@@ -89,7 +89,7 @@ return {
 				},
 				{
 					name = "",
-					type = "polarbearhouse",
+					type = "polarbearhouse_village",
 					shape = "rectangle",
 					x = 288,
 					y = 582,

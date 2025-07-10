@@ -143,7 +143,7 @@ local function OnHaunt(inst)
 	end
 end
 
-local BLOCKER_CANT_TAGS = {"_inventoryitem", "locomotor", "NOBLOCK", "fx"}
+local BLOCKER_CANT_TAGS = {"_inventoryitem", "locomotor", "NOBLOCK", "FX"}
 
 local function customcheckfn(pt)
 	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, nil, BLOCKER_CANT_TAGS) == 0 and not TheWorld.Map:IsPointNearHole(pt)
@@ -286,6 +286,8 @@ local function fn()
 	inst._snowblockrange = net_smallbyte(inst.GUID, "polarbearhouse._snowblockrange")
 	inst._snowblockrange:set(5)
 	
+	inst:SetPrefabName("polarbearhouse")
+	
 	MakeSnowCoveredPristine(inst)
 	
 	inst.entity:SetPristine()
@@ -340,4 +342,5 @@ local function fn()
 end
 
 return Prefab("polarbearhouse", fn, assets, prefabs),
+	Prefab("polarbearhouse_village", fn, assets, prefabs), -- This is just for world required prefabs, wanna make sure any bear village generate!
 	MakePlacer("polarbearhouse_placer", "polarbearhouse", "polarbearhouse", "idle")

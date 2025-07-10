@@ -17,15 +17,41 @@ local polar_preparedfoods = {
 		end,
 		card_def = {ingredients = {{"icelettuce", 2}, {"oceanfish_medium_polar1_inv", 1}, {"tomato", 1}}},
 	},
+	
+	icecream_emperor = {
+		test = function(cooker, names, tags) return names.emperor_egg and not tags.inedible and not tags.monster end,
+		name = "icecream_emperor", -- postinit/components/stewer is where its at
+		hunger = TUNING.CALORIES_MED,
+		health = 0,
+		sanity = TUNING.SANITY_HUGE,
+		cooktime = 0.5,
+		foodtype = FOODTYPE.GOODIES,
+		perishtime = TUNING.PERISH_SUPERFAST,
+		priority = 10,
+		temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+		temperatureduration = TUNING.FOOD_TEMP_LONG,
+		stacksize = 6,
+		potlevel = "low",
+		floater = {"small", nil, nil},
+		noprefab = true,
+		no_cookbook = true,
+		overridebuild = "cook_pot_food",
+		overridesymbolname = "icecream",
+		card_def = {ingredients = {{"emperor_egg", 1}, {"ice", 2}, {"honey", 1}}},
+	},
 }
 
 for k, v in pairs(polar_preparedfoods) do
-	v.name = k
+	v.name = v.name or k
 	v.weight = v.weight or 1
 	v.priority = v.priority or 0
-	v.overridebuild = "cook_pot_food_polar"
-	v.cookbook_atlas = "images/cookbook_polar.xml"
-	v.cookbook_tex = "cookbook_"..k..".tex"
+	
+	if not v.no_cookbook then
+		v.overridebuild = "cook_pot_food_polar"
+		v.cookbook_atlas = "images/cookbook_polar.xml"
+		v.cookbook_tex = "cookbook_"..k..".tex"
+	end
+	
 	v.cookbook_category = "cookpot"
 end
 

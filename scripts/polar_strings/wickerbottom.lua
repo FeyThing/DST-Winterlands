@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		"My locomotion is severely impeded...",
 		"Why did I not prepare better for this snowy slog?",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "A strategic withdrawal? Tsk."
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "This disturbance feels orchestrated, not natural."
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Making a hole here would be ill-advised."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Ooo. What a serviceable present!"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "This warrants closer inspection."
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Not now dear. Whatever's under is not finished." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Social birds, yes - but this is something else entirely!",
+		PENGUIN = "No need for manners under siege.",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "I would like to observe its structure from closer."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "My, this Aptenodytes imperator certainly fancies himself.",
+		HOSTILE = "Your reign ends here!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "I could use this feather..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Make no mistake, it can still hold a fight.",
 		ANTLER = "A fine specimen with defenses fit for the wilds.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Only half the commitment to the art..."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Are those eggs? It would have made for a dreadful depiction!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "How noble. I mean nobles like themselves modeled don't they?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "The artist might be present in the courtyard, I shall inquire it."
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "It needs fuel.",
 		ON = "A warm, secure flame.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Seconds away to find out..."
 	DESCRIBE.POLARICE_PLOW_ITEM = "The cold ocean floor is more lively than one might think."
+	DESCRIBE.TOWER_POLAR_FLAG = "What an alluring motion!"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Unfortunately too large for a bookmark."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Oh dear... this can't be good."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "I hope we have enough firewood."
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Frozen beyond measure."
 	DESCRIBE.BLUEGEM_SHARDS = "Matter is neither created nor destroyed, only shattered."
+	DESCRIBE.EMPEROR_EGG = "The poor thing shan't hatch, but it can still find a purpose."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Not exactly what I meant by \"studying it\"... but this can work out."
 	DESCRIBE.POLAR_DRYICE = "Solid carbon dioxide."
 	DESCRIBE.POLARBEARFUR = "I ought to wash it... you can never be too prudent with fleas."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "It's the right shape for a few applications."
 	DESCRIBE.ARMORPOLAR = "Comfort and protection!"
+	DESCRIBE.COMPASS_POLAR = "It seems to align with someplace else than the other compasses."
+	DESCRIBE.EMPEROR_PENGUINHAT = "I do suppose a ruler is best cool headed."
 	DESCRIBE.FROSTWALKERAMULET = "Fascinating. It solidifies water through rapid thermal regulation."
 	DESCRIBE.ICICLESTAFF = "An accurate cast is worth two errant ones."
 	DESCRIBE.POLAR_SPEAR = "Crude, but highly durable in the cold."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "I'm not sure about this... insect domestication thing."
 	DESCRIBE.POLARICESTAFF = "A good clunk brings everyone back to their manners."
 	DESCRIBE.POLARMOOSEHAT = "To keep one's warmth while the cold rages on."
+	DESCRIBE.WINTERS_FISTS = "No dear, I meant \"Feast\". As in... ah, whatever."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "The token of a social custom, cherished by both Ursidae and the French."

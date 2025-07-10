@@ -25,24 +25,67 @@ local Layouts = require("map/layouts").Layouts
 local StaticLayout = require("map/static_layout")
 
 local polar_layouts = {
-	"BearTown1", "BearTown2", "PolarTuskTown", "PolarAmulet_Shack", "PolarThrone",
-	"PolarFox_Duo", "PolarFox_Solo", "PolarFlea_Farm", "PolarLake",
-	"PolarCave_Pillar", "PolarCave_SmallPillar",
-	"BlueGem_Shards", "BlueGem_Shards_Ice", "skeleton_icicle", "skeleton_polar",
+	["BearTown1"] = 			{},
+	["BearTown2"] = 			{},
+	["BearTown3"] = 			{},
+	["BearTown4"] = 			{
+		defs = {
+			tree = {"evergreen", "evergreen_sparse"},
+		},
+	},
+	["BearTown5"] = 			{
+		defs = {
+			tree = {"evergreen", "evergreen_sparse"},
+		},
+	},
+	
+	["BearOnIce"] = 			{},
+	["PolarTuskTown"] = 		{},
+	["PolarAmulet_Shack"] = 	{},
+	["PolarThrone"] = 			{},
+	
+	["Polar_Lake"] = 			{
+		defs = {
+			fishingitem = {"ocean_trawler_kit", "oceanfishingrod"},
+			fishingrecipe = {"oceanfishingbobber_ball_tacklesketch", "oceanfishingbobber_robin_winter_tacklesketch", "oceanfishinglure_hermit_snow_tacklesketch"},
+		},
+	},
+	["PolarFox_Duo"] = 			{},
+	["PolarFox_Solo"] = 		{},
+	["PolarFlea_Farm"] = 		{},
+	["PolarFlea_House"] = 		{},
+	["polarflea_grass"] = 		{},
+	
+	["BlueGem_Shards"] = 		{},
+	["BlueGem_Shards_Ice"] = 	{},
+	["PolarCave_Pillar"] = 		{},
+	["PolarCave_SmallPillar"] = {},
+	["PolarStaff_Rink"] = 		{
+		defs = {
+			polarstaff = {"iciclestaff", "polaricestaff"},
+		},
+	},
+	
+	["PolarSnowman"] = 			{},
+	["skeleton_icicle"] = 		{},
+	["skeleton_polar"] = 		{},
+	
+	["PolarStart"] = 			{
+		name = "polar_start",
+		layout_position = LAYOUT_POSITION.CENTER,
+		defs = {
+			welcomitem = IsSpecialEventActive(SPECIAL_EVENTS.HALLOWED_NIGHTS) and {"pumpkin_lantern"} or {"marsh_bush"},
+		},
+	},
 }
 
-for _, layout in ipairs(polar_layouts) do
-	Layouts[layout] = StaticLayout.Get("map/static_layouts/"..string.lower(layout))
-	Layouts[layout].ground_types = POLAR_GROUND_TYPES
+for k, v in pairs(polar_layouts) do
+	Layouts[k] = StaticLayout.Get("map/static_layouts/"..(v.name or string.lower(k)), {
+		layout_position = v.layout_position,
+		defs = v.defs,
+	})
+	Layouts[k].ground_types = POLAR_GROUND_TYPES
 end
-
-Layouts["PolarStart"] = StaticLayout.Get("map/static_layouts/polar_start", {
-	layout_position = LAYOUT_POSITION.CENTER,
-	defs = {
-		welcomitem = IsSpecialEventActive(SPECIAL_EVENTS.HALLOWED_NIGHTS) and {"pumpkin_lantern"} or {"marsh_bush"},
-	},
-})
-Layouts["PolarStart"].ground_types = POLAR_GROUND_TYPES
 
 --	Retrofit
 
@@ -90,14 +133,37 @@ end
 
 ENV.AddGlobalClassPostConstruct("map/storygen", "Story", function(self)
 	if self.map_tags then
+		self.map_tags.TagData["PolarBearTown"] = true
 		self.map_tags.TagData["PolarFleas"] = true
 		
-		self.map_tags.Tag["polararea"] = function(tagdata) return "TAG", "polararea" end
+		--
 		
-		self.map_tags.Tag["PolarFleas"] = function(tagdata) if tagdata["PolarFleas"] == false then return end
-			tagdata["PolarFleas"] = false
+		self.map_tags.Tag["polararea"] = function(tagdata)
+			return "TAG", "polararea"
+		end
+		
+		self.map_tags.Tag["PolarBearTown"] = function(tagdata)
+			if tagdata["PolarBearTown"] == false then
+				return
+			end
+			tagdata["PolarBearTown"] = false
 			
-			return "STATIC", "PolarFlea_Farm" -- TODO: more random results
+			-- 1: Merm BBQ
+			-- 2: Fishing Docks
+			-- 3: Praise-o-Meter
+			-- 4: Grassy Walkway
+			-- 5: Isolated Village
+			return "STATIC", "BearTown"..math.random(5)
+		end
+		
+		self.map_tags.Tag["PolarFleas"] = function(tagdata)
+			if tagdata["PolarFleas"] == false then
+				return
+			end
+			local setpiece = tagdata["PolarFleas"] == "extra_setpiece" and (math.random() < 0.5 and "polarflea_grass" or "PolarFlea_House") or "PolarFlea_Farm"
+			tagdata["PolarFleas"] = (setpiece == "PolarFlea_Farm" and math.random() < 0.33) and "extra_setpiece" or false
+			
+			return "STATIC", setpiece
 		end
 	end
 end)

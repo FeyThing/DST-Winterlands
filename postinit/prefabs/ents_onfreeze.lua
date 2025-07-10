@@ -36,13 +36,13 @@ local function OnFreeze_Waterplant(inst, forming)
 	if forming then
 		local pos = inst:GetPosition()
 		inst.components.lootdropper:SpawnLootPrefab("waterplant_planter", pos)
-
+		
 		local rock = SpawnPrefab("waterplant_rock")
 		rock.Transform:SetPosition(inst.Transform:GetWorldPosition())
-
+		
 		inst.base:Remove()
 		inst:Remove()
-
+		
 		DestroyEntity(rock, TheWorld, false, true)
 	end
 end

@@ -5,10 +5,13 @@ if ENV.GetModConfigData("misc_music") == false then
 	return
 end
 
---	NOTE: So... this definitively cause problems with "remix mods" and *could* be an issue with other mods that remap these,
---	but I'm so done touching music with this game.
-
 local POLAR_BUSY_MUSIC = "polarsounds/music/music_work"
+
+local POLAR_TRIGGERED_DANGER_MUSIC = {
+	emperor_penguin = {"polarsounds/music/music_epicfight_emperor_penguin"},
+}
+
+--
 
 local SEASON_BUSY_MUSIC = {
 	autumn = "dontstarve/music/music_work",
@@ -32,6 +35,8 @@ local SEASON_EPICFIGHT_MUSIC = {
 }
 
 ENV.AddComponentPostInit("dynamicmusic", function(self)
+	--	Work Music
+	
 	function self:UpdatePolarMusic(self, ignore)
 		if ThePlayer == nil then
 			return
@@ -82,4 +87,26 @@ ENV.AddComponentPostInit("dynamicmusic", function(self)
 	end
 	
 	self._polartask = self.inst:DoPeriodicTask(1, self.UpdatePolarMusic, nil, self)
+	
+	--	Boss Music
+	
+	local StartPlayerListeners
+	
+	if self.inst.event_listening and self.inst.event_listening["playeractivated"] then
+		for i, v in ipairs(self.inst.event_listening["playeractivated"][self.inst]) do
+			StartPlayerListeners = PolarUpvalue(v, "StartPlayerListeners")
+			if StartPlayerListeners then
+				break
+			end
+		end
+	end
+	
+	local StartTriggeredDanger = PolarUpvalue(StartPlayerListeners, "StartTriggeredDanger")
+	local TRIGGERED_DANGER_MUSIC = PolarUpvalue(StartTriggeredDanger, "TRIGGERED_DANGER_MUSIC")
+	
+	if TRIGGERED_DANGER_MUSIC then
+		for boss, data in pairs(POLAR_TRIGGERED_DANGER_MUSIC) do
+			TRIGGERED_DANGER_MUSIC[boss] = data
+		end
+	end
 end)

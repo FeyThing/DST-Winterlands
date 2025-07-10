@@ -53,12 +53,18 @@ local function OnUnequip(inst, owner)
 end
 
 local function OnCharged(inst)
+	if inst.components.insulator then
+		inst.components.insulator:SetInsulation(TUNING.INSULATION_LARGE)
+	end
 	if inst.components.equippable and inst.components.equippable:IsEquipped() then
 		inst:StartForceField()
 	end
 end
 
 local function OnDischarged(inst)
+	if inst.components.insulator then
+		inst.components.insulator:SetInsulation(0)
+	end
 	inst:StopForceField()
 end
 
@@ -170,7 +176,7 @@ local function fn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("insulator")
-	inst.components.insulator:SetInsulation(TUNING.INSULATION_MED_LARGE)
+	inst.components.insulator:SetInsulation(TUNING.INSULATION_LARGE)
 	inst.components.insulator:SetSummer()
 	
 	inst:AddComponent("inventoryitem")

@@ -1,3 +1,5 @@
+local messagebottletreasures = require("messagebottletreasures") -- TODO: Chests can either be scenarios or spawned by GenerateTreasure
+
 local COMBAT_MUST_TAGS = {"_combat", "_health"}
 local COMBAT_CANT_TAGS = {"INLIMBO"}
 local COMBAT_TAGS = {"character", "monster", "hostile"}

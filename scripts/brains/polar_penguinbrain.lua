@@ -73,9 +73,10 @@ local function ShouldRunAway(inst, target)
 end
 
 local function GetWaterFn(inst)
-	--[[if inst._ocean_escape_position then
+	local t = GetTime()
+	if inst._ocean_escape_position and not (t - (inst._escape_try_time or t) > 1) then
 		return inst._ocean_escape_position
-	end]]
+	end
 	
 	local pt = inst:GetPosition()
 	local offset
@@ -88,6 +89,7 @@ local function GetWaterFn(inst)
 	
 	if offset then
 		inst._ocean_escape_position = pt + offset
+		inst._escape_try_time = t
 		
 		return inst._ocean_escape_position
 	end

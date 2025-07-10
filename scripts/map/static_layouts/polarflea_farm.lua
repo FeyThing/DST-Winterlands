@@ -52,6 +52,41 @@ return {
 			opacity = 1,
 			properties = {},
 			objects = {
+				--[[{
+					name = "",
+					type = "skeleton",
+					shape = "rectangle",
+					x = 350,
+					y = 298,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {
+						["data.anim"] = "6"
+					}
+				},]]
+				{
+					name = "",
+					type = "wysp_skeleton_marker",
+					shape = "rectangle",
+					x = 350,
+					y = 298,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
+				{
+					name = "",
+					type = "goldenshovel",
+					shape = "rectangle",
+					x = 328,
+					y = 269,
+					width = 0,
+					height = 0,
+					visible = true,
+					properties = {}
+				},
 				{
 					name = "",
 					type = "grass_polar",
@@ -155,28 +190,6 @@ return {
 					properties = {
 						["data.pickable.makealwaysbarren"] = "1"
 					}
-				},
-				{
-					name = "",
-					type = "skeleton",
-					shape = "rectangle",
-					x = 350,
-					y = 298,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
-				},
-				{
-					name = "",
-					type = "goldenshovel",
-					shape = "rectangle",
-					x = 328,
-					y = 269,
-					width = 0,
-					height = 0,
-					visible = true,
-					properties = {}
 				},
 				{
 					name = "",

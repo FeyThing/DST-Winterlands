@@ -4,10 +4,20 @@ GLOBAL.setfenv(1, GLOBAL)
 local OldOnTransplantFn
 local makemorphable
 
+local function GrassInPolar(inst)
+	if IsInPolar(inst) then
+		return true
+	end
+	
+	local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(inst.Transform:GetWorldPosition())
+	
+	return TheWorld.Map:GetTile(tx, ty) == WORLD_TILES.POLAR_SNOW -- Allows to put Tundra Grass from patches made by Winter's Fists!
+end
+
 local function OnTransplantFn(inst, ...)
 	local _makemorphable = makemorphable -- Keeping this here for simpler mod compat
 	
-	if IsInPolar(inst) then
+	if GrassInPolar(inst) then
 		local grass = SpawnPrefab("grass_polar")
 		grass.Transform:SetPosition(inst.Transform:GetWorldPosition())
 		
@@ -51,7 +61,7 @@ end)
 --
 
 local function DoPolarUpdate(inst)
-	local inpolar = IsInPolar(inst)
+	local inpolar = GrassInPolar(inst)
 	
 	if (inst.inpolar or false) ~= inpolar then
 		if inpolar then

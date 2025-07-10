@@ -42,6 +42,8 @@ local function fn()
 	inst.components.perishable:StartPerishing()
 	inst.components.perishable.onperishreplacement = "houndstooth"
 	
+	inst:AddComponent("snowmandecor")
+	
 	inst:AddComponent("stackable")
 	
 	MakeHauntableLaunchAndSmash(inst)
