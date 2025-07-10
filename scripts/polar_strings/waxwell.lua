@@ -57,7 +57,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	}
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Nope! Nope!",
-		HELD = "It'll hurt but it's not like I going to keep it as a pet.",
+		HELD = "It'll hurt but it's not like I'm going to keep it as a pet.",
 		HELD_BACKPACK = "You won't make me keep that thing.",
 	}
 	DESCRIBE.POLARFOX = {
@@ -108,7 +108,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Serviceable, and somewhat refined."
 	DESCRIBE.FROSTWALKERAMULET = "A pity for the fish in my wake. But oh well."
 	DESCRIBE.ICICLESTAFF = "A fate worse than rotten tomatoes."
-	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear trough my suit. At best."
+	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear through my suit. At best."
 	DESCRIBE.POLARAMULET = "They worked some magic on the string. What exactly, I'm not sure."
 	DESCRIBE.POLARBEARHAT = "I am seriously revolted."
 	DESCRIBE.POLARCROWNHAT = "Powerful and elegant, but also uncomfortable."

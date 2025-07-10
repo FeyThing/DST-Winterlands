@@ -82,7 +82,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	}
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Even this frosty den couldn't escape a fiery end.",
-		GENERIC = "An hiding place to warm the soul.",
+		GENERIC = "A hiding place to warm the soul.",
 	}
 	DESCRIBE.POLARICE_PLOW = "Watch out! The portal to the fish dimension will soon open!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Less fun but more discreet than explosives."
@@ -110,7 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.ICICLESTAFF = "Look sharp! For spikes could leave a naughty mark."
 	DESCRIBE.POLAR_SPEAR = "Ice and sticks were made for one another."
 	DESCRIBE.POLARAMULET = "What matters is that you believe in it, hyuyu!"
-	DESCRIBE.POLARBEARHAT = "This is oddly confortable for what it is."
+	DESCRIBE.POLARBEARHAT = "This is oddly comfortable for what it is."
 	DESCRIBE.POLARCROWNHAT = "Cold on the outside, freezing on the inside."
 	DESCRIBE.POLARFLEA_SACK = "What's inside? That's a surprise!"
 	DESCRIBE.POLARICESTAFF = "It's not nice to leave our guests trapped in ice!"

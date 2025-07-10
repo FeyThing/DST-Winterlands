@@ -117,7 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	
 	--	Others
-	DESCRIBE.ARCTIC_FOOL_FISH = "Should I write something on it? Like: \"Come and stab me\""
+	DESCRIBE.ARCTIC_FOOL_FISH = "Should I write something on it? Like: \"Come and stab me\"."
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "This looks so fragile...",
 		INUSE = "I see. Breaking it would have lasting consequences.",

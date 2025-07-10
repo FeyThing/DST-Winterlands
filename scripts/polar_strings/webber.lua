@@ -18,7 +18,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Well that's quite nice-"
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Mom would be upset if she saw me like this..."
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Mom would be upset if she saw us like this..."
 	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Can we go play in snow again... but with a coat?"
 	
 --	Worldgen
