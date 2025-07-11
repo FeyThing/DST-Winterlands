@@ -80,7 +80,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Buildings
 	
-	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Rest assured, there is no such statues of me. I think."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Rest assured, there are no such statues of me. I think."
 	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Perhaps it has a metaphorical meaning?"
 	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "I wouldn't assume he took some inspiration of my work..."
 	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Best enjoy your days of grandeur while you have them."
