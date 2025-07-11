@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
         "Grrrr... głupie duże morze śniegu!",
         "To wogóle nie jak woda!",
     }
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Bagno {wins}, Śnieg 0!"
     ANNOUNCE.ANNOUNCE_POLARGLOBE = "Glr-rpp, zostawić ziemie w spokoju!"
     ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Może nie tutaj."
     ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Najleszy dzień, florp!"
@@ -21,7 +22,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
     ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Glurg! Duże morze śniegu jest mokre I zimne!"
     ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Aaa... znowu jest dobre mokre."
 
-    --	Worldgen
+--	Worldgen
 
     --	Plants
     DESCRIBE.ANTLER_TREE = {
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 
     --	Misc
     ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Co za rzecz, florp?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Jeszcze nie móc iść do jaskini pod jaskinią." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Ooo duży zamek, jak w książkach!",
+		PENGUIN = "Grrr! Ty zejść na dół!",
+	}
     DESCRIBE.TUMBLEWEED_POLAR = "Heehee, ja złapać cię!"
 
-    --	Mobs
+--	Mobs
 
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Powinni połączyć siły i pokonać świnie!",
+		HOSTILE = "Czemu nie chcieć pracować razem?",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "On chronić śnieżaki, florp!"
     DESCRIBE.MOOSE_POLAR = {
         GENERIC = "Ja też chcieć, żeby róg wyrosnąć spowrotem, florp.",
         ANTLER = "Też chcieć mieć duże rogi jak te...",
@@ -67,8 +78,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
     }
     DESCRIBE.POLARWARG = "Chce pomóc zabić niedźwiedzie?"
 
-    --	Buildings
+--	Buildings
 
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Pikantny, florp? Jest zimny."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Klaun umieć lepiej!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Ja zrobić to co ty zrobić dla rybek."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Hmm. Może my zrobić posągi dla króla mermów..."
     DESCRIBE.POLAR_BRAZIER = {
         GENERIC = "Wrzucić drewno do środka.",
         ON = "Jest troche wysokie ale nadal czuć ciepłe.",
@@ -86,8 +101,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
     }
     DESCRIBE.POLARICE_PLOW = "Nie móc się doczekać! Na prawde, florp."
     DESCRIBE.POLARICE_PLOW_ITEM = "Chcieć zobaczyć rybki z głębin!"
+	DESCRIBE.TOWER_POLAR_FLAG = "Hee-hee, jest mała latająca ryba."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Teraz jest symbol królestwa mermów, flort."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Coś nadchodzić co nie być zwykłym wiatrem..."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Glurp! Co to znaczyć?"
 
-    --	Items
+--	Items
 
     --	Food
     DESCRIBE.DRYICECREAM = "Glurr- jenzyk-- psyklejony!"
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
     --	Crafting
     DESCRIBE.BLUEGEM_OVERCHARGED = "Ooooooooooooo!"
     DESCRIBE.BLUEGEM_SHARDS = "Glorp, móc spowrotem je zkleić?"
+	DESCRIBE.EMPEROR_EGG = "Zostawić błyszczące!"
     DESCRIBE.MOOSE_POLAR_ANTLER = "Ja to zrobić. Ja przepraszać."
     DESCRIBE.POLAR_DRYICE = "Czemu ten lód nie jadalny?"
     DESCRIBE.POLARBEARFUR = "Ja móc zjeść w ramach zemsty... ale ja tego nie zrobić."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
     --	Equipments
     DESCRIBE.ANTLER_TREE_STICK = "Drzewo upuścić to, ale ja to zatrzymać."
     DESCRIBE.ARMORPOLAR = "Zrobić z wrogów mermów koszulke!"
+	DESCRIBE.COMPASS_POLAR = "Metalowa rybcia chcieć, żebym iść w tym kierunku."
+	DESCRIBE.EMPEROR_PENGUINHAT = "Glurp... powinna uwolnić biedne rybcie spowrotem do wody."
     DESCRIBE.FROSTWALKERAMULET = "Wystarczająco blisko od pływania, flort."
     DESCRIBE.ICICLESTAFF = "Robić super ciężkie krople."
     DESCRIBE.POLAR_SPEAR = "Ale, Pani Wicker mówić, żeby nie bawić się jedzeniem?"
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
     DESCRIBE.POLARFLEA_SACK = "Zgadywać, że są teraz przyjaciele, flort."
     DESCRIBE.POLARICESTAFF = "Mieć całą zime w patyku, florp."
     DESCRIBE.POLARMOOSEHAT = "Hee-hee, ja mieć twoją czapkę pbbbt!"
+	DESCRIBE.WINTERS_FISTS = "Śnieg broń? Ja jeść broń cały ten czas!"
 
     --	Others
     DESCRIBE.ARCTIC_FOOL_FISH = "Oooo, rybcia! Pan klaun mieć fajne zabawy!"

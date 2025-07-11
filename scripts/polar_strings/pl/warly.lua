@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		"Bon sang... uf...",
 		"Hrrrr...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Król odszedł! Niech żyje król!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Brr! Kto zostawił drzwi od zamrażarki otwarte?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Wolałbym połowić gdzieś indziej."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Merci-- oh. Powinienembył też przynieść prezenty!"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Coś jadalnego w śniegu?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Ça alors... już za niedługo. Może kiedyś indziej?" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Caluśki zamek z lodu? Muszę to uszanować.",
+		PENGUIN = "Założę się, że jego klopsiki jest świetne!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Może wyprawa tam nie była aż taka zła!"
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Czy organizują bankiet, czy banquise?",
+		HOSTILE = "A, czyli teraz obalamy monarchię?",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Guess I'll find eggs someplace else..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Straciło swoją ozdobe.",
 		ANTLER = "Wspaniałe zwierzę, które z pewnością zapewni wyraziste, dzikie smaki.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Prezentacja to połowa smaku, n'est-ce pas?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Sam trochę ćwiczyłem żonglowanie. Ale nie jedzeniem!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "To śmiała porcja ego."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Wszystko bardzo ładnie. Ale... kiedy jemy?"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Przydałyby się jakieś gałązki.",
 		ON = "Et voilà!",
@@ -86,7 +101,11 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Mam nadzieję, że przyniosłem wystarczająco dużo przynęty..."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Dzień wędkowania pod lodem brzmi kusząco!"
-	
+	DESCRIBE.TOWER_POLAR_FLAG = "Patrzenie na to jak unosi się na wietrze wzmaga mój apetyt... co?"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Zakładam, że nie wrócą, żeby je pozbierać?"
+	DESCRIBE.RAINOMETER.POLARSTORM = "Coś się gotuje..."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Czy chciałbyś płaszcz?"
+
 --	Items
 	
 	--	Food
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "O jacie, stanowczo za zimne jak na mój gust!"
 	DESCRIBE.BLUEGEM_SHARDS = "Przydałby się jakiś klej."
+	DESCRIBE.EMPEROR_EGG = "No i to jest kulinar- ee, kuriozalne znalezisko."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Bardziej czekałem na spróbowanie mięsa."
 	DESCRIBE.POLAR_DRYICE = "Co za duże kostki lodu!"
 	DESCRIBE.POLARBEARFUR = "Najprzytulniejsza kulka śniegu."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Salut, vieille branche!"
 	DESCRIBE.ARMORPOLAR = "Jakaś futrzasta ochrona."
+	DESCRIBE.COMPASS_POLAR = "Pokaż mi proszę drogę do zamrażarki."
+	DESCRIBE.EMPEROR_PENGUINHAT = "Nie należe do osób, które ryb nie lubią. Ale..."
 	DESCRIBE.FROSTWALKERAMULET = "To przenosi zamrażanie na wyższy poziom!"
 	DESCRIBE.ICICLESTAFF = "Il pleut il mouille? Nie, jest zabujcze!"
 	DESCRIBE.POLAR_SPEAR = "Pełnia zabawy, dopóki nie zacznie kapać."
@@ -115,7 +137,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Lepiej w środku niż na mnie."
 	DESCRIBE.POLARICESTAFF = "Pardon, ale muszę chwile odetchnąć."
 	DESCRIBE.POLARMOOSEHAT = "Lepiej, żeby w tych rejonach nie było żadnych niebezpiecznych łowców."
-	
+	DESCRIBE.WINTERS_FISTS = "Teraz jestem naprawdę niemiły..."
+
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Klasyczny, nieszkodliwy żart! A przynajmniej powienien być..."
 	DESCRIBE.POLARGLOBE = {

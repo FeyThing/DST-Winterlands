@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		"Przebrne przez ciebie... śniegu!",
 		"...Mggrmm...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Leć do fiordu, wstrętny ptaku!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "A niech to! Fimbulvetr właśnie się zaczął!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "To byłby błąd."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Co to było?"
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Przyjaciel, czy przezimnik?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Alas 'tis isn't finished yet." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Wiatr wyśpiewuje swoje pochwały wokół tych ścian.",
+		PENGUIN = "Ta breja? Staw mi czoła w stali!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Wirujący zwiastun zimowej potęgi."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Cóż te ptaki morskie tutaj knują?",
+		HOSTILE = "Poddaj się, póki możesz!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Co boli bardziej pomiędzy dziobaniem, a kłuciem?"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Ba! Tyś się sam rozbroił!",
 		ANTLER = "Łaska Freyi dotyka nawet tych zamrożonych krain.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Jaka saga kończy się w ten sposób?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Niech zacznie żonglować ostrzami, wtedy możemy porozmawiać."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Jakże chwalebna postawa! Ale za jakie czyny?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Czyż walczy w tak wielkiej elegancji jak tańczy?"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Kamienny kosz do podtrzymywania płomienia.",
 		ON = "Wzywam cię, o buchający płomieniu!",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Czas na najazd!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Coś do przebicia wałów obronnych ryb."
+	DESCRIBE.TOWER_POLAR_FLAG = "Po co wywieszać ten nieistniejący już symbol?"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Sztandar wojenny poległego wroga."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Fimbulvetr jest blisko!"
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Wiatr wkrótce zmieni się na gorszy."
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Wzmocniony ostatnim tchem lodowego giganta."
 	DESCRIBE.BLUEGEM_SHARDS = "Klejnot został pokonany."
+	DESCRIBE.EMPEROR_EGG = "Tchórzliwy ptak je rostawił."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Żegnaj..."
 	DESCRIBE.POLAR_DRYICE = "Kawałki lodowego giganta!"
 	DESCRIBE.POLARBEARFUR = "Skóra, którą tylko najwaleczniejsi wojownicy mogą zdobyć."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Z drogi, śniegu, gdyż posiadam ten kij!"
 	DESCRIBE.ARMORPOLAR = "Godny Walkirii."
+	DESCRIBE.COMPASS_POLAR = "Słyszy szepty zorzy polarnej."
+	DESCRIBE.EMPEROR_PENGUINHAT = "Śmierdzi dawną pychą... i rybą."
 	DESCRIBE.FROSTWALKERAMULET = "Przemierzanie mórz z tym amuletem to błachostka!"
 	DESCRIBE.ICICLESTAFF = "Wzywa deszcz lodowych włóczni."
 	DESCRIBE.POLAR_SPEAR = "Potęga tej broni jest krótko żywotna."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Pełen moich małych wojowników, gotowych do walki!"
 	DESCRIBE.POLARICESTAFF = "Uciekaj z drogi lub nie uciekaj wogóle."
 	DESCRIBE.POLARMOOSEHAT = "Rogaty hełm do walki z zimnem."
+	DESCRIBE.WINTERS_FISTS = "Nie jest to moja preferowana broń, ale sprawdza się dobrze na polu bitwy."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Strzeż się przeklętej pieczęci..."

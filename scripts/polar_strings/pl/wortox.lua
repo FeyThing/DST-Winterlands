@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
         "Hju... ju... brrrrr!",
         "Idźcie... uparte kopyta...",
     }
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Hee-Hee! Patrz, królewski zad ucieka!"
     ANNOUNCE.ANNOUNCE_POLARGLOBE = "Nazywasz to żartem? To było po prostu niemiłe!"
     ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Jest nieograniczona ilość lodu do zniszczenia, ale nie tutaj!"
     ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Widzisz? Czasami powinieneś mi zaufać-"
@@ -21,7 +22,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
     ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "O-jej ojej, muszę pozostać nagrzany i suchy..."
     ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Nie ma śniegu! Nie ma problemu!"
 
-    --	Worldgen
+--	Worldgen
 
     --	Plants
     DESCRIBE.ANTLER_TREE = {
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 
     --	Misc
     ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Hjuju! Cóżby to mogło być?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Tak czy inaczej, w tej chwili nic tu nie ma!" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Punkt obserwacyjny dla wandali.",
+		PENGUIN = "Jakże niemiły! Co za tupet!",
+	}
     DESCRIBE.TUMBLEWEED_POLAR = "Mroźny płatek z nutą zabawy!"
 
-    --	Mobs
+--	Mobs
 
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Autorytet? Ooo nie byłbym taki pewien.",
+		HOSTILE = "Spróbuj mnie złapać!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Proszę, mnie nie dziob!"
     DESCRIBE.MOOSE_POLAR = {
         GENERIC = "Nie martw się, mój drogi, odrosną spowrotem.",
         ANTLER = "Cóż za duże rogi posiadasz! Mógłbym je wziąć?",
@@ -67,8 +78,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
     }
     DESCRIBE.POLARWARG = "Ma przeraźliwy ryk, który mógłby zamrozić duszę!"
 
-    --	Buildings
+--	Buildings
 
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Mógłbym go jeszcze bardziej pogorszyć jednym prostym trikiem."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Czy dotarłem na ceremonię koronacji błaznów?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Hjuju, ja też potrafię nadymać moją klatkę piersiową!"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Skromność? Nie kojarze!"
     DESCRIBE.POLAR_BRAZIER = {
         GENERIC = "Śmiertelnicy powinni byli pomyśleć o tym wcześniej! Hjuju!",
         ON = "Odpędzaj chłód, drogi płomyku.",
@@ -86,8 +101,12 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
     }
     DESCRIBE.POLARICE_PLOW = "Uważaj! Portal do wymiaru ryb zaraz się otworzy!"
     DESCRIBE.POLARICE_PLOW_ITEM = "Mniej zabawy niż z materiałami wybuchowymi, ale bardziej dyskretny."
+	DESCRIBE.TOWER_POLAR_FLAG = "Nie rozumiem zamiłowania do flag śmiertelników. Wszystko to bzdura!"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Kiedyś napuszona rzecz, teraz nic nie znaczy."
+	DESCRIBE.RAINOMETER.POLARSTORM = "Najlepiej byłoby się schować nawet jeśli ta maszyna nie może się zdecydować."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Próbujesz mnie tylko nastraszyć! Czyż nie?"
 
-    --	Items
+--	Items
 
     --	Food
     DESCRIBE.DRYICECREAM = "Rozpoznaję żart, gdy go widzę!"
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
     --	Crafting
     DESCRIBE.BLUEGEM_OVERCHARGED = "W powietrzu czy w klejnocie, twoja dusza nadal będzie moja."
     DESCRIBE.BLUEGEM_SHARDS = "Upss! Znów go popsułem."
+	DESCRIBE.EMPEROR_EGG = "Czy wrócą po nie? Mmm. Lepiej ję zabrać!"
     DESCRIBE.MOOSE_POLAR_ANTLER = "No cóż, wielka szkoda, dla ciebie!"
     DESCRIBE.POLAR_DRYICE = "Tak zimny jak się da, idealny dla mnie."
     DESCRIBE.POLARBEARFUR = "Grube futro do zabawy na śniegu."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
     --	Equipments
     DESCRIBE.ANTLER_TREE_STICK = "Ten kijek nadaje się do chodzenia."
     DESCRIBE.ARMORPOLAR = "Gdy obrażenia wchodzą w gre, dodaj więcej futra!"
+	DESCRIBE.EMPEROR_PENGUINHAT = "Niech żyje ryba!"
+	DESCRIBE.COMPASS_POLAR = "Nie mam żadnego współczucia dla tej wadliwej rzeczy!"
     DESCRIBE.FROSTWALKERAMULET = "Nowe ścieżki się otwierają, gdy woda się oziembia."
     DESCRIBE.ICICLESTAFF = "Bądź czujny! Ponieważ kolce mogą zostawić niemiły ślad."
     DESCRIBE.POLAR_SPEAR = "Lód i patyki są dla siebie stworzone."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
     DESCRIBE.POLARFLEA_SACK = "Co jest w środku? To dopiero niespodzianka!"
     DESCRIBE.POLARICESTAFF = "Nieładnie jest zostawiać naszych gości uwięzionych w lodzie!"
     DESCRIBE.POLARMOOSEHAT = "Puszysta korona do ukrywania swojego mroźnego grymasu."
+	DESCRIBE.WINTERS_FISTS = "Czasami różnica między żartem a morderstwem z zimną krwią jest tak niewielka."
 
     --	Others
     DESCRIBE.ARCTIC_FOOL_FISH = "Ooo, Wes! Powinieneś był powiedzieć mi wcześniej o tych żartach!"

@@ -13,12 +13,13 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		"Halo...? Czy ktoś tu jest?",
 		"Nie chcemy zgubić naszych przyjaciół w śniegu...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "To widać, ptaki nie mają z nami szans!"
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Ziemia zatrząsła się jak galaretka!"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Zbyt niebezpiecznie."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "No cóż, to dość miłe-"
 	
 	--	Buffs
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Mama byłaby wściekła jakby nas takich zobaczyła..."
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Mama byłaby wściekła jakby mnie takiego zobaczyła..."
 	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Czy możemy znowu pobawić się w śniegu... tym razem z kurtką?"
 	
 --	Worldgen
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Coś zobaczyliśmy! Ale co?"
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Nie możemy jeszcze pójść głębiej, może później?" -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Lepiej uważać, żeby się tu na górze nie poślizgnąć.",
+		PENGUIN = "Hej! Nie w twarz!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Wątpimy, że roztopiłby się na naszym języku."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "My też mamy dużą armię! Ale zamek wciąż jest w budowie...",
+		HOSTILE = "Zobaczmy, która jest lepsza, okej?",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Nie ukradliśmy żadnego jajka! Obiecujemy!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Stuknęło się w głowę! Biedny łosiek...",
 		ANTLER = "Są o wiele większe niż sobie wyobrażaliśmy!",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Och. Nie powinniśmy patrzeć. Prawda?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Kto żongluje najlepiej pomiędzy cesarzem, Wes'em, a Wolfgang'iem?"
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Jest też królem popisów."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Szkoda, że ​​posągi nie potrafią tańczyć!"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "Pali się? Nie widzimy tu z dołu!",
 		ON = "Aaah, tego właśnie potrzebowaliśmy!",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "Powinniśmy się odsunąć, nie chcemy się przyglądać rybom ZA blisko."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Maszyna do wydostania ryb spod lodu."
+	DESCRIBE.TOWER_POLAR_FLAG = "Pomachajmy mu spowrotem!"
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "A więc... czy to teraz nasze królestwo?"
+	DESCRIBE.RAINOMETER.POLARSTORM = "Czy nie powinniśmy powiedzieć o tym innym?"
+	DESCRIBE.WINTEROMETER.POLARSTORM = "Czy coś jest nie tak, Panie Pomiarze Termiczny?"
 	
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Bardziej błyskotliwe i fajniejsze!"
 	DESCRIBE.BLUEGEM_SHARDS = "Może mogliśmy być troche bardziej ostrożni."
+	DESCRIBE.EMPEROR_EGG = "Więc zostawili swoje dzieci? Tak po prostu?"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Mamy twoje rogi! I... życie, oprócz tego."
 	DESCRIBE.POLAR_DRYICE = "Te są zabronione w walkach na śnieżki."
 	DESCRIBE.POLARBEARFUR = "Mamy sobie poduszkę."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Po wszystkich tych latach... perfekcyjny patyk!"
 	DESCRIBE.ARMORPOLAR = "Chcielibyśmy go nosić na zawsze."
+	DESCRIBE.COMPASS_POLAR = "Trudno mu znaleźć drogę."
+	DESCRIBE.EMPEROR_PENGUINHAT = "Czy to oznacza, że wygraliśmy?"
 	DESCRIBE.FROSTWALKERAMULET = "Lepiej mieć zimne nogi niż mokre."
 	DESCRIBE.ICICLESTAFF = "Ojoj! To wygląda na ostre!"
 	DESCRIBE.POLAR_SPEAR = "Jak wielki sopel na patyku!"
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Do noszenia całego oddziału na plecach."
 	DESCRIBE.POLARICESTAFF = "Awaryjna sieć lodowa."
 	DESCRIBE.POLARMOOSEHAT = "Czapka zrobiona z przyjaciół pana Woodiego."
+	DESCRIBE.WINTERS_FISTS = "Nie jest aż tak niekomfortowe, gdy masz puchate dłonie."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Dobra zabawa póki nie trafi na twoje plecy!"

@@ -13,6 +13,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		"To zajmie... wieczność...",
 		"Hrrrrgh...",
 	}
+	ANNOUNCE.ANNOUNCE_EMPEROR_ESCAPE = "Ha! Odlatujcie, wszyscy! Nie, czekaj..."
 	ANNOUNCE.ANNOUNCE_POLARGLOBE = "Aj! Koniec jest bliski... a może nie?"
 	ANNOUNCE.ANNOUNCE_POLARICE_PLOW_BAD = "Coś mi mówi, że tutaj to lepiej nie próbować."
 	ANNOUNCE.ANNOUNCE_THRONE_GIFT_TAKEN = "Dziękuję... ale teraz sobie już pójde."
@@ -39,10 +40,20 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Jakaś to rzecz albo nie..."
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Będę musiała tu wrócić innym razem." -- TEMP QUOTE
+	DESCRIBE.TOWER_POLAR = {
+		GENERIC = "Wieża, nie ta zegarowa.",
+		PENGUIN = "Poczekaj no jak tylko dorwę cię w moję płetwy!",
+	}
 	DESCRIBE.TUMBLEWEED_POLAR = "Nie mam czasu ganiać się za płatkami śniegu."
 	
 --	Mobs
 	
+	DESCRIBE.EMPEROR_PENGUIN = {
+		GENERIC = "Czy on naprawdę jest bogaty, jeśli wszystkie jego aktywa są zamrożone?",
+		HOSTILE = "Wolę zginąć walcząc, niż trafić do więzienia!",
+	}
+	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Zdecydowanie dużo w tym nie widzisz."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "No cóż. Czy to znaczy, że wygrałeś?",
 		ANTLER = "Prawdopodobnie bardziej podatne na utrzymanie pozycji niż inne.",
@@ -69,6 +80,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	
 --	Buildings
 	
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "No cóż. Niektórych rzeczy nie da się odzobaczyć."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Nawet z kamienia chce się popisywać."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "On naprawdę uważa się za ponadczasowego..."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Czy jego ogromne ego to wszystko, co powinniśmy o nim zapamiętać?"
 	DESCRIBE.POLAR_BRAZIER = {
 		GENERIC = "No tak, tak. Potrzebuję opału.",
 		ON = "Jeśli trzeszczy, to działa.",
@@ -86,6 +101,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	}
 	DESCRIBE.POLARICE_PLOW = "No dawaj... bo uciekną!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Czemu by nie połowić gdzieś mniej zimniej?"
+	DESCRIBE.TOWER_POLAR_FLAG = "Jedyne co robi to próbuje uciec przed wiatrem."
+	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Pozwoliłabym mu nieść kurz, albo śnieg, wszystko jedno."
+	DESCRIBE.RAINOMETER.POLARSTORM = "To nie może być dobre..."
+	DESCRIBE.WINTEROMETER.POLARSTORM = "O rany... co to tam znaczyło?"
 
 --	Items
 	
@@ -98,6 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Mam takie przeczucie, że może eksplodować w każdej chwili."
 	DESCRIBE.BLUEGEM_SHARDS = "I tak wole pracować z drobniejszymi kawałkami."
+	DESCRIBE.EMPEROR_EGG = "Nic z niego nie wyjdzie... najlepiej wykorzystać je w jakiś inny sposób."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Lepiej żeby to było tego warte."
 	DESCRIBE.POLAR_DRYICE = "I co ja mogłabym zrobić z tego?"
 	DESCRIBE.POLARBEARFUR = "Jak trzymanie ciepłego śniegu."
@@ -106,6 +126,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Equipments
 	DESCRIBE.ANTLER_TREE_STICK = "Ooo, dokładnie to czego potrzebowałam!"
 	DESCRIBE.ARMORPOLAR = "Nareszcie jakaś znośna zbroja."
+	DESCRIBE.COMPASS_POLAR = "Wyobraź sobie, czytać zegar w ten sposób... o, zgrozo."
+	DESCRIBE.EMPEROR_PENGUINHAT = "Nie zastąpię go."
 	DESCRIBE.FROSTWALKERAMULET = "Świetnie! Mam już dość tych przesklętych rzek."
 	DESCRIBE.ICICLESTAFF = "Uwaga na sojuszniczy ogień... i sojuszniczy lód. Wszystkie żywioły chcą naszej śmierci!"
 	DESCRIBE.POLAR_SPEAR = "Korzystaj z niego póki jest świeży."
@@ -115,6 +137,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "No cóż, jeśli od razu wskoczą do środka, nie ma problemu..."
 	DESCRIBE.POLARICESTAFF = "Wszyscy, i to mówie WSZYSCY, zasługują na przerwę."
 	DESCRIBE.POLARMOOSEHAT = "Mam tylko nadzieję, że nie wezmą mnie za chodzącego steka..."
+	DESCRIBE.WINTERS_FISTS = "Nie musiałabym ciągle ich zdejmować, gdyby nie były takie ciężkie."
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Nie mam czasu na te wygłupy! (A może i mam...?)"

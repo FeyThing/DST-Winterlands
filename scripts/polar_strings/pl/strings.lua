@@ -17,12 +17,17 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.ROCK_POLAR = "Lodowy Wzgórek"
 	
 	--	Misc
-	NAMES.POLARSNOW_MATERIAL = "W Wysokim Śniegu"
+	NAMES.CAVE_ENTRANCE_POLAR = "Zapadlisko?" -- TEMP NAME
 	NAMES.IN_POLARSNOW = "Śnieg?"
+	NAMES.POLARSNOW_MATERIAL = "W Wysokim Śniegu"
+	NAMES.TOWER_POLAR = "Lodowa Wieża"
+	NAMES.TOWER_POLAR_FLAG = "Cesarski Proporczyk"
 	NAMES.TUMBLEWEED_POLAR = "Biegus Tundrowy"
 	
 --	Mobs
 	
+	NAMES.EMPEROR_PENGUIN = "Cesarz Pingwin"
+	NAMES.EMPEROR_PENGUIN_GUARD = "Pingwardzista"
 	NAMES.MOOSE_POLAR = "Łoś"
 	NAMES.MOOSE_SPECTER = "Łoś Widmo"
 	NAMES.OCEANFISH_MEDIUM_POLAR1 = "Okoń Północny"
@@ -36,6 +41,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 --	Buildings
 	
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Posąg Cesarza Pingwina"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_FRUITY_BUILDER = "(Pikantny) Posąg Cesarza"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Posąg Cesarza Pingwina"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE_BUILDER = "(Żonglujący) Posąg Cesarza"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "Posąg Cesarza Pingwina"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC_BUILDER = "(Majestatyczny) Posąg Cesarza"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Posąg Cesarza Pingwina"
+	NAMES.CHESSPIECE_EMPEROR_PENGUIN_SPIN_BUILDER = "(Wirujący) Posąg Cesarza"
 	NAMES.POLAR_BRAZIER = "Koksownik"
 	NAMES.POLAR_BRAZIER_ITEM = "Koksownik"
 	NAMES.POLAR_THRONE = "Niegrzeczny Tron"
@@ -49,6 +62,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	--	Food
 	NAMES.DRYICECREAM = "Suche Lody"
+	NAMES.ICECREAM_EMPEROR = NAMES.ICECREAM
 	NAMES.ICELETTUCE = "Sałata Lodowa"
 	NAMES.ICEBURRITO = "Brrito"
 	NAMES.POLARCRABLEGS = "Królewskie Nóżki Krabowe"
@@ -57,6 +71,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Crafting
 	NAMES.BLUEGEM_OVERCHARGED = "Przeładowany Niebieski Klejnot"
 	NAMES.BLUEGEM_SHARDS = "Odłamki Niebieskiego Klejnotu"
+	NAMES.EMPEROR_EGG = "Zmrożone Jajo"
 	NAMES.MOOSE_POLAR_ANTLER = "Widmowe Poroże"
 	NAMES.POLAR_DRYICE = "Suchy Lód"
 	NAMES.POLARBEARFUR = "Futro Polarne"
@@ -65,6 +80,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Equipments
 	NAMES.ANTLER_TREE_STICK = "Gałąź Poroża"
 	NAMES.ARMORPOLAR = "Puchata Zbroja"
+	NAMES.COMPASS_POLAR = "Mroźny Kompas"
+	NAMES.EMPEROR_PENGUINHAT = "Cesarska Korona"
 	NAMES.FROSTWALKERAMULET = "Najmroźniejszy Amulet"
 	NAMES.ICICLESTAFF = "Sopelowe Berło"
 	NAMES.POLAR_SPEAR = "Stalagdzida"
@@ -75,6 +92,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARFLEA_SACK = "Pakiet Autodrapacza"
 	NAMES.POLARICESTAFF = "Zimowa Różdżka"
 	NAMES.POLARMOOSEHAT = "Uszanka"
+	NAMES.WINTERS_FISTS = "Zimowe Pięści"
+	NAMES.WINTERS_FISTS_BLUEPRINT = "Projekt Zimowych Pięści"
 	
 	--	Others
 	NAMES.ARCTIC_FOOL_FISH = "Prima Arybilis"
@@ -84,6 +103,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARICEPACK = "Paczka Lodu"
 	NAMES.POLARTRINKET_1 = "Przytulny Gnom"
 	NAMES.POLARTRINKET_2 = "Przytulna Gnomka"
+	NAMES.TOWER_POLAR_FLAG_ITEM = "Cesarski Proporczyk"
 	NAMES.TRAP_POLARTEETH = "Lodowata Pułapka"
 	NAMES.TURF_POLAR_CAVES = "Gleba Lodowej Jaskini"
 	NAMES.TURF_POLAR_DRYICE = "Brukowany Suchy Lód"
@@ -101,11 +121,18 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Names
 	STRINGS.SKIN_NAMES.ms_polarmoosehat_white = "Ozdobiona Uszanka"
 	
+	STRINGS.SKIN_NAMES.ms_loading_polarfox = "Slick in the Snow"
+	
 	--	Desc
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "Niedźwiedzie mówią, że wyglądają świetnie z tymi powpychanymi patykami!"
 	
+	STRINGS.SKIN_DESCRIPTIONS.ms_loading_polarfox = "Niedźwiedzie legendy mówią: zrób wystarczająco dobrego aniołka w śniegu, a następnego dnia zostaną tylko ślady jego łap."
+	
 --	Speech, etc
+
 	STRINGS.POLARCOLD_SNUFFING = {"(uff) ", "(sniff) ", "(wydech) ", "(ciąg nosem) "}
+	
+	STRINGS.EMPEROR_PENGUIN_SIGNTEXT = {"Waa Waaw!", "Waaaaaa.", "Wa wa wa. Waw.", "Waaa, wah, waaa.", "Waaaw. Waa!"}
 	
 	STRINGS.POLARBEARNAMES = {
 		--	cold foods
@@ -261,6 +288,10 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.POLARAMULET_CRAFT = "Wymień"
 	STRINGS.ACTIONS.POLARPLOW = "Odśnież"
 	STRINGS.ACTIONS.SNOWGLOBE = "Zatrząś!"
+	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS = "Zmiażdż"
+	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_1 = "Śnieżka!"
+	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_2 = "Duża śnieżka!!"
+	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_3 = "Wielka śnieżka!!!"
 	STRINGS.ACTIONS.STICK_ARCTIC_FISH = {
 		GENERIC = "Przyklej do niego!",
 		VAR2 = "Zrób to!",
@@ -284,6 +315,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "To drzewo ma solidne gałęzie, które mogą się przydać.\nNiestety, siekery nie dadzą rade ich zciąć..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Ułatwia poruszanie się w wysokim śniegu i zwiększa prędkość poruszania się o 25%."
+	STRINGS.SCRAPBOOK.SPECIALINFO.COMPASS_POLAR = "Działa jak normalny kompas. Ale wskazuję najbardziej północne miejsce ze wszystkich."
+	STRINGS.SCRAPBOOK.SPECIALINFO.EMPEROR_EGG = "...ktoś mógłby wiedzieć... co z nim zrobić..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "Zamraża wodę wokół nosiciela oraz po wpadnięci do wody.\n\nZnacznie poprawia stabilność na lodzie."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Zjedzienie tego pomoże na chwile przebić się przez najwyższe góry śnieżne z łatwością."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICICLESTAFF = "Przyzywa salwę 15 sopli.\n\nNotatka dla siebie: Unikaj obszaru salwy."
@@ -294,7 +327,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "Wygląda dość podejrzanie...  no coż, jeśli można skorzystać z usług to czemu nie."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Lekko poprawia widoczność podczas zamieci... jest też dobry do udawania jelenia."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Tworzy wokół nosiciela lodową barierę, która chroni przed zamieciami i soplami ale potrafi zamrozić istoty w pobliżu.\nUderzenia mają wysoką szanse na chwilowe zakłucenie działania barriery."
-	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "The okropne małe pełzaki są wszędzie! W wysokiej trawie, na ssakach... sprawdzałeś/aś ostatnio swoje włosy?"
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "Te okropne małe pełzaki są wszędzie! W wysokiej trawie, na ssakach... sprawdzałeś/aś ostatnio swoje włosy?"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "Przytulny pojemnik z 10 miejscami, uwielbiany przez śnieżne pchły. Te ze środka będą wskakiwały i wyskakiwały bez podgryzania oraz będą wyskakiwać w obronie swojego nowego domu."
 	STRINGS.SCRAPBOOK.SPECIALINFO.OCEANFISH_IN_ICE = "Wygląda jakby można było ją wytopić... albo, poprostu, zbierz je wszystkie?"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Spowalnia psucie się porzywienia w ekwipunku lub w skrzyni o 25%. Efekt nakłada się mnożąco."
@@ -302,19 +335,28 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICESTAFF = "Wysyła mrożącą falę uderzeniową z dużym zasięgiem."
 	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "Latają sobie na wietrze i po drodze zbierają śmieci.\n\nWszelakie śmieci.\n\nZaskakujące śmieci."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Ktokolwiek kto zadziera z tą ścianą powienien troche ochłonąć."
-	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "Plugs into WX78's circuit board.\n\nRequires 1 socket and multiplies all sorts of Naughtiness gained as followed per circuit installed:\nx2 > x3 > x3.5 > x4 > x4.5 > x5"
+	STRINGS.SCRAPBOOK.SPECIALINFO.WINTERS_FISTS = "Uderz w ziemie tymi ciężkimi bryłami lodu, aby rozbić obszary pokryte śniegiem.\n\nStojąc w śniegu można wykonywać kombinacje śnieżek: pierwsza powodująca niewielkie obrarzenia, druga odpychająca, a trzecia powodująca wielką śnieżną zamieć!"
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "Podłączany do płyty na obwody wewnątrz WX-78.\n\nWymaga 1 gniazda i mnoży każde zdobyte punkty niegrzeczności w zależności od ilości zainstalowanych Obwodów Dla Niegrzecznych:\nx2 > x3 > x3.5 > x4 > x4.5 > x5"
 
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "Najbardziej kapryśne warzywo.. .\nale to nie powód żeby traktować je chłodno. -W"
+	
+	STRINGS.UI.HUD.TROPHYSCALE_PREFAB_OVERRIDE_OWNER.emperor_penguin = "Cesarz w Samej Swojej Odsłonie"
+	STRINGS.UI.HUD.TROPHYSCALE_PREFAB_OVERRIDE_OWNER.tower_polar = "Cesarska Liga Wędkarska"
 	
 	--	Recipes
 	RECIPE_DESC.ARCTIC_FOOL_FISH = "Przyczep komuś do pleców. Rozrywka gwarantowana! Przynajmniej dla ciebie."
 	RECIPE_DESC.ARMORPOLAR = "Chroni przed obrażeniami i gryzącym zimnem."
 	RECIPE_DESC.BLUEGEM_OVERCHARGED = "...upoluj go...\n...chowa się w zamieci."
+	RECIPE_DESC.CHESSPIECE_EMPEROR_PENGUIN_FRUITY_BUILDER = "Wyrzeźb cesarza jak jedną ze swoich francuskich mew."
+	RECIPE_DESC.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE_BUILDER = "Naprawdę wiedział, jak urządzić imprezę."
+	RECIPE_DESC.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC_BUILDER = "Ta poza dodaje \"brr\" do burleska."
+	RECIPE_DESC.CHESSPIECE_EMPEROR_PENGUIN_SPIN_BUILDER = "Zamrożony w przecudnym zawirowaniu."
 	RECIPE_DESC.FROSTWALKERAMULET = "Woda nigdy nie była tak zimna!"
 	RECIPE_DESC.ICICLESTAFF = "Przyzwij dokładnie to co przysięgaleś zniszczyć."
 	RECIPE_DESC.POLAR_BRAZIER_ITEM = "Ognisko, które możesz ze sobą wziąć gdzie tylko chcesz."
 	RECIPE_DESC.POLAR_DRYICE = "Zima, w formie cegły."
 	RECIPE_DESC.POLAR_LAVAE_TOOTH = "Czy bycie rodzicem to za duża odpowiedzialność?"
+	RECIPE_DESC.POLAR_SPEAR = "Całkiem fajne, hę?"
 	RECIPE_DESC.POLARAMULET_BUILDER = "Złóż swój własny, ozdobiony naszyjnik."
 	RECIPE_DESC.POLARBEARHAT = "Wyprzedź zamieć."
 	RECIPE_DESC.POLARBEARHOUSE = "Ta chata posiada niedźwiedzia."
@@ -324,11 +366,13 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.POLARICEPACK = "Utrzymuj swoje jedzenie zimne, w kieszeni czy w skrzyni."
 	RECIPE_DESC.POLARICESTAFF = "Zamroź wszystkich przeciwników na swojej drodze!"
 	RECIPE_DESC.SHARDS_BLUEGEM = "Zimna praca popłaca."
-	RECIPE_DESC.SNOWBALL_ITEM_POLAR = "Przenoścny śnieg?\nJakie to wygodne!"
+	RECIPE_DESC.SNOWBALL_ITEM_POLAR = "Przenośny śnieg?\nJakie to wygodne!"
 	RECIPE_DESC.TRAP_POLARTEETH = "Wyskakuje spod ziemi i zamraża każdego, kto na niej stanie."
 	RECIPE_DESC.TURF_POLAR_CAVES = "Chłodny bruk z najchłodniejszej jaskini."
 	RECIPE_DESC.TURF_POLAR_DRYICE = "Droga do której potrzeba skarpetek."
 	RECIPE_DESC.WALL_POLAR_ITEM = "Najlepsza defensywa to ta zimna."
+	RECIPE_DESC.WINTERS_FISTS = "Niech rozpocznie się pięściowanie!"
+	RECIPE_DESC.WINTERS_FISTS_BLUEPRINT = "...zapomniana wiedza... ma swoją cenę."
 	RECIPE_DESC.WINTERCOOKING_POLARCRABLEGS = "Odkryj kuchnię nadmorską."
 	RECIPE_DESC.WX78MODULE_NAUGHTY = "Sprawia, że ​​stajesz się bardziej pikantny."
 	
@@ -370,3 +414,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	local OLDSCRAPBOOK_BOOK_RAIN = STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN or ""
 	STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN = OLDSCRAPBOOK_BOOK_RAIN.."\n\nTa książka ma efekt na zamieć śnieżną w Krainie Lodu."
+		
+	local OLDSCRAPBOOK_RAINOMETER = STRINGS.SCRAPBOOK.SPECIALINFO.RAINOMETER or ""
+	STRINGS.SCRAPBOOK.SPECIALINFO.RAINOMETER = OLDSCRAPBOOK_RAINOMETER.." Wzburza się przed zbliżającymi się zamieciami."
+	
+	local OLDSCRAPBOOK_WINTEROMETOR = STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR or ""
+	STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR = OLDSCRAPBOOK_WINTEROMETOR.."\nI wzburza się, przed zbliżającymi się zamieciami."
