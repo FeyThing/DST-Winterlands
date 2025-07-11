@@ -43,7 +43,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.CAVE_ENTRANCE_POLAR = "They're not done working on that yet." -- TEMP QUOTE
 	DESCRIBE.TOWER_POLAR = {
 		GENERIC = "Grand, cold, and fleeting. Just like... sigh.",
-		PENGUIN = "To built a whole stage for such a woeful performance.",
+		PENGUIN = "To build a whole stage for such a woeful performance.",
 	}
 	DESCRIBE.TUMBLEWEED_POLAR = "A whimsical display, but entirely unimportant."
 	
@@ -80,7 +80,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	
 --	Buildings
 	
-	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Rest assured, there is no such statues of me. I think."
+	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_FRUITY = "Rest assured, there are no such statues of me. I think."
 	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_JUGGLE = "Perhaps it has a metaphorical meaning?"
 	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_MAGESTIC = "I wouldn't assume he took some inspiration of my work..."
 	DESCRIBE.CHESSPIECE_EMPEROR_PENGUIN_SPIN = "Best enjoy your days of grandeur while you have them."
@@ -117,7 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I'm getting back what's rightfully mine, even if it's changed a little."
 	DESCRIBE.BLUEGEM_SHARDS = "Glitters."
-	DESCRIBE.EMPEROR_EGG = "Can't make omelette with unbrekable eggs."
+	DESCRIBE.EMPEROR_EGG = "Can't make omelette with unbreakable eggs."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "I ought to extract the magic inside."
 	DESCRIBE.POLAR_DRYICE = "Reminds me... I've never had myself sculpted in ice, yet."
 	DESCRIBE.POLARBEARFUR = "Now this is- Gah! So many fleas!"

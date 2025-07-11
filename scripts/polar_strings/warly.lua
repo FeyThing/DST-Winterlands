@@ -40,7 +40,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	
 	--	Misc
 	ANNOUNCE.DESCRIBE_IN_POLARSNOW = "Anything edible in here?"
-	DESCRIBE.CAVE_ENTRANCE_POLAR = "Ça alors... it's clsose. Maybe another time?" -- TEMP QUOTE
+	DESCRIBE.CAVE_ENTRANCE_POLAR = "Ça alors... it's close. Maybe another time?" -- TEMP QUOTE
 	DESCRIBE.TOWER_POLAR = {
 		GENERIC = "A whole ice castle? I got to respect that.",
 		PENGUIN = "I bet his meatball game is strong!",
