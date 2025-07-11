@@ -43,7 +43,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.CAVE_ENTRANCE_POLAR = "They're not done working on that yet." -- TEMP QUOTE
 	DESCRIBE.TOWER_POLAR = {
 		GENERIC = "Grand, cold, and fleeting. Just like... sigh.",
-		PENGUIN = "To built a whole stage for such a woeful performance.",
+		PENGUIN = "To build a whole stage for such a woeful performance.",
 	}
 	DESCRIBE.TUMBLEWEED_POLAR = "A whimsical display, but entirely unimportant."
 	
