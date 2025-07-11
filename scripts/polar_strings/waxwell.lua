@@ -117,7 +117,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I'm getting back what's rightfully mine, even if it's changed a little."
 	DESCRIBE.BLUEGEM_SHARDS = "Glitters."
-	DESCRIBE.EMPEROR_EGG = "Can't make omelette with unbrekable eggs."
+	DESCRIBE.EMPEROR_EGG = "Can't make omelette with unbreakable eggs."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "I ought to extract the magic inside."
 	DESCRIBE.POLAR_DRYICE = "Reminds me... I've never had myself sculpted in ice, yet."
 	DESCRIBE.POLARBEARFUR = "Now this is- Gah! So many fleas!"
