@@ -51,7 +51,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	
 	DESCRIBE.EMPEROR_PENGUIN = {
 		GENERIC = "Hey Maxwell, see any resemblance?",
-		HOSTILE = "He's loosing his cool!",
+		HOSTILE = "He's losing his cool!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Woah man, chill down!"
 	DESCRIBE.MOOSE_POLAR = {
