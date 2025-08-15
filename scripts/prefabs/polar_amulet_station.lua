@@ -326,7 +326,7 @@ local function fn()
 	
 	inst._speechstr = net_string(inst.GUID, "polaramulet_station._speechstr", "speechstrdirty")
 	
-	MakeSnowCoveredPristine(inst)
+	--MakeSnowCoveredPristine(inst)
 	
 	if not TheNet:IsDedicated() then
 		inst:AddComponent("pointofinterest")

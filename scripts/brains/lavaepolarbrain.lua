@@ -101,6 +101,7 @@ end)
 function LavaePolarBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
 		
 		WhileNode(function() return self.inst.components.hunger:GetPercent() < 0.05 end, "STARVING BABY ALERT!",
 			PriorityNode{

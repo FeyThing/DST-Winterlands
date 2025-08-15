@@ -48,7 +48,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.TUMBLEWEED_POLAR = "A whimsical display, but entirely unimportant."
 	
 --	Mobs
-
+	
 	DESCRIBE.EMPEROR_PENGUIN = {
 		GENERIC = "What resemblance? Is it the suit - no, the class!",
 		HOSTILE = "Definitively wasn't for his cool temper.",

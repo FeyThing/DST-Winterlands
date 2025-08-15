@@ -144,7 +144,7 @@ return {
 				},
 				{
 					name = "",
-					type = "catcoonhat",
+					type = "hat",
 					shape = "rectangle",
 					x = 272,
 					y = 310,

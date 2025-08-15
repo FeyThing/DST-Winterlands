@@ -7,6 +7,7 @@ GLOBAL.setfenv(1, GLOBAL)
 	local params = containers.params
 
 --	Necklace "Shop"
+
 	params.polaramulet_station =  {
 		widget = {
 			slotpos = {

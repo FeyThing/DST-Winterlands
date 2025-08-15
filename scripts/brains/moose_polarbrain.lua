@@ -50,6 +50,7 @@ end)
 function Moose_PolarBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
 		
 		WhileNode(function() return self.inst.hasantler and (not self.inst.components.combat.target or not self.inst.components.combat:InCooldown()) end, "Ram Attack",
 			ChaseAndRam(self.inst, MAX_CHARGE_TIME, CHARGE_GIVEUP_DIST, MAX_CHARGE_DIST)),

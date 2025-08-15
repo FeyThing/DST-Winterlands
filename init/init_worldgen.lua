@@ -100,7 +100,7 @@ if polar_level.overrides == nil then
 end
 
 --polar_level.overrides.prefabswaps_start = "classic"
---polar_level.overrides.season_start = "winter"
+polar_level.overrides.season_start = "winter"
 polar_level.overrides.start_location = "polar"
 polar_level.overrides.task_set = "polar"
 

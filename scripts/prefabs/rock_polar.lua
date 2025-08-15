@@ -174,6 +174,7 @@ local function fn()
 	
 	MakeHauntableWork(inst)
 	MakeSnowCovered(inst)
+	SetLunarHailBuildupAmountSmall(inst)
 	
 	inst.MakeCaveEntrance = MakeCaveEntrance
 	inst.OnSave = OnSave

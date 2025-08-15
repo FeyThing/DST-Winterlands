@@ -1,3 +1,6 @@
+-- ADM: I'm no longer working on the mod but I think it's essential the update comes out, the emperor is unfinished so it was turned into a miniboss... with less unique things
+-- well, for now, if anyone wishes to pick it up again, sorry.
+
 local assets = {
 	Asset("ANIM", "anim/penguin_emperor.zip"),
 	Asset("ANIM", "anim/penguin.zip"),
@@ -7,11 +10,14 @@ local assets = {
 }
 
 local prefabs = {
+	"compass_polar",
 	"emperor_egg",
 	"pondfish",
+	"winter_ornament_boss_emperor_penguin",
 }
 
 SetSharedLootTable("emperor_penguin", {
+	{"compass_polar", 			1},
 	{"emperor_egg", 			1},
 	{"feather_crow", 			1},
 	{"feather_crow", 			0.5},
@@ -266,7 +272,8 @@ local function OnTeleported(inst)
 end
 
 local function OnMinHealth(inst)
-	if not POPULATING and not (TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.defeated) then
+	if not POPULATING and TheWorld.components.emperorpenguinspawner and not TheWorld.components.emperorpenguinspawner.defeated then
+		TheWorld.components.emperorpenguinspawner:SpawnGuards(math.random(5, 10))
 		inst:MakeDefeated()
 	end
 end
@@ -286,6 +293,22 @@ local function OnTimerDone(inst, data)
 		end
 	end
 end
+
+--[[local function IsInCastle(inst, t)
+	if TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst) then
+		inst.time_outside_castle = nil
+		
+		return true
+	elseif inst.time_outside_castle and t then
+		return GetTime() - inst.time_outside_castle > t
+	else
+		if inst.time_outside_castle == nil then
+			inst.time_outside_castle = GetTime()
+		end
+		
+		return false
+	end
+end]]
 
 local function fn()
 	local inst = CreateEntity()
@@ -329,6 +352,8 @@ local function fn()
 		return inst
 	end
 	
+	inst.override_combat_fx_size = "small"
+	
 	inst.attackerUSERIDs = {}
 	inst._soundpath = "dontstarve/creatures/pengull/" -- TEMP
 	
@@ -351,9 +376,9 @@ local function fn()
 	
 	inst:AddComponent("healthtrigger")
 	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], CallGuards)
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], EnterJuggleTrigger)
+	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], EnterJuggleTrigger)
 	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], CallGuards)
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], EnterJuggleTrigger)
+	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], EnterJuggleTrigger)
 	
 	inst:AddComponent("inspectable")
 	inst.components.inspectable.getstatus = GetStatus
@@ -390,6 +415,7 @@ local function fn()
 	inst.eggsLayed = 0
 	inst.eggprefab = "emperor_egg"
 	inst.MakeDefeated = MakeDefeated
+	--inst.IsInCastle = IsInCastle
 	inst.DoExtraEgg = DoExtraEgg
 	inst.OnEntitySleep = OnEntitySleep
 	inst.OnEntityWake = OnEntityWake

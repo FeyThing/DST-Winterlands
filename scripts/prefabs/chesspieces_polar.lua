@@ -209,7 +209,7 @@ local chesspieces = {}
 for p = 1, #PIECES do
 	table.insert(chesspieces, makepiece(p))
 	table.insert(chesspieces, makebuilder(p))
-	for m = 1,#MATERIALS do
+	for m = 1, #MATERIALS do
 		table.insert(chesspieces, makepiece(p, m))
 	end
 end

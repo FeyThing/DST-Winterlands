@@ -125,7 +125,6 @@ end
 
 function Emperor_PenguinBrain:OnStart()
 	local root = PriorityNode({
-		BrainCommon.PanicTrigger(self.inst),
 		WhileNode(function() return ShouldRunAway(self.inst) end, "Escaping",
 			PriorityNode({
 				IfNode(function() return FindNearbyHopPoint(self.inst) end, "Close Enough To Hop Into The Ocean!",
@@ -135,8 +134,8 @@ function Emperor_PenguinBrain:OnStart()
 		
 		IfNode(function() return ShouldCallGuards(self.inst) end, "Call Guards",
 			ActionNode(function() self.inst.sg:GoToState("summon_guards") end)),
-		IfNode(function() return ShouldJuggle(self.inst) end, "Go Juggling",
-			ActionNode(function() self.inst.sg:GoToState("emperor_juggle") end)),
+		--[[IfNode(function() return ShouldJuggle(self.inst) end, "Go Juggling",
+			ActionNode(function() self.inst.sg:GoToState("emperor_juggle") end)),]]
 		WhileNode(function() return ShouldGetToTower(self.inst) end, "Climb Tower",
 			ParallelNode{
 				PriorityNode({

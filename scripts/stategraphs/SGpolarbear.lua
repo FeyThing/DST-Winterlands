@@ -26,8 +26,9 @@ local events = {
 	CommonHandlers.OnSink(),
 	CommonHandlers.OnFallInVoid(),
 	CommonHandlers.OnIpecacPoop(),
+	CommonHandlers.OnElectrocute(),
 	EventHandler("doattack", function(inst)
-		if not inst.components.health:IsDead() then
+		if not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
 			if inst.enraged and not (inst.components.timer and inst.components.timer:TimerExists("chompcooldown")) then
 				inst.sg:GoToState("attack_chomp")
 			else
@@ -483,5 +484,6 @@ CommonStates.AddHopStates(states, true, {pre = "boat_jump_pre", loop = "boat_jum
 CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddVoidFallStates(states)
 CommonStates.AddIpecacPoopState(states)
+CommonStates.AddElectrocuteStates(states)
 
 return StateGraph("polarbear", states, events, "idle", actionhandlers)

@@ -1,6 +1,7 @@
 local customizations = {
 --	WORLDSETTINGS
 	arctic_fools = 			{category = LEVELCATEGORY.SETTINGS, desc = "extraevent_descriptions", group = "events", masteroption = true, master_controlled = true, order = 0.14},
+	emperor_penguin = 		{category = LEVELCATEGORY.SETTINGS, group = "giants"},
 	icelettuce_regrowth = 	{category = LEVELCATEGORY.SETTINGS, desc = "speed_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 	polar_icicles = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	polar_throne = 			{category = LEVELCATEGORY.SETTINGS, group = "global", desc = "yesno_descriptions", world = {"forest", "shipwrecked", "porkland"}, order = 13.1},
@@ -113,6 +114,17 @@ WSO.Pre.tumbleweed_polar = function(difficulty)
 		--default = {TUMBLEWIND_SPAWNRATE_EARLY = 1, TUMBLEWIND_SPAWNRATE_LATER = 6},
 		many = 		{TUMBLEWIND_SPAWNRATE_EARLY = 1, TUMBLEWIND_SPAWNRATE_LATER = 4},
 		always = 	{TUMBLEWIND_SPAWNRATE_EARLY = 1, TUMBLEWIND_SPAWNRATE_LATER = 2},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
+end
+
+WSO.Pre.emperor_penguin = function(difficulty)
+	local tuning_vars = {
+		never = {SPAWN_EMPEROR_PENGUIN = false},
+		rare = {SPAWN_EMPEROR_PENGUIN_MOD = 0.5},
+		--default = {SPAWN_EMPEROR_PENGUIN_MOD = 1, SPAWN_EMPEROR_PENGUIN = true},
+		often = {SPAWN_EMPEROR_PENGUIN_MOD = 1.5},
+		always = {SPAWN_EMPEROR_PENGUIN_MOD = 2},
 	}
 	OverrideTuningVariables(tuning_vars[difficulty])
 end

@@ -71,6 +71,7 @@ end
 function PolarFleaBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
 		
 		EventNode(self.inst, "fleafindhost",
 			DoAction(self.inst, FindMammal)),

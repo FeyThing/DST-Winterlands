@@ -16,6 +16,7 @@ local events = {
 	CommonHandlers.OnWakeEx(),
 	CommonHandlers.OnFreeze(),
 	CommonHandlers.OnDeath(),
+	CommonHandlers.OnElectrocute(),
 	
 	EventHandler("locomote", function(inst)
 		if inst:ChargeRam() then
@@ -50,11 +51,15 @@ local events = {
 			end
 		end
 	end),
-	EventHandler("attacked", function(inst)
-		if (not inst.sg:HasStateTag("busy") or inst.sg:HasStateTag("caninterrupt")) and not inst.components.health:IsDead() then
+	EventHandler("attacked", function(inst, data)
+		if not inst.components.health:IsDead() then
+			if CommonHandlers.TryElectrocuteOnAttacked(inst, data) then
+				return
+			elseif not inst.sg:HasStateTag("electrocute") and (not inst.sg:HasStateTag("busy") or inst.sg:HasStateTag("caninterrupt")) then
 			--if not inst.components.combat:InCooldown() then
 				inst.sg:GoToState("hit")
 			--end
+			end
 		end
 	end),
 	EventHandler("doattack", function(inst, data)
@@ -415,7 +420,6 @@ CommonStates.AddCombatStates(states, {
 })
 
 CommonStates.AddFrozenStates(states)
-
 CommonStates.AddSleepExStates(states, {
 	starttimeline = {
 		TimeEvent(9 * FRAMES, function(inst)
@@ -423,7 +427,7 @@ CommonStates.AddSleepExStates(states, {
 		end),
 	},
 })
-
 CommonStates.AddSinkAndWashAshoreStates(states)
+CommonStates.AddElectrocuteStates(states)
 
 return StateGraph("moose_polar", states, events, "idle")

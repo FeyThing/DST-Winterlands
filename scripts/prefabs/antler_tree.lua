@@ -65,6 +65,7 @@ local function SetStump(inst)
 	inst:RemoveComponent("burnable")
 	inst:RemoveComponent("propagator")
 	inst:RemoveComponent("hauntable")
+	inst:RemoveComponent("lunarhailbuildup")
 	
 	if not inst:HasTag("burnt") then
 		MakeSmallBurnable(inst)

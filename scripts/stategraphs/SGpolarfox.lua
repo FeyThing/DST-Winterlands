@@ -22,6 +22,7 @@ local events = {
 	CommonHandlers.OnFreeze(),
 	CommonHandlers.OnSleepEx(),
 	CommonHandlers.OnWakeEx(),
+	CommonHandlers.OnElectrocute(),
 	
 	EventHandler("locomote", function(inst)
 		if inst.components.locomotor then
@@ -608,5 +609,6 @@ CommonStates.AddFrozenStates(states,
 )
 CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddVoidFallStates(states)
+CommonStates.AddElectrocuteStates(states)
 
 return StateGraph("polarfox", states, events, "idle", actionhandlers)

@@ -185,6 +185,7 @@ function PolarFoxBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicWhenScared(self.inst, 1),
 		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
 		
 		RunAway(self.inst, {fn = ShouldRunAway, oneoftags = AVOID_TAGS, notags = AVOID_NOT_TAGS}, RUN_AWAY_COMBAT_DIST, STOP_RUN_AWAY_DIST, nil, nil, nil, nil, ShouldDive),
 		IfNode(function() return TryDive(self.inst) end, "Try To Dive",

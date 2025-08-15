@@ -8,6 +8,8 @@ function GetAllPolarWinterOrnamentPrefabs()
 	local decor = {
 		"winter_ornament_polar_icicle_blue",
 		"winter_ornament_polar_icicle_white",
+		
+		"winter_ornament_boss_emperor_penguin",
 	}
 	
 	return decor
@@ -214,5 +216,6 @@ local ornament = {}
 
 table.insert(ornament, MakeOrnament("polar_icicle_blue", "winter_ornamentpolar"))
 table.insert(ornament, MakeOrnament("polar_icicle_white", "winter_ornamentpolar"))
+table.insert(ornament, MakeOrnament("boss_emperor_penguin", "winter_ornamentboss"))
 
 return unpack(ornament)

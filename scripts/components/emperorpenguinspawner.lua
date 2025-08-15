@@ -270,28 +270,35 @@ return Class(function(self, inst)
 			end
 		end
 		
-		return daysleft >= 12 and 0.1
+		local chance = daysleft >= 12 and 0.1
 			or daysleft >= 10 and 0.25
 			or daysleft >= 8 and 0.5
 			or 1
+			
+		return chance * TUNING.SPAWN_EMPEROR_PENGUIN_MOD
 	end
 	
 	function self:TrySpawnCastleAtColony(colony)
-		if self.ice_castle_pos then
+		return
+		--[[This is the intended spawn method for the castle, disabled due to unfinished combat
+		
+		if self.ice_castle_pos or not TUNING.SPAWN_EMPEROR_PENGUIN then
 			return
 		end
 		
-		local pt, valid = self:GetValidCastlePos(colony:GetPosition())
 		local chance = GetSpawnChanceForColony(colony)
-		
-		if valid and math.random() <= chance then
-			local spawned = self:SpawnCastle(pt)
-			if spawned then
-				self:SpawnEmperor()
-			end
+		if math.random() <= chance then
+			local pt, valid = self:GetValidCastlePos(colony:GetPosition())
 			
-			return spawned
-		end
+			if valid then
+				local spawned = self:SpawnCastle(pt)
+				if spawned then
+					self:SpawnEmperor()
+				end
+				
+				return spawned
+			end
+		end]]
 	end
 	
 	--	Combat utils

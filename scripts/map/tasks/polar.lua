@@ -28,8 +28,8 @@ AddTask("Polar Lands", {
 	room_choices = {
 		["PolarIsland_Walrus"] = 1,
 		["PolarIsland_Lakes"] = function() return 1 + math.random(SIZE_VARIATION) end,
-		["PolarIsland_BigLake"] = function() return math.random() <= 0.2 and 1 or 0 end,
-		["PolarIsland_BurntForest"] = function() return math.random() <= 0.33 and math.random(1, 2) or 0 end,
+		["PolarIsland_BigLake"] = 1,
+		["PolarIsland_BurntForest"] = 2,
 		["PolarIsland_BG"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
@@ -45,7 +45,7 @@ AddTask("Polar Caves", {
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
 		["PolarIsland_Caves"] = function() return 2 + math.random(SIZE_VARIATION) end,
-		["PolarIsland_TrappedCaves"] = function() return math.random() <= 0.33 and 1 or 0 end,
+		["PolarIsland_TrappedCaves"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
 	background_room = "Empty_Cove",
@@ -67,7 +67,7 @@ AddTask("Polar Floe", {
 	entrance_room = "MoonIsland_Blank",
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
-		["PolarIsland_FloeField"] = function() return math.random(6, 12) end,
+		["PolarIsland_FloeField"] = 9,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
 	background_room = "Empty_Cove",

@@ -117,6 +117,7 @@ local ITEMS = {
 	"turf_polar_caves",
 	"turf_polar_dryice",
 	"wall_polar_item",
+	"winter_ornament_boss_emperor_penguin",
 	"winter_ornament_polar_icicle_blue",
 	"winter_ornament_polar_icicle_white",
 	"winters_fists",
@@ -137,6 +138,7 @@ end
 POLARAMULET_PARTS = GLOBAL.rawget(GLOBAL, "POLARAMULET_PARTS") or {}
 
 local SCRAPBOOK_POLAR = require("scrapbook_polar")
+
 for k, v in pairs(SCRAPBOOK_POLAR) do
 	if not (v.type == "item" or v.type == "food") then
 		RegisterScrapbookIconAtlas(GLOBAL.resolvefilepath("images/scrapbook_polar.xml"), v.tex)

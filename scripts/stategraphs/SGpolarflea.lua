@@ -5,14 +5,18 @@ local actionhandlers = {
 }
 
 local events= {
-	EventHandler("attacked", function(inst)
-		if not inst.components.health:IsDead() and not inst.sg:HasStateTag("attack") then
-			inst.sg:GoToState("hit")
+	EventHandler("attacked", function(inst, data)
+		if not inst.components.health:IsDead() then
+			if CommonHandlers.TryElectrocuteOnAttacked(inst, data) then
+				return
+			elseif not inst.sg:HasStateTag("electrocute") and not inst.sg:HasStateTag("attack") then
+				inst.sg:GoToState("hit")
+			end
 		end
 	end),
 	EventHandler("death", function(inst) inst.sg:GoToState("death") end),
 	EventHandler("doattack", function(inst, data)
-		if not inst.components.health:IsDead() and (inst.sg:HasStateTag("hit") or not inst.sg:HasStateTag("busy")) then
+		if not inst.components.health:IsDead() and not inst.sg:HasStateTag("electrocute") and (inst.sg:HasStateTag("hit") or not inst.sg:HasStateTag("busy")) then
 			inst.sg:GoToState("attack", data.target)
 		end
 	end),
@@ -29,6 +33,7 @@ local events= {
 	CommonHandlers.OnSleep(),
 	CommonHandlers.OnLocomote(true, false),
 	CommonHandlers.OnFreeze(),
+	CommonHandlers.OnElectrocute(),
 }
 
 local states = {
@@ -56,7 +61,6 @@ local states = {
 		end,
 		
 		timeline = {
-
 			TimeEvent(9 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/whip") end),
 			TimeEvent(12 * FRAMES, function (inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/attack") end),
 			TimeEvent(16 * FRAMES, function(inst) inst.components.combat:DoAttack(inst.sg.statemem.target) end),
@@ -290,5 +294,6 @@ local states = {
 
 CommonStates.AddSleepStates(states)
 CommonStates.AddFrozenStates(states)
+CommonStates.AddElectrocuteStates(states)
 
 return StateGraph("polarflea", states, events, "idle", actionhandlers)

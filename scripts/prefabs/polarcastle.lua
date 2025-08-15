@@ -88,7 +88,7 @@ local function ice()
 	inst.entity:AddMiniMapEntity()
 	inst.entity:AddNetwork()
 	
-	inst.MiniMapEntity:SetIcon("penguin.png")
+	inst.MiniMapEntity:SetIcon("emperor_penguin.png")
 	
 	inst.AnimState:SetBank("emperor_penguin_ice")
 	inst.AnimState:SetBuild("emperor_penguin_ice")
@@ -422,7 +422,7 @@ local function flag()
 	inst.AnimState:SetBuild("tower_polar")
 	inst.AnimState:PlayAnimation("flag", true)
 	inst.AnimState:SetScale(1.25, 1.25)
-	inst.AnimState:SetFinalOffset(4)
+	inst.AnimState:SetFinalOffset(3)
 	
 	inst:AddTag("structure")
 	

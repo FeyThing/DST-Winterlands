@@ -44,7 +44,7 @@ local function SpinOnUpdate(inst)
 	if #ents > 0 then
 		local t = GetTime()
 		local target = ents[1]
-		print("bouncing:", target)
+		
 		if (inst._collided_times[target] == nil or t - inst._collided_times[target] > BOUNCE_TARGET_RETRY_TIME) then
 			local bounce = false
 			
@@ -88,8 +88,7 @@ local function GetSummonGuardNums(inst)
 end
 
 local events = {
-	CommonHandlers.OnFreeze(), -- Pengulls can be frozen and have animations for it, but they don't use them ?
-	CommonHandlers.OnSink(), -- Useful for Emperor only (TODO: seems non-official emperor can get stuck sinking over and over when escaping)
+	CommonHandlers.OnSink(), -- Useful for Emperor only (TODO: seems c_spawned emperor can get stuck sinking over and over when escaping)
 	CommonHandlers.OnFallInVoid(),
 	
 	EventHandler("emperor_entertower", function(inst)
@@ -149,7 +148,6 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		tags = {"busy", "nointerrupt", "temp_invincible"},
 		
 		onenter = function(inst, pt)
-			print("enter:", inst)
 			if inst._extraegg and inst.DoExtraEgg then
 				inst:DoExtraEgg()
 			end
@@ -161,14 +159,13 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		end,
 		
 		onexit = function(inst)
-			print("		exit!", inst)
 			DoPloof(inst)
 		end,
 		
 		events = {
 			EventHandler("animover", function(inst)
 				local landed = DoPloof(inst)
-				print("	animover!", inst, "-", landed)
+				
 				if landed then
 					inst.sg:GoToState("run_stop")
 				end
@@ -213,11 +210,10 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		onenter = function(inst, doexit)
 			inst.SoundEmitter:KillAllSounds()
 			inst.Physics:Stop()
-			inst:Hide()
-			if inst.DynamicShadow then
-				inst.DynamicShadow:Enable(false)
-			end
 			
+			if doexit then
+				inst.AnimState:PlayAnimation("tower_pst")
+			end
 			inst.sg.statemem.exiting_tower = doexit
 			
 			if inst._juggle_tower then
@@ -237,17 +233,24 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 					
 					inst.entity:SetParent(inst._juggle_tower.entity)
 					inst.entity:AddFollower()
-					inst.Follower:FollowSymbol(inst._juggle_tower.GUID, "flagpole", 0, 0, 0)
+					inst.Follower:FollowSymbol(inst._juggle_tower.GUID, "flagpole", 0, 15, 0, nil, true) -- If needs ownsrotation, then use tower position to get facing angle
 				end
 			end
 		end,
 		
 		timeline = {
-			TimeEvent(9 * FRAMES, function(inst)
+			TimeEvent(11 * FRAMES, function(inst)
 				inst.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
+				inst:Hide()
+				if inst.DynamicShadow then
+					inst.DynamicShadow:Enable(false)
+				end
 			end),
 			TimeEvent(40 * FRAMES, function(inst)
+				--inst.sg:GoToState("emperor_juggle")
 				inst.sg:GoToState("idle")
+				inst.AnimState:PlayAnimation("tower_pre")
+				inst.AnimState:PushAnimation("idle", true)
 			end),
 		},
 		
@@ -265,19 +268,19 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		end,
 	},
 	
-	State{
+	State{ -- NOTES: Animations, sounds and snowball tossing aren't finished/basically inexistant, so for now it's an idle until guards are dealt with...
 		name = "emperor_juggle",
 		tags = {"busy", "canrotate", "juggling", "nointerrupt", "noattack"},
 		
 		onenter = function(inst)
-			inst.AnimState:PlayAnimation("juggle_pre")
-			inst.AnimState:PushAnimation("juggle_loop")
+			--inst.AnimState:PlayAnimation("juggle_pre")
+			--inst.AnimState:PushAnimation("juggle_loop")
 			inst.SoundEmitter:KillAllSounds()
 			inst.Physics:Stop()
 		end,
 		
 		onupdate = function(inst)
-			if inst.sg.timeinstate < 40 * FRAMES then
+			if inst._juggle_tower and (inst.sg.timeinstate < 40 * FRAMES or inst.wants_to_call_guards) then
 				return
 			end
 			
@@ -358,6 +361,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 			--inst.AnimState:PlayAnimation("emperor_spin_loop", false)
 			--inst.AnimState:PushAnimation("sleep_pre")
 			inst.AnimState:PushAnimation("sleep_pst", false)
+			inst.Physics:Stop()
 			
 			if inst.components.locomotor then
 				inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "spin")
@@ -465,7 +469,6 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 	},
 }
 
-CommonStates.AddFrozenStates(states)
 CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddVoidFallStates(states)
 
@@ -493,7 +496,7 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 	
 	local oldlocomote_event = sg.events["locomote"].fn
 	sg.events["locomote"].fn = function(inst, ...)
-		if inst.recovering_stamina then
+		if inst.recovering_stamina or inst._juggle_tower then
 			return
 		elseif oldlocomote_event then
 			oldlocomote_event(inst, ...)

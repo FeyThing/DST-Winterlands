@@ -74,6 +74,7 @@ local polar_layouts = {
 		name = "polar_start",
 		layout_position = LAYOUT_POSITION.CENTER,
 		defs = {
+			hat = {"catcoonhat", "winterhat"},
 			welcomitem = IsSpecialEventActive(SPECIAL_EVENTS.HALLOWED_NIGHTS) and {"pumpkin_lantern"} or {"marsh_bush"},
 		},
 	},
@@ -161,7 +162,7 @@ ENV.AddGlobalClassPostConstruct("map/storygen", "Story", function(self)
 				return
 			end
 			local setpiece = tagdata["PolarFleas"] == "extra_setpiece" and (math.random() < 0.5 and "polarflea_grass" or "PolarFlea_House") or "PolarFlea_Farm"
-			tagdata["PolarFleas"] = (setpiece == "PolarFlea_Farm" and math.random() < 0.33) and "extra_setpiece" or false
+			tagdata["PolarFleas"] = (setpiece == "PolarFlea_Farm" and math.random() < 0.25) and "extra_setpiece" or false
 			
 			return "STATIC", setpiece
 		end

@@ -368,6 +368,9 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return self.inst.components.health.takingfiredamage end, "On Fire",
 			ChattyNode(self.inst, "POLARBEAR_PANICFIRE",
 				Panic(self.inst))),
+		WhileNode(function() return BrainCommon.ShouldAvoidElectricFence(self.inst) end, "Shocked",
+			ChattyNode(self.inst, "POLARBEAR_PANICELECTRICITY",
+				AvoidElectricFence(self.inst))),
 		
 		ChattyNode(self.inst, GetCombatLines,
 			WhileNode(function() return not self.inst.components.combat:InCooldown() end, "Attack Momentarily",

@@ -123,6 +123,7 @@ local components = {
 	"submersible",
 	"teamleader",
 	"temperature",
+	"wanderingtraderspawner",
 	"wateryprotection",
 	"wavemanager",
 	"weather",

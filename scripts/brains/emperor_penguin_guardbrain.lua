@@ -103,6 +103,7 @@ end
 function Emperor_Penguin_GuardBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
 		
 		WhileNode(function() return ShouldRunAway(self.inst) end, "Escaping",
             PriorityNode({

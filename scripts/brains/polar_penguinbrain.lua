@@ -98,6 +98,8 @@ end
 function Polar_PenguinBrain:OnStart()
 	local root = PriorityNode({
 		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
+		
 		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST, 15),
 		IfNode(function() return FindNearbyHopPoint(self.inst) end, "Close Enough To Hop Into The Ocean!",
 			ActionNode(function() HopIntoOcean(self.inst) end)),
