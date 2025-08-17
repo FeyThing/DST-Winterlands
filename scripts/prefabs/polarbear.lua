@@ -86,8 +86,8 @@ local function GetFuelMasterBonus(inst, item, target)
 end
 
 local function CalcSanityAura(inst, observer)
-	return (inst.enraged or observer:HasTag("merm") and -TUNING.SANITYAURA_LARGE)
-		or (inst.components.follower and inst.components.follower.leader == observer and TUNING.SANITYAURA_SMALL)
+	return (inst.enraged or observer:HasTag("merm")) and -TUNING.SANITYAURA_LARGE
+		or (inst.components.follower and inst.components.follower.leader == observer) and TUNING.SANITYAURA_SMALL
 		or 0
 end
 
