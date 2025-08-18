@@ -20,6 +20,9 @@ function Temperature:GetInsulation(...)
 	local winterInsulation, summerInsulation = OldGetInsulation(self, ...)
 	local winterPolarI, summerPolarI = self:GetPolarWetnessModifier(winterInsulation, summerInsulation)
 	
+	local fleas = self.inst.components.inventory and self.inst.components.inventory:GetItemsWithTag("flea") or {}
+	winterPolarI = winterPolarI + (#fleas * TUNING.POLARFLEA_INV_INSULATION)
+	
 	if self.inst:HasTag("heatrock") and IsInPolar(self.inst) then
 		winterPolarI = winterPolarI * TUNING.HEATROCK_INSULATION_POLARMULT
 	end

@@ -1,7 +1,7 @@
 local customizations = {
 --	WORLDSETTINGS
 	arctic_fools = 			{category = LEVELCATEGORY.SETTINGS, desc = "extraevent_descriptions", group = "events", masteroption = true, master_controlled = true, order = 0.14},
-	emperor_penguin = 		{category = LEVELCATEGORY.SETTINGS, group = "giants"},
+	--emperor_penguin = 	{category = LEVELCATEGORY.SETTINGS, group = "giants", world = {"forest"}},
 	icelettuce_regrowth = 	{category = LEVELCATEGORY.SETTINGS, desc = "speed_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 	polar_icicles = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	polar_throne = 			{category = LEVELCATEGORY.SETTINGS, group = "global", desc = "yesno_descriptions", world = {"forest", "shipwrecked", "porkland"}, order = 13.1},

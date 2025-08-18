@@ -33,6 +33,10 @@ local Submersible = require("components/submersible")
 	
 	local OldSubmerge = Submersible.Submerge
 	function Submersible:Submerge(...)
+		if self._ice_fishing then
+			self.force_no_repositioning = true
+		end
+		
 		local has_moved = OldSubmerge(self, ...)
 		
 		if self._ice_fishing then

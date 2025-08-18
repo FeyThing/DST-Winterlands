@@ -30,7 +30,11 @@ local LOOT = {
 		bullkelp_plant = 2,
 		bullkelp_root = 1,
 		kelp = 2,
-	}
+	},
+	SUNKENCHEST_POOLS = {
+		sunkenchest_emperorstash = 1, -- TEMP?
+		sunkenchest_oceanmonument = 2
+	},
 }
 
 local FNS = {
@@ -195,7 +199,7 @@ local RESULTS = {
 			
 			{prefab = "sunkenchest", 	chance = 0.1, 	spawntime = 0,
 				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end,
-				onspawn = function(inst, ...) return FNS.SetScenario(inst, "sunkenchest_oceanmonument", ...) end},
+				onspawn = function(inst, ...)return FNS.SetScenario(inst, weighted_random_choice(LOOT["SUNKENCHEST_POOLS"]), ...) end},
 		},
 		onstarted = FNS.SpawnShoal,
 		rad = 1.5,
@@ -308,7 +312,7 @@ local RESULTS = {
 			
 			{prefab = "sunkenchest", 	chance = 0.2, 	spawntime = 0,
 				offset = function(pt, radius, ...) return FNS.OffsetIfLarger(pt, radius, 3, ...) end,
-				onspawn = function(inst, ...) return FNS.SetScenario(inst, "sunkenchest_oceanmonument", ...) end},
+				onspawn = function(inst, ...) return FNS.SetScenario(inst, weighted_random_choice(LOOT["SUNKENCHEST_POOLS"]), ...) end},
 		},
 		rad = 1.5,
 		weight = 2,
