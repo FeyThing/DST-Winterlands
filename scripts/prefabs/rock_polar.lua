@@ -197,7 +197,7 @@ local function OnPolarFreeze(inst, forming)
 		rock.Transform:SetPosition(inst.Transform:GetWorldPosition())
 		
 		if TheSim:FindFirstEntityWithTag("polarcave_entrance") == nil then
-			inst:MakeCaveEntrance() -- Only useful in case players broke all their protuberances before update, so no reload is necessary
+			rock:MakeCaveEntrance() -- Only useful in case players broke all their protuberances before update, so no reload is necessary
 		end
 	end
 	
