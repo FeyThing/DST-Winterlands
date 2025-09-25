@@ -342,8 +342,9 @@ local function OnPolarFreeze(inst, forming)
 		end
 		
 		SpawnPrefab("ice_splash").Transform:SetPosition(x, y, z)
-		inst:Remove()
 	end
+	
+	inst:Remove()
 end
 
 local function rock()
