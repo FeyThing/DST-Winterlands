@@ -15,6 +15,18 @@ ENV.ModdedCurios = {
     },
 }
 
+-- Skin Blacklist, for stuff that shouldn't show in belongings / crafting wheel
+
+local POLAR_DISPLAY_BLACKLIST = {
+	"ms_treasurechest_upgraded_polarice",
+}
+
+for i, skin in ipairs(POLAR_DISPLAY_BLACKLIST) do
+	ITEM_DISPLAY_BLACKLIST[skin] = true
+end
+
+--	In case Modded Skin API whitelisting breaks once more
+
 local IsWhiteListedMod = PolarUpvalue(Sim.ReskinEntity, "IsWhiteListedMod")
 local function IsSillyListedMod(...)
 	local _IsWhiteListedMod = IsWhiteListedMod

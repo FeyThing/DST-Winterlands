@@ -124,6 +124,7 @@ local ITEMS = {
 	"wx78module_naughty",
 	
 	"ms_polarmoosehat_white",
+	"ms_treasurechest_polarice",
 }
 
 --	Scrapbook Stuff
