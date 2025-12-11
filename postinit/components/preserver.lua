@@ -1,6 +1,9 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+--TODO: There seems to be a bug with the icepacks inside of iceboxes and other specific containers when they are placed, then removed,
+--		the spoiling items will spoil FASTER than normal. So far no idea why this happens o_o (but I didn't look much, im sick)
+
 local Preserver = require("components/preserver")
 	
 	function Preserver:GetIcePackMult(item)
@@ -31,10 +34,6 @@ local Preserver = require("components/preserver")
 	
 	local OldGetPerishRateMultiplier = Preserver.GetPerishRateMultiplier
 	function Preserver:GetPerishRateMultiplier(item, ...)
-		if self.perish_rate_multiplier == nil then
-			self.perish_rate_multiplier = 1 -- TODO: Delete this later. Needed until beta is released
-		end
-		
 		local rate = OldGetPerishRateMultiplier(self, item, ...)
 		local pack_rate = self:GetIcePackMult(item)
 		

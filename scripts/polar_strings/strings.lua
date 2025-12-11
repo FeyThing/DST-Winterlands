@@ -400,7 +400,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 			str = "Two new recipes passed down through generations of hunters. The flavor is sure to awaken your nose's primal instincts to sniff out exactly the prey you're after, and quick!"
 		},
 		DAY11_TOOLTIP = {
-			title = "Glacier Bushhat Skin",
+			title = "My-Wee-Glacier Bush Hat Skin",
 			str = "Ideal for hiding among Pengulls, less so around tumbleweeds and cacti."
 		},
 		DAY12_TOOLTIP = {

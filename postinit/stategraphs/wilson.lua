@@ -381,6 +381,45 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 			oldfunnyidle(inst, ...)
 		end
 	end
+	
+	local oldhide = sg.states["hide"].onenter
+	sg.states["hide"].onenter = function(inst, ...)
+		oldhide(inst, ...)
+		
+		local hat = inst.components.inventory and inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HEAD)
+		local skin_name = hat and hat:GetSkinName()
+		
+		if skin_name == "ms_bushhat_polar" then
+			inst.SoundEmitter:KillAllSounds()
+			
+			local pct = TheWorld.state.seasonprogress
+			local stage = "tall"
+			
+			local threshold1 = 0.4
+			local threshold2 = 0.65
+			local threshold3 = 0.9
+			
+			if TheWorld.state.iswinter or IsInPolar(inst) then
+				stage = "tall"
+			elseif TheWorld.state.isspring then
+				stage = (pct < threshold1 and "tall")
+					or (pct < threshold2 and "medium")
+					or "short"
+			elseif TheWorld.state.issummer then
+				stage = "short"
+			elseif TheWorld.state.isautumn then
+				stage = (pct < threshold2 and "short")
+					or (pct < threshold3 and "medium")
+					or "tall"
+			end
+			
+			local sym_override = stage == "tall" and "swap_hat"
+				or stage == "medium" and "swap_hat_med"
+				or "swap_hat_low"
+			
+			inst.AnimState:OverrideItemSkinSymbol("swap_hat", GetBuildForItem(skin_name), sym_override, hat.GUID, hat.AnimState:GetBuild())
+		end
+	end
 end)
 
 --
