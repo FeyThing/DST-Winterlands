@@ -32,9 +32,17 @@ AddTaskSetPreInitAny(function(self)
 		end
 		
 		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
-		self.set_pieces["skeleton_icicle"] = {count = 1, tasks = {"Polar Caves"}}
 		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		self.set_pieces["PolarFox_Solo"] = {count = 3, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
+		
+		if math.random() < 0.5 then
+			self.set_pieces["skeleton_beartrapped"] = {count = 1, tasks = {"Polar Lands"}}
+		else
+			self.set_pieces["skeleton_icicle"] = {count = 1, tasks = {"Polar Caves"}}
+		end
+		if math.random() < 0.33 then
+			self.set_pieces["arrowsigns_polarvillages"] = {count = 1, tasks = {"Polar Lands", "Polar Village"}}
+		end
 		
 		if self.required_prefabs == nil then
 			self.required_prefabs = {}

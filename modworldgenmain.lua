@@ -26,27 +26,28 @@ local Layouts = require("map/layouts").Layouts
 local StaticLayout = require("map/static_layout")
 
 local polar_layouts = {
-	["BearTown1"] = 			{},
-	["BearTown2"] = 			{},
-	["BearTown3"] = 			{},
-	["BearTown4"] = 			{
+	["BearTown1"] = {},
+	["BearTown2"] = {},
+	["BearTown3"] = {},
+	["BearTown4"] = {
 		defs = {
 			tree = {"evergreen", "evergreen_sparse"},
 		},
 	},
-	["BearTown5"] = 			{
+	["BearTown5"] = {
 		defs = {
 			tree = {"evergreen", "evergreen_sparse"},
 		},
 	},
 	
-	["BearOnIce"] = 			{},
-	["PolarTuskCamp"] = 		{},
-	["PolarTuskTown"] = 		{},
-	["PolarAmulet_Shack"] = 	{},
-	["PolarThrone"] = 			{},
+	["arrowsigns_polarvillages"] = 	{},
+	["BearOnIce"] = 				{},
+	["PolarTuskCamp"] = 			{},
+	["PolarTuskTown"] = 			{},
+	["PolarAmulet_Shack"] = 		{},
+	["PolarThrone"] = 				{},
 	
-	["Polar_Lake"] = 			{
+	["Polar_Lake"] = {
 		defs = {
 			fishingitem = {"ocean_trawler_kit", "oceanfishingrod"},
 			fishingrecipe = {"oceanfishingbobber_ball_tacklesketch", "oceanfishingbobber_robin_winter_tacklesketch", "oceanfishinglure_hermit_snow_tacklesketch"},
@@ -62,7 +63,7 @@ local polar_layouts = {
 	["BlueGem_Shards_Ice"] = 	{},
 	["PolarCave_Pillar"] = 		{},
 	["PolarCave_SmallPillar"] = {},
-	["PolarStaff_Rink"] = 		{
+	["PolarStaff_Rink"] = {
 		defs = {
 			polarstaff = {"iciclestaff", "polaricestaff"},
 		},
@@ -70,10 +71,11 @@ local polar_layouts = {
 	
 	["PolarSnowman"] = 			{},
 	["PolarSpookman"] = 		{},
+	["skeleton_beartrapped"] = 	{},
 	["skeleton_icicle"] = 		{},
 	["skeleton_polar"] = 		{},
 	
-	["PolarStart"] = 			{
+	["PolarStart"] = {
 		name = "polar_start",
 		layout_position = LAYOUT_POSITION.CENTER,
 		defs = {

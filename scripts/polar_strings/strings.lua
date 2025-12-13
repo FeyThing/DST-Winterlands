@@ -167,6 +167,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARCOLD_SNUFFING = {"(huff) ", "(sniff) ", "(sniffff) ", "(snort) ", "(snurf) ", "(snuffle) "}
 	
 	STRINGS.EMPEROR_PENGUIN_SIGNTEXT = {"Waa Waaw!", "Waaaaaah.", "Wa wa wa. Waw.", "Waaa, wah, waaa.", "Waaaw. Waa!"}
+	STRINGS.WINTERLANDS_BEARS_ARROWSIGNTEXT = {"GLORIOUS HOME", "GREAT VILLAGE", "NICE FOLK"}
+	STRINGS.WINTERLANDS_WALRUS_ARROWSIGNTEXT = {"BARBAROUS CAMP", "BRUTISH \"HUNTERS\"", "WICKED HIDEOUT"}
 	
 	STRINGS.POLARBEARNAMES = {
 		--	cold foods

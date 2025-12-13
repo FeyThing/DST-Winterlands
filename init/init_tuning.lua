@@ -27,7 +27,8 @@ local wilson_attack = TUNING.BASE_SURVIVOR_ATTACK
 	
 	TUNING.POLAR_TASKS_OPTIONALITY = {
 		["Polar Floe"] = 0.5,
-		["Polar Icerink"] = 0.25,
+		["Polar Gnomes"] = 0.25,
+		["Polar Icerink"] = 0.32,
 		["Polar Quarry"] = 0.32,
 	}
 	

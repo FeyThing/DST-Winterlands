@@ -253,6 +253,53 @@ AddRoom("PolarIsland_Rink", {
 	}
 })
 
+--
+
+AddRoom("PolarIsland_GnomeVillage", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_GNOMES_NOISE,
+	tags = {"ForceDisconnected", "PolarThrone"},
+	type = NODE_TYPE.SeparatedRoom,
+	contents = {
+		countprefabs = {
+			polarbearhouse = function() return math.random() < 0.15 and 1 or 0 end,
+			snowwave_itemrespawner = function() return math.random(8, 13) end,
+			winter_tree_sparse = function() return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 1 or 0 end,
+		},
+		
+		distributepercent = 0.25,
+		distributeprefabs = {
+			polartrinket_1 = 0.45,
+			polartrinket_2 = 0.3,
+			trinket_4 = 0.4,
+			trinket_13 = 0.25,
+			
+			antler_tree = 0.35,
+			evergreen = 2.5,
+			evergreen_sparse = 1.2,
+			twiggytree = 0.2,
+			marsh_bush = 1.5,
+			rock_ice = 0.5,
+			rocks = 0.5,
+			
+			mushtree_medium = 0.15,
+			mushtree_small = 0.32,
+			mushtree_tall = 0.5,
+			
+			red_mushroom = 0.3,
+			green_mushroom = 0.64,
+			blue_mushroom = 1,
+		},
+		
+		prefabdata = {
+			snowwave_itemrespawner = {canspawnsnowitem = true},
+			winter_tree_sparse = function()
+				return {growable = {stage = 5}, polar_decorate = true}
+			end,
+		},
+	}
+})
+
 -- BG
 
 AddRoom("PolarIsland_BG", {
