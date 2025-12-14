@@ -4,12 +4,43 @@ local assets = {
 	Asset("ANIM", "anim/polar_snow_bush.zip"),
 }
 
-local function UpdateSnow(inst, issnowcovered)
-	if issnowcovered then
+local function UpdateSnow(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local isinpolar = IsInPolarAtPoint(x, y, z)
+	local issnowcovered = TheWorld.state.issnowcovered
+	
+	if issnowcovered or isinpolar then
 		inst.AnimState:Show("snow")
 	else
 		inst.AnimState:Hide("snow")
 	end
+	
+	if not inst.updatesnowanim then
+		return
+	end
+	
+	local pct = TheWorld.state.seasonprogress
+	local stage = "tall"
+	
+	if TheWorld.state.iswinter or isinpolar then
+		stage = "tall"
+	elseif TheWorld.state.isspring then
+		stage = (pct < inst.threshold1 and "tall")
+			or (pct < inst.threshold2 and "medium")
+			or "short"
+	elseif TheWorld.state.issummer then
+		stage = "short"
+	elseif TheWorld.state.isautumn then
+		stage = (pct < inst.threshold2 and "short")
+			or (pct < inst.threshold3 and "medium")
+			or "tall"
+	end
+	
+	local anim = stage == "tall" and "idle"
+		or stage == "medium" and "med"
+		or "low"
+		
+	inst.AnimState:PlayAnimation(anim..5, true)
 end
 
 local function CreateFxFollowFrame(i)
@@ -32,9 +63,15 @@ local function CreateFxFollowFrame(i)
 	inst:AddComponent("highlightchild")
 	
 	inst.persists = false
+	inst.updatesnowanim = i == 5
 	
-	inst:WatchWorldState("isnight", UpdateSnow)
-	UpdateSnow(inst, TheWorld.state.issnowcovered)
+	inst.threshold1 = 0.4
+	inst.threshold2 = 0.65
+	inst.threshold3 = 0.9
+	
+	--inst:WatchWorldState("issnowcovered", UpdateSnow)
+	inst:DoPeriodicTask(0.1, UpdateSnow, 0)
+	--UpdateSnow(inst, TheWorld.state.issnowcovered)
 	
 	return inst
 end

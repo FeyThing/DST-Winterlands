@@ -94,6 +94,23 @@ AddTask("Polar Quarry", {
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 
+AddTask("Polar Gnomes", {
+	locks = {LOCKS.ISLAND_TIERPOLAR, LOCKS.ISLAND_TIER3},
+	keys_given = {},
+	region_id = polar_region,
+	level_set_piece_blocker = true,
+	room_tags = {"RoadPoison", "polararea", "not_mainland"},
+	room_choices = {
+		["PolarIsland_Lakes"] = function() return math.random(SIZE_VARIATION) end,
+		["PolarIsland_GnomeVillage"] = function() return math.random(1, 2) end,
+		["PolarIsland_BG"] = function() return math.random(SIZE_VARIATION) end,
+	},
+	entrance_room = {"Empty_Cove"},
+	room_bg = WORLD_TILES.POLAR_SNOW,
+	background_room = "PolarIsland_GnomeForest",
+	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
+})
+
 AddTask("Polar Icerink", {
 	locks = {LOCKS.ISLAND_TIERPOLAR},
 	keys_given = {},
