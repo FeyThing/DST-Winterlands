@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "No wonder walruses are all chubby."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "No wonder walruses are all chubby."
 	DESCRIBE.POLARCRABLEGS = "It got more legs than us to share!"
+	DESCRIBE.POLARFLEAEGGSACK = "It's healthier over his candies, I think."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Glittery-er and cooler!"

@@ -73,6 +73,7 @@ local prefabs = {
 	"shovels",
 	"snowball_item",
 	"tree_rock_data",
+	"trinkets",
 	"walrus",
 	"walrus_camp",
 	"wilson",

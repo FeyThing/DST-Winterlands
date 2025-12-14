@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Mmm. Wolfgang should go hunting more often!"
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Mmm. Wolfgang should go hunting more often!"
 	DESCRIBE.POLARCRABLEGS = "From scary leggy bug to yummy leggy bug."
+	DESCRIBE.POLARFLEAEGGSACK = "I'm not ready to be a mother!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It tickles in hand!"

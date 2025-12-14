@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Wow, Warly's got some serious competition with MaTusk around!"
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Wow, Warly's got some serious competition with MaTusk around!"
 	DESCRIBE.POLARCRABLEGS = "Mmmm! Hey, anybody wants to listen to my crab horror stories?"
+	DESCRIBE.POLARFLEAEGGSACK = "It's full of jelly, and beans."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "From a magic blue gem to... I don't know... a cursed blue gem, surely?"

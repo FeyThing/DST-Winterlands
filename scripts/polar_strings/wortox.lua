@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "The humans should be taking notes... I'm just saying!"
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "The humans should be taking notes... I'm just saying!"
 	DESCRIBE.POLARCRABLEGS = "Fine, fine, I will grab some of that crab."
+	DESCRIBE.POLARFLEAEGGSACK = "Ooo, this is giving me an idea!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "In the air or in a gem, your soul will still be mine."

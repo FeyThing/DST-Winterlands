@@ -187,7 +187,7 @@ local function SetHost(inst, host, kick, given)
 			inst.components.health:StopRegen()
 		end
 		
-		inst:PushEvent("fleahostkick", inst._host)
+		inst:PushEvent("fleahostkick", {host = inst._host})
 		inst._host = nil
 		
 		return
@@ -210,6 +210,9 @@ local function SetHost(inst, host, kick, given)
 	
 	if inst.components.health then
 		inst.components.health:StartRegen(TUNING.POLARFLEA_POCKET_REGEN, TUNING.POLARFLEA_REGEN_RATE)
+	end
+	if inst.components.follower and inst.components.follower.leader then
+		inst.components.follower:SetLeader(nil)
 	end
 	
 	local inventory = inst._host and (inst._host.components.inventory or inst._host.components.container)
@@ -380,8 +383,19 @@ local function OnSave(inst, data)
 		data.host_id = inst._host.GUID
 		table.insert(ents, data.host_id)
 	end
+	data.babyflea = inst.babyflea or nil
 	
 	return ents
+end
+
+local function OnLoad(inst, data)
+	if data then
+		if data.babyflea then
+			inst.babyflea = data.babyflea or nil
+			inst.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
+			inst.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
+		end
+	end
 end
 
 local function OnLoadPostPass(inst, newents, savedata)
@@ -498,6 +512,8 @@ local function fn()
 	inst.components.combat:SetKeepTargetFunction(KeepTargetFn)
 	inst.components.combat:SetPlayerStunlock(PLAYERSTUNLOCK.RARELY)
 	
+	inst:AddComponent("follower")
+	
 	inst:AddComponent("health")
 	inst.components.health:SetMaxHealth(TUNING.POLARFLEA_HEALTH)
 	inst.components.health.murdersound = "polarsounds/snowflea/murder"
@@ -539,6 +555,7 @@ local function fn()
 	inst.CanBeHost = CanBeHost
 	inst.HostCapacity = HostCapacity
 	inst.OnSave = OnSave
+	inst.OnLoad = OnLoad
 	inst.OnLoadPostPass = OnLoadPostPass
 	inst.SetHost = SetHost
 	

@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "I'm game for another hunt after this."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "I'm game for another hunt after this."
 	DESCRIBE.POLARCRABLEGS = "Yer doing a fine job at cracking 'em, Luce."
+	DESCRIBE.POLARFLEAEGGSACK = "...Looks tasty. Eh? Who said that?"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It's impossibly cold."

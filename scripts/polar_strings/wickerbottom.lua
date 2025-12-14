@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Surprisingly palatable."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Surprisingly palatable."
 	DESCRIBE.POLARCRABLEGS = "The kids have been very crabby to try them. That means more for me!"
+	DESCRIBE.POLARFLEAEGGSACK = "An ovipository sac, unpleasant indeed."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Frozen beyond measure."

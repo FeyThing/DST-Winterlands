@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "That's a lot of fat. Oh but I'll still eat it."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "That's a lot of fat. Oh but I'll still eat it."
 	DESCRIBE.POLARCRABLEGS = "Would be perfect with melted butter."
+	DESCRIBE.POLARFLEAEGGSACK = "I'll never be clean again..."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I'm getting back what's rightfully mine, even if it's changed a little."

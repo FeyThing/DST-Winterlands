@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Anything this smoky has got to taste good!"
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Anything this smoky has got to taste good!"
 	DESCRIBE.POLARCRABLEGS = "Never had one of these before, I'll try ten."
+	DESCRIBE.POLARFLEAEGGSACK = "In the fire. No time to think."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Hissss... stay away!!"

@@ -216,7 +216,7 @@ return Class(function(self, inst)
 			self.retrofit_done = data.retrofit_done or {}
 			
 			if not self.retrofit_done["fishshoals"] then
-				IceFloes_Retrofitting()
+				--IceFloes_Retrofitting()
 			end
 		end
 	end

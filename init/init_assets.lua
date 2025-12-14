@@ -122,6 +122,7 @@ local ITEMS = {
 	"polarcrownhat",
 	"polarflea",
 	"polarflea_sack",
+	"polarfleaeggsack",
 	"polarglobe",
 	"oceanfish_in_ice",
 	"polarice_plow_item",

@@ -78,14 +78,13 @@ function PolarFleaMotherSpawner:TrySpawn(pt)
 		return
 	end
 	
-	if math.random() < self.spawnchance then
-		--local mom = SpawnPrefab("polarflea")
-		--mom.Transform:SetPosition(pt.x, pt.y, pt.z)
-		--mom.Transform:SetScale(3, 3, 3)
+	if HasPassedCalendarDay(15) and math.random() < self.spawnchance then
+		local mom = SpawnPrefab("polarflea_mother")
+		mom.Transform:SetPosition(pt.x, pt.y, pt.z)
 		
-		--if mom.sg then
-		--	mom.sg:GoToState("taunt") -- Unburrow instead, later
-		--end
+		if mom.sg then
+			mom.sg:GoToState("emerge")
+		end
 		
 		self.spawnchance = TUNING.POLARFLEA_MOTHER_SPAWN_CHANCE
 		-- TODO: Add minimum cooldown. Also fleas spawned from mother shouldn't increase count

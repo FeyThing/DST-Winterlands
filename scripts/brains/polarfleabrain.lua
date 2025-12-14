@@ -11,6 +11,10 @@ local MAX_CHASE_TIME = 60
 local MAX_CHASE_DIST = 40
 local MAX_WANDER_DIST = 40
 
+local MIN_FOLLOW_DIST = 0
+local MAX_FOLLOW_DIST = 12
+local TARGET_FOLLOW_DIST = 6
+
 local NO_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach"}
 
 local PolarFleaBrain = Class(Brain, function(self, inst)
@@ -85,6 +89,7 @@ function PolarFleaBrain:OnStart()
 		FailIfSuccessDecorator(ConditionWaitNode(function() return not self.inst._hosting_queued end, "Block While Hosting")),
 		
 		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST),
+		Follow(self.inst, function() return self.inst.components.follower.leader end, MIN_FOLLOW_DIST, TARGET_FOLLOW_DIST, MAX_FOLLOW_DIST),
 		Wander(self.inst, function() return self.inst.components.knownlocations:GetLocation("home") end, MAX_WANDER_DIST),
 	}, 0.25)
 	

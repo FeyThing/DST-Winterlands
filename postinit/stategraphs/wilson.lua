@@ -390,9 +390,6 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 		local skin_name = hat and hat:GetSkinName()
 		
 		if skin_name == "ms_bushhat_polar" then
-			inst.SoundEmitter:KillAllSounds()
-			inst.SoundEmitter:PlaySound("dontstarve_DLC001/common/iceboulder_smash")
-			
 			local pct = TheWorld.state.seasonprogress
 			local stage = "tall"
 			

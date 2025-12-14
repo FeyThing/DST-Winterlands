@@ -16,6 +16,7 @@ local customizations = {
 	polar_throne = 			{category = LEVELCATEGORY.SETTINGS, group = "global", desc = descriptions.polarthrone_descriptions, world = {"forest", "shipwrecked", "porkland"}, order = 13.1},
 	polarbears = 			{category = LEVELCATEGORY.SETTINGS, group = "animals"},
 	polarfleas = 			{category = LEVELCATEGORY.SETTINGS, group = "monsters"},
+	--polarflea_mother = 	{category = LEVELCATEGORY.SETTINGS, group = "giants"},
 	polarfoxes = 			{category = LEVELCATEGORY.SETTINGS, group = "animals", world = {"forest", "shipwrecked", "porkland"}},
 	tumbleweed_polar = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	
@@ -25,6 +26,10 @@ local customizations = {
 	polarbearhouses = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "animals", world = {"forest", "shipwrecked", "porkland"}},
 	rocks_polar = 			{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 }
+
+if HasPassedCalendarDay(15) then
+	customizations["polarflea_mother"] = {category = LEVELCATEGORY.SETTINGS, group = "giants"}
+end
 
 for k, v in pairs(customizations) do
 	v.name = k
@@ -125,6 +130,17 @@ WSO.Pre.polarfleas = function(difficulty)
 		--default = {POLARFLEA_WORLD_MAXFLEAS = 100, GRASS_POLAR_FLEA_CHANCE = 0.2, POLARFLEA_HOUNDED_MIN = 0, POLARFLEA_HOUNDED_MAX = 3},
 		many = 		{POLARFLEA_WORLD_MAXFLEAS = 150, GRASS_POLAR_FLEA_CHANCE = 0.4, POLARFLEA_HOUNDED_MAX = 5},
 		always = 	{POLARFLEA_WORLD_MAXFLEAS = 300, GRASS_POLAR_FLEA_CHANCE = 0.8, POLARFLEA_HOUNDED_MIN = 1, POLARFLEA_HOUNDED_MAX = 5},
+	}
+	OverrideTuningVariables(tuning_vars[difficulty])
+end
+
+WSO.Pre.polarflea_mother = function(difficulty)
+	local tuning_vars = {
+		never = 	{POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_DECAY = 1, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_KILL = 0},
+		few = 		{POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_DECAY = 0.2, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_KILL = 0.01},
+		--default = {POLARFLEA_MOTHER_SPAWN_CHANCE = 0, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_DECAY = 0.1, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_KILL = 0.01},
+		many = 		{POLARFLEA_MOTHER_SPAWN_CHANCE = 0.02, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_DECAY = 0.05, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_KILL = 0.02},
+		always = 	{POLARFLEA_MOTHER_SPAWN_CHANCE = 0.05, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_DECAY = 0.01, POLARFLEA_MOTHER_FLEAS_SPAWNCHANCE_KILL = 0.03},
 	}
 	OverrideTuningVariables(tuning_vars[difficulty])
 end

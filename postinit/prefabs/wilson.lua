@@ -100,6 +100,8 @@ ENV.AddPlayerPostInit(function(inst)
 	
 	inst._usearcticfoolfish = net_event(inst.GUID, "localplayer._usearcticfoolfish")
 	
+	inst:AddTag(UPGRADETYPES.POLARFLEA_SACK.."_upgradeuser")
+	
 	inst:AddComponent("snowedshader")
 	
 	if not TheWorld.ismastersim then

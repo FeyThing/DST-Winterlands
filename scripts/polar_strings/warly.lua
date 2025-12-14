@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Ooh la la, this hunters' cookbook holds treasures!"
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Ooh la la, this hunters' cookbook holds treasures!"
 	DESCRIBE.POLARCRABLEGS = "Mwah! Simplement par-fait!"
+	DESCRIBE.POLARFLEAEGGSACK = "Looks like... hold the pot -- I have an idea!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Oh my, that is too cold for my taste!"

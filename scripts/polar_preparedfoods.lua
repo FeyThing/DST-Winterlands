@@ -36,7 +36,7 @@ local polar_preparedfoods = {
 	},
 	
 	koalefried_trunk_summer = {
-		test = function(cooker, names, tags) return HasPassedCalendarDay(10) and (names.trunk_summer or names.trunk_cooked) and (names.onion or names.onion_cooked or names.potato or names.potato_cooked) end,
+		test = function(cooker, names, tags) return (names.trunk_summer or names.trunk_cooked) and (names.onion or names.onion_cooked or names.potato or names.potato_cooked) and ((tags.meat and tags.meat >= 2) or (tags.veggie and tags.veggie >= 2)) end,
 		hunger = TUNING.CALORIES_SMALL * 8,
 		health = TUNING.HEALING_LARGE,
 		sanity = TUNING.SANITY_LARGE,
@@ -64,7 +64,7 @@ local polar_preparedfoods = {
 	},
 	
 	koalefried_trunk_winter = {
-		test = function(cooker, names, tags) return HasPassedCalendarDay(10) and names.trunk_winter and (names.onion or names.onion_cooked or names.potato or names.potato_cooked) end,
+		test = function(cooker, names, tags) return names.trunk_winter and (names.onion or names.onion_cooked or names.potato or names.potato_cooked) and ((tags.meat and tags.meat >= 2) or (tags.veggie and tags.veggie >= 2)) end,
 		hunger = TUNING.CALORIES_SMALL * 8,
 		health = TUNING.HEALING_LARGE,
 		sanity = TUNING.SANITY_LARGE,

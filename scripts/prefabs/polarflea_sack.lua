@@ -101,6 +101,17 @@ local function FleaPreserverRate(inst, item)
 	return (item and item:HasTag("flea")) and TUNING.POLARFLEA_SACK_PRESERVER_RATE or nil
 end
 
+local function CanBeUpgraded(inst, item)
+	return not inst.components.equippable:IsEquipped()
+end
+
+local function OnUpgraded(inst, upgrader, item)
+	if item and item.prefab == "polarfleaeggsack" and inst.components.fueled then
+		inst.components.fueled:SetPercent(1)
+	end
+	inst.upgraded = true
+end
+
 local function OnBurnt(inst)
 	if inst.components.container then
 		inst.components.container:DropEverything()
@@ -179,6 +190,15 @@ local function fn()
 	
 	inst:AddComponent("preserver")
 	inst.components.preserver:SetPerishRateMultiplier(FleaPreserverRate)
+	
+	if HasPassedCalendarDay(16) then
+		inst:AddComponent("upgradeable")
+		inst.components.upgradeable.upgradetype = UPGRADETYPES.POLARFLEA_SACK
+		inst.components.upgradeable.numstages = 2
+		inst.components.upgradeable.upgradesperstage = 1
+		inst.components.upgradeable:SetOnUpgradeFn(OnUpgraded)
+		inst.components.upgradeable:SetCanUpgradeFn(CanBeUpgraded)
+	end
 	
 	inst:AddComponent("waterproofer")
 	inst.components.waterproofer:SetEffectiveness(0)

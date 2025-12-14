@@ -130,6 +130,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Smoked and fried aliments is chemistry at its best."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Smoked and fried aliments is chemistry at its best."
 	DESCRIBE.POLARCRABLEGS = "The good thing about having ten legs, is that there's enough for everyone."
+	DESCRIBE.POLARFLEAEGGSACK = "Looks like jellybeans."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I take it back. THIS sparkles with cold energy!"

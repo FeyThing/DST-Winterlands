@@ -34,6 +34,12 @@ local function OnAttacked(inst, data)
 	inst.components.combat:ShareTarget(data.attacker, 30, ShareTargetFn, 5)
 end
 
+local function OnDeath(inst)
+	if inst.bagpipes then
+		inst.bagpipes:Hide()
+	end
+end
+
 local RETARGET_MUST_TAGS = {"_combat"}
 local RETARGET_CANT_TAGS = {"hound", "walrus"}
 local RETARGET_ONEOF_TAGS = {"character", "monster"}
@@ -307,6 +313,7 @@ local function fn()
 	inst.soundgroup = "matusk" -- Remapped in init_assets
 	
 	inst:ListenForEvent("attacked", OnAttacked)
+	inst:ListenForEvent("death", OnDeath)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	inst:ListenForEvent("newcombattarget", OnNewTarget)
 	inst:WatchWorldState("stopday", OnStopDay)

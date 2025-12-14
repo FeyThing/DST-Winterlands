@@ -28,6 +28,9 @@ local function MakeTrinket(num)
 		
 		inst:AddTag("molebait")
 		inst:AddTag("cattoy")
+		if num <= 2 then
+			inst:AddTag("snowhidden")
+		end
 		
 		MakeInventoryFloatable(inst)
 		

@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "And them's walruses be makin' these with just their two flippers?!"
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "And them's walruses be makin' these with just their two flippers?!"
 	DESCRIBE.POLARCRABLEGS = "I'm good with only a small pinch of luxury."
+	DESCRIBE.POLARFLEAEGGSACK = "These lil' things slip more than a wet soap."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "I ain't holding this without gloves."

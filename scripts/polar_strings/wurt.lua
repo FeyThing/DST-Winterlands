@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Sigh... can't have good things."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Sigh... can't have good things."
 	DESCRIBE.POLARCRABLEGS = "Want to eat all lemon slices!"
+	DESCRIBE.POLARFLEAEGGSACK = "Like to put hands inside. Hee-hee-hee!"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Ooooooooooooo!"

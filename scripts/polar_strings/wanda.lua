@@ -127,6 +127,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "I just wish hunting didn't take so long."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "I just wish hunting didn't take so long."
 	DESCRIBE.POLARCRABLEGS = "They better not scuttle off my plate."
+	DESCRIBE.POLARFLEAEGGSACK = "Ugh. What do I make of this?"
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Why do I feel like it's going to explode at any moment?"

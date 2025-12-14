@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "Smoked spoils from the hunt."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "Smoked spoils from the hunt."
 	DESCRIBE.POLARCRABLEGS = "The beast ascends to Valhalla... and to my belly!"
+	DESCRIBE.POLARFLEAEGGSACK = "Protein rich slime."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "Empowered by the ice giant's death rattle."

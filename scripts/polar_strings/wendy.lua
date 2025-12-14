@@ -125,6 +125,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.KOALEFRIED_TRUNK_SUMMER = "A delicious fate. More koalefants must meet it."
 	DESCRIBE.KOALEFRIED_TRUNK_WINTER = "A delicious fate. More koalefants must meet it."
 	DESCRIBE.POLARCRABLEGS = "We removed its legs one by one!"
+	DESCRIBE.POLARFLEAEGGSACK = "Life waits inside."
 	
 	--	Crafting
 	DESCRIBE.BLUEGEM_OVERCHARGED = "It's too small of a vessel for such energy."

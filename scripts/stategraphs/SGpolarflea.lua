@@ -4,7 +4,7 @@ local actionhandlers = {
 	ActionHandler(ACTIONS.NUZZLE, "take_host_pre"),
 }
 
-local events= {
+local events = {
 	EventHandler("attacked", function(inst, data)
 		if not inst.components.health:IsDead() then
 			if CommonHandlers.TryElectrocuteOnAttacked(inst, data) then
@@ -20,8 +20,8 @@ local events= {
 			inst.sg:GoToState("attack", data.target)
 		end
 	end),
-	EventHandler("fleahostkick", function(inst, host)
-		inst.sg:GoToState("fall", host)
+	EventHandler("fleahostkick", function(inst, data)
+		inst.sg:GoToState("fall", data)
 	end),
 	EventHandler("trapped", function(inst)
 		if not inst.sg:HasStateTag("busy") then
@@ -51,7 +51,7 @@ local states = {
 		
 		onenter = function(inst, target)
 			inst.AnimState:PlayAnimation("atk")
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/attack")
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."attack")
 			inst.Physics:Stop()
 			
 			inst.sg.statemem.target = target
@@ -59,8 +59,8 @@ local states = {
 		end,
 		
 		timeline = {
-			TimeEvent(9 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/whip") end),
-			TimeEvent(12 * FRAMES, function (inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/attack") end),
+			TimeEvent(9 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."whip") end),
+			TimeEvent(12 * FRAMES, function (inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."attack") end),
 			TimeEvent(16 * FRAMES, function(inst) inst.components.combat:DoAttack(inst.sg.statemem.target) end),
 		},
 		
@@ -82,7 +82,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("hit")
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/hit")
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."hit")
 			inst.Physics:Stop()
 		end,
 		
@@ -101,7 +101,7 @@ local states = {
 		end,
 		
 		timeline = {
-			TimeEvent(1 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/blblbl") end),
+			TimeEvent(1 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."blblbl") end),
 		},
 		
 		events = {
@@ -117,11 +117,11 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("death")
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/death")
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."death")
 			inst.Physics:Stop()
 			
 			RemovePhysicsColliders(inst)
-			inst.components.lootdropper:DropLoot(Vector3(inst.Transform:GetWorldPosition()))			
+			inst.components.lootdropper:DropLoot(Vector3(inst.Transform:GetWorldPosition()))
 		end,
 	},
 	
@@ -135,7 +135,7 @@ local states = {
 		end,
 		
 		events = {
-			EventHandler("animover", function(inst) inst.sg:GoToState("run") end),		
+			EventHandler("animover", function(inst) inst.sg:GoToState("run") end),
 		},
 	 },
 	 
@@ -146,7 +146,7 @@ local states = {
 		onenter = function(inst) 
 			inst.AnimState:PlayAnimation("run_loop")
 			if not inst.SoundEmitter:PlayingSound("walk_LP") then
-				inst.SoundEmitter:PlaySound("polarsounds/snowflea/walk_LP", "walk_LP")
+				inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."walk_LP", "walk_LP")
 			end
 			
 			inst.components.locomotor:RunForward()
@@ -184,16 +184,18 @@ local states = {
 		name = "fall",
 		tags = {"busy"},
 		
-		onenter = function(inst, host)
+		onenter = function(inst, data)
 			inst.AnimState:PlayAnimation("idle", true)
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/spawn")
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."spawn")
 			inst.Physics:Stop()
 			
-			local pt = inst:GetPosition()
-			pt.y = pt.y + 1.5
-			
-			inst.Transform:SetPosition(pt:Get())
-			inst.Transform:SetRotation(math.random(360))
+			if not (data and data.pt) then
+				local pt = inst:GetPosition()
+				pt.y = pt.y + 1.5
+				
+				inst.Transform:SetPosition(pt:Get())
+				inst.Transform:SetRotation(math.random(360))
+			end
 		end,
 		
 		onupdate = function(inst)
@@ -232,7 +234,7 @@ local states = {
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("taunt")
 			inst.AnimState:SetFrame(inst.AnimState:GetCurrentAnimationNumFrames() * 0.7)
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/attack")
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."attack")
 			
 			local action = inst:GetBufferedAction()
 			local target = action and action.target
@@ -290,7 +292,7 @@ local states = {
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("taunt")
-			inst.SoundEmitter:PlaySound("polarsounds/snowflea/hit")
+			inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."hit")
 			inst.Physics:Stop()
 			
 			inst:ClearBufferedAction()
