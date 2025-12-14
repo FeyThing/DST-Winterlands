@@ -441,10 +441,14 @@ local PolarBearBrain = Class(Brain, function(self, inst)
 end)
 
 function PolarBearBrain:OnStart()
-	local combat_trial_nodes = PriorityNode({
-		ChattyNode(self.inst, GetTrialParticipatorLines,
-			ChaseAndAttack(self.inst, 999, 999))
-	}, 0)
+	local combat_trial_nodes = ChattyNode(self.inst, GetTrialParticipatorLines,
+							       ChaseAndAttack(self.inst, 999, 999))
+
+	-- local fun_trial_nodes = PriorityNode({
+	-- 	WhileNode(function() return self.inst.trialdata.fun_trial end,
+	-- 		ChattyNode(self.inst, GetTrialParticipatorLines,
+	-- 			TODO))
+	-- }, 0)
 
 	local observe_trial_nodes = PriorityNode({
 		Follow(self.inst, GetNearbyTrial, GetTrialFollowMinDist, GetTrialFollowTargetDist, GetTrialFollowMaxDist, true),
@@ -465,7 +469,8 @@ function PolarBearBrain:OnStart()
 				AvoidElectricFence(self.inst))),
 
 		-- Trial participation nodes
-		WhileNode(function() return self.inst.trialdata and self.inst.trialdata.combat_trial end, "Participate In Combat Trial", combat_trial_nodes),
+		WhileNode(function() return self.inst:HasTag("trial_participator") and self.inst.trialdata.combat_trial end, "Participate In Combat Trial", combat_trial_nodes),
+		-- WhileNode(function() return self.inst:HasTag("trial_participator") and self.inst.trialdata.fun_trial end, "Participate In Fun Trial", fun_trial_nodes),
 
 		-- Common nodes
 		ChattyNode(self.inst, GetCombatLines,
@@ -476,7 +481,7 @@ function PolarBearBrain:OnStart()
 				Panic(self.inst))),
 				
 		-- Trial spectating nodes
-		WhileNode(function() if self.inst.trialdata == nil then return FindNearbyTrial(self.inst) ~= nil end end, "Observe Trial", observe_trial_nodes),
+		WhileNode(function() if not self.inst:HasTag("trial_participator") then return FindNearbyTrial(self.inst) ~= nil end end, "Observe Trial", observe_trial_nodes),
 
 		-- Common nodes
 		WhileNode(function() return KeepMajor(self.inst) end, "Face Major",
@@ -513,16 +518,16 @@ function PolarBearBrain:OnStart()
 		
 		-- Bored nodes -- LukaS: THIS BREAKS WANDERING, TODO FIX!
 					   --        for some reason this completely breaks subsequent nodes and stops
-					   --        bears from wandering, also they spam their FaceEntity lines each brain tick
-		-- IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
-		-- 	PriorityNode({
-		-- 		ChattyNode(self.inst, "POLARBEAR_STICKARCTICFISH",
-		-- 			DoAction(self.inst, StickArcticFoolFishAction, "Pranking Players")),
-		-- 		ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
-		-- 			DoAction(self.inst, AddFuelAction, "Add Fuel")),
-		-- 		ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
-		-- 			DoAction(self.inst, DoPlowingAction, "Plow Snow"), 5, 10, 5, 5),
-		-- 	}, 0.5)),
+					   --        bears without homes from wandering, also they spam their FaceEntity lines each brain tick
+		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
+			PriorityNode({
+				ChattyNode(self.inst, "POLARBEAR_STICKARCTICFISH",
+					DoAction(self.inst, StickArcticFoolFishAction, "Pranking Players")),
+				ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
+					DoAction(self.inst, AddFuelAction, "Add Fuel")),
+				ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
+					DoAction(self.inst, DoPlowingAction, "Plow Snow"), 5, 10, 5, 5),
+			}, 0.5)),
 		
 		-- Common nodes
 		ChattyNode(self.inst, "POLARBEAR_GOHOME",
@@ -532,7 +537,7 @@ function PolarBearBrain:OnStart()
 		ChattyNode(self.inst, GetChatterLines,
 			FaceEntity(self.inst, GetFaceTargetNearestPlayerFn, KeepFaceTargetNearestPlayerFn)),
 		Wander(self.inst, function() return self.inst.components.knownlocations:GetLocation("spawnpt") end, MAX_WANDER_DIST)
-	}, 0.25)
+	}, 0.35)
 	
 	self.bt = BT(self.inst, root)
 end

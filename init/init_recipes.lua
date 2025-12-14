@@ -123,8 +123,8 @@ PolarRecipe("polar_lavae_tooth", 			{Ingredient("lavae_egg", 1), Ingredient("red
 
 PolarRecipe("bluegem_overcharged", 			{Ingredient("moose_polar_antler", 1), Ingredient("bluegem", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 PolarRecipe("trial_fist_fight", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 1)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
--- PolarRecipe("trial_endurence_fight", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 2)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
--- PolarRecipe("trial_all_out_rumble", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 5)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("trial_endurence_fight", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 2)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("trial_all_out_rumble", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 5)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 
 for phase, phase_data in pairs(POLARAMULET_STATION_MOONPHASE_TRADEDATA) do
 	for i, recipe_data in ipairs(phase_data) do

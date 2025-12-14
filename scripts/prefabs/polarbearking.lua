@@ -1,5 +1,3 @@
-local trials = require("polarbearking_trials")
-
 local assets = {
     Asset("ANIM", "anim/pig_king.zip")
 }
@@ -31,7 +29,7 @@ local function OnInfighting(inst, attacker, victim)
     end
 end
 
-local function StopBearInfighting(inst)
+local function DoRoar(inst)
     local x, y, z = inst.Transform:GetWorldPosition()
     local bears = TheSim:FindEntities(x, y, z, TUNING.POLARBEARKING_STOP_INFIGHTING_RANGE, { "bear" }, { "bear_major" })
     local preys = TheSim:FindEntities(x, y, z, TUNING.POLARBEARKING_STOP_INFIGHTING_RANGE, { "prey" })
@@ -66,14 +64,19 @@ local function StopBearInfighting(inst)
     end
 end
 
+-- TODO: Add a second return value, the reason for failing, use it later for talking
+local TRIAL_OBSTACLE_TAGS = { "structure", "wall", "fire" }
 local function CanStartTrial(inst, trialdata)
+    local x, y, z = inst.Transform:GetWorldPosition()
+    local obstacles = TheSim:FindEntities(x, y, z, trialdata.radius, nil, nil, TRIAL_OBSTACLE_TAGS)
     return not inst.sg:HasStateTag("sleeping") and
            not inst.sg:HasStateTag("yelling") and
-           not inst.components.trialsholder:IsTrialActive()
+           not inst.components.trialsholder:IsTrialActive() and
+           #obstacles <= 0
 end
 
 local function OnActivatePrototyper(inst, doer, recipe)
-    inst.components.trialsholder:StartTrial(trials[recipe.name], doer)
+    inst.components.trialsholder:StartTrial(recipe.name, doer)
 end
 
 local function OnTurnOnPrototyper(inst)
@@ -156,8 +159,8 @@ local function fn()
 
     inst:AddComponent("inspectable")
 
-    inst:AddComponent("hauntable")
-    inst.components.hauntable:SetHauntValue(TUNING.HAUNT_TINY)
+    -- inst:AddComponent("hauntable")
+    -- inst.components.hauntable:SetHauntValue(TUNING.HAUNT_TINY)
 
     inst:AddComponent("trialsholder")
     inst.components.trialsholder:SetTrialStartTestFn(CanStartTrial)
@@ -165,7 +168,7 @@ local function fn()
     inst.infighting_tolerance = TUNING.POLARBEARKING_INFIGHTING_TOLARANCE
     inst._regain_tolerance_task = nil
 
-    inst.StopBearInfighting = StopBearInfighting
+    inst.DoRoar = DoRoar
     inst.OnInfighting = OnInfighting
 
     inst:SetStateGraph("SGpolarbearking")

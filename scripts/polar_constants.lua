@@ -41,8 +41,6 @@ TECH.POLARBEARKING_TRIALS = {POLARBEARKING_TRIALS = 1}
 TECH_INGREDIENT.POLARSNOW = "polarsnow_material"
 TECH_INGREDIENT.POLARBEAR = "polarbear_material"
 
-TRIALS_INGREDIANT_ACCESS_RADIUS = 12
-
 POLARAMULET_STATION_MOONPHASE_TRADEDATA = {
 	new = {
 		{product = "charcoal", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 6, max = 12}},

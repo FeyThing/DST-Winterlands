@@ -17,8 +17,8 @@ end
 
 local trial_names = {
     "trial_fist_fight",
-    -- "trial_endurence_fight"
-    -- "trial_all_out_rumble"
+    "trial_endurence_fight",
+    "trial_all_out_rumble"
 }
 
 local prefabs = {  }

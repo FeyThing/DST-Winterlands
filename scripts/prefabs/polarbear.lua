@@ -35,9 +35,8 @@ local BODY_PAINTINGS = {
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
 local RETARGET_ONEOF_TAGS = {"hound", "walrus", "warg", "pirate", "wonkey", "abominable_snowman"}
 local RETARGET_NOT_TAGS = {"bearbuddy"}
-
 local function RetargetFn(inst)
-	if inst.trialdata ~= nil and inst.trialdata.combat_trial then
+	if inst:HasTag("trial_participator") and inst.trialdata.combat_trial then
 		return not inst:IsInLimbo() and FindEntity(inst, inst.trialdata.radius * 2, function(guy)
 			return inst.components.combat:CanTarget(guy) and inst.trialdata.players_left[guy]
 		end)
@@ -77,7 +76,7 @@ local function OnAttacked(inst, data)
 	if data and data.attacker then
 		inst.components.combat:SetTarget(data.attacker)
 
-		if inst.trialdata == nil then
+		if not inst:HasTag("trial_participator") then
 			inst.components.combat:ShareTarget(data.attacker, 30, function(dude)
 				return dude:HasTag("bear") and dude.components.health and not dude.components.health:IsDead()
 			end, 10)
