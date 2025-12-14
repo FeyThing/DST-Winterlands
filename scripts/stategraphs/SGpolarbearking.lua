@@ -139,7 +139,7 @@ local states = {
 
         timeline = {
             TimeEvent(30*FRAMES, function(inst)
-                inst:StopBearInfighting()
+                inst:DoRoar()
             end)
         },
 

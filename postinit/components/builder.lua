@@ -8,7 +8,7 @@ local function HasSnowIngredient(self, ingredient)
 
 	if ingredient.type and ingredient.type == "polarbear_material" then
 		local x, y, z = self.inst.Transform:GetWorldPosition()
-		local bears = TheSim:FindEntities(x, y, z, TRIALS_INGREDIANT_ACCESS_RADIUS, { "bear" }, { "bear_major" })
+		local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS, { "bear" }, { "bear_major" })
 
 		if #bears >= ingredient.amount then
 			return true
