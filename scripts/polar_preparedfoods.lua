@@ -91,9 +91,32 @@ local polar_preparedfoods = {
 		card_def = {ingredients = {{"trunk_winter", 1}, {"potato", 2}, {"onion", 1}}},
 	},
 	
+	-- Alt recipes, postinit/components/stewer is where its at
+	
+	jellybean_fleaeggs = {
+		test = function(cooker, names, tags) return names.polarfleaeggsack and not tags.inedible and not tags.monster end,
+		name = "jellybean_fleaeggs",
+		hunger = 0,
+		health = TUNING.JELLYBEAN_TICK_VALUE,
+		sanity = TUNING.SANITY_TINY,
+		perishtime = nil,
+		foodtype = FOODTYPE.GOODIES,
+		cooktime = 2.5,
+		priority = 12,
+		stacksize = 1,
+		tags = {"honeyed"},
+		potlevel = "low",
+		floater = {"small", nil, 0.85},
+		noprefab = true,
+		no_cookbook = true,
+		overridebuild = "cook_pot_food",
+		overridesymbolname = "jellybean",
+		scrapbook_healthvalue = 122,
+	},
+	
 	icecream_emperor = {
 		test = function(cooker, names, tags) return names.emperor_egg and not tags.inedible and not tags.monster end,
-		name = "icecream_emperor", -- postinit/components/stewer is where its at
+		name = "icecream_emperor",
 		hunger = TUNING.CALORIES_MED,
 		health = 0,
 		sanity = TUNING.SANITY_HUGE,

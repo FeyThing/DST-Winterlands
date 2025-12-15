@@ -4,7 +4,7 @@ local polarfoods_warly = require("polar_preparedfoods_warly")
 
 local polarfoods_prefabs = {}
 for k, data in pairs(polarfoods) do
-	if not data.noprefab then -- We don't want spiced 'emperor icecream' to generate !
+	if not data.noprefab then -- We don't want spiced 'emperor icecream' or 'jellybeans_fleaeggs' to generate !
 		polarfoods_prefabs[k] = data
 	end
 end

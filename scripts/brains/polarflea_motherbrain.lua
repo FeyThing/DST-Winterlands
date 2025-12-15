@@ -14,8 +14,8 @@ local MAX_WANDER_DIST = 40
 local FLEA_TAGS = {"flea", "_combat"}
 local FLEA_NOT_TAGS = {"epic", "INLIMBO", "isdead"}
 
-local MIN_FLEAS_IN_RANGE = 8
-local MIN_FLEAS_RANGE = 60 * 60
+local MIN_FLEAS_IN_RANGE = 7
+local MIN_FLEAS_RANGE = 80 * 80
 
 local PolarFlea_MotherBrain = Class(Brain, function(self, inst)
 	Brain._ctor(self, inst)

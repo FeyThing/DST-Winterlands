@@ -5,6 +5,18 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local Container = require("components/container")
 	
+	local OldGiveItem = Container.GiveItem
+	function Container:GiveItem(item, slot, ...)
+		if item and item:HasTag("flea") and self.inst:HasTag("fleapack") and self.inst.components.upgradeable and self.inst.components.upgradeable:GetStage() >= 2
+			and item.components.stackable == nil then
+			
+			item:AddComponent("stackable")
+			item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+		end
+		
+		return OldGiveItem(self, item, slot, ...)
+	end
+	
 	local OldCanTakeItemInSlot = Container.CanTakeItemInSlot
 	function Container:CanTakeItemInSlot(item, slot, ...)
 		if item and item:HasTag("flea") then

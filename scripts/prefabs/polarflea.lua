@@ -33,6 +33,35 @@ local function Retarget(inst)
 	return target
 end
 
+local function ReleaseStack(inst)
+	local fleas = {inst}
+	
+	if inst.components.stackable then
+		while inst.components.stackable:StackSize() > 1 do
+			local item = inst.components.stackable:Get()
+			
+			if item then
+				if inst.babyflea then
+					item.babyflea = true
+					item.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
+					item.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
+				end
+				
+				if item.components.inventoryitem then
+					item.components.inventoryitem:OnDropped()
+				end
+				item.Physics:Teleport(inst.Transform:GetWorldPosition())
+				item:PushEvent("fleahostkick", {host = inst._host})
+				
+				--item:RemoveComponent("stackable")
+				table.insert(fleas, item)
+			end
+		end
+	end
+	
+	return fleas
+end
+
 local function HostCapacity(inst, host)
 	local inventory = host.components.inventory or host.components.container
 	local max
@@ -176,6 +205,26 @@ local function SetHost(inst, host, kick, given)
 	if kick or host == nil then
 		local inventory = inst._host and (inst._host.components.inventory or inst._host.components.container)
 		
+		--[[if inst.components.stackable then
+			while inst.components.stackable:StackSize() > 1 do
+				local item = inst.components.stackable:Get()
+				
+				if item then
+					if inst.babyflea then
+						item.babyflea = true
+						item.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
+						item.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
+					end
+					
+					if item.components.inventoryitem then
+						item.components.inventoryitem:OnDropped()
+					end
+					item.Physics:Teleport(inst.Transform:GetWorldPosition())
+					item:PushEvent("fleahostkick", {host = inst._host})
+				end
+			end
+		end]]
+		
 		if inventory and inst.components.inventoryitem and inst.components.inventoryitem:IsHeld() then
 			inventory:RemoveItem(inst, true)
 			inventory:DropItem(inst, true)
@@ -237,14 +286,14 @@ local function SetHost(inst, host, kick, given)
 	inst._host:PushEvent("gotpolarflea", {flea = inst, given = given})
 end
 
-local function GetStatus(inst)
+local function GetStatus(inst, viewer)
 	local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
 	
 	if owner and owner:HasTag("fleapack") then
 		return "HELD_BACKPACK"
 	end
 	
-	return owner == inst and "HELD_INV" or nil -- HELD is autocompleted by game but we use another logic
+	return owner == viewer and "HELD_INV" or nil -- HELD is autocompleted by game but we use another logic
 end
 
 --	Host events
@@ -273,10 +322,15 @@ local function OnHostAttacked(inst, host, data) -- This is for both onattacked a
 		end
 		
 		if math.random() <= release_chance and not isflea then
+			local fleas = ReleaseStack(inst)
 			inst:SetHost(nil, true)
 			
 			if attacker and not isflea and not isbuddy then
-				inst.components.combat:SetTarget(attacker)
+				for i, v in ipairs(fleas) do
+					if v.components.combat then
+						v.components.combat:SetTarget(attacker)
+					end
+				end
 			end
 		end
 	end
@@ -310,9 +364,14 @@ local function OnHostAttackOther(inst, host, data)
 				if target and not target:HasTag("flea") and not (target.components.health and target.components.health:IsDead())
 					and inst.components.combat:CanTarget(target) then
 					
+					local fleas = ReleaseStack(inst)
 					inst:SetHost(nil, true)
 					
-					inst.components.combat:SetTarget(target)
+					for i, v in ipairs(fleas) do
+						if v.components.combat then
+							v.components.combat:SetTarget(target)
+						end
+					end
 				end
 			end
 		end
@@ -325,10 +384,15 @@ local function OnHostPickedUp(inst, host, data) -- This is for both items, picka
 		local isbuddy = picker and picker:HasTag("bearbuddy")
 		local isflea = picker and picker:HasTag("flea")
 		
+		local fleas = ReleaseStack(inst)
 		inst:SetHost(nil, true)
 		
 		if picker and not isflea and not isbuddy then
-			inst.components.combat:SetTarget(picker)
+			for i, v in ipairs(fleas) do
+				if v.components.combat then
+					v.components.combat:SetTarget(picker)
+				end
+			end
 		end
 	end
 end
@@ -350,6 +414,8 @@ local function OnBecomeActiveItem(inst, doer)
 		local inventory = inst._host and (inst._host.components.inventory or inst._host.components.container)
 		
 		if inst:IsValid() then
+			ReleaseStack(inst)
+			
 			if inventory then
 				inventory:RemoveItem(inst, true)
 				inventory:DropItem(inst, true)
@@ -416,7 +482,8 @@ local function OnRemove(inst)
 			end
 		end
 	end
-	if TheWorld._numfleas then
+	
+	if TheWorld._numfleas and not inst.babyflea then
 		TheWorld._numfleas = TheWorld._numfleas - 1
 	end
 end
@@ -442,7 +509,9 @@ local function OnTimerDone(inst, data)
 end
 
 local function HostingInit(inst)
-	TheWorld._numfleas = (TheWorld._numfleas or 0) + 1
+	if not inst.babyflea then
+		TheWorld._numfleas = (TheWorld._numfleas or 0) + 1
+	end
 	
 	if inst._host == nil then
 		local owner = inst.components.inventoryitem and inst.components.inventoryitem:GetGrandOwner()
@@ -452,6 +521,11 @@ local function HostingInit(inst)
 		elseif owner == nil and inst.components.timer and not inst.components.timer:TimerExists("findhost") then
 			inst.components.timer:StartTimer("findhost", 2 + math.random(TUNING.POLARFLEA_HOST_FINDTIME))
 		end
+	end
+	
+	local container = inst.components.inventoryitem.owner
+	if not (container and container:HasTag("fleapack")) then
+		inst:RemoveComponent("stackable")
 	end
 	
 	inst._try_hosting = nil
@@ -471,6 +545,7 @@ local function fn()
 	inst.entity:AddNetwork()
 	
 	MakeCharacterPhysics(inst, 5, 0.3)
+	inst.Physics:ClearCollidesWith(COLLISION.CHARACTERS)
 	
 	inst.Transform:SetFourFaced()
 	
@@ -539,6 +614,9 @@ local function fn()
 	
 	inst:AddComponent("sanityaura")
 	inst.components.sanityaura.aura = -TUNING.SANITYAURA_SMALL
+	
+	inst:AddComponent("stackable")
+	inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
 	
 	inst:AddComponent("sleeper")
 	

@@ -102,14 +102,18 @@ local function FleaPreserverRate(inst, item)
 end
 
 local function CanBeUpgraded(inst, item)
-	return not inst.components.equippable:IsEquipped()
+	return true
 end
 
 local function OnUpgraded(inst, upgrader, item)
-	if item and item.prefab == "polarfleaeggsack" and inst.components.fueled then
-		inst.components.fueled:SetPercent(1)
+	if item and item.prefab == "polarfleaeggsack" then
+		if inst.components.fueled then
+			inst.components.fueled:SetPercent(1)
+		end
+		inst:DoTaskInTime(0, function()
+			inst.components.upgradeable:SetStage(2)
+		end)
 	end
-	inst.upgraded = true
 end
 
 local function OnBurnt(inst)
@@ -133,6 +137,27 @@ local function OnExtinguish(inst)
 	if inst.components.container then
 		inst.components.container.canbeopened = true
 	end
+end
+
+local function ItemGet(inst, data)
+	local item = data and data.item
+	
+	if item and item:HasTag("flea") and inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2 then
+		if item.components.stackable == nil then
+			item:AddComponent("stackable")
+			item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+		end
+	end
+end
+
+local function ItemLose(inst, data)
+	--[[local item = data and data.prev_item
+	
+	if item and item:HasTag("flea") and inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2 then
+		if item.components.stackable then
+			item:RemoveComponent("stackable")
+		end
+	end]]
 end
 
 local function fn()
@@ -194,7 +219,7 @@ local function fn()
 	if HasPassedCalendarDay(16) then
 		inst:AddComponent("upgradeable")
 		inst.components.upgradeable.upgradetype = UPGRADETYPES.POLARFLEA_SACK
-		inst.components.upgradeable.numstages = 2
+		inst.components.upgradeable.numstages = 3 -- 2, but third loops for repairing
 		inst.components.upgradeable.upgradesperstage = 1
 		inst.components.upgradeable:SetOnUpgradeFn(OnUpgraded)
 		inst.components.upgradeable:SetCanUpgradeFn(CanBeUpgraded)
@@ -214,6 +239,9 @@ local function fn()
 	inst.UpdateFleas = UpdateFleas
 	
 	inst._updatefleas = inst:DoPeriodicTask(0.5, inst.UpdateFleas)
+	
+	inst:ListenForEvent("itemget", ItemGet)
+	inst:ListenForEvent("itemlose", ItemLose)
 	
 	return inst
 end

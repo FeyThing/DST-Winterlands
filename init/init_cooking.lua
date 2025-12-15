@@ -24,12 +24,3 @@ local Cooking = require("cooking")
 	for _, cooker in pairs(cookpots_master) do for _, recipe in pairs(warly_recipes) do AddCookerRecipe(cooker, recipe) end end
 	for _, cooker in pairs(spicers) do for _, recipe in pairs(spiced_recipes) do AddCookerRecipe(cooker, recipe) end end
 	for _, recipe in pairs(polar_recipes) do if recipe.card_def then table.insert(recipe_cards, {recipe_name = recipe.name, cooker_name = "cookpot"}) end end
-	
---	Recipe Changes
-	
-	local Recipes = Cooking.recipes.cookpot
-	local OldCaliforniaRoll = Recipes.jellybean.test
-	Recipes.jellybean.test = function(cooker, names, tags)
-		return OldCaliforniaRoll(cooker, names, tags)
-			or (names.polarfleaeggsack and not tags.inedible and not tags.monster)
-	end

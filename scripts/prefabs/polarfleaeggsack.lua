@@ -35,6 +35,7 @@ local function OnDeploy(inst, pt)
 	if owner and owner.components.inventory then
 		owner.components.inventory:DropItem(sack)
 	end
+	sack.AnimState:PlayAnimation("planted", true)
 	sack.SoundEmitter:PlaySound("dontstarve/creatures/spider/spider_egg_sack")
 	sack.Transform:SetPosition(pt:Get())
 	
@@ -56,7 +57,7 @@ local function fn()
 	
 	inst.AnimState:SetBank("polar_flea_egg_sac")
 	inst.AnimState:SetBuild("polar_flea_egg_sac")
-	inst.AnimState:PlayAnimation("idle")
+	inst.AnimState:PlayAnimation("idle", true)
 	
 	MakeInventoryFloatable(inst, "med", 0.05, {0.85, 0.6, 0.85})
 	
@@ -96,4 +97,4 @@ local function fn()
 end
 
 return Prefab("polarfleaeggsack", fn, assets),
-	MakePlacer("polarfleaeggsack_placer", "polar_flea_egg_sac", "polar_flea_egg_sac", "idle")
+	MakePlacer("polarfleaeggsack_placer", "polar_flea_egg_sac", "polar_flea_egg_sac", "placer")

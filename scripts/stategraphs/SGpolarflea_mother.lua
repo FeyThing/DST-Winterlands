@@ -1,5 +1,62 @@
 require("stategraphs/commonstates")
 
+local CHARGE_TAGS = {"_combat"}
+local CHARGE_NOT_TAGS = {"flea", "INLIMBO", "playerghost"}
+
+local KNOCK_TAGS = {"character", "monster"}
+local KNOCK_NOT_TAGS = {"DECOR", "FX", "INLIMBO", "playerghost"}
+
+local function DoNearbyKnock(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local ents = TheSim:FindEntities(x, y, z, 2.5, nil, KNOCK_NOT_TAGS, KNOCK_TAGS)
+	
+	if inst.sg.statemem.knocktargets == nil then
+		inst.sg.statemem.knocktargets = {}
+	end
+	
+	for i, v in ipairs(ents) do
+		if not inst.sg.statemem.knocktargets[v] then
+			if v.sg and not (v.sg:HasStateTag("knockback") or v.sg:HasStateTag("nointerrupt")) then
+				v:PushEvent("knockback", {knocker = inst, radius = 1, strengthmult = 1, forcelanded = true})
+			end
+			inst.sg.statemem.knocktargets[v] = true
+		end
+	end
+end
+
+local function SpewBaby(inst, dir)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local rot = inst.Transform:GetRotation()
+	
+	if dir ~= "left" and dir ~= "right" then
+		dir = inst.lastspewdir == "right" and "left" or "right"
+	end
+	inst.lastspewdir = dir
+	
+	local side_offset = (dir == "left") and 90 or -90
+	local baby_rot = rot + side_offset + math.random(-15, 15)
+	
+	local rad = baby_rot * DEGREES
+	local ox = math.cos(rad) * (0.5 + math.random() * 0.5)
+	local oz = -math.sin(rad) * (0.5 + math.random() * 0.5)
+	local pt = Vector3(x + ox, y + 1.5, z + oz)
+	
+	local baby = SpawnPrefab("polarflea")
+	baby.Transform:SetPosition(pt:Get())
+	baby.Transform:SetRotation(baby_rot)
+	baby.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
+	baby.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
+	baby.babyflea = true
+	
+	if baby.components.follower then
+		baby.components.follower:SetLeader(inst)
+	end
+	
+	baby:PushEvent("fleahostkick", {host = inst, pt = pt})
+	
+	return baby
+end
+
 local actionhandlers = {}
 
 local events = {
@@ -32,65 +89,6 @@ local events = {
 	CommonHandlers.OnElectrocute(),
 }
 
-local CHARGE_TAGS = {"_combat"}
-local CHARGE_NOT_TAGS = {"flea", "INLIMBO", "playerghost"}
-
-local KNOCK_TAGS = {"character", "monster"}
-local KNOCK_NOT_TAGS = {"DECOR", "FX", "INLIMBO", "playerghost"}
-
-local function DoNearbyKnock(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, 2.5, nil, KNOCK_NOT_TAGS, KNOCK_TAGS)
-	
-	for i, v in ipairs(ents) do
-		if not (inst.sg.statemem.bitetargets and inst.sg.statemem.bitetargets[v]) then
-			if not v:HasTag("flea") then
-				v.components.combat:GetAttacked(inst, 1)
-			end
-			if v.sg and not (v.sg:HasStateTag("knockback") or v.sg:HasStateTag("nointerrupt")) then
-				v:PushEvent("knockback", {knocker = inst, radius = 1, strengthmult = 1, forcelanded = true})
-			end
-			if inst.sg.statemem.bitetargets then
-				inst.sg.statemem.bitetargets[v] = true
-			end
-		end
-	end
-end
-
-local function SpewBaby(inst, dir)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local rot = inst.Transform:GetRotation()
-	
-	if dir ~= "left" and dir ~= "right" then
-		dir = inst.lastspewdir == "right" and "left" or "right"
-	end
-	inst.lastspewdir = dir
-	
-	local side_offset = (dir == "left") and 90 or -90
-    local baby_rot = rot + side_offset + math.random(-15, 15)
-	
-	local rad = baby_rot * DEGREES
-	local ox = math.cos(rad) * (0.5 + math.random() * 0.5)
-	local oz = -math.sin(rad) * (0.5 + math.random() * 0.5)
-	local pt = Vector3(x + ox, y + 1.5, z + oz)
-	
-	local baby = SpawnPrefab("polarflea")
-	baby.Transform:SetPosition(pt:Get())
-	baby.Transform:SetRotation(baby_rot)
-	baby.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
-	baby.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
-	baby.babyflea = true
-	
-	if baby.components.follower then
-		baby.components.follower:SetLeader(inst)
-	end
-	
-	baby:PushEvent("fleahostkick", {host = inst, pt = pt})
-	
-	return baby
-end
-
-
 local states = {
 	State{
 		name = "idle",
@@ -111,27 +109,31 @@ local states = {
 			inst.AnimState:PushAnimation("charge_loop")
 			inst.Physics:Stop()
 			
-			if not inst.SoundEmitter:PlayingSound("walk_LP") then
-				inst.SoundEmitter:PlaySound("polarsounds/snowflea/walk_LP", "walk_LP")
-			end
-			
 			inst.sg.statemem.target = target
 			inst.components.combat:StartAttack()
 			inst.components.locomotor.runspeed = TUNING.POLARFLEA_MOTHER_CHARGE_SPEED
 			inst.components.locomotor.walkspeed = TUNING.POLARFLEA_MOTHER_CHARGE_SPEED
 			
-			inst.sg:SetTimeout(1 + math.random())
+			inst.sg.statemem._steptask = inst:DoPeriodicTask(0.1, function()
+				inst.SoundEmitter:PlaySound("polarsounds/motherflea/step")
+			end, 20 * FRAMES)
+			inst.sg:SetTimeout(1.4 + math.random() * 0.2)
 		end,
 		
 		timeline = {
-			TimeEvent(11 * FRAMES, function (inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/attack") end),
-			TimeEvent(20 * FRAMES, function (inst) inst.components.locomotor:RunForward() end),
-			TimeEvent(22 * FRAMES, function(inst) inst.sg.statemem.bitetargets = {} end),
+			TimeEvent(11 * FRAMES, function (inst)
+				inst.SoundEmitter:PlaySound("polarsounds/snowflea/attack")
+				inst.SoundEmitter:PlaySound("polarsounds/motherflea/step")
+			end),
+			TimeEvent(21 * FRAMES, function(inst)
+				inst.sg.statemem.bitetargets = {}
+				inst.SoundEmitter:PlaySound("polarsounds/motherflea/step")
+			end),
 		},
 		
 		onupdate = function(inst)
 			if inst.sg.statemem.bitetargets then
-				inst.components.locomotor:RunForward()
+				inst.components.locomotor:RunForward(true)
 				
 				local x, y, z = inst.Transform:GetWorldPosition()
 				local angle = inst.Transform:GetRotation()
@@ -143,7 +145,7 @@ local states = {
 				x = x + 1 * cos_theta
 				z = z - 1 * sin_theta
 				
-				local ents = TheSim:FindEntities(x, y, z, 0.9, nil, CHARGE_NOT_TAGS, CHARGE_TAGS)
+				local ents = TheSim:FindEntities(x, y, z, 1.1, nil, CHARGE_NOT_TAGS, CHARGE_TAGS)
 				for i, v in ipairs(ents) do
 					if not inst.sg.statemem.bitetargets[v] and v.components.combat and v.components.health and not v.components.health:IsDead() then
 						v.components.combat:GetAttacked(inst, TUNING.POLARFLEA_MOTHER_DAMAGE)
@@ -160,7 +162,10 @@ local states = {
 		end,
 		
 		onexit = function(inst, target)
-			inst.SoundEmitter:KillSound("walk_LP")
+			if inst.sg.statemem._steptask then
+				inst.sg.statemem._steptask:Cancel()
+				inst.sg.statemem._steptask = nil
+			end
 		end,
 	},
 	
@@ -168,12 +173,12 @@ local states = {
 		name = "charge_stop",
 		tags = {"attack", "busy", "canrotate"},
 		
-		onenter = function(inst, target)
+		onenter = function(inst)
 			inst.AnimState:PlayAnimation("charge_pst")
 			inst.SoundEmitter:PlaySound("polarsounds/motherflea/brakes")
-			inst.components.locomotor:Stop()
-			
 			inst.Physics:SetMotorVel(5, 0, 0)
+			
+			inst.components.locomotor:Stop()
 			
 			inst.components.combat:RestartCooldown()
 			inst.components.locomotor.runspeed = TUNING.POLARFLEA_MOTHER_RUN_SPEED
@@ -271,7 +276,7 @@ local states = {
 			
 			local numshakes = data and data.numshakes or nil
 			inst._wantstospawnfleas = nil
-			inst.sg.statemem.numshakes = numshakes or math.random(3, 4)
+			inst.sg.statemem.numshakes = numshakes or 3
 			inst.sg.statemem.started = data and data.start
 		end,
 		
@@ -345,6 +350,10 @@ local states = {
 			inst.components.locomotor:RunForward()
 		end,
 		
+		timeline = {
+			TimeEvent(3 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step") end),
+		},
+		
 		events = {
 			EventHandler("animover", function(inst) inst.sg:GoToState("walk") end),
 		},
@@ -359,6 +368,17 @@ local states = {
 			
 			inst.components.locomotor:RunForward()
 		end,
+		
+		timeline = {
+			TimeEvent(5 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step") end),
+			TimeEvent(9 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step", nil, 0.2) end),
+			TimeEvent(15 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step") end),
+			TimeEvent(19 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step", nil, 0.8) end),
+			TimeEvent(25 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step") end),
+			TimeEvent(31 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step", nil, 0.6) end),
+			TimeEvent(35 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step") end),
+			TimeEvent(40 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step", nil, 0.4) end),
+		},
 		
 		onexit = function(inst)
 			inst.SoundEmitter:KillSound("walk_LP")
@@ -380,6 +400,10 @@ local states = {
 			
 			inst.components.locomotor:StopMoving()
 		end,
+		
+		timeline = {
+			TimeEvent(2 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("polarsounds/motherflea/step") end),
+		},
 		
 		events = {
 			EventHandler("animover", function(inst)

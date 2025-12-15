@@ -243,7 +243,7 @@ local states = {
 				inst:ForceFacePoint(target:GetPosition())
 				inst.sg.statemem.target = target
 				
-				if target.components.container and target.components.container.canbeopened then
+				if target.components.container and target.components.container.canbeopened and not target:HasTag("backpack") then
 					BufferedAction(inst, target, ACTIONS.RUMMAGE):Do()
 				end
 			end

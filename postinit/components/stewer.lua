@@ -26,10 +26,16 @@ local Stewer = require("components/stewer")
 
 	local OldHarvest = Stewer.Harvest
 	function Stewer:Harvest(harvester, ...)
-		local emperor_icecream = self.done and self.product == "icecream_emperor"
-		local recipe = emperor_icecream and Cooking.GetRecipe(self.inst.prefab, "icecream") or nil
-		local recipe_emperor = emperor_icecream and Cooking.GetRecipe(self.inst.prefab, "icecream_emperor") or nil
+		local icecream_emperor = self.done and self.product == "icecream_emperor"
+		local recipe_emperor = icecream_emperor and Cooking.GetRecipe(self.inst.prefab, "icecream_emperor") or nil
+		
+		local jellybean_fleaeggs = self.done and self.product == "jellybean_fleaeggs"
+		local recipe_fleaeggs = jellybean_fleaeggs and Cooking.GetRecipe(self.inst.prefab, "jellybean_fleaeggs") or nil
+		
 		local oldstacksize
+		local recipe = (icecream_emperor and Cooking.GetRecipe(self.inst.prefab, "icecream"))
+			or (jellybean_fleaeggs and Cooking.GetRecipe(self.inst.prefab, "jellybean"))
+			or nil
 		
 		-- Sure wish doing alternative recipes wasn't this hacky
 		if recipe and recipe_emperor then
@@ -37,11 +43,16 @@ local Stewer = require("components/stewer")
 			recipe.stacksize = recipe_emperor.stacksize
 			
 			self.product = "icecream"
+		elseif recipe and recipe_fleaeggs then
+			oldstacksize = recipe.stacksize
+			recipe.stacksize = recipe_fleaeggs.stacksize
+			
+			self.product = "jellybean"
 		end
 		
 		local ret = OldHarvest(self, harvester, ...)
 		
-		if recipe and recipe_emperor then
+		if recipe then
 			recipe.stacksize = oldstacksize
 		end
 		
