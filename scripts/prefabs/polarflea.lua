@@ -26,9 +26,18 @@ local function Retarget(inst)
 			end
 		end
 		
+		local full
+		if fleapack then
+			if inst.components.stackable and fleapack.components.upgradeable and fleapack.components.upgradeable:GetStage() >= 2 then
+				full = fleapack.components.container:CanAcceptCount(inst, 1) <= 0
+			else
+				full = inventory:IsFull() and fleapack.components.container:IsFull()
+			end
+		end
+		
 		return not guy:HasTag("flea") and inst.components.combat:CanTarget(guy)
-			and (fleapack == nil or (fleapack and guy.components.inventory:IsFull() and fleapack.components.container:IsFull()))
-	end, RETARGET_MUST_TAGS, RETARGET_CANT_TAGS, RETARGET_ONEOF_TAGS) or nil
+			and (fleapack == nil or full)
+	end, RETARGET_MUST_TAGS, RETARGET_CANT_TAGS, RETARGET_ONEOF_TAGS)
 	
 	return target
 end
@@ -53,7 +62,6 @@ local function ReleaseStack(inst)
 				item.Physics:Teleport(inst.Transform:GetWorldPosition())
 				item:PushEvent("fleahostkick", {host = inst._host})
 				
-				--item:RemoveComponent("stackable")
 				table.insert(fleas, item)
 			end
 		end
@@ -77,7 +85,7 @@ local function HostCapacity(inst, host)
 		
 		max = max and math.min(val, max) or val
 	elseif inventory then
-		local stackmax = (inst.components.stackable and inst.components.stackable.maxsize) or 1
+		local stackmax = (inst.components.stackable and inst.components.stackable.maxsize) or TUNING.STACK_SIZE_LARGEITEM
 		local containers = {inventory}
 		
 		if host.components.inventory then
@@ -135,7 +143,7 @@ local function CanBeHost(inst, host)
 				local inventory = host.components.inventory
 				if inventory then
 					for k, v in pairs(inventory.equipslots) do
-						if v:HasTag("fleapack") and v.components.container and v.components.container:IsOpen() and v.components.container:CanAcceptCount(inst, 1) then
+						if v:HasTag("fleapack") and v.components.container and v.components.container:IsOpen() and v.components.container:CanAcceptCount(inst, 1) > 0 then
 							return true
 						end
 					end
@@ -205,26 +213,6 @@ local function SetHost(inst, host, kick, given)
 	if kick or host == nil then
 		local inventory = inst._host and (inst._host.components.inventory or inst._host.components.container)
 		
-		--[[if inst.components.stackable then
-			while inst.components.stackable:StackSize() > 1 do
-				local item = inst.components.stackable:Get()
-				
-				if item then
-					if inst.babyflea then
-						item.babyflea = true
-						item.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
-						item.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
-					end
-					
-					if item.components.inventoryitem then
-						item.components.inventoryitem:OnDropped()
-					end
-					item.Physics:Teleport(inst.Transform:GetWorldPosition())
-					item:PushEvent("fleahostkick", {host = inst._host})
-				end
-			end
-		end]]
-		
 		if inventory and inst.components.inventoryitem and inst.components.inventoryitem:IsHeld() then
 			inventory:RemoveItem(inst, true)
 			inventory:DropItem(inst, true)
@@ -234,6 +222,11 @@ local function SetHost(inst, host, kick, given)
 		
 		if inst.components.health then
 			inst.components.health:StopRegen()
+		end
+		if inst.components.stackable == nil then
+			inst:AddComponent("stackable")
+			inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+			inst.skinname = nil
 		end
 		
 		inst:PushEvent("fleahostkick", {host = inst._host})
@@ -250,6 +243,10 @@ local function SetHost(inst, host, kick, given)
 	--	Setting new host
 	
 	inst._host = host
+	if inst._host == nil or not inst._host:IsValid() then
+		return -- Shouldn't happen
+	end
+	
 	inst:ListenForEvent("onignite", inst.on_host_attacked, inst._host)
 	inst:ListenForEvent("attacked", inst.on_host_attacked, inst._host)
 	inst:ListenForEvent("onattackother", inst.on_host_attackother, inst._host)
@@ -264,8 +261,7 @@ local function SetHost(inst, host, kick, given)
 		inst.components.follower:SetLeader(nil)
 	end
 	
-	local inventory = inst._host and (inst._host.components.inventory or inst._host.components.container)
-	
+	local inventory = inst._host.components.inventory or inst._host.components.container
 	if inventory then
 		if inst.components.inventoryitem and not inst.components.inventoryitem:IsHeld() then
 			inst._try_hosting = true -- Needed for fleas to go in pockets and prioritize Itchhiker Pack
@@ -281,6 +277,12 @@ local function SetHost(inst, host, kick, given)
 		end
 		
 		inst:RemoveFromScene()
+	end
+	
+	local fleapack = inst.components.inventoryitem and inst.components.inventoryitem.owner
+	if not (fleapack and fleapack.components.upgradeable and fleapack.components.upgradeable:GetStage() >= 2) then
+		inst:RemoveComponent("stackable")
+		inst.skinname = "unstackable_flea"
 	end
 	
 	inst._host:PushEvent("gotpolarflea", {flea = inst, given = given})
@@ -524,8 +526,9 @@ local function HostingInit(inst)
 	end
 	
 	local container = inst.components.inventoryitem.owner
-	if not (container and container:HasTag("fleapack")) then
+	if inst._host and not (container and container:HasTag("fleapack") and container.components.upgradeable and container.components.upgradeable:GetStage() >= 2) then
 		inst:RemoveComponent("stackable")
+		inst.skinname = "unstackable_flea"
 	end
 	
 	inst._try_hosting = nil
@@ -650,7 +653,7 @@ local function fn()
 	inst:SetStateGraph("SGpolarflea")
 	inst:SetBrain(brain)
 	
-	inst:DoTaskInTime(0.1, HostingInit)
+	inst:DoTaskInTime(0, HostingInit)
 	
 	return inst
 end

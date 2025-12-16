@@ -9,8 +9,12 @@ local FLEA_NOT_TAGS = {"INLIMBO"}
 
 local function UpdateFleas(inst) -- Call fleas to find a host ASAP if we have room, they will choose Itchhiker Packs in priority in the brain
 	local owner = inst.components.inventoryitem and inst.components.inventoryitem:GetGrandOwner()
-	if inst.components.container == nil or (inst.components.container:IsFull() and (owner == nil or owner.components.inventory and owner.components.inventory:IsFull()))
-		or (owner and (not inst.components.container:IsOpen() or owner:HasTag("hiding"))) then
+	local container = inst.components.container
+	local inventory = owner and owner.components.inventory
+	local upgraded = inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2
+	
+	if container == nil or (owner and (not container:IsOpen() or owner:HasTag("hiding")))
+		or (not upgraded and container:IsFull() and (owner == nil or inventory and inventory:IsFull())) then
 		
 		return
 	end
@@ -18,7 +22,7 @@ local function UpdateFleas(inst) -- Call fleas to find a host ASAP if we have ro
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local ents = TheSim:FindEntities(x, y, z, TUNING.POLARFLEA_SACK_CALL_DIST, FLEA_TAGS, FLEA_NOT_TAGS)
 	
-	for i, v in ipairs(ents) do
+	for _, v in ipairs(ents) do
 		if v.CanBeHost and not v:CanBeHost(owner or inst) then
 			return
 		end
@@ -28,7 +32,7 @@ local function UpdateFleas(inst) -- Call fleas to find a host ASAP if we have ro
 		end
 		
 		local target = v.components.combat and v.components.combat.target
-		if target == nil or (target and target:IsValid() and target:HasTag("player")) then
+		if target == nil or (target:IsValid() and target:HasTag("player")) then
 			v:PushEvent("fleafindhost", {caller = inst})
 		end
 	end
@@ -106,12 +110,29 @@ local function CanBeUpgraded(inst, item)
 end
 
 local function OnUpgraded(inst, upgrader, item)
-	if item and item.prefab == "polarfleaeggsack" then
+	if item and item.prefab == "polarfleaeggsack" and inst.components.container then
 		if inst.components.fueled then
 			inst.components.fueled:SetPercent(1)
 		end
+		
+		inst.components.container:ForEachItem(function(item)
+			if item:HasTag("flea") and item.components.stackable == nil then
+				item:AddComponent("stackable")
+				item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+				item.skinname = nil
+			end
+        end)
+		
 		inst:DoTaskInTime(0, function()
 			inst.components.upgradeable:SetStage(2)
+			
+			local owner = inst.components.inventoryitem and inst.components.inventoryitem:GetGrandOwner()
+			local inventory = owner and owner.components.inventory
+			
+			if inventory then
+				inventory:Unequip(inst.components.equippable.equipslot)
+				inventory:Equip(inst)
+			end
 		end)
 	end
 end
@@ -146,18 +167,20 @@ local function ItemGet(inst, data)
 		if item.components.stackable == nil then
 			item:AddComponent("stackable")
 			item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+			item.skinname = nil
 		end
 	end
 end
 
 local function ItemLose(inst, data)
-	--[[local item = data and data.prev_item
 	
-	if item and item:HasTag("flea") and inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2 then
-		if item.components.stackable then
-			item:RemoveComponent("stackable")
-		end
-	end]]
+end
+
+local function OnInit(inst) -- Refresh UI, this helps not showing fake stackable fleas on load of unupgraded pack
+	if inst.components.equippable and inst.components.equippable:IsEquipped() and inst.components.container then
+		inst.components.container:Close()
+		inst.components.container:Open()
+	end
 end
 
 local function fn()
@@ -216,14 +239,12 @@ local function fn()
 	inst:AddComponent("preserver")
 	inst.components.preserver:SetPerishRateMultiplier(FleaPreserverRate)
 	
-	if HasPassedCalendarDay(16) then
-		inst:AddComponent("upgradeable")
-		inst.components.upgradeable.upgradetype = UPGRADETYPES.POLARFLEA_SACK
-		inst.components.upgradeable.numstages = 3 -- 2, but third loops for repairing
-		inst.components.upgradeable.upgradesperstage = 1
-		inst.components.upgradeable:SetOnUpgradeFn(OnUpgraded)
-		inst.components.upgradeable:SetCanUpgradeFn(CanBeUpgraded)
-	end
+	inst:AddComponent("upgradeable")
+	inst.components.upgradeable.upgradetype = UPGRADETYPES.POLARFLEA_SACK
+	inst.components.upgradeable.numstages = 3 -- 2, but third loops for repairing
+	inst.components.upgradeable.upgradesperstage = 1
+	inst.components.upgradeable:SetOnUpgradeFn(OnUpgraded)
+	inst.components.upgradeable:SetCanUpgradeFn(CanBeUpgraded)
 	
 	inst:AddComponent("waterproofer")
 	inst.components.waterproofer:SetEffectiveness(0)
@@ -239,6 +260,7 @@ local function fn()
 	inst.UpdateFleas = UpdateFleas
 	
 	inst._updatefleas = inst:DoPeriodicTask(0.5, inst.UpdateFleas)
+	inst:DoTaskInTime(0, OnInit)
 	
 	inst:ListenForEvent("itemget", ItemGet)
 	inst:ListenForEvent("itemlose", ItemLose)

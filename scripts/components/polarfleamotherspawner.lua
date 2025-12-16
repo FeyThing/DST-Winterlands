@@ -10,7 +10,10 @@ local PolarFleaMotherSpawner = Class(function(self, inst)
 	self.spawnchance = TUNING.POLARFLEA_MOTHER_SPAWN_CHANCE
 	self.spawnchance_min = TUNING.POLARFLEA_MOTHER_SPAWN_CHANCE_MIN -- Gonna want AT LEAST some violance first
 	
-	self.inst:ListenForEvent("motherflea_triggered", function(src, data) -- TODO: This can also be triggered from Hostile Flare in grass patch
+	self.inst:ListenForEvent("megaflare_detonated", function(src, data)
+		self:OnMegaFlare(data)
+	end)
+	self.inst:ListenForEvent("motherflea_triggered", function(src, data)
 		self:OnEntityKilled(data)
 	end)
 	self.inst:WatchWorldState("cycles", function() self:OnNewDay() end)
@@ -57,8 +60,20 @@ function PolarFleaMotherSpawner:ShouldTrigger(pt, data) -- Tests both fleakill s
 	return true, spawn_pos
 end
 
+function PolarFleaMotherSpawner:OnMegaFlare(data)
+	if data and data.sourcept then
+		local triggered, trigger_pos = self:ShouldTrigger(data.sourcept, data)
+		
+		if trigger_pos then
+			self.inst:DoTaskInTime(1 + math.random() * 3, function()
+				self:TrySpawn(trigger_pos, true)
+			end)
+		end
+	end
+end
+
 function PolarFleaMotherSpawner:OnEntityKilled(data)
-	if not data or not data.victim or not data.victim.Transform then
+	if not data or not data.victim or not data.victim.Transform or data.victim.babyflea then
 		return
 	end
 	
@@ -73,12 +88,12 @@ function PolarFleaMotherSpawner:OnEntityKilled(data)
 	end
 end
 
-function PolarFleaMotherSpawner:TrySpawn(pt)
-	if pt == nil or self.spawnchance <= self.spawnchance_min then
+function PolarFleaMotherSpawner:TrySpawn(pt, force_spawn)
+	if not force_spawn and (pt == nil or self.spawnchance <= self.spawnchance_min) then
 		return
 	end
 	
-	if HasPassedCalendarDay(15) and math.random() < self.spawnchance then
+	if HasPassedCalendarDay(15) and (force_spawn or math.random() < self.spawnchance) then
 		local mom = SpawnPrefab("polarflea_mother")
 		mom.Transform:SetPosition(pt.x, pt.y, pt.z)
 		

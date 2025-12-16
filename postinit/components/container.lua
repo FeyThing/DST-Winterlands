@@ -12,6 +12,7 @@ local Container = require("components/container")
 			
 			item:AddComponent("stackable")
 			item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+			item.skinname = nil
 		end
 		
 		return OldGiveItem(self, item, slot, ...)
