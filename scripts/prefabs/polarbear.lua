@@ -493,6 +493,10 @@ local function SetEnraged(inst, enable)
 	end
 end
 
+local function HealthDeltaRedirect(inst, amount, overtime, cause, ignore_invincible, afflicter, ignore_absorb)
+	return inst.trial_disqualify_nodamage_cooldown ~= nil
+end
+
 local function SetPainting(inst, colour)
 	if colour ~= DEFAULT_PAINTING then
 		inst.AnimState:OverrideSymbol("pig_torso", "polarbear_build", "pig_torso_"..colour)
@@ -633,7 +637,7 @@ local function fn()
 	inst.components.combat.CalcDamage = function(self, target, ...) -- Special CalcDamage edit for trial fighting, bears play nice :)
 		local damage, spdamage = old_CalcDamage(self, target, ...)
 
-		if inst.trialdata ~= nil and inst.trialdata.players_left[target] then -- The target is a trial participant
+		if inst:HasTag("trial_participator") and inst.trialdata.players_left[target] then -- The target is a trial participant
 			local target_hp = target.components.health.currenthealth
 
 			if target_hp <= TUNING.POLARBEAR_DAMAGE then
@@ -656,6 +660,7 @@ local function fn()
 	inst:AddComponent("health")
 	inst.components.health:SetMaxHealth(TUNING.POLARBEAR_HEALTH)
 	inst.components.health:StartRegen(TUNING.POLARBEAR_HEALTH_REGEN_AMOUNT, TUNING.POLARBEAR_HEALTH_REGEN_PERIOD)
+	inst.components.health.redirect = HealthDeltaRedirect
 	
 	inst:AddComponent("inventory")
 	

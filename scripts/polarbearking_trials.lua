@@ -84,6 +84,7 @@ local function EndFistFightTrail(self, reason)
     for player, _ in pairs(self.trialdata.player_participants) do
         player:RemoveEventCallback("healthdelta", FistFight_Player_OnHealthDelta)
         player:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+        player.trialdata = nil
     end
 
     for participant, _ in pairs(self.trialdata.participants) do
@@ -91,6 +92,8 @@ local function EndFistFightTrail(self, reason)
         participant:RemoveEventCallback("healthdelta", FistFight_Bear_OnHealthDelta)
         participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
         participant.trialdata = nil
+        participant.components.health:SetInvincible(true)
+        participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
 
         participant.components.combat:DropTarget()
     end
@@ -100,22 +103,25 @@ local function OnDisqualifyFistFightTrial(self, participant)
     if self.trialdata.players_left[participant] then
         participant:RemoveEventCallback("healthdelta", FistFight_Player_OnHealthDelta)
         participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+        participant.trialdata = nil
     elseif self.trialdata.participants[participant] then
         participant:RemoveEventCallback("attacked", FistFight_Bear_OnAttacked)
         participant:RemoveEventCallback("healthdelta", FistFight_Bear_OnHealthDelta)
         participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
         participant.trialdata = nil
+        participant.components.health:SetInvincible(true)
+        participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
 
         participant.components.combat:DropTarget()
     end
 end
 
 local function WinFistFightTrial(self, player)
-    TheNet:Announce("Player "..tostring(player).."won the trial!")
+    self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
 end
 
 local function LoseFistFightTrial(self, player)
-    TheNet:Announce("Player "..tostring(player).."lost the trial!")
+    self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
 end
 --
 
@@ -148,7 +154,9 @@ local function StartEndurenceFightTrail(self)
 
     EndurenceFight_Bear_OnHealthDelta = function(inst, data)
         if data.newpercent <= 0.1 then
-            self:DisqualifyParticipant(inst)
+            inst:DoTaskInTime(0, function() -- Delay the check 1 tick because "attacked" gets called after
+                self:DisqualifyParticipant(inst)
+            end)
         end
     end
 
@@ -199,6 +207,7 @@ local function EndEndurenceFightTrail(self, reason)
     for player, _ in pairs(self.trialdata.player_participants) do
         player:RemoveEventCallback("healthdelta", EndurenceFight_Player_OnHealthDelta)
         player:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+        player.trialdata = nil
     end
 
     for participant, _ in pairs(self.trialdata.participants) do
@@ -206,6 +215,14 @@ local function EndEndurenceFightTrail(self, reason)
         participant:RemoveEventCallback("healthdelta", EndurenceFight_Bear_OnHealthDelta)
         participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
         participant.trialdata = nil
+        participant.components.health:SetInvincible(true)
+        participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
+
+        if participant.components.timer:TimerExists("rageover") then -- Calm them down if they're enraged
+            participant.components.timer:SetTimeLeft("rageover", 0)
+        else
+            participant:SetEnraged(false)
+        end
 
         participant.components.combat:DropTarget()
     end
@@ -215,22 +232,36 @@ local function OnDisqualifyEndurenceFightTrial(self, participant)
     if self.trialdata.players_left[participant] then
         participant:RemoveEventCallback("healthdelta", EndurenceFight_Player_OnHealthDelta)
         participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+        participant.trialdata = nil
     elseif self.trialdata.participants[participant] then
         participant:RemoveEventCallback("attacked", EndurenceFight_Bear_OnAttacked)
         participant:RemoveEventCallback("healthdelta", EndurenceFight_Bear_OnHealthDelta)
         participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
         participant.trialdata = nil
+        participant.components.health:SetInvincible(true)
+        participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
+        participant.nearby_trial = self.inst
+        participant:AddTag("trial_spectator")
+
+        if participant.components.timer:TimerExists("rageover") then -- Calm them down if they're enraged
+            participant.components.timer:SetTimeLeft("rageover", 0)
+        else
+            participant:SetEnraged(false)
+        end
 
         participant.components.combat:DropTarget()
+
+        participant.sg:GoToState("idle")
+        participant.brain:ForceUpdate() -- Force them to leave the trial radius
     end
 end
 
 local function WinEndurenceFightTrial(self, player)
-    TheNet:Announce("Player "..tostring(player).."won the trial!")
+    self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
 end
 
 local function LoseEndurenceFightTrial(self, player)
-    TheNet:Announce("Player "..tostring(player).."lost the trial!")
+    self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
 end
 --
 

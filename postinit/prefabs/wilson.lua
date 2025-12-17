@@ -125,6 +125,21 @@ ENV.AddPlayerPostInit(function(inst)
 	end
 	
 	inst:AddComponent("tumblewindattractor")
+
+	local old_CalcDamage = inst.components.combat.CalcDamage
+	inst.components.combat.CalcDamage = function(self, target, ...) -- Special CalcDamage edit for trial fighting, players play nice :)
+		local damage, spdamage = old_CalcDamage(self, target, ...)
+
+		if inst:HasTag("player_trial_participator") and inst.trialdata.participants[target] then -- The target is a trial participant
+			local target_hp = target.components.health.currenthealth
+
+			if target_hp <= TUNING.POLARBEAR_DAMAGE then
+				return target_hp - 1, nil -- Cap the damage to targets hp - 1
+			end
+		end
+
+		return damage, spdamage
+	end
 	
 	if OldOnSave == nil then
 		OldOnSave = inst.OnSave
