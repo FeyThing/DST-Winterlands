@@ -279,10 +279,7 @@ return Class(function(self, inst)
 	end
 	
 	function self:TrySpawnCastleAtColony(colony)
-		return
-		--[[This is the intended spawn method for the castle, disabled due to unfinished combat
-		
-		if self.ice_castle_pos or not TUNING.SPAWN_EMPEROR_PENGUIN then
+		if not HasPassedCalendarDay(20) or self.ice_castle_pos or not TUNING.SPAWN_EMPEROR_PENGUIN then
 			return
 		end
 		
@@ -298,7 +295,7 @@ return Class(function(self, inst)
 				
 				return spawned
 			end
-		end]]
+		end
 	end
 	
 	--	Combat utils

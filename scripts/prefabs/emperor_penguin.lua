@@ -166,9 +166,7 @@ local function OnEntitySleep(inst)
 end
 
 local function WakeUp(inst)
-	if inst.brain == nil then -- Idk why but he spawned without the brain once... and sometime he would be idle for life... now I'm scared
-		inst:SetBrain(brain)
-	end
+	inst:_EnableBrain_Internal() -- I don't even know why his brain is off on spawn...
 	if inst.sg and not inst.sg.statemem.exiting_tower then
 		inst.sg:GoToState("summon_guards", true)
 	end
@@ -375,10 +373,10 @@ local function fn()
 	inst.components.health:SetMaxHealth(TUNING.EMPEROR_PENGUIN_HEALTH)
 	
 	inst:AddComponent("healthtrigger")
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], CallGuards)
-	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], EnterJuggleTrigger)
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], CallGuards)
-	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], EnterJuggleTrigger)
+	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], CallGuards)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], EnterJuggleTrigger)
+	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], CallGuards)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], EnterJuggleTrigger)
 	
 	inst:AddComponent("inspectable")
 	inst.components.inspectable.getstatus = GetStatus

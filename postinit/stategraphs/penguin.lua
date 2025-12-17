@@ -91,11 +91,11 @@ local events = {
 	CommonHandlers.OnSink(), -- Useful for Emperor only (TODO: seems c_spawned emperor can get stuck sinking over and over when escaping)
 	CommonHandlers.OnFallInVoid(),
 	
-	EventHandler("emperor_entertower", function(inst)
+	--[[EventHandler("emperor_entertower", function(inst)
 		if inst.components.health and not inst.components.health:IsDead() and not inst.sg:HasStateTag("busy") then
 			inst.sg:GoToState("emperor_entertower")
 		end
-	end),
+	end),]]
 	EventHandler("emperor_spin", function(inst)
 		if inst.components.health and not inst.components.health:IsDead() and not inst.sg:HasStateTag("busy") then
 			inst.sg:GoToState("emperor_spin")
@@ -208,58 +208,70 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		tags = {"busy", "nointerrupt", "noattack"},
 		
 		onenter = function(inst, doexit)
-			inst.SoundEmitter:KillAllSounds()
 			inst.Physics:Stop()
-			
+			inst.SoundEmitter:KillAllSounds()
 			if doexit then
 				inst.AnimState:PlayAnimation("tower_pst")
+			else
+				inst.AnimState:PlayAnimation("slide_bounce")
+				inst.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
 			end
-			inst.sg.statemem.exiting_tower = doexit
 			
-			if inst._juggle_tower then
-				inst.Physics:SetActive(false)
-				if doexit then
-					inst.entity:SetParent(nil)
-					if inst.Follower then
-						inst.Follower:StopFollowing()
-					end
-					
-					if inst._tower_exit_pos then
-						inst.Transform:SetPosition(inst._tower_exit_pos:Get())
-						inst._tower_exit_pos = nil
-					end
-				else
-					inst._tower_exit_pos = inst:GetPosition()
-					
-					inst.entity:SetParent(inst._juggle_tower.entity)
-					inst.entity:AddFollower()
-					inst.Follower:FollowSymbol(inst._juggle_tower.GUID, "flagpole", 0, 15, 0, nil, true) -- If needs ownsrotation, then use tower position to get facing angle
-				end
-			end
+			inst.sg.statemem.exiting_tower = doexit
 		end,
 		
 		timeline = {
-			TimeEvent(11 * FRAMES, function(inst)
-				inst.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
-				inst:Hide()
+			TimeEvent(10 * FRAMES, function(inst)
 				if inst.DynamicShadow then
 					inst.DynamicShadow:Enable(false)
 				end
+				
+				inst:Hide()
+				if inst._juggle_tower then
+					inst.Physics:SetActive(false)
+					if inst.sg.statemem.exiting_tower then
+						inst.entity:SetParent(nil)
+						if inst.Follower then
+							inst.Follower:StopFollowing()
+						end
+						
+						if inst._tower_exit_pos then
+							inst.Transform:SetPosition(inst._tower_exit_pos:Get())
+							inst._tower_exit_pos = nil
+						end
+					else
+						inst._tower_exit_pos = inst:GetPosition()
+						
+						inst.entity:SetParent(inst._juggle_tower.entity)
+						inst.entity:AddFollower()
+						inst.Follower:FollowSymbol(inst._juggle_tower.GUID, "flagpole", 0, 15, 0, nil, true) -- If needs ownsrotation, then use tower position to get facing angle
+					end
+				end
 			end),
-			TimeEvent(40 * FRAMES, function(inst)
-				--inst.sg:GoToState("emperor_juggle")
-				inst.sg:GoToState("idle")
+			TimeEvent(20 * FRAMES, function(inst)
+				inst.SoundEmitter:PlaySound("dontstarve/pig/pighut_lighton")
+			end),
+			TimeEvent(45 * FRAMES, function(inst)
+				inst.SoundEmitter:PlaySound("dontstarve/pig/pighut_lightoff")
 				inst.AnimState:PlayAnimation("tower_pre")
-				inst.AnimState:PushAnimation("idle", true)
+				inst.AnimState:PushAnimation("idle_loop")
+				if inst.DynamicShadow then
+					inst.DynamicShadow:Enable(true)
+				end
+				
+				inst:Show()
+			end),
+			TimeEvent(80 * FRAMES, function(inst)
+				inst.sg:GoToState("idle")
 			end),
 		},
 		
 		onexit = function(inst)
-			inst:Show()
 			if inst.DynamicShadow then
 				inst.DynamicShadow:Enable(true)
 			end
 			
+			inst:Show()
 			if inst.sg.statemem.exiting_tower then
 				inst._juggle_tower = nil
 				inst.wants_to_juggle = nil
@@ -268,13 +280,13 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		end,
 	},
 	
-	State{ -- NOTES: Animations, sounds and snowball tossing aren't finished/basically inexistant, so for now it's an idle until guards are dealt with...
+	State{
 		name = "emperor_juggle",
 		tags = {"busy", "canrotate", "juggling", "nointerrupt", "noattack"},
 		
 		onenter = function(inst)
-			--inst.AnimState:PlayAnimation("juggle_pre")
-			--inst.AnimState:PushAnimation("juggle_loop")
+			inst.AnimState:PlayAnimation("juggle_pre")
+			inst.AnimState:PushAnimation("juggle_loop")
 			inst.SoundEmitter:KillAllSounds()
 			inst.Physics:Stop()
 		end,
@@ -481,6 +493,19 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 		sg.states[state.name] = state
 	end
 	
+	--	Emperor go in tower
+	
+	local oldgohome = sg.actionhandlers[ACTIONS.GOHOME] and sg.actionhandlers[ACTIONS.GOHOME].deststate
+	sg.actionhandlers[ACTIONS.GOHOME] = ActionHandler(ACTIONS.GOHOME, function(inst, action, ...)
+		if action.target and action.target:HasTag("polarcastletower") then
+			return "emperor_entertower"
+		end
+		
+		if oldgohome then
+			return oldgohome(inst, action, ...)
+		end
+	end)
+	
 	--	Emperor & guards can't be stunlocked
 	
 	local oldattacked_event = sg.events["attacked"].fn
@@ -488,7 +513,7 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 		if (inst:HasTag("penguin_emperor") or inst:HasTag("penguin_guard")) and inst.sg:HasAnyStateTag("attack", "moving") then
 			return
 		elseif oldattacked_event then
-			oldattacked_event(inst, ...)
+			return oldattacked_event(inst, ...)
 		end
 	end
 	
@@ -496,10 +521,10 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 	
 	local oldlocomote_event = sg.events["locomote"].fn
 	sg.events["locomote"].fn = function(inst, ...)
-		if inst.recovering_stamina or inst._juggle_tower then
+		if inst.recovering_stamina or inst.entity:GetParent() then
 			return
 		elseif oldlocomote_event then
-			oldlocomote_event(inst, ...)
+			return oldlocomote_event(inst, ...)
 		end
 	end
 	

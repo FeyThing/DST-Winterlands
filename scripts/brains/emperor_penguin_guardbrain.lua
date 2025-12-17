@@ -62,10 +62,10 @@ local function GetWaterFn(inst)
 		inst._ocean_escape_position = pt + offset
 		
 		if inst._forgetcollisions == nil then
-			inst._forgetcollisions = inst:DoTaskInTime(3, function()
+			inst._forgetcollisions = inst:DoPeriodicTask(0.5, function()
 				inst.Physics:ClearCollisionMask()
 				inst.Physics:CollidesWith(COLLISION.GROUND)
-			end)
+			end, 2)
 		end
 		
 		return inst._ocean_escape_position

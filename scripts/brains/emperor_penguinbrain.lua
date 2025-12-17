@@ -44,6 +44,12 @@ local function ShouldGetToTower(inst)
 	return inst._juggle_tower ~= nil
 end
 
+local function GoToTowerAction(inst)
+	if inst._juggle_tower then
+		return BufferedAction(inst, inst._juggle_tower, ACTIONS.GOHOME)
+	end
+end
+
 local function ShouldChase(inst)
 	local target = inst.components.combat and inst.components.combat.target
 	
@@ -111,10 +117,10 @@ local function GetWaterFn(inst)
 		inst._ocean_escape_position = pt + offset
 		
 		if inst._forgetcollisions == nil then
-			inst._forgetcollisions = inst:DoTaskInTime(3, function()
+			inst._forgetcollisions = inst:DoPeriodicTask(0.5, function()
 				inst.Physics:ClearCollisionMask()
 				inst.Physics:CollidesWith(COLLISION.GROUND)
-			end)
+			end, 2)
 		end
 		
 		return inst._ocean_escape_position
@@ -134,13 +140,14 @@ function Emperor_PenguinBrain:OnStart()
 		
 		IfNode(function() return ShouldCallGuards(self.inst) end, "Call Guards",
 			ActionNode(function() self.inst.sg:GoToState("summon_guards") end)),
-		--[[IfNode(function() return ShouldJuggle(self.inst) end, "Go Juggling",
-			ActionNode(function() self.inst.sg:GoToState("emperor_juggle") end)),]]
+		IfNode(function() return ShouldJuggle(self.inst) end, "Go Juggling",
+			ActionNode(function() self.inst.sg:GoToState("emperor_juggle") end)),
 		WhileNode(function() return ShouldGetToTower(self.inst) end, "Climb Tower",
 			ParallelNode{
 				PriorityNode({
-					Leash(self.inst, function() return self.inst._juggle_tower and self.inst._juggle_tower:GetPosition() end, 3, 3, true),
-					ActionNode(function() self.inst:PushEvent("emperor_entertower") end),
+					--Leash(self.inst, function() return self.inst._juggle_tower and self.inst._juggle_tower:GetPosition() end, 3, 3, true),
+					--ActionNode(function() self.inst:PushEvent("emperor_entertower") end),
+					DoAction(self.inst, GoToTowerAction, "go to tower", true),
 				}, 0.25),
 				LoopNode{
 					ActionNode(function()

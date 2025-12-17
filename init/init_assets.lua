@@ -37,6 +37,7 @@ Assets = {
 	
 	Asset("ANIM", "anim/polarcalendar.zip"),
 	Asset("ANIM", "anim/polarcalendar_icons.zip"),
+	Asset("ANIM", "anim/polarcalendar_temp_anims.zip"), -- From 17 to 19th
 	
 	-- Shaders / Shades
 	Asset("SHADER", "shaders/snowed.ksh"),
