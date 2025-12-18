@@ -33,30 +33,7 @@ function TrialsHolder:SetTrialStartTestFn(fn)
     self.canstarttrial = fn
 end
 
-function TrialsHolder:StartTrial(trialname, doer)
-    local trialdata = trials[trialname]
-
-    if trialdata == nil then
-        if self.onfailstarttrial ~= nil then
-            self.onfailstarttrial(self.inst, trialdata)
-        end
-
-        self.inst:PushEvent("trialstartfailed")
-
-        return false
-    end
-
-    if (self.canstarttrial ~= nil and not self.canstarttrial(self.inst, trialdata)) or
-    (trialdata.canstarttrial ~= nil and not trialdata.canstarttrial()) then
-        if self.onfailstarttrial ~= nil then
-            self.onfailstarttrial(self.inst, trialdata)
-        end
-
-        self.inst:PushEvent("trialstartfailed")
-
-        return false
-    end
-
+function TrialsHolder:DoStartTrial(trialdata, doer)
     self.trialdata = trialdata
     self.trialdata.trial_starter = doer
 
@@ -64,15 +41,17 @@ function TrialsHolder:StartTrial(trialname, doer)
         self.trialdata.player_participants = { [self.trialdata.trial_starter] = true }
         self.trialdata.players_left = { [self.trialdata.trial_starter] = true }
         self.trialdata.trial_starter:AddTag("player_trial_participator")
+        self.trialdata.trial_starter.trialdata = trialdata
     else
         self.trialdata.player_participants = {  }
         self.trialdata.players_left = {  }
 
         local x, y, z = self.inst.Transform:GetWorldPosition()
-        local players = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS, { "player" }, { "playerghost" })
+        local players = TheSim:FindEntities(x, y, z, trialdata.radius, { "player" }, { "playerghost" })
         for _, player in ipairs(players) do
             self.trialdata.player_participants[player] = true
             self.trialdata.players_left[player] = true
+            player.trialdata = trialdata
             player:AddTag("player_trial_participator")
         end
     end
@@ -81,15 +60,29 @@ function TrialsHolder:StartTrial(trialname, doer)
     self.radius_fx.Transform:SetPosition(self.inst.Transform:GetWorldPosition())
     self.radius_fx.AnimState:SetScale(1.5 * self.trialdata.radius / (TILE_SCALE * 3), 1.5 * self.trialdata.radius / (TILE_SCALE * 3))
 
-    if self.trialdata.start_fn ~= nil and not self.trialdata.start_fn(self) then
-        for player, _ in pairs(self.trialdata.player_participants) do
-            player:RemoveTag("player_trial_participator")
-        end
+    if self.trialdata.start_fn ~= nil then
+        self.trialdata.start_fn(self)
+    end
+    
+    self.inst:PushEvent("trialstarted", trialdata)
 
-        self.radius_fx:Remove()
+    self.inst:StartUpdatingComponent(self)
+end
 
-        self.trialdata = nil
+function TrialsHolder:TryStartTrial(trialname, doer)
+    local trialdata = trials[trialname]
 
+    local failed = false    
+    if trialdata == nil then
+        failed = true
+    end
+
+    if (self.canstarttrial ~= nil and not self.canstarttrial(self.inst, trialdata)) or
+    (trialdata.canstarttrial ~= nil and not trialdata.canstarttrial()) then
+        failed = true
+    end
+
+    if failed then
         if self.onfailstarttrial ~= nil then
             self.onfailstarttrial(self.inst, trialdata)
         end
@@ -99,14 +92,20 @@ function TrialsHolder:StartTrial(trialname, doer)
         return false
     end
 
-    self.inst:PushEvent("trialstarted", trialdata)
+    self.inst.components.talker:Say("LETS GET READY TO RRRRRRUMBLEEEEEE!!!")
 
-    self.inst:StartUpdatingComponent(self)
+    self.inst:DoTaskInTime(1.5, function()
+        self:DoStartTrial(trialdata, doer)
+    end)
 
     return true
 end
 
 function TrialsHolder:EndTrial(reason)
+    if self.trialdata == nil then
+        return
+    end
+
     if self.trialdata.end_fn ~= nil then
         self.trialdata.end_fn(self, reason)
     end

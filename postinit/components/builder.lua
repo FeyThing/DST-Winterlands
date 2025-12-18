@@ -1,7 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local function HasSnowIngredient(self, ingredient)
+local function HasPolarIngredient(self, ingredient)
 	if ingredient.type and ingredient.type == "polarsnow_material" then
 		return self.inst.nearhighsnow:value()
 	end
@@ -9,8 +9,15 @@ local function HasSnowIngredient(self, ingredient)
 	if ingredient.type and ingredient.type == "polarbear_material" then
 		local x, y, z = self.inst.Transform:GetWorldPosition()
 		local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS, { "bear" }, { "bear_major" })
+		local angries = 0
 
-		if #bears >= ingredient.amount then
+		for _, bear in ipairs(bears) do
+			if bear.enraged then
+				angries = angries + 1
+			end
+		end
+
+		if #bears - angries >= ingredient.amount then
 			return true
 		end
 	end
@@ -33,12 +40,12 @@ local Builder = require("components/builder")
 	local OldHasTechIngredient = Builder.HasTechIngredient
 	function Builder:HasTechIngredient(ingredient, ...)
 		
-		return HasSnowIngredient(self, ingredient) or OldHasTechIngredient(self, ingredient, ...)
+		return HasPolarIngredient(self, ingredient) or OldHasTechIngredient(self, ingredient, ...)
 	end
 	
 local BuilderReplica = require("components/builder_replica")
 	
 	local OldHasTechIngredientReplica = BuilderReplica.HasTechIngredient
 	function BuilderReplica:HasTechIngredient(ingredient, ...)
-		return HasSnowIngredient(self, ingredient) or OldHasTechIngredientReplica(self, ingredient, ...)
+		return HasPolarIngredient(self, ingredient) or OldHasTechIngredientReplica(self, ingredient, ...)
 	end

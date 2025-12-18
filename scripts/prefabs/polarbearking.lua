@@ -71,12 +71,12 @@ local function CanStartTrial(inst, trialdata)
     local obstacles = TheSim:FindEntities(x, y, z, trialdata.radius, nil, nil, TRIAL_OBSTACLE_TAGS)
     return not inst.sg:HasStateTag("sleeping") and
            not inst.sg:HasStateTag("yelling") and
-           not inst.components.trialsholder:IsTrialActive() and
-           #obstacles <= 0
+           not inst.components.trialsholder:IsTrialActive() --and
+        --    #obstacles <= 0
 end
 
 local function OnActivatePrototyper(inst, doer, recipe)
-    inst.components.trialsholder:StartTrial(recipe.name, doer)
+    inst.components.trialsholder:TryStartTrial(recipe.name, doer)
 end
 
 local function OnTurnOnPrototyper(inst)
@@ -118,6 +118,10 @@ local function OnIsNight(inst, isnight)
     end
 end
 
+local function OnTalk(inst, script)
+	-- inst.SoundEmitter:PlaySound("")
+end
+
 local function fn()
     local inst = CreateEntity()
 
@@ -145,6 +149,13 @@ local function fn()
     inst:AddTag("bear_major")
     inst:AddTag("birdblocker")
     inst:AddTag("antlion_sinkhole_blocker")
+
+	inst:AddComponent("talker")
+	inst.components.talker.fontsize = 35
+	inst.components.talker.font = TALKINGFONT
+	inst.components.talker.offset = Vector3(0, -400, 0)
+	inst.components.talker.ontalk = OnTalk
+	inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
 
     if not TheNet:IsDedicated() then
         inst:AddComponent("pointofinterest")
