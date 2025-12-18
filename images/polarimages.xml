@@ -33,8 +33,8 @@
 		<Element name="iceburrito.tex" u1="0.3750234375" u2="0.4355234375" v2="0.624" v1="0.501" />
 		<Element name="icelettuce.tex" u1="0.4385" u2="0.499" v2="0.749" v1="0.626" />
 		<Element name="icelettuce_oversized.tex" u1="0.4375234375" u2="0.4980234375" v2="0.624" v1="0.501" />
+		<Element name="icelettuce_oversized_rotten.tex" u1="0.0635" u2="0.124" v2="0.499" v1="0.376" />
 		<Element name="icelettuce_oversized_waxed.tex" u1="0.001" u2="0.0615" v2="0.499" v1="0.376" />
-		<Element name="icelettuce_rotten.tex" u1="0.0635" u2="0.124" v2="0.499" v1="0.376" />
 		<Element name="icelettuce_seeds.tex" u1="0.001" u2="0.0615" v2="0.374" v1="0.251" />
 		<Element name="iciclestaff.tex" u1="0.0635" u2="0.124" v2="0.374" v1="0.251" />
 		<Element name="koalefried_trunk_summer.tex" u1="0.001" u2="0.0615" v2="0.249" v1="0.126" />
