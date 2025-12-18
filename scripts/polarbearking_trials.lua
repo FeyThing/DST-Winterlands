@@ -48,7 +48,7 @@ function(guy) return not guy.components.health:IsDead() end,
     { "bear" }, { "bear_major", "INLIMBO" })
 
     if bear == nil then
-        return false
+        return
     end
 
     self.trialdata.participants = { [bear] = true }
@@ -77,7 +77,7 @@ function(guy) return not guy.components.health:IsDead() end,
         player:ListenForEvent("onremove", Generic_Participant_OnRemove)
     end
 
-    return true
+    return
 end
 
 local function EndFistFightTrail(self, reason)
@@ -117,10 +117,12 @@ local function OnDisqualifyFistFightTrial(self, participant)
 end
 
 local function WinFistFightTrial(self, player)
+    -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
     self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
 end
 
 local function LoseFistFightTrial(self, player)
+    -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
     self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
 end
 --
@@ -164,7 +166,7 @@ local function StartEndurenceFightTrail(self)
     local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, { "bear" }, { "bear_major", "INLIMBO" })
 
     if #bears < 2 then
-        return false
+        return
     end
 
     self.trialdata.participants = {  }
@@ -200,7 +202,7 @@ local function StartEndurenceFightTrail(self)
         player:ListenForEvent("onremove", Generic_Participant_OnRemove)
     end
 
-    return true
+    return
 end
 
 local function EndEndurenceFightTrail(self, reason)
@@ -257,13 +259,41 @@ local function OnDisqualifyEndurenceFightTrial(self, participant)
 end
 
 local function WinEndurenceFightTrial(self, player)
+    -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
     self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
 end
 
 local function LoseEndurenceFightTrial(self, player)
+    -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
     self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
 end
 --
+
+-- this may expand in the future
+-- trial data template:
+-- trial_name = {
+--     name - trial name, should be kept the same as the key and the prefab for the recipe
+--     radius - radius of the trial in in-game units
+--     solo - solo trials allow only the "crafter" to participate, non-solo trials automatically detect and include players in 12 units radius
+--     combat_trial - special check for polar bear retargeting, special combat quotes and brain behaviour
+--     audience_valid - polar bears will swarm around but just outside of the trial radius and spectate with special quotes
+--     canstarttrial - function validating environment conditions for a trial to start, special for each trial, separate from TrialHolder.canstarttrial
+--     disqualify_fn - function that runs whenever a participant is disqualified (using TrialHolder:DisqualifyParticipant())
+--                     the main use is to revert the participant to its original state after leaving the trial, e.g, removing event callbacks
+--     start_fn - function that runs when a trial successfully begins (inside TrialHolder:DoStartTrial())
+--                use it to set up important variables/event listeners/entity state for non-player participants
+--                this function should first and foremost collect its non-player participants
+--                player participants are collected automatically inside TrialHolder:DoStartTrial() so you can still prepare them if need be
+--     end_fn - function that runs when the trial ends for any reason
+--              use it to revert all participants to their original states just like in disqualify_fn, this can either be unnecessary,
+--              if the trial ends with just 1 player winning effectively making it into disqualify_fn, or crucial if the trial is interrupted
+--              or ends with players losing (this could leave multiple non-player participants in the trial)
+--              this function should loop through every participant still in the trial and revert them to their original states
+--     player_win_fn - function that runs whenever a player wins a trial, this will only happen when the trial ends in a victory and therefor
+--                     will always run for each player still present in the trial when it ends
+--     player_lose_fn - function that runs whenever a player loses a trial, this can happen during a trial and will not necessarily end it
+--                      as there may be more players still present in it
+-- }
 
 local trials = {
     trial_fist_fight = {
@@ -298,23 +328,11 @@ local trials = {
     },
     -- trial_all_out_rumble = { -- LET'S GET READY TO RRRRRRRRUMBLEEEEEEE
     --     name = "trial_all_out_rumble",
-    --     radius = 16,
-    --     combat_trial = true,
-    --     audience_valid = true,
-    --     canstarttrial = function() return TheWorld.state.isday end,
-    --     -- start_fn = StartFistFightTrail,
-    --     -- end_fn = EndFistFightTrail,
-    --     -- player_win_fn = WinFistFightTrial,
-    --     -- player_lose_fn = LoseFistFightTrial
+    --     radius = 18
     -- },
     -- trial_hide_and_hunt = {
     --     name = "trial_hide_and_hunt",
-    --     radius = 60,
-    --     fun_trial = true,
-    --     -- start_fn = StartFistFightTrail,
-    --     -- end_fn = EndFistFightTrail,
-    --     -- player_win_fn = WinFistFightTrial,
-    --     -- player_lose_fn = LoseFistFightTrial
+    --     radius = 60
     -- }
 }
 
