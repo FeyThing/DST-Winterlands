@@ -108,4 +108,18 @@ if HasPassedCalendarDay(14) then
 	}))
 end
 
+if HasPassedCalendarDay(19) then
+	table.insert(prefs, CreatePrefabSkin("ms_goldenaxe_polar", {
+		assets = {
+			Asset("DYNAMIC_ANIM", "anim/dynamic/goldenaxe_polar.zip"),
+			Asset("PKGREF", "anim/dynamic/goldenaxe_polar.dyn"),
+		},
+		base_prefab = "goldenaxe",
+		type = "item",
+		build_name_override = "goldenaxe_polar",
+		rarity = "ModMade",
+		skin_tags = {"POLAR", "GOLDENAXE", "CRAFTABLE"},
+	}))
+end
+
 return unpack(prefs)

@@ -370,10 +370,9 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		tags = {"busy", "canrotate", "nointerrupt", "running"},
 		
 		onenter = function(inst)
-			--inst.AnimState:PlayAnimation("emperor_spin_loop", false)
-			--inst.AnimState:PushAnimation("sleep_pre")
-			inst.AnimState:PushAnimation("sleep_pst", false)
-			inst.Physics:Stop()
+			inst.AnimState:PlayAnimation("emperor_panic", true)
+			inst.SoundEmitter:PlaySound("dontstarve/movement/iceslab_slipping")
+			inst.Physics:SetMotorVelOverride(5, 0, 0)
 			
 			if inst.components.locomotor then
 				inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "spin")
@@ -384,13 +383,14 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				end
 				inst.components.timer:StartTimer("spincooldown", TUNING.EMPEROR_PENGUIN_SPIN_COOLDOWN)
 			end
+			
+			inst.sg:SetTimeout(inst.AnimState:GetCurrentAnimationLength() * 2)
 		end,
 		
-		events = {
-			EventHandler("animqueueover", function(inst)
-				inst.sg:GoToState("idle")
-			end)
-		},
+		ontimeout = function(inst)
+			inst.Physics:Stop()
+			inst.sg:GoToState("idle")
+		end,
 	},
 	
 	State{

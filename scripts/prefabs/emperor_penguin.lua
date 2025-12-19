@@ -1,11 +1,7 @@
--- ADM: I'm no longer working on the mod but I think it's essential the update comes out, the emperor is unfinished so it was turned into a miniboss... with less unique things
--- well, for now, if anyone wishes to pick it up again, sorry.
-
 local assets = {
 	Asset("ANIM", "anim/penguin_emperor.zip"),
 	Asset("ANIM", "anim/penguin.zip"),
 	
-	Asset("ANIM", "anim/penguin_emperor_anims.zip"),
 	Asset("ANIM", "anim/penguin_polar_anims.zip"),
 }
 

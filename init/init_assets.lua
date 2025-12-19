@@ -149,6 +149,7 @@ local ITEMS = {
 	
 	"ms_bushhat_polar",
 	"ms_dragonflychest_polarice",
+	"ms_goldenaxe_polar",
 	"ms_goldenpickaxe_polar",
 	"ms_goldenshovel_polar",
 	"ms_treasurechest_polarice",
