@@ -10,13 +10,13 @@ local customizations = {
 --	WORLDSETTINGS
 	antler_trees_regrowth = {category = LEVELCATEGORY.SETTINGS, desc = "speed_descriptions", group = "resources", image = "antler_trees.tex", world = {"forest", "shipwrecked", "porkland"}},
 	arctic_fools = 			{category = LEVELCATEGORY.SETTINGS, desc = "extraevent_descriptions", group = "events", masteroption = true, master_controlled = true, order = 0.14},
-	--emperor_penguin = 	{category = LEVELCATEGORY.SETTINGS, group = "giants", world = {"forest"}},
+	emperor_penguin = 		{category = LEVELCATEGORY.SETTINGS, group = "giants", world = {"forest"}},
 	icelettuce_regrowth = 	{category = LEVELCATEGORY.SETTINGS, desc = "speed_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 	polar_icicles = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	polar_throne = 			{category = LEVELCATEGORY.SETTINGS, group = "global", desc = descriptions.polarthrone_descriptions, world = {"forest", "shipwrecked", "porkland"}, order = 13.1},
 	polarbears = 			{category = LEVELCATEGORY.SETTINGS, group = "animals"},
 	polarfleas = 			{category = LEVELCATEGORY.SETTINGS, group = "monsters"},
-	--polarflea_mother = 	{category = LEVELCATEGORY.SETTINGS, group = "giants"},
+	polarflea_mother = 		{category = LEVELCATEGORY.SETTINGS, group = "giants"},
 	polarfoxes = 			{category = LEVELCATEGORY.SETTINGS, group = "animals", world = {"forest", "shipwrecked", "porkland"}},
 	tumbleweed_polar = 		{category = LEVELCATEGORY.SETTINGS, group = "misc", world = {"forest", "shipwrecked", "porkland"}},
 	
@@ -26,10 +26,6 @@ local customizations = {
 	polarbearhouses = 		{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "animals", world = {"forest", "shipwrecked", "porkland"}},
 	rocks_polar = 			{category = LEVELCATEGORY.WORLDGEN, desc = "worldgen_frequency_descriptions", group = "resources", world = {"forest", "shipwrecked", "porkland"}},
 }
-
-if HasPassedCalendarDay(15) then
-	customizations["polarflea_mother"] = {category = LEVELCATEGORY.SETTINGS, group = "giants"}
-end
 
 for k, v in pairs(customizations) do
 	v.name = k

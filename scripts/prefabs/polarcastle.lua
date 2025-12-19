@@ -240,6 +240,10 @@ local function OnHammered(inst, worker)
 end
 
 local function OnHit(inst, worker, workleft, numworks)
+	if worker and worker.prefab == "emperor_penguin" then
+		inst.SoundEmitter:PlaySound("dontstarve/wilson/hit")
+	end
+	
 	if (numworks > 0.5 or workleft <= 0) then
 		inst.AnimState:PlayAnimation("hit")
 		inst.AnimState:PushAnimation("idle")
@@ -322,6 +326,7 @@ local function tower()
 	inst.Transform:SetEightFaced()
 	
 	MakeObstaclePhysics(inst, 0.5)
+	inst:SetPhysicsRadiusOverride(1.5)
 	inst.Physics:SetDontRemoveOnSleep(true)
 	
 	inst.AnimState:SetBank("tower_polar")

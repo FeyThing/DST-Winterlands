@@ -105,6 +105,17 @@ local POLAR_FX = {
 			FinalOffset3(inst)
 		end,
 	},
+	{
+		name = "winters_fists_snowball_roll_fx",
+		bank = "splash",
+		build = "splash_snow",
+		anim = "idle",
+		fn = function(inst)
+			local scale = 0.5 + math.random() * 0.35
+			inst.AnimState:SetScale(math.random() < 0.5 and scale or -scale, scale)
+			FinalOffset2(inst)
+		end,
+	},
 }
 
 require("fx")

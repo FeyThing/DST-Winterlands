@@ -65,14 +65,8 @@ local function CallGuards(inst)
 	inst.wants_to_call_guards = true
 end
 
---	TODO: Change targetting mode to stay hostile as long as entity is awake. Combat starts when a credible source attacked emperor or castle (players, followers, explosives...)
-
 local function GetStatus(inst)
-	local target = inst.components.combat and inst.components.combat.target
-	
-	if target and not target:HasTag("hostile") then
-		return "HOSTILE"
-	end
+	return inst:HasTag("hostile") and "HOSTILE" or nil
 end
 
 local function ShouldSleep(inst)
@@ -163,9 +157,12 @@ end
 
 local function WakeUp(inst)
 	inst:_EnableBrain_Internal() -- I don't even know why his brain is off on spawn...
-	if inst.sg and not inst.sg.statemem.exiting_tower then
-		inst.sg:GoToState("summon_guards", true)
-	end
+	
+	inst:DoTaskInTime(0.2 + math.random(), function()
+		if inst.sg and not inst.sg.statemem.exiting_tower then
+			inst.sg:GoToState("summon_guards", true)
+		end
+	end)
 end
 
 local function OnEntityWake(inst)
@@ -313,7 +310,7 @@ local function fn()
 	inst.entity:AddDynamicShadow()
 	inst.entity:AddNetwork()
 	
-	MakeGiantCharacterPhysics(inst, 500, 0.75)
+	MakeGiantCharacterPhysics(inst, 500, 0.5)
 	
 	inst.DynamicShadow:SetSize(2, 1.1)
 	
@@ -369,9 +366,9 @@ local function fn()
 	inst.components.health:SetMaxHealth(TUNING.EMPEROR_PENGUIN_HEALTH)
 	
 	inst:AddComponent("healthtrigger")
-	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], CallGuards)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], CallGuards)
 	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], EnterJuggleTrigger)
-	--inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], CallGuards)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], CallGuards)
 	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], EnterJuggleTrigger)
 	
 	inst:AddComponent("inspectable")
@@ -431,8 +428,6 @@ local function fn()
 	inst:ListenForEvent("newcombattarget", OnCombatTargetChange)
 	inst:ListenForEvent("teleported", OnTeleported)
 	inst:ListenForEvent("timerdone", OnTimerDone)
-	
-	inst:DoTaskInTime(0.1, WakeUp)
 	
 	return inst
 end

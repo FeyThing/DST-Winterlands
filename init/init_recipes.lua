@@ -64,7 +64,9 @@ PolarRecipe("polar_dryice", 		{Ingredient("ice", 6), Ingredient(TECH_INGREDIENT.
 --	Tools / Weapons
 PolarRecipe("polar_spear", 			{Ingredient("ice", 1), Ingredient("twigs", 2)}, 										TECH.LOST, 			nil, 		{"WEAPONS"}, {"spear_wathgrithr_lightning"})
 PolarRecipe("trap_polarteeth", 		{Ingredient("ice", 1), Ingredient("cutstone", 1), Ingredient("polarwargstooth", 1)}, 	TECH.SCIENCE_TWO, 	nil, 		{"WEAPONS"}, {"trap_teeth"})
---PolarRecipe("winters_fists", 		{Ingredient("emperor_egg", 2), Ingredient("polar_dryice", 2)}, 							TECH.LOST, 			nil, 		{"WEAPONS", "SUMMER"}, {"wathgrithr_shield", "icehat"})
+if HasPassedCalendarDay(21) then
+PolarRecipe("winters_fists", 		{Ingredient("emperor_egg", 2), Ingredient("polar_dryice", 2)}, 							TECH.LOST, 			nil, 		{"WEAPONS", "SUMMER"}, {"wathgrithr_shield", "icehat"})
+end
 
 --	Armor / Clothing
 PolarRecipe("armorpolar", 			{Ingredient("polarbearfur", 3), Ingredient("pigskin", 1)}, 								TECH.SCIENCE_TWO, 	nil, 		{"ARMOUR", "WINTER"}, {"armor_bramble", "raincoat"})
@@ -112,8 +114,9 @@ PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("char
 PolarRecipe("polaramulet_builder", 			{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 PolarRecipe("polar_fishingrod",				{Ingredient("smallmeat", 2)}, 								TECH.POLARAMULET_STATION, 	{product = "fishingrod", nounlock = true, image = "fishingrod.tex", actionstr = "TRADE", sg_state = "give"}, 					{"CRAFTING_STATION"})
 PolarRecipe("polar_oceanfishingrod",		{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 		TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", nounlock = true, image = "oceanfishingrod.tex", actionstr = "TRADE", sg_state = "give"}, 			{"CRAFTING_STATION"})
---PolarRecipe("polar_birdtrap",				{Ingredient("fishmeat", 2)}, 								TECH.POLARAMULET_STATION, 	{product = "birdtrap", nounlock = true, image = "birdtrap.tex", actionstr = "TRADE", sg_state = "give"}, 						{"CRAFTING_STATION"}) Note: ...not useful... frost tails do the job and trader says it won't trade fish!
---PolarRecipe("winters_fists_blueprint", 	{Ingredient("papyrus", 1), Ingredient("emperor_egg", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, image = "blueprint_rare.tex", actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
+if HasPassedCalendarDay(21) then
+PolarRecipe("winters_fists_blueprint", 		{Ingredient("papyrus", 1), Ingredient("emperor_egg", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, image = "blueprint_rare.tex", actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
+end
 
 PolarRecipe("polarcrownhat", 				{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
 PolarRecipe("frostwalkeramulet", 			{Ingredient("bluegem_shards", 3), Ingredient("bluegem_overcharged", 1)}, 									TECH.LOST, 					{nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"blueamulet"})

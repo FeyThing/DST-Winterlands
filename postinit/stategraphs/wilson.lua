@@ -62,25 +62,91 @@ local states = {
 	
 	State{
 		name = "winterfistcast",
-		tags = {"doing", "busy", "canrotate"},
+		tags = {"doing", "busy", "canrotate", "winterfistscast"},
 		
 		onenter = function(inst)
-			inst.AnimState:PlayAnimation("winterfist_small")
-			inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+			local spelltype = (inst.bufferedaction and inst.bufferedaction.invobject) and tonumber(inst.bufferedaction.invobject.spelltype:sub(-1)) or 1
+			local anim = spelltype == 1 and "throw"
+				or spelltype == 2 and "deploytoss"
+				or "winterfist_large"
+			local pre = spelltype == 2 and "deploytoss_pre" or nil
+			
+			if inst.bufferedaction and inst.bufferedaction.target == inst then
+				spelltype = 4
+				
+				inst.AnimState:PlayAnimation("atk_leap")
+				inst.AnimState:SetSymbolHue("fx_leap_phase", 0.6)
+			else
+				if spelltype > 1 then
+					inst.AnimState:PlayAnimation("useitem_dir_pre")
+					
+					if pre then
+						inst.AnimState:PushAnimation(pre, false)
+						inst.AnimState:PushAnimation(anim, false)
+					else
+						inst.AnimState:PushAnimation(anim, false)
+					end
+				else
+					inst.AnimState:PlayAnimation(anim, false)
+				end
+				
+				inst.SoundEmitter:PlaySound("polarsounds/winters_fists/use"..spelltype, nil, 0.5)
+			end
 			inst.components.locomotor:Stop()
+			
+			inst.sg.statemem.spelltype = spelltype
 		end,
 		
 		timeline = {
-			TimeEvent(5 * FRAMES, function(inst)
-				inst:PerformBufferedAction()
+			TimeEvent(2 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 1 then
+					inst:PerformBufferedAction()
+					inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+				end
 			end),
-			TimeEvent(7 * FRAMES, function(inst)
-				inst.sg:RemoveStateTag("busy")
-			end)
+			TimeEvent(6 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 1 then
+					inst.sg:RemoveStateTag("busy")
+				elseif inst.sg.statemem.spelltype == 4 then
+					inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+				end
+			end),
+			TimeEvent(9 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 2 then
+					inst:PerformBufferedAction()
+					inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+				end
+			end),
+			TimeEvent(13 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 3 then
+					inst:PerformBufferedAction()
+					inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
+				end
+			end),
+			TimeEvent(17 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 2 then
+					inst.sg:RemoveStateTag("busy")
+				end
+			end),
+			TimeEvent(19 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 4 then
+					inst:PerformBufferedAction()
+					inst.SoundEmitter:PlaySound("dontstarve/common/deathpoof")
+				end
+			end),
+			TimeEvent(26 * FRAMES, function(inst)
+				if inst.sg.statemem.spelltype == 3 then
+					inst.sg:RemoveStateTag("busy")
+				end
+			end),
 		},
 		
+		onexit = function(inst)
+			inst.AnimState:SetSymbolHue("fx_leap_phase", 0)
+		end,
+		
 		events = {
-			EventHandler("animover", function(inst)
+			EventHandler("animqueueover", function(inst)
 				inst.sg:GoToState("idle")
 			end)
 		},
@@ -431,36 +497,6 @@ local states_client = {
 		onenter = function(inst)
 			inst.components.locomotor:Stop()
 			inst.AnimState:PlayAnimation("polarcast")
-			
-			inst:PerformPreviewBufferedAction()
-			inst.sg:SetTimeout(2)
-		end,
-		
-		onupdate = function(inst)
-			if inst.sg:ServerStateMatches() then
-				if inst.entity:FlattenMovementPrediction() then
-					inst.sg:GoToState("idle", "noanim")
-				end
-			elseif inst.bufferedaction == nil then
-				inst.sg:GoToState("idle")
-			end
-		end,
-		
-		ontimeout = function(inst)
-			inst:ClearBufferedAction()
-			inst.sg:GoToState("idle")
-		end
-	},
-	
-	State{
-		name = "winterfistcast",
-		tags = {"doing", "busy", "canrotate"},
-		server_states = {"winterfistcast"},
-		
-		onenter = function(inst)
-			inst.AnimState:PlayAnimation("winterfist_small")
-			inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_weapon")
-			inst.components.locomotor:Stop()
 			
 			inst:PerformPreviewBufferedAction()
 			inst.sg:SetTimeout(2)

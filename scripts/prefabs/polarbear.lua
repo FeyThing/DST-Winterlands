@@ -451,7 +451,7 @@ local function DoGrowl(inst)
 	inst.SoundEmitter:PlaySound(inst.sounds.growl)
 	
 	if inst.enraged and inst.components.health and not inst.components.health:IsDead() then
-		inst._growltask = inst:DoTaskInTime(0.1 + math.random() * 0.5, inst.DoGrowl)
+		inst._growltask = inst:DoTaskInTime(1 + math.random() * 0.4, inst.DoGrowl)
 	end
 end
 
@@ -468,16 +468,15 @@ local function SetEnraged(inst, enable)
 	end
 	
 	inst._isenraged:set(enable)
-	if inst._growltask then
-		inst._growltask:Cancel()
-		inst._growltask = nil
-	end
 	
 	inst:AddOrRemoveTag("hostile", enable)
 	if inst.enraged then
 		inst:StopPolarPlowing()
 		
-		inst._growltask = inst:DoTaskInTime(0.1, inst.DoGrowl)
+		if inst._growltask == nil then
+			inst._growltask = inst:DoTaskInTime(0.1, inst.DoGrowl)
+		end
+		
 		if not inst.components.timer:TimerExists("rageover") then
 			inst.components.timer:StartTimer("rageover", TUNING.POLARBEAR_RAGE_TIME)
 		else
@@ -486,7 +485,10 @@ local function SetEnraged(inst, enable)
 		
 		inst.components.locomotor:SetExternalSpeedMultiplier(inst, "ragespeed", TUNING.POLARBEAR_RAGE_RUN_MULT)
 	else
-		inst.SoundEmitter:KillSound("growl")
+		if inst._growltask then
+			inst._growltask:Cancel()
+			inst._growltask = nil
+		end
 		
 		inst.components.timer:StopTimer("rageover")
 		inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "ragespeed")

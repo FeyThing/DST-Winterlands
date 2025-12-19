@@ -7,7 +7,7 @@ local assets_snowball = {
 }
 
 local function IsInSnow(owner)
-	if owner == nil or not owner:IsValid() then
+	if owner == nil or (not owner:IsValid() or (owner.replica.rider and owner.replica.rider:IsRiding())) then
 		return
 	end
 	
@@ -25,10 +25,17 @@ local function OnEquip(inst, owner)
 		inst._addednosteal = true
 	end
 	
+	inst:ListenForEvent("onattackother", inst._onattackother, owner)
+	
 	if inst._fists == nil then
 		inst._fists = SpawnPrefab("winters_fists_over")
 		inst._fists:AttachToOwner(owner, nil)
 	end
+	if inst._resetspelltype then
+		inst._resetspelltype:Cancel()
+		inst._resetspelltype = nil
+	end
+	inst._spelltype:set(1)
 end
 
 local function OnUnequip(inst, owner)
@@ -39,10 +46,17 @@ local function OnUnequip(inst, owner)
 		inst._addednosteal = nil
 	end
 	
+	inst:RemoveEventCallback("onattackother", inst._onattackother, owner)
+	
 	if inst._fists then
 		inst._fists:Remove()
 		inst._fists = nil
 	end
+	if inst._resetspelltype then
+		inst._resetspelltype:Cancel()
+		inst._resetspelltype = nil
+	end
+	inst._spelltype:set(1)
 end
 
 local function OnCharged(inst)
@@ -54,9 +68,9 @@ local function OnCharged(inst)
 end
 
 local function OnDischarged(inst)
-	inst.components.spellcaster.canuseontargets = false
-	inst.components.spellcaster.canuseonpoint = false
-	inst.components.spellcaster.canuseonpoint_water = false
+	inst.components.spellcaster.canuseontargets = true
+	inst.components.spellcaster.canuseonpoint = true
+	inst.components.spellcaster.canuseonpoint_water = true
 	inst.components.spellcaster.canusefrominventory = false
 	inst.components.spellcaster.canonlyuseonlocomotorspvp = false
 end
@@ -68,9 +82,16 @@ local function OnUse(inst, target, pos, caster)
 		return
 	end
 	
+	if inst._resetspelltype then
+		inst._resetspelltype:Cancel()
+		inst._resetspelltype = nil
+	end
+	
 	local x, y, z = caster.Transform:GetWorldPosition()
 	local usesmash = target == caster
 	pos = target and target:GetPosition() or pos or caster:GetPosition()
+	
+	--inst:AddOrRemoveTag("rechargeable_bonus", not usesmash)
 	
 	if usesmash then
 		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(x, y, z)
@@ -108,16 +129,50 @@ local function OnUse(inst, target, pos, caster)
 		snowball:SetSize(spelltype)
 		snowball:ThrowAt(pos, caster)
 		
+		if spelltype < TUNING.WINTERS_FISTS_SPELL_TYPES then
+			inst._resetspelltype = inst:DoTaskInTime(TUNING.WINTERS_FISTS_SNOWBALL_COOLDOWN, function()
+				if not (caster and caster.sg and caster.sg:HasStateTag("winterfistscast")) then
+					inst._spelltype:set(1)
+				end
+			end)
+		end
+		
 		inst._spelltype:set((spelltype >= TUNING.WINTERS_FISTS_SPELL_TYPES and 0 or spelltype) + 1)
 	end
 	
-	if inst.components.rechargeable then
+	if inst.components.rechargeable and usesmash then
 		inst.components.rechargeable:Discharge(usesmash and TUNING.WINTERS_FISTS_TERRAFORMER_COOLDOWN or TUNING.WINTERS_FISTS_SNOWBALL_COOLDOWN)
 	end
 	if inst.components.finiteuses then
-		inst.components.finiteuses:Use(TUNING.WINTERS_FISTS_DURABILITY / (usesmash and 30 or 150))
+		inst.components.finiteuses:Use(TUNING.WINTERS_FISTS_DURABILITY / (usesmash and 30 or 125))
 	elseif inst.components.perishable then
-		inst.components.perishable:SetPercent(inst.components.perishable:GetPercent() - (usesmash and 0.033 or 0.006))
+		inst.components.perishable:SetPercent(inst.components.perishable:GetPercent() - (usesmash and 0.03 or 0.008))
+	end
+end
+
+local function CanCastFn(doer, target, pos)
+	return doer and IsInSnow(doer)
+end
+
+local function WintersFistsDamage(inst, attacker, target)
+	local freezepercent = 0
+	
+	if target and target.components.freezable then
+		freezepercent = math.clamp(target.components.freezable.coldness / target.components.freezable:ResolveResistance(), 0, 1)
+	end
+	
+	return TUNING.WINTERS_FISTS_DAMAGE * (1 + (TUNING.WINTERS_FISTS_DAMAGE_FROZEN_MULT - 1) * freezepercent)
+end
+
+local function OnAttackOther(owner, data, inst)
+	local freezepercent = 0
+	
+	if data and data.target and data.target.components.freezable then
+		freezepercent = math.clamp(data.target.components.freezable.coldness / data.target.components.freezable:ResolveResistance(), 0, 1)
+	end
+	
+	if owner and owner.SoundEmitter and freezepercent > 0 then
+		owner.SoundEmitter:PlaySound("polarsounds/winters_fists/hit_crit", nil, freezepercent)
 	end
 end
 
@@ -140,6 +195,7 @@ local function fn()
 	inst.AnimState:SetBuild("swap_wintersfists")
 	inst.AnimState:PlayAnimation("idle")
 	
+	inst:AddTag("castonpolarsnow")
 	inst:AddTag("frozen")
 	inst:AddTag("icebox_valid")
 	inst:AddTag("rechargeable")
@@ -204,11 +260,14 @@ local function fn()
 	inst.components.spellcaster.canusefrominventory = true
 	inst.components.spellcaster.veryquickcast = true
 	inst.components.spellcaster:SetSpellFn(OnUse)
+	inst.components.spellcaster:SetCanCastFn(CanCastFn)
 	
 	inst:AddComponent("weapon")
-	inst.components.weapon:SetDamage(TUNING.WINTERS_FISTS_DAMAGE)
+	inst.components.weapon:SetDamage(WintersFistsDamage)
 	
 	MakeHauntableLaunch(inst) -- TODO: use, as smash ?
+	
+	inst._onattackother = function(owner, data) OnAttackOther(owner, data, inst) end
 	
 	return inst
 end
@@ -322,6 +381,10 @@ local function DoTerraform(inst, is_load)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local radius = TUNING.WINTERS_FISTS_TERRAFORMER_RAD
 	local delete = true
+	
+	if inst.components.wateryprotection then
+		inst.components.wateryprotection:SpreadProtectionAtPoint(x, y, z, TILE_SCALE * 2)
+	end
 	
 	for ix = -radius, radius do
 		for iz = -radius, radius do
@@ -442,6 +505,11 @@ local function terraformer()
 	
 	inst:AddComponent("timer")
 	inst:ListenForEvent("timerdone", OnTimerDone)
+	
+	inst:AddComponent("wateryprotection")
+	inst.components.wateryprotection.extinguishheatpercent = TUNING.FIRESUPPRESSOR_EXTINGUISH_HEAT_PERCENT
+	inst.components.wateryprotection.addcoldness = TUNING.WINTERS_FISTS_POUND_COLDNESS
+	inst.components.wateryprotection:AddIgnoreTag("player")
 	
 	inst.OnEntitySleep = OnEntitySleep
 	inst.OnEntityWake = OnEntityWake

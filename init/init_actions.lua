@@ -219,6 +219,47 @@ local oldprototyper = COMPONENT_ACTIONS.SCENE.prototyper -- Trading with Walruse
 		end
 	end
 	
+local function IsInSnow(owner, target)
+	if owner == nil or (not owner:IsValid() or (owner.replica.rider and owner.replica.rider:IsRiding())) then
+		return
+	end
+	
+	local tile, tileinfo = owner:GetCurrentTileType()
+	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15))
+	
+	return in_snow or owner == target
+end
+
+local oldspellcaster = COMPONENT_ACTIONS.POINT.spellcaster -- Only throw snowballs while in snow
+	COMPONENT_ACTIONS.POINT.spellcaster = function(inst, doer, pos, actions, right, target, ...)
+		if inst:HasTag("castonpolarsnow") and doer and not IsInSnow(doer, target) then
+			return
+		end
+		if oldspellcaster then
+			oldspellcaster(inst, doer, pos, actions, right, target, ...)
+		end
+	end
+	
+local oldspellcaster_equipped = COMPONENT_ACTIONS.EQUIPPED.spellcaster
+	COMPONENT_ACTIONS.EQUIPPED.spellcaster = function(inst, doer, target, actions, right, ...)
+		if inst:HasTag("castonpolarsnow") and doer and not IsInSnow(doer, target) then
+			return
+		end
+		if oldspellcaster_equipped then
+			oldspellcaster_equipped(inst, doer, target, actions, right, ...)
+		end
+	end
+	
+local oldspellcaster_inventory = COMPONENT_ACTIONS.INVENTORY.spellcaster
+	COMPONENT_ACTIONS.INVENTORY.spellcaster = function(inst, doer, actions, ...)
+		if inst:HasTag("castonpolarsnow")  then
+			return
+		end
+		if oldspellcaster_inventory then
+			oldspellcaster_inventory(inst, doer, actions, ...)
+		end
+	end
+	
 local oldstorytellingprop = COMPONENT_ACTIONS.SCENE.storytellingprop -- To keep action order the same with Walter, can't use portable_campfire tag or it can't be used by others
 	COMPONENT_ACTIONS.SCENE.storytellingprop = function(inst, doer, actions, right, ...)
 		if inst:HasTag("portable_brazier") then

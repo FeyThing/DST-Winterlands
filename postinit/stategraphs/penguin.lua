@@ -3,32 +3,32 @@ GLOBAL.setfenv(1, GLOBAL)
 
 require("stategraphs/commonstates")
 
+local function IsProperEmperor(inst)
+	return TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor == inst
+end
+
 local PENGUIN_GUARDS_TAGS = {"penguin_guard"}
 local PENGUIN_GUARDS_NOT_TAGS = {"isdead"}
 
 local COLLISION_RADIUS = 1.2
-local BOUNCE_ANGLE_VARIANCE = 10
+local BOUNCE_ANGLE_VARIANCE = 20
 
 local BOUNCE_OFF_TAGS = {"wall", "polarcastletower", "structure", "_inventoryitem", "_combat"}
-local BOUNCE_OFF_NOT_TAGS = {"INLIMBO", "penguin", "playerghost"}
+local BOUNCE_OFF_NOT_TAGS = {"INLIMBO", "isdead"}
 
-local BOUNCE_TARGET_RETRY_TIME = 1
+local BOUNCE_TARGET_RETRY_TIME = 0.25
 
-local function SpinGetAngle(inst, target)
-	local x1, y1, z1 = inst.Transform:GetWorldPosition()
-	local x2, y2, z2 = target.Transform:GetWorldPosition()
-	local rot = inst.Transform:GetRotation()
+local function SpinGetAngle(inst)
+    local x, y, z = inst.Transform:GetWorldPosition()
+    local cpt = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.ice_castle_pos or inst:GetPosition()
 	
-	local dx = x1 - x2
-	local dz = z1 - z2
+    local dx = cpt.x - x
+    local dz = cpt.z - z
 	
-	local rangle = 2 * math.atan2(-dz, -dx) * RADIANS - rot
+    local angle = math.atan2(-dz, dx) * RADIANS
+    angle = angle + math.random(-BOUNCE_ANGLE_VARIANCE, BOUNCE_ANGLE_VARIANCE)
 	
-	-- (Minimal randomness to avoid stuck potential)
-	local jitter = math.random(-BOUNCE_ANGLE_VARIANCE, BOUNCE_ANGLE_VARIANCE)
-	local fangle = (rangle + jitter) % 360
-	
-	return fangle
+    return angle % 360
 end
 
 local function SpinOnUpdate(inst)
@@ -40,33 +40,35 @@ local function SpinOnUpdate(inst)
 		y,
 		z + -math.sin(rot * DEGREES) * COLLISION_RADIUS,
 		1.2, nil, BOUNCE_OFF_NOT_TAGS, BOUNCE_OFF_TAGS)
-	
+		
 	if #ents > 0 then
 		local t = GetTime()
 		local target = ents[1]
 		
-		if (inst._collided_times[target] == nil or t - inst._collided_times[target] > BOUNCE_TARGET_RETRY_TIME) then
+		if target ~= inst and (inst._collided_times[target] == nil or t - inst._collided_times[target] > BOUNCE_TARGET_RETRY_TIME) then
 			local bounce = false
 			
 			if target.components.inventoryitem and not target.components.health then
 				if target.components.heavyobstaclephysics then
 					bounce = true
 					target.components.heavyobstaclephysics:ForceDropPhysics()
+					inst.SoundEmitter:PlaySound("dontstarve/wilson/hit")
 				end
-				target.components.inventoryitem:DoDropPhysics(x, y, z, true, target.components.heavyobstaclephysics and 1 or 2)
-				
-				inst.SoundEmitter:PlaySound("dontstarve/wilson/hit")
+				target.components.inventoryitem:DoDropPhysics(x, y, z, true)
 			end
+			
 			if target.components.workable then
-				target.components.workable:WorkedBy(inst, target:HasTag("icecastlepart") and 0 or 1)
 				bounce = true
+				target.components.workable:WorkedBy(inst, target:HasTag("icecastlepart") and 0 or 1)
 			end
-			if target.components.combat and target.components.health and not target.components.health:IsDead() and not target:HasTag("wall") then
+			
+			if target.components.combat and target.components.health and not target.components.health:IsDead() and
+				not target:HasTag("wall") and (not target:HasTag("penguin") or target:HasTag("player")) then
 				target.components.combat:GetAttacked(inst, TUNING.EMPEROR_PENGUIN_DAMAGE * TUNING.EMPEROR_PENGUIN_DAMAGE_SPINMOD)
 			end
+			
 			if bounce then
-				local angle = SpinGetAngle(inst, target)
-				inst.Transform:SetRotation(angle)
+				inst.Transform:SetRotation(SpinGetAngle(inst))
 			end
 			
 			inst._collided_times[target] = t
@@ -228,6 +230,8 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				
 				inst:Hide()
 				if inst._juggle_tower then
+					inst._juggle_tower.emperor_juggling = true
+					
 					inst.Physics:SetActive(false)
 					if inst.sg.statemem.exiting_tower then
 						inst.entity:SetParent(nil)
@@ -261,7 +265,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				
 				inst:Show()
 			end),
-			TimeEvent(80 * FRAMES, function(inst)
+			TimeEvent(60 * FRAMES, function(inst)
 				inst.sg:GoToState("idle")
 			end),
 		},
@@ -273,6 +277,10 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 			
 			inst:Show()
 			if inst.sg.statemem.exiting_tower then
+				if inst._juggle_tower then
+					inst._juggle_tower.emperor_juggling = nil
+				end
+				
 				inst._juggle_tower = nil
 				inst.wants_to_juggle = nil
 				inst.Physics:SetActive(true)
@@ -289,22 +297,92 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 			inst.AnimState:PushAnimation("juggle_loop")
 			inst.SoundEmitter:KillAllSounds()
 			inst.Physics:Stop()
+			
+			inst.sg.statemem.throw_index = 1
+			inst.sg.statemem.next_throw_time = 0
 		end,
 		
 		onupdate = function(inst)
-			if inst._juggle_tower and (inst.sg.timeinstate < 40 * FRAMES or inst.wants_to_call_guards) then
+			local time = inst.sg.timeinstate
+			
+			if inst._juggle_tower and (time < 40 * FRAMES or inst.wants_to_call_guards) then
 				return
 			end
 			
 			local x, y, z = inst.Transform:GetWorldPosition()
+			
+			if time >= inst.sg.statemem.next_throw_time then
+				local pattern = TUNING.EMPEROR_PENGUIN_SNOWBALL_TYPE_THROWS
+				local index = inst.sg.statemem.throw_index
+				local size = pattern[index]
+				
+				index = index + 1
+				if index > #pattern then
+					index = 1
+				end
+				inst.sg.statemem.throw_index = index
+				
+				local targets = {}
+				if inst.attackerUSERIDs then
+					for userid, _ in pairs(inst.attackerUSERIDs) do
+						local player = UserToPlayer(userid)
+						if player and player:IsValid() and not player:HasTag("playerghost") and player.entity:IsVisible()
+							and inst:IsNear(player, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE) then
+							
+							table.insert(targets, player)
+						end
+					end
+				end
+				
+				if #targets > 0 then
+					local target = targets[math.random(#targets)]
+					local snowball = SpawnPrefab("winters_fists_snowball")
+					
+					if snowball then
+						snowball.Transform:SetPosition(x, y + 1.5, z)
+						
+						if snowball.SetSize then
+							snowball:SetSize(size)
+						end
+						if snowball.ThrowAt then
+							snowball:ThrowAt(target:GetPosition(), inst)
+						elseif snowball.components.complexprojectile then
+							snowball.components.complexprojectile:SetLaunchOffset(Vector3(0, 1.5, 0))
+							snowball.components.complexprojectile:Launch(target:GetPosition(), inst)
+						end
+					end
+				end
+				
+				inst.sg.statemem.next_throw_time = time + TUNING.EMPEROR_PENGUIN_SNOWBALL_SPAWNPERIOD
+			end
+			
+			--
+			
 			local guards = TheSim:FindEntities(x, 0, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE * 1.5, PENGUIN_GUARDS_TAGS, PENGUIN_GUARDS_NOT_TAGS)
 			inst.sg.statemem.guards_min = GetSummonGuardNums(inst)
 			
 			if #guards <= inst.sg.statemem.guards_min * (1 - TUNING.EMPEROR_PENGUIN_SUMMONS_KILL_PERCENT) then
 				inst.wants_to_juggle = nil
-				inst.sg:GoToState("emperor_entertower", true)
+				inst.sg:GoToState("emperor_stopjuggle")
 			end
 		end,
+	},
+	
+	State{
+		name = "emperor_stopjuggle",
+		tags = {"busy", "canrotate", "nointerrupt"},
+		
+		onenter = function(inst, leftcastle)
+			inst.AnimState:PlayAnimation("juggle_pst")
+			inst.SoundEmitter:PlaySound(inst._soundpath.."taunt")
+			inst.Physics:Stop()
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("emperor_entertower", true)
+			end)
+		},
 	},
 	
 	State{
@@ -331,14 +409,20 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		end,
 		
 		onupdate = function(inst)
-			if not inst.wants_to_spin or not (TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst)) then
+			local incastle = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst)
+			
+			if not inst.wants_to_spin or not incastle then
+				inst.Physics:SetMotorVelOverride(0, 0, 0)
+				
 				inst.wants_to_spin = nil
-				inst.sg:GoToState("emperor_stopspin")
+				inst.sg:GoToState("emperor_stopspin", not incastle)
 			elseif inst.sg.statemem.spinning then
 				if inst.components.locomotor then
 					local i = inst.AnimState:IsCurrentAnimation("emperor_spin_fast_loop") and 2 or 1
-					inst.components.locomotor:SetExternalSpeedMultiplier(inst, "spin", TUNING.EMPEROR_PENGUIN_SPIN_SPEEDMULT[i])
-					inst.components.locomotor:RunForward(true)
+					--inst.components.locomotor:SetExternalSpeedMultiplier(inst, "spin", TUNING.EMPEROR_PENGUIN_SPIN_SPEEDMULT[i])
+					--inst.components.locomotor:RunForward(true)
+					
+					inst.Physics:SetMotorVelOverride(8.5 * TUNING.EMPEROR_PENGUIN_SPIN_SPEEDMULT[i], 0, 0)
 				end
 				
 				SpinOnUpdate(inst)
@@ -369,7 +453,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		name = "emperor_stopspin",
 		tags = {"busy", "canrotate", "nointerrupt", "running"},
 		
-		onenter = function(inst)
+		onenter = function(inst, leftcastle)
 			inst.AnimState:PlayAnimation("emperor_panic", true)
 			inst.SoundEmitter:PlaySound("dontstarve/movement/iceslab_slipping")
 			inst.Physics:SetMotorVelOverride(5, 0, 0)
@@ -448,6 +532,23 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 			EventHandler("animover", function(inst)
 				inst.sg:GoToState("idle")
 			end)
+		},
+	},
+	
+	State{
+		name = "emperor_panic_walk",
+		tags = {"moving", "canrotate"},
+		
+		onenter = function(inst)
+			inst.SoundEmitter:KillSound("slide")
+			inst.AnimState:PlayAnimation("emperor_panic")
+			inst.components.locomotor:WalkForward()
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("emperor_panic_walk")
+			end),
 		},
 	},
 	

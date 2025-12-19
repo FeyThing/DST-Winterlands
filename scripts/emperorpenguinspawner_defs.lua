@@ -83,7 +83,7 @@ local FNS = {
 	end,
 	
 	SignSpawnFn = function(num, pt)
-		if math.random() < 0.66 then
+		if math.random() < 0.75 then
 			return
 		end
 		

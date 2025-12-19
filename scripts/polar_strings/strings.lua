@@ -473,7 +473,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE = "This tree has robust branches that could prove to be useful.\nHowever, axes won't cut it to take them off properly..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held.\n\nAlso increases stability on ice."
 	STRINGS.SCRAPBOOK.SPECIALINFO.COMPASS_POLAR = "Functions just like a normal Compass. But it points to the north-i-est place of all."
-	--STRINGS.SCRAPBOOK.SPECIALINFO.EMPEROR_EGG = "...somebody might know... what to do with it..."
+	STRINGS.SCRAPBOOK.SPECIALINFO.EMPEROR_EGG = "...somebody might know... what to do with it..."
 	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "Freezes the water around the wearer and under itself when dropped.\n\nAlso greatly increases stability on ice."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave high snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICICLESTAFF = "Creates a salvo of 15 Icicles.\n\nNote to self: Keep clear from the area."
@@ -496,7 +496,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALRUS_BAGPIPE = "Lose your wits playing the Bagpipes! Its tune keeps hounds and hound waves at ease momentarily, and opens hunters for safe trading to you and nearby allies."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALRUS_BEARTRAP = "A nasty trap deployed and hidden in the snow by trappers.\n\nCreatures caught by the mechanism will be stuck in place momentarily. One can attempt to break free from it, or be rescued by allies or foes' attacks alike.\n\nCan be disarmed by placing an item atop, or risking your life."
-	STRINGS.SCRAPBOOK.SPECIALINFO.WINTERS_FISTS = "Pound the ground with these heavy ice chunks to burst temporary snowy areas.\n\nSnowball combos can be performed while standing in snow: first causing minor damage, then pushing back, and finally causing a deadly avalanche!"
+	STRINGS.SCRAPBOOK.SPECIALINFO.WINTERS_FISTS = "Put on those heavy ice chunk and pound the ground to burst out temporary snowy areas.\n\nFrozen targets take up to double melee damage.\n\nSnowball combos can be performed WHILE standing in snow, making them bigger at each throw, dealing more damage, more freezing, and finally hurl down a deadly avalanche taking anything down its path!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "Plugs into WX78's circuit board.\n\nRequires 1 socket and multiplies all sorts of Naughtiness gained as followed per circuit installed:\nx2 > x3 > x3.5 > x4 > x4.5 > x5"
 	
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
