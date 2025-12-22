@@ -92,7 +92,7 @@ function TrialsHolder:TryStartTrial(trialname, doer)
         return false
     end
 
-    self.inst.components.talker:Say("LETS GET READY TO RRRRRRUMBLEEEEEE!!!")
+    -- self.inst.components.talker:Say("LETS GET READY TO RRRRRRUMBLEEEEEE!!!")
 
     self.inst:DoTaskInTime(1.5, function()
         self:DoStartTrial(trialdata, doer)

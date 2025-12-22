@@ -1,9 +1,5 @@
 local assets = {
-    Asset("ANIM", "anim/pig_king.zip")
-}
-
-local prefabs = {
-    
+	Asset("ANIM", "anim/polarbearking.zip")
 }
 
 local function OnInfighting(inst, attacker, victim)
@@ -15,17 +11,29 @@ local function OnInfighting(inst, attacker, victim)
     inst.infighting_tolerance = inst.infighting_tolerance - tolarence_drain
 
     if inst.infighting_tolerance <= 0 then
-        inst.infighting_tolerance = TUNING.POLARBEARKING_INFIGHTING_TOLARANCE
+        if inst._regain_tolerance_task then
+            inst._regain_tolerance_task:Cancel()
+            inst._regain_tolerance_task = nil
+        end
 
+        inst._regain_tolerance_task = inst:DoTaskInTime(TUNING.POLARBEARKING_INFIGHTING_TOLARANCE_RESET_TIME, function()
+            inst.infighting_tolerance = TUNING.POLARBEARKING_INFIGHTING_TOLARANCE
+            inst.sg.mem.angry = nil
+            inst:PushEvent("calmdown")
+        end)
+
+        inst.sg.mem.angry = true
         inst:PushEvent("stopinfighting")
     else
         if inst._regain_tolerance_task then
             inst._regain_tolerance_task:Cancel()
-            inst._regain_tolerance_task = inst:DoTaskInTime(TUNING.POLARBEARKING_INFIGHTING_TOLARANCE_RESET_TIME, function()
-                inst.infighting_tolerance = TUNING.POLARBEARKING_INFIGHTING_TOLARANCE
-                inst._regain_tolerance_task = nil
-            end)
+            inst._regain_tolerance_task = nil
         end
+
+        inst._regain_tolerance_task = inst:DoTaskInTime(TUNING.POLARBEARKING_INFIGHTING_TOLARANCE_RESET_TIME, function()
+            inst.infighting_tolerance = TUNING.POLARBEARKING_INFIGHTING_TOLARANCE
+            inst._regain_tolerance_task = nil
+        end)
     end
 end
 
@@ -101,9 +109,10 @@ end
 local function OnIsNight(inst, isnight)
     if isnight then
         inst.sg.mem.sleeping = true
+        inst.sg.mem.angry = nil
 
         if inst.sg:HasStateTag("idle") then
-            inst.sg:GoToState("sleep")
+            inst.sg:GoToState("sleep", true)
         end
 
         DisableTrials(inst)
@@ -134,13 +143,13 @@ local function fn()
 
     MakeObstaclePhysics(inst, 2, 0.5)
 
-    inst.MiniMapEntity:SetIcon("pigking.png")
+    inst.MiniMapEntity:SetIcon("polarbearking.png")
     inst.MiniMapEntity:SetPriority(1)
 
     inst.DynamicShadow:SetSize(10, 5)
 
-    inst.AnimState:SetBank("Pig_King")
-    inst.AnimState:SetBuild("Pig_King")
+    inst.AnimState:SetBank("polarbearking")
+    inst.AnimState:SetBuild("polarbearking")
     inst.AnimState:SetFinalOffset(1)
 
     inst.AnimState:PlayAnimation("idle", true)
@@ -150,12 +159,12 @@ local function fn()
     inst:AddTag("birdblocker")
     inst:AddTag("antlion_sinkhole_blocker")
 
-	inst:AddComponent("talker")
-	inst.components.talker.fontsize = 35
-	inst.components.talker.font = TALKINGFONT
-	inst.components.talker.offset = Vector3(0, -400, 0)
-	inst.components.talker.ontalk = OnTalk
-	inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
+	-- inst:AddComponent("talker")
+	-- inst.components.talker.fontsize = 35
+	-- inst.components.talker.font = TALKINGFONT
+	-- inst.components.talker.offset = Vector3(0, -500, 0)
+	-- inst.components.talker.ontalk = OnTalk
+	-- inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
 
     if not TheNet:IsDedicated() then
         inst:AddComponent("pointofinterest")
@@ -190,4 +199,4 @@ local function fn()
     return inst
 end
 
-return Prefab("polarbearking", fn, assets, prefabs)
+return Prefab("polarbearking", fn, assets)
