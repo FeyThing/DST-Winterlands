@@ -118,12 +118,12 @@ end
 
 local function WinFistFightTrial(self, player)
     -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
-    self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
+    -- self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
 end
 
 local function LoseFistFightTrial(self, player)
     -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
-    self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
+    -- self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
 end
 --
 
@@ -260,12 +260,12 @@ end
 
 local function WinEndurenceFightTrial(self, player)
     -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
-    self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
+    -- self.inst.components.talker:Say("NOW THAT'S WHAT I LIKE TO SEE!")
 end
 
 local function LoseEndurenceFightTrial(self, player)
     -- probably should not put this here, this WILL be called multiple times with 2+ players in the trial
-    self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
+    -- self.inst.components.talker:Say("THEY'LL BURY YOU IN A LUNCHBOX!")
 end
 --
 
