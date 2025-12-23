@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		HOSTILE = "Uh oh... I think we just started a war, Woby.",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Think a whole regiment could take down a Deerclops?"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Hey, no littering!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		FOLLOWER = "You're easier to tame than they said on that radio show.",
 		GENERIC = "I was right. Those three dark dots were, in fact, a polar bear."
 	}
+	DESCRIBE.POLARBEARKING = "They say he sold the bear fur before hunting it. Woah... can you believe that?!"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Look at this-- uh, THESE cool bugs!",
 		HELD_INV = "My handbook says... that it's too late to remove it.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		GENERIC = "Get'em, girl!",
 	}
 	DESCRIBE.POLARWARG = "The poor thing must be lost."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		GENERIC = "Oooh, this gotta be that dental museum I've heard about!",
 		OPEN = "Hi! Are you open to visitors?",
 	}
+	DESCRIBE.POLARBEARHEAD = "Is it too late to return it to its owner?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "That's a frostburn if I ever saw one. Heh.",
 		GENERIC = "You think they make furnitures out of snow?",
 	}
+	DESCRIBE.POLARHEADSTICK = "That's a cool stick."
 	DESCRIBE.POLARICE_PLOW = "Don't worry, I know the drill."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Maybe Woby could locate the fish by smell?"
+	DESCRIBE.POLARWALRUSHEAD = "Darnit! I missed the monocle again!"
 	DESCRIBE.TOWER_POLAR_FLAG = "In this base, we salute the flag!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "I can't say I've heard of this nation before."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Must be something in the air."

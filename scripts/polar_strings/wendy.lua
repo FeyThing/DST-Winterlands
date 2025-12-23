@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		HOSTILE = "Are you worthy, governor?",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "To be pecked by flint sounds... unpleasant."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Her song is bewitching... but oh, so completely off-key!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Heehee...",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		FOLLOWER = "It's my stuffy now.",
 		GENERIC = "A predator born of the ice.",
 	}
+	DESCRIBE.POLARBEARKING = "Legends say he cheated death, by the rules."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Shouldn't we be running?",
 		HELD_INV = "Um, excuse you?",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "A sly shade in the snow.",
 	}
 	DESCRIBE.POLARWARG = "The champion of the tundra."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "It's away from the others for a reason.",
 		OPEN = "Can you teach me your art?",
 	}
+	DESCRIBE.POLARBEARHEAD = "Promise, I will take better care of the next one."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "No longer a refuge from the biting cold.",
 		GENERIC = "They made their graves here.",
 	}
+	DESCRIBE.POLARHEADSTICK = "It's the anticipation that matters."
 	DESCRIBE.POLARICE_PLOW = "Mind not drowning in deep icy water now."
 	DESCRIBE.POLARICE_PLOW_ITEM = "To find fishes, and maybe more if we're unlucky."
+	DESCRIBE.POLARWALRUSHEAD = "Somewhere, a child cries."
 	DESCRIBE.TOWER_POLAR_FLAG = "It swims in silence, forgotten by all."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Oh, I stepped on that poor flag. I will do it again."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Are we going to die?"

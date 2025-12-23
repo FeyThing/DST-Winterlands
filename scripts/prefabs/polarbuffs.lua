@@ -235,6 +235,41 @@ local function HuntMoar_OnLoad(inst, data)
 	end
 end
 
+--	[[			Ursa Major Buff			]]	--
+
+local function UrsaMajor_OnAttached(inst, target) -- TODO: We should add some nice visuals to actions performed while this is active
+	if target.components.combat then
+		target.components.combat.externaldamagemultipliers:SetModifier(inst, TUNING.BUFF_ATTACK_MULTIPLIER)
+	end
+	
+	if target.components.health then
+		target.components.health.externalabsorbmodifiers:SetModifier(inst, TUNING.BUFF_PLAYERABSORPTION_MODIFIER)
+	end
+	
+	if target.components.workmultiplier == nil then
+		target:AddComponent("workmultiplier")
+	end
+	target.components.workmultiplier:AddMultiplier(ACTIONS.CHOP, TUNING.BUFF_WORKEFFECTIVENESS_MODIFIER, inst)
+	target.components.workmultiplier:AddMultiplier(ACTIONS.MINE, TUNING.BUFF_WORKEFFECTIVENESS_MODIFIER, inst)
+	target.components.workmultiplier:AddMultiplier(ACTIONS.HAMMER, TUNING.BUFF_WORKEFFECTIVENESS_MODIFIER, inst)
+end
+
+local function UrsaMajor_OnDetached(inst, target)
+	if target.components.combat then
+		target.components.combat.externaldamagemultipliers:RemoveModifier(inst)
+	end
+	
+	if target.components.health then
+		target.components.health.externalabsorbmodifiers:RemoveModifier(inst)
+	end
+	
+	if target.components.workmultiplier then
+		target.components.workmultiplier:RemoveMultiplier(ACTIONS.CHOP, inst)
+		target.components.workmultiplier:RemoveMultiplier(ACTIONS.MINE, inst)
+		target.components.workmultiplier:RemoveMultiplier(ACTIONS.HAMMER, inst)
+	end
+end
+
 --	[[	Timefreeze Watch Invincibility	]]	--
 
 local function wandatimefreeze_debugstatdrain(inst, stat, amt)
@@ -444,4 +479,5 @@ return MakeBuff("polarwetness", Wetness_OnAttached, nil, Wetness_OnDetached, nil
 	MakeBuff("walrusally", WalrusAlly_OnAttached, nil, WalrusAlly_OnDetached, TUNING.POLAR_WALRUSALLY_BUFF_DURATION, 2, false),
 	MakeBuff("walrusboost", WalrusBoost_OnAttached, nil, WalrusBoost_OnDetached, TUNING.POLAR_WALRUSBOOST_BUFF_DURATION, 2, false),
 	MakeBuff("huntmoar", HuntMoar_OnAttached, nil, HuntMoar_OnDetached, TUNING.MOARHUNT_BUFF_DURATION, 2, true, nil, HuntMoar_OnSave, HuntMoar_OnLoad),
+	MakeBuff("ursamajor", UrsaMajor_OnAttached, nil, UrsaMajor_OnDetached, TUNING.URSAMAJOR_BUFF_DURATION, 2, false),
 	MakeBuff("wandatimefreeze", WandaTimeFreeze_OnAttached, nil, WandaTimeFreeze_OnDetached, TUNING.POCKETWATCH_BUFF_DURATION, 2, true)

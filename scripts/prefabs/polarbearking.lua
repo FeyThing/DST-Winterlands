@@ -107,22 +107,22 @@ local function DisableTrials(inst)
 end
 
 local function OnIsNight(inst, isnight)
-    if isnight then
+    if isnight and not (inst.components.trialsholder and inst.components.trialsholder:IsTrialActive()) then
         inst.sg.mem.sleeping = true
         inst.sg.mem.angry = nil
-
+		
         if inst.sg:HasStateTag("idle") then
             inst.sg:GoToState("sleep", true)
         end
-
+		
         DisableTrials(inst)
     else
         inst.sg.mem.sleeping = false
-
+		
         if inst.sg:HasStateTag("sleeping") then
             inst.sg:GoToState("wake")
         end
-
+		
         EnableTrials(inst)
     end
 end
@@ -151,28 +151,31 @@ local function fn()
     inst.AnimState:SetBank("polarbearking")
     inst.AnimState:SetBuild("polarbearking")
     inst.AnimState:SetFinalOffset(1)
-
     inst.AnimState:PlayAnimation("idle", true)
-
+	
     inst:AddTag("bear")
     inst:AddTag("bear_major")
     inst:AddTag("birdblocker")
     inst:AddTag("antlion_sinkhole_blocker")
-
-	-- inst:AddComponent("talker")
-	-- inst.components.talker.fontsize = 35
-	-- inst.components.talker.font = TALKINGFONT
-	-- inst.components.talker.offset = Vector3(0, -500, 0)
-	-- inst.components.talker.ontalk = OnTalk
-	-- inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
-
+	inst:AddTag("snowblocker")
+	
+	inst:AddComponent("talker")
+	inst.components.talker.fontsize = 35
+	inst.components.talker.font = TALKINGFONT
+	inst.components.talker.offset = Vector3(0, -740, 0)
+	inst.components.talker.ontalk = OnTalk
+	inst.components.talker.mod_str_fn = function(ret) return PolarifySpeech(ret, inst) end
+	
     if not TheNet:IsDedicated() then
         inst:AddComponent("pointofinterest")
         inst.components.pointofinterest:SetHeight(70)
     end
-
+	
+	inst._snowblockrange = net_smallbyte(inst.GUID, "polarbearking._snowblockrange")
+	inst._snowblockrange:set(15)
+	
     inst.entity:SetPristine()
-
+	
     if not TheWorld.ismastersim then
         return inst
     end

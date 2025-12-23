@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		HOSTILE = "Down with the monarchy!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "These birds are up to something..."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "I don't like the sound of that..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Hmph, amateur. Lemme show you how it's done.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		FOLLOWER = "Always down for a fishing trip, eh?",
 		GENERIC = "Sounds like someone got a little cold.",
 	}
+	DESCRIBE.POLARBEARKING = "They say trees fall when he looks their way. Eh. Sure."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Yuck!",
 		HELD_INV = "Get outta my hairs and feathers!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "A rare sight even up in the North.",
 	}
 	DESCRIBE.POLARWARG = "It could pull a sled on its own."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "I'm very offended.",
 		OPEN = "I don't need your curses.",
 	}
+	DESCRIBE.POLARBEARHEAD = "Creepy, but also kinda impressive yknow?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Guess it was only built to withstand the cold.",
 		GENERIC = "I used to say: you live in what you eat, eh?",
 	}
+	DESCRIBE.POLARHEADSTICK = "Sure wish it would stay empty."
 	DESCRIBE.POLARICE_PLOW = "Should be a good spot!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Less time digging is more time fishing."
+	DESCRIBE.POLARWALRUSHEAD = "The track ends here."
 	DESCRIBE.TOWER_POLAR_FLAG = "Nice breeze catcher, that."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Down with the feathery empire."
 	DESCRIBE.RAINOMETER.POLARSTORM = "This might be serious..."

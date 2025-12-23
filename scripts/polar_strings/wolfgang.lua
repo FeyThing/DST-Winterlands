@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		HOSTILE = "Muscles versus flippers!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Someone has to defend the weak."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Missus got mustache too? Wolfgang need moment to think..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Is sobbing little ice cubes.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		FOLLOWER = "Wolfgang enjoys arm wrestling with friend.",
 		GENERIC = "I respect bear man!",
 	}
+	DESCRIBE.POLARBEARKING = "Is true that bear man wrestled two vargs at once... with one hand?"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Eep!",
 		HELD_INV = "Will not let go without a fight.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Ha! Is puny critter!",
 	}
 	DESCRIBE.POLARWARG = "Puppy got new coat?"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Got a bad feeling about this.",
 		OPEN = "Is a little d-dark in here...",
 	}
+	DESCRIBE.POLARBEARHEAD = "He has seen happier days."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Big fish had tough life.",
 		GENERIC = "Bear man have defeated big fish.",
 	}
+	DESCRIBE.POLARHEADSTICK = "Something strong goes here, not Wolfgang though."
 	DESCRIBE.POLARICE_PLOW = "Is really that deep...?"
 	DESCRIBE.POLARICE_PLOW_ITEM = "To dig deep holes."
+	DESCRIBE.POLARWALRUSHEAD = "Ha! Flubbery man lies on pipes. Is flubbery man favorite thing!"
 	DESCRIBE.TOWER_POLAR_FLAG = "Wolfgang thinks it's pretty."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "It's okay, we will get you a new home."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Is whole world shaking?"

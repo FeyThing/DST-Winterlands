@@ -227,7 +227,13 @@ local function IsInSnow(owner, target)
 	local tile, tileinfo = owner:GetCurrentTileType()
 	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15))
 	
-	return in_snow or owner == target
+	if in_snow or owner == target then
+		return true
+	end
+	
+	local inventory = owner.components.inventory or owner.replica.inventory
+	
+	return inventory and inventory:FindItem(function(item) return IsWintersFistsSnowball(item) end) ~= nil
 end
 
 local oldspellcaster = COMPONENT_ACTIONS.POINT.spellcaster -- Only throw snowballs while in snow

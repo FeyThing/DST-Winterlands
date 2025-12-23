@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		HOSTILE = "Let's see which is best, okay?",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "We didn't steal any egg! Promise!"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "She seems right in her flippers."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It bumped its head! Poor moosey...",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		FOLLOWER = "We've got a big Teddy!",
 		GENERIC = "Are we welcome in your little town?",
 	}
+	DESCRIBE.POLARBEARKING = "Others told us he turned summer into a carpet."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Yikes!",
 		HELD_INV = "Next time, we keep our pockets shut!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		GENERIC = "I bet it's hungry.",
 	}
 	DESCRIBE.POLARWARG = "Who knew the yeti had a puppy?"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		GENERIC = "Looks like the cabin Walter described around the fire!",
 		OPEN = "Can you stop looking at our fangs?",
 	}
+	DESCRIBE.POLARBEARHEAD = "What did it do to deserve this?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Rest in peace... to the spider on the ceiling.",
 		GENERIC = "We would be better indoor than outhere.",
 	}
+	DESCRIBE.POLARHEADSTICK = "It's almost creepier empty."
 	DESCRIBE.POLARICE_PLOW = "We should move back, don't want to see the fish from TOO close."
 	DESCRIBE.POLARICE_PLOW_ITEM = "A machine to free the fish from the ice."
+	DESCRIBE.POLARWALRUSHEAD = "It kind of deserved it."
 	DESCRIBE.TOWER_POLAR_FLAG = "Let's wave back at it!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "So... is it our empire now?"
 	DESCRIBE.RAINOMETER.POLARSTORM = "Shouldn't we tell the others about this?"

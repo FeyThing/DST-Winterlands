@@ -60,6 +60,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		HOSTILE = "I'd rather die fighting than end up in jail!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "You definitively can't see much in this."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Fake 'stache or not, she's a real problem."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Well. Does that mean you won?",
@@ -73,6 +74,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		FOLLOWER = "Is the paint permanent? Or how long does it take you daily?",
 		GENERIC = "I'm just passing through, don't mind me.",
 	}
+	DESCRIBE.POLARBEARKING = "I've heard stories he beat down a Deerclops before it spawned..."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Ack! Begone!",
 		HELD_INV = "It hurts, but removing it would hurt more.",
@@ -85,8 +87,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		GENERIC = "Ooooh you! You won't get away this time!",
 	}
 	DESCRIBE.POLARWARG = "For how long has this monster been prowling around here?"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -105,12 +105,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		GENERIC = "Why would anyone want to live here of all places?",
 		OPEN = "Do as you wish, but I like my workshop with less... shadows.",
 	}
+	DESCRIBE.POLARBEARHEAD = "Who would make such a thing...? Oh. I think I recall who."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Burnt yet cold.",
 		GENERIC = "Very cliché, as if I lived in a clock tower. No wait... I don't eat clocks!",
 	}
+	DESCRIBE.POLARHEADSTICK = "Soon, it will make sense."
 	DESCRIBE.POLARICE_PLOW = "Come on... they're gonna escape!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Why don't we just fish somewhere less cold?"
+	DESCRIBE.POLARWALRUSHEAD = "What a waste of fine tusks..."
 	DESCRIBE.TOWER_POLAR_FLAG = "All it does is try to escape in the wind."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "I would let it carry dust, or snow, whatever."
 	DESCRIBE.RAINOMETER.POLARSTORM = "This can't be good..."

@@ -18,6 +18,11 @@ SetSharedLootTable("polarflea_mother", {
 	{"polarfleaeggsack", 	0.1},
 })
 
+local spew_prefabs = {
+	polarflea = 0.9,
+	winter_ornament_boss_polarflea = IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 0.1 or 0,
+}
+
 local function KeepTargetFn(inst, target)
 	return target and inst:IsNear(target, 30)
 end
@@ -108,6 +113,8 @@ local function fn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst.spew_prefabs = spew_prefabs
 	
 	inst:AddComponent("combat")
 	inst.components.combat.hiteffectsymbol = "body_upper"

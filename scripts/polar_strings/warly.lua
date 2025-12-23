@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		HOSTILE = "Ah, are we overthrowing the monarchy now?",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Guess I'll find eggs someplace else..."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Not too happy to make your acquaintance, madame."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It lost its garnish.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		FOLLOWER = "It got quite the insatiable appetite.",
 		GENERIC = "We're both eager to find out how the other taste like\n... or is it just me?",
 	}
+	DESCRIBE.POLARBEARKING = "They say he eat meat without chewing... I think I'm about to faint."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Oh non!",
 		HELD_INV = "Bon appétit, and adieu!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		GENERIC = "A cunning little renard.",
 	}
 	DESCRIBE.POLARWARG = "I'm all shivery, and it's not just the cold..."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		GENERIC = "Must be a veritable boucherie inside...",
 		OPEN = "You can have what I don't plan on cooking.",
 	}
+	DESCRIBE.POLARBEARHEAD = "What a waste of -- I mean what a shame, a real shame."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Thought I smelled sardines.",
 		GENERIC = "Would that really withstand a snowstorm?",
 	}
+	DESCRIBE.POLARHEADSTICK = "This seat is reserved."
 	DESCRIBE.POLARICE_PLOW = "I hope I brought enough bait..."
 	DESCRIBE.POLARICE_PLOW_ITEM = "A day of ice fishing sounds tempting!"
+	DESCRIBE.POLARWALRUSHEAD = "He doesn't move as fast as I'd think anymore."
 	DESCRIBE.TOWER_POLAR_FLAG = "Watching it float like that makes me hungry... what?"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "I suppose they won't return to pick it up?"
 	DESCRIBE.RAINOMETER.POLARSTORM = "Something's cooking..."

@@ -41,18 +41,28 @@ local function SpewBaby(inst, dir)
 	local oz = -math.sin(rad) * (0.5 + math.random() * 0.5)
 	local pt = Vector3(x + ox, y + 1.5, z + oz)
 	
-	local baby = SpawnPrefab("polarflea")
-	baby.Transform:SetPosition(pt:Get())
-	baby.Transform:SetRotation(baby_rot)
-	baby.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
-	baby.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
-	baby.babyflea = true
+	local baby = SpawnPrefab(weighted_random_choice(inst.spew_prefabs))
 	
-	if baby.components.follower then
-		baby.components.follower:SetLeader(inst)
+	if baby == nil then
+		return
+	elseif baby.components.combat then
+		baby.Transform:SetPosition(pt:Get())
+		baby.Transform:SetRotation(baby_rot)
+		baby.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)
+		baby.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
+		baby.babyflea = true
+		
+		if baby.components.follower then
+			baby.components.follower:SetLeader(inst)
+		end
+		
+		baby:PushEvent("fleahostkick", {host = inst, pt = pt})
+	elseif baby.components.inventoryitem then
+		local speed = math.random() * 4 + 2
+		
+		baby.Transform:SetPosition(pt:Get())
+		baby.Physics:SetVel(speed * math.cos(rad), 2 + math.random() * 2, speed * -math.sin(rad))
 	end
-	
-	baby:PushEvent("fleahostkick", {host = inst, pt = pt})
 	
 	return baby
 end

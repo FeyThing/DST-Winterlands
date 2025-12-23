@@ -14,7 +14,13 @@ local function IsInSnow(owner)
 	local tile, tileinfo = owner:GetCurrentTileType()
 	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15))
 	
-	return in_snow
+	if in_snow then
+		return true, false
+	end
+	
+	local snowball = owner.components.inventory and owner.components.inventory:FindItem(function(item) return IsWintersFistsSnowball(item) end)
+	
+	return snowball ~= nil, snowball
 end
 
 local function OnEquip(inst, owner)
@@ -117,6 +123,7 @@ local function OnUse(inst, target, pos, caster)
 		blocker.Transform:SetPosition(cx, cy, cz)
 		blocker:SetSnowBlockRange(3)
 	elseif pos and caster then
+		local in_snow, snowball_used = IsInSnow(caster)
 		local angle = caster.Transform:GetRotation() * DEGREES
 		--local offset_x = math.cos(angle)
 		--local offset_z = -math.sin(angle)
@@ -138,6 +145,14 @@ local function OnUse(inst, target, pos, caster)
 		end
 		
 		inst._spelltype:set((spelltype >= TUNING.WINTERS_FISTS_SPELL_TYPES and 0 or spelltype) + 1)
+		
+		if snowball_used then
+			if snowball_used.components.stackable then
+				snowball_used.components.stackable:Get():Remove()
+			else
+				snowball_used:Remove()
+			end
+		end
 	end
 	
 	if inst.components.rechargeable and usesmash then

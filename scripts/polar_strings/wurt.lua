@@ -59,6 +59,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	}
 	DESCRIBE.GIRL_WALRUS = "Hee-hee. Weird family just got weirder."
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Is protecting Snowfolk, florp!"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Me want horn bit to grow back too, florp.",
 		ANTLER = "Would like have big horns like this...",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		FOLLOWER = "Me n-not scared of you!",
 		GENERIC = "Glorp...! Is Mermfolk eater...",
 	}
+	DESCRIBE.POLARBEARKING = "Mermfolk say he is both monster under bed and in closet. G-glup."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Glurgh, it everywhere!",
 		HELD_INV = "Go away! Go awaaaay!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "It like swimming in big sea of snow, flort.",
 	}
 	DESCRIBE.POLARWARG = "Wanna help kill Bearfolk?"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "Probably... safe.",
 		OPEN = "Hello? You not Bearfolk?",
 	}
+	DESCRIBE.POLARBEARHEAD = "Ha ha!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Yesss, one less!",
 		GENERIC = "Not wanna see what in here...",
 	}
+	DESCRIBE.POLARHEADSTICK = "Ha-- oh. Not yet, florp."
 	DESCRIBE.POLARICE_PLOW = "Can't wait! Seriously, florp."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Want to see the deep fishes!"
+	DESCRIBE.POLARWALRUSHEAD = "Ha ha!"
 	DESCRIBE.TOWER_POLAR_FLAG = "Hee-hee, is little flying fish."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Is emblem of Mermfolk kingdom now, flort."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Something coming but it not rain..."

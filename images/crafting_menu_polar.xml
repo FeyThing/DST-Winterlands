@@ -2,8 +2,9 @@
 	<Texture filename="crafting_menu_polar.tex" />
 	<Elements>
 		<Element name="polaramulet_station.tex" u1="0.001" u2="0.25290625" v2="0.999" v1="0.74709375" />
-		<Element name="station_girl_walrustrader.tex" u1="0.25490625" u2="0.5068125" v2="0.999" v1="0.74709375" />
-		<Element name="station_little_walrustrader.tex" u1="0.5088125" u2="0.76071875" v2="0.999" v1="0.74709375" />
-		<Element name="station_walrustrader.tex" u1="0.001" u2="0.25290625" v2="0.74509375" v1="0.4931875" />
+		<Element name="polarbearking.tex" u1="0.25490625" u2="0.5068125" v2="0.999" v1="0.74709375" />
+		<Element name="station_girl_walrustrader.tex" u1="0.5088125" u2="0.76071875" v2="0.999" v1="0.74709375" />
+		<Element name="station_little_walrustrader.tex" u1="0.001" u2="0.25290625" v2="0.74509375" v1="0.4931875" />
+		<Element name="station_walrustrader.tex" u1="0.25490625" u2="0.5068125" v2="0.74509375" v1="0.4931875" />
 	</Elements>
 </Atlas>

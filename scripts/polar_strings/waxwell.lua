@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		HOSTILE = "Definitively wasn't for his cool temper.",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "I call them \"Pawnguins\"."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Good for him... good for him."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It's hardly intimidating now.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		FOLLOWER = "For the last time. We will NOT go fishing!",
 		GENERIC = "They're an intriguing bunch.",
 	}
+	DESCRIBE.POLARBEARKING = "Never heard about this guy."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Nope! Nope!",
 		HELD_INV = "It'll hurt but it's not like I'm going to keep it as a pet.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "Be on your way.",
 	}
 	DESCRIBE.POLARWARG = "What wonderful adaptation."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "Well, well. Talk about a hospitable-looking dwelling.",
 		OPEN = "...I will pretend I didn't see what's inside.",
 	}
+	DESCRIBE.POLARBEARHEAD = "Some would call it a trophy."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "If only the scorching sun would spare this place.",
 		GENERIC = "I smell something rotten inside. Ugh.",
 	}
+	DESCRIBE.POLARHEADSTICK = "Potential can be so intimidating."
 	DESCRIBE.POLARICE_PLOW = "Better stand back, or you're fish food."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Desperate times call for destructive measures."
+	DESCRIBE.POLARWALRUSHEAD = "In my defense, he did not recognize me."
 	DESCRIBE.TOWER_POLAR_FLAG = "It looked better from a distance."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Good fabric. He knew his fluff."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Here it comes."

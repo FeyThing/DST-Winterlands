@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		HOSTILE = "Angry? Yes",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Got your nose?"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Branches make funny noise"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Lesson learned. Should not fight friend",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		FOLLOWER = "Cold Fuzzy good friend",
 		GENERIC = "Oh. Cold Fuzzy!",
 	}
+	DESCRIBE.POLARBEARKING = "Friends say all snow is Big Fuzzy poop"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Not Bzzter again!",
 		HELD_INV = "Will ouch a lot",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		GENERIC = "Aww! Come, COME!",
 	}
 	DESCRIBE.POLARWARG = "Big chilly woofer"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		GENERIC = "Someone home?",
 		OPEN = "Hello...! Hello?",
 	}
+	DESCRIBE.POLARBEARHEAD = "Why Big Fuzzy so quiet?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Smells fishy",
 		GENERIC = "Glub Glub house",
 	}
+	DESCRIBE.POLARHEADSTICK = "Hmm. Missing a friend"
 	DESCRIBE.POLARICE_PLOW = "Water soon!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Diggy Diggy Hole?"
+	DESCRIBE.POLARWALRUSHEAD = "Grows on branches too?"
 	DESCRIBE.TOWER_POLAR_FLAG = "Ooh. Glub Glub swimming in air?"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Pretty!"
 	DESCRIBE.RAINOMETER.POLARSTORM = "Scary"

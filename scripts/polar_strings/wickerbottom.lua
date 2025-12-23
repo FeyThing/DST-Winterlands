@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		HOSTILE = "Your reign ends here!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "I could use this feather..."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Oh dear, they brought support this time."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Make no mistake, it can still hold a fight.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		FOLLOWER = "Taming a bear is absurd, but it seems he's taken a liking to me.",
 		GENERIC = "A remarkable hunter, thriving in such extreme conditions.",
 	}
+	DESCRIBE.POLARBEARKING = "His legend is filed simultaneously under Mythology, and Personal Memoirs. I'm baffled."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Oh dear...",
 		HELD_INV = "How unmannered, revolting pests!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Vulpes lagopus, frolicking happily in the snow!",
 	}
 	DESCRIBE.POLARWARG = "He will be hard to defeat at field advantage."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Curious location for a commerce... or who knows what.",
 		OPEN = "I still have all my teeth, dear, and I intend to keep them.",
 	}
+	DESCRIBE.POLARBEARHEAD = "This is meant to be taken as a warning."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "It has succumbed to flames.",
 		GENERIC = "A den, though hardly thermally insulated.",
 	}
+	DESCRIBE.POLARHEADSTICK = "This appears to be awaiting a... specimen."
 	DESCRIBE.POLARICE_PLOW = "Seconds away to find out..."
 	DESCRIBE.POLARICE_PLOW_ITEM = "The cold ocean floor is more lively than one might think."
+	DESCRIBE.POLARWALRUSHEAD = "A grim example of failed overconfidence."
 	DESCRIBE.TOWER_POLAR_FLAG = "What an alluring motion!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Unfortunately too large for a bookmark."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Oh dear... this can't be good."
