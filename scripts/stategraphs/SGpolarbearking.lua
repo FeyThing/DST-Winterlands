@@ -171,6 +171,7 @@ local states = {
             TimeEvent(27*FRAMES, function(inst)
                 inst:DoRoar()
                 inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/bearger/taunt")
+				inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/bearger/groundpound")
             end)
         },
 
