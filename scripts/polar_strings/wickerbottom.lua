@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		HOSTILE = "Your reign ends here!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "I could use this feather..."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Oh dear, they brought support this time."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Make no mistake, it can still hold a fight.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		FOLLOWER = "Taming a bear is absurd, but it seems he's taken a liking to me.",
 		GENERIC = "A remarkable hunter, thriving in such extreme conditions.",
 	}
+	DESCRIBE.POLARBEARKING = "His legend is filed simultaneously under Mythology, and Personal Memoirs. I'm baffled."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Oh dear...",
 		HELD_INV = "How unmannered, revolting pests!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Vulpes lagopus, frolicking happily in the snow!",
 	}
 	DESCRIBE.POLARWARG = "He will be hard to defeat at field advantage."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

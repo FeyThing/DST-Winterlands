@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		HOSTILE = "Definitively wasn't for his cool temper.",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "I call them \"Pawnguins\"."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Good for him... good for him."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It's hardly intimidating now.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		FOLLOWER = "For the last time. We will NOT go fishing!",
 		GENERIC = "They're an intriguing bunch.",
 	}
+	DESCRIBE.POLARBEARKING = "Never heard about this guy."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Nope! Nope!",
 		HELD_INV = "It'll hurt but it's not like I'm going to keep it as a pet.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "Be on your way.",
 	}
 	DESCRIBE.POLARWARG = "What wonderful adaptation."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

@@ -52,6 +52,7 @@ PrefabFiles = {
 	"polarmoosehat",
 	"polarstaff",
 	"polarstaff_casts",
+	"polarstickheads",
 	"polartrinkets",
 	"polarwargstooth",
 	"rock_polar",

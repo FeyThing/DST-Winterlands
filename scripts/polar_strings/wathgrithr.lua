@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		HOSTILE = "Surrender while thee can!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "What hurts more between the pecking and the stabbing?"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Ha! Let thy pipes sound my glory as the battle rages!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Bah! 'Thou hath disarmed thyself!",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		FOLLOWER = "A companion from the frost land.",
 		GENERIC = "Stout Norse warriors, feared by all of the fish realm.",
 	}
+	DESCRIBE.POLARBEARKING = "The sagas proclaim thunder did not roar til he showed it how!"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "O hell no!",
 		HELD_INV = "It can be removed, at the cost of my skin.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		GENERIC = "'Twas no chance to escape me!",
 	}
 	DESCRIBE.POLARWARG = "A glorious battle awaits me on this frozen land."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

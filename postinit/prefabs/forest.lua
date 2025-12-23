@@ -58,6 +58,8 @@ for i, v in ipairs(forest_shards) do
 		
 		inst:AddComponent("oceanfish_in_ice_spawner")
 		
+		inst:AddComponent("polarbearkingspawner")
+		
 		inst:AddComponent("polarfleamotherspawner")
 		
 		inst:AddComponent("polarfoxrespawner")

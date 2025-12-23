@@ -132,6 +132,7 @@ local states = {
 				if inst.sg.statemem.spelltype == 4 then
 					inst:PerformBufferedAction()
 					inst.SoundEmitter:PlaySound("dontstarve/common/deathpoof")
+					inst.SoundEmitter:PlaySound("polarsounds/winters_fists/hit_crit")
 				end
 			end),
 			TimeEvent(26 * FRAMES, function(inst)
@@ -175,6 +176,34 @@ local states = {
 				inst.AnimState:PlayAnimation("build_pst")
 				inst.SoundEmitter:KillSound("make")
 			end),
+		},
+	},
+	
+	State{
+		name = "challenge_bearking",
+		tags = {"busy", "canrotate"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("emote_flex")
+			inst.components.locomotor:Stop()
+			
+			inst:SetCameraZoomed(true)
+		end,
+		
+		timeline = {
+			TimeEvent(6 * FRAMES, function(inst)
+				inst:PerformBufferedAction()
+			end),
+		},
+		
+		onexit = function(inst)
+			inst:SetCameraZoomed(false)
+		end,
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end)
 		},
 	},
 	

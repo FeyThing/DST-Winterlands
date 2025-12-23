@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		HOSTILE = "Try and get me!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Peck me not, please!"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "When her pipes skirl, the whole clan unfurls."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Don't worry, my dear, they will grow back.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		FOLLOWER = "We're both hardly bearable companions, hyuyu!",
 		GENERIC = "They seem kind enough to my kind.",
 	}
+	DESCRIBE.POLARBEARKING = "Mortals say he could squeeze my own soul right out, hyuyu...! I-I don't plan to find out."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Oh no! No no no!",
 		HELD_INV = "It's okay. I will consume you in return soon.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		GENERIC = "Catch it before it digs itself six hooves under!",
 	}
 	DESCRIBE.POLARWARG = "It got a chilling howl to freeze the soul!"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

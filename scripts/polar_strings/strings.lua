@@ -62,9 +62,13 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLAR_THRONE = "Naughty Throne"
 	NAMES.POLAR_THRONE_GIFTS = "Gift Pile"
 	NAMES.POLARAMULET_STATION = "\"The Polar Exchange\""
+	NAMES.POLARBEARHEAD = "Polar Bear Head"
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
+	NAMES.POLARHEADSTICK = "Some Sticks So Far"
+	NAMES.POLARHEADSTICK_NAME = "Creature Head"
 	NAMES.POLARICE_PLOW = "Ice Demoleisher"
 	NAMES.POLARICE_PLOW_ITEM = "Ice Demoleisher"
+	NAMES.POLARWALRUSHEAD = "Walrus Head"
 	
 --	Items
 	
@@ -135,6 +139,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.COOKINGRECIPECARD_KOALEFRIED_TRUNK_SUMMER = "Snoot Platter Recipe Card"
 	NAMES.COOKINGRECIPECARD_KOALEFRIED_TRUNK_WINTER = "Winter Snoot Platter Recipe Card"
 	NAMES.SNOWBALL_ITEM_POLAR = "Snowball"
+	NAMES.TRIAL_FIST_FIGHT = "A Bear, Bare Paws"
+	NAMES.TRIAL_ENDURENCE_FIGHT = "Fair Odds"
+	NAMES.TRIAL_ALL_OUT_RUMBLE = "All Out Rumble"
 	
 --	Skins
 	
@@ -144,6 +151,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_NAMES.ms_goldenpickaxe_polar = "Goldenice Pickaxe"
 	STRINGS.SKIN_NAMES.ms_goldenshovel_polar = "Goldenice Shovel"
 	STRINGS.SKIN_NAMES.ms_dragonflychest_polarice = "Dry \"Ice Box\""
+	STRINGS.SKIN_NAMES.ms_polarheadstick_merm = "Merm Head"
+	STRINGS.SKIN_NAMES.ms_polarheadstick_pig = "Pig Head"
+	STRINGS.SKIN_NAMES.ms_polarheadstick_walrus = "Walrus Head"
 	STRINGS.SKIN_NAMES.ms_polarmoosehat_white = "Hornamented Ushanka"
 	STRINGS.SKIN_NAMES.ms_treasurechest_polarice = "\"Ice Box\""
 	
@@ -155,6 +165,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenpickaxe_polar = "Its icy edges hum with subterranean cold..."
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenshovel_polar = "It glints with the pale shimmer of freshly frozen ground."
 	STRINGS.SKIN_DESCRIPTIONS.ms_dragonflychest_polarice = "It's almost like if you had a large Ice Box. Well, the impression strikes out more in the dead of winter."
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_merm = "Give off a fearsome sight and smell to anyone entering your turf."
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_pig = "Let those pigs know this place is no ham-usement park."
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_walrus = "Up this neatly stacked pile of blow dart pipes, their owner rest here."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarmoosehat_white = "Twigs, bones... anything 'fur holding this loose hat together!"
 	STRINGS.SKIN_DESCRIPTIONS.ms_treasurechest_polarice = "Got no gears for the real thing? Afraid you'll have to make do with this."
 	
@@ -273,6 +286,19 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARBEAR_TOOTHTRADE_PST = {"YOU DESERVE IT", "HERE, STILL FRESH", "HERE'S MY OFFER", "YOU CAN HAVE THIS", "TAKE THAT", "TAKE, TAKE!", "A FINE TRADE"}
 	STRINGS.POLARBEAR_TOOTHTRADE_EMPTY = {"OUT OF STOCK", "GOT NOTHING TO TRADE", "YOU TAKE SNOWFLEAS?", "ALL OUT"} -- Unused (for now?)
 	
+	STRINGS.POLARBEARKING_TRIAL_LOST_LEFT = {"NO SLIPPING AWAY!", "OHHH HO, ESCAPING SO SOON?", "WHERE DO YOU THINK YOU'RE GOING?"}
+	STRINGS.POLARBEARKING_TRIAL_LOST_DEAD1 = {"ENOUGH, YOU ARE NOT WORTHY", "SUCH A WASTE OF TIME, LEAVE THIS GROUND!", "WEAKNESS BRINGS NO REFRESHMENT"}
+	STRINGS.POLARBEARKING_TRIAL_LOST_DEAD2 = {"TALK OF AN EMBARRASSMENT", "THEY'LL BURY YOU IN A LUNCHBOX!", "WELP... NEXT CHALLENGER"}
+	STRINGS.POLARBEARKING_TRIAL_LOST_CHEAT = {"CHEATERS WILL FIND NO GLORY HERE", "GRRRRRAW, THE RULES!", "RULES AREN'T MADE TO BE BROKEN", "STOP! THAT'S NOT ALLOWED"}
+	STRINGS.POLARBEARKING_TRIAL_WON1 = {"GRRRRAAAW YEAAAH!", "NOW THAT'S WHAT I LIKE TO SEE!", "OHHH HO! THAT WILL DO!"}
+	STRINGS.POLARBEARKING_TRIAL_WON2 = {"OKAY, OKAY, YOU'VE GOT THIS", "YES! YESSS! THAT'S IT!", "WE HAVE A WINNER, OHHH HO!"}
+	STRINGS.POLARBEARKING_TRIAL_GOT_BUFF = {"I BESTOW YOU MY STRENGTH! WELL, SOME OF IT", "YOU HAVE MY BLESSING, GO WITH IT, SON"}
+	STRINGS.POLARBEARKING_TRIAL_GOT_ITEM = {"ACCEPT THIS GIFT!", "HERE! HAVE THIS ON ME", "THIS CALLS FOR A FINE REWARD"}
+	STRINGS.POLARBEARKING_TRIAL_GOT_LOYALTY = {"YOU FOUGH WELL, WE SHALL REMEMBER YOU, SON", "WE WILL SING OF YOUR VICTORY FOR NIGHTS!"}
+	STRINGS.POLARBEARKING_TRIAL_START1 = {"STRENGTH ALONE ENTERS THIS RING"}
+	STRINGS.POLARBEARKING_TRIAL_START2 = {"BREAK A LEG, OHHH HO!"}
+	STRINGS.POLARBEARKING_TRIAL_START3 = {"LETS GET READY TO RRRRRRUMBLEEEEEE!!!"}
+	
 	STRINGS.POLARAMULET_STATION_WAITING = {
 		"...",
 		"...got the... stuff?",
@@ -338,6 +364,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_1 = "Snowball!"
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_2 = "Bigball!!"
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_3 = "Hugeball!!!"
+	STRINGS.ACTIONS.OPEN_CRAFTING.URSATALK = "Talk to"
 	STRINGS.ACTIONS.WALRUS_BEARTRAP_REMOVE = {
 		GENERIC = "Struggle",
 		HELP_OTHER = "Rescue",
@@ -359,7 +386,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		VAR14 = "Back! Back, I say!",
 		VAR15 = "Fool...",
 	}
-
+	
 	--  Polar Calendar
 	STRINGS.POLAR_CALENDAR = {
 		DAY1_TOOLTIP = {
@@ -484,6 +511,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm... also good to make others think you're an actual bear."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARKING = "Take part in the chieftain trials of raw strength to grow your esteem among all of Bearfolk!\n\nThese challenges require to bring a certain amount of specific creatures around Ursa Major, and fight them honorably (that means follow whatever rules may apply)."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "Awful little buggers found everywhere on the Winterlands!\nThey hide in tall grass, on mammals... have you looked inside your hairs recently?\n\nWhile painful to remove from their host, their fur will provide a little warmth."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA_SACK = "A 10 slots cozy container loved by Snowfleas!\nThose inside will jump in and out of it without biting, and they will come out to defend their new home when threatened.\n\nClosing it pauses all Snowfleas interactions."
@@ -529,12 +557,16 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
 	RECIPE_DESC.POLARCROWNHAT = "Rule over the blizzard!"
 	RECIPE_DESC.POLARFLEA_SACK = "Carry a ton of crawly friends!"
+	RECIPE_DESC.POLARHEADSTICK = "Inflict fear to however you fancy."
 	RECIPE_DESC.POLARICE_PLOW_ITEM = "Dig a hole and sea's what's under."
 	RECIPE_DESC.POLARICEPACK = "Make things in your pockets or storages a little cooler."
 	RECIPE_DESC.POLARICESTAFF = "Freeze all enemies in your track!"
 	RECIPE_DESC.SHARDS_BLUEGEM = "Shard work pays off."
 	RECIPE_DESC.SNOWBALL_ITEM_POLAR = "Portable snow?\nHow convenient!"
 	RECIPE_DESC.TRAP_POLARTEETH = "Pops up and freezes whoever steps on it."
+	RECIPE_DESC.TRIAL_FIST_FIGHT = "Face the bear as bears do. Tools or teeth are forbidden."
+	RECIPE_DESC.TRIAL_ENDURENCE_FIGHT = "They say two is better than you, show them wrong."
+	RECIPE_DESC.TRIAL_ALL_OUT_RUMBLE = "In short, victory is when nothing else stands."
 	RECIPE_DESC.TURF_POLAR_CAVES = "The chilly stone of the chillest cave."
 	RECIPE_DESC.TURF_POLAR_DRYICE = "A road sure to keep your toes frosty."
 	RECIPE_DESC.WALL_POLAR_ITEM = "The best defence is the coolest one."
@@ -564,9 +596,13 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.WINTERCOOKING_POLARCRABLEGS = "Crack into coastal cuisine."
 	RECIPE_DESC.WX78MODULE_NAUGHTY = "Makes you extra saucy."
 	
+	STRINGS.UI.CRAFTING.RECIPEACTION.POLAREXCHANCESHOP = "Trade"
+	STRINGS.UI.CRAFTING.RECIPEACTION.URSATRIALS = "Go!"
+	STRINGS.UI.CRAFTING.RECIPEACTION.WALRUSSHOP = "Trade"
 	STRINGS.UI.CRAFTING.NEEDSARCTIC_FOOL = "Available during Arctic Fools!"
 	STRINGS.UI.CRAFTING.NEEDSPOLARAMULET_STATION = "Unlock by trading with some shady individual..."
 	STRINGS.UI.CRAFTING.NEEDSWANDERINGWALRUSSHOP = "Get along Walruses to make this trade!"
+	STRINGS.UI.CRAFTING.NEEDSTECH.POLARBEAR = "Get Polar Bears nearby!"
 	STRINGS.UI.CRAFTING.NEEDSTECH.POLARSNOW = "There's not enough snow!"
 	STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION = "\"The Polar Exchange\""
 	STRINGS.UI.CRAFTING_STATION_FILTERS.WANDERINGWALRUSSHOP = "MacTusk N' Son"

@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		HOSTILE = "Down with the monarchy!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "These birds are up to something..."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "I don't like the sound of that..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Hmph, amateur. Lemme show you how it's done.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		FOLLOWER = "Always down for a fishing trip, eh?",
 		GENERIC = "Sounds like someone got a little cold.",
 	}
+	DESCRIBE.POLARBEARKING = "They say trees fall when he looks their way. Eh. Sure."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Yuck!",
 		HELD_INV = "Get outta my hairs and feathers!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "A rare sight even up in the North.",
 	}
 	DESCRIBE.POLARWARG = "It could pull a sled on its own."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

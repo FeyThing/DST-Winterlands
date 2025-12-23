@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		HOSTILE = "Muscles versus flippers!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Someone has to defend the weak."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Missus got mustache too? Wolfgang need moment to think..."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Is sobbing little ice cubes.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		FOLLOWER = "Wolfgang enjoys arm wrestling with friend.",
 		GENERIC = "I respect bear man!",
 	}
+	DESCRIBE.POLARBEARKING = "Is true that bear man wrestled two vargs at once... with one hand?"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Eep!",
 		HELD_INV = "Will not let go without a fight.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Ha! Is puny critter!",
 	}
 	DESCRIBE.POLARWARG = "Puppy got new coat?"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

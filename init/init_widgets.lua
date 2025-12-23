@@ -306,6 +306,68 @@ AddClassPostConstruct("screens/playerinfopopupscreen", function(self, owner, pla
 	end
 end)
 
+--	Show mob quantities with Ursa Trials
+
+local POLARBEAR_TRIALS_QUANTITY = nil
+
+local function GetPolarBears()
+	local x, y, z = ThePlayer.Transform:GetWorldPosition()
+	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS, {"bear"}, {"bear_major"})
+	local angries = 0
+	
+	for _, bear in ipairs(bears) do
+		if bear.enraged then -- TODO: Not networked btw!
+			angries = angries + 1
+		end
+	end
+	
+	return #bears - angries
+end
+
+local IngredientUI = require("widgets/ingredientui")
+	
+	local OldIngredientUI_ctor = IngredientUI._ctor
+	function IngredientUI:_ctor(atlas, image, quantity, on_hand, has_enough, name, owner, recipe_type, quant_text_scale, ingredient_recipe)
+		if recipe_type == "polarbear_material" and quantity == nil and ThePlayer then
+			on_hand = GetPolarBears()
+			quantity = POLARBEAR_TRIALS_QUANTITY or 1
+		end
+		
+		return OldIngredientUI_ctor(self, atlas, image, quantity, on_hand, has_enough, name, owner, recipe_type, quant_text_scale, ingredient_recipe)
+	end
+	
+local CraftingMenuIngredients = require("widgets/redux/craftingmenu_ingredients")
+	
+	local OldSetRecipe = CraftingMenuIngredients.SetRecipe
+	function CraftingMenuIngredients:SetRecipe(recipe, ...)
+		if recipe then
+			for i, ing in ipairs(recipe.tech_ingredients) do
+				if ing.type == "polarbear_material" then
+					POLARBEAR_TRIALS_QUANTITY = ing.amount or 1
+					break
+				end
+			end
+		end
+		
+		OldSetRecipe(self, recipe, ...)
+	end
+	
+local RecipePopup = require("widgets/recipepopup")
+	
+	local OldSetRecipe = CraftingMenuIngredients.SetRecipe
+	function CraftingMenuIngredients:SetRecipe(recipe, ...)
+		if recipe then
+			for i, ing in ipairs(recipe.tech_ingredients) do
+				if ing.type == "polarbear_material" then
+					POLARBEAR_TRIALS_QUANTITY = ing.amount or 1
+					break
+				end
+			end
+		end
+		
+		OldSetRecipe(self, recipe, ...)
+	end
+	
 --	WX-78 Circuits
 
 AddClassPostConstruct("widgets/upgrademodulesdisplay", function(self)
@@ -350,19 +412,19 @@ PauseScreen.BuildMenu = function(self, ...)
 	table.remove(self.menu.items, #self.menu.items) -- Repositioning the button
 	table.insert(self.menu.items, 6, calendar_btn)
 
-    local pos = Vector3(0, 0, 0)
+	local pos = Vector3(0, 0, 0)
 	for _, item in ipairs(self.menu.items) do
 		item:SetPosition(pos)
 		pos = pos + Vector3(0, self.menu.offset, 0)
 	end
 
-    local button_h = 50
+	local button_h = 50
 	local buttons = self.menu.items
 	local height = button_h * #buttons + 30	-- consoles are shorter since they don't have the '
-    height = math.clamp(height, 90, 500)
+	height = math.clamp(height, 90, 500)
 	self.bg:SetSize(190, height)
 	self.bg.body:SetRegionSize(190, height)
 
 	local y_pos = (button_h * (#buttons - 1) / 2)
-    self.menu:SetPosition(0, y_pos, 0)
+	self.menu:SetPosition(0, y_pos, 0)
 end

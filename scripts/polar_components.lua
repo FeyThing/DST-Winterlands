@@ -204,6 +204,10 @@ function HasPolarSnowImmunity(inst)
 	return false
 end
 
+function IsWintersFistsSnowball(item)
+	return item.prefab == "snowball_item" -- I'm tired atm but later we should add other mod snowballs
+end
+
 local TIMEFREEZE_DRAINS = TUNING.POCKERWATCH_BUFF_DRAINS
 
 function WandaTimeFreezeDrain(inst, stat, delta, old, max, min)

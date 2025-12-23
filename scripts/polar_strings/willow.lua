@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		HOSTILE = "He's losing his cool!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Woah man, chill down!"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Her mustache's fake, right? It HAS to be."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Pfft, look who's extra stupid now.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		FOLLOWER = "Now, you bite for me!",
 		GENERIC = "Oh you look very flammable.",
 	}
+	DESCRIBE.POLARBEARKING = "I don't believe the stories... buuut, I don't wanna be on the next one."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Crap-crap!",
 		HELD_INV = "Ughhh! Get it off!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		GENERIC = "Hey there little guy!",
 	}
 	DESCRIBE.POLARWARG = "Get your fleas away from me."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

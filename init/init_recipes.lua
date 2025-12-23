@@ -34,9 +34,7 @@ end
 local POLAR_CRAFTING_ATLAS = "images/crafting_menu_polar.xml"
 
 PROTOTYPER_DEFS["polaramulet_station"] = {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "polaramulet_station.tex", action_str = "TRADE", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.POLARAMULET_STATION}
-
-PROTOTYPER_DEFS["polarbearking"] = {icon_atlas = "images/polarimages.xml", icon_image = "ms_polarmoosehat_white.tex", action_str = "TALKTO", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.POLARBEARKING_TRIALS}
-
+PROTOTYPER_DEFS["polarbearking"] = {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "polarbearking.tex", action_str = "URSATALK", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.POLARBEARKING_TRIALS}
 PROTOTYPER_DEFS["walrus"] = PROTOTYPER_DEFS["walrus"] or {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "station_walrustrader.tex", action_str = "TRADE", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.WANDERINGWALRUSSHOP}
 PROTOTYPER_DEFS["girl_walrus"] = {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "station_girl_walrustrader.tex", action_str = "TRADE", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.WANDERINGWALRUSSHOP}
 PROTOTYPER_DEFS["little_walrus"] = PROTOTYPER_DEFS["little_walrus"] or {icon_atlas = POLAR_CRAFTING_ATLAS, icon_image = "station_little_walrustrader.tex", action_str = "TRADE", is_crafting_station = true, filter_text = STRINGS.UI.CRAFTING_STATION_FILTERS.WANDERINGWALRUSSHOP}
@@ -83,11 +81,14 @@ PolarRecipe("boat_ice_item", 		{Ingredient("polar_dryice", 1)}, 											TECH.
 end
 
 --	Decor / Structure
-PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 2), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 									{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})
-PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 	{"STRUCTURES"}, {"rabbithouse"})
-PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 						{"DECOR"}, {"turf_underrock"})
-PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 						{"DECOR"}, {"turf_dragonfly"})
-PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 						{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
+PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 2), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 																							{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})
+PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 															{"STRUCTURES"}, {"rabbithouse"})
+PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_underrock"})
+PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 																				{"DECOR"}, {"turf_dragonfly"})
+PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 																				{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
+if HasPassedCalendarDay(23) then
+PolarRecipe("polarheadstick", 		{Ingredient("twigs", 4)}, 																	TECH.LOST, 				{placer = "polarheadstick_placer", min_spacing = 0.9, nameoverride = "polarheadstick_name"}, 	{"DECOR"}, {"sewing_mannequin"})
+end
 
 PolarRecipe("chesspiece_emperor_penguin_fruity_builder", 	{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_fruity.tex"}, 	{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})
 PolarRecipe("chesspiece_emperor_penguin_juggle_builder", 	{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_juggle.tex"}, 	{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})
@@ -111,23 +112,20 @@ PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("char
 
 --	Shack
 
-PolarRecipe("polaramulet_builder", 			{Ingredient("rope", 3)}, 		TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
-PolarRecipe("polar_fishingrod",				{Ingredient("smallmeat", 2)}, 								TECH.POLARAMULET_STATION, 	{product = "fishingrod", nounlock = true, image = "fishingrod.tex", actionstr = "TRADE", sg_state = "give"}, 					{"CRAFTING_STATION"})
-PolarRecipe("polar_oceanfishingrod",		{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 		TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", nounlock = true, image = "oceanfishingrod.tex", actionstr = "TRADE", sg_state = "give"}, 			{"CRAFTING_STATION"})
+PolarRecipe("polaramulet_builder", 			{Ingredient("rope", 3)}, 									TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("polar_fishingrod",				{Ingredient("smallmeat", 2)}, 								TECH.POLARAMULET_STATION, 	{product = "fishingrod", nounlock = true, image = "fishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 					{"CRAFTING_STATION"})
+PolarRecipe("polar_oceanfishingrod",		{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 		TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", nounlock = true, image = "oceanfishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 		{"CRAFTING_STATION"})
 if HasPassedCalendarDay(21) then
-PolarRecipe("winters_fists_blueprint", 		{Ingredient("papyrus", 1), Ingredient("emperor_egg", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, image = "blueprint_rare.tex", actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
+PolarRecipe("winters_fists_blueprint", 		{Ingredient("papyrus", 1), Ingredient("emperor_egg", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, image = "blueprint_rare.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
 end
 
-PolarRecipe("polarcrownhat", 				{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
-PolarRecipe("frostwalkeramulet", 			{Ingredient("bluegem_shards", 3), Ingredient("bluegem_overcharged", 1)}, 									TECH.LOST, 					{nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"blueamulet"})
-PolarRecipe("iciclestaff", 					{Ingredient("polar_dryice", 1), Ingredient("bluegem_overcharged", 1), Ingredient("deerclops_eyeball", 1)}, 	TECH.LOST, 					{nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
-PolarRecipe("polaricestaff", 				{Ingredient("antler_tree_stick", 1), Ingredient("bluegem_overcharged", 1)}, 								TECH.LOST, 					{nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
-PolarRecipe("polar_lavae_tooth", 			{Ingredient("lavae_egg", 1), Ingredient("redgem", 1)}, 														TECH.LOST, 					{product = "lavae_tooth", description = "polar_lavae_tooth", nounlock = true, actionstr = "TRADE", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})
+PolarRecipe("polarcrownhat", 				{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
+PolarRecipe("frostwalkeramulet", 			{Ingredient("bluegem_shards", 3), Ingredient("bluegem_overcharged", 1)}, 									TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"blueamulet"})
+PolarRecipe("iciclestaff", 					{Ingredient("polar_dryice", 1), Ingredient("bluegem_overcharged", 1), Ingredient("deerclops_eyeball", 1)}, 	TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
+PolarRecipe("polaricestaff", 				{Ingredient("antler_tree_stick", 1), Ingredient("bluegem_overcharged", 1)}, 								TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"icestaff"})
+PolarRecipe("polar_lavae_tooth", 			{Ingredient("lavae_egg", 1), Ingredient("redgem", 1)}, 														TECH.LOST, 					{product = "lavae_tooth", description = "polar_lavae_tooth", nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})
 
-PolarRecipe("bluegem_overcharged", 			{Ingredient("moose_polar_antler", 1), Ingredient("bluegem", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
-PolarRecipe("trial_fist_fight", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 1)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
-PolarRecipe("trial_endurence_fight", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 2)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
-PolarRecipe("trial_all_out_rumble", 				{Ingredient(TECH_INGREDIENT.POLARBEAR, 5)}, 											TECH.POLARBEARKING_TRIALS, 					{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
+PolarRecipe("bluegem_overcharged", 			{Ingredient("moose_polar_antler", 1), Ingredient("bluegem", 1)}, 											TECH.POLARAMULET_STATION, 	{nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 
 for phase, phase_data in pairs(POLARAMULET_STATION_MOONPHASE_TRADEDATA) do
 	for i, recipe_data in ipairs(phase_data) do
@@ -135,6 +133,12 @@ for phase, phase_data in pairs(POLARAMULET_STATION_MOONPHASE_TRADEDATA) do
 		PolarRecipe(recipe_name, recipe_data.ingredients, TECH.LOST, {product = recipe_data.product, description = recipe_data.description or "polar_trade_"..i, numtogive = recipe_data.numtogive, limitedamount = true, nounlock = true, sg_state = "give", nameoverride = recipe_data.nameoverride, image = recipe_data.image, hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
 	end
 end
+
+--	Ursa Major
+
+PolarRecipe("trial_fist_fight", 			{Ingredient(TECH_INGREDIENT.POLARBEAR, 1)}, 	TECH.POLARBEARKING_TRIALS, 	{nounlock = true, actionstr = "URSATRIALS", sg_state = "challenge_bearking"}, 	{"CRAFTING_STATION"})
+PolarRecipe("trial_endurence_fight", 		{Ingredient(TECH_INGREDIENT.POLARBEAR, 2)}, 	TECH.POLARBEARKING_TRIALS, 	{nounlock = true, actionstr = "URSATRIALS", sg_state = "challenge_bearking"}, 	{"CRAFTING_STATION"})
+PolarRecipe("trial_all_out_rumble", 		{Ingredient(TECH_INGREDIENT.POLARBEAR, 7)}, 	TECH.POLARBEARKING_TRIALS, 	{nounlock = true, actionstr = "URSATRIALS", sg_state = "challenge_bearking"}, 	{"CRAFTING_STATION"})
 
 --	Walrus
 
@@ -151,7 +155,7 @@ for walrus, walrus_data in pairs(POLARWALRUS_TRADEDATA) do
 			STRINGS.NAMES[string.upper(recipe_name)] = string.format("%s x%d", base_name, recipe_data.numtogive)
 		end
 		
-		PolarRecipe(recipe_name, recipe_data.ingredients, TECH.LOST, {product = recipe_data.product, description = recipe_data.description or "walrustrade_"..recipe_data.product, numtogive = recipe_data.numtogive, limitedamount = true, nounlock = true, actionstr = "TRADE", sg_state = "give", nameoverride = recipe_data.nameoverride, image = recipe_data.image, hint_msg = "NEEDSWANDERINGWALRUSSHOP"}, {"CRAFTING_STATION"})
+		PolarRecipe(recipe_name, recipe_data.ingredients, TECH.LOST, {product = recipe_data.product, description = recipe_data.description or "walrustrade_"..recipe_data.product, numtogive = recipe_data.numtogive, limitedamount = true, nounlock = true, actionstr = "WALRUSSHOP", sg_state = "give", nameoverride = recipe_data.nameoverride, image = recipe_data.image, hint_msg = "NEEDSWANDERINGWALRUSSHOP"}, {"CRAFTING_STATION"})
 	end
 end
 
@@ -159,9 +163,18 @@ end
 
 local AddDeconstructRecipe = ENV.AddDeconstructRecipe
 
-AddDeconstructRecipe("emperor_penguinhat", 	{Ingredient("fishmeat_small", 4), Ingredient("ice", 20)})
-AddDeconstructRecipe("compass_polar", 		{Ingredient("compass", 1), Ingredient("ice", 3)})
-AddDeconstructRecipe("polar_brazier", 		{Ingredient("boneshard", 3), Ingredient("cutstone", 1), Ingredient("rope", 1)})
-AddDeconstructRecipe("polaramulet", 		{Ingredient("rope", 3), Ingredient("nightmarefuel", 1)})
-AddDeconstructRecipe("polarmoosehat", 		{Ingredient("cutgrass", 6), Ingredient("boneshard", 4), Ingredient("polarflea", 2)})
-AddDeconstructRecipe("tower_polar_flag", 	{Ingredient("tower_polar_flag_item", 1)})
+AddDeconstructRecipe("compass_polar", 			{Ingredient("compass", 1), Ingredient("ice", 3)})
+AddDeconstructRecipe("emperor_penguinhat", 		{Ingredient("fishmeat_small", 4), Ingredient("ice", 20)})
+AddDeconstructRecipe("polar_brazier", 			{Ingredient("boneshard", 3), Ingredient("cutstone", 1), Ingredient("rope", 1)})
+AddDeconstructRecipe("polaramulet", 			{Ingredient("rope", 3), Ingredient("nightmarefuel", 1)})
+AddDeconstructRecipe("polarbearhead", 			{Ingredient("polarbearfur", 4), Ingredient("twigs", 4)})
+AddDeconstructRecipe("polarmoosehat", 			{Ingredient("cutgrass", 6), Ingredient("boneshard", 4), Ingredient("polarflea", 2)})
+AddDeconstructRecipe("polarwalrushead", 		{Ingredient("walrus_tusk", 2), Ingredient("walrushat", 1), Ingredient("twigs", 4)})
+AddDeconstructRecipe("tower_polar_flag", 		{Ingredient("tower_polar_flag_item", 1)})
+
+--	[ 	Construction Plans	]	--
+
+CONSTRUCTION_PLANS["polarheadstick"] = 			{Ingredient("polarbearfur", 2), Ingredient("meat", 1)}
+CONSTRUCTION_PLANS["polarheadstick_merm"] = 	{Ingredient("froglegs", 2), Ingredient("pondfish", 1)}
+CONSTRUCTION_PLANS["polarheadstick_pig"] = 		{Ingredient("pigskin", 2), Ingredient("meat", 1)}
+CONSTRUCTION_PLANS["polarheadstick_walrus"] = 	{Ingredient("walrus_tusk", 2), Ingredient("walrushat", 1)}

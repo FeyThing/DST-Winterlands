@@ -282,6 +282,7 @@ local function fn()
 	inst.AnimState:SetBuild("polarbearhouse")
 	inst.AnimState:PlayAnimation("idle", true)
 	
+	inst:AddTag("bearhouse")
 	inst:AddTag("structure")
 	inst:AddTag("snowblocker")
 	

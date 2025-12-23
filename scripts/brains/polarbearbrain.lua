@@ -516,18 +516,15 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return self.inst.components.timer and self.inst.components.timer:TimerExists("arcticfooled_cooldown") end, "Avoid Pranked",
 			RunAway(self.inst, "arcticfooled", 4, 10, nil, nil, nil, true)),
 		
-		-- Bored nodes -- LukaS: THIS BREAKS WANDERING, TODO FIX!
-					   --        for some reason this completely breaks subsequent nodes and stops
-					   --        bears without homes from wandering, also they spam their FaceEntity lines each brain tick
-		IfNode(function() return not self.inst.components.locomotor.dest end, "Bored",
-			PriorityNode({
-				ChattyNode(self.inst, "POLARBEAR_STICKARCTICFISH",
-					DoAction(self.inst, StickArcticFoolFishAction, "Pranking Players")),
-				ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
-					DoAction(self.inst, AddFuelAction, "Add Fuel")),
-				ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
-					DoAction(self.inst, DoPlowingAction, "Plow Snow"), 5, 10, 5, 5),
-			}, 0.5)),
+		-- Bored nodes
+		PriorityNode({
+			ChattyNode(self.inst, "POLARBEAR_STICKARCTICFISH",
+				DoAction(self.inst, StickArcticFoolFishAction, "Pranking Players")),
+			ChattyNode(self.inst, "POLARBEAR_FUELBRAZIER",
+				DoAction(self.inst, AddFuelAction, "Add Fuel")),
+			ChattyNode(self.inst, "POLARBEAR_PLOWSNOW",
+				DoAction(self.inst, DoPlowingAction, "Plow Snow"), 5, 10, 5, 5),
+		}, 0.5),
 		
 		-- Common nodes
 		ChattyNode(self.inst, "POLARBEAR_GOHOME",

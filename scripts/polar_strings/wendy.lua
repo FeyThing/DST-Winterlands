@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		HOSTILE = "Are you worthy, governor?",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "To be pecked by flint sounds... unpleasant."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Her song is bewitching... but oh, so completely off-key!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Heehee...",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		FOLLOWER = "It's my stuffy now.",
 		GENERIC = "A predator born of the ice.",
 	}
+	DESCRIBE.POLARBEARKING = "Legends say he cheated death, by the rules."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Shouldn't we be running?",
 		HELD_INV = "Um, excuse you?",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "A sly shade in the snow.",
 	}
 	DESCRIBE.POLARWARG = "The champion of the tundra."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		HOSTILE = "Angry? Yes",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Got your nose?"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Branches make funny noise"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Lesson learned. Should not fight friend",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		FOLLOWER = "Cold Fuzzy good friend",
 		GENERIC = "Oh. Cold Fuzzy!",
 	}
+	DESCRIBE.POLARBEARKING = "Friends say all snow is Big Fuzzy poop"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Not Bzzter again!",
 		HELD_INV = "Will ouch a lot",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		GENERIC = "Aww! Come, COME!",
 	}
 	DESCRIBE.POLARWARG = "Big chilly woofer"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

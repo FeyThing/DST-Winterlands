@@ -60,6 +60,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		HOSTILE = "I'd rather die fighting than end up in jail!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "You definitively can't see much in this."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Fake 'stache or not, she's a real problem."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Well. Does that mean you won?",
@@ -73,6 +74,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		FOLLOWER = "Is the paint permanent? Or how long does it take you daily?",
 		GENERIC = "I'm just passing through, don't mind me.",
 	}
+	DESCRIBE.POLARBEARKING = "I've heard stories he beat down a Deerclops before it spawned..."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Ack! Begone!",
 		HELD_INV = "It hurts, but removing it would hurt more.",
@@ -85,8 +87,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		GENERIC = "Ooooh you! You won't get away this time!",
 	}
 	DESCRIBE.POLARWARG = "For how long has this monster been prowling around here?"
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

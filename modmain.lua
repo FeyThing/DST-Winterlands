@@ -72,6 +72,7 @@ local prefabs = {
 	"shadowworker",
 	"shovels",
 	"snowball_item",
+	"stickheads",
 	"tree_rock_data",
 	"trinkets",
 	"walrus",

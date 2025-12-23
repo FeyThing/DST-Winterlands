@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		HOSTILE = "Yeow, he's got moves!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "It pecks, it stabs. But worse: its feather tickles!"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "She's givin' me the look like I'm tonight's dinner."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "Ran headfirst into trouble, huh?",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		FOLLOWER = "So, uh, what's your favorite fish?",
 		GENERIC = "Don't ya give me the cold shoulders.",
 	}
+	DESCRIBE.POLARBEARKING = "Word is he dug that entire ice cave himself. But I ain't buyin' it."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "I know better than getting closer from those things.",
 		HELD_INV = "Yeesh! Go away!",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		GENERIC = "Get over here, you little rascal!",
 	}
 	DESCRIBE.POLARWARG = "I've got no doubt about his minty breath."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

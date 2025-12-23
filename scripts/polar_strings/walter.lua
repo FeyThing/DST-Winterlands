@@ -58,6 +58,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		HOSTILE = "Uh oh... I think we just started a war, Woby.",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Think a whole regiment could take down a Deerclops?"
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Hey, no littering!"
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
@@ -71,6 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		FOLLOWER = "You're easier to tame than they said on that radio show.",
 		GENERIC = "I was right. Those three dark dots were, in fact, a polar bear."
 	}
+	DESCRIBE.POLARBEARKING = "They say he sold the bear fur before hunting it. Woah... can you believe that?!"
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Look at this-- uh, THESE cool bugs!",
 		HELD_INV = "My handbook says... that it's too late to remove it.",
@@ -83,8 +85,6 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		GENERIC = "Get'em, girl!",
 	}
 	DESCRIBE.POLARWARG = "The poor thing must be lost."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	

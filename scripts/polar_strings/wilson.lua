@@ -63,6 +63,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		HOSTILE = "He's got home-ice advantage!",
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Looks pecky."
+	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "There's fun for the whole family."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It moose be tough to cope with antler loss.",
@@ -76,6 +77,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		FOLLOWER = "That's my bear buddy.",
 		GENERIC = "A fearsome, cuddly looking guy.",
 	}
+	DESCRIBE.POLARBEARKING = "Science says rumors about him."
 	DESCRIBE.POLARFLEA = {
 		GENERIC = "Time to flea!",
 		HELD_INV = "The mandibles are already quite far under my skin.",
@@ -88,8 +90,6 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		GENERIC = "Aha! Come here!",
 	}
 	DESCRIBE.POLARWARG = "The cold must be trivial with fur like his."
-	DESCRIBE.FROSTY_SIMPLE = "Frosty"
-	DESCRIBE.POLARBEARKING = "Hmm, Ursa Major, he is."
 	
 --	Buildings
 	
@@ -108,12 +108,15 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		GENERIC = "It's a mystery how this shack holds together.",
 		OPEN = "Er, my mistake. Wrong address.",
 	}
+	DESCRIBE.POLARBEARHEAD = "I wouldn't mess with a bear, or the one who killed it."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Holy mackerel!",
 		GENERIC = "I doubt it's much warmer in there.",
 	}
+	DESCRIBE.POLARHEADSTICK = "I hope I'm not getting ahead of myself..."
 	DESCRIBE.POLARICE_PLOW = "I'm deeply intrigued about what's under."
 	DESCRIBE.POLARICE_PLOW_ITEM = "The best fish is always the one hiding."
+	DESCRIBE.POLARWALRUSHEAD = "Nothing personal of course. (Ahem!)"
 	DESCRIBE.TOWER_POLAR_FLAG = "Do I need to know where the wind goes?"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Perfect timing, I needed a tissue!"
 	DESCRIBE.RAINOMETER.POLARSTORM = "Must be that climate change thing I've heard about."

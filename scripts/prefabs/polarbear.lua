@@ -41,7 +41,7 @@ local function RetargetFn(inst)
 			return inst.components.combat:CanTarget(guy) and inst.trialdata.players_left[guy]
 		end)
 	end
-
+	
 	return not inst:IsInLimbo() and FindEntity(inst, TUNING.PIG_TARGET_DIST, function(guy)
 		return inst.components.combat:CanTarget(guy)
 				and guy:HasAnyTag(RETARGET_ONEOF_TAGS) or guy:HasAnyTag(POLARBEAR_FISHY_TAGS)
@@ -73,9 +73,13 @@ local function OnAttacked(inst, data)
 		return
 	end
 	
+	if inst.components.timer and inst.components.timer:TimerExists("trial_participator_ending") then
+		return
+	end
+	
 	if data and data.attacker then
 		inst.components.combat:SetTarget(data.attacker)
-
+		
 		if not inst:HasTag("trial_participator") then
 			inst.components.combat:ShareTarget(data.attacker, 30, function(dude)
 				return dude:HasTag("bear") and dude.components.health and not dude.components.health:IsDead()
@@ -256,10 +260,11 @@ local function OnGetItemFromPlayer(inst, giver, item)
 				giver:PushEvent("makefriend")
 				giver.components.leader:AddFollower(inst)
 				
+				local hasboost = giver.components.timer and giver.components.timer:TimerExists("polarbear_loyaltyboost")
 				local loyalty = (item.components.edible:GetHunger() * TUNING.POLARBEAR_LOYALTY_PER_HUNGER) * (item:HasAnyTag(FISHMEAT_TAGS)
 					and TUNING.POLARBEAR_LOYALTY_FISHMEAT_MULT or 1)
 				
-				inst.components.follower:AddLoyaltyTime(loyalty)
+				inst.components.follower:AddLoyaltyTime(loyalty * (hasboost and TUNING.POLARBEAR_LOYALTYBOOST_MULT or 1))
 				inst.components.follower.maxfollowtime = giver:HasTag("polite")
 					and TUNING.POLARBEAR_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS or TUNING.POLARBEAR_LOYALTY_MAXTIME
 			end

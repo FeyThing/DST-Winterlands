@@ -122,4 +122,31 @@ if HasPassedCalendarDay(19) then
 	}))
 end
 
+table.insert(prefs, CreatePrefabSkin("ms_polarheadstick_pig", {
+	assets = {},
+	base_prefab = "polarheadstick",
+	type = "item",
+	build_name_override = "pig_head",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "POLARHEADSTICK", "CRAFTABLE"},
+}))
+
+table.insert(prefs, CreatePrefabSkin("ms_polarheadstick_merm", {
+	assets = {},
+	base_prefab = "polarheadstick",
+	type = "item",
+	build_name_override = "merm_head",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "POLARHEADSTICK", "CRAFTABLE"},
+}))
+
+table.insert(prefs, CreatePrefabSkin("ms_polarheadstick_walrus", {
+	assets = {},
+	base_prefab = "polarheadstick",
+	type = "item",
+	build_name_override = "polarwalrus_head",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "POLARHEADSTICK", "CRAFTABLE"},
+}))
+
 return unpack(prefs)
