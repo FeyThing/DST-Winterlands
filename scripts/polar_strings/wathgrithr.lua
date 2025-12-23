@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		GENERIC = "A most intriguing hall of trade.",
 		OPEN = "Those wares gleam with the promise of battle's aid.",
 	}
+	DESCRIBE.POLARBEARHEAD = "T'was an honorable warrior, but t'wasn't the strongest."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "The house fish has gone into smoke.",
 		GENERIC = "T'would be impressive if 'twas a real catch!",
 	}
+	DESCRIBE.POLARHEADSTICK = "A monument yet unborn."
 	DESCRIBE.POLARICE_PLOW = "We raid!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Something to pierce the fish ramparts."
+	DESCRIBE.POLARWALRUSHEAD = "He hunter's saga ends here, on this stick."
 	DESCRIBE.TOWER_POLAR_FLAG = "Why fly this defunct symbol?"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "The war banner of a fallen enemy."
 	DESCRIBE.RAINOMETER.POLARSTORM = "The Fimbulvetr is nigh!"

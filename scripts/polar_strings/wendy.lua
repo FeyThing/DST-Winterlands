@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "It's away from the others for a reason.",
 		OPEN = "Can you teach me your art?",
 	}
+	DESCRIBE.POLARBEARHEAD = "Promise, I will take better care of the next one."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "No longer a refuge from the biting cold.",
 		GENERIC = "They made their graves here.",
 	}
+	DESCRIBE.POLARHEADSTICK = "It's the anticipation that matters."
 	DESCRIBE.POLARICE_PLOW = "Mind not drowning in deep icy water now."
 	DESCRIBE.POLARICE_PLOW_ITEM = "To find fishes, and maybe more if we're unlucky."
+	DESCRIBE.POLARWALRUSHEAD = "Somewhere, a child cries."
 	DESCRIBE.TOWER_POLAR_FLAG = "It swims in silence, forgotten by all."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Oh, I stepped on that poor flag. I will do it again."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Are we going to die?"

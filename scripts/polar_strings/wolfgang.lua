@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Got a bad feeling about this.",
 		OPEN = "Is a little d-dark in here...",
 	}
+	DESCRIBE.POLARBEARHEAD = "He has seen happier days."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Big fish had tough life.",
 		GENERIC = "Bear man have defeated big fish.",
 	}
+	DESCRIBE.POLARHEADSTICK = "Something strong goes here, not Wolfgang though."
 	DESCRIBE.POLARICE_PLOW = "Is really that deep...?"
 	DESCRIBE.POLARICE_PLOW_ITEM = "To dig deep holes."
+	DESCRIBE.POLARWALRUSHEAD = "Ha! Flubbery man lies on pipes. Is flubbery man favorite thing!"
 	DESCRIBE.TOWER_POLAR_FLAG = "Wolfgang thinks it's pretty."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "It's okay, we will get you a new home."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Is whole world shaking?"

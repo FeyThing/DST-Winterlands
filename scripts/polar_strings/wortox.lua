@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		GENERIC = "Full of mischief, no doubt!",
 		OPEN = "Oh my, friend, what tricksy smile you have!",
 	}
+	DESCRIBE.POLARBEARHEAD = "How unpleasant!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Even this frosty den couldn't escape a fiery end.",
 		GENERIC = "A hiding place to warm the soul.",
 	}
+	DESCRIBE.POLARHEADSTICK = "This one's not for me I hope!"
 	DESCRIBE.POLARICE_PLOW = "Watch out! The portal to the fish dimension will soon open!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Less fun but more discreet than explosives."
+	DESCRIBE.POLARWALRUSHEAD = "Then the hunter, now a prey."
 	DESCRIBE.TOWER_POLAR_FLAG = "I don't get mortals love for flags. It's all puff!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Before a pompous thing, but now it means nothing."
 	DESCRIBE.RAINOMETER.POLARSTORM = "I would best hide if even this machine can't decide."

@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Curious location for a commerce... or who knows what.",
 		OPEN = "I still have all my teeth, dear, and I intend to keep them.",
 	}
+	DESCRIBE.POLARBEARHEAD = "This is meant to be taken as a warning."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "It has succumbed to flames.",
 		GENERIC = "A den, though hardly thermally insulated.",
 	}
+	DESCRIBE.POLARHEADSTICK = "This appears to be awaiting a... specimen."
 	DESCRIBE.POLARICE_PLOW = "Seconds away to find out..."
 	DESCRIBE.POLARICE_PLOW_ITEM = "The cold ocean floor is more lively than one might think."
+	DESCRIBE.POLARWALRUSHEAD = "A grim example of failed overconfidence."
 	DESCRIBE.TOWER_POLAR_FLAG = "What an alluring motion!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Unfortunately too large for a bookmark."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Oh dear... this can't be good."

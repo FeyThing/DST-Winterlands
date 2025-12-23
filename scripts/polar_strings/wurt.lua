@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "Probably... safe.",
 		OPEN = "Hello? You not Bearfolk?",
 	}
+	DESCRIBE.POLARBEARHEAD = "Ha ha!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Yesss, one less!",
 		GENERIC = "Not wanna see what in here...",
 	}
+	DESCRIBE.POLARHEADSTICK = "Ha-- oh. Not yet, florp."
 	DESCRIBE.POLARICE_PLOW = "Can't wait! Seriously, florp."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Want to see the deep fishes!"
+	DESCRIBE.POLARWALRUSHEAD = "Ha ha!"
 	DESCRIBE.TOWER_POLAR_FLAG = "Hee-hee, is little flying fish."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Is emblem of Mermfolk kingdom now, flort."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Something coming but it not rain..."

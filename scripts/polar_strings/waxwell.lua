@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "Well, well. Talk about a hospitable-looking dwelling.",
 		OPEN = "...I will pretend I didn't see what's inside.",
 	}
+	DESCRIBE.POLARBEARHEAD = "Some would call it a trophy."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "If only the scorching sun would spare this place.",
 		GENERIC = "I smell something rotten inside. Ugh.",
 	}
+	DESCRIBE.POLARHEADSTICK = "Potential can be so intimidating."
 	DESCRIBE.POLARICE_PLOW = "Better stand back, or you're fish food."
 	DESCRIBE.POLARICE_PLOW_ITEM = "Desperate times call for destructive measures."
+	DESCRIBE.POLARWALRUSHEAD = "In my defense, he did not recognize me."
 	DESCRIBE.TOWER_POLAR_FLAG = "It looked better from a distance."
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Good fabric. He knew his fluff."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Here it comes."

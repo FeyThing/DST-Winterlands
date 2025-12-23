@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		GENERIC = "Burning this place down would be doing it a favor.",
 		OPEN = "So that's how the Tooth Fairy looks like... oh well.",
 	}
+	DESCRIBE.POLARBEARHEAD = "I wouldn't like to be in your place."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Ha ha! Your fish house stood no chance!",
 		GENERIC = "Ugh, it smells like fish.",
 	}
+	DESCRIBE.POLARHEADSTICK = "Hm. How about a fire on a stick this time around?"
 	DESCRIBE.POLARICE_PLOW = "I'll save you all, fishes!"
 	DESCRIBE.POLARICE_PLOW_ITEM = "Sure sucks to be stuck under the ice."
+	DESCRIBE.POLARWALRUSHEAD = "Aw jeez! I thought it was going to be a shooting turret."
 	DESCRIBE.TOWER_POLAR_FLAG = "I bet it would have even more flair on fire!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Bah. That's fuel."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Now might be a good time to leave this place."

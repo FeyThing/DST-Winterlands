@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		GENERIC = "I'm better outside than in this shoddy shack.",
 		OPEN = "Buddy, ever heard of proper lighting? It's creepy in here.",
 	}
+	DESCRIBE.POLARBEARHEAD = "Speak of somethin' creepy. Yeesh!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Hm. Probably another wildfire.",
 		GENERIC = "There's something fishy about it.",
 	}
+	DESCRIBE.POLARHEADSTICK = "I see someone's planning a head."
 	DESCRIBE.POLARICE_PLOW = "I should move a wee bit away."
 	DESCRIBE.POLARICE_PLOW_ITEM = "That's enough hiding from me, fishies."
+	DESCRIBE.POLARWALRUSHEAD = "Does that fix our walrus problem? Or do we need more?"
 	DESCRIBE.TOWER_POLAR_FLAG = "Look at it go!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "Haven't got much use for you, little flag."
 	DESCRIBE.RAINOMETER.POLARSTORM = "Gee, what's wrong with it?"

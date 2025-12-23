@@ -103,12 +103,15 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		GENERIC = "Looks like the cabin Walter described around the fire!",
 		OPEN = "Can you stop looking at our fangs?",
 	}
+	DESCRIBE.POLARBEARHEAD = "What did it do to deserve this?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Rest in peace... to the spider on the ceiling.",
 		GENERIC = "We would be better indoor than outhere.",
 	}
+	DESCRIBE.POLARHEADSTICK = "It's almost creepier empty."
 	DESCRIBE.POLARICE_PLOW = "We should move back, don't want to see the fish from TOO close."
 	DESCRIBE.POLARICE_PLOW_ITEM = "A machine to free the fish from the ice."
+	DESCRIBE.POLARWALRUSHEAD = "It kind of deserved it."
 	DESCRIBE.TOWER_POLAR_FLAG = "Let's wave back at it!"
 	DESCRIBE.TOWER_POLAR_FLAG_ITEM = "So... is it our empire now?"
 	DESCRIBE.RAINOMETER.POLARSTORM = "Shouldn't we tell the others about this?"
