@@ -43,7 +43,9 @@ local function SpewBaby(inst, dir)
 	
 	local baby = SpawnPrefab(weighted_random_choice(inst.spew_prefabs))
 	
-	if baby.components.combat then
+	if baby == nil then
+		return
+	elseif baby.components.combat then
 		baby.Transform:SetPosition(pt:Get())
 		baby.Transform:SetRotation(baby_rot)
 		baby.Transform:SetScale(TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE, TUNING.POLARFLEA_BABY_SCALE)

@@ -20,7 +20,7 @@ SetSharedLootTable("polarflea_mother", {
 
 local spew_prefabs = {
 	polarflea = 0.9,
-	winter_ornament_polarflea = IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 0.1 or 0,
+	winter_ornament_boss_polarflea = IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 0.1 or 0,
 }
 
 local function KeepTargetFn(inst, target)
