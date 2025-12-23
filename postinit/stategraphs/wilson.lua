@@ -558,7 +558,7 @@ local states_client = {
 			inst.AnimState:PushAnimation("build_loop")
 			inst.SoundEmitter:PlaySound("dontstarve/wilson/make_trap", "make")
 			
-			inst.sg:SetTimeout(TIMEOUT)
+			inst.sg:SetTimeout(2)
 		end,
 		
 		onupdate = function(inst)
@@ -600,6 +600,35 @@ local states_client = {
 			inst.sg:GoToState("idle", "noanim")
 		end,
 	},
+	
+	State{
+		name = "challenge_bearking",
+		tags = {"busy", "canrotate"},
+		server_states = {"challenge_bearking"},
+		
+		onenter = function(inst)
+			inst.AnimState:PlayAnimation("emote_flex")
+			inst.components.locomotor:Stop()
+			
+			inst:PerformPreviewBufferedAction()
+			inst.sg:SetTimeout(2)
+		end,
+		
+		onupdate = function(inst)
+			if inst.sg:ServerStateMatches() then
+				if inst.entity:FlattenMovementPrediction() then
+					inst.sg:GoToState("idle", "noanim")
+				end
+			elseif inst.bufferedaction == nil then
+				inst.sg:GoToState("idle", true)
+			end
+		end,
+		
+		ontimeout = function(inst)
+			inst:ClearBufferedAction()
+			inst.sg:GoToState("idle", true)
+		end,
+    },
 }
 
 ENV.AddStategraphPostInit("wilson_client", function(sg)
