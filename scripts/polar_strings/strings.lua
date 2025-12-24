@@ -31,6 +31,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	NAMES.EMPEROR_PENGUIN = "Emperor Pengull"
 	NAMES.EMPEROR_PENGUIN_GUARD = "Penguard"
+	NAMES.FROSTY_SIMPLE = "Frosty"
 	NAMES.GIRL_WALRUS = "MaTusk"
 	NAMES.MOOSE_POLAR = "Moose"
 	NAMES.MOOSE_SPECTER = "Spectral Moose"
@@ -38,13 +39,12 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.OCEANFISH_MEDIUM_POLAR1_INV = "Boreal Bass"
 	NAMES.POLAR_PENGUIN = NAMES.PENGUIN
 	NAMES.POLARBEAR = "Polar Bear"
+	NAMES.POLARBEARKING = "Ursa Major"
 	NAMES.POLARFLEA = "Snowflea"
 	NAMES.POLARFLEA_MOTHER = "Motherflea"
 	NAMES.POLARFOX = "Frost Tail"
 	NAMES.POLARWARG = "Ice Varg"
 	NAMES.SHADOW_ICICLER = "Shadow Spine"
-	NAMES.FROSTY_SIMPLE = "Frosty"
-	NAMES.POLARBEARKING = "Ursa Major" -- Is this even a mod?
 	
 --	Buildings
 	
@@ -151,6 +151,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_NAMES.ms_goldenpickaxe_polar = "Goldenice Pickaxe"
 	STRINGS.SKIN_NAMES.ms_goldenshovel_polar = "Goldenice Shovel"
 	STRINGS.SKIN_NAMES.ms_dragonflychest_polarice = "Dry \"Ice Box\""
+	STRINGS.SKIN_NAMES.ms_minerhat_boreal = "Boreal Headlamp"
 	STRINGS.SKIN_NAMES.ms_polarheadstick_merm = "Merm Head"
 	STRINGS.SKIN_NAMES.ms_polarheadstick_pig = "Pig Head"
 	STRINGS.SKIN_NAMES.ms_polarheadstick_walrus = "Walrus Head"
@@ -165,6 +166,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenpickaxe_polar = "Its icy edges hum with subterranean cold..."
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenshovel_polar = "It glints with the pale shimmer of freshly frozen ground."
 	STRINGS.SKIN_DESCRIPTIONS.ms_dragonflychest_polarice = "It's almost like if you had a large Ice Box. Well, the impression strikes out more in the dead of winter."
+	STRINGS.SKIN_DESCRIPTIONS.ms_minerhat_boreal = "Its glow wiggles and waves like a pocket-sized aurora leading the way."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_merm = "Give off a fearsome sight and smell to anyone entering your turf."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_pig = "Let those pigs know this place is no ham-usement park."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_walrus = "Up this neatly stacked pile of blow dart pipes, their owner rest here."

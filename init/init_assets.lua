@@ -158,6 +158,7 @@ local ITEMS = {
 	"ms_goldenaxe_polar",
 	"ms_goldenpickaxe_polar",
 	"ms_goldenshovel_polar",
+	"ms_minerhat_boreal",
 	"ms_polarheadstick_merm",
 	"ms_polarheadstick_pig",
 	"ms_polarheadstick_walrus",

@@ -107,7 +107,7 @@ AddTask("Polar Gnomes", {
 	},
 	entrance_room = {"Empty_Cove"},
 	room_bg = WORLD_TILES.POLAR_SNOW,
-	background_room = "PolarIsland_GnomeForest",
+	background_room = "Empty_Cove",
 	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
 })
 

@@ -83,6 +83,7 @@ PrefabFiles = {
 	
 --	Skin stuff
 	
+	"minerhat_boreal_overlay",
 	"polarskinprefabs",
 	"polar_snow_angel",
 	"polar_snow_bush",

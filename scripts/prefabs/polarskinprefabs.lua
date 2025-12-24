@@ -64,63 +64,55 @@ table.insert(prefs, CreatePrefabSkin("ms_dragonflychest_upgraded_polarice", {
 	skin_tags = {},
 }))
 
-if HasPassedCalendarDay(9) then
-	table.insert(prefs, CreatePrefabSkin("ms_goldenpickaxe_polar", {
-		assets = {
-			Asset("DYNAMIC_ANIM", "anim/dynamic/goldenpickaxe_polar.zip"),
-			Asset("PKGREF", "anim/dynamic/goldenpickaxe_polar.dyn"),
-		},
-		base_prefab = "goldenpickaxe",
-		type = "item",
-		build_name_override = "goldenpickaxe_polar",
-		rarity = "ModMade",
-		skin_tags = {"POLAR", "GOLDENPICKAXE", "CRAFTABLE"},
-	}))
-end
+table.insert(prefs, CreatePrefabSkin("ms_goldenpickaxe_polar", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/goldenpickaxe_polar.zip"),
+		Asset("PKGREF", "anim/dynamic/goldenpickaxe_polar.dyn"),
+	},
+	base_prefab = "goldenpickaxe",
+	type = "item",
+	build_name_override = "goldenpickaxe_polar",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "GOLDENPICKAXE", "CRAFTABLE"},
+}))
 
-if HasPassedCalendarDay(11) then
-	table.insert(prefs, CreatePrefabSkin("ms_bushhat_polar", {
-		assets = {
-			Asset("DYNAMIC_ANIM", "anim/dynamic/ms_bushhat_polar.zip"),
-			Asset("PKGREF", "anim/dynamic/ms_bushhat_polar.dyn"),
-		},
-		base_prefab = "bushhat",
-		type = "item",
-		build_name_override = "ms_bushhat_polar",
-		rarity = "ModMade",
-		prefabs = {"polar_snow_bush"},
-		skin_tags = {"POLAR", "BUSHHAT", "CRAFTABLE"},
-		fx_prefab = {"polar_snow_bush"},
-	}))
-end
+table.insert(prefs, CreatePrefabSkin("ms_bushhat_polar", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/ms_bushhat_polar.zip"),
+		Asset("PKGREF", "anim/dynamic/ms_bushhat_polar.dyn"),
+	},
+	base_prefab = "bushhat",
+	type = "item",
+	build_name_override = "ms_bushhat_polar",
+	rarity = "ModMade",
+	prefabs = {"polar_snow_bush"},
+	skin_tags = {"POLAR", "BUSHHAT", "CRAFTABLE"},
+	fx_prefab = {"polar_snow_bush"},
+}))
 
-if HasPassedCalendarDay(14) then
-	table.insert(prefs, CreatePrefabSkin("ms_goldenshovel_polar", {
-		assets = {
-			Asset("DYNAMIC_ANIM", "anim/dynamic/goldenshovel_polar.zip"),
-			Asset("PKGREF", "anim/dynamic/goldenshovel_polar.dyn"),
-		},
-		base_prefab = "goldenshovel",
-		type = "item",
-		build_name_override = "goldenshovel_polar",
-		rarity = "ModMade",
-		skin_tags = {"POLAR", "GOLDENSHOVEL", "CRAFTABLE"},
-	}))
-end
+table.insert(prefs, CreatePrefabSkin("ms_goldenshovel_polar", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/goldenshovel_polar.zip"),
+		Asset("PKGREF", "anim/dynamic/goldenshovel_polar.dyn"),
+	},
+	base_prefab = "goldenshovel",
+	type = "item",
+	build_name_override = "goldenshovel_polar",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "GOLDENSHOVEL", "CRAFTABLE"},
+}))
 
-if HasPassedCalendarDay(19) then
-	table.insert(prefs, CreatePrefabSkin("ms_goldenaxe_polar", {
-		assets = {
-			Asset("DYNAMIC_ANIM", "anim/dynamic/goldenaxe_polar.zip"),
-			Asset("PKGREF", "anim/dynamic/goldenaxe_polar.dyn"),
-		},
-		base_prefab = "goldenaxe",
-		type = "item",
-		build_name_override = "goldenaxe_polar",
-		rarity = "ModMade",
-		skin_tags = {"POLAR", "GOLDENAXE", "CRAFTABLE"},
-	}))
-end
+table.insert(prefs, CreatePrefabSkin("ms_goldenaxe_polar", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/goldenaxe_polar.zip"),
+		Asset("PKGREF", "anim/dynamic/goldenaxe_polar.dyn"),
+	},
+	base_prefab = "goldenaxe",
+	type = "item",
+	build_name_override = "goldenaxe_polar",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "GOLDENAXE", "CRAFTABLE"},
+}))
 
 table.insert(prefs, CreatePrefabSkin("ms_polarheadstick_pig", {
 	assets = {},
@@ -147,6 +139,18 @@ table.insert(prefs, CreatePrefabSkin("ms_polarheadstick_walrus", {
 	build_name_override = "polarwalrus_head",
 	rarity = "ModMade",
 	skin_tags = {"POLAR", "POLARHEADSTICK", "CRAFTABLE"},
+}))
+
+table.insert(prefs, CreatePrefabSkin("ms_minerhat_boreal", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/minerhat_boreal.zip"),
+		Asset("PKGREF", "anim/dynamic/minerhat_boreal.dyn"),
+	},
+	base_prefab = "minerhat",
+	type = "item",
+	rarity = "ModMade",
+	build_name_override = "minerhat_boreal",
+	skin_tags = {"POLAR", "MINERHAT", "CRAFTABLE"},
 }))
 
 return unpack(prefs)

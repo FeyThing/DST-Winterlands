@@ -58,6 +58,7 @@ local prefabs = {
 	"klaus_sack",
 	"krampus",
 	"lavae",
+	"minerhat",
 	"mole",
 	"moonbase",
 	"mushroom_farm",
