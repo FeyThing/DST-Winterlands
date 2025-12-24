@@ -193,6 +193,10 @@ return Class(function(self, inst)
 				emperor.components.knownlocations:RememberLocation("rookery", pt)
 			end
 			
+			if emperor.sg then
+				emperor.sg:GoToState("summon_guards", true)
+			end
+			
 			self.emperor = emperor
 		end
 	end

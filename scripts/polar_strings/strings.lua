@@ -488,9 +488,11 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 			str = "Its glow wiggles and waves like a pocket-sized aurora leading the way."
 		},
 		DAY25_TOOLTIP = {
-			title = "Frosty the Snowman, Blue Gems Overcharger",
-			str = "Summon a snowbound giant! This is Phase One of a tougher battle for Overcharged Blue Gems.\nStay tuned for more, and happy Winter's Feast!"
+			title = "Frosty the Snowman, Coming Next!",
+			str = "Do you wanna build an ice giant? Well, if you want Overcharged Blue Gems you'll have to as the road to make them is getting tougher soon. Stay tuned for more, and happy Winter's Feast!"
 		},
+		RESET = "Reset",
+		RESET_TOOLTIP = "...well that was fun...! but look at this mess...\n...what do you say we clean up and start over...?",
 		SEE_YA = "Next tile unlocks at 0:00 UTC-8!",
 	}
 	

@@ -155,18 +155,28 @@ local function OnEntitySleep(inst)
 	end
 end
 
-local function WakeUp(inst)
-	inst:_EnableBrain_Internal() -- I don't even know why his brain is off on spawn...
+-- There's some weird ***jank that happens when the emperor is spawned naturally, brains turns off because entity spawns too far to stay loaded
+-- ... and it just won't turn back on from there onward, so uh, we'll fire this continuously JUST to make sure it stays active.
+-- (we actually do need him to be able unload normally for fight reset!)
+
+local function WakeUp(inst, do_summon)
+	if not inst:IsAsleep() then
+		inst:_EnableBrain_Internal()
+	end
 	
-	inst:DoTaskInTime(0.2 + math.random(), function()
-		if inst.sg and not inst.sg.statemem.exiting_tower then
-			inst.sg:GoToState("summon_guards", true)
-		end
-	end)
+	if do_summon then
+		inst:DoTaskInTime(0.2 + math.random(), function()
+			if inst.sg and not inst.sg.statemem.exiting_tower then
+				inst.sg:GoToState("summon_guards", true)
+			end
+		end)
+	end
 end
 
 local function OnEntityWake(inst)
-	WakeUp(inst)
+	if inst:GetTimeAlive() > 2 then -- First time is called from spawnercomponent
+		WakeUp(inst, true)
+	end
 end
 
 local function OnSave(inst, data)
@@ -420,6 +430,8 @@ local function fn()
 	
 	inst:SetStateGraph("SGpenguin")
 	inst:SetBrain(brain)
+	
+	inst._wakeuptask = inst:DoPeriodicTask(1, WakeUp)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("emperorpenguin_defeated", inst._ondefeated, TheWorld)

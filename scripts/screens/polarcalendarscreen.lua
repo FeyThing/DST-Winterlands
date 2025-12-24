@@ -37,7 +37,7 @@ local clickables = {
 		w = 90,
 		h = 110,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY4_TOOLTIP,
-		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/calendar/swoop", 0.2}, {"polarsounds/calendar/hit_snow", 1}},
+		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/calendar/swoop", 0.2}, {"polarsounds/calendar/hit_snow", 0.9}},
 	},
 	{
 		x = 220,
@@ -93,6 +93,7 @@ local clickables = {
 		w = 110,
 		h = 100,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY11_TOOLTIP,
+		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/arctic_fools/stick_fish", 0.9}},
 	},
 	{
 		x = -450,
@@ -100,6 +101,7 @@ local clickables = {
 		w = 100,
 		h = 100,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY12_TOOLTIP,
+		sounds = {{"polarsounds/calendar/step_snow"}, {"polarsounds/calendar/hit_snow", 0.35}, {"polarsounds/calendar/gift_open", 0.6}},
 	},
 	{
 		x = 720,
@@ -107,6 +109,7 @@ local clickables = {
 		w = 100,
 		h = 100,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY13_TOOLTIP,
+		sounds = {{"polarsounds/calendar/hit_snow"}, {"polarsounds/calendar/gift_open", 0.6}, {"polarsounds/calendar/pop", 0.7}},
 	},
 	{
 		x = -310,
@@ -114,6 +117,7 @@ local clickables = {
 		w = 120,
 		h = 120,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY14_TOOLTIP,
+		sounds = {{"polarsounds/calendar/step_snow"}, {"polarsounds/calendar/hit_snow", 0.4}, {"polarsounds/calendar/swoop", 0.6}, {"polarsounds/calendar/gift_open", 0.8}},
 	},
 	{
 		x = -500,
@@ -121,6 +125,7 @@ local clickables = {
 		w = 120,
 		h = 120,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY15_TOOLTIP,
+		sounds = {{"polarsounds/calendar/hit_snow"}, {"polarsounds/calendar/swoop", 0.1}, {"polarsounds/calendar/gift_open", 0.8}},
 	},
 	{
 		x = -390,
@@ -128,6 +133,7 @@ local clickables = {
 		w = 120,
 		h = 80,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY16_TOOLTIP,
+		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/arctic_fools/stick_fish", 1}},
 	},
 	{
 		x = 170,
@@ -135,6 +141,7 @@ local clickables = {
 		w = 120,
 		h = 100,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY17_TOOLTIP,
+		sounds = {{"polarsounds/calendar/gift_open"}},
 	},
 	{
 		x = 570,
@@ -142,6 +149,7 @@ local clickables = {
 		w = 90,
 		h = 130,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY18_TOOLTIP,
+		sounds = {{"polarsounds/calendar/tree_chop"}, {"polarsounds/calendar/shadowhand_pick", 0.4}, {"polarsounds/calendar/hit_snow", 0.6}},
 	},
 	{
 		x = -485,
@@ -149,6 +157,7 @@ local clickables = {
 		w = 120,
 		h = 90,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY19_TOOLTIP,
+		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/arctic_fools/stick_fish", 0.6}},
 	},
 	{
 		x = -140,
@@ -156,6 +165,7 @@ local clickables = {
 		w = 150,
 		h = 150,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY20_TOOLTIP,
+		sounds = {{"polarsounds/calendar/hit_snow"}, {"polarsounds/calendar/pop", 0.3}, {"polarsounds/calendar/gift_open", 0.3}, {"polarsounds/calendar/hit_snow", 0.6}},
 	},
 	{
 		x = 335,
@@ -163,6 +173,7 @@ local clickables = {
 		w = 110,
 		h = 70,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY21_TOOLTIP,
+		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/arctic_fools/stick_fish", 0.6}},
 	},
 	{
 		x = 540,
@@ -170,6 +181,7 @@ local clickables = {
 		w = 100,
 		h = 100,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY22_TOOLTIP,
+		sounds = {{"polarsounds/calendar/step_snow", 0.1}, {"polarsounds/calendar/step_snow", 0.5}, {"polarsounds/calendar/gift_open", 1.1}, {"polarsounds/calendar/pop", 1.1}},
 	},
 	{
 		x = -365,
@@ -177,6 +189,7 @@ local clickables = {
 		w = 100,
 		h = 100,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY23_TOOLTIP,
+		sounds = {{"polarsounds/calendar/touch"}, {"polarsounds/arctic_fools/swoop", 0.1}, {"polarsounds/arctic_fools/stick_fish", 0.6}},
 	},
 	{
 		x = 675,
@@ -184,6 +197,7 @@ local clickables = {
 		w = 90,
 		h = 130,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY24_TOOLTIP,
+		sounds = {{"polarsounds/calendar/tree_chop"}, {"polarsounds/calendar/tree_fall", 0.5}, {"polarsounds/calendar/shadowhand_pick", 0.7}, {"polarsounds/calendar/step_snow", 1.1}},
 	},
 	{
 		x = -560,
@@ -191,6 +205,7 @@ local clickables = {
 		w = 160,
 		h = 190,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY25_TOOLTIP,
+		sounds = {{"polarsounds/calendar/step_snow"}, {"polarsounds/calendar/hit_snow", 0.3}, {"polarsounds/calendar/step_snow", 0.6}},
 	}
 }
 
@@ -292,6 +307,33 @@ local PolarCalendarScreen = Class(Screen, function(self, owner)
 	
 	TheFrontEnd:GetSound():PlaySound("polarsounds/music/winters_feast_calendar", "all_i_want_for_kleismass")
 	SetAutopaused(true)
+	
+	--
+	
+	self.reset_btn = self.root:AddChild(ImageButton("images/ui.xml", "button_large.tex", "button_large_over.tex", "button_large_disabled.tex",
+		self.active_clickable_day >= 25 and "button_large_onclick.tex" or "button_large_disabled.tex"))
+	
+	self.reset_btn:SetPosition(120, 70)
+	self.reset_btn:SetVAnchor(ANCHOR_BOTTOM)
+	self.reset_btn:SetHAnchor(ANCHOR_LEFT)
+	self.reset_btn:AddChild(Text(HEADERFONT, 35, STRINGS.POLAR_CALENDAR.RESET))
+	
+	self.reset_btn:SetOnClick(function()
+		self:ResetCalendar()
+	end)
+	self.reset_btn.OnGainFocus = function()
+		if self.active_clickable_day >= 25 then
+			self.tooltip:SetString(STRINGS.POLAR_CALENDAR.RESET_TOOLTIP)
+			self.tooltip:Show()
+		end
+	end
+	self.reset_btn.OnLoseFocus = function()
+		if self.active_clickable_day >= 25 then
+			self.tooltip.title:SetString("")
+			self.tooltip:Hide()
+		end
+	end
+	self:SetResetEnabled(self.active_clickable_day >= 25)
 end)
 
 local function OnCalendarAnimOver(inst)
@@ -336,6 +378,7 @@ function PolarCalendarScreen:InitClickable(initial)
 	pointer:SetClickable(false)
 	pointer:SetPosition(data.x, data.y)
 	pointer:Hide()
+	pointer.inst:ListenForEvent("calendar_reset", function() pointer:Kill() end, self.inst)
 	
 	btn:SetPosition(data.x, data.y)
 	btn:SetOnClick(function()
@@ -358,8 +401,10 @@ function PolarCalendarScreen:InitClickable(initial)
 
 		self:RedrawNumbers()
 
-		if self.active_clickable_day < FINAL_ADVENT_DAY then
+		if self.active_clickable_day <= FINAL_ADVENT_DAY then
 			self:InitClickable()
+		else
+			self:SetResetEnabled(true)
 		end
 	end)
 	btn:SetOnGainFocus(function()
@@ -469,6 +514,56 @@ end
 
 function PolarCalendarScreen:OnBecomeActive()
 	PolarCalendarScreen._base.OnBecomeActive(self)
+end
+
+function PolarCalendarScreen:SetResetEnabled(enabled)
+	if not self.reset_btn then
+		return
+	end
+	
+	if enabled then
+		self.reset_btn:SetTextures("images/ui.xml", "button_large.tex", "button_large_over.tex", "button_large_disabled.tex", "button_large_onclick.tex")
+		self.reset_btn.image:SetTexture("images/ui.xml", "button_large.tex")
+	else -- Can also reset but not showcased
+		self.reset_btn:SetTextures("images/ui.xml", "button_large_disabled.tex", "button_large_disabled.tex", "button_large_disabled.tex", "button_large_disabled.tex")
+		self.reset_btn.image:SetTexture("images/ui.xml", "button_large_disabled.tex")
+	end
+end
+
+function PolarCalendarScreen:ResetCalendar()
+	if self.active_clickable_day <= 1 then
+		return
+	end
+	
+	local swirl = self:AddChild(UIAnim())
+	swirl:GetAnimState():SetBank("spawn_fx")
+	swirl:GetAnimState():SetBuild("puff_spawning")
+	swirl:GetAnimState():PlayAnimation("large", true)
+	swirl:GetAnimState():SetBloomEffectHandle("shaders/anim.ksh")
+	swirl:GetAnimState():SetScale(10000, 10000)
+	swirl:GetAnimState():SetAddColour(0, 0, 0.2, 1)
+	swirl:SetVAnchor(ANCHOR_MIDDLE)
+	swirl:SetHAnchor(ANCHOR_MIDDLE)
+	swirl:SetScaleMode(SCALEMODE_FIXEDSCREEN_NONDYNAMIC)
+	swirl:SetPosition(0, -350)
+	swirl:SetClickable(false)
+	swirl.inst:ListenForEvent("animover", function() swirl:Kill() end)
+	
+	TheFrontEnd:GetSound():PlaySound("polarsounds/calendar/swirl")
+	
+	self.inst:DoTaskInTime(0.5, function()
+		self.active_clickable_day = 1
+		TheSim:SetPersistentString("winterlands_adventday", "1", false)
+		
+		self.calendar.inst:RemoveEventCallback("animover", OnCalendarAnimOver)
+		self.calendar:GetAnimState():PlayAnimation("0", true)
+		self.inst:PushEvent("calendar_reset")
+		
+		self:RedrawIcons()
+		self:RedrawNumbers()
+		self:InitClickable(true)
+		self:SetResetEnabled(false)
+	end)
 end
 
 function PolarCalendarScreen:OnControl(control, down)
