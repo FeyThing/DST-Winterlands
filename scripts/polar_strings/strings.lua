@@ -494,6 +494,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		RESET = "Reset",
 		RESET_TOOLTIP = "...well that was fun...! but look at this mess...\n...what do you say we clean up and start over...?",
 		SEE_YA = "Next tile unlocks at 0:00 UTC-8!",
+		SPEEDRUN = "Speedrun?",
+		SPEEDRUN_BESTTIME = "Clear the calendar as fast you can!\nBest time: {time}",
 	}
 	
 	--	Scrapbook, Cookbook
