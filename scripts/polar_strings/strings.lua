@@ -146,6 +146,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Skins
 	
 	--	Names
+	STRINGS.SKIN_NAMES.ms_antler_tree_stick_holly = "Holly Branch"
 	STRINGS.SKIN_NAMES.ms_bushhat_polar = "My-Wee-Glacier"
 	STRINGS.SKIN_NAMES.ms_goldenaxe_polar = "Goldenice Axe"
 	STRINGS.SKIN_NAMES.ms_goldenpickaxe_polar = "Goldenice Pickaxe"
@@ -161,6 +162,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_NAMES.ms_loading_polarfox = "Slick in the Snow"
 	
 	--	Desc
+	STRINGS.SKIN_DESCRIPTIONS.ms_antler_tree_stick_holly = "Smash 'em (in holliday's spirit)!"
 	STRINGS.SKIN_DESCRIPTIONS.ms_bushhat_polar = "Ideal for hiding among Pengulls, less so around tumbleweeds and cacti."
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenaxe_polar = "Make trees feel the swing of winter air before your blade!"
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenpickaxe_polar = "Its icy edges hum with subterranean cold..."
@@ -490,6 +492,14 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		DAY25_TOOLTIP = {
 			title = "Frosty the Snowman, Coming Next!",
 			str = "Do you wanna build an ice giant? Well, if you want Overcharged Blue Gems you'll have to as the road to make them is getting tougher soon. Stay tuned for more, and happy Winter's Feast!"
+		},
+		SPEEDRUN_REWARD_TOOLTIP = {
+			title = "Holly Branch Skin",
+			str = "Nice clicking there! Here, a little bonus gift on us!"
+		},
+		STEAMER_REWARD_TOOLTIP = {
+			title = "Ice Cutter Skin",
+			str = "WELL DAMN! Take this, and go take a cold shower please."
 		},
 		RESET = "Reset",
 		RESET_TOOLTIP = "...well that was fun...! but look at this mess...\n...what do you say we clean up and start over...?",

@@ -1,6 +1,20 @@
 --------------------------------------------------------------------------
 --[[ Basic skin functions ]]
 --------------------------------------------------------------------------
+antler_tree_stick_init_fn = function(inst, build_name)
+	basic_init_fn(inst, build_name, "antler_tree_stick")
+	
+	local sounds = SKIN_SOUND_FX[inst:GetSkinName()]
+	if sounds then
+		inst.hit_skin_sound = sounds.hit
+	end
+end
+antler_tree_stick_clear_fn = function(inst)
+	basic_clear_fn(inst, "antler_tree_stick")
+	
+	inst.hit_skin_sound = nil
+end
+
 polarmoosehat_init_fn = function(inst, build_name) basic_init_fn(inst, build_name, "hat_polarmoose") end
 polarmoosehat_clear_fn = function(inst) basic_clear_fn(inst, "hat_polarmoose") end
 

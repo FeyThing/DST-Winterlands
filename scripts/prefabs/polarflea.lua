@@ -136,7 +136,7 @@ local function CanBeHost(inst, host)
 	
 	local function test_hosting()
 		if host and host:IsValid() and not (host.components.health and host.components.health:IsDead()) and host.entity:IsVisible() and inst:HostCapacity(host) > 0 and
-			not host:HasAnyTag({"fire", "fleaghosted", "likewateroffducksback", "smallcreature"}) then
+			not host:HasAnyTag({"fire", "fleaghosted", "likewateroffducksback", "smallcreature", "playerghost"}) then
 			
 			--	Player logic
 			if host:HasTag("player") then

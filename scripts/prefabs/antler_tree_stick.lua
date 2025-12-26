@@ -2,8 +2,6 @@ local assets = {
 	Asset("ANIM", "anim/antler_tree_stick.zip"),
 }
 
-local tree_sticcs = {"low", "med", "high"}
-
 local function OnEquip(inst, owner)
 	local skin_build = inst:GetSkinBuild()
 	if skin_build then
@@ -56,7 +54,7 @@ local function OnAttack(inst, attacker, target)
 	end
 	
 	if target and target.SoundEmitter and not target:HasTag("shadowcreature") and not target:HasTag("brightmare") then
-		target.SoundEmitter:PlaySound("polarsounds/antler_tree/bonk", nil, nil, true)
+		target.SoundEmitter:PlaySound(inst.hit_skin_sound or "polarsounds/antler_tree/bonk", nil, nil, true)
 	end
 end
 

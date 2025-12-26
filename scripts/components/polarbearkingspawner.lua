@@ -10,9 +10,12 @@ local PolarBearKingSpawner = Class(function(self, inst)
 	self.inst = inst
 	
 	self.king_decor = {
-		polar_brazier = 2,
-		mermhead = 1,
-		polarwalrushead = HasPassedCalendarDay(23) and 1 or 0,
+		polar_brazier = 2.5,
+		
+		pighead = 1,
+		mermhead = 3,
+		polarbearhead = 0.5,
+		polarwalrushead = 3,
 	}
 end)
 
@@ -78,6 +81,11 @@ function PolarBearKingSpawner:TryPlaceKing()
 	if pt then
 		local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, 2, nil, CLEAR_NOT_TAGS, CLEAR_TAGS)
 		for i, v in ipairs(ents) do
+			local child = v.components.spawner and v.components.spawner.child
+			if child then
+				child:Remove()
+			end
+			
 			v:Remove()
 		end
 		
@@ -95,7 +103,7 @@ function PolarBearKingSpawner:TryPlaceKing()
 			local offset = DECOR_OFFSETS[i]
 			local _pt = Vector3(pt.x + offset[1], pt.y + offset[2], pt.z + offset[3])
 			
-			if TheWorld.Map:IsPassableAtPoint(_pt:Get()) and TheWorld.Map:IsDeployPointClear(_pt, nil, 1.5) then
+			if TheWorld.Map:IsPassableAtPoint(_pt:Get()) and TheWorld.Map:IsDeployPointClear(_pt, nil, 6) then
 				local ent = SpawnPrefab(weighted_random_choice(self.king_decor))
 				ent.Transform:SetPosition(pt.x + offset[1], pt.y + offset[2], pt.z + offset[3])
 			end

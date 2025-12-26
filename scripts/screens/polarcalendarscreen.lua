@@ -206,7 +206,17 @@ local clickables = {
 		h = 190,
 		tooltip = STRINGS.POLAR_CALENDAR.DAY25_TOOLTIP,
 		sounds = {{"polarsounds/calendar/step_snow"}, {"polarsounds/calendar/hit_snow", 0.3}, {"polarsounds/calendar/step_snow", 0.6}},
-	}
+	},
+	
+	--	Speedrun Skins
+	
+	{
+		x = 260,
+		y = 70,
+		w = 0,
+		h = 0,
+		tooltip = STRINGS.POLAR_CALENDAR.SPEEDRUN_REWARD_TOOLTIP,
+	},
 }
 
 local function MakeIcon(id, tooltip, self)
@@ -264,7 +274,14 @@ local PolarCalendarScreen = Class(Screen, function(self, owner)
 	black.image:SetHAnchor(ANCHOR_MIDDLE)
 	black.image:SetScaleMode(SCALEMODE_FILLSCREEN)
 	black.image:SetTint(0, 0, 0, 0.6)
-	black:SetOnClick(function() TheFrontEnd:PopScreen() end)
+	black:SetOnClick(function()
+		if self.speedrun_active then
+			TheFrontEnd:GetSound():PlaySound("dontstarve/HUD/click_negative")
+			return
+		end
+		
+		TheFrontEnd:PopScreen()
+	end)
 	black:SetHelpTextMessage("")
 	
 	self.root = self:AddChild(Widget("root"))
@@ -308,16 +325,7 @@ local PolarCalendarScreen = Class(Screen, function(self, owner)
 	
 	self.icons = {}
 	self.numbers = {}
-	
-	self:RedrawIcons()
-	self:RedrawNumbers()
-	
-	self:InitClickable(true)
-	
-	self.default_focus = self.calendar
-	
-	TheFrontEnd:GetSound():PlaySound("polarsounds/music/winters_feast_calendar", "all_i_want_for_kleismass")
-	SetAutopaused(true)
+	self.speedrun_icons = {}
 	
 	--
 	
@@ -357,7 +365,17 @@ local PolarCalendarScreen = Class(Screen, function(self, owner)
 	self.speedrun_active = false
 	self.speedrun_time = 0
 	
+	--
+	
+	self:RedrawIcons()
+	self:RedrawNumbers()
+	self:InitClickable(true)
 	self:SetResetEnabled(self.active_clickable_day > FINAL_ADVENT_DAY or self.active_clickable_day <= 1)
+	
+	TheFrontEnd:GetSound():PlaySound("polarsounds/music/winters_feast_calendar", "all_i_want_for_kleismass")
+	SetAutopaused(true)
+	
+	self.default_focus = self.calendar
 end)
 
 local function OnCalendarAnimOver(inst)
@@ -409,24 +427,8 @@ function PolarCalendarScreen:InitClickable(initial)
 	
 	btn:SetPosition(data.x, data.y)
 	btn:SetOnClick(function()
-		self:RedrawIcons() -- In case someone spam clicks the tiles
-		self:PlayTileSounds(clickables[self.active_clickable_day].sounds)
-		
-		self.calendar.inst:RemoveEventCallback("animover", OnCalendarAnimOver)
-		self.calendar:GetAnimState():PlayAnimation(tostring(self.active_clickable_day - 1).."to"..tostring(self.active_clickable_day))
-		
-		pointer:GetAnimState():PlayAnimation("active_pst")
-		TheFrontEnd:GetSound():KillSound("gift_idle")
-		self.calendar.inst.playgiftsound = true
-		self.calendar.inst.pointer = pointer
-		
-		self.calendar.inst:ListenForEvent("animover", OnCalendarAnimOver)
-		btn:Kill()
-		
-		self.active_clickable_day = self.active_clickable_day + 1
-		
 		local is_speedrunning = self.speedrun_active
-		if is_speedrunning and self.active_clickable_day > FINAL_ADVENT_DAY then
+		if is_speedrunning and self.active_clickable_day >= FINAL_ADVENT_DAY then
 			self.speedrun_active = false
 			
 			for i = 1, 4 do
@@ -458,6 +460,22 @@ function PolarCalendarScreen:InitClickable(initial)
 				TheFrontEnd:GetSound():PlaySound("polarsounds/calendar/confetti")
 			end
 		end
+		
+		self:RedrawIcons() -- In case someone spam clicks the tiles
+		self:PlayTileSounds(clickables[self.active_clickable_day].sounds)
+		
+		self.calendar.inst:RemoveEventCallback("animover", OnCalendarAnimOver)
+		self.calendar:GetAnimState():PlayAnimation(tostring(self.active_clickable_day - 1).."to"..tostring(self.active_clickable_day))
+		
+		pointer:GetAnimState():PlayAnimation("active_pst")
+		TheFrontEnd:GetSound():KillSound("gift_idle")
+		self.calendar.inst.playgiftsound = true
+		self.calendar.inst.pointer = pointer
+		
+		self.calendar.inst:ListenForEvent("animover", OnCalendarAnimOver)
+		btn:Kill()
+		
+		self.active_clickable_day = self.active_clickable_day + 1
 		
 		TheSim:SetPersistentString("winterlands_adventday", tostring(self.active_clickable_day)..(self.speedrun_besttime and ("|" .. tostring(self.speedrun_besttime)) or ""), false)
 		
@@ -495,22 +513,47 @@ function PolarCalendarScreen:InitClickable(initial)
 end
 
 function PolarCalendarScreen:RedrawIcons()
-	for i, icon in ipairs(self.icons) do
-		icon:Kill()
+	for i = #self.icons, self.active_clickable_day, -1 do
+		if self.icons[i] then
+			self.icons[i]:Kill()
+			self.icons[i] = nil
+		end
 	end
 	
-	self.icons = {}
-	
-	for i, data in ipairs(clickables) do
-		if i > self.active_clickable_day - 1 then
-			break
-		end
-		
+	for i = #self.icons + 1, self.active_clickable_day - 1 do
 		local icon = MakeIcon(i, self.tooltip, self)
 		icon:GetAnimState():PlayAnimation("icon"..tostring(i).."_idle")
 		
 		self.calendar:AddChild(icon)
-		table.insert(self.icons, icon)
+		self.icons[i] = icon
+	end
+	
+	local speedrun_icon1 = self.speedrun_icons[1]
+	local won_speedrun1 = self.speedrun_besttime and self.speedrun_besttime < CALENDAR_DEV_SCOREBOARD.DEFAULT
+	
+	if speedrun_icon1 == nil then
+		speedrun_icon1 = MakeIcon(26, self.tooltip, self)
+		speedrun_icon1:GetAnimState():PlayAnimation("icon26_idle")
+		speedrun_icon1:SetVAnchor(ANCHOR_BOTTOM)
+		speedrun_icon1:SetHAnchor(ANCHOR_LEFT)
+		
+		if not won_speedrun1 then
+			speedrun_icon1:Hide()
+		else
+			speedrun_icon1.shown = true
+		end
+		
+		self.root:AddChild(speedrun_icon1)
+		table.insert(self.speedrun_icons, speedrun_icon1)
+	elseif won_speedrun1 and not speedrun_icon1.shown then
+		speedrun_icon1:GetAnimState():PlayAnimation("icon26")
+		
+		speedrun_icon1:Show()
+		speedrun_icon1.shown = true
+	end
+	
+	if won_speedrun1 and CLIENT_MOD_RPC["ModdedSkins"] and ThePlayer then
+		SendModRPCToClient(GetClientModRPC("ModdedSkins", "UnlockModdedSkin"), ThePlayer.userid, "ms_antler_tree_stick_holly")
 	end
 end
 
@@ -522,7 +565,7 @@ function PolarCalendarScreen:RedrawNumbers()
 	self.numbers = {}
 	
 	for i, data in ipairs(clickables) do
-		if i >= self.active_clickable_day then
+		if i >= self.active_clickable_day and i <= FINAL_ADVENT_DAY then
 			local num = Text(UIFONT, 52, tostring(i))
 			num:SetClickable(false)
 			num:SetHAlign(ANCHOR_MIDDLE)
@@ -568,9 +611,11 @@ function PolarCalendarScreen:OnUpdate(dt)
 	
 	for i, icon in ipairs(self.icons) do
 		local t = self.time * icon.bounce_speed + icon.bounce_phase
-		local yoff = math.sin(t) * 6
-		
-		icon:SetPosition(icon.base_x, icon.base_y + yoff)
+		icon:SetPosition(icon.base_x, icon.base_y + math.sin(t) * 6)
+	end
+	for i, icon in ipairs(self.speedrun_icons) do
+		local t = self.time * icon.bounce_speed + icon.bounce_phase
+		icon:SetPosition(icon.base_x, icon.base_y + math.sin(t) * 6)
 	end
 	
 	if self.speedrun_active and self.reset_btn then

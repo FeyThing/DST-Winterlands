@@ -153,4 +153,20 @@ table.insert(prefs, CreatePrefabSkin("ms_minerhat_boreal", {
 	skin_tags = {"POLAR", "MINERHAT", "CRAFTABLE"},
 }))
 
+table.insert(prefs, CreatePrefabSkin("ms_antler_tree_stick_holly", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/antler_tree_stick_holly.zip"),
+		Asset("PKGREF", "anim/dynamic/antler_tree_stick_holly.dyn"),
+	},
+	base_prefab = "antler_tree_stick",
+	type = "item",
+	build_name_override = "antler_tree_stick_holly",
+	rarity = "ModLocked",
+	condition = {no_gift = true},
+	skin_tags = {"POLAR", "ANTLER_TREE_STICK", "CRAFTABLE"},
+	skin_sound = {
+		["hit"] = "polarsounds/antler_tree/bonk_holly"
+	},
+}))
+
 return unpack(prefs)

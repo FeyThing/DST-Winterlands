@@ -153,6 +153,7 @@ local ITEMS = {
 	"winters_fists",
 	"wx78module_naughty",
 	
+	"ms_antler_tree_stick_holly",
 	"ms_bushhat_polar",
 	"ms_dragonflychest_polarice",
 	"ms_goldenaxe_polar",
