@@ -380,6 +380,9 @@ local function OnCalendarAnimOver(inst)
 end
 
 function PolarCalendarScreen:InitClickable(initial)
+	if self.active_clickable_day > FINAL_ADVENT_DAY then
+		return
+	end
 	if not HasPassedCalendarDay(self.active_clickable_day) then
 		if initial then
 			self.tooltip:SetString(STRINGS.POLAR_CALENDAR.SEE_YA)
