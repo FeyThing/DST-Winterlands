@@ -74,42 +74,39 @@ POLARWALRUS_TRADEDATA = { -- Note: Default chance for each trade is 50%, respect
 		{product = "blowdart_pipe",	 	ingredients = {Ingredient("smallmeat", 2)}, 		limits = {min = 3, max = 4}, chance = 1},
 		{product = "blowdart_sleep",	ingredients = {Ingredient("smallmeat", 1)}, 		limits = {min = 3, max = 6}, numtogive = 2, chance = 1},
 		{product = "flint", 			ingredients = {Ingredient("fishmeat_small", 2)}, 	limits = {min = 1, max = 8}},
-		{product = "goldnugget", 		ingredients = {Ingredient("fishmeat", 2)}, 			limits = {min = 5, max = 12}},
-		{product = "goldnugget", 		ingredients = {Ingredient("trunk_summer", 1)}, 		limits = {min = 5, max = 12}, numtogive = 4},
-		{product = "goldnugget", 		ingredients = {Ingredient("trunk_winter", 1)}, 		limits = {min = 5, max = 12}, numtogive = 5},
+		{product = "goldnugget", 		ingredients = {Ingredient("fishmeat", 2)}, 			limits = {min = 5, max = 12}, chance = 1},
+		{product = "goldnugget", 		ingredients = {Ingredient("trunk_summer", 1)}, 		limits = {min = 5, max = 12}, numtogive = 4, chance = 1},
+		{product = "goldnugget", 		ingredients = {Ingredient("trunk_winter", 1)}, 		limits = {min = 5, max = 12}, numtogive = 5, chance = 1},
+		{product = "nonslipgrit",		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 3}},
+		{product = "desiccant", 		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 3}},
 		{product = "walrushat",		 	ingredients = {Ingredient("polarbearfur", 2)}, 		limits = {min = 1, max = 1}, chance = 1},
 	},
 	little_walrus = {
-		{product = "smallmeat", 		ingredients = {Ingredient("ice", 2)}, 				limits = {min = 3, max = 8}},
+		{product = "smallmeat", 		ingredients = {Ingredient("ice", 2)}, 				limits = {min = 3, max = 8}, chance = 1},
 		{product = "meat", 				ingredients = {Ingredient("ice", 4)}, 				limits = {min = 2, max = 4}},
 		{product = "monstermeat", 		ingredients = {Ingredient("ice", 3)}, 				limits = {min = 1, max = 3}},
 		{product = "saltrock", 			ingredients = {Ingredient("smallmeat_dried", 1)}, 	limits = {min = 3, max = 9}, numtogive = 2, chance = 1},
 		{product = "saltrock", 			ingredients = {Ingredient("meat_dried", 1)}, 		limits = {min = 3, max = 9}, numtogive = 3, chance = 1},
-		{product = "boneshard", 		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 4}},
-		{product = "houndstooth", 		ingredients = {Ingredient("flint", 1)}, 			limits = {min = 1, max = 4}},
+		{product = "boneshard", 		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 4}, chance = 1},
+		{product = "houndstooth", 		ingredients = {Ingredient("flint", 1)}, 			limits = {min = 1, max = 4}, chance = 1},
 		{product = "trunk_summer", 		ingredients = {Ingredient("saltrock", 4)}, 			limits = {min = 1, max = 1}},
 		{product = "trunk_winter", 		ingredients = {Ingredient("saltrock", 5)}, 			limits = {min = 1, max = 1}},
 	},
 	girl_walrus = {
-		{product = "walrus_beartrap", 		ingredients = {Ingredient("houndstooth", 4)}, 	limits = {min = 1, max = 3}, chance = 1},
-		{product = "trap_teeth", 			ingredients = {Ingredient("flint", 2)}, 		limits = {min = 1, max = 5}, chance = 1},
-		{product = "sewing_kit", 			ingredients = {Ingredient("boneshard", 3)}, 	limits = {min = 1, max = 1}, chance = 0.5},
-		{product = "beefalowool", 			ingredients = {Ingredient("saltrock", 2)}, 		limits = {min = 1, max = 6}},
-		{product = "pigskin", 				ingredients = {Ingredient("saltrock", 4)}, 		limits = {min = 1, max = 4}},
-		{product = "polarbearfur", 			ingredients = {Ingredient("saltrock", 6)}, 		limits = {min = 1, max = 2}},
-		{product = "steelwool", 			ingredients = {Ingredient("saltrock", 20)}, 	limits = {min = 1, max = 1}},
-		{product = "saltrock", 				ingredients = {Ingredient("beefalowool", 1)}, 	limits = {min = 5, max = 10}},
-		{product = "saltrock", 				ingredients = {Ingredient("pigskin", 1)}, 		limits = {min = 5, max = 10}, numtogive = 3},
-		{product = "saltrock", 				ingredients = {Ingredient("polarbearfur", 1)}, 	limits = {min = 5, max = 10}, numtogive = 5},
-		--{product = "cookingrecipecard", 	ingredients = {Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nosharedstock = true, nameoverride = "cookingrecipecard_koalefried_trunk_summer", image = "cookingrecipecard.tex"},
-		--{product = "cookingrecipecard", 	ingredients = {Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nosharedstock = true, nameoverride = "cookingrecipecard_koalefried_trunk_winter", image = "cookingrecipecard.tex"},
+		{product = "walrus_beartrap", 	ingredients = {Ingredient("houndstooth", 4)}, 	limits = {min = 1, max = 3}, chance = 1},
+		{product = "trap_teeth", 		ingredients = {Ingredient("flint", 2)}, 		limits = {min = 1, max = 5}, chance = 1},
+		{product = "sewing_kit", 		ingredients = {Ingredient("boneshard", 3)}, 	limits = {min = 1, max = 1}, chance = 1},
+		{product = "beefalowool", 		ingredients = {Ingredient("saltrock", 2)}, 		limits = {min = 1, max = 6}, chance = 1},
+		{product = "pigskin", 			ingredients = {Ingredient("saltrock", 4)}, 		limits = {min = 1, max = 4}, chance = 1},
+		{product = "polarbearfur", 		ingredients = {Ingredient("saltrock", 6)}, 		limits = {min = 1, max = 2}, chance = 1},
+		{product = "steelwool", 		ingredients = {Ingredient("saltrock", 20)}, 	limits = {min = 1, max = 1}},
+		{product = "saltrock", 			ingredients = {Ingredient("beefalowool", 1)}, 	limits = {min = 5, max = 10}},
+		{product = "saltrock", 			ingredients = {Ingredient("pigskin", 1)}, 		limits = {min = 5, max = 10}, numtogive = 3},
+		{product = "saltrock", 			ingredients = {Ingredient("polarbearfur", 1)}, 	limits = {min = 5, max = 10}, numtogive = 5},
+		{product = "cookingrecipecard", ingredients = {Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nosharedstock = true, nameoverride = "cookingrecipecard_koalefried_trunk_summer", image = "cookingrecipecard.tex"},
+		{product = "cookingrecipecard", ingredients = {Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nosharedstock = true, nameoverride = "cookingrecipecard_koalefried_trunk_winter", image = "cookingrecipecard.tex"},
 	},
 }
-
-if HasPassedCalendarDay(10) then
-table.insert(POLARWALRUS_TRADEDATA, {product = "cookingrecipecard", 	ingredients = {Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nosharedstock = true, nameoverride = "cookingrecipecard_koalefried_trunk_summer", image = "cookingrecipecard.tex"})
-table.insert(POLARWALRUS_TRADEDATA, {product = "cookingrecipecard", 	ingredients = {Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nosharedstock = true, nameoverride = "cookingrecipecard_koalefried_trunk_winter", image = "cookingrecipecard.tex"})
-end
 
 --	Events
 

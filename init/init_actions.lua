@@ -94,6 +94,41 @@ local CASTSPELLSTR = ACTIONS.CASTSPELL.strfn
 		end
 	end
 	
+local HAUNTFN = ACTIONS.HAUNT.fn -- Ghost can plow High Snow
+	ACTIONS.HAUNT.fn = function(act, ...)
+		local act_pos = act:GetActionPoint()
+		local plowed = false
+		
+		if act_pos and act.target == nil then
+			local iscanadian = act.doer and act.doer:HasTag("polite")
+			local duration = TUNING.POLARPLOW_BLOCKER_DURATION * (iscanadian and TUNING.POLARPLOW_BLOCKER_CANADIAN_MULT or 1)
+			
+			SpawnPolarSnowBlocker(act_pos, TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, act.doer)
+			local fx = SpawnPrefab("polar_splash_large")
+			fx.Transform:SetPosition(act_pos.x, act_pos.y, act_pos.z)
+			
+			if act.doer and act.doer.SoundEmitter then
+				act.doer.SoundEmitter:PlaySound("polarsounds/common/snow_plow")
+			end
+			
+			plowed = true
+		end
+		
+		return HAUNTFN(act, ...) or plowed
+	end
+	
+local HAUNTSTR_OVERRIDE = ACTIONS.HAUNT.stroverridefn
+	ACTIONS.HAUNT.stroverridefn = function(act, ...)
+		local act_pos = act:GetActionPoint()
+		if act_pos and TheWorld.Map:IsPolarSnowAtPoint(act_pos.x, act_pos.y, act_pos.z, true) then
+			return STRINGS.ACTIONS.POLARPLOW_GHOST
+		end
+		
+		if HAUNTSTR_OVERRIDE then
+			return HAUNTSTR_OVERRIDE(act, ...)
+		end
+	end
+	
 local MURDERFN = ACTIONS.MURDER.fn -- NOTE: Wack, but vanilla has nothing that tells an entity directly that it got murdered... needed for snowfleas biting from any inv/container
 	ACTIONS.MURDER.fn = function(act, ...)
 		local murdered = act.invobject or act.target
@@ -104,19 +139,19 @@ local MURDERFN = ACTIONS.MURDER.fn -- NOTE: Wack, but vanilla has nothing that t
 		return MURDERFN(act, ...)
 	end
 	
-local TURNONSTR = ACTIONS.TURNON.stroverridefn
+local TURNONSTR_OVERRIDE = ACTIONS.TURNON.stroverridefn
 	ACTIONS.TURNON.stroverridefn = function(act, ...)
 		local target = act.invobject or act.target
 		if target and target:HasTag("snowglobe") then
 			return STRINGS.ACTIONS.SNOWGLOBE
 		end
 		
-		if TURNONSTR then
-			return TURNONSTR(act, ...)
+		if TURNONSTR_OVERRIDE then
+			return TURNONSTR_OVERRIDE(act, ...)
 		end
 	end
 	
-local BAITFN = ACTIONS.BAIT.fn
+local BAITFN = ACTIONS.BAIT.fn -- "Mines" can't be baited, only traps, our beartraps are a... mine, but we want to use bait action for disarming
 	ACTIONS.BAIT.fn = function(act, ...)
 		if act.invobject and act.target and act.target:HasTag("walrus_beartrap") and act.doer.components.inventory then
 			local bait = act.doer.components.inventory:RemoveItem(act.invobject)
@@ -134,7 +169,7 @@ local BAITFN = ACTIONS.BAIT.fn
 		return BAITFN(act, ...)
 	end
 	
-local DEPLOYDIST = ACTIONS.DEPLOY.extra_arrive_dist
+local DEPLOYDIST = ACTIONS.DEPLOY.extra_arrive_dist -- Allows to place beartraps from a little bit further away
 	ACTIONS.DEPLOY.extra_arrive_dist = function(doer, dest, bufferedaction, ...)
 		local dist = DEPLOYDIST(doer, dest, bufferedaction, ...) or 0
 		local invobject = bufferedaction and bufferedaction.invobject or nil
@@ -175,7 +210,7 @@ local oldcombat = COMPONENT_ACTIONS.SCENE.combat
 			oldcombat(inst, doer, actions, right, ...)
 		end
 	end
-
+	
 local oldcontainer = COMPONENT_ACTIONS.SCENE.container -- Needed for controller support
 	COMPONENT_ACTIONS.SCENE.container = function(inst, doer, actions, right, ...)
 		if right and inst:HasTag("snowshack") and inst.replica.container and inst.replica.container:IsFull() then

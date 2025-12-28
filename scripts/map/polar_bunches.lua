@@ -36,7 +36,7 @@ local Bunches = {
 					
 					local tile = world:GetTile(x, z)
 					if tile == WORLD_TILES.POLAR_SNOW or tile == WORLD_TILES.POLAR_ICE or tile == WORLD_TILES.OCEAN_POLAR then
-						return (not HasPassedCalendarDay(2) or math.random() < 0.8) and "rock_ice" or "boat_ice_item_worldgen"
+						return math.random() < 0.8 and "rock_ice" or "boat_ice_item_worldgen"
 					end
 				end
 			end

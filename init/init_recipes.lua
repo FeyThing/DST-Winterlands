@@ -62,9 +62,7 @@ PolarRecipe("polar_dryice", 		{Ingredient("ice", 6), Ingredient(TECH_INGREDIENT.
 --	Tools / Weapons
 PolarRecipe("polar_spear", 			{Ingredient("ice", 1), Ingredient("twigs", 2)}, 										TECH.LOST, 			nil, 		{"WEAPONS"}, {"spear_wathgrithr_lightning"})
 PolarRecipe("trap_polarteeth", 		{Ingredient("ice", 1), Ingredient("cutstone", 1), Ingredient("polarwargstooth", 1)}, 	TECH.SCIENCE_TWO, 	nil, 		{"WEAPONS"}, {"trap_teeth"})
-if HasPassedCalendarDay(21) then
 PolarRecipe("winters_fists", 		{Ingredient("emperor_egg", 2), Ingredient("polar_dryice", 2)}, 							TECH.LOST, 			nil, 		{"WEAPONS", "SUMMER"}, {"wathgrithr_shield", "icehat"})
-end
 
 --	Armor / Clothing
 PolarRecipe("armorpolar", 			{Ingredient("polarbearfur", 3), Ingredient("pigskin", 1)}, 								TECH.SCIENCE_TWO, 	nil, 		{"ARMOUR", "WINTER"}, {"armor_bramble", "raincoat"})
@@ -76,9 +74,7 @@ PolarRecipe("polaricepack", 		{Ingredient("polar_dryice", 1), Ingredient("bluege
 
 --	Boating / Fishing
 PolarRecipe("polarice_plow_item", 	{Ingredient("log", 3), Ingredient("cutstone", 1), Ingredient("mole", 1)}, 	TECH.SEAFARING_ONE, 	nil, 				{"FISHING", "WINTER"}, {"ocean_trawler_kit", "winterometer"})
-if HasPassedCalendarDay(2) then
 PolarRecipe("boat_ice_item", 		{Ingredient("polar_dryice", 1)}, 											TECH.SEAFARING_ONE, 	{numtogive = 8}, 	{"SEAFARING"}, {"flotationcushion"})
-end
 
 --	Decor / Structure
 PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 2), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 																							{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})
@@ -86,9 +82,7 @@ PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryi
 PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_underrock"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 																				{"DECOR"}, {"turf_dragonfly"})
 PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 																				{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
-if HasPassedCalendarDay(23) then
 PolarRecipe("polarheadstick", 		{Ingredient("twigs", 4)}, 																	TECH.LOST, 				{placer = "polarheadstick_placer", min_spacing = 0.9, nameoverride = "polarheadstick_name"}, 	{"DECOR"}, {"sewing_mannequin"})
-end
 
 PolarRecipe("chesspiece_emperor_penguin_fruity_builder", 	{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_fruity.tex"}, 	{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})
 PolarRecipe("chesspiece_emperor_penguin_juggle_builder", 	{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_juggle.tex"}, 	{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})
@@ -103,9 +97,7 @@ PolarRecipe("wintercooking_polarcrablegs",	{Ingredient("wintersfeastfuel", 1), I
 --	Survivors
 local function pocketwatch_nodecon(inst) return not inst:HasTag("pocketwatch_inactive") end
 
-if HasPassedCalendarDay(4) then
 PolarRecipe("pocketwatch_polar", 		{Ingredient("pocketwatch_parts", 2), Ingredient("bluegem_shards", 3), Ingredient("polarwargstooth", 2)}, 	TECH.SCIENCE_TWO, 			{builder_tag = "clockmaker", no_deconstruction = pocketwatch_nodecon}, 	{"CHARACTER", "ARMOUR"}, {"pocketwatch_portal", "wathgrithr_shield"})
-end
 PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 													TECH.ROBOTMODULECRAFT_ONE, 	{builder_tag = "upgrademoduleowner", nounlock = false}, 				{"CHARACTER", "MAGIC"}, {"wx78module_light", "nightmarefuel"})
 
 --	[ 	Crafting Station	]	--
@@ -115,9 +107,7 @@ PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("char
 PolarRecipe("polaramulet_builder", 			{Ingredient("rope", 3)}, 									TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 PolarRecipe("polar_fishingrod",				{Ingredient("smallmeat", 2)}, 								TECH.POLARAMULET_STATION, 	{product = "fishingrod", nounlock = true, image = "fishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 					{"CRAFTING_STATION"})
 PolarRecipe("polar_oceanfishingrod",		{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 		TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", nounlock = true, image = "oceanfishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 		{"CRAFTING_STATION"})
-if HasPassedCalendarDay(21) then
 PolarRecipe("winters_fists_blueprint", 		{Ingredient("papyrus", 1), Ingredient("emperor_egg", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, image = "blueprint_rare.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
-end
 
 PolarRecipe("polarcrownhat", 				{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})
 PolarRecipe("frostwalkeramulet", 			{Ingredient("bluegem_shards", 3), Ingredient("bluegem_overcharged", 1)}, 									TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"MAGIC"}, {"blueamulet"})

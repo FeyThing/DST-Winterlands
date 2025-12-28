@@ -122,8 +122,8 @@ AddRoom("PolarIsland_FloeField", {
 	tags = {"ForceDisconnected"},
 	contents = {
 		countprefabs = {
-			polarfish_shoalspawner_spawner_ice = function() return HasPassedCalendarDay(8) and 1 or 0 end,
-			rock_ice_spawner_polar = function() return (HasPassedCalendarDay(8) and math.random() < 0.4) and 1 or 0 end,
+			polarfish_shoalspawner_spawner_ice = 1,
+			rock_ice_spawner_polar = function() return math.random() < 0.4 and 1 or 0 end,
 		},
 		
 		distributepercent = 0.03,

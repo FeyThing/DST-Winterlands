@@ -223,11 +223,7 @@ local function SetHost(inst, host, kick, given)
 		if inst.components.health then
 			inst.components.health:StopRegen()
 		end
-		if inst.components.stackable == nil then
-			inst:AddComponent("stackable")
-			inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
-			inst.skinname = nil
-		end
+		inst.skinname = nil
 		
 		inst:PushEvent("fleahostkick", {host = inst._host})
 		inst._host = nil
@@ -281,7 +277,6 @@ local function SetHost(inst, host, kick, given)
 	
 	local fleapack = inst.components.inventoryitem and inst.components.inventoryitem.owner
 	if not (fleapack and fleapack.components.upgradeable and fleapack.components.upgradeable:GetStage() >= 2) then
-		inst:RemoveComponent("stackable")
 		inst.skinname = "unstackable_flea"
 	end
 	
@@ -527,7 +522,6 @@ local function HostingInit(inst)
 	
 	local container = inst.components.inventoryitem.owner
 	if inst._host and not (container and container:HasTag("fleapack") and container.components.upgradeable and container.components.upgradeable:GetStage() >= 2) then
-		inst:RemoveComponent("stackable")
 		inst.skinname = "unstackable_flea"
 	end
 	

@@ -8,9 +8,9 @@ end
 FINAL_ADVENT_DAY = 25
 
 CALENDAR_DEV_SCOREBOARD = { -- Change this, player, and not only would you be set on the naughty list for life, but you'll also be sent to hell
-	DEFAULT = 18,
+	9.31, -- Steamerclaw
+	10.86, -- ADM
+	15.50, -- Xeno
 	
-	XENO = 15.50,
-	ADM = 10.86,
-	STEAMERCLAW = 9.31,
+	18, -- Default
 }

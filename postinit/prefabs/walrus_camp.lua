@@ -38,7 +38,7 @@ local function CanSpawn(inst, prefab, ...)
 		-- Can't spawn if there is already nearby support, Min-chance on first year. Doubles each year until maxed out...
 		local support_chance = has_support and 0 or (min_chance * (years < 1 and 1 or (2 ^ math.floor(years))))
 		
-		return HasPassedCalendarDay(5) and math.random() < math.min(support_chance, max_chance)
+		return math.random() < math.min(support_chance, max_chance)
 	end
 	
 	return test

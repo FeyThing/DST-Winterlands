@@ -24,7 +24,7 @@ local SPAWN_OFFSET = 2
 local SPAWN_OFFSET_ATTEMPTS = 12
 
 function PolarFleaMotherSpawner:ShouldTrigger(pt, data) -- Tests both fleakill spawn increment and spawn validity
-	if not HasPassedCalendarDay(15) or not GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) then
+	if not GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) then
 		return false
 	end
 	
@@ -93,7 +93,7 @@ function PolarFleaMotherSpawner:TrySpawn(pt, force_spawn)
 		return
 	end
 	
-	if HasPassedCalendarDay(15) and (force_spawn or math.random() < self.spawnchance) then
+	if force_spawn or math.random() < self.spawnchance then
 		local mom = SpawnPrefab("polarflea_mother")
 		mom.Transform:SetPosition(pt.x, pt.y, pt.z)
 		

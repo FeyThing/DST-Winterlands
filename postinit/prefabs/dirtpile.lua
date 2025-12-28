@@ -5,7 +5,7 @@ local tracks = {"animal_track", "dirtpile"}
 
 local function PolarInit(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
-	if HasPassedCalendarDay(7) and GetClosestPolarTileToPoint(x, 0, z, 32) then
+	if GetClosestPolarTileToPoint(x, 0, z, 32) then
 		inst.AnimState:OverrideSymbol("art", "dirt_to_polar_builds", "art")
 	end
 end
@@ -15,7 +15,7 @@ local function displaynamefn(inst, ...)
 	local name = olddisplaynamefn and olddisplaynamefn(inst, ...)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
-	if HasPassedCalendarDay(7) and (name == nil or name == STRINGS.NAMES.DIRTPILE) and z and GetClosestPolarTileToPoint(x, 0, z, 32) then
+	if (name == nil or name == STRINGS.NAMES.DIRTPILE) and z and GetClosestPolarTileToPoint(x, 0, z, 32) then
 		name = STRINGS.NAMES.DIRTPILE_POLAR
 	end
 	

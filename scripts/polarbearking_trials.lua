@@ -2,6 +2,32 @@
 
 local Generic_Participant_OnRemove
 
+local function Generic_Participant_RestoreLeader(self, participant, oldleader) -- This is the bear loyalty logic but oh I suppose it's fine for anything
+	if oldleader and oldleader:IsValid() and oldleader.components.leader then
+		oldleader.components.leader:AddFollower(participant)
+		
+		local hasboost = oldleader.components.timer and oldleader.components.timer:TimerExists("polarbear_loyaltyboost")
+		local loyalty = 50 * TUNING.POLARBEAR_LOYALTY_PER_HUNGER
+		
+		participant.components.follower:AddLoyaltyTime(loyalty * (hasboost and TUNING.POLARBEAR_LOYALTYBOOST_MULT or 1))
+		participant.components.follower.maxfollowtime = oldleader:HasTag("polite")
+			and TUNING.POLARBEAR_LOYALTY_MAXTIME + TUNING.PIG_LOYALTY_POLITENESS_MAXTIME_BONUS or TUNING.POLARBEAR_LOYALTY_MAXTIME
+	end
+	
+	self.trialdata_follower[participant] = nil
+end
+
+local function Generic_PlayerRewards(player, maxhealing_mult)
+	player:DoTaskInTime(0.5 + math.random(), function()
+		if player.sg then
+			player.sg:GoToState("challenge_bearking", true)
+		end
+		if player.components.health then
+			player.components.health:DeltaPenalty(TUNING.TRIALS_WIN_MAX_HEALING * maxhealing_mult)
+		end
+	end)
+end
+
 --  [ Fist Fight ]
 
 local FistFight_Player_OnHealthDelta
@@ -47,30 +73,32 @@ local function StartFistFightTrail(self)
 	
 	local bear = FindEntity(self.inst, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, function(guy)
 		return not guy.components.health:IsDead()
-	end, { "bear" }, { "bear_major", "INLIMBO" })
+	end, {"bear"}, {"bear_major", "INLIMBO"})
 	
 	if bear == nil then
 		return
 	end
 	
-	self.trialdata.participants = { [bear] = true }
+	self.trialdata.participants = {[bear] = true}
 	self.trialdata.result_announced = false
 	
-	bear:AddTag("trial_participator")
 	bear.trialdata = self.trialdata
+	bear:AddTag("trial_participator")
+	if bear.sg then
+		bear.sg:GoToState("abandon")
+	end
 	
 	if bear.components.timer:TimerExists("rageover") then -- Calm them down if they're enraged
 		bear.components.timer:SetTimeLeft("rageover", 0)
 	else
 		bear:SetEnraged(false)
 	end
-	
 	if bear.components.health then
 		bear.components.health:SetPercent(1)
 	end
-	
 	if bear.components.follower and bear.components.follower.leader then
-		bear.components.follower:StopLeashing()
+		self.trialdata_follower[bear] = {leader = bear.components.follower.leader}
+		bear.components.follower:StopFollowing()
 	end
 	
 	bear:ListenForEvent("attacked", FistFight_Bear_OnAttacked)
@@ -98,11 +126,17 @@ local function EndFistFightTrail(self, reason)
 		participant:RemoveEventCallback("attacked", FistFight_Bear_OnAttacked)
 		participant:RemoveEventCallback("healthdelta", FistFight_Bear_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
 		participant.trialdata = nil
+		
 		participant.components.health:SetInvincible(true)
 		participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
 		
 		participant.components.combat:DropTarget()
+	end
+	
+	for follower, data in pairs(self.trialdata_follower) do
+		Generic_Participant_RestoreLeader(self, follower, data.leader)
 	end
 end
 
@@ -110,12 +144,16 @@ local function OnDisqualifyFistFightTrial(self, participant)
 	if self.trialdata.players_left[participant] then
 		participant:RemoveEventCallback("healthdelta", FistFight_Player_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
 		participant.trialdata = nil
 	elseif self.trialdata.participants[participant] then
 		participant:RemoveEventCallback("attacked", FistFight_Bear_OnAttacked)
 		participant:RemoveEventCallback("healthdelta", FistFight_Bear_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
+		
 		participant.trialdata = nil
+		
 		participant.components.health:SetInvincible(true)
 		participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
 		
@@ -124,6 +162,8 @@ local function OnDisqualifyFistFightTrial(self, participant)
 end
 
 local function WinFistFightTrial(self, player)
+	Generic_PlayerRewards(player, 1)
+	
 	if player.components.timer then
 		if player.components.timer:TimerExists("polarbear_loyaltyboost") then
 			player.components.timer:SetTimeLeft("polarbear_loyaltyboost", TUNING.POLARBEAR_LOYALTYBOOST_DURATION)
@@ -191,7 +231,7 @@ local function StartDuoFightTrail(self)
 	end
 	
 	local x, y, z = self.inst.Transform:GetWorldPosition()
-	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, { "bear" }, { "bear_major", "INLIMBO" })
+	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, {"bear"}, {"bear_major", "INLIMBO"})
 	
 	if #bears < 2 then
 		return
@@ -206,22 +246,24 @@ local function StartDuoFightTrail(self)
 		end
 		
 		self.trialdata.participants[bear] = true
-		bear:AddTag("trial_participator")
 		
 		bear.trialdata = self.trialdata
+		bear:AddTag("trial_participator")
+		if bear.sg then
+			bear.sg:GoToState("abandon")
+		end
 		
 		if bear.components.timer:TimerExists("rageover") then -- Calm them down if they're enraged
 			bear.components.timer:SetTimeLeft("rageover", 0)
 		else
 			bear:SetEnraged(false)
 		end
-		
 		if bear.components.health then
 			bear.components.health:SetPercent(1)
 		end
-		
 		if bear.components.follower and bear.components.follower.leader then
-			bear.components.follower:StopLeashing()
+			self.trialdata_follower[bear] = {leader = bear.components.follower.leader}
+			bear.components.follower:StopFollowing()
 		end
 		
 		--bear:ListenForEvent("attacked", DuoFight_Bear_OnAttacked)
@@ -250,7 +292,9 @@ local function EndDuoFightTrail(self, reason)
 		--participant:RemoveEventCallback("attacked", DuoFight_Bear_OnAttacked)
 		participant:RemoveEventCallback("healthdelta", DuoFight_Bear_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
 		participant.trialdata = nil
+		
 		participant.components.health:SetInvincible(true)
 		participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
 		
@@ -262,20 +306,28 @@ local function EndDuoFightTrail(self, reason)
 		
 		participant.components.combat:DropTarget()
 	end
+	
+	for follower, data in pairs(self.trialdata_follower) do
+		Generic_Participant_RestoreLeader(self, follower, data.leader)
+	end
 end
 
 local function OnDisqualifyDuoFightTrial(self, participant)
 	if self.trialdata.players_left[participant] then
 		participant:RemoveEventCallback("healthdelta", DuoFight_Player_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
 		participant.trialdata = nil
 	elseif self.trialdata.participants[participant] then
 		--participant:RemoveEventCallback("attacked", DuoFight_Bear_OnAttacked)
 		participant:RemoveEventCallback("healthdelta", DuoFight_Bear_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
 		participant.trialdata = nil
+		
 		participant.components.health:SetInvincible(true)
 		participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
+		
 		participant.nearby_trial = self.inst
 		participant:AddTag("trial_spectator")
 		
@@ -298,24 +350,28 @@ local function DuoGetRewards(self, player) -- TODO: this is very temp and probab
 	if IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random() < 0.5 then
 		table.insert(items, SpawnPrefab(GetRandomPolarWinterOrnament()))
 	end
-	
 	table.insert(items, SpawnPrefab(math.random() <= 0.5 and "meat" or "smallmeat"))
 	table.insert(items, SpawnPrefab(math.random() <= 0.5 and "fishmeat" or "fishmeat_small"))
-	if math.random() < 0.33 then
+	if math.random() <= 0.5 then
 		table.insert(items, SpawnPrefab(math.random() <= 0.5 and "meat" or "smallmeat"))
 	end
-	if math.random() < 0.33 then
+	if math.random() <= 0.5 then
 		table.insert(items, SpawnPrefab(math.random() <= 0.5 and "fishmeat" or "fishmeat_small"))
 	end
-	
-	if math.random() < 0.33 then
+	if math.random() <= 0.5 then
+		table.insert(items, SpawnPrefab("polarbearfur"))
+	end
+	if math.random() <= 0.5 then
+		table.insert(items, SpawnPrefab("hambat"))
+	end
+	if math.random() <= 0.33 then
 		local r = math.random()
 		table.insert(items, SpawnPrefab((r <= 0.33 and "oceanfishinglure_spoon_red")
 			or (r <= 0.66 and "oceanfishinglure_spoon_green")
 			or "oceanfishinglure_spoon_blue"))
 	end
 	
-	if HasPassedCalendarDay(23) and player and player.components.builder and not player.components.builder:KnowsRecipe("polarheadstick") and player.components.builder:CanLearn("polarheadstick") and
+	if player and player.components.builder and not player.components.builder:KnowsRecipe("polarheadstick") and player.components.builder:CanLearn("polarheadstick") and
 		not (player.components.timer and player.components.timer:TimerExists("polarheadstick_reward_cooldown")) then
 		
 		if player.components.timer then
@@ -328,6 +384,8 @@ local function DuoGetRewards(self, player) -- TODO: this is very temp and probab
 end
 
 local function WinDuoFightTrial(self, player)
+	Generic_PlayerRewards(player, 2)
+	
 	if self.trialdata.result_announced then
 		return
 	end
@@ -358,7 +416,7 @@ local function WinDuoFightTrial(self, player)
 		local take_time = GetTime() + TUNING.POLARBEAR_IGNORE_TREASURE_TIME
 		
 		for i, item in ipairs(items) do
-			item.Transform:SetPosition(x, y, z)
+			item.Transform:SetPosition(x, y + 4, z)
 			item._tooth_trade_taketime = take_time
 			
 			launchitem(item, angle)
@@ -406,16 +464,20 @@ local function SpawnRumbleWave(self)
 		self.trialdata.participants[bear] = true
 		self.trialdata.active_count = self.trialdata.active_count + 1
 		
-		bear:AddTag("trial_participator")
 		bear.trialdata = self.trialdata
+		bear:AddTag("trial_participator")
+		if bear.sg then
+			bear.sg:GoToState("abandon")
+		end
+		
+		if bear.components.follower and bear.components.follower.leader then
+			self.trialdata_follower[bear] = {leader = bear.components.follower.leader}
+			bear.components.follower:StopFollowing()
+		end
 		
 		bear.components.health:SetPercent(1)
 		bear.components.combat:DropTarget()
 		bear.components.combat:TryRetarget()
-		
-		if bear.components.follower and bear.components.follower.leader then
-			bear.components.follower:StopLeashing()
-		end
 		
 		bear:ListenForEvent("healthdelta", AllOutRumble_Bear_OnHealthDelta)
 		bear:ListenForEvent("onremove", Generic_Participant_OnRemove)
@@ -476,11 +538,17 @@ local function EndAllOutRumbleTrail(self, reason)
 	for participant, _ in pairs(self.trialdata.participants) do
 		participant:RemoveEventCallback("healthdelta", AllOutRumble_Bear_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
+		
 		participant.trialdata = nil
+		
 		participant.components.health:SetInvincible(true)
 		participant:DoTaskInTime(2, function(inst) inst.components.health:SetInvincible(false) end)
 		
 		participant.components.combat:DropTarget()
+	end
+	
+	for follower, data in pairs(self.trialdata_follower) do
+		Generic_Participant_RestoreLeader(self, follower, data.leader)
 	end
 end
 
@@ -513,6 +581,8 @@ local function OnDisqualifyAllOutRumbleTrial(self, participant)
 end
 
 local function WinAllOutRumbleTrial(self, player)
+	Generic_PlayerRewards(player, 3)
+	
 	player:AddDebuff("buff_ursamajor", "buff_ursamajor")
 	
 	if self.trialdata.result_announced then
@@ -563,7 +633,7 @@ end
 --					 will always run for each player still present in the trial when it ends
 --	 player_lose_fn - function that runs whenever a player loses a trial, this can happen during a trial and will not necessarily end it
 --					  as there may be more players still present in it
--- }
+--}
 
 local trials = {
 	trial_fist_fight = {

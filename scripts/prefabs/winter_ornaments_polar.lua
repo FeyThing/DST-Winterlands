@@ -4,22 +4,24 @@ local LIGHT_DATA = {
 	{colour = Vector3(1, 0.1, 0.1)},
 }
 
-function GetAllPolarWinterOrnamentPrefabs()
-	local decor = {
+function GetAllPolarWinterOrnamentPrefabs(basic_only)
+	local ornaments = {
 		"winter_ornament_polar_icicle_blue",
 		"winter_ornament_polar_icicle_white",
-		
-		"winter_ornament_boss_emperor_penguin",
-		"winter_ornament_boss_polarflea",
 	}
 	
-	return decor
+	if not basic_only then
+		table.insert(ornaments, "winter_ornament_boss_emperor_penguin")
+		table.insert(ornaments, "winter_ornament_boss_polarflea")
+	end
+	
+	return ornaments
 end
 
 function GetRandomPolarWinterOrnament()
-	local decor = GetAllPolarWinterOrnamentPrefabs()
+	local ornaments = GetAllPolarWinterOrnamentPrefabs(true)
 	
-    return decor[math.random(#decor)]
+    return ornaments[math.random(#ornaments)]
 end
 
 local function UpdateLight(inst, data)

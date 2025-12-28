@@ -183,16 +183,19 @@ local states = {
 		name = "challenge_bearking",
 		tags = {"busy", "canrotate"},
 		
-		onenter = function(inst)
-			inst.AnimState:PlayAnimation("emote_flex")
+		onenter = function(inst, is_over)
+			inst.AnimState:PlayAnimation(is_over and "emote_fistshake" or "emote_flex")
 			inst.components.locomotor:Stop()
 			
 			inst:SetCameraZoomed(true)
+			inst.sg.statemem.is_over = is_over
 		end,
 		
 		timeline = {
 			TimeEvent(6 * FRAMES, function(inst)
-				inst:PerformBufferedAction()
+				if not inst.sg.statemem.is_over then
+					inst:PerformBufferedAction()
+				end
 			end),
 		},
 		

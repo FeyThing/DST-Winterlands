@@ -31,7 +31,6 @@ end
 
 local SNOW_ANGEL_TAGS = {"fx", "highsnowangel"}
 
-if HasPassedCalendarDay(3) then
 AddModUserCommand("Winterlands", "snowangel", {
 	aliases = {"angel", "highsnow", "snow"},
 	prettyname = function(command) return string.format(STRINGS.UI.BUILTINCOMMANDS.EMOTES.PRETTYNAMEFMT, FirstToUpper(command.name)) end,
@@ -89,7 +88,6 @@ AddModUserCommand("Winterlands", "snowangel", {
 		end
 	end,
 })
-end
 
 --	In case Modded Skin API whitelisting breaks once more
 

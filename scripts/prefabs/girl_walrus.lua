@@ -20,7 +20,7 @@ local brain = require "brains/girl_walrusbrain"
 SetSharedLootTable("girl_walrus", {
 	{"goldnugget", 		0.8},
 	{"meat", 			1},
-	{"walrus_bagpipe", 	HasPassedCalendarDay(6) and 1 or 0},
+	{"walrus_bagpipe", 	1},
 	{"walrus_trap", 	0.5},
 	{"walrus_tusk", 	0.5},
 })

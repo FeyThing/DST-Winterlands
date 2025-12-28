@@ -169,4 +169,17 @@ table.insert(prefs, CreatePrefabSkin("ms_antler_tree_stick_holly", {
 	},
 }))
 
+table.insert(prefs, CreatePrefabSkin("ms_glasscutter_polar", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/glasscutter_polar.zip"),
+		Asset("PKGREF", "anim/dynamic/glasscutter_polar.dyn"),
+	},
+	base_prefab = "glasscutter",
+	type = "item",
+	build_name_override = "glasscutter_polar",
+	rarity = "ModLocked",
+	condition = {no_gift = true},
+	skin_tags = {"POLAR", "GLASSCUTTER", "CRAFTABLE"},
+}))
+
 return unpack(prefs)

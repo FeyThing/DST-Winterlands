@@ -70,7 +70,7 @@ local tree_rocks = {"tree_rock1", "tree_rock2"}
 
 local function PolarInit(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
-	if HasPassedCalendarDay(7) and GetClosestPolarTileToPoint(x, 0, z, 32) then
+	if GetClosestPolarTileToPoint(x, 0, z, 32) then
 		inst.AnimState:OverrideSymbol("tree_ground_rocks", "dirt_to_polar_builds", "tree_ground_rocks")
 	end
 end

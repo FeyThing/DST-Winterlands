@@ -4,6 +4,7 @@ local TrialsHolder = Class(function(self, inst)
 	self.inst = inst
 	
 	self.trialdata = nil
+	self.trialdata_follower = {}
 	self.canstarttrial = nil
 end)
 

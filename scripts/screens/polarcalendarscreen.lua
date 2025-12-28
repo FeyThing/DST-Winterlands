@@ -217,6 +217,13 @@ local clickables = {
 		h = 0,
 		tooltip = STRINGS.POLAR_CALENDAR.SPEEDRUN_REWARD_TOOLTIP,
 	},
+	{
+		x = 330,
+		y = 70,
+		w = 0,
+		h = 0,
+		tooltip = STRINGS.POLAR_CALENDAR.LEADERBOARDTOP_REWARD_TOOLTIP,
+	},
 }
 
 local function MakeIcon(id, tooltip, self)
@@ -528,8 +535,12 @@ function PolarCalendarScreen:RedrawIcons()
 		self.icons[i] = icon
 	end
 	
+	--	Speedrun reward icons
+	
 	local speedrun_icon1 = self.speedrun_icons[1]
-	local won_speedrun1 = self.speedrun_besttime and self.speedrun_besttime < CALENDAR_DEV_SCOREBOARD.DEFAULT
+	local speedrun_icon2 = self.speedrun_icons[2]
+	local won_speedrun1 = self.speedrun_besttime and self.speedrun_besttime < CALENDAR_DEV_SCOREBOARD[#CALENDAR_DEV_SCOREBOARD]
+	local won_speedrun2 = self.speedrun_besttime and self.speedrun_besttime < CALENDAR_DEV_SCOREBOARD[1]
 	
 	if speedrun_icon1 == nil then
 		speedrun_icon1 = MakeIcon(26, self.tooltip, self)
@@ -552,8 +563,32 @@ function PolarCalendarScreen:RedrawIcons()
 		speedrun_icon1.shown = true
 	end
 	
+	if speedrun_icon2 == nil then
+		speedrun_icon2 = MakeIcon(27, self.tooltip, self)
+		speedrun_icon2:GetAnimState():PlayAnimation("icon27_idle")
+		speedrun_icon2:SetVAnchor(ANCHOR_BOTTOM)
+		speedrun_icon2:SetHAnchor(ANCHOR_LEFT)
+		
+		if not won_speedrun2 then
+			speedrun_icon2:Hide()
+		else
+			speedrun_icon2.shown = true
+		end
+		
+		self.root:AddChild(speedrun_icon2)
+		table.insert(self.speedrun_icons, speedrun_icon2)
+	elseif won_speedrun2 and not speedrun_icon2.shown then
+		speedrun_icon2:GetAnimState():PlayAnimation("icon26")
+		
+		speedrun_icon2:Show()
+		speedrun_icon2.shown = true
+	end
+	
 	if won_speedrun1 and CLIENT_MOD_RPC["ModdedSkins"] and ThePlayer then
 		SendModRPCToClient(GetClientModRPC("ModdedSkins", "UnlockModdedSkin"), ThePlayer.userid, "ms_antler_tree_stick_holly")
+	end
+	if won_speedrun2 and CLIENT_MOD_RPC["ModdedSkins"] and ThePlayer then
+		SendModRPCToClient(GetClientModRPC("ModdedSkins", "UnlockModdedSkin"), ThePlayer.userid, "ms_glasscutter_polar")
 	end
 end
 

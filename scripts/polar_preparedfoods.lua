@@ -21,7 +21,7 @@ local polar_preparedfoods = {
 	},
 	
 	filet_o_flea = {
-		test = function(cooker, names, tags) return HasPassedCalendarDay(12) and tags.monster and tags.monster >= 1 and names.polarflea end,
+		test = function(cooker, names, tags) return tags.monster and tags.monster >= 1 and names.polarflea end,
 		hunger = TUNING.CALORIES_SMALL * 4,
 		health = -TUNING.HEALING_MED,
 		sanity = -TUNING.SANITY_MEDLARGE,

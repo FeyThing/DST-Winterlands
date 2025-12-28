@@ -363,6 +363,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Actions
 	STRINGS.ACTIONS.POLARAMULET_CRAFT = "Exchange"
 	STRINGS.ACTIONS.POLARPLOW = "Plow"
+	STRINGS.ACTIONS.POLARPLOW_GHOST = "PlooOOoow"
 	STRINGS.ACTIONS.SNOWGLOBE = "Shake!"
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS = "Smash"
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_1 = "Snowball!"
@@ -497,7 +498,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 			title = "Holly Branch Skin",
 			str = "Nice clicking there! Here, a little bonus gift on us!"
 		},
-		STEAMER_REWARD_TOOLTIP = {
+		LEADERBOARDTOP_REWARD_TOOLTIP = {
 			title = "Ice Cutter Skin",
 			str = "WELL DAMN! Take this, and go take a cold shower please."
 		},
@@ -590,6 +591,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.WALRUSTRADE_BLOWDART_SLEEP = "(Bwoorp noises)"
 	RECIPE_DESC.WALRUSTRADE_FLINT = "(Cleans monocle)"
 	RECIPE_DESC.WALRUSTRADE_GOLDNUGGET = "(Impressed whistle)"
+	RECIPE_DESC.WALRUSTRADE_DESICCANT = "(Rubs flippers)"
+	RECIPE_DESC.WALRUSTRADE_NONSLIPGRIT = "(Monoculour eyeroll)"
 	RECIPE_DESC.WALRUSTRADE_WALRUSHAT = "(Clicks of approval)"
 	RECIPE_DESC.WALRUSTRADE_SEWING_KIT = "(Miscontent clicks)"
 	RECIPE_DESC.WALRUSTRADE_COOKINGRECIPECARD = "(Pinch flippers)"

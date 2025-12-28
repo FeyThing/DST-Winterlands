@@ -283,7 +283,7 @@ return Class(function(self, inst)
 	end
 	
 	function self:TrySpawnCastleAtColony(colony)
-		if not HasPassedCalendarDay(19) or self.ice_castle_pos or not TUNING.SPAWN_EMPEROR_PENGUIN then
+		if self.ice_castle_pos or not TUNING.SPAWN_EMPEROR_PENGUIN then
 			return
 		end
 		

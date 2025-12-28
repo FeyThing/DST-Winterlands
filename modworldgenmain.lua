@@ -189,7 +189,7 @@ ENV.AddGlobalClassPostConstruct("map/storygen", "Story", function(self)
 			end
 			tagdata["PolarTusks"] = false
 			
-			return "STATIC", (HasPassedCalendarDay(13) and math.random() < 0.5) and "PolarTuskCamp" or "PolarTuskTown"
+			return "STATIC", math.random() < 0.5 and "PolarTuskCamp" or "PolarTuskTown"
 		end
 	end
 end)

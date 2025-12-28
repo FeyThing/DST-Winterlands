@@ -90,7 +90,7 @@ PLANT_DEFS.icelettuce = {
 			revealplantname = true,
 			fullgrown = true,
 		},
-		--[[{
+		{
 			text = "oversized",
 			anim = "crop_oversized",
 			grow_anim = "grow_oversized",
@@ -113,39 +113,12 @@ PLANT_DEFS.icelettuce = {
 			stagepriority = -100,
 			is_rotten = true,
 			hidden = true,
-		},]]
+		},
 	},
 	plantregistrywidget = "widgets/redux/farmplantpage",
 	plantregistrysummarywidget = "widgets/redux/farmplantsummarywidget",
 	pictureframeanim = {anim = "idle_shiver", time = 12 * FRAMES},
 }
-
-if HasPassedCalendarDay(18) then
-	table.insert(PLANT_DEFS.icelettuce.plantregistryinfo, {
-		text = "oversized",
-		anim = "crop_oversized",
-		grow_anim = "grow_oversized",
-		revealplantname = true,
-		fullgrown = true,
-		hidden = true,
-	})
-	table.insert(PLANT_DEFS.icelettuce.plantregistryinfo, {
-		text = "rotting",
-		anim = "crop_rot",
-		grow_anim = "grow_rot",
-		stagepriority = -100,
-		is_rotten = true,
-		hidden = true,
-	})
-	table.insert(PLANT_DEFS.icelettuce.plantregistryinfo, {
-		text = "oversized_rotting",
-		anim = "crop_rot_oversized",
-		grow_anim = "grow_rot_oversized",
-		stagepriority = -100,
-		is_rotten = true,
-		hidden = true,
-	})
-end
 
 --	Changes for lettuce and other crops on island...
 
@@ -300,19 +273,6 @@ local function GrowthStagesPostInit(OLD_GROWTH_STAGES)
 							inst:RemoveTag("farm_plant_freezejoy")
 						end
 					end
-					
-					inst.no_oversized = not HasPassedCalendarDay(18)
-				end
-			end
-			
-			local OldPreGrowFn = stage.pregrowfn
-			stage.pregrowfn = function(inst, ...)
-				if OldPreGrowFn then
-					OldPreGrowFn(inst, ...)
-				end
-				
-				if inst:HasTag("farm_plant_icelettuce") then
-					inst.no_oversized = not HasPassedCalendarDay(18)
 				end
 			end
 			
@@ -329,7 +289,7 @@ end
 
 local function GetHeatFn_IceLettuce(inst)
 	local stage = (inst.components.growable and inst.components.growable.stage or 5) + (inst.is_oversized and 1 or 0)
-	if not HasPassedCalendarDay(18) or (stage <= 1 or inst:HasTag("farm_plant_killjoy")) then
+	if stage <= 1 or inst:HasTag("farm_plant_killjoy") then
 		return nil
 	end
 	
@@ -338,7 +298,7 @@ end
 
 local function PolarInit(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
-	if HasPassedCalendarDay(7) and GetClosestPolarTileToPoint(x, 0, z, 32) then
+	if GetClosestPolarTileToPoint(x, 0, z, 32) then
 		inst.AnimState:OverrideSymbol("soil01", "dirt_to_polar_builds", "soil01")
 	end
 end

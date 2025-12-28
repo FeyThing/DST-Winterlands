@@ -71,7 +71,6 @@ local prefabs = {
 	"rainometer",
 	"rock_ice",
 	"shadowworker",
-	"shovels",
 	"snowball_item",
 	"stickheads",
 	"tree_rock_data",
@@ -82,7 +81,7 @@ local prefabs = {
 	"winona_spotlight",
 	"wintersfeastcookedfoods",
 	
-	"any", -- hound, walrus, ...
+	"any", -- shovels, hound, walrus, ...
 	"bear_treasures",
 	"chesspieces_polar_materials",
 	"ents_onfreeze",

@@ -111,14 +111,13 @@ end
 
 local function OnUpgraded(inst, upgrader, item)
 	if item and item.prefab == "polarfleaeggsack" and inst.components.container then
+		inst.SoundEmitter:PlaySound("dontstarve/creatures/spider/spider_egg_sack")
 		if inst.components.fueled then
 			inst.components.fueled:SetPercent(1)
 		end
 		
 		inst.components.container:ForEachItem(function(item)
-			if item:HasTag("flea") and item.components.stackable == nil then
-				item:AddComponent("stackable")
-				item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+			if item:HasTag("flea") then
 				item.skinname = nil
 			end
         end)
@@ -164,11 +163,7 @@ local function ItemGet(inst, data)
 	local item = data and data.item
 	
 	if item and item:HasTag("flea") and inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2 then
-		if item.components.stackable == nil then
-			item:AddComponent("stackable")
-			item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
-			item.skinname = nil
-		end
+		item.skinname = nil
 	end
 end
 
@@ -176,18 +171,12 @@ local function ItemLose(inst, data)
 	
 end
 
-local function OnInit(inst) -- Refresh UI, this helps not showing fake stackable fleas on load of unupgraded pack
-	if inst.components.equippable and inst.components.equippable:IsEquipped() and inst.components.container then
-		inst.components.container:Close()
-		inst.components.container:Open()
-	end
-end
-
 local function fn()
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
+	inst.entity:AddSoundEmitter()
 	inst.entity:AddMiniMapEntity()
 	inst.entity:AddNetwork()
 	
@@ -258,9 +247,7 @@ local function fn()
 	MakeHauntableLaunchAndDropFirstItem(inst)
 	
 	inst.UpdateFleas = UpdateFleas
-	
 	inst._updatefleas = inst:DoPeriodicTask(0.5, inst.UpdateFleas)
-	inst:DoTaskInTime(0, OnInit)
 	
 	inst:ListenForEvent("itemget", ItemGet)
 	inst:ListenForEvent("itemlose", ItemLose)
