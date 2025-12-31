@@ -29,11 +29,16 @@ local function OnAnimOver(inst)
 			return guy.Physics and not guy:HasTag("walrus_beartrapped") and not (guy.sg and guy.sg:HasStateTag("nointerrupt"))
 		end, TRAP_TARGET_TAGS, TRAP_TARGET_NOT_TAGS)
 		
+		local mount = (target and target.components.rider) and target.components.rider:GetMount() or nil
 		local snared = false
-		if target and target.components.combat and target.components.health then
-			target.components.combat:GetAttacked(inst, TUNING.WALRUS_BEARTRAP_DAMAGE)
+		
+		if target then
+			if target.components.combat and target.components.health and not target.components.health:IsDead() then
+				target.components.combat:GetAttacked(inst, TUNING.WALRUS_BEARTRAP_DAMAGE)
+			end
+			target = mount or target
 			
-			if not target:HasAnyTag(TRAP_CANT_SNARE_TAGS) and not target.components.health:IsDead() and target.components.health:GetPercent() > 0 then
+			if not target:HasAnyTag(TRAP_CANT_SNARE_TAGS) and not (inst.components.health and inst.components.health:GetPercent() <= 0) then
 				snared = ((not target:HasTag("epic") or target:HasTag("bearger")) or inst._walrus_beartrap_snareable) and not inst._walrus_beartrap_notsnareable
 			end
 			inst.SoundEmitter:PlaySound("polarsounds/walrus/trap_bear_trigger")
@@ -123,16 +128,19 @@ local function DoTrapUpdate(inst, target)
 	if target and target:IsValid() then
 		local range = TUNING.WALRUS_BEARTRAP_RADIUS * TUNING.WALRUS_BEARTRAP_RADIUS
 		
-		if target._walrus_beartrap == nil or target:HasAnyTag(TRAP_CANT_SNARE_TAGS) or target:HasAnyTag(TRAP_TARGET_NOT_TAGS) or inst:GetDistanceSqToInst(target) > range then
-			inst:SetTrapTarget(target)
-			inst.AnimState:PlayAnimation("trap_pst")
-			return
-		end
-		if not target:HasTag("walrus_beartrapped") and not target:HasTag("player") then -- Not an ent with auto-struggle. Needs help from the trap !
-			if inst._autostruggle_task == nil then
-				local struggletime = math.random(TUNING.WALRUS_BEARTRAP_AUTOSTRUGGLE_TIMES.min, TUNING.WALRUS_BEARTRAP_AUTOSTRUGGLE_TIMES.max)
-				
-				inst._autostruggle_task = inst:DoTaskInTime(struggletime, inst.DoTrapStruggle, target)
+		-- Mounts are the ones being snared, but are in limbo while in use, first we wait for them to buck off the rider...
+		if not (target.components.rideable and target.components.rideable:GetRider() ~= nil) then
+			if target._walrus_beartrap == nil or target:HasAnyTag(TRAP_CANT_SNARE_TAGS) or target:HasAnyTag(TRAP_TARGET_NOT_TAGS) or inst:GetDistanceSqToInst(target) > range then
+				inst:SetTrapTarget(target)
+				inst.AnimState:PlayAnimation("trap_pst")
+				return
+			end
+			if not target:HasTag("walrus_beartrapped") and not target:HasTag("player") then -- Not an ent with auto-struggle. Needs help from the trap !
+				if inst._autostruggle_task == nil then
+					local struggletime = math.random(TUNING.WALRUS_BEARTRAP_AUTOSTRUGGLE_TIMES.min, TUNING.WALRUS_BEARTRAP_AUTOSTRUGGLE_TIMES.max)
+					
+					inst._autostruggle_task = inst:DoTaskInTime(struggletime, inst.DoTrapStruggle, target)
+				end
 			end
 		end
 		

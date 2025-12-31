@@ -130,6 +130,7 @@ local components = {
 	"preserver",
 	"regrowthmanager",
 	"repairable",
+	"rider",
 	"sandstorms",
 	"sanity",
 	"sentientaxe",

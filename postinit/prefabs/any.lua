@@ -49,6 +49,8 @@ local function WalrusOrHoundPostInit(inst)
 	end
 end
 
+--
+
 ENV.AddPrefabPostInitAny(function(inst)
 	if not TheWorld.ismastersim then
 		return

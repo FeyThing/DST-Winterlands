@@ -447,7 +447,38 @@ local function DoTerraform(inst, is_load)
 end
 
 local function UndoTerraform(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local radius = TUNING.WINTERS_FISTS_TERRAFORMER_RAD
 	
+	for ix = -radius, radius do
+		for iz = -radius, radius do
+			if (math.abs(ix * ix) + math.abs(iz * iz) <= radius * radius) and
+			   (radius - 1 == 0 or not (math.abs(ix * ix) + math.abs(iz * iz) <= (radius - 1) * (radius - 1))) then
+			   
+				local fx = x + (ix * TILE_SCALE)
+				local fz = z + (iz * TILE_SCALE)
+				
+				local width, height = TheWorld.Map:GetWorldSize()
+				local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(fx, 0, fz)
+				
+				local nx = (tx - width / 2) * TILE_SCALE
+				local nz = (ty - height / 2) * TILE_SCALE
+				
+				local current_tile = TheWorld.Map:GetTile(tx, ty)
+				
+				if current_tile == inst.tile then
+					local current_undertile = TheWorld.components.undertile:GetTileUnderneath(tx, ty)
+					
+					if current_undertile then
+						TheWorld.Map:SetTile(tx, ty, current_undertile)
+						TheWorld.components.undertile:ClearTileUnderneath(tx, ty)
+					end
+				end
+			end
+		end
+	end
+	
+	inst:Remove()
 end
 
 local function OnTimerDone(inst, data)
@@ -487,7 +518,9 @@ local function OnSave(inst, data)
 end
 
 local function OnLoad(inst, data)
-	
+	if inst.components.timer and not inst.components.timer:TimerExists("undo_terraforming") then
+		inst.components.timer:StartTimer("undo_terraforming", 10) -- This fixes when the fists couldn't actually undo terraforming, oops !
+	end
 end
 
 local function terraformer()
@@ -519,7 +552,6 @@ local function terraformer()
 	inst.UndoTerraform = UndoTerraform
 	
 	inst:AddComponent("timer")
-	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	inst:AddComponent("wateryprotection")
 	inst.components.wateryprotection.extinguishheatpercent = TUNING.FIRESUPPRESSOR_EXTINGUISH_HEAT_PERCENT
@@ -530,6 +562,8 @@ local function terraformer()
 	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	
+	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	return inst
 end

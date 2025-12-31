@@ -33,7 +33,7 @@ local LOOT = {
 		kelp = 2,
 	},
 	SUNKENCHEST_POOLS = {
-		sunkenchest_emperorstash = 1, -- TEMP?
+		--sunkenchest_emperorstash = 1,
 		sunkenchest_oceanmonument = 2
 	},
 }

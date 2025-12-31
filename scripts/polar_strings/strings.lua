@@ -148,6 +148,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Names
 	STRINGS.SKIN_NAMES.ms_antler_tree_stick_holly = "Holly Branch"
 	STRINGS.SKIN_NAMES.ms_bushhat_polar = "My-Wee-Glacier"
+	STRINGS.SKIN_NAMES.ms_glasscutter_polar = "Ice Cutter"
 	STRINGS.SKIN_NAMES.ms_goldenaxe_polar = "Goldenice Axe"
 	STRINGS.SKIN_NAMES.ms_goldenpickaxe_polar = "Goldenice Pickaxe"
 	STRINGS.SKIN_NAMES.ms_goldenshovel_polar = "Goldenice Shovel"
@@ -162,8 +163,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_NAMES.ms_loading_polarfox = "Slick in the Snow"
 	
 	--	Desc
-	STRINGS.SKIN_DESCRIPTIONS.ms_antler_tree_stick_holly = "Smash 'em (in holliday's spirit)!"
+	STRINGS.SKIN_DESCRIPTIONS.ms_antler_tree_stick_holly = "Smash 'em (in the holliday's spirit)!"
 	STRINGS.SKIN_DESCRIPTIONS.ms_bushhat_polar = "Ideal for hiding among Pengulls, less so around tumbleweeds and cacti."
+	STRINGS.SKIN_DESCRIPTIONS.ms_glasscutter_polar = "A natural replica of the Frostjaw... jaw."
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenaxe_polar = "Make trees feel the swing of winter air before your blade!"
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenpickaxe_polar = "Its icy edges hum with subterranean cold..."
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenshovel_polar = "It glints with the pale shimmer of freshly frozen ground."
