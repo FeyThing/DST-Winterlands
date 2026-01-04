@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Oh dear, they brought support this time."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Make no mistake, it can still hold a fight.",
-		ANTLER = "A fine specimen with defenses fit for the wilds.",
+		ANTLER_LOST = "Make no mistake, it can still hold a fight.",
+		GENERIC = "A fine specimen with defenses fit for the wilds.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "This specimen would be worth studying!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "I wonder how the world would look through pearly oculars."

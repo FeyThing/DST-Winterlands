@@ -46,8 +46,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Il bois être dur de vivre sans tes cornes.",
-		ANTLER = "Je préférerais rester en dehors de son chemin.",
+		ANTLER_LOST = "Il bois être dur de vivre sans tes cornes.",
+		GENERIC = "Je préférerais rester en dehors de son chemin.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "On dirait que les légendes locales étaient vraies."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Ces yeux doivent valoir une fortune !"

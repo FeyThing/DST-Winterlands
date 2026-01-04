@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Te ptaki coś knują..."
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Hmf, amator. Pokażę ci jak to się robi.",
-        ANTLER = "Wielki, śmiały, i dumny ze swojego drzewa, tak jak ja!",
+        ANTLER_LOST = "Hmf, amator. Pokażę ci jak to się robi.",
+        GENERIC = "Wielki, śmiały, i dumny ze swojego drzewa, tak jak ja!",
     }
     DESCRIBE.MOOSE_SPECTER = "Ja też tak mogę?"
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Ktoś ci kiedyś mówił, że masz piękne oczy, hę?"

@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "She's givin' me the look like I'm tonight's dinner."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Ran headfirst into trouble, huh?",
-		ANTLER = "Looks tough. Time to find out if it really is.",
+		ANTLER_LOST = "Ran headfirst into trouble, huh?",
+		GENERIC = "Looks tough. Time to find out if it really is.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "I kinda just want to observe it for now."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Bit too flashy to my liking, but it's still on the menu."

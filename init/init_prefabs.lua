@@ -11,6 +11,7 @@ PrefabFiles = {
 	"compass_polar",
 	"emperor_egg",
 	"emperor_penguin",
+	"emperor_penguin_guard",
 	"emperor_penguinhat",
 	"frostwalkeramulet",
 	"girl_walrus",

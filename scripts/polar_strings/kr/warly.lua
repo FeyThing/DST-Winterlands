@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 -- 몬스터
 
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "장식이 없어졌네.",
-		ANTLER = "훌륭한 야생 풍미가 나올 거 같은 짐승이야.",
+		ANTLER_LOST = "장식이 없어졌네.",
+		GENERIC = "훌륭한 야생 풍미가 나올 거 같은 짐승이야.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "몽 디유, 정말 예술이야!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "포아송 프레~ (신선한 생선)!"

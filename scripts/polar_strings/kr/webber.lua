@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 -- 생물
 
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "머리를 부딪혔나 봐! 불쌍한 무스...",
-        ANTLER = "생각했던 것보다 훨씬 커!",
+        ANTLER_LOST = "머리를 부딪혔나 봐! 불쌍한 무스...",
+        GENERIC = "생각했던 것보다 훨씬 커!",
     }
     DESCRIBE.MOOSE_SPECTER = "조금... 으스스해 보여."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "바다 속 보물 낚았다!"

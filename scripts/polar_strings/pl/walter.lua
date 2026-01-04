@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Myślisz, że cały pułk dałby rade pokonać Deerclopsa?"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Jak straciłeś swoje poroże? No cóż, dość smutna historia.",
-		ANTLER = "Hm. Nie wygląda tak tajemniczo! Ale, może, jakby chowało się w śniegu...",
+		ANTLER_LOST = "Jak straciłeś swoje poroże? No cóż, dość smutna historia.",
+		GENERIC = "Hm. Nie wygląda tak tajemniczo! Ale, może, jakby chowało się w śniegu...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "W-wiedziałem! Wiedziałem... od samego początku! Haha!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Hej, popatrz na te dziwne oczka!"

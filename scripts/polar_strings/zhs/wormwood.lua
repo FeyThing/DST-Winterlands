@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "教训学到了。不应该和朋友打架",
-		ANTLER = "有大树枝！",
+		ANTLER_LOST = "教训学到了。不应该和朋友打架",
+		GENERIC = "有大树枝！",
 	}
 	DESCRIBE.MOOSE_SPECTER = "树枝冷了吗？"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "闪亮的咕噜咕噜！"

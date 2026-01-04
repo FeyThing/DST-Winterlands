@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "When her pipes skirl, the whole clan unfurls."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Don't worry, my dear, they will grow back.",
-		ANTLER = "What large horns you have! Can I have them?",
+		ANTLER_LOST = "Don't worry, my dear, they will grow back.",
+		GENERIC = "What large horns you have! Can I have them?",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Most mortals don't get to see imps either, I'll have you remember."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "A prismatic swimmer from deep icy water."

@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Not too happy to make your acquaintance, madame."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "It lost its garnish.",
-		ANTLER = "A grand beast sure to yield robust, gamey flavors.",
+		ANTLER_LOST = "It lost its garnish.",
+		GENERIC = "A grand beast sure to yield robust, gamey flavors.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Mon dieu, it looks simply exquisite!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Poisson frais!"

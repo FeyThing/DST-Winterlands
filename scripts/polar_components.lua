@@ -172,7 +172,7 @@ function GetPolarWetness(inst)
 	return 0, false
 end
 
-function HasPolarDebuffImmunity(inst, ignorewaterproof)
+function HasPolarDebuffImmunity(inst, ignorewaterproof, ignoredesiccant)
 	if inst:HasTag("polarimmune") or inst:HasTag("wereplayer") or inst:HasTag("playerghost") then
 		return true
 	end
@@ -182,6 +182,14 @@ function HasPolarDebuffImmunity(inst, ignorewaterproof)
 			if v:HasTag("polarimmunity") then
 				return true, v
 			end
+		end
+		
+		local desiccant = inst.components.inventory:FindItem(function(item)
+			return item.components.moistureabsorbersource and item.components.moistureabsorbersource:GetDryingRate(0) > 0
+		end)
+		
+		if desiccant and not ignoredesiccant then
+			return true
 		end
 	end
 	

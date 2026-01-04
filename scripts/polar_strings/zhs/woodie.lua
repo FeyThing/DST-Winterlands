@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "哼，业余。让我来亲自给你示范一下。",
-		ANTLER = "他又大又威猛，对他的森林感到骄傲，就像我一样！",
+		ANTLER_LOST = "哼，业余。让我来亲自给你示范一下。",
+		GENERIC = "他又大又威猛，对他的森林感到骄傲，就像我一样！",
 	}
 	DESCRIBE.MOOSE_SPECTER = "我也可以这样做吗？"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "有人告诉过你，你的眼睛很漂亮吗？"

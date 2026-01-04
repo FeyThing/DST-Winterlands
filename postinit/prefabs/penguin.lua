@@ -62,11 +62,12 @@ end
 
 -- Penguins shouldn't die and drop their loot when drowning, make them sink (but not really)
 
+--[[NOTE: For now we'll try to use drownable... but I don't quite trust that so we may switch back!
 local function OnPolarFreeze(inst, forming)
 	if not forming then
 		inst:Remove()
 	end
-end
+end]]
 
 --	Penguins only defend each others if part of the same "herd", we don't want that in the castle or nearby guards
 
@@ -93,7 +94,9 @@ for i, v in ipairs(penguin_prefabs) do
 		end
 		
 		if v == "penguin" then
-			inst.OnPolarFreeze = OnPolarFreeze
+			inst:AddComponent("drownable")
+			
+			--inst.OnPolarFreeze = OnPolarFreeze
 			
 			inst:ListenForEvent("attacked", OnAttacked_Castle)
 		elseif v == "penguin_ice" then

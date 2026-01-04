@@ -58,8 +58,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Wygląda na dziobatego."
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Musi być na prawde ciężko radzić sobie ze stratą poroża.",
-        ANTLER = "Wolałbym trzymać się z dala od jego drogi.",
+        ANTLER_LOST = "Musi być na prawde ciężko radzić sobie ze stratą poroża.",
+        GENERIC = "Wolałbym trzymać się z dala od jego drogi.",
     }
     DESCRIBE.MOOSE_SPECTER = "Wygląda na to, że lokalne legendy okazały się prawdziwe."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Te oczy byłyby warte fortunę!"

@@ -42,6 +42,8 @@ ENV.AddComponentPostInit("playerspawner", function(self)
 			end
 		end
 		
+		player:AddDebuff("buff_walrusally", "buff_walrusally") -- A little help if the player spawns nearby MacTusk...
+		
 		player:DoTaskInTime(0, function()
 			if player.sg and player.sg:HasStateTag("idle") then
 				player.sg:GoToState("polarspawn")

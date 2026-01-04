@@ -23,15 +23,18 @@ local GRASS_TAGS = {"fleahosted", "plant"}
 local SPAWN_OFFSET = 2
 local SPAWN_OFFSET_ATTEMPTS = 12
 
+local YOUR_MOM_TAGS = {"epic", "flea"}
+
 function PolarFleaMotherSpawner:ShouldTrigger(pt, data) -- Tests both fleakill spawn increment and spawn validity
 	if not GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) then
 		return false
 	end
 	
 	local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, self.findgrass_dist, GRASS_TAGS)
+	local your_mother = FindEntity(inst, 20, nil, YOUR_MOM_TAGS)
 	local spawn_pos
 	
-	if #ents >= self.findgrass_min then
+	if #ents >= self.findgrass_min and your_mother == nil then
 		local sx, sy, sz = 0, 0, 0
 		
 		for i, v in ipairs(ents) do
@@ -73,7 +76,7 @@ function PolarFleaMotherSpawner:OnMegaFlare(data)
 end
 
 function PolarFleaMotherSpawner:OnEntityKilled(data)
-	if not data or not data.victim or not data.victim.Transform or data.victim.babyflea then
+	if not data or not data.victim or not data.victim.Transform or data.victim.babyflea or data.victim:HasTag("INLIMBO") then
 		return
 	end
 	

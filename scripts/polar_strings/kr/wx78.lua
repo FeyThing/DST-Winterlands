@@ -77,8 +77,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "빙빙 돌아봤자 소용없다, 눈덩어리"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-	GENERIC = "하하. 멍청이. 하하.",
-	ANTLER = "방어력은 인상적. 하지만 쓸데없다, 고깃덩어리에겐",
+	ANTLER_LOST = "하하. 멍청이. 하하.",
+	GENERIC = "방어력은 인상적. 하지만 쓸데없다, 고깃덩어리에겐",
 }
 DESCRIBE.MOOSE_SPECTER = "죽어도 뭔가는 쓸모가 있겠지"
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "금붕어보다 백 배는 낫다"

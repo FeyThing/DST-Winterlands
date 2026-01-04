@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Good for him... good for him."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "It's hardly intimidating now.",
-		ANTLER = "Big antlers, big attitude.",
+		ANTLER_LOST = "It's hardly intimidating now.",
+		GENERIC = "Big antlers, big attitude.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Hmph. How... majestic."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "An aquarist acquaintance of mine would pay a fortune for it."

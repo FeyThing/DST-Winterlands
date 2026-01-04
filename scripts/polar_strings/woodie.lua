@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "I don't like the sound of that..."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Hmph, amateur. Lemme show you how it's done.",
-		ANTLER = "Big, bold, and proud of his woods like I am!",
+		ANTLER_LOST = "Hmph, amateur. Lemme show you how it's done.",
+		GENERIC = "Big, bold, and proud of his woods like I am!",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Can I do that too?"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Has anyone told ya you got pretty eyes, eh?"

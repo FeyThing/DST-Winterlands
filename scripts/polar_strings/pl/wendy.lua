@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Bycie dziobniętym przez krzemień brzmi... nieprzyjemnie."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Heehee...",
-		ANTLER = "To poroże wygląda ci na drogie, hm?",
+		ANTLER_LOST = "Heehee...",
+		GENERIC = "To poroże wygląda ci na drogie, hm?",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Nie Abigail, nie że możemy go adoptować."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Cóż za piękne oczy twoje oczodoły trzymają."

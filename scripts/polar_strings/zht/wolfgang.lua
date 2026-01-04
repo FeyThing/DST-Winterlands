@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "是會啜泣的小冰塊。",
-		ANTLER = "好猛的野獸，來摔跤啊。",
+		ANTLER_LOST = "是會啜泣的小冰塊。",
+		GENERIC = "好猛的野獸，來摔跤啊。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "啊啊啊！沃爾夫岡很抱歉！"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "有個可怕的臉。"

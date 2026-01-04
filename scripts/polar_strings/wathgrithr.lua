@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Ha! Let thy pipes sound my glory as the battle rages!"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Bah! 'Thou hath disarmed thyself!",
-		ANTLER = "Freya's grace touches even these frozen lands.",
+		ANTLER_LOST = "Bah! 'Thou hath disarmed thyself!",
+		GENERIC = "Freya's grace touches even these frozen lands.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "A creature hidden in the veil of Skadi's domain."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Its shine foretells a fine feast."

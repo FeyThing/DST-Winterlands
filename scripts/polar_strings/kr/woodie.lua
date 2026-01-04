@@ -43,8 +43,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "우박 아니어서 다행이야, 그치?"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-	GENERIC = "흥, 풋내기 같으니. 내가 제대로 보여주지.",
-	ANTLER = "크고, 당당하고, 나처럼 자기 나무를 자랑스러워하네!",
+	ANTLER_LOST = "흥, 풋내기 같으니. 내가 제대로 보여주지.",
+	GENERIC = "크고, 당당하고, 나처럼 자기 나무를 자랑스러워하네!",
 }
 DESCRIBE.MOOSE_SPECTER = "나도 저런 거 할 수 있을까?"
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "누가 너 눈 예쁘다고 했니? 이제 내가 했어!"

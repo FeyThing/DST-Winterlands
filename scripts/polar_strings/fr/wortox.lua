@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Ne t'inquiète pas mon grand, elles repousseront avec le temps.",
-		ANTLER = "Tes bois sont immenses ! Je peux les prendre, par chance ?",
+		ANTLER_LOST = "Ne t'inquiète pas mon grand, elles repousseront avec le temps.",
+		GENERIC = "Tes bois sont immenses ! Je peux les prendre, par chance ?",
 	}
 	DESCRIBE.MOOSE_SPECTER = "La plupart des mortels ne voient pas non plus de diablotins, je vous rappellerai."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Un joli nageur issue des profondeurs."

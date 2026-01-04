@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Mieć twój nos?"
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Ja zapamiętać nauczke. Nie walczyć z przyjacielem",
-        ANTLER = "Mieć duże gałęzie!",
+        ANTLER_LOST = "Ja zapamiętać nauczke. Nie walczyć z przyjacielem",
+        GENERIC = "Mieć duże gałęzie!",
     }
     DESCRIBE.MOOSE_SPECTER = "Mieć zimne gałęzie?"
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Błyskotny bulbulek!"

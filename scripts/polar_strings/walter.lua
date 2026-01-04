@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Hey, no littering!"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "How it lost its antlers? Well it's a tragic tale, really.",
-		ANTLER = "Hm. Not too mysterious looking! But maybe if it was white and hiding in a blizzard...",
+		ANTLER_LOST = "How it lost its antlers? Well it's a tragic tale, really.",
+		GENERIC = "Hm. Not too mysterious looking! But maybe if it was white and hiding in a blizzard...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "I-I knew! I knew it... all along! Haha!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Hey, look at those creepy eyes!"

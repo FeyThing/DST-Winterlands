@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Il a perdu sa garniture.",
-		ANTLER = "Cette grosse bête produira surement de bonnes saveurs robustes.",
+		ANTLER_LOST = "Il a perdu sa garniture.",
+		GENERIC = "Cette grosse bête produira surement de bonnes saveurs robustes.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Mon Dieu, elle a l'air tout simplement... exquise !"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Poisson frais!"

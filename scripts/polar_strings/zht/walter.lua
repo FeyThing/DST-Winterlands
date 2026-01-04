@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "它是怎麼失去角的？這真是一個悲劇的故事。",
-		ANTLER = "嗯。看起來不太神秘！但也許如果它是白色的，藏在暴風雪中……",
+		ANTLER_LOST = "它是怎麼失去角的？這真是一個悲劇的故事。",
+		GENERIC = "嗯。看起來不太神秘！但也許如果它是白色的，藏在暴風雪中……",
 	}
 	DESCRIBE.MOOSE_SPECTER = "我知道！我知道……一直以來！哈哈！"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "嘿，看看那些可怕的眼睛！"

@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Bah ! Tu t'es désarmé tout seul !",
-		ANTLER = "La grâce de Freya touche même ces terres gelées.",
+		ANTLER_LOST = "Bah ! Tu t'es désarmé tout seul !",
+		GENERIC = "La grâce de Freya touche même ces terres gelées.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Une créature caché dans le voile du domaine de Skadi."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Son rayonnement prédit un beau festin."

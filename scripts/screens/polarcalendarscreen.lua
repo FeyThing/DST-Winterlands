@@ -578,7 +578,7 @@ function PolarCalendarScreen:RedrawIcons()
 		self.root:AddChild(speedrun_icon2)
 		table.insert(self.speedrun_icons, speedrun_icon2)
 	elseif won_speedrun2 and not speedrun_icon2.shown then
-		speedrun_icon2:GetAnimState():PlayAnimation("icon26")
+		speedrun_icon2:GetAnimState():PlayAnimation("icon27")
 		
 		speedrun_icon2:Show()
 		speedrun_icon2.shown = true

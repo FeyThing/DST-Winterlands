@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 --	Mobs
 
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "뿔을 잃은 이유? 사실... 슬픈 이야기야.",
-		ANTLER = "흠. 별로 신비롭진 않네! 하얗고 눈 속에 숨어 있었다면 모를까...",
+		ANTLER_LOST = "뿔을 잃은 이유? 사실... 슬픈 이야기야.",
+		GENERIC = "흠. 별로 신비롭진 않네! 하얗고 눈 속에 숨어 있었다면 모를까...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "나... 나 그럴 줄 알았어! 진짜야! 하하!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "와, 눈 좀 봐! 으스스해!"

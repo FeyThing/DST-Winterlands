@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Pfft, regarde qui a l'air encore plus stupide maintenant.",
-		ANTLER = "Super, un autre genre de cerf débile.",
+		ANTLER_LOST = "Pfft, regarde qui a l'air encore plus stupide maintenant.",
+		GENERIC = "Super, un autre genre de cerf débile.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Je vais avoir besoin de plus de fléchettes."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Je t'ai sorti de cet enfer gelé, de rien."

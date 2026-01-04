@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Co boli bardziej pomiędzy dziobaniem, a kłuciem?"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Ba! Tyś się sam rozbroił!",
-		ANTLER = "Łaska Freyi dotyka nawet tych zamrożonych krain.",
+		ANTLER_LOST = "Ba! Tyś się sam rozbroił!",
+		GENERIC = "Łaska Freyi dotyka nawet tych zamrożonych krain.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Stworzenie ukryte w zasłonie domeny Skadi."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Jej blask zapowiada wspaniałą ucztę."

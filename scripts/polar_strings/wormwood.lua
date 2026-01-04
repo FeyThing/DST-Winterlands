@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Branches make funny noise"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Lesson learned. Should not fight friend",
-		ANTLER = "Got big branches!",
+		ANTLER_LOST = "Lesson learned. Should not fight friend",
+		GENERIC = "Got big branches!",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Branches got cold?"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Shiny Glub Glub!"

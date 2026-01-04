@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "現在根本不具威脅。",
-		ANTLER = "大角，大角度。",
+		ANTLER_LOST = "現在根本不具威脅。",
+		GENERIC = "大角，大角度。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "哼。多麼……威嚴。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "我一位水族學家的朋友會為此付出一大筆錢。"

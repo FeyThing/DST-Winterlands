@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Hi, hi...",
-		ANTLER = "Ces bois te sont chers, n'est-ce pas ?",
+		ANTLER_LOST = "Hi, hi...",
+		GENERIC = "Ces bois te sont chers, n'est-ce pas ?",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Non Abigail, on ne peut pas le garder."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Que tes orbites renferment de jolis yeux..."

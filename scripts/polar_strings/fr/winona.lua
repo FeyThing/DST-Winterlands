@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Ça fonce tête baissé dans les ennuies, hein ?",
-		ANTLER = "Ça joue les dure. C'est l'heure de voir si ça l'est vraiment.",
+		ANTLER_LOST = "Ça fonce tête baissé dans les ennuies, hein ?",
+		GENERIC = "Ça joue les dure. C'est l'heure de voir si ça l'est vraiment.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "J'ai juste envie de l'observer pour l'instant."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Un peu trop brillant à mon goût, mais toujours au menu."

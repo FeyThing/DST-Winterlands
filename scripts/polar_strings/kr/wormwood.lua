@@ -43,8 +43,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "천천히 가~!"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-	GENERIC = "배웠어. 친구랑 싸우면 안 돼.",
-	ANTLER = "큰 가지 있다!",
+	ANTLER_LOST = "배웠어. 친구랑 싸우면 안 돼.",
+	GENERIC = "큰 가지 있다!",
 }
 DESCRIBE.MOOSE_SPECTER = "가지가 차가워졌어?"
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "반짝이 글럽글럽!"

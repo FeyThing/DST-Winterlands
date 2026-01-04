@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Dziobie, kłuje. Ale co gorsza: jego pióro łaskocze!"
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Teraz to się wkopałeś, huh?",
-        ANTLER = "Wygląda na mocnego. Czas się przekonać, czy jest naprawdę.",
+        ANTLER_LOST = "Teraz to się wkopałeś, huh?",
+        GENERIC = "Wygląda na mocnego. Czas się przekonać, czy jest naprawdę.",
     }
     DESCRIBE.MOOSE_SPECTER = "Na razie chcę go po prostu poobserwować."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Jak dla mnie trochę za bardzo błyszczący, ale nadal jest w menu."

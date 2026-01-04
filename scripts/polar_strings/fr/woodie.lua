@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Hmf, amateur. Laisse-moi te montrer comment on fait.",
-		ANTLER = "Grand, intrépide, et fière de ses bois comme je le suis !",
+		ANTLER_LOST = "Hmf, amateur. Laisse-moi te montrer comment on fait.",
+		GENERIC = "Grand, intrépide, et fière de ses bois comme je le suis !",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Je peux faire ça aussi ?"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "On t'as déjà dit que t'as de beau yeux, hein ?"

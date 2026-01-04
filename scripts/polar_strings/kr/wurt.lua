@@ -43,8 +43,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "히히, 잡을 거야!"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-	GENERIC = "나도 저 뿔 다시 자랐으면 좋겠어, 플롭.",
-	ANTLER = "나도 저런 큰 뿔 갖고 싶다아...",
+	ANTLER_LOST = "나도 저 뿔 다시 자랐으면 좋겠어, 플롭.",
+	GENERIC = "나도 저런 큰 뿔 갖고 싶다아...",
 }
 DESCRIBE.MOOSE_SPECTER = "오오! 진짜 아니 책에서 나온 거 같아!"
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "완~전 예쁘다아~!"

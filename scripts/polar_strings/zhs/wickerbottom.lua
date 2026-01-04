@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "不要误会，它仍然很能打。",
-		ANTLER = "一个优秀的标本，拥有适合荒野的防御能力。",
+		ANTLER_LOST = "不要误会，它仍然很能打。",
+		GENERIC = "一个优秀的标本，拥有适合荒野的防御能力。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "这个标本值得研究！"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "我想知道透过珍珠般的眼睛看世界会是什么样子。"

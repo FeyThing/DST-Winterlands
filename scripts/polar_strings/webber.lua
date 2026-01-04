@@ -62,7 +62,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.GIRL_WALRUS = "She seems right in her flippers."
 	DESCRIBE.MOOSE_POLAR = {
 		GENERIC = "It bumped its head! Poor moosey...",
-		ANTLER = "They're much bigger than what we imagined!",
+		ANTLER_LOST = "They're much bigger than what we imagined!",
 	}
 	DESCRIBE.MOOSE_SPECTER = "It looks spooky a bit..."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "We fished a treasure from the depths!"

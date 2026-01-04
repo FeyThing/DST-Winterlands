@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Her mustache's fake, right? It HAS to be."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Pfft, look who's extra stupid now.",
-		ANTLER = "Oh great, another stupid deer of some sort.",
+		ANTLER_LOST = "Pfft, look who's extra stupid now.",
+		GENERIC = "Oh great, another stupid deer of some sort.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "I'm going to need more darts."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Gotcha out of this frozen hell, you're welcome."

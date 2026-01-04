@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Il pleur de tout petits glaçons.",
-		ANTLER = "C'est une bête fun a combattre.",
+		ANTLER_LOST = "Il pleur de tout petits glaçons.",
+		GENERIC = "C'est une bête fun a combattre.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "AAAH ! Wolfgang est désolé !"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Il a un visage un peu effrayant."

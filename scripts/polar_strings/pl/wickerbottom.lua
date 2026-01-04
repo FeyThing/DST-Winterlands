@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Mogłabym skorzystać z tego pióra..."
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Nie lekceważ go, nadal potrafi sie bronić.",
-        ANTLER = "Piękny okaz z obronę godną dziczy.",
+        ANTLER_LOST = "Nie lekceważ go, nadal potrafi sie bronić.",
+        GENERIC = "Piękny okaz z obronę godną dziczy.",
     }
     DESCRIBE.MOOSE_SPECTER = "Ten okaz warto by było zbadać!"
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Zastanawiam się, jak wyglądałby świat przez perłowe oczy."

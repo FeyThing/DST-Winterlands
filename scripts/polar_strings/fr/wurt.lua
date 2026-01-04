@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Moi aussi veux faire repousser ma corne, florp.",
-		ANTLER = "Je veux avoir des cornes grosse comme ça...",
+		ANTLER_LOST = "Moi aussi veux faire repousser ma corne, florp.",
+		GENERIC = "Je veux avoir des cornes grosse comme ça...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Oooh ! C'est comme dans le livre de choses pas vraies !"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Il est troooo beaaaau !"

@@ -347,19 +347,15 @@ end
 local function DuoGetRewards(self, player) -- TODO: this is very temp and probably too random / not enough rewarding (but also can be spammed so... what else)
 	local items = {}
 	
-	if IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random() < 0.5 then
-		table.insert(items, SpawnPrefab(GetRandomPolarWinterOrnament()))
-	end
+	table.insert(items, SpawnPrefab("polarbearfur"))
 	table.insert(items, SpawnPrefab(math.random() <= 0.5 and "meat" or "smallmeat"))
 	table.insert(items, SpawnPrefab(math.random() <= 0.5 and "fishmeat" or "fishmeat_small"))
+	
 	if math.random() <= 0.5 then
 		table.insert(items, SpawnPrefab(math.random() <= 0.5 and "meat" or "smallmeat"))
 	end
 	if math.random() <= 0.5 then
 		table.insert(items, SpawnPrefab(math.random() <= 0.5 and "fishmeat" or "fishmeat_small"))
-	end
-	if math.random() <= 0.5 then
-		table.insert(items, SpawnPrefab("polarbearfur"))
 	end
 	if math.random() <= 0.5 then
 		table.insert(items, SpawnPrefab("hambat"))
@@ -369,6 +365,10 @@ local function DuoGetRewards(self, player) -- TODO: this is very temp and probab
 		table.insert(items, SpawnPrefab((r <= 0.33 and "oceanfishinglure_spoon_red")
 			or (r <= 0.66 and "oceanfishinglure_spoon_green")
 			or "oceanfishinglure_spoon_blue"))
+	end
+	
+	if IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random() < 0.33 then
+		table.insert(items, SpawnPrefab(GetRandomPolarWinterOrnament()))
 	end
 	
 	if player and player.components.builder and not player.components.builder:KnowsRecipe("polarheadstick") and player.components.builder:CanLearn("polarheadstick") and

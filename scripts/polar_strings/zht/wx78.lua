@@ -46,8 +46,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WX78.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "哈哈。白癡。哈哈",
-		ANTLER = "令人印象深刻的防禦。真可惜浪費在愚蠢的有機體上",
+		ANTLER_LOST = "哈哈。白癡。哈哈",
+		GENERIC = "令人印象深刻的防禦。真可惜浪費在愚蠢的有機體上",
 	}
 	DESCRIBE.MOOSE_SPECTER = "你一定會很有價值的，死的時候"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "比金魚更有價值點"

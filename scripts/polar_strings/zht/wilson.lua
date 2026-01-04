@@ -49,8 +49,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "失去了角，牠一定很難受。",
-		ANTLER = "我最好遠離牠的路徑。",
+		ANTLER_LOST = "失去了角，牠一定很難受。",
+		GENERIC = "我最好遠離牠的路徑。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "看來當地的傳說是真的。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "那些眼睛值一大筆錢！"

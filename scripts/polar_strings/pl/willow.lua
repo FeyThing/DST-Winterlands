@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Łooo koleś, wyluzuj!"
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Pff, i kto tu jest teraz głupkiem.",
-        ANTLER = "O świetnie, kolejny głupi jeleń czy coś.",
+        ANTLER_LOST = "Pff, i kto tu jest teraz głupkiem.",
+        GENERIC = "O świetnie, kolejny głupi jeleń czy coś.",
     }
     DESCRIBE.MOOSE_SPECTER = "Będę potrzebowała więcej strzałek."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Wyciągnęłam cię z tego lodowatego piekła, nie ma za co."

@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Proszę, mnie nie dziob!"
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Nie martw się, mój drogi, odrosną spowrotem.",
-        ANTLER = "Cóż za duże rogi posiadasz! Mógłbym je wziąć?",
+        ANTLER_LOST = "Nie martw się, mój drogi, odrosną spowrotem.",
+        GENERIC = "Cóż za duże rogi posiadasz! Mógłbym je wziąć?",
     }
     DESCRIBE.MOOSE_SPECTER = "Większość śmiertelników też nie widuje diablików, pamiętaj."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Pryzmatyczny pływak z głębokiej, lodowatej wody."

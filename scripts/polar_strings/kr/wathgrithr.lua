@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 -- 몬스터
 
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "허! 무기를 내려놓았군, 겁쟁이 같으니.",
-		ANTLER = "프레야의 축복이 이 얼어붙은 땅에도 내렸도다.",
+		ANTLER_LOST = "허! 무기를 내려놓았군, 겁쟁이 같으니.",
+		GENERIC = "프레야의 축복이 이 얼어붙은 땅에도 내렸도다.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "스카디의 영역을 떠도는 베일 속의 괴수다."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "그 광택... 훌륭한 향연을 예고하는군."

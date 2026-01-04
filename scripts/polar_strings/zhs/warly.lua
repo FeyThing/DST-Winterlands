@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "它失去了装饰。",
-		ANTLER = "一头伟大的野兽，肯定能带来浓郁的野味。",
+		ANTLER_LOST = "它失去了装饰。",
+		GENERIC = "一头伟大的野兽，肯定能带来浓郁的野味。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "天啊，它看起来简直太精致了！"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "新鲜的鱼！"

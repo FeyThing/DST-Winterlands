@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 -- 생물
 
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "이젠 별로 위협적이지 않군.",
-        ANTLER = "큰 뿔, 큰 태도지.",
+        ANTLER_LOST = "이젠 별로 위협적이지 않군.",
+        GENERIC = "큰 뿔, 큰 태도지.",
     }
     DESCRIBE.MOOSE_SPECTER = "흠. 제법... 위엄 있군."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "수조 애호가 친구라면 돈을 아끼지 않겠지."

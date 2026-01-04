@@ -60,7 +60,7 @@ PolarRecipe("shards_bluegem", 		{Ingredient("bluegem_shards", 3)}, 													
 PolarRecipe("polar_dryice", 		{Ingredient("ice", 6), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 						TECH.LOST, 			nil, 													{"REFINE"}, {"bearger_fur"})
 
 --	Tools / Weapons
-PolarRecipe("polar_spear", 			{Ingredient("ice", 1), Ingredient("twigs", 2)}, 										TECH.LOST, 			nil, 		{"WEAPONS"}, {"spear_wathgrithr_lightning"})
+PolarRecipe("polar_spear", 			{Ingredient("ice", 3), Ingredient("twigs", 2)}, 										TECH.LOST, 			nil, 		{"WEAPONS"}, {"spear_wathgrithr_lightning"})
 PolarRecipe("trap_polarteeth", 		{Ingredient("ice", 1), Ingredient("cutstone", 1), Ingredient("polarwargstooth", 1)}, 	TECH.SCIENCE_TWO, 	nil, 		{"WEAPONS"}, {"trap_teeth"})
 PolarRecipe("winters_fists", 		{Ingredient("emperor_egg", 2), Ingredient("polar_dryice", 2)}, 							TECH.LOST, 			nil, 		{"WEAPONS", "SUMMER"}, {"wathgrithr_shield", "icehat"})
 

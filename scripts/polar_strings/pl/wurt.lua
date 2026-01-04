@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "On chronić śnieżaki, florp!"
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Ja też chcieć, żeby róg wyrosnąć spowrotem, florp.",
-        ANTLER = "Też chcieć mieć duże rogi jak te...",
+        ANTLER_LOST = "Ja też chcieć, żeby róg wyrosnąć spowrotem, florp.",
+        GENERIC = "Też chcieć mieć duże rogi jak te...",
     }
     DESCRIBE.MOOSE_SPECTER = "Ooo! Jak w książce nieprawdziwych rzeczy!"
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Jaki ładny!"

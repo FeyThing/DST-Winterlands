@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 -- 생물
 
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "히히...",
-        ANTLER = "그 뿔, 소중해 보이네... 그렇지?",
+        ANTLER_LOST = "히히...",
+        GENERIC = "그 뿔, 소중해 보이네... 그렇지?",
     }
     DESCRIBE.MOOSE_SPECTER = "안 돼, 애비게일. 얘는 못 데리고 가."
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "예쁜 눈... 빈 구멍 속에서 빛나고 있어."

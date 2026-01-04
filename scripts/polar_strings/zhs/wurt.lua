@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "我也想要角再长回来，咕噜。",
-		ANTLER = "想要这样的大角……",
+		ANTLER_LOST = "我也想要角再长回来，咕噜。",
+		GENERIC = "想要这样的大角……",
 	}
 	DESCRIBE.MOOSE_SPECTER = "哦哦！就像在书里看到的不真实的东西！"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "它好漂亮啊！"

@@ -389,7 +389,7 @@ AddClassPostConstruct("widgets/upgrademodulesdisplay", function(self)
 	end
 end)
 
---  Advent Calendar
+--[[Advent Calendar, now disabled, twas fun !
 
 local PolarCalendarScreen = require("screens/polarcalendarscreen")
 local PauseScreen = require("screens/redux/pausescreen")
@@ -427,4 +427,4 @@ PauseScreen.BuildMenu = function(self, ...)
 
 	local y_pos = (button_h * (#buttons - 1) / 2)
 	self.menu:SetPosition(0, y_pos, 0)
-end
+end]]

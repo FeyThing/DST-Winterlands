@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Missus got mustache too? Wolfgang need moment to think..."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Is sobbing little ice cubes.",
-		ANTLER = "Fun beast to wrestle with.",
+		ANTLER_LOST = "Is sobbing little ice cubes.",
+		GENERIC = "Fun beast to wrestle with.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "AAAH! Wolfgang is sorry!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Got a spooky face."

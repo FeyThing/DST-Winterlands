@@ -66,8 +66,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "There's fun for the whole family."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "It moose be tough to cope with antler loss.",
-		ANTLER = "I'd rather stay clear from its path.",
+		ANTLER_LOST = "It moose be tough to cope with antler loss.",
+		GENERIC = "I'd rather stay clear from its path.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Seems the local legends were true."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Those eyes would be worth a fortune!"

@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Her song is bewitching... but oh, so completely off-key!"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Heehee...",
-		ANTLER = "Those antlers look dear to you, hm?",
+		ANTLER_LOST = "Heehee...",
+		GENERIC = "Those antlers look dear to you, hm?",
 	}
 	DESCRIBE.MOOSE_SPECTER = "No Abigail, I don't think we can keep him."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "What pretty eyes your sockets hold."

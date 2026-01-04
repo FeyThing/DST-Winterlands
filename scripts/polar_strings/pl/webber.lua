@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Nie ukradliśmy żadnego jajka! Obiecujemy!"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Stuknęło się w głowę! Biedny łosiek...",
-		ANTLER = "Są o wiele większe niż sobie wyobrażaliśmy!",
+		ANTLER_LOST = "Stuknęło się w głowę! Biedny łosiek...",
+		GENERIC = "Są o wiele większe niż sobie wyobrażaliśmy!",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Wygląda troche strasznie..."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Wyłowiliśmy skarb z głębin!"

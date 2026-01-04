@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Nazywam je \"Pionk-gwinami\"."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Teraz jest mało straszny.",
-		ANTLER = "Duże poroże, duży humor.",
+		ANTLER_LOST = "Teraz jest mało straszny.",
+		GENERIC = "Duże poroże, duży humor.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Hmph. Jaki... majestatyczny."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Mój znajomy akwarysta zapłaciłby za to fortunę."

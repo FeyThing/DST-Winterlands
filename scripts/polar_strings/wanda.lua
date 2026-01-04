@@ -63,8 +63,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.GIRL_WALRUS = "Fake 'stache or not, she's a real problem."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Well. Does that mean you won?",
-		ANTLER = "Probably more susceptible to hold its ground than the other ones.",
+		ANTLER_LOST = "Well. Does that mean you won?",
+		GENERIC = "Probably more susceptible to hold its ground than the other ones.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Took you long to show up!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "All that shine, but no sense of stealth."

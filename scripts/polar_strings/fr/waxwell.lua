@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Il n'est plus trop intimidant comme ça.",
-		ANTLER = "Grosse cornes, grande attitude.",
+		ANTLER_LOST = "Il n'est plus trop intimidant comme ça.",
+		GENERIC = "Grosse cornes, grande attitude.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "C'est si... majestueux. Mouais."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "J'ai un collègue aquariophile qui aurait payé une fortune pour ça."

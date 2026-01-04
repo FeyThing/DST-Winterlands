@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "嘿嘿……",
-		ANTLER = "那些角對你來說很珍貴，嗯？",
+		ANTLER_LOST = "嘿嘿……",
+		GENERIC = "那些角對你來說很珍貴，嗯？",
 	}
 	DESCRIBE.MOOSE_SPECTER = "不，阿比蓋爾，我不認為我們能留住他。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "你眼窩裡的眼睛多麼漂亮呀。"

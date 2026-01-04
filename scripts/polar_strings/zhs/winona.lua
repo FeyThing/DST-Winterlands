@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "直接撞上麻烦了，嗯？",
-		ANTLER = "看起来很强。是时候看看它是否真的如此了。",
+		ANTLER_LOST = "直接撞上麻烦了，嗯？",
+		GENERIC = "看起来很强。是时候看看它是否真的如此了。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "我现在只是想观察观察它。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "有点太浮夸了，不太合我胃口，但还是可以接受。"

@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Guess I'll find eggs someplace else..."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Straciło swoją ozdobe.",
-		ANTLER = "Wspaniałe zwierzę, które z pewnością zapewni wyraziste, dzikie smaki.",
+		ANTLER_LOST = "Straciło swoją ozdobe.",
+		GENERIC = "Wspaniałe zwierzę, które z pewnością zapewni wyraziste, dzikie smaki.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Mon dieu, wygląda po prostu wykwintnie!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Poisson frais!"

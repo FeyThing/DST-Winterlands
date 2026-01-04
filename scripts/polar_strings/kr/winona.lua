@@ -43,8 +43,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "겉모습도, 속도 다 다르다더라."
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-    GENERIC = "앞만 보고 달리다 사고 났네?",
-    ANTLER = "단단해 보이네. 진짜 그런지 확인해보자고.",
+    ANTLER_LOST = "앞만 보고 달리다 사고 났네?",
+    GENERIC = "단단해 보이네. 진짜 그런지 확인해보자고.",
 }
 DESCRIBE.MOOSE_SPECTER = "일단은 좀 지켜보자."
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "눈에 띄긴 하는데, 그래도 먹을 순 있어."

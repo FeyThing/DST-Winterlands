@@ -85,7 +85,9 @@ local function OnHaunt(inst, haunter)
 	return false
 end
 
-local function create_common(bankandbuild)
+--	TODO: Add bunnyman head
+
+local function create_common(bankandbuild, combattags, combatnottags)
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
@@ -93,12 +95,21 @@ local function create_common(bankandbuild)
 	inst.entity:AddSoundEmitter()
 	inst.entity:AddNetwork()
 	
-	inst:AddTag("beaverchewable")
-	inst:AddTag("structure")
-	
 	inst.AnimState:SetBank(bankandbuild)
 	inst.AnimState:SetBuild(bankandbuild)
 	inst.AnimState:PlayAnimation("idle_asleep")
+	
+	inst:AddTag("beaverchewable")
+	inst:AddTag("mobhead_combat")
+	inst:AddTag("structure")
+	
+	inst.mobhead_combat_mods = {
+		armormult = TUNING.MOBHEADS_COMBAT_ARMOR_MULT,
+		damagemult = TUNING.MOBHEADS_COMBAT_DAMAGE_MULT,
+		stacking = TUNING.MOBHEADS_COMBAT_BUFF_STACKING,
+		tags = combattags,
+		not_tags = combatnottags,
+	}
 	
 	inst.entity:SetPristine()
 	
@@ -140,7 +151,7 @@ local function create_common(bankandbuild)
 end
 
 local function create_pighead()
-	local inst = create_common("polarbear_head")
+	local inst = create_common("polarbear_head", {"bear"})
 	
 	if not TheWorld.ismastersim then
 		return inst
@@ -150,7 +161,7 @@ local function create_pighead()
 end
 
 local function create_walrushead()
-	local inst = create_common("polarwalrus_head")
+	local inst = create_common("polarwalrus_head", {"walrus"})
 	
 	if not TheWorld.ismastersim then
 		return inst

@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Zdecydowanie dużo w tym nie widzisz."
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "No cóż. Czy to znaczy, że wygrałeś?",
-		ANTLER = "Prawdopodobnie bardziej podatne na utrzymanie pozycji niż inne.",
+		ANTLER_LOST = "No cóż. Czy to znaczy, że wygrałeś?",
+		GENERIC = "Prawdopodobnie bardziej podatne na utrzymanie pozycji niż inne.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Długo ci to zajęło, żebyś się pojawił!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Całe te błyskotanie i zero umiejętnosći ukrywania się."

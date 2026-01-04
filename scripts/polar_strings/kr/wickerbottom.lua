@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 -- 생물
 
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "방심할 수는 없어요, 여전히 위험하답니다.",
-        ANTLER = "야생에서 살아남기 위한 훌륭한 방어 수단이네요.",
+        ANTLER_LOST = "방심할 수는 없어요, 여전히 위험하답니다.",
+        GENERIC = "야생에서 살아남기 위한 훌륭한 방어 수단이네요.",
     }
     DESCRIBE.MOOSE_SPECTER = "이 개체는 연구 가치가 있겠는걸요!"
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "저 진주색 눈으로 세상을 보면 어떨까요?"

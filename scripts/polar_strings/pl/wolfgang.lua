@@ -55,8 +55,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	}
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Ktoś musi chronić słabeuszy."
     DESCRIBE.MOOSE_POLAR = {
-        GENERIC = "Jest małe płaczące kostki lodowe.",
-        ANTLER = "Śmieszna bestia do zapasów.",
+        ANTLER_LOST = "Jest małe płaczące kostki lodowe.",
+        GENERIC = "Śmieszna bestia do zapasów.",
     }
     DESCRIBE.MOOSE_SPECTER = "AAA! Wolfgang przeprasza!"
     DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Ma straszną twarz."

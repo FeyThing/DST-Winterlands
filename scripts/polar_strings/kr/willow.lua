@@ -43,8 +43,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "기다려. 너 녹여버릴 거야!"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-    GENERIC = "풋, 누가 더 멍청한지 보이네?",
-    ANTLER = "또 멍청한 사슴류네, 환장하겠어.",
+    ANTLER_LOST = "풋, 누가 더 멍청한지 보이네?",
+    GENERIC = "또 멍청한 사슴류네, 환장하겠어.",
 }
 DESCRIBE.MOOSE_SPECTER = "다트가 더 필요하겠어."
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "이 얼음지옥에서 꺼내줬다? 고맙다고 해."

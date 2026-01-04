@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Ne vous y trompez pas, il reste tout autant dangereux.",
-		ANTLER = "Un spécimen remarquable, doté de défenses adaptées à son environnement.",
+		ANTLER_LOST = "Ne vous y trompez pas, il reste tout autant dangereux.",
+		GENERIC = "Un spécimen remarquable, doté de défenses adaptées à son environnement.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Ce spécimen mériterait une étude approfondie !"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Je me demande à quoi le monde ressemble aux travers d'yeux nacrés."

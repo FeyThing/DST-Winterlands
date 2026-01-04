@@ -57,9 +57,7 @@ local function OnNoCombatTarget(inst)
 end
 
 local function GetStatus(inst)
-	return (inst:HasTag("spectermoose") and "SPECTER")
-		or (inst.hasantler and "ANTLER")
-		or nil
+	return not inst.hasantler and "ANTLER_LOST" or nil
 end
 
 --
@@ -229,7 +227,7 @@ local function MakeMoose(name, assets)
 		inst:AddComponent("drownable")
 		
 		inst:AddComponent("health")
-		inst.components.health:SetMaxHealth(TUNING.POLAR_MOOSE_HEALTH)
+		inst.components.health:SetMaxHealth(name == "specter" and TUNING.SPECTER_MOOSE_HEALTH or TUNING.POLAR_MOOSE_HEALTH)
 		
 		inst:AddComponent("inspectable")
 		

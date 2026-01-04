@@ -43,8 +43,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "서리꽃 같은 장난꾸러기!"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-	GENERIC = "걱정 마, 친구. 곧 다시 자랄 거야~",
-	ANTLER = "뿔이 아주 크구나! 나 줘도 될까?",
+	ANTLER_LOST = "걱정 마, 친구. 곧 다시 자랄 거야~",
+	GENERIC = "뿔이 아주 크구나! 나 줘도 될까?",
 }
 DESCRIBE.MOOSE_SPECTER = "필멸자들이 임프를 보는 일도 드물지~ 기억해둬!"
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "얼어붙은 심연에서 온 무지갯빛 수영꾼~"

@@ -188,6 +188,17 @@ local function GetNoLeaderHomePos(inst)
 	return GetHomePos(inst)
 end
 
+local function GetWanderPos(inst)
+	local leader = GetLeader(inst)
+	if leader then
+		return leader:GetPosition()
+	end
+	
+	if inst.components.knownlocations then
+		return inst.components.knownlocations:GetLocation("spawnpt")
+	end
+end
+
 --	Fuelin'
 
 local BRAZIER_TAGS = {"canlight"}
@@ -533,7 +544,7 @@ function PolarBearBrain:OnStart()
 		Leash(self.inst, GetNoLeaderHomePos, LEASH_MAX_DIST, LEASH_RETURN_DIST),
 		ChattyNode(self.inst, GetChatterLines,
 			FaceEntity(self.inst, GetFaceTargetNearestPlayerFn, KeepFaceTargetNearestPlayerFn)),
-		Wander(self.inst, function() return self.inst.components.knownlocations:GetLocation("spawnpt") end, MAX_WANDER_DIST)
+		Wander(self.inst, GetWanderPos, MAX_WANDER_DIST)
 	}, 0.35)
 	
 	self.bt = BT(self.inst, root)

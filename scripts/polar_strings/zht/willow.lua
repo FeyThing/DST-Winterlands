@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "噗，看看誰現在特別愚蠢。",
-		ANTLER = "哦太好了，又一隻愚蠢的鹿。",
+		ANTLER_LOST = "噗，看看誰現在特別愚蠢。",
+		GENERIC = "哦太好了，又一隻愚蠢的鹿。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "我需要更多的標槍。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "是我把你從這個冰凍的地獄裡救出的，謝謝我吧。"

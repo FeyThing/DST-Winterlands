@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "哈！你自己解除武裝了！",
-		ANTLER = "芙蕾雅的恩典觸及了這片冰封之地。",
+		ANTLER_LOST = "哈！你自己解除武裝了！",
+		GENERIC = "芙蕾雅的恩典觸及了這片冰封之地。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "隱藏在斯卡迪面紗中的生物。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "它的光澤預示著一頓美餐。"

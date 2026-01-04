@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Il s'est cogné la tête ! Pauvre bébête...",
-		ANTLER = "Ils sont bien plus grand que ce qu'on imaginait !",
+		ANTLER_LOST = "Il s'est cogné la tête ! Pauvre bébête...",
+		GENERIC = "Ils sont bien plus grand que ce qu'on imaginait !",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Il est un poil effrayant..."
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "On a pêché un trésor des profondeurs !"

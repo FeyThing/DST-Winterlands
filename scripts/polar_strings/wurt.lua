@@ -61,8 +61,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.EMPEROR_PENGUIN_GUARD = "Is protecting Snowfolk, florp!"
 	DESCRIBE.FROSTY_SIMPLE = "Frosty"
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Me want horn bit to grow back too, florp.",
-		ANTLER = "Would like have big horns like this...",
+		ANTLER_LOST = "Me want horn bit to grow back too, florp.",
+		GENERIC = "Would like have big horns like this...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Oooh! It like in book of not-real-things!"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "It sooo prettyyy!"

@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "T'as appris la leçon : Ne pas se battre avec mes amis.",
-		ANTLER = "Il a de grandes branches !",
+		ANTLER_LOST = "T'as appris la leçon : Ne pas se battre avec mes amis.",
+		GENERIC = "Il a de grandes branches !",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Tes branches ont eu froid ?"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Un bloub-bloub qui brille !"

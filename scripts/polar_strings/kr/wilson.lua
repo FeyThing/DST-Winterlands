@@ -46,8 +46,8 @@ DESCRIBE.TUMBLEWEED_POLAR = "모든 과학 법칙을 무시하고 있어!"
 -- 몬스터
 
 DESCRIBE.MOOSE_POLAR = {
-    GENERIC = "뿔 잃은 사슴, 살아가기 참 힘들겠지.",
-    ANTLER = "부딪히지 않게 거리를 두는 게 좋겠어.",
+    ANTLER_LOST = "뿔 잃은 사슴, 살아가기 참 힘들겠지.",
+    GENERIC = "부딪히지 않게 거리를 두는 게 좋겠어.",
 }
 DESCRIBE.MOOSE_SPECTER = "지역 전설이 사실이었군."
 DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "저 눈은 값어치가 꽤 나갈 텐데!"

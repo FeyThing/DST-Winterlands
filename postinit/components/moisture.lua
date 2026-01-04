@@ -3,7 +3,7 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local Moisture = require("components/moisture")
 	
---	Wetness rate is halted while the debuff is active, however it will consequently increase if the player is attempting to dry, or rather, melt the debuff
+--	Wetness rate is halted while the Frozen Wetness debuff is active, however it will consequently increase if the player is attempting to dry, or rather, melt the debuff
 	
 	function Moisture:GetPolarMoistureRate(rate)
 		rate = rate or self:GetMoistureRate()

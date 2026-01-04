@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "那么，这是否意味着你赢了？",
-		ANTLER = "它可能比其他的更坚持立场。",
+		ANTLER_LOST = "那么，这是否意味着你赢了？",
+		GENERIC = "它可能比其他的更坚持立场。",
 	}
 	DESCRIBE.MOOSE_SPECTER = "你也太晚才出现了！"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "光芒四射，但缺乏隐匿感。"

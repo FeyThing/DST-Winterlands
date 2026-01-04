@@ -47,6 +47,7 @@ local prefabs = {
 	"books",
 	"bluegem",
 	"cookingrecipecard",
+	"desiccant",
 	"dirtpile",
 	"evergreen",
 	"farm_plants",

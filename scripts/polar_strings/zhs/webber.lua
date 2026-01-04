@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "它撞到了头！可怜的驼鹿……",
-		ANTLER = "它们比我们想象的要大得多！",
+		ANTLER_LOST = "它撞到了头！可怜的驼鹿……",
+		GENERIC = "它们比我们想象的要大得多！",
 	}
 	DESCRIBE.MOOSE_SPECTER = "看起来有点可怕……"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "我们从深处钓到了宝藏！"

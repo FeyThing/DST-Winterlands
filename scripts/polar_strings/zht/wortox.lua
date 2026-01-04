@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "別擔心，親愛的，它們會再長回來的。",
-		ANTLER = "你的角有多大啊！我可以要它們嗎？",
+		ANTLER_LOST = "別擔心，親愛的，它們會再長回來的。",
+		GENERIC = "你的角有多大啊！我可以要它們嗎？",
 	}
 	DESCRIBE.MOOSE_SPECTER = "大多數凡人可沒機會見到小惡魔，你可得記得這點。"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "來自深邃冰冷水域的彩虹泳者。"

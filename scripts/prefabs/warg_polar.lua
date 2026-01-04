@@ -1,3 +1,6 @@
+--	NOTE: This file auto copies the basic warg mainfuction to (hopefully) keep up to date with changes with Vargs,
+--	useful, but risky so check this file for possible maintenance if vargs change in a way we don't want these to replicate !!
+
 local assets = {
 	Asset("ANIM", "anim/warg_polar.zip"),
 }
@@ -22,6 +25,8 @@ SetSharedLootTable("polarwarg", {
 	{"polarbearfur", 	1},
 	{"polarbearfur", 	0.33},
 })
+
+--	ALWAYS spawn Koalefant carcass as winter one
 
 local OldSimulateKoalefantDrops = SimulateKoalefantDrops
 function SimulateKoalefantDrops(inst, ...)

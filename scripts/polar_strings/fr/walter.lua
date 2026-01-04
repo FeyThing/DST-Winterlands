@@ -43,8 +43,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 --	Mobs
 	
 	DESCRIBE.MOOSE_POLAR = {
-		GENERIC = "Comment a-t-il perdu ses bois ? Oh, c'est une histoire bien tragique... ",
-		ANTLER = "Hm. C'est pas trop mal ! Mais s'il était blanc et caché dans une tempête de neige...",
+		ANTLER_LOST = "Comment a-t-il perdu ses bois ? Oh, c'est une histoire bien tragique... ",
+		GENERIC = "Hm. C'est pas trop mal ! Mais s'il était blanc et caché dans une tempête de neige...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "J-je le savais ! Je le savais... depuis le début ! Ha ha !"
 	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "Hé, regardez ces yeux effrayants !"

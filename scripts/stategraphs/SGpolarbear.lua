@@ -240,7 +240,9 @@ local states = {
 				local ents = TheSim:FindEntities(x, y, z, TUNING.POLARBEAR_BITE_RANGE * 0.8, nil, not_tags, BITE_TAGS)
 				for i, v in ipairs(ents) do
 					if not inst.sg.statemem.chomptargets[v] and v.components.combat and v.components.health and not v.components.health:IsDead() then
-						v.components.combat:GetAttacked(inst, TUNING.POLARBEAR_DAMAGE_BITE)
+						local dmg = inst.components.combat:CalcDamage(v, nil, TUNING.POLARBEAR_DAMAGE_BITE_MULT)
+						
+						v.components.combat:GetAttacked(inst, dmg)
 						inst.sg.statemem.chomptargets[v] = true
 					end
 				end
