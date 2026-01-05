@@ -128,7 +128,12 @@ end
 
 local function OnStartDayLightTask(inst)
 	inst.doortask = nil
-	inst.components.spawner:ReleaseChild()
+	
+	if not (TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL) and not TheWorld.state.iscavenight then
+		inst.components.spawner:ReleaseChild()
+	elseif not TheWorld.state.iscavenight then
+		inst.doortask = inst:DoTaskInTime(1 + math.random() * 2, OnStartDayLightTask)
+	end
 end
 
 local function OnStartDay(inst)

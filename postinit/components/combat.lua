@@ -1,36 +1,6 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local Combat_Replica = require("components/combat_replica")
-	
-	local OldCanTarget = Combat_Replica.CanTarget
-	function Combat_Replica:CanTarget(target, ...)
-		if self.inst:HasTag("penguin") and target and target.prefab == "wall_polar" then
-			return false -- We don't want Pengulls to break their castle...
-		end
-		
-		if self.inst:HasTag("player_trial_participator") and target and target:HasTag("trial_spectator") and not target:HasTag("trial_participator") then
-			return false -- Don't target trial spectators if we're participating
-		end
-		
-		return OldCanTarget(self, target, ...)
-	end
-	
-	local OldIsAlly = Combat_Replica.IsAlly
-	function Combat_Replica:IsAlly(guy, ...)
-		local inventory = self.inst.replica.inventory or self.inst.components.inventory
-		
-		if guy and inventory then
-			if guy:HasTag("flea") and not guy:HasTag("epic") and inventory:EquipHasTag("fleapack") then
-				return guy.replica.combat == nil or guy.replica.combat:GetTarget() ~= self.inst
-			elseif (guy:HasTag("walrus") or guy:HasTag("hound")) and self.inst:HasTag("walruspal") then -- Bagpipes buffed
-				return guy.replica.combat == nil or guy.replica.combat:GetTarget() ~= self.inst
-			end
-		end
-		
-		return OldIsAlly(self, guy, ...)
-	end
-	
 local Combat = require("components/combat")
 	
 	local MOB_HEAD_TAGS = {"mobhead_combat"}
@@ -101,4 +71,52 @@ local Combat = require("components/combat")
 		end
 		
 		return OldGetAttacked(self, attacker, damage, weapon, ...)
+	end
+	
+	local OldShouldAggro = Combat.ShouldAggro
+	function Combat:ShouldAggro(target, ...)
+		--	So, turns out mobs will specifically NOT fight things that possess a minhealth and have no hostile tag.
+		--	⭐🌟⭐ Emperor Pengull ⭐🌟⭐ is typing...
+		
+		local unscrew = target:HasTag("penguin_emperor") and target.components.health and target.components.health.minhealth and not target:HasTag("hostile")
+		if unscrew then
+			target.components.health:SetMinHealth(0)
+		end
+		
+		local test = OldShouldAggro(self, target, ...)
+		if unscrew then
+			target.components.health:SetMinHealth(1)
+		end
+		
+		return test
+	end
+	
+local Combat_Replica = require("components/combat_replica")
+	
+	local OldCanTarget = Combat_Replica.CanTarget
+	function Combat_Replica:CanTarget(target, ...)
+		if self.inst:HasTag("penguin") and target and target.prefab == "wall_polar" then
+			return false -- We don't want Pengulls to break their castle...
+		end
+		
+		if self.inst:HasTag("player_trial_participator") and target and target:HasTag("trial_spectator") and not target:HasTag("trial_participator") then
+			return false -- Don't target trial spectators if we're participating
+		end
+		
+		return OldCanTarget(self, target, ...)
+	end
+	
+	local OldIsAlly = Combat_Replica.IsAlly
+	function Combat_Replica:IsAlly(guy, ...)
+		local inventory = self.inst.replica.inventory or self.inst.components.inventory
+		
+		if guy and inventory then
+			if guy:HasTag("flea") and not guy:HasTag("epic") and inventory:EquipHasTag("fleapack") then
+				return guy.replica.combat == nil or guy.replica.combat:GetTarget() ~= self.inst
+			elseif (guy:HasTag("walrus") or guy:HasTag("hound")) and self.inst:HasTag("walruspal") then -- Bagpipes buffed
+				return guy.replica.combat == nil or guy.replica.combat:GetTarget() ~= self.inst
+			end
+		end
+		
+		return OldIsAlly(self, guy, ...)
 	end

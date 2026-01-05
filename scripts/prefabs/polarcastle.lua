@@ -230,6 +230,7 @@ local function OnHammered(inst, worker)
 			if recipecard and recipecard.components.named then
 				recipecard.cooker_name = "cookpot"
 				recipecard.recipe_name = "icecream_emperor"
+				recipecard.keep_unique_recipes = true
 				recipecard.components.named:SetName(subfmt(STRINGS.NAMES.COOKINGRECIPECARD, {item = STRINGS.NAMES.ICECREAM_EMPEROR}))
 			end
 		end

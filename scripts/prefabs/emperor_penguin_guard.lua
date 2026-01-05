@@ -46,14 +46,22 @@ local function KeepTarget(inst, target)
 	return false
 end
 
+local HOSTILE_TAGS = {"hostile", "monster"}
+local HOSTILE_NOT_TAGS = {"INLIMBO", "isdead", "player", "penguin_emperor"}
+
 local function RetargetFn(inst)
 	local emperor = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor
+	local targets = {}
 	
+	--	First, only protect against castle attackers
 	if emperor and emperor:IsValid() and emperor.components.combat and emperor:HasTag("hostile") then
-		local targets = {}
 		local pos = inst.components.knownlocations and (inst.components.knownlocations:GetLocation("herd") or inst.components.knownlocations:GetLocation("rookery"))
+		local castle_pos = TheWorld.components.emperorpenguinspawner.ice_castle_pos
+		
 		for i, player in ipairs(AllPlayers) do
-			if player:GetDistanceSqToPoint(emperor.Transform:GetWorldPosition()) < MAX_CHASEAWAY_DIST_SQ * 2 then
+			if (castle_pos and player:GetDistanceSqToPoint(castle_pos) < MAX_CHASEAWAY_DIST_SQ * 2)
+				or player:GetDistanceSqToPoint(emperor.Transform:GetWorldPosition()) < MAX_CHASEAWAY_DIST_SQ * 2 then
+				
 				table.insert(targets, player)
 			end
 		end
@@ -63,8 +71,21 @@ local function RetargetFn(inst)
 			table.insert(targets, target)
 		end
 		
-		return #targets > 0 and targets[math.random(#targets)] or nil
+		if #targets > 0 then
+			return targets[math.random(#targets)]
+		end
 	end
+	
+	--	If none, just protect from baddies around
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local ents = TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, nil, HOSTILE_NOT_TAGS, HOSTILE_TAGS)
+	for i, enemy in ipairs(ents) do
+		if not (enemy:HasTag("penguin") and not enemy:HasTag("player")) and enemy.components.combat then
+			table.insert(targets, enemy)
+		end
+	end
+	
+	return #targets > 0 and targets[math.random(#targets)] or nil
 end
 
 --

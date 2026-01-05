@@ -24,13 +24,31 @@ return Class(function(self, inst)
 	
 	--	Castle content management
 	
+	local PENGUIN_GUARDS_TAGS = {"penguin_guard"}
+	local PENGUIN_GUARDS_NOT_TAGS = {"isdead"}
+	
 	local function OnCastleProvoked(ent, data)
-		if self.ice_castle_parts and self.emperor and not self.defeated and data and ent.prefab ~= "rock_ice" then
+		if self.ice_castle_pos and self.ice_castle_parts and self.emperor and not self.defeated and data and ent.prefab ~= "rock_ice" then
 			local attacker = data.attacker or data.worker or data.owner
-			local combat = self.emperor.components.combat
 			
-			if attacker and combat and combat.target == nil then
-				combat:SuggestTarget(attacker)
+			local x, y, z = self.ice_castle_pos:Get()
+			local num_guards = #TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, PENGUIN_GUARDS_TAGS, PENGUIN_GUARDS_NOT_TAGS)
+			
+			-- We seed some guard if castle is currently helpless
+			local need_support = (ent:HasTag("wall") or ent:HasTag("penguin_emperor")) and attacker and not self:IsInstInsideCastle(attacker)
+				and num_guards < 1 and self._provoke_support == nil
+			
+			if need_support then
+				self._provoke_support = self.inst:DoTaskInTime(0.2 + math.random() * 0.5, function()
+					self:SpawnGuards(1)
+				end)
+			end
+			if attacker and self.emperor.components.combat then
+				if self.emperor.attackerUSERIDs and attacker.userid then
+					self.emperor.attackerUSERIDs[attacker.userid] = true
+				end
+				
+				self.emperor.components.combat:SuggestTarget(attacker)
 			end
 		end
 	end
@@ -204,6 +222,11 @@ return Class(function(self, inst)
 	local CASTLE_TOWER_TAGS = {"polarcastletower"}
 	
 	function self:SpawnGuards(num)
+		if self._provoke_support then
+			self._provoke_support:Cancel()
+			self._provoke_support = nil
+		end
+		
 		local pt = self.ice_castle_pos
 		
 		if num and num > 0 and pt and #self.ice_towers > 0 then

@@ -43,17 +43,33 @@ local function KeepTarget(inst, target)
 	return true
 end
 
+local HOSTILE_TAGS = {"hostile", "monster"}
+local HOSTILE_NOT_TAGS = {"INLIMBO", "isdead", "player", "penguin_emperor"}
+
 local function RetargetFn(inst)
+	local targets = {}
+	
 	if inst:HasTag("hostile") and TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor == inst then
-		local targets = {}
-		for i, player in ipairs(AllPlayers) do
-			if TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(player) then
-				table.insert(targets, player)
+		for ID, data in pairs(inst.attackerUSERIDs) do
+			for i, player in ipairs(AllPlayers) do
+				if player.userid == ID and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(player) then
+					table.insert(targets, player)
+				end
 			end
 		end
-		
-		return #targets > 0 and targets[math.random(#targets)] or nil
 	end
+	
+	local target = #targets > 0 and targets[math.random(#targets)] or nil
+	
+	if target then
+		return target
+	else
+		target = FindEntity(inst, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, function(guy)
+			return guy.components.combat and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(guy)
+		end, nil, HOSTILE_NOT_TAGS, HOSTILE_TAGS)
+	end
+	
+	return target
 end
 
 local function EnterJuggleTrigger(inst)
@@ -230,8 +246,16 @@ local function OnAttacked(inst, data)
 	local attacker = data and data.attacker
 	
 	if attacker then
-		if attacker:HasTag("player") then
-			inst.attackerUSERIDs[data.attacker.userid] = true
+		if attacker.userid then
+			inst:AddTag("hostile")
+			inst.attackerUSERIDs[attacker.userid] = true
+		elseif attacker.components.follower then
+			local leader = attacker.components.follower:GetLeader()
+			
+			if leader and leader.userid then
+				inst:AddTag("hostile")
+				inst.attackerUSERIDs[leader.userid] = true
+			end
 		end
 		
 		inst.components.combat:SetTarget(attacker)
@@ -257,7 +281,9 @@ local function OnCombatTargetChange(inst, data)
 			inst.components.timer:StartTimer("spincooldown", TUNING.EMPEROR_PENGUIN_SPIN_COOLDOWN)
 		end
 		
-		inst:AddTag("hostile")
+		if data.target:HasTag("player") then
+			inst:AddTag("hostile")
+		end
 	end
 end
 
@@ -367,9 +393,9 @@ local function fn()
 	inst.components.combat:SetAttackPeriod(TUNING.EMPEROR_PENGUIN_ATTACK_PERIOD)
 	inst.components.combat:SetRange(TUNING.EMPEROR_PENGUIN_ATTACK_DIST)
 	
-	inst:AddComponent("explosiveresist")
-	
 	inst:AddComponent("drownable")
+	
+	inst:AddComponent("explosiveresist")
 	
 	inst:AddComponent("health")
 	inst.components.health:SetMinHealth(1)

@@ -7,6 +7,9 @@ local function IsProperEmperor(inst)
 	return TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor == inst
 end
 
+local HOSTILE_TAGS = {"hostile", "monster"} -- Non-hostile-players snowball targets
+local HOSTILE_NOT_TAGS = {"INLIMBO", "isdead", "player", "penguin_emperor"}
+
 local PENGUIN_GUARDS_TAGS = {"penguin_guard"}
 local PENGUIN_GUARDS_NOT_TAGS = {"isdead"}
 
@@ -212,6 +215,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		onenter = function(inst, doexit)
 			inst.Physics:Stop()
 			inst.SoundEmitter:KillAllSounds()
+			inst.SoundEmitter:PlaySound(inst._soundpath.."idle")
 			if doexit then
 				inst.AnimState:PlayAnimation("tower_pst")
 			else
@@ -334,6 +338,13 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 					end
 				end
 				
+				local ents = TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, nil, HOSTILE_NOT_TAGS, HOSTILE_TAGS)
+				for i, enemy in ipairs(ents) do
+					if not (enemy:HasTag("penguin") and not enemy:HasTag("player")) and enemy.components.combat then
+						table.insert(targets, enemy)
+					end
+				end
+				
 				if #targets > 0 then
 					local target = targets[math.random(#targets)]
 					local snowball = SpawnPrefab("winters_fists_snowball")
@@ -402,6 +413,8 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				COLLISION.OBSTACLES
 			)
 			
+			inst.sg.statemem.last_spin_waw = GetTime()
+			
 			inst._collided_times = {}
 			if inst.components.timer and not inst.components.timer:TimerExists("keepspinning") then
 				inst.components.timer:StartTimer("keepspinning", TUNING.EMPEROR_PENGUIN_SPIN_DURATION)
@@ -410,6 +423,13 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		
 		onupdate = function(inst)
 			local incastle = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst)
+			
+			local t = GetTime()
+			local last_spin_waw = inst.sg.statemem.last_spin_waw or t
+			if t > last_spin_waw + 0.33 then
+				inst.SoundEmitter:PlaySound(inst._soundpath.."taunt")
+				inst.sg.statemem.last_spin_waw = t
+			end
 			
 			if not inst.wants_to_spin or not incastle then
 				inst.Physics:SetMotorVelOverride(0, 0, 0)
@@ -431,7 +451,9 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		
 		timeline = {
 			TimeEvent(24 * FRAMES, function(inst)
+				inst.sg:AddStateTag("noattack")
 				inst.sg:AddStateTag("running")
+				
 				inst.sg.statemem.spinning = true
 			end),
 		},

@@ -150,8 +150,8 @@ local function create_common(bankandbuild, combattags, combatnottags)
 	return inst
 end
 
-local function create_pighead()
-	local inst = create_common("polarbear_head", {"bear"})
+local function create_bearhead()
+	local inst = create_common("polarbear_head", {"bear", "bearger"})
 	
 	if not TheWorld.ismastersim then
 		return inst
@@ -330,7 +330,7 @@ local function builder_walrus()
 	return inst
 end
 
-return Prefab("polarbearhead", create_pighead, assets_bear, prefabs), -- New heads
+return Prefab("polarbearhead", create_bearhead, assets_bear, prefabs), -- New heads
 	Prefab("polarwalrushead", create_walrushead, assets_walrus, prefabs),
 	
 	Prefab("polarheadstick", builder_bear, assets_bear, prefabs), -- Just the construction sites (technically also the skins)

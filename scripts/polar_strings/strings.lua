@@ -529,6 +529,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm... also good to make others think you're an actual bear."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHEAD = "Being around Polar Bear Heads boosts your damage dealt and absorption against bears of all kind by 12.5% for up to 4 Polar Bear Heads."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARKING = "Take part in the chieftain trials of raw strength to grow your esteem among all of Bearfolk!\n\nThese challenges require to bring a certain amount of specific creatures around Ursa Major, and fight them honorably (that means follow whatever rules may apply)."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARCROWNHAT = "Grants the wearer an ice barrier that keeps the blizzard and icicles out, but builds up freezing on creatures within.\nHits have a high chance of disrupting the barrier momentarily."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARFLEA = "Awful little buggers found everywhere on the Winterlands!\nThey hide in tall grass, on mammals... have you looked inside your hairs recently?\n\nWhile painful to remove from their host, their fur will provide a little warmth."
@@ -538,8 +539,9 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPACK = "Slows the spoilage of other carried or stored items by 25%. Effect can be stacked multiplicatively."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICEPLOW = "Digs a large hole in the ice that makes for an ideal fishing spot!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARICESTAFF = "Sends a freezing shockwave in a large range."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARWALRUSHEAD = "Being around Walrus Heads boosts your damage dealt and absorption against walruses of all kind by 12.5% for up to 4 Walrus Heads."
 	STRINGS.SCRAPBOOK.SPECIALINFO.TUMBLEWEED_POLAR = "These flutter in the blizzard and collect junk along the way.\n\nAll sorts of crazy junk.\n\nYou'd be surprised."
-	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out."
+	STRINGS.SCRAPBOOK.SPECIALINFO.WALL_POLAR = "Whoever messes with this wall better chill out... unless they brought sufficiently warm clothing."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALRUS_BAGPIPE = "Lose your wits playing the Bagpipes! Its tune keeps hounds and hound waves at ease momentarily, and opens hunters for safe trading to you and nearby allies."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALRUS_BEARTRAP = "A nasty trap deployed and hidden in the snow by trappers.\n\nCreatures caught by the mechanism will be stuck in place momentarily. One can attempt to break free from it, or be rescued by allies or foes' attacks alike.\n\nCan be disarmed by placing an item atop, or risking your life."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WINTERS_FISTS = "Put on those heavy ice chunk and pound the ground to burst out temporary snowy areas.\n\nFrozen targets take up to double melee damage.\n\nSnowball combos can be performed WHILE standing in snow, making them bigger at each throw, dealing more damage, more freezing, and finally hurl down a deadly avalanche taking anything down its path!"
@@ -672,11 +674,17 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	local OLDSCRAPBOOK_BOOK_RAIN = STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN or ""
 	STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN = OLDSCRAPBOOK_BOOK_RAIN.."\n\nThis book will affect the blizzard instead when used in the Winterlands."
 	
+	local OLDSCRAPBOOK_MERMHEAD = STRINGS.SCRAPBOOK.SPECIALINFO.MERMHEAD or ""
+	STRINGS.SCRAPBOOK.SPECIALINFO.MERMHEAD = OLDSCRAPBOOK_MERMHEAD.."\nBeing around Merm Heads boosts your damage dealt and absorption against merms of all kinds by 12.5% for up to 4 Merm Heads."
+	
 	local OLDSCRAPBOOK_PENGUIN = STRINGS.SCRAPBOOK.SPECIALINFO.PENGUIN or ""
 	STRINGS.SCRAPBOOK.SPECIALINFO.PENGUIN = "Feathery inhabitants of the Winterlands, they leave home for the Mainland in winter to lay their eggs.\n"..OLDSCRAPBOOK_PENGUIN
 	
+	local OLDSCRAPBOOK_PIGHEAD = STRINGS.SCRAPBOOK.SPECIALINFO.PIGHEAD or ""
+	STRINGS.SCRAPBOOK.SPECIALINFO.PIGHEAD = OLDSCRAPBOOK_PIGHEAD.."\nBeing around Pig Heads boosts your damage dealt and absorption against pigs of all kinds by 12.5% for up to 4 Pig Heads."
+	
 	local OLDSCRAPBOOK_RAINOMETER = STRINGS.SCRAPBOOK.SPECIALINFO.RAINOMETER or ""
-	STRINGS.SCRAPBOOK.SPECIALINFO.RAINOMETER = OLDSCRAPBOOK_RAINOMETER.." Becomes agitated ahead of nearby blizzard episodes."
+	STRINGS.SCRAPBOOK.SPECIALINFO.RAINOMETER = OLDSCRAPBOOK_RAINOMETER.."\nBecomes agitated ahead of nearby blizzard episodes."
 	
 	local OLDSCRAPBOOK_WINTEROMETOR = STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR or ""
-	STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR = OLDSCRAPBOOK_WINTEROMETOR.."\nAnd agitates early ahead of nearby blizzard episodes."
+	STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR = OLDSCRAPBOOK_WINTEROMETOR.."\nAgitates early ahead of nearby blizzard episodes."

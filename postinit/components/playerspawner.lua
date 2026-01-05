@@ -42,8 +42,6 @@ ENV.AddComponentPostInit("playerspawner", function(self)
 			end
 		end
 		
-		player:AddDebuff("buff_walrusally", "buff_walrusally") -- A little help if the player spawns nearby MacTusk...
-		
 		player:DoTaskInTime(0, function()
 			if player.sg and player.sg:HasStateTag("idle") then
 				player.sg:GoToState("polarspawn")
@@ -74,6 +72,26 @@ ENV.AddComponentPostInit("playerspawner", function(self)
 			player.Transform:SetPosition(x, y, z)
 			self:PolarSpawnWelcome(player, x, y, z)
 		end
+	end
+	
+	local POLAR_SPAWN_PROTECTION_DANGER_TAGS = {"hostile", "bear", "walrus"}
+	
+	local Old_ShouldEnableSpawnProtection = self._ShouldEnableSpawnProtection
+	function self:_ShouldEnableSpawnProtection(inst, player, x, y, z, isloading, ...)
+		local inpolar = not isloading and IsInPolarAtPoint(x, y, z) -- Spawnprotection is not active on day one, but we'll make an exception on Winterlands start (yknow why)
+		local oldcycle = TheWorld.state.cycles
+		if inpolar and oldcycle <= 1 then
+			TheWorld.state.cycles = 2
+		end
+		
+		local test = Old_ShouldEnableSpawnProtection(self, inst, player, x, y, z, isloading, ...)
+		if inpolar and not test then
+			test = TheSim:CountEntities(x, y, z, 24, nil, nil, SPAWN_PROTECTION_DANGER_TAGS) >= 1 -- Increased range because spawn sequence is longer
+		end
+		
+		TheWorld.state.cycles = oldcycle
+		
+		return test
 	end
 	
 	self.inst:ListenForEvent("ms_registerspawnpoint_polar", OnRegisterPolarPoint)

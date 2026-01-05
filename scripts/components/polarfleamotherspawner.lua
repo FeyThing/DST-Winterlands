@@ -31,10 +31,10 @@ function PolarFleaMotherSpawner:ShouldTrigger(pt, data) -- Tests both fleakill s
 	end
 	
 	local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, self.findgrass_dist, GRASS_TAGS)
-	local your_mother = FindEntity(inst, 20, nil, YOUR_MOM_TAGS)
+	local your_mother = TheSim:FindEntities(pt.x, pt.y, pt.z, 20, YOUR_MOM_TAGS)
 	local spawn_pos
 	
-	if #ents >= self.findgrass_min and your_mother == nil then
+	if #ents >= self.findgrass_min and #your_mother < 1 then
 		local sx, sy, sz = 0, 0, 0
 		
 		for i, v in ipairs(ents) do

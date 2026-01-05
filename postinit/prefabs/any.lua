@@ -29,7 +29,7 @@ end
 --	[[	Walrus / Hounds	]]	--
 
 local function NoWalrusAllyRetarget(inst, target)
-	if target:HasTag("walruspal") then
+	if target:HasTag("walruspal") or (target.components.age and target.components.age:GetAge() <= 20) then -- Leave freshly spawned players alone, yknow why
 		return not inst:HasTag("epic") and not inst:HasTag("warg") -- Puppy's getting too big
 	end
 end

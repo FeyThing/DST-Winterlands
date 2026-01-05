@@ -3,8 +3,6 @@ require "behaviours/runaway"
 require "behaviours/doaction"
 require "behaviours/standstill"
 
--- TODO: in the event the castle is blocked, probably penguins should be allowed to attack walls?
-
 local BrainCommon = require("brains/braincommon")
 
 local MAX_CHASE_TIME = 60
