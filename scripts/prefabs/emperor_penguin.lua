@@ -48,6 +48,7 @@ local HOSTILE_NOT_TAGS = {"INLIMBO", "isdead", "player", "penguin_emperor"}
 
 local function RetargetFn(inst)
 	local targets = {}
+	local target
 	
 	if inst:HasTag("hostile") and TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor == inst then
 		for ID, data in pairs(inst.attackerUSERIDs) do
@@ -57,27 +58,67 @@ local function RetargetFn(inst)
 				end
 			end
 		end
-	end
-	
-	local target = #targets > 0 and targets[math.random(#targets)] or nil
-	
-	if target then
-		return target
-	else
-		target = FindEntity(inst, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, function(guy)
-			return guy.components.combat and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(guy)
-		end, nil, HOSTILE_NOT_TAGS, HOSTILE_TAGS)
+		
+		target = #targets > 0 and targets[math.random(#targets)] or nil
+		
+		if target then
+			return target
+		else
+			target = FindEntity(inst, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, function(guy)
+				return guy.components.combat and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(guy)
+			end, nil, HOSTILE_NOT_TAGS, HOSTILE_TAGS)
+		end
 	end
 	
 	return target
 end
 
+local function ForceQuitTowerState(inst) -- This is to be called when leaving tower unconventionally (when tower state onexit won't run)
+	inst:Show()
+	if inst.DynamicShadow then
+		inst.DynamicShadow:Enable(true)
+	end
+	
+	inst.entity:SetParent(nil)
+	if inst.Follower then
+		inst.Follower:StopFollowing()
+	end
+	
+	if inst._juggle_tower then
+		if inst._juggle_tower.tower_emperor then
+			inst._juggle_tower.tower_emperor:set(nil)
+		end
+		if inst.emperor_tower then
+			inst.emperor_tower:set(nil)
+		end
+		if inst._juggle_tower.components.locomotor then
+			inst._juggle_tower:RemoveComponent("locomotor")
+		end
+		
+		if TheWorld.ismastersim then
+			if inst._juggle_tower.components.highlightchild then
+				inst._juggle_tower.components.highlightchild:SetOwner(nil)
+			end
+			if inst.components.highlightchild then
+				inst.components.highlightchild:SetOwner(nil)
+			end
+		end
+	end
+	
+	inst._juggle_tower = nil
+	inst._tower_exit_pos = nil
+	inst.wants_to_juggle = nil
+	inst.Physics:SetActive(true)
+end
+
 local function EnterJuggleTrigger(inst)
+	inst.healthphase_regenlock = nil
 	inst.wants_to_call_guards = true
 	inst.wants_to_juggle = true
 end
 
 local function CallGuards(inst)
+	inst.healthphase_regenlock = nil
 	inst.wants_to_call_guards = true
 end
 
@@ -95,6 +136,8 @@ end
 
 local function TeleportOverrideFn(inst)
 	local ipos = inst:GetPosition()
+	ipos.y = 0
+	
 	local offset = FindWalkableOffset(ipos, TWOPI * math.random(), 8, 8, true, false)
 		or FindWalkableOffset(ipos, TWOPI * math.random(), 12, 8, true, false)
 	
@@ -131,26 +174,13 @@ local function MakeDefeated(inst, fromload)
 end
 
 local function OnEntitySleep(inst)
-	if inst.sg == nil or inst.sg.statemem.exiting_tower then
-		return
-	end
-	
-	inst.wants_to_call_guards = nil
-	inst.wants_to_juggle = nil
-	inst.wants_to_spin = nil
-	
 	local castle_pos = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.ice_castle_pos
 	if castle_pos and TheWorld.components.emperorpenguinspawner.emperor == inst then
-		inst.Transform:SetPosition(castle_pos:Get())
+		inst:ForceQuitTowerState()
 		
-		if inst._juggle_tower then
-			inst.sg:GoToState("emperor_entertower", true)
-		end
 		inst.sg:GoToState("idle")
-	end
-	
-	if inst.components.combat then
-		inst.components.combat:SetTarget(nil)
+		
+		inst.Transform:SetPosition(castle_pos:Get())
 	end
 	
 	-- Emperor will regenerate one phase of health when quiting combat, so we repeat the last triggers where fight was abandonned
@@ -195,6 +225,7 @@ local function OnEntityWake(inst)
 	end
 end
 
+--[[Saving now occurs from spawner component, emperor cannot be saved while parented to a tower, causing it to despawn
 local function OnSave(inst, data)
 	data.attackerUSERIDs = inst.attackerUSERIDs or nil
 	data.defeated = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.defeated
@@ -216,7 +247,7 @@ local function OnLoad(inst, data)
 			inst:AddTag("hostile")
 		end
 	end
-end
+end]]
 
 local function PushMusic(inst)
 	if ThePlayer == nil or not inst:HasTag("hostile") then
@@ -261,8 +292,6 @@ local function OnAttacked(inst, data)
 		inst.components.combat:SetTarget(attacker)
 		inst.components.combat:ShareTarget(attacker, 16, CanShareTarget, 100)
 	end
-	
-	inst.healthphase_regenlock = nil
 end
 
 local function OnCombatTargetChange(inst, data)
@@ -288,13 +317,21 @@ local function OnCombatTargetChange(inst, data)
 end
 
 local function OnTeleported(inst)
-	if inst.entity:GetParent() == inst._juggle_tower and inst._juggle_tower ~= nil then
-		inst.entity:SetParent(nil)
-		if inst.Follower then
-			inst.Follower:StopFollowing()
-		end
+	if not inst.healthphase_regenlock then
+		-- Sometimes, teleportation even around castle can cause entity to turn asleep, we don't want regen to occur in these case
+		inst.healthphase_regenlock = true
 		
-		inst._tower_exit_pos = nil
+		inst:DoTaskInTime(1, function()
+			inst.healthphase_regenlock = nil
+		end)
+	end
+	
+	if inst.sg and inst.sg:HasStateTag("towered") then
+		inst.sg:GoToState("wake")
+	end
+	
+	if inst.entity:GetParent() == inst._juggle_tower and inst._juggle_tower then
+		inst:ForceQuitTowerState()
 	end
 end
 
@@ -337,6 +374,12 @@ end
 	end
 end]]
 
+local function SetEmperorTowerDirty(inst)
+	local tower = inst.emperor_tower:value()
+	
+	inst.components.highlightchild:SetOwner(tower)
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -367,6 +410,10 @@ local function fn()
 	inst:AddTag("penguin")
 	inst:AddTag("penguin_emperor")
 	inst:AddTag("scarytoprey")
+	
+	inst:AddComponent("highlightchild")
+	
+	inst.emperor_tower = net_entity(inst.GUID, "emperor_penguin._tower", "towerdirty")
 	
 	if not TheNet:IsDedicated() then
 		inst._playingmusic = false
@@ -443,11 +490,12 @@ local function fn()
 	inst.eggprefab = "emperor_egg"
 	inst.MakeDefeated = MakeDefeated
 	--inst.IsInCastle = IsInCastle
+	inst.ForceQuitTowerState = ForceQuitTowerState
 	inst.DoExtraEgg = DoExtraEgg
 	inst.OnEntitySleep = OnEntitySleep
 	inst.OnEntityWake = OnEntityWake
-	inst.OnSave = OnSave
-	inst.OnLoad = OnLoad
+	--inst.OnSave = OnSave
+	--inst.OnLoad = OnLoad
 	inst._ondefeated = function(src, data)
 		if not inst:IsAsleep() then
 			OnDefeated(inst, data)

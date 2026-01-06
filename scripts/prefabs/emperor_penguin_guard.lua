@@ -131,7 +131,7 @@ end
 local function OnAttacked(inst, data)
 	local attacker = data and data.attacker
 	
-	if attacker then
+	if attacker and not attacker:HasTag("penguin_emperor") then
 		inst.components.combat:SetTarget(attacker)
 		inst.components.combat:ShareTarget(attacker, SHARE_TARGET_DIST, CanShareTarget, MAX_TARGET_SHARES)
 		

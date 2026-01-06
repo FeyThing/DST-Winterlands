@@ -78,7 +78,7 @@ local Combat = require("components/combat")
 		--	So, turns out mobs will specifically NOT fight things that possess a minhealth and have no hostile tag.
 		--	⭐🌟⭐ Emperor Pengull ⭐🌟⭐ is typing...
 		
-		local unscrew = target:HasTag("penguin_emperor") and target.components.health and target.components.health.minhealth and not target:HasTag("hostile")
+		local unscrew = target and target:HasTag("penguin_emperor") and target.components.health and target.components.health.minhealth and not target:HasTag("hostile")
 		if unscrew then
 			target.components.health:SetMinHealth(0)
 		end

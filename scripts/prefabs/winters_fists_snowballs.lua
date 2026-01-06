@@ -292,7 +292,7 @@ local function SetSize(inst, size)
 end
 
 local function ThrowAt(inst, targetpos, owner)
-	local nocollidetime = (owner and owner.prefab == "emperor_penguin") and 0.6 or 0.25
+	local nocollidetime = (owner and owner.prefab == "emperor_penguin") and 1 or 0.25
 	
 	inst.Physics:SetCylinder(0, 0) -- We don't want the snowball to crash instantly on nearby colliders !
 	inst:DoTaskInTime(nocollidetime, function() inst.Physics:SetCylinder(1, 1) end)

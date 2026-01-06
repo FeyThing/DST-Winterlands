@@ -185,7 +185,9 @@ local function OnRemove(inst)
 end
 
 local function GetStatus(inst)
-	return inst.emperor_juggling and "PENGUIN" or nil
+	local emperor = inst.tower_emperor and inst.tower_emperor:value()
+	
+	return emperor and "PENGUIN" or nil
 end
 
 local function GetPolarMistMult(inst)
@@ -211,6 +213,20 @@ end
 
 local function OnEntityWake(inst)
 	inst.components.polarmistemitter:StartMisting()
+end
+
+local function TeleportOverrideFn(inst)
+	local emperor = inst.tower_emperor and inst.tower_emperor:value()
+	
+	if emperor then
+		if emperor.components.teleportedoverride and emperor.components.teleportedoverride.pos_fn then
+			emperor.components.teleportedoverride.pos_fn(emperor)
+		end
+		
+		emperor:PushEvent("teleported")
+	end
+	
+	return inst:GetPosition()
 end
 
 local function OnHammered(inst, worker)
@@ -316,6 +332,12 @@ local function UpdateFacing(inst)
 	end
 end
 
+local function SetTowerEmperorDirty(inst)
+	local emperor = inst.tower_emperor and inst.tower_emperor:value()
+	
+	inst.components.highlightchild:SetOwner(emperor)
+end
+
 local function tower()
 	local inst = CreateEntity()
 	
@@ -342,6 +364,8 @@ local function tower()
 	inst:AddTag("birdblocker")
 	inst:AddTag("polarcastletower")
 	
+	inst.tower_emperor = net_entity(inst.GUID, "tower_polar.tower_emperor", "tower_emperordirty")
+	
 	inst._pfpos = nil
 	inst._ispathfinding = net_bool(inst.GUID, "_ispathfinding", "onispathfindingdirty")
 	MakeObstacle(inst)
@@ -349,12 +373,16 @@ local function tower()
 	
 	inst.OnRemoveEntity = OnRemove
 	
+	inst:AddComponent("highlightchild")
+	
 	inst:AddComponent("updatelooper")
 	inst.components.updatelooper:AddPostUpdateFn(UpdateFacing)
 	
 	inst.entity:SetPristine()
 	
 	if not TheWorld.ismastersim then
+		inst:ListenForEvent("tower_emperordirty", SetTowerEmperorDirty)
+		
 		return inst
 	end
 	
@@ -368,6 +396,9 @@ local function tower()
 	inst.components.polarmistemitter:StartMisting()
 	inst.components.polarmistemitter.scale = GetPolarMistMult
 	inst.components.polarmistemitter.maxmist = 4
+	
+	inst:AddComponent("teleportedoverride")
+	inst.components.teleportedoverride:SetDestPositionFn(TeleportOverrideFn)
 	
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)

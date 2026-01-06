@@ -19,7 +19,8 @@ local BOUNCE_ANGLE_VARIANCE = 20
 local BOUNCE_OFF_TAGS = {"wall", "polarcastletower", "structure", "_inventoryitem", "_combat"}
 local BOUNCE_OFF_NOT_TAGS = {"INLIMBO", "isdead"}
 
-local BOUNCE_TARGET_RETRY_TIME = 0.25
+local BOUNCE_STRUCTURE_RETRY_TIME = 0.25
+local BOUNCE_TARGET_RETRY_TIME = 0.1
 
 local function SpinGetAngle(inst)
     local x, y, z = inst.Transform:GetWorldPosition()
@@ -47,8 +48,9 @@ local function SpinOnUpdate(inst)
 	if #ents > 0 then
 		local t = GetTime()
 		local target = ents[1]
+		local collide_retry_time = target:HasTag("locomotor") and BOUNCE_TARGET_RETRY_TIME or BOUNCE_STRUCTURE_RETRY_TIME
 		
-		if target ~= inst and (inst._collided_times[target] == nil or t - inst._collided_times[target] > BOUNCE_TARGET_RETRY_TIME) then
+		if target ~= inst and (inst._collided_times[target] == nil or t - inst._collided_times[target] > collide_retry_time) then
 			local bounce = false
 			
 			if target.components.inventoryitem and not target.components.health then
@@ -67,7 +69,9 @@ local function SpinOnUpdate(inst)
 			
 			if target.components.combat and target.components.health and not target.components.health:IsDead() and
 				not target:HasTag("wall") and (not target:HasTag("penguin") or target:HasTag("player")) then
-				target.components.combat:GetAttacked(inst, TUNING.EMPEROR_PENGUIN_DAMAGE * TUNING.EMPEROR_PENGUIN_DAMAGE_SPINMOD)
+				
+				local dmg = inst.components.combat:CalcDamage(target, nil, TUNING.EMPEROR_PENGUIN_DAMAGE_SPINMOD)
+				target.components.combat:GetAttacked(inst, dmg)
 			end
 			
 			if bounce then
@@ -210,12 +214,13 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 	--	Emperor
 	State{
 		name = "emperor_entertower",
-		tags = {"busy", "nointerrupt", "noattack"},
+		tags = {"busy", "nointerrupt", "noattack", "towered"},
 		
 		onenter = function(inst, doexit)
 			inst.Physics:Stop()
 			inst.SoundEmitter:KillAllSounds()
 			inst.SoundEmitter:PlaySound(inst._soundpath.."idle")
+			
 			if doexit then
 				inst.AnimState:PlayAnimation("tower_pst")
 			else
@@ -223,6 +228,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				inst.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
 			end
 			
+			inst.entity:SetCanSleep(false)
 			inst.sg.statemem.exiting_tower = doexit
 		end,
 		
@@ -234,10 +240,28 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				
 				inst:Hide()
 				if inst._juggle_tower then
-					inst._juggle_tower.emperor_juggling = true
-					
 					inst.Physics:SetActive(false)
+					
 					if inst.sg.statemem.exiting_tower then
+						if inst._juggle_tower.tower_emperor then
+							inst._juggle_tower.tower_emperor:set(nil)
+						end
+						if inst.emperor_tower then
+							inst.emperor_tower:set(nil)
+						end
+						if inst._juggle_tower.components.locomotor then
+							inst._juggle_tower:RemoveComponent("locomotor")
+						end
+						
+						if TheWorld.ismastersim then
+							if inst._juggle_tower.components.highlightchild then
+								inst._juggle_tower.components.highlightchild:SetOwner(nil)
+							end
+							if inst.components.highlightchild then
+								inst.components.highlightchild:SetOwner(nil)
+							end
+						end
+						
 						inst.entity:SetParent(nil)
 						if inst.Follower then
 							inst.Follower:StopFollowing()
@@ -248,6 +272,26 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 							inst._tower_exit_pos = nil
 						end
 					else
+						-- Highlight and locomotor is to help aiming at emperor using Telestaff
+						if inst._juggle_tower.tower_emperor then
+							inst._juggle_tower.tower_emperor:set(inst)
+						end
+						if inst.emperor_tower then
+							inst.emperor_tower:set(inst._juggle_tower)
+						end
+						if inst._juggle_tower.components.locomotor == nil then
+							inst._juggle_tower:AddComponent("locomotor")
+						end
+						
+						if TheWorld.ismastersim then
+							if inst._juggle_tower.components.highlightchild then
+								inst._juggle_tower.components.highlightchild:SetOwner(inst)
+							end
+							if inst.components.highlightchild then
+								inst.components.highlightchild:SetOwner(inst._juggle_tower)
+							end
+						end
+						--
 						inst._tower_exit_pos = inst:GetPosition()
 						
 						inst.entity:SetParent(inst._juggle_tower.entity)
@@ -275,26 +319,25 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		},
 		
 		onexit = function(inst)
+			inst:Show()
 			if inst.DynamicShadow then
 				inst.DynamicShadow:Enable(true)
 			end
 			
-			inst:Show()
 			if inst.sg.statemem.exiting_tower then
-				if inst._juggle_tower then
-					inst._juggle_tower.emperor_juggling = nil
-				end
-				
 				inst._juggle_tower = nil
+				inst._tower_exit_pos = nil
 				inst.wants_to_juggle = nil
 				inst.Physics:SetActive(true)
 			end
+			
+			inst.entity:SetCanSleep(true)
 		end,
 	},
 	
 	State{
 		name = "emperor_juggle",
-		tags = {"busy", "canrotate", "juggling", "nointerrupt", "noattack"},
+		tags = {"busy", "canrotate", "juggling", "nointerrupt", "noattack", "towered"},
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("juggle_pre")
@@ -381,7 +424,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 	
 	State{
 		name = "emperor_stopjuggle",
-		tags = {"busy", "canrotate", "nointerrupt"},
+		tags = {"busy", "canrotate", "nointerrupt", "towered"},
 		
 		onenter = function(inst, leftcastle)
 			inst.AnimState:PlayAnimation("juggle_pst")
@@ -454,6 +497,8 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 				inst.sg:AddStateTag("noattack")
 				inst.sg:AddStateTag("running")
 				
+				inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/mossling/spin", "spinLoop")
+				
 				inst.sg.statemem.spinning = true
 			end),
 		},
@@ -475,8 +520,9 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		name = "emperor_stopspin",
 		tags = {"busy", "canrotate", "nointerrupt", "running"},
 		
-		onenter = function(inst, leftcastle)
+		onenter = function(inst)
 			inst.AnimState:PlayAnimation("emperor_panic", true)
+			inst.SoundEmitter:KillSound("spinLoop")
 			inst.SoundEmitter:PlaySound("dontstarve/movement/iceslab_slipping")
 			inst.Physics:SetMotorVelOverride(5, 0, 0)
 			

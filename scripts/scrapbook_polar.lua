@@ -58,7 +58,7 @@ local scrapbookdata = {
 	wx78module_naughty = {type = "item", subcat = "upgrademodule", finiteuses = 4, build = "wx_polarchips", bank = "polarchips", anim = "naughty", craftingprefab = "wx78", deps = {"charcoal", "scandata"}},
 	
 	--	Creatures / Giants
-	emperor_penguin = {type = "giant", health = 4000, damage = 40, build = "penguin_emperor", bank = "penguin", anim = "idle_loop", deps = {"compass_polar", "emperor_egg", "emperor_penguin_guard", "emperor_penguinhat", "gnarwail_horn", "pondfish", "winter_ornament_boss_emperor_penguin"}},
+	emperor_penguin = {type = "giant", health = 4000, damage = 40, build = "penguin_emperor", bank = "penguin", anim = "idle_loop", deps = {"compass_polar", "emperor_egg", "emperor_penguin_guard", "emperor_penguinhat", "feather_crow", "feather_robin_winter", "gnarwail_horn", "pondfish", "winter_ornament_boss_emperor_penguin"}},
 	emperor_penguin_guard = {type = "creature", health = 300, damage = 34, build = "penguin_guard", bank = "penguin_guard", anim = "idle_loop", animoffsety = -90, deps = {"blueprint", "drumstick", "featherpencil", "flint", "polar_spear"}},
 	girl_walrus = {type = "creature", health = 300, damage = 22, build = "walrus_girl", bank = "walrus", anim = "idle_loop", deps = {"cookingrecipecard", "goldnugget", "meat", "walrus_bagpipe", "walrus_beartrap", "walrus_camp", "walrus_tusk"}},
 	moose_polar = {type = "creature", health = 1000, damage = "17-34", build = "moose_polar", bank = "deer", anim = "idle", hide = {"CHAIN"}, overridesymbol = {{"swap_neck_collar", "moose_polar", "swap_neck"}, {"swap_antler_red", "moose_polar", "swap_antler1"}, {"deer_head", "moose_polar_eye", "deer_head_with_eyes"}}, deps = {"boneshard", "meat", "antler_tree", "antler_tree_stick"}},

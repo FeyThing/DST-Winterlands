@@ -206,6 +206,7 @@ return Class(function(self, inst)
 		if pt then
 			local emperor = SpawnPrefab("emperor_penguin")
 			emperor.Transform:SetPosition(pt:Get())
+			emperor.persists = false
 			
 			if emperor.components.knownlocations then
 				emperor.components.knownlocations:RememberLocation("rookery", pt)
@@ -402,6 +403,7 @@ return Class(function(self, inst)
 	end
 	
 	--	Saved data, Events
+	--	NOTE: emperor savedata is now entirely in this component, he will not persist into the world, because he already doesn't if saved atop a tower (parented entity)
 	
 	function self:OnSave()
 		local data = {
@@ -412,6 +414,8 @@ return Class(function(self, inst)
 			ice_castle_pos = self.ice_castle_pos,
 			next_sketch_drop = self.next_sketch_drop,
 			times_beat = self.times_beat,
+			
+			attackerUSERIDs = self.emperor and self.emperor.attackerUSERIDs,
 		}
 		local ents = {}
 		
@@ -422,8 +426,10 @@ return Class(function(self, inst)
 			end
 		end
 		if self.emperor and self.emperor:IsValid() then
-			table.insert(ents, self.emperor.GUID)
-			data.emperor = self.emperor.GUID
+			--table.insert(ents, self.emperor.GUID)
+			--data.emperor = self.emperor.GUID
+			
+			data.emperor_savedata = self.emperor:GetSaveRecord()
 		end
 		
 		return data, ents
@@ -455,12 +461,31 @@ return Class(function(self, inst)
 					end
 				end
 			end
-			if savedata.emperor then
+			
+			if savedata.emperor then -- Old, keeping for old saves
 				if newents[savedata.emperor] then
 					local emperor = newents[savedata.emperor].entity
 					
 					if emperor and emperor:IsValid() then
 						self.emperor = emperor
+						emperor.persists = false
+					end
+				end
+			end
+			if savedata.emperor_savedata and not savedata.defeated then -- New method
+				local emperor = SpawnSaveRecord(savedata.emperor_savedata)
+				
+				if emperor then
+					self.emperor = emperor
+					emperor.persists = false
+					emperor:ForceQuitTowerState()
+					
+					if self.ice_castle_pos then
+						emperor.Transform:SetPosition(self.ice_castle_pos:Get())
+					end
+					if savedata.attackerUSERIDs and next(savedata.attackerUSERIDs) then
+						emperor.attackerUSERIDs = savedata.attackerUSERIDs
+						emperor:AddTag("hostile")
 					end
 				end
 			end
