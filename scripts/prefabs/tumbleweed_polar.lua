@@ -132,8 +132,8 @@ local function MakeLoot(inst)
 		if group and #group.items > 0 then
 			local item = group.items[math.random(#group.items)]
 			
-			table.insert(inst.loot, item)
-			table.insert(inst.lootaggro, table.contains(loot_aggros, item))
+			inst.loot[#inst.loot + 1] = item
+			inst.lootaggro[#inst.lootaggro + 1] = table.contains(loot_aggros, item) == true
 			
 			num_loots = num_loots - 1
 		end

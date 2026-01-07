@@ -56,7 +56,7 @@ GLOBAL.setfenv(1, GLOBAL)
 		widget = {
 			slotpos = {},
 			animbank = "ui_polarfleasack_2x5",
-			animbuild = "ui_piggyback_2x6",
+			animbuild = "ui_polarfleasack_2x5",
 			pos = Vector3(-5, -90, 0),
 		},
 		issidewidget = true,
@@ -71,6 +71,11 @@ GLOBAL.setfenv(1, GLOBAL)
 	
 	function params.polarflea_sack.priorityfn(container, item, slot)
 		return item:HasTag("flea")
+	end
+	
+	function params.polarflea_sack.widget.bganim_visualfn(bganim, container, doer)
+		--TODO: Visual differance between standard/upgraded backpack
+		--		also...fleas running around backpack ui :>
 	end
 	
 --	Sparse Winter Tree
@@ -238,7 +243,7 @@ AddClassPostConstruct("widgets/itemtile", function(self, invitem)
 	end
 	
 	if invitem.prefab and invitem.prefab:sub(1, 11) == "chesspiece_" and invitem.prefab:sub(-7) == "_dryice" then
-		self.image:SetTint(0.8, 0.65, 0.9, 0.7)
+		self.image:SetTint(0.73, 0.8, 0.92, 0.6)
 	end
 end)
 

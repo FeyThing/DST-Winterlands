@@ -163,6 +163,18 @@ local function OnEnterNewState(inst, data)
 	end
 end
 
+local function OnEquip(inst, data)
+	if data and data.item and data.eslot == EQUIPSLOTS.HANDS then
+		inst.AnimState:Show("swap_object")
+	end
+end
+
+local function OnUnequip(inst, data)
+	if data and data.item and data.eslot == EQUIPSLOTS.HANDS then
+		inst.AnimState:Hide("swap_object")
+	end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -180,6 +192,7 @@ local function fn()
 	inst.AnimState:SetBank("penguin_guard")
 	inst.AnimState:SetBuild("penguin_guard")
 	inst.AnimState:PlayAnimation("idle_loop", true)
+	inst.AnimState:Hide("swap_object")
 	
 	inst:AddTag("penguin")
 	inst:AddTag("penguin_guard")
@@ -250,6 +263,8 @@ local function fn()
 		end
     end
 	
+	inst:ListenForEvent("equip", OnEquip)
+	inst:ListenForEvent("unequip", OnUnequip)
 	EquipWeapon(inst)
 	
 	inst:SetBrain(brain)

@@ -28,7 +28,7 @@ local function makepiece_dryice(name)
 	--
 	
 	local function ChessPiecePreInit(inst)
-		MATERIALS = PolarUpvalue(Prefabs[name.."_moonglass"].fn, "MATERIALS")
+		MATERIALS = PolarUpvalue(Prefabs[name.."_marble"].fn, "MATERIALS")
 		materialid_dryice = MATERIALS and #MATERIALS or 3
 		
 		if MATERIALS and not table.contains(MATERIALS, MATERIALS_DRYICE) then
@@ -46,7 +46,7 @@ local function makepiece_dryice(name)
 	end
 	
 	local function fn()
-		local inst = Prefabs[name.."_moonglass"].fn()
+		local inst = Prefabs[name.."_marble"].fn()
 		ChessPiecePreInit(inst)
 		
 		inst.AnimState:SetSymbolHue("swap_body", 0.15)

@@ -25,6 +25,9 @@ local LAYOUTS = {
 local DECOR_BLOCKER_TAGS = {"blocker", "plant", "structure", "wall"}
 local SLIPPERY_MUST_TAGS = {"slipperyfeettarget"}
 
+local CHESSPIECE_EVENT_TAGS = {"chess_moonevent", "event_trigger"}
+local CHESSPIECE_EVENT_NOT_TAGS = {"INLIMBO"}
+
 local castle_chesspieces = {
 	chesspiece_emperor_penguin_fruity_dryice = 4,
 	chesspiece_emperor_penguin_juggle_dryice = 4,
@@ -55,7 +58,7 @@ local FNS = {
 		
 		return inst
 	end,
-
+	
 	WallSpawnFn = function(num, pt)
 		local inst = SpawnPrefab("wall_polar")
 		inst.Transform:SetPosition(pt:Get())
@@ -72,14 +75,33 @@ local FNS = {
 	end,
 	
 	ChesspieceSpawnFn = function(num, pt)
-		if num > 9 or math.random() < 0.3 then
+		local isfullmoon = TheWorld.state.moonphase == "full"
+		if num > 9 or (math.random() < 0.3 and not isfullmoon) then
 			return
 		end
 		
-		local inst = SpawnPrefab(weighted_random_choice(castle_chesspieces))
-		inst.Transform:SetPosition(pt:Get())
+		local function has_chesspiece(prefab)
+			local ents = TheSim:FindEntities(pt.x, pt.y, pt.z, 16, CHESSPIECE_EVENT_TAGS, CHESSPIECE_EVENT_NOT_TAGS)
+			for i, ent in ipairs(ents) do
+				if ent.prefab == prefab then
+					return true
+				end
+			end
+			
+			return false
+		end
 		
-		return inst
+		local chesspiece = isfullmoon and (not has_chesspiece("chesspiece_knight_dryice") and "chesspiece_knight_dryice"
+			or not has_chesspiece("chesspiece_bishop_dryice") and has_chesspiece("chesspiece_knight_dryice") and "chesspiece_bishop_dryice"
+			or not has_chesspiece("chesspiece_rook_dryice") and has_chesspiece("chesspiece_bishop_dryice") and "chesspiece_rook_dryice")
+			or weighted_random_choice(castle_chesspieces)
+		
+		if chesspiece then
+			local inst = SpawnPrefab(chesspiece)
+			inst.Transform:SetPosition(pt:Get())
+			
+			return inst
+		end
 	end,
 	
 	SignSpawnFn = function(num, pt)

@@ -86,7 +86,7 @@ ENV.AddComponentPostInit("playerspawner", function(self)
 		
 		local test = Old_ShouldEnableSpawnProtection(self, inst, player, x, y, z, isloading, ...)
 		if inpolar and not test then
-			test = TheSim:CountEntities(x, y, z, 24, nil, nil, SPAWN_PROTECTION_DANGER_TAGS) >= 1 -- Increased range because spawn sequence is longer
+			test = TheSim:CountEntities(x, y, z, 24, nil, nil, POLAR_SPAWN_PROTECTION_DANGER_TAGS) >= 1 -- Increased range because spawn sequence is longer
 		end
 		
 		TheWorld.state.cycles = oldcycle

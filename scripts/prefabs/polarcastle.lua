@@ -47,6 +47,10 @@ SetSharedLootTable("tower_polar", {
 local CASTLE_FLOOR_TAGS = {"polarcastlefloor"}
 local CASTLE_TOWER_TAGS = {"polarcastletower"}
 
+local FIRE_TAGS = {"fire"}
+local FIRE_NOT_TAGS = {"cooker", "INLIMBO"}
+local FIREWATCH_PERIOD = 2
+
 --	Court
 
 local function IsSlipperyAtPosition(inst, x, y, z)
@@ -65,6 +69,39 @@ end
 
 local function SlipperyRate(inst, target)
 	return 2.75 / 2
+end
+
+local function DoFireWatch(inst, target)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	
+	local fires = TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE * 0.7, FIRE_TAGS, FIRE_NOT_TAGS)
+	if #fires < 1 then
+		return
+	end
+	
+	local towers = TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE * 0.7, CASTLE_TOWER_TAGS)
+	if #towers < 1 then
+		return
+	end
+	
+	local fire, tower = fires[math.random(#fires)], towers[math.random(#towers)]
+	if fire and tower and fire:IsValid() and tower:IsValid() then
+		tower.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
+		
+		if fire:IsAsleep() or tower:IsAsleep() then
+			fire.components.burnable:Extinguish()
+		else
+			local proj = SpawnPrefab("snowball")
+			
+			if proj and proj.components.complexprojectile then
+				local fx, fy, fz = fire.Transform:GetWorldPosition()
+				proj.Transform:SetPosition(tower.Transform:GetWorldPosition())
+				proj.components.complexprojectile:Launch(Vector3(fx, 0, fz))
+			else
+				fire.components.burnable:Extinguish()
+			end
+		end
+	end
 end
 
 local function OnEntityWake_Castle(inst)
@@ -105,7 +142,7 @@ local function ice()
 	inst:AddTag("snowblocker")
 	
 	inst._snowblockrange = net_smallbyte(inst.GUID, "polarcastle._snowblockrange")
-	inst._snowblockrange:set(12)
+	inst._snowblockrange:set(13)
 	
 	inst.entity:SetPristine()
 	
@@ -117,7 +154,10 @@ local function ice()
 	inst.components.slipperyfeettarget:SetIsSlipperyAtPoint(IsSlipperyAtPosition)
 	inst.components.slipperyfeettarget:SetSlipperyRate(SlipperyRate)
 	
+	inst.DoFireWatch = DoFireWatch
 	inst.OnEntityWake = OnEntityWake_Castle
+	
+	inst._firewatch = inst:DoPeriodicTask(FIREWATCH_PERIOD, inst.DoFireWatch)
 	
 	return inst
 end
@@ -301,6 +341,21 @@ local function ShouldRecoil(inst, worker, tool, numworks)
 	return false, numworks
 end
 
+local function CloseTheNoor(inst)
+	--TODO: Doors needs to be either animated or be a split object, to hide and show...
+	
+	--inst._opened_door = nil
+end
+
+local function OpenTheNoor(inst)
+	inst.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
+	
+	--[[if inst._opened_door then
+		inst._opened_door:Cancel()
+	end
+	inst._opened_door = inst:DoTaskInTime(0.85, CloseTheNoor)]]
+end
+
 local function UpdateFacing(inst)
 	local castle_floor = GetClosestInstWithTag(CASTLE_FLOOR_TAGS, inst, 12)
 	local facing = inst.AnimState:GetCurrentFacing()
@@ -416,6 +471,7 @@ local function tower()
 	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	--inst.OpenTheNoor = OpenTheNoor
 	
 	return inst
 end

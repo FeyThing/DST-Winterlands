@@ -1,3 +1,5 @@
+-- TODO: Reduce damage for players hit with hats with "hardarmor"... but only when Klei adds it for Hardwood Hat
+
 local assets = {
 	Asset("ANIM", "anim/icicle_roof.zip"),
 	Asset("ANIM", "anim/icicle_rock.zip"),

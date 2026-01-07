@@ -240,6 +240,7 @@ return Class(function(self, inst)
 				
 				local penguin = SpawnPrefab("emperor_penguin_guard")
 				penguin.Transform:SetPosition(offset:Get())
+				tower.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
 				
 				if penguin.components.knownlocations then
 					penguin.components.knownlocations:RememberLocation("rookery", offset)
