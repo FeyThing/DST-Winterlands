@@ -6,7 +6,7 @@ local deepcopy = GLOBAL.deepcopy
 local STRINGS = GLOBAL.STRINGS
 require("polar_strings/strings")
 
-local polar_tasks = {"Polar Village", "Polar Lands", "Polar Caves"}
+local polar_tasks = {"Polar Village", math.random() <= 0.66 and "Polar Lands" or "Polar Deciduous Lands", "Polar Caves"}
 local polar_start_required_tasks = {"Polar Floe", "Polar Quarry"}
 
 --	Add Island, Setpieces, ...
@@ -31,17 +31,17 @@ AddTaskSetPreInitAny(function(self)
 			end
 		end
 		
-		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
+		self.set_pieces["PolarAmulet_Shack"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands", "Polar Village", "Polar Quarry"}}
 		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		self.set_pieces["PolarFox_Solo"] = {count = 3, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		
 		if math.random() < 0.5 then
-			self.set_pieces["skeleton_beartrapped"] = {count = 1, tasks = {"Polar Lands"}}
+			self.set_pieces["skeleton_beartrapped"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands"}}
 		else
 			self.set_pieces["skeleton_icicle"] = {count = 1, tasks = {"Polar Caves"}}
 		end
 		if math.random() < 0.33 then
-			self.set_pieces["arrowsigns_polarvillages"] = {count = 1, tasks = {"Polar Lands", "Polar Village"}}
+			self.set_pieces["arrowsigns_polarvillages"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands", "Polar Village"}}
 		end
 		
 		if self.required_prefabs == nil then
@@ -133,7 +133,7 @@ GLOBAL.Level.ChooseSetPieces = function(self, ...)
 		if self.set_pieces == nil then
 			self.set_pieces = {}
 		end
-		self.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands"}}
+		self.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands", "Polar Deciduous Lands"}}
 		
 		if self.required_prefabs == nil then
 			self.required_prefabs = {}

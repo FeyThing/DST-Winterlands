@@ -50,17 +50,18 @@ local function RetargetFn(inst)
 	local targets = {}
 	local target
 	
+	print("RetargetFn?")
 	if inst:HasTag("hostile") and TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor == inst then
 		for ID, data in pairs(inst.attackerUSERIDs) do
 			for i, player in ipairs(AllPlayers) do
-				if player.userid == ID and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(player) then
+				if player:IsValid() and player.userid == ID and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(player) then
 					table.insert(targets, player)
 				end
 			end
 		end
 		
 		target = #targets > 0 and targets[math.random(#targets)] or nil
-		
+		print("target?", target)
 		if target then
 			return target
 		else
@@ -74,6 +75,7 @@ local function RetargetFn(inst)
 end
 
 local function ForceQuitTowerState(inst) -- This is to be called when leaving tower unconventionally (when tower state onexit won't run)
+	inst:ClearBufferedAction()
 	inst:Show()
 	if inst.DynamicShadow then
 		inst.DynamicShadow:Enable(true)
@@ -111,15 +113,27 @@ local function ForceQuitTowerState(inst) -- This is to be called when leaving to
 	inst.Physics:SetActive(true)
 end
 
-local function EnterJuggleTrigger(inst)
-	inst.healthphase_regenlock = nil
+local function CallGuards(inst, phase)
+	if inst.healthtrigger_phase and phase and phase <= inst.healthtrigger_phase then
+		return
+	end
+	
 	inst.wants_to_call_guards = true
-	inst.wants_to_juggle = true
+	inst.healthphase_regenlock = nil
+	
+	inst.healthtrigger_phase = phase or inst.healthtrigger_phase
 end
 
-local function CallGuards(inst)
-	inst.healthphase_regenlock = nil
+local function EnterJuggleTrigger(inst, phase)
+	if inst.healthtrigger_phase and phase and phase <= inst.healthtrigger_phase then
+		return
+	end
+	
 	inst.wants_to_call_guards = true
+	inst.wants_to_juggle = true
+	inst.healthphase_regenlock = nil
+	
+	inst.healthtrigger_phase = phase or inst.healthtrigger_phase
 end
 
 local function GetStatus(inst)
@@ -144,8 +158,8 @@ local function TeleportOverrideFn(inst)
 	return (offset and ipos + offset) or ipos
 end
 
-local function MakeDefeated(inst, fromload)
-	TheWorld:PushEvent("emperorpenguin_defeated", {emperor = inst})
+local function MakeDefeated(inst, fromload, noegg)
+	TheWorld:PushEvent("emperorpenguin_defeated", {emperor = inst, noegg = noegg})
 	
 	inst:AddTag("notarget")
 	if inst.components.combat then
@@ -169,6 +183,29 @@ local function MakeDefeated(inst, fromload)
 				
 				break
 			end
+		end
+	end
+end
+
+-- There's some weird ***jank that happens with the boss where both brain and components will not properly wake up from unloading, or being removed from scene,
+-- this will need some research at some point to figure why it happens at all, but atm we make do...
+
+local function WakeUp(inst)
+	if not inst:IsAsleep() and not inst:HasTag("INLIMBO") then
+		local wakeup = inst._braindisabled or (inst.components.combat and inst.components.combat.retargettask == nil and inst.components.combat.targetfn)
+		
+		if wakeup then
+			OnEntityWake(inst.GUID)
+		end
+	end
+end
+
+local function OnEntityWake(inst)
+	if TheWorld.components.emperorpenguinspawner and not TheWorld.components.emperorpenguinspawner.defeated
+		and inst:GetTimeAlive() > 2 then -- First time is called from spawnercomponent
+		
+		if inst.sg and not inst.sg.statemem.exiting_tower then
+			inst.sg:GoToState("summon_guards", true)
 		end
 	end
 end
@@ -201,37 +238,18 @@ local function OnEntitySleep(inst)
 	end
 end
 
--- There's some weird ***jank that happens when the emperor is spawned naturally, brains turns off because entity spawns too far to stay loaded
--- ... and it just won't turn back on from there onward, so uh, we'll fire this continuously JUST to make sure it stays active.
--- (we actually do need him to be able unload normally for fight reset!)
+--	NOTE: Save and load mainly occurs from spawner, emperor cannot be saved while parented to a tower, causing it to despawn
+--	this here is just for when he's defeated or manually spawned
 
-local function WakeUp(inst, do_summon)
-	if not inst:IsAsleep() then
-		inst:_EnableBrain_Internal()
-	end
-	
-	if do_summon then
-		inst:DoTaskInTime(0.2 + math.random(), function()
-			if inst.sg and not inst.sg.statemem.exiting_tower then
-				inst.sg:GoToState("summon_guards", true)
-			end
-		end)
-	end
-end
-
-local function OnEntityWake(inst)
-	if inst:GetTimeAlive() > 2 then -- First time is called from spawnercomponent
-		WakeUp(inst, true)
-	end
-end
-
---[[Saving now occurs from spawner component, emperor cannot be saved while parented to a tower, causing it to despawn
 local function OnSave(inst, data)
 	data.attackerUSERIDs = inst.attackerUSERIDs or nil
 	data.defeated = TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.defeated
 	data.callguards = inst.wants_to_call_guards
 	data.gojuggle = inst.wants_to_juggle
 	data.healthphase_regenlock = inst.healthphase_regenlock
+	data.healthtrigger_cutdmg = inst.healthtrigger_cutdmg
+	data.healthtrigger_phase = inst.healthtrigger_phase
+	data.snd_egg_dropped = inst._extraegg == nil
 end
 
 local function OnLoad(inst, data)
@@ -239,15 +257,18 @@ local function OnLoad(inst, data)
 		inst.attackerUSERIDs = data.attackerUSERIDs or inst.attackerUSERIDs
 		inst.wants_to_call_guards = data.callguards
 		inst.wants_to_juggle = data.gojuggle
+		
 		inst.healthphase_regenlock = data.healthphase_regenlock
+		inst.healthtrigger_cutdmg = data.healthtrigger_cutdmg
+		inst.healthtrigger_phase = data.healthtrigger_phase
 		
 		if data.defeated then
-			inst:MakeDefeated(true)
+			inst:MakeDefeated(true, data.snd_egg_dropped)
 		elseif next(inst.attackerUSERIDs) then
 			inst:AddTag("hostile")
 		end
 	end
-end]]
+end
 
 local function PushMusic(inst)
 	if ThePlayer == nil or not inst:HasTag("hostile") then
@@ -262,12 +283,29 @@ local function PushMusic(inst)
 	end
 end
 
+local function TryRipMantle(inst)
+	if inst.components.lootdropper and (inst.healthtrigger_cutdmg or 0) >= TUNING.EMPEROR_PENGUIN_HEALTH_CUTDAMAGE then
+		local rip = inst.components.lootdropper:SpawnLootPrefab("malbatross_feathered_weave")
+		rip.AnimState:SetScale(0.7, 0.7)
+		
+		inst.SoundEmitter:PlaySound("polarsounds/emperor_penguin/rip_mantle")
+		inst.healthtrigger_cutdmg = 0
+	end
+end
+
 local function DoExtraEgg(inst)
 	local egg = inst.eggprefab and inst.components.lootdropper and inst.components.lootdropper:SpawnLootPrefab(inst.eggprefab)
+	
+	-- OnAttacked event may not be pushed on the last hit
+	inst:TryRipMantle()
+	
 	inst._extraegg = nil
 	
 	return egg
 end
+
+local PENGUIN_GUARDS_TAGS = {"penguin_guard"}
+local PENGUIN_GUARDS_NOT_TAGS = {"INLIMBO", "isdead"}
 
 local function CanShareTarget(dude)
 	return dude:HasTag("penguin")
@@ -275,8 +313,28 @@ end
 
 local function OnAttacked(inst, data)
 	local attacker = data and data.attacker
+	local damage = data and (data.damageresolved or data.damage)
+	local weapon = data and data.weapon
+	
+	inst:TryRipMantle()
+	if damage and damage > 0 and weapon and weapon:HasTag("pointy") and weapon:HasTag("sharp") then
+		inst.healthtrigger_cutdmg = (inst.healthtrigger_cutdmg or 0) + damage
+	end
 	
 	if attacker then
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local num_guards = #TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, PENGUIN_GUARDS_TAGS, PENGUIN_GUARDS_NOT_TAGS)
+		
+		-- We seed some guard if castle is currently helpless
+		local need_support = not attacker:HasTag("penguin") and not TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(attacker)
+			and num_guards < 1 and TheWorld.components.emperorpenguinspawner._provoke_support == nil
+		
+		if need_support then
+			TheWorld.components.emperorpenguinspawner._provoke_support = TheWorld:DoTaskInTime(0.2 + math.random() * 0.3, function()
+				TheWorld.components.emperorpenguinspawner:SpawnGuards(math.random(1, 2))
+			end)
+		end
+		
 		if attacker.userid then
 			inst:AddTag("hostile")
 			inst.attackerUSERIDs[attacker.userid] = true
@@ -343,7 +401,7 @@ local function OnMinHealth(inst)
 end
 
 local function OnDefeated(inst, data)
-	if inst._extraegg == nil then
+	if inst._extraegg == nil and not (data and data.noegg) then
 		inst._extraegg = inst:DoTaskInTime(2 + math.random() * 6, inst.DoExtraEgg)
 	end
 end
@@ -448,11 +506,15 @@ local function fn()
 	inst.components.health:SetMinHealth(1)
 	inst.components.health:SetMaxHealth(TUNING.EMPEROR_PENGUIN_HEALTH)
 	
+	inst.healthtrigger_phase = 1
+	inst.CallGuards = CallGuards
+	inst.EnterJuggleTrigger = EnterJuggleTrigger
+	
 	inst:AddComponent("healthtrigger")
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], CallGuards)
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], EnterJuggleTrigger)
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], CallGuards)
-	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], EnterJuggleTrigger)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[2], function(inst) inst:CallGuards(2) end)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[3], function(inst) inst:EnterJuggleTrigger(3) end)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[4], function(inst) inst:CallGuards(4) end)
+	inst.components.healthtrigger:AddTrigger(TUNING.EMPEROR_PENGUIN_SUMMONS_HEALTH_PERCENT[5], function(inst) inst:EnterJuggleTrigger(5) end)
 	
 	inst:AddComponent("inspectable")
 	inst.components.inspectable.getstatus = GetStatus
@@ -492,10 +554,12 @@ local function fn()
 	--inst.IsInCastle = IsInCastle
 	inst.ForceQuitTowerState = ForceQuitTowerState
 	inst.DoExtraEgg = DoExtraEgg
+	inst.TryRipMantle = TryRipMantle
 	inst.OnEntitySleep = OnEntitySleep
 	inst.OnEntityWake = OnEntityWake
-	--inst.OnSave = OnSave
-	--inst.OnLoad = OnLoad
+	inst.OnSave = OnSave
+	inst.OnLoad = OnLoad
+	
 	inst._ondefeated = function(src, data)
 		if not inst:IsAsleep() then
 			OnDefeated(inst, data)
@@ -505,7 +569,7 @@ local function fn()
 	inst:SetStateGraph("SGpenguin")
 	inst:SetBrain(brain)
 	
-	inst._wakeuptask = inst:DoPeriodicTask(1, WakeUp)
+	inst._wakeuptask = inst:DoPeriodicTask(0.5, WakeUp)
 	
 	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("emperorpenguin_defeated", inst._ondefeated, TheWorld)

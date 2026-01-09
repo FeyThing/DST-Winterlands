@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Not your home! Grrrr!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Glorp, won't eat me!!"
+	ANNOUNCE.BATTLECRY.WALRUS = "Glurph! Go fish somewhere else!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Glurgh?! Grrr, won't get me next time..."

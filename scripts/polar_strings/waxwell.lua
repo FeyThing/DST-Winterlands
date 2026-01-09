@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "You're on thin ice, pal."
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Brains over paws!"
+	ANNOUNCE.BATTLECRY.WALRUS = "My condoleances!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Har-har. Very funny. Laugh on... now who did this?"

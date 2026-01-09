@@ -27,9 +27,27 @@ AddTask("Polar Lands", {
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
 		["PolarIsland_Walrus"] = 1,
-		["PolarIsland_Lakes"] = function() return 1 + math.random(SIZE_VARIATION) end,
+		["PolarIsland_Lakes"] = function() return math.min(4, 2 + math.random(SIZE_VARIATION)) end,
 		["PolarIsland_BigLake"] = 1,
 		["PolarIsland_BurntForest"] = function() return math.random(0, 2) end,
+		["PolarIsland_BG"] = 1,
+	},
+	room_bg = WORLD_TILES.POLAR_SNOW,
+	background_room = "PolarIsland_BG",
+	colour = {r = 0.1, g = 0.1, b = 1, a = 0.9},
+})
+
+AddTask("Polar Deciduous Lands", {
+	locks = {LOCKS.ISLAND_TIERPOLAR},
+	keys_given = {LOCKS.ISLAND_TIER2, LOCKS.ISLAND_TIER3},
+	region_id = polar_region,
+	level_set_piece_blocker = true,
+	room_tags = {"RoadPoison", "polararea", "not_mainland"},
+	room_choices = {
+		["PolarIsland_Walrus"] = 1,
+		["PolarIsland_DeciduousLakes"] = function() return math.min(4, 2 + math.random(SIZE_VARIATION)) end,
+		["PolarIsland_BigLake"] = 1,
+		["PolarIsland_BurntDeciduousForest"] = function() return math.random(0, 2) end,
 		["PolarIsland_BG"] = 1,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,
@@ -44,7 +62,7 @@ AddTask("Polar Caves", {
 	level_set_piece_blocker = true,
 	room_tags = {"RoadPoison", "polararea", "not_mainland"},
 	room_choices = {
-		["PolarIsland_Caves"] = function() return 2 + math.random(SIZE_VARIATION) end,
+		["PolarIsland_Caves"] = function() return math.min(5, 3 + math.random(SIZE_VARIATION)) end,
 		["PolarIsland_TrappedCaves"] = function() return math.random(0, 1) end,
 	},
 	room_bg = WORLD_TILES.POLAR_SNOW,

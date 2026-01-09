@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "You can't fly away from the inevitable!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Let's put you to sleep."
+	ANNOUNCE.BATTLECRY.WALRUS = "Prepare to die! All of you!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "It is gone. But the shame still clings to me."
@@ -155,7 +157,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARMOOSEHAT = "Even I don't know who it's made of."
 	DESCRIBE.WALRUS_BAGPIPE = "Its song echoes with sorrow."
 	DESCRIBE.WALRUS_BEARTRAP = "Like a grave waiting to be filled..."
-	DESCRIBE.WINTERS_FISTS = "Heehee. Hey, Wolfgang, how about some arm wrestling?"
+	DESCRIBE.WINTERS_FISTS = "How about some arm wrestling now, Mr. Wolfgang?"
 	
 	--	Others
 	DESCRIBE.ARCTIC_FOOL_FISH = "Should I write something on it? Like: \"Come and stab me\"."

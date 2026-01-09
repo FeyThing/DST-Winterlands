@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "'Tis beaks against steel!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Leave me a pretty scar, will you?"
+	ANNOUNCE.BATTLECRY.WALRUS = "Thy trail ends here and now!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Arg! Mark me not, trickster."

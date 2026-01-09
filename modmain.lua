@@ -1,21 +1,36 @@
+local ENV = env
+local modimport = ENV.modimport
+GLOBAL.ENV = env
+GLOBAL.setfenv(1, GLOBAL)
+
 --	Strings, Translations
 
+local translation = ENV.GetModConfigData("language")
+
 require("polar_strings/strings")
-
-local characters = {"wilson", "willow", "wolfgang", "wendy", "wx78", "wickerbottom", "woodie", "waxwell", "wathgrithr", "webber", "winona", "warly", "wortox", "wormwood", "wurt", "walter", "wanda"}
-local translation = GetModConfigData("language")
-
-for i, character in ipairs(characters) do
-	require("polar_strings/"..character)
+if translation and softresolvefilepath("scripts/polar_strings/"..translation.."/strings.lua") then
+	require("polar_strings/"..translation.."/strings")
 end
 
-if translation then
-	require("polar_strings/"..translation.."/strings")
-	
-	for i, character in ipairs(characters) do
+for i, character in ipairs(DST_CHARACTERLIST) do
+	if softresolvefilepath("scripts/polar_strings/"..character..".lua") then
+		require("polar_strings/"..character)
+	end
+	if translation and softresolvefilepath("scripts/polar_strings/"..translation.."/"..character..".lua") then
 		require("polar_strings/"..translation.."/"..character)
 	end
 end
+
+ENV.AddSimPostInit(function()
+	for i, character in ipairs(MODCHARACTERLIST) do
+		if softresolvefilepath("scripts/polar_strings/modded/"..character..".lua") then
+			require("polar_strings/modded/"..character)
+		end
+		if translation and softresolvefilepath("scripts/polar_strings/"..translation.."/modded/"..character..".lua") then
+			require("polar_strings/"..translation.."/modded/"..character)
+		end
+	end
+end)
 
 --	Main, Postinits
 
@@ -39,6 +54,7 @@ for _, v in pairs(inits) do
 end
 
 local prefabs = {
+	"abigail",
 	"antlion_sinkhole",
 	"bearger",
 	"birds",
@@ -49,7 +65,6 @@ local prefabs = {
 	"cookingrecipecard",
 	"desiccant",
 	"dirtpile",
-	"evergreen",
 	"farm_plants",
 	"flower",
 	"forest",
@@ -74,6 +89,7 @@ local prefabs = {
 	"shadowworker",
 	"snowball_item",
 	"stickheads",
+	"trees",
 	"tree_rock_data",
 	"trinkets",
 	"walrus",
@@ -124,11 +140,13 @@ local components = {
 	"moonstormmanager",
 	"oceanfishinghook",
 	"pickable",
+	"plantregrowth",
 	"playeractionpicker",
 	"playercontroller",
 	"playerspawner",
 	"playervision",
 	"preserver",
+	"pushable",
 	"regrowthmanager",
 	"repairable",
 	"rider",

@@ -9,7 +9,8 @@ local function OnPreBuilt(inst, builder, materials, recipe, ...)
 				local block_range = TUNING.SNOW_PLOW_RANGES.USED or 0
 				
 				if block_range > 0 then
-					SpawnPolarSnowBlocker(builder:GetPosition(), block_range, TUNING.POLARPLOW_BLOCKER_DURATION, builder)
+					local duration = GetPolarPlowDuration(builder, nil, "polarsnowmaterial")
+					SpawnPolarSnowBlocker(builder:GetPosition(), block_range, duration, builder)
 				end
 				
 				break
@@ -23,6 +24,8 @@ local function OnPreBuilt(inst, builder, materials, recipe, ...)
 end
 
 ENV.AddPrefabPostInit("snowball_item", function(inst)
+	-- High Snow clearing happens when pushed into a snowman, under, not for tiny snowballs
+	
 	if not TheWorld.ismastersim then
 		return
 	end
@@ -152,7 +155,7 @@ ENV.AddPrefabPostInit("snowman", function(inst)
 	inst:AddTag("snowblocker")
 	
 	inst._snowblockrange = net_smallbyte(inst.GUID, "snowman._snowblockrange")
-	inst._snowblockrange:set(3)
+	inst._snowblockrange:set(2)
 	
 	if not TheWorld.ismastersim then
 		return
@@ -171,8 +174,7 @@ ENV.AddPrefabPostInit("snowman", function(inst)
 	
 	inst:AddComponent("snowwavemelter") -- Basically take the snow with you on the roll !
 	inst.components.snowwavemelter.melt_range = 3
-	inst.components.snowwavemelter.melt_rate = 0.2
-	inst.components.snowwavemelter:StartMelting()
+	--inst.components.snowwavemelter:StartMelting() Now in pushable postinit
 	
 	inst.OnPolarDecorate = OnPolarDecorate
 	

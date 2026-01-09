@@ -9,6 +9,7 @@ PrefabFiles = {
 	"chesspieces_polar",
 	"chesspieces_polar_materials",
 	"compass_polar",
+	"deciduoustrees_polar",
 	"emperor_egg",
 	"emperor_penguin",
 	"emperor_penguin_guard",

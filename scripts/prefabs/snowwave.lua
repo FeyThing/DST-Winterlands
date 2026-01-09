@@ -151,27 +151,49 @@ local function blocker()
 	return inst
 end
 
---
+--	This is a target entity for Maxwell's shadow workers and Abigail to allow them to plow High Snow
 
 local function OnDig(inst, worker)
 	if worker and worker:HasTag("shadowminion") then
-		local blocker = SpawnPrefab("snowwave_blocker")
-		blocker.Transform:SetPosition(inst.Transform:GetWorldPosition())
+		local duration = GetPolarPlowDuration(worker)
+		SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SHADOWWORKER, duration, worker)
 		
-		if blocker.SetSnowBlockRange then
-			blocker:SetSnowBlockRange(inst.plow_range)
+		local fx = SpawnPrefab("polar_splash_large")
+		fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
+		
+		if worker and worker.SoundEmitter then
+			worker.SoundEmitter:PlaySound("polarsounds/common/snow_plow")
 		end
 	end
+	
+	inst:Remove()
+end
+
+local function CustomOnHaunt(inst, haunter)
+	local duration = GetPolarPlowDuration(haunter)
+	SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, haunter)
+	
+	local fx = SpawnPrefab("polar_splash_large")
+	fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
+	
+	if haunter and haunter.SoundEmitter then
+		haunter.SoundEmitter:PlaySound("polarsounds/common/snow_plow")
+	end
+	
+	inst:Remove()
+	
+	return true
 end
 
 local function marker()
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
+	inst.entity:AddAnimState() -- Needed for haunting
 	inst.entity:AddNetwork()
 	
+	inst:AddTag("plow_action_marker")
 	inst:AddTag("stump") -- Worker's Brain only looks out for stumps, graves and farm debris
-	inst:AddTag("shadowworker_plowmark")
 	
 	inst.entity:SetPristine()
 	
@@ -184,10 +206,13 @@ local function marker()
 	inst.components.workable:SetWorkLeft(1)
 	inst.components.workable:SetOnFinishCallback(OnDig)
 	
-	inst.plow_range = 6
 	inst.persists = false
 	
-	inst:DoTaskInTime(60, inst.Remove)
+	inst:AddComponent("hauntable")
+	inst.components.hauntable:SetHauntValue(-TUNING.HAUNT_SMALL)
+	AddHauntableCustomReaction(inst, CustomOnHaunt, nil, false, true)
+	
+	inst:DoTaskInTime(30, inst.Remove)
 	
 	return inst
 end

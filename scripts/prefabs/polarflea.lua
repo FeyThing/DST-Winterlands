@@ -277,7 +277,7 @@ local function SetHost(inst, host, kick, given)
 	
 	local fleapack = inst.components.inventoryitem and inst.components.inventoryitem.owner
 	if not (fleapack and fleapack.components.upgradeable and fleapack.components.upgradeable:GetStage() >= 2) then
-		inst.skinname = "unstackable_flea"
+		inst.skinname = "ms_polarflea_unstackable"
 	end
 	
 	inst._host:PushEvent("gotpolarflea", {flea = inst, given = given})
@@ -522,7 +522,7 @@ local function HostingInit(inst)
 	
 	local container = inst.components.inventoryitem.owner
 	if inst._host and not (container and container:HasTag("fleapack") and container.components.upgradeable and container.components.upgradeable:GetStage() >= 2) then
-		inst.skinname = "unstackable_flea"
+		inst.skinname = "ms_polarflea_unstackable"
 	end
 	
 	inst._try_hosting = nil

@@ -44,12 +44,16 @@ local map = require("map/forest_map")
 local TRANSLATE_TO_PREFABS = map.TRANSLATE_TO_PREFABS
 local TRANSLATE_AND_OVERRIDE = map.TRANSLATE_AND_OVERRIDE
 
-TRANSLATE_TO_PREFABS["antler_trees"] = 		{"antler_tree", "antler_tree_burnt", "antler_tree_stump"}
-TRANSLATE_TO_PREFABS["polarbearhouses"] = 	{"polarbearhouse", "winter_tree_sparse"}
-TRANSLATE_TO_PREFABS["polar_icicles"] = 	{"polar_icicle", "polar_icicle_rock"}
-TRANSLATE_TO_PREFABS["rocks_polar"] = 		{"rock_polar"}
+TRANSLATE_TO_PREFABS["antler_trees"] = 			{"antler_tree", "antler_tree_burnt", "antler_tree_stump"}
+TRANSLATE_TO_PREFABS["polarbearhouses"] = 		{"polarbearhouse", "polarbearhouse_village", "winter_tree_sparse"}
+TRANSLATE_TO_PREFABS["polar_icicles"] = 		{"polar_icicle", "polar_icicle_rock"}
+TRANSLATE_TO_PREFABS["rocks_polar"] = 			{"rock_polar"}
 
-TRANSLATE_AND_OVERRIDE["grass_polar"] = 	{"grass_polar", "grass_polar_spawner"}
+if TRANSLATE_TO_PREFABS["trees"] then
+	table.insert(TRANSLATE_TO_PREFABS["trees"], "deciduoustree_polar")
+end
+
+TRANSLATE_AND_OVERRIDE["grass_polar"] = 		{"grass_polar", "grass_polar_spawner"}
 
 --
 

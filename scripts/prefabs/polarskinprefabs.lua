@@ -182,4 +182,13 @@ table.insert(prefs, CreatePrefabSkin("ms_glasscutter_polar", {
 	skin_tags = {"POLAR", "GLASSCUTTER", "CRAFTABLE"},
 }))
 
+-- Just added to keep log clear, using this fake skin name allows us to filtrate stackability of fleas
+table.insert(prefs, CreatePrefabSkin("ms_polarflea_unstackable", {
+	base_prefab = "polarflea",
+	type = "item",
+	rarity = "ModLocked",
+	condition = {no_gift = true},
+	skin_tags = {"POLAR", "POLARFLEA", "CRAFTABLE"},
+}))
+
 return unpack(prefs)

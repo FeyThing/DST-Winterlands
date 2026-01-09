@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Hey! No pecking!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "It's past your hibernation time!"
+	ANNOUNCE.BATTLECRY.WALRUS = "This trail is ours!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "What? How? WHO?"

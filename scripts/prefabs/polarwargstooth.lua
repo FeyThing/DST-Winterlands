@@ -18,6 +18,7 @@ local function fn()
 	
 	inst:AddTag("frozen")
 	inst:AddTag("show_spoilage")
+	inst:AddTag("icebox_valid")
 	--inst:AddTag("blowpipeammo")
 	--inst:AddTag("reloaditem_ammo")
 	

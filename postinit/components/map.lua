@@ -10,8 +10,11 @@ local SNOWBLOCKER_NOT_TAGS = {"INLIMBO", "blueflame", "fx"} -- Don't include inv
 local SNOWBLOCKER_DIST = 10
 
 function Map:IsPolarSnowBlocked(x, y, z, range_mod)
-	local ents = TheSim:FindEntities(x, y, z, SNOWBLOCKER_DIST, nil, SNOWBLOCKER_NOT_TAGS, SNOWBLOCKER_TAGS)
+	if RoadManager and RoadManager:IsOnRoad(x, 0, z) then
+		return true
+	end
 	
+	local ents = TheSim:FindEntities(x, y, z, SNOWBLOCKER_DIST, nil, SNOWBLOCKER_NOT_TAGS, SNOWBLOCKER_TAGS)
 	for i, v in ipairs(ents) do
 		local ent_range = 0 --(v._snowblockrange == nil and v:HasTag("fire") and TUNING.SNOW_BLOCK_RANGES.FIRE) or 0
 		--					^ OLD METHOD NO LONGER IN USE, 'fire' tagged range is now determined by their firefx level

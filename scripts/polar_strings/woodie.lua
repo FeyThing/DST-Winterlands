@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Ya get what ya deserve!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Rrraaargh!"
+	ANNOUNCE.BATTLECRY.WALRUS = "Hunting season's over, for you!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Eh? Oh, c'mon Luce... you could've told me."

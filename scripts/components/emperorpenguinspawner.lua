@@ -25,7 +25,7 @@ return Class(function(self, inst)
 	--	Castle content management
 	
 	local PENGUIN_GUARDS_TAGS = {"penguin_guard"}
-	local PENGUIN_GUARDS_NOT_TAGS = {"isdead"}
+	local PENGUIN_GUARDS_NOT_TAGS = {"INLIMBO", "isdead"}
 	
 	local function OnCastleProvoked(ent, data)
 		if self.ice_castle_pos and self.ice_castle_parts and self.emperor and not self.defeated and data and ent.prefab ~= "rock_ice" then
@@ -35,12 +35,12 @@ return Class(function(self, inst)
 			local num_guards = #TheSim:FindEntities(x, y, z, TUNING.EMPEROR_PENGUIN_CASTLE_RANGE, PENGUIN_GUARDS_TAGS, PENGUIN_GUARDS_NOT_TAGS)
 			
 			-- We seed some guard if castle is currently helpless
-			local need_support = (ent:HasTag("wall") or ent:HasTag("penguin_emperor")) and attacker and not self:IsInstInsideCastle(attacker)
+			local need_support = ent:HasTag("wall") and attacker and not self:IsInstInsideCastle(attacker)
 				and num_guards < 1 and self._provoke_support == nil
 			
 			if need_support then
-				self._provoke_support = self.inst:DoTaskInTime(0.2 + math.random() * 0.5, function()
-					self:SpawnGuards(1)
+				self._provoke_support = self.inst:DoTaskInTime(0.2 + math.random() * 0.3, function()
+					self:SpawnGuards(math.random(1, 2))
 				end)
 			end
 			if attacker and self.emperor.components.combat then
@@ -222,7 +222,7 @@ return Class(function(self, inst)
 	
 	local CASTLE_TOWER_TAGS = {"polarcastletower"}
 	
-	function self:SpawnGuards(num)
+	function self:SpawnGuards(num, instant)
 		if self._provoke_support then
 			self._provoke_support:Cancel()
 			self._provoke_support = nil
@@ -240,7 +240,6 @@ return Class(function(self, inst)
 				
 				local penguin = SpawnPrefab("emperor_penguin_guard")
 				penguin.Transform:SetPosition(offset:Get())
-				tower.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
 				
 				if penguin.components.knownlocations then
 					penguin.components.knownlocations:RememberLocation("rookery", offset)
@@ -248,8 +247,10 @@ return Class(function(self, inst)
 				if penguin.components.combat and self.emperor and self.emperor.components.combat and self.emperor.components.combat.target then
 					penguin.components.combat:SetTarget(self.emperor.components.combat.target)
 				end
-				if penguin.sg then
+				if penguin.sg and not instant then
 					penguin.sg:GoToState("exittower_guard")
+				else
+					tower.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
 				end
 				
 				table.insert(self.ice_castle_parts, penguin)
@@ -415,18 +416,25 @@ return Class(function(self, inst)
 			ice_castle_pos = self.ice_castle_pos,
 			next_sketch_drop = self.next_sketch_drop,
 			times_beat = self.times_beat,
-			
-			attackerUSERIDs = self.emperor and self.emperor.attackerUSERIDs,
 		}
-		local ents = {}
 		
+		local ents = {}
 		for i, v in pairs(self.ice_castle_parts) do
 			if v and v:IsValid() then
 				table.insert(ents, v.GUID)
 				table.insert(data.parts, v.GUID)
 			end
 		end
+		
 		if self.emperor and self.emperor:IsValid() then
+			data.attackerUSERIDs = self.emperor.attackerUSERIDs
+			data.callguards = self.emperor.wants_to_call_guards
+			data.gojuggle = self.emperor.wants_to_juggle
+			
+			data.healthphase_regenlock = self.emperor.healthphase_regenlock
+			data.healthtrigger_cutdmg = self.emperor.healthtrigger_cutdmg
+			data.healthtrigger_phase = self.emperor.healthtrigger_phase
+			
 			--table.insert(ents, self.emperor.GUID)
 			--data.emperor = self.emperor.GUID
 			
@@ -484,6 +492,14 @@ return Class(function(self, inst)
 					if self.ice_castle_pos then
 						emperor.Transform:SetPosition(self.ice_castle_pos:Get())
 					end
+					
+					emperor.wants_to_call_guard = savedata.callguards or emperor.wants_to_call_guard
+					emperor.wants_to_juggle = savedata.gojuggle or emperor.wants_to_juggle
+					
+					emperor.healthphase_regenlock = savedata.healthphase_regenlock or emperor.healthphase_regenlock
+					emperor.healthtrigger_cutdmg = savedata.healthtrigger_cutdmg or emperor.healthtrigger_cutdmg
+					emperor.healthtrigger_phase = savedata.healthtrigger_phase or emperor.healthtrigger_phase
+					
 					if savedata.attackerUSERIDs and next(savedata.attackerUSERIDs) then
 						emperor.attackerUSERIDs = savedata.attackerUSERIDs
 						emperor:AddTag("hostile")

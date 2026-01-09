@@ -8,7 +8,8 @@ local Deployable = require("components/deployable")
 		local block_range = TUNING.SNOW_PLOW_RANGES.REPLACED or 0
 		
 		if block_range > 0 then
-			SpawnPolarSnowBlocker(pt, block_range, TUNING.POLARPLOW_BLOCKER_DURATION, deployer)
+			local duration = GetPolarPlowDuration(deployer, nil, "deploy")
+			SpawnPolarSnowBlocker(pt, block_range, duration, deployer)
 		end
 		
 		return OldDeploy(self, pt, deployer, ...)

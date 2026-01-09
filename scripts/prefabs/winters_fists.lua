@@ -81,6 +81,54 @@ local function OnDischarged(inst)
 	inst.components.spellcaster.canonlyuseonlocomotorspvp = false
 end
 
+local NO_TAGS_PVP = {"INLIMBO", "playerghost", "FX", "NOCLICK", "DECOR", "notarget", "companion", "decoy"}
+local NO_TAGS = shallowcopy(NO_TAGS_PVP)
+
+table.insert(NO_TAGS, "player")
+table.insert(NO_TAGS, "wall")
+
+local function HasFriendlyLeader(target, attacker)
+	local target_leader = (target.components.follower) and target.components.follower.leader or nil
+	
+	if target_leader then
+		if target_leader.components.inventoryitem then
+			target_leader = target_leader.components.inventoryitem:GetGrandOwner()
+		end
+		
+		local PVP_enabled = TheNet:GetPVPEnabled()
+		return (target_leader and (target_leader:HasTag("player") and not PVP_enabled))
+			or (target.components.domesticatable and target.components.domesticatable:IsDomesticated() and not PVP_enabled)
+			or (target.components.saltlicker and target.components.saltlicker.salted and not PVP_enabled)
+	end
+	
+	return false
+end
+
+local function SmashAoEValidFn(target, attacker)
+	if target:HasTag("playerghost") then
+		return false
+	end
+	
+	if target:HasTag("monster") and not TheNet:GetPVPEnabled() and 
+		((target.components.follower and target.components.follower.leader and target.components.follower.leader:HasTag("player")) or target.bedazzled) then
+		return false
+	end
+	
+	if HasFriendlyLeader(target, attacker) then
+		return false
+	end
+	
+	return true
+end
+
+local function DoSmashAoE(inst, attacker, target)
+	if attacker.components.combat then
+		local excludetags = TheNet:GetPVPEnabled() and NO_TAGS_PVP or NO_TAGS
+		
+		attacker.components.combat:DoAreaAttack(target, 6, inst, SmashAoEValidFn, nil, excludetags)
+	end
+end
+
 local ICICLE_TAGS = {"bigicicle"}
 
 local function OnUse(inst, target, pos, caster)
@@ -100,6 +148,8 @@ local function OnUse(inst, target, pos, caster)
 	--inst:AddOrRemoveTag("rechargeable_bonus", not usesmash)
 	
 	if usesmash then
+		inst:DoSmashAoE(caster, target)
+		
 		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(x, y, z)
 		local terraformer = SpawnPrefab("winters_fists_terraformer")
 		
@@ -153,6 +203,13 @@ local function OnUse(inst, target, pos, caster)
 				snowball_used:Remove()
 			end
 		end
+		
+		--[[local block_range = TUNING.SNOW_PLOW_RANGES.USED or 0
+		
+		if block_range > 0 then
+			local duration = GetPolarPlowDuration(caster, nil, "winters_fists")
+			SpawnPolarSnowBlocker(caster:GetPosition(), block_range, duration, caster)
+		end]]
 	end
 	
 	if inst.components.rechargeable and usesmash then
@@ -279,6 +336,8 @@ local function fn()
 	
 	inst:AddComponent("weapon")
 	inst.components.weapon:SetDamage(WintersFistsDamage)
+	
+	inst.DoSmashAoE = DoSmashAoE
 	
 	MakeHauntableLaunch(inst) -- TODO: use, as smash ?
 	

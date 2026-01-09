@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Oooh quit waaahining already!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Your time is up, beast!"
+	ANNOUNCE.BATTLECRY.WALRUS = "I'm just here for the tusks!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Wait... I had that thing on my back this whole time?"

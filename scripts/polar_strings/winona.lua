@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Things are gettin' feathery!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Come and throw paws!"
+	ANNOUNCE.BATTLECRY.WALRUS = "Hunter's becoming the prey, hey?"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Hah! I must've looked like a real fool walking around with this!"

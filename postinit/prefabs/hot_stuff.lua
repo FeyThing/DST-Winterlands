@@ -31,7 +31,7 @@ local FIRES = {
 	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_block = SNOWBLOCK.STAR, 		snow_melt = true},
 	
 	--	Just visual
-	mermthrone = 				{snow_block = 5},
+	mermthrone = 				{snow_block = 6},
 	penguin_ice = 				{snow_block = 12},
 	winona_teleport_pad = 		{snow_block = 4},
 	
@@ -65,6 +65,10 @@ end
 
 --
 
+local function TorchCanMelt(inst)
+	return inst:HasTag("fire") and not inst:HasTag("INLIMBO")
+end
+
 local oldapplyskillbrightness
 local function applyskillbrightness(inst, value, ...)
 	if oldapplyskillbrightness then
@@ -83,6 +87,8 @@ end
 --
 
 for prefab, data in pairs(FIRES) do
+	local istorch = prefab == "torch"
+	
 	ENV.AddPrefabPostInit(prefab, function(inst)
 		if data.prot_range then
 			inst:AddTag("blizzardprotection")
@@ -91,7 +97,9 @@ for prefab, data in pairs(FIRES) do
 		end
 		
 		if data.snow_block and inst._snowblockrange == nil then
-			inst:AddTag("snowblocker")
+			if not istorch then
+				inst:AddTag("snowblocker")
+			end
 			
 			inst._snowblockrange = net_smallbyte(inst.GUID, prefab.."._snowblockrange")
 			inst._snowblockrange:set(data.snow_block)
@@ -117,12 +125,16 @@ for prefab, data in pairs(FIRES) do
 		
 		if data.snow_melt and inst.components.snowwavemelter == nil then
 			inst:AddComponent("snowwavemelter")
-			if data.snow_block then
-				inst.components.snowwavemelter.melt_range = data.snow_block
+			
+			if data.snow_block or istorch then
+				inst.components.snowwavemelter.melt_range = data.snow_block or SNOWBLOCK.TORCH
+			end
+			if istorch then
+				inst.components.snowwavemelter.canmeltfn = TorchCanMelt
 			end
 			inst.components.snowwavemelter:StartMelting()
 			
-			if prefab == "torch" and inst._onskillrefresh and oldapplyskillbrightness == nil then
+			if istorch and inst._onskillrefresh and oldapplyskillbrightness == nil then
 				local RefreshAttunedSkills = PolarUpvalue(inst._onskillrefresh, "RefreshAttunedSkills")
 				oldapplyskillbrightness = PolarUpvalue(RefreshAttunedSkills, "applyskillbrightness")
 				

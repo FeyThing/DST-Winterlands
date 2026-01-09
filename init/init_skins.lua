@@ -21,6 +21,7 @@ ENV.ModdedCurios = {
 local POLAR_DISPLAY_BLACKLIST = {
 	"ms_dragonflychest_upgraded_polarice",
 	"ms_treasurechest_upgraded_polarice",
+	"ms_polarflea_unstackable",
 }
 
 for i, skin in ipairs(POLAR_DISPLAY_BLACKLIST) do
@@ -64,8 +65,10 @@ AddModUserCommand("Winterlands", "snowangel", {
 						inst.components.polarwalker.snowdepth = 0
 					end
 					
+					local duration = GetPolarPlowDuration(inst, TUNING.POLARPLOW_BLOCKER_DURATION, "emote")
+					SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SNOW_EMOTE or 1, duration, inst)
+					
 					inst.SoundEmitter:PlaySound("dontstarve/movement/run_snow")
-					SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SNOW_EMOTE or 1, TUNING.POLARPLOW_BLOCKER_DURATION, inst)
 				end,
 				insnowfnperiod = 0.76,
 				insnowfn2 = function(inst)

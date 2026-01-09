@@ -12,14 +12,8 @@ function PolarPlower:CanPlow(doer, pos)
 	return true
 end
 
-function PolarPlower:GetPlowDuration(doer)
-	local iscanadian = doer and doer:HasTag("polite")
-	
-	return TUNING.POLARPLOW_BLOCKER_DURATION * (iscanadian and TUNING.POLARPLOW_BLOCKER_CANADIAN_MULT or 1)
-end
-
 function PolarPlower:DoPlow(doer, pos)
-	local duration = self:GetPlowDuration(doer)
+	local duration = GetPolarPlowDuration(doer, nil, "shovel")
 	local dist = self.plow_range
 	
 	local blocker, blockers = SpawnPolarSnowBlocker(pos, self.plow_range, duration, doer)

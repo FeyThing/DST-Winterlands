@@ -101,6 +101,38 @@ AddRoom("PolarIsland_Lakes", {
 	}
 })
 
+AddRoom("PolarIsland_DeciduousLakes", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_FOREST_NOISE,
+	internal_type = NODE_INTERNAL_CONNECTION_TYPE.EdgeCentroid,
+	tags = {"PolarThrone"},
+	contents = {
+		countprefabs = {
+			catcoonden = function() return math.random(0, 1) end,
+			skeleton_notplayer_1 = function() return math.random() < 0.01 and 1 or 0 end,
+			skeleton_notplayer_2 = function() return math.random() < 0.01 and 1 or 0 end,
+			snowwave_itemrespawner = function() return math.random(8, 12) end,
+			rock1 = function() return math.random(0, 1) end,
+			rocks = 4,
+		},
+		
+		distributepercent = 0.4,
+		distributeprefabs = {
+			carrot_planted = 0.17,
+			antler_tree = 0.01,
+			antler_tree_stump = 0.005,
+			tree = {weight = 1, prefabs = {"evergreen_sparse", "deciduoustree_polar"}},
+			stump = {weight = 0.37, prefabs = {"evergreen_stump", "deciduoustree_stump"}},
+			marsh_bush = 0.16,
+			twiggytree = 0.31,
+		},
+		
+		prefabdata = {
+			snowwave_itemrespawner = {canspawnsnowitem = true},
+		},
+	}
+})
+
 AddRoom("PolarIsland_Walrus", {
 	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
 	value = WORLD_TILES.POLAR_FOREST_NOISE,
@@ -206,6 +238,34 @@ AddRoom("PolarIsland_BurntForest", {
 			evergreen_sparse = function() return {burnt = math.random() < 0.8} end,
 			leif_sparse = function() return {hibernate = true, sleeping = true, leifscale = leif_scales[math.random(#leif_scales)]} end,
 			polarbearhouse = {burnt = true},
+			snowwave_itemrespawner = {canspawnsnowitem = true},
+			twiggytree = function() return {burnt = math.random() < 0.8} end,
+		},
+	}
+})
+
+AddRoom("PolarIsland_BurntDeciduousForest", {
+	colour = {r = 0.1, g = 0.1, b = 0.8, a = 0.9},
+	value = WORLD_TILES.POLAR_FOREST_NOISE,
+	tags = {"PolarThrone"},
+	contents = {
+		countprefabs = {
+			catcoonden = function() return math.random(0, 1) end,
+			snowwave_itemrespawner = function() return math.random(14, 22) end,
+		},
+		
+		distributepercent = 0.4,
+		distributeprefabs = {
+			antler_tree_burnt = 0.01,
+			deciduoustree = 1.25,
+			deciduoustree_polar = 0.25,
+			deciduoustree_stump = 0.05,
+			twiggytree = 0.05,
+		},
+		
+		prefabdata = {
+			catcoonden = function() return {burnt = math.random() < 0.8} end,
+			deciduoustree = function() return {burnt = true} end,
 			snowwave_itemrespawner = {canspawnsnowitem = true},
 			twiggytree = function() return {burnt = math.random() < 0.8} end,
 		},

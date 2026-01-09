@@ -1,24 +1,22 @@
 local ENV = env
-local _GLOBAL = GLOBAL
-_GLOBAL.modname = modname -- To fix the crashing issue for people using EnableModError() in their modsettings.lua
-GLOBAL.setfenv(1, _GLOBAL)
+local modimport = ENV.modimport
+GLOBAL.ENV = env
+GLOBAL.setfenv(1, GLOBAL)
 
 --	Import
 
-local modimport = ENV.modimport
+local translation = ENV.GetModConfigData("language")
+
+require("polar_strings/strings")
+if translation and softresolvefilepath("scripts/polar_strings/"..translation.."/strings.lua") then
+	require("polar_strings/"..translation.."/strings")
+end
 
 modimport("init/init_tuning")
 modimport("init/init_tiles")
 
 require("advent_calendar_content")
 require("map/polar_terrain")
-require("polar_strings/strings")
-
-local translation = ENV.GetModConfigData("language")
-
-if translation then
-	require("polar_strings/"..translation.."/strings")
-end
 
 --	Setpieces
 

@@ -94,18 +94,17 @@ local CASTSPELLSTR = ACTIONS.CASTSPELL.strfn
 		end
 	end
 	
-local HAUNTFN = ACTIONS.HAUNT.fn -- Ghost can plow High Snow
+local HAUNTFN = ACTIONS.HAUNT.fn -- Ghosts can plow High Snow
 	ACTIONS.HAUNT.fn = function(act, ...)
-		local act_pos = act:GetActionPoint()
+		local plow_pos = act:GetActionPoint() or act.doer:GetPosition()
 		local plowed = false
 		
-		if act_pos and act.target == nil then
-			local iscanadian = act.doer and act.doer:HasTag("polite")
-			local duration = TUNING.POLARPLOW_BLOCKER_DURATION * (iscanadian and TUNING.POLARPLOW_BLOCKER_CANADIAN_MULT or 1)
+		if plow_pos then
+			local duration = GetPolarPlowDuration(act.doer, nil, "haunt")
+			SpawnPolarSnowBlocker(plow_pos, TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, act.doer)
 			
-			SpawnPolarSnowBlocker(act_pos, TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, act.doer)
 			local fx = SpawnPrefab("polar_splash_large")
-			fx.Transform:SetPosition(act_pos.x, act_pos.y, act_pos.z)
+			fx.Transform:SetPosition(plow_pos.x, plow_pos.y, plow_pos.z)
 			
 			if act.doer and act.doer.SoundEmitter then
 				act.doer.SoundEmitter:PlaySound("polarsounds/common/snow_plow")

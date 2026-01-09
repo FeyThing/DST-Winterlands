@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Ooh, you tasty drumstick!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "You know what they say about selling bear fur?"
+	ANNOUNCE.BATTLECRY.WALRUS = "Ah! Right as I was looking for dinner!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Alors là! I will have my revenge!"

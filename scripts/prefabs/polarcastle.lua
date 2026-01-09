@@ -49,7 +49,7 @@ local CASTLE_TOWER_TAGS = {"polarcastletower"}
 
 local FIRE_TAGS = {"fire"}
 local FIRE_NOT_TAGS = {"cooker", "INLIMBO"}
-local FIREWATCH_PERIOD = 2
+local FIREWATCH_PERIOD = 1.25
 
 --	Court
 
@@ -87,6 +87,7 @@ local function DoFireWatch(inst, target)
 	local fire, tower = fires[math.random(#fires)], towers[math.random(#towers)]
 	if fire and tower and fire:IsValid() and tower:IsValid() then
 		tower.SoundEmitter:PlaySound("dontstarve/common/pighouse_door")
+		tower.SoundEmitter:PlaySound("polarsounds/emperor_guard/attack", nil, 0.5)
 		
 		if fire:IsAsleep() or tower:IsAsleep() then
 			fire.components.burnable:Extinguish()
@@ -510,7 +511,7 @@ local function flag()
 	
 	inst:SetDeploySmartRadius(DEPLOYSPACING_RADIUS[DEPLOYSPACING.LESS] / 2)
 	
-	inst.AnimState:SetRayTestOnBB(true)
+	--inst.AnimState:SetRayTestOnBB(true)
 	inst.AnimState:SetBank("tower_polar")
 	inst.AnimState:SetBuild("tower_polar")
 	inst.AnimState:PlayAnimation("flag", true)

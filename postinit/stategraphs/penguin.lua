@@ -319,6 +319,7 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		},
 		
 		onexit = function(inst)
+			inst:ClearBufferedAction()
 			inst:Show()
 			if inst.DynamicShadow then
 				inst.DynamicShadow:Enable(true)

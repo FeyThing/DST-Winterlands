@@ -1,11 +1,37 @@
+local DECIDUOUSTREE_TAGS = {"birchnut"}
+local DECIDUOUSTREE_NOT_TAGS = {"INLIMBO", "stump"}
+
 local SNOWWAVE_ITEMS = {
-	rocks = 1.5,
-	flint = 1,
-	twigs = 0.5,
-	pinecone = 0.25,
-	goldnugget = 0.25,
-	nitre = 0.25,
+	rocks = 		{weight = 1.5},
+	flint = 		{weight = 1},
+	twigs = 		{weight = 0.5},
+	pinecone = 		{weight = 0.25},
+	goldnugget = 	{weight = 0.25},
+	nitre = 		{weight = 0.25},
+	
+	acorn = {
+		weight = 0.75,
+		testfn = function(inst)
+			local x, y, z = inst.Transform:GetWorldPosition()
+			
+			return #TheSim:FindEntities(x, y, z, 8, DECIDUOUSTREE_TAGS, DECIDUOUSTREE_NOT_TAGS) > 0
+		end,
+	},
+	
+	polar_brazier_item_blueprint = {
+		weight = 0.1,
+		testfn = function(inst)
+			for i, v in ipairs(AllPlayers) do
+				if v.components.builder and not v.components.builder:KnowsRecipe("polar_brazier_item") and v.components.builder:CanLearn("polar_brazier_item") then
+					return true
+				end
+			end
+			
+			return false
+		end,
+	},
 }
+
 
 local BLOCKER_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "character", "structure", "wall", "plant", "_inventoryitem"}
 local BLOCKER_NOT_TAGS = {"berrythief", "INLIMBO"}
@@ -27,6 +53,18 @@ local function MoveAround(inst)
 	return offset ~= nil
 end
 
+local function GetRespawnItems(inst)
+	local items = {}
+	
+	for prefab, data in pairs(inst.snowwave_items) do
+		if not data.testfn or data.testfn(inst) then
+			items[prefab] = data.weight
+		end
+	end
+	
+	return items
+end
+
 local function SpawnSnowItem(inst)
 	if inst.snowitem then
 		return
@@ -35,19 +73,22 @@ local function SpawnSnowItem(inst)
 	local moved = MoveAround(inst)
 	
 	if moved then
-		local items = deepcopy(inst.snowwave_items)
-		for i, v in ipairs(AllPlayers) do
-			if v.components.builder and not v.components.builder:KnowsRecipe("polar_brazier_item") and v.components.builder:CanLearn("polar_brazier_item") then
-				items["polar_brazier_item_blueprint"] = TUNING.POLAR_BRAZIER_BLUEPRINT_CHANCE
-			end
+		local items = inst:GetRespawnItems()
+		if next(items) == nil then
+			return
 		end
 		
 		local item = weighted_random_choice(items)
 		inst.snowitem = SpawnPrefab(item)
-		inst.snowitem.Transform:SetPosition(inst.Transform:GetWorldPosition())
 		
-		inst:ListenForEvent("onpickup", inst.onsnowitempicked, inst.snowitem)
-		inst:ListenForEvent("onremove", inst.onsnowitempicked, inst.snowitem)
+		if inst.snowitem then
+			inst.snowitem.Transform:SetPosition(inst.Transform:GetWorldPosition())
+			
+			inst:ListenForEvent("onpickup", inst.onsnowitempicked, inst.snowitem)
+			inst:ListenForEvent("onremove", inst.onsnowitempicked, inst.snowitem)
+		end
+		
+		return item
 	end
 end
 
@@ -73,7 +114,11 @@ local function OnLoadPostPass(inst, newents, savedata)
 				inst:ListenForEvent("onremove", inst.onsnowitempicked, inst.snowitem)
 			end
 		elseif savedata.canspawnsnowitem then
-			inst:SpawnSnowItem()
+			local spawned = inst:SpawnSnowItem()
+			
+			if spawned then
+				inst.can_spawn_snowitem = nil
+			end
 		end
 	end
 end
@@ -89,8 +134,11 @@ local function OnPolarstormChanged(inst, active)
 	if active then
 		inst.can_spawn_snowitem = true
 	elseif inst.can_spawn_snowitem then
-		inst:SpawnSnowItem()
-		inst.can_spawn_snowitem = nil
+		local spawned = inst:SpawnSnowItem()
+		
+		if spawned then
+			inst.can_spawn_snowitem = nil
+		end
 	end
 end
 
@@ -120,6 +168,7 @@ local function fn()
 		end
 	end
 	
+	inst.GetRespawnItems = GetRespawnItems
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass
 	inst.SpawnSnowItem = SpawnSnowItem

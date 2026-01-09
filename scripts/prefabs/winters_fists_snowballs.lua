@@ -14,7 +14,7 @@ local ROLL_MAX_SCALE = 2
 local ROLL_MAX_SCALE_TIME = 2
 
 local HIT_TAGS = {"_combat", "pickable", "_inventoryitem"}
-local HIT_NOT_TAGS = {"INLIMBO", "isdead", "notarget", "heavy", "wall"}
+local HIT_NOT_TAGS = {"INLIMBO", "isdead", "notarget", "heavy"}
 
 local HARVEST_TAGS = {"_combat", "pickable", "_inventoryitem"}
 local HARVEST_NOT_TAGS = {"INLIMBO", "isdead", "heavy", "playerghost", "structure", "wall", "notarget"}
@@ -91,6 +91,7 @@ local function TransportTarget(inst, target)
 		
 		if target:HasTag("player") then
 			if target.sg then
+				target.sg:GoToState("idle") -- Normally can't be transported on nointerrupt states
 				target.sg:HandleEvent("devoured", {attacker = inst})
 			end
 		else
@@ -150,12 +151,16 @@ local function RollingTask(inst)
 	local scale = 1 + (ROLL_MAX_SCALE - 1) * progress
 	inst.Transform:SetScale(scale, scale, scale)
 	
+	local HARVEST_RAD = HARVEST_START_RAD + (HARVEST_ROLL_RAD * progress)
 	if inst.components.wateryprotection then
-		inst.components.wateryprotection:SpreadProtection(inst, HARVEST_ROLL_RAD)
+		inst.components.wateryprotection:SpreadProtection(inst, HARVEST_RAD) -- Only puts off fire, small / med applies cold
+	end
+	if inst.components.snowwavemelter then
+		inst.components.snowwavemelter.melt_range = math.ceil(HARVEST_RAD + 1)
 	end
 	
 	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, HARVEST_START_RAD + (HARVEST_ROLL_RAD * progress), nil, HARVEST_NOT_TAGS, HARVEST_TAGS)
+	local ents = TheSim:FindEntities(x, y, z, HARVEST_RAD, nil, HARVEST_NOT_TAGS, HARVEST_TAGS)
 	local attacker = inst.components.complexprojectile and inst.components.complexprojectile.attacker or nil
 	
 	local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
@@ -170,7 +175,8 @@ local function RollingTask(inst)
 			--local ent_bby = bby4 - bby3
 			
 			local is_dead = ent.components.health and ent.components.health:IsDead()
-			local is_smaller = not ent:HasTag("epic") and not ent:HasTag("largecreature") -- (ent_bby * 0.6) <= inst_bby
+			local is_smaller = not ent:HasTag("epic") and not ent:HasTag("largecreature") and -- (ent_bby * 0.6) <= inst_bby
+				not (ent.sg and ent.sg:HasStateTag("nointerrupt"))
 			
 			if ent.components.combat then
 				ent.components.combat:GetAttacked(attacker or inst, TUNING.WINTERS_FISTS_DAMAGE + (is_smaller and 0 or TUNING.WINTERS_FISTS_DAMAGE_SNOWBALL))
@@ -202,6 +208,10 @@ local function RollingTask(inst)
 end
 
 local function OnHit(inst, attacker, target)
+	if inst.components.wateryprotection then
+		inst.components.wateryprotection:SpreadProtection(inst)
+	end
+	
 	if inst._collided or target or inst.size < #SNOWBALL_SIZE_DATA then
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local ents = TheSim:FindEntities(x, y, z, HARVEST_START_RAD, nil, HIT_NOT_TAGS, HIT_TAGS)
@@ -217,16 +227,14 @@ local function OnHit(inst, attacker, target)
 		for i, ent in ipairs(ents) do
 			if ent ~= inst and attacker and ent ~= attacker and ent:IsValid() and (not (ent:HasTag("player") and attacker:HasTag("player")) or TheNet:GetPVPEnabled()) then
 				if ent.components.combat and inst.size <= 2 then
-					ent.components.combat:GetAttacked(attacker or inst, inst.size <= 1 and TUNING.WINTERS_FISTS_DAMAGE_SMALLBALL or TUNING.WINTERS_FISTS_DAMAGE_MEDBALL)
+					local damage = inst.size <= 1 and TUNING.WINTERS_FISTS_DAMAGE_SMALLBALL or TUNING.WINTERS_FISTS_DAMAGE_MEDBALL
+					ent.components.combat:GetAttacked(attacker or inst, ent:HasTag("dryice") and 0 or damage)
 				end
 				if ent.components.workable and inst.size > 1 then
-					ent.components.workable:WorkedBy(inst, inst.size > 2 and TUNING.WINTERS_FISTS_SNOWBALL_GIANT_WORKS or TUNING.WINTERS_FISTS_SNOWBALL_MED_WORKS)
+					local workdone = inst.size > 2 and TUNING.WINTERS_FISTS_SNOWBALL_GIANT_WORKS or TUNING.WINTERS_FISTS_SNOWBALL_MED_WORKS
+					ent.components.workable:WorkedBy(inst, ent:HasTag("dryice") and 0 or workdone)
 				end
 			end
-		end
-		
-		if inst.components.wateryprotection then
-			inst.components.wateryprotection:SpreadProtection(inst, HARVEST_START_RAD)
 		end
 		
 		SpawnPrefab("splash_snow_fx").Transform:SetPosition(inst.Transform:GetWorldPosition())
@@ -288,18 +296,27 @@ local function SetSize(inst, size)
 		inst.AnimState:PlayAnimation("small_to_med")
 		inst.AnimState:PushAnimation("med_to_large", false)
 		inst.AnimState:PushAnimation("roll_large_loop", true)
+		
+		if inst.components.snowwavemelter == nil then
+			inst:AddComponent("snowwavemelter") -- Basically take the snow with you on the roll !
+		end
+		inst.components.snowwavemelter.melt_range = math.ceil(HARVEST_START_RAD + 1)
+		inst.components.snowwavemelter:StartMelting()
 	end
 end
 
 local function ThrowAt(inst, targetpos, owner)
 	local nocollidetime = (owner and owner.prefab == "emperor_penguin") and 1 or 0.25
 	
+	inst.persists = true
 	inst.Physics:SetCylinder(0, 0) -- We don't want the snowball to crash instantly on nearby colliders !
 	inst:DoTaskInTime(nocollidetime, function() inst.Physics:SetCylinder(1, 1) end)
-	inst.persists = true
+	inst.Physics:SetCollisionCallback(inst.OnCollide)
 	
 	inst.components.complexprojectile:Launch(targetpos, owner, inst)
-	inst.Physics:SetCollisionCallback(inst.OnCollide)
+	if inst.components.wateryprotection and owner:HasTag("player") then
+		inst.components.wateryprotection:AddIgnoreTag("player")
+	end
 end
 
 local function OnRemoved(inst)

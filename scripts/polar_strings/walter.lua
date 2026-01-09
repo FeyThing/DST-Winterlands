@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "I'll be fine, they're fightless birds."
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Watch Woby! I'm fighting a big, scary bear!"
+	ANNOUNCE.BATTLECRY.WALRUS = "Ha! You feel right into my trap!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Darnit... they can't keep getting away with it!"

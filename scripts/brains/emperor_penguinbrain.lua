@@ -99,6 +99,10 @@ local function ShouldRunAway(inst)
 	return TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.defeated
 end
 
+local function ShouldRunHome(inst)
+	return IsProperEmperor(inst) and TheWorld.components.emperorpenguinspawner and not TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst)
+end
+
 local function GetWaterFn(inst)
 	if inst._ocean_escape_position then
 		return inst._ocean_escape_position
@@ -138,6 +142,9 @@ function Emperor_PenguinBrain:OnStart()
 				Leash(self.inst, GetWaterFn, 0.2, 0.2, true),
 			}, 0.25)),
 		
+		BrainCommon.PanicTrigger(self.inst),
+		BrainCommon.ElectricFencePanicTrigger(self.inst),
+		
 		IfNode(function() return ShouldCallGuards(self.inst) end, "Call Guards",
 			ActionNode(function() self.inst.sg:GoToState("summon_guards") end)),
 		IfNode(function() return ShouldJuggle(self.inst) end, "Go Juggling",
@@ -164,6 +171,9 @@ function Emperor_PenguinBrain:OnStart()
 			ActionNode(function() self.inst:PushEvent("emperor_spin") end)),
 		WhileNode(function() return ShouldChase(self.inst) end, "Should Chase",
 			ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST, 15)),
+		
+		WhileNode(function() return ShouldRunHome(self.inst) end, "Should Run Home",
+			Leash(self.inst, GetWanderHome, 10, 8, true)),
 		Wander(self.inst, GetWanderHome, GetWanderDistFn),
 		StandStill(self.inst),
 	}, 0.25)

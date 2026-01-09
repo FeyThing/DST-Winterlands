@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Things are getting feathery!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "This may bear consequences."
+	ANNOUNCE.BATTLECRY.WALRUS = "You've made a big blubber coming here!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "I knew something felt off... fishy even."

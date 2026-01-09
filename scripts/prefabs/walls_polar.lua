@@ -215,24 +215,6 @@ function MakeWallType(data)
 		end
 	end
 	
-	local function OnHammered(inst, worker)
-		if data.maxloots and data.loot then
-			local num_loots = math.max(1, math.floor(data.maxloots * inst.components.health:GetPercent()))
-			
-			for i = 1, num_loots do
-				inst.components.lootdropper:SpawnLootPrefab(data.loot)
-			end
-		end
-		
-		local fx = SpawnPrefab("collapse_small")
-		fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
-		if data.material then
-			fx:SetMaterial(data.material)
-		end
-		
-		inst:Remove()
-	end
-	
 	local function itemfn()
 		local inst = CreateEntity()
 		
@@ -301,6 +283,24 @@ function MakeWallType(data)
 		MakeHauntableLaunch(inst)
 		
 		return inst
+	end
+	
+	local function OnHammered(inst, worker)
+		if data.maxloots and data.loot then
+			local num_loots = math.max(1, math.floor(data.maxloots * inst.components.health:GetPercent()))
+			
+			for i = 1, num_loots do
+				inst.components.lootdropper:SpawnLootPrefab(data.loot)
+			end
+		end
+		
+		local fx = SpawnPrefab("collapse_small")
+		fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
+		if data.material then
+			fx:SetMaterial(data.material)
+		end
+		
+		inst:Remove()
 	end
 	
 	local function OnHit(inst, worker)
@@ -443,7 +443,7 @@ local walldata = {
 		material = MATERIALS.DRYICE,
 		buildsound = "dontstarve_DLC001/common/iceboulder_hit",
 		hitsound = "dontstarve_DLC001/common/iceboulder_smash",
-		tags = {"stone"},
+		tags = {"stone", "dryice"},
 		loot = "ice",
 		maxloots = 2,
 		maxhealth = TUNING.POLARWALL_HEALTH,

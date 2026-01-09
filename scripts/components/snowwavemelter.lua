@@ -9,14 +9,19 @@ local SnowwaveMelter = Class(function(self, inst)
 	
 	self.growth_time = 2
 	self.melting = false
+	self.melting_paused = false
 end)
 
 function SnowwaveMelter:CanMelt()
-	return (self.canmeltfn and self.canmeltfn(self.inst)) or not self.inst:HasTag("INLIMBO")
+	if self.canmeltfn then
+		return self.canmeltfn(self.inst)
+	end
+	
+	return not self.inst:HasTag("INLIMBO")
 end
 
 function SnowwaveMelter:GetMeltRange(skip_growth)
-	local range = self.melt_range
+	local range = FunctionOrValue(self.melt_range, self.inst)
 	
 	-- Gonna adjust melt_range based on burnable size, so items don't cover as much range as burning tree !
 	if self.inst.components.firefx then
@@ -47,44 +52,26 @@ function SnowwaveMelter:Melt()
 		return
 	end
 	
-	--[[local x, y, z = self.inst.Transform:GetWorldPosition()
-	local blockers = TheSim:FindEntities(x, y, z, MIN_SNOWBLOCKER_DIST, SNOWBLOCKER_TAGS)
+	local duration = self.use_melt_time and self.melt_time or GetPolarPlowDuration(self.inst, self.melt_time, "melted")
 	
-	local should_melt = true
-	for i, v in ipairs(blockers) do
-		if v.ExtendSnowBlocker then
-			should_melt = false
-			
-			local range = v._snowblockrange and v._snowblockrange:value() or 0
-			if v.SetSnowBlockRange and range < self.melt_range then			
-				v:SetSnowBlockRange(range, self.inst)
-			end
-			v:ExtendSnowBlocker(self.inst)
-		end
-	end
-	
-	if should_melt then
-		local blocker = SpawnPrefab("snowwave_blocker")
-		blocker.Transform:SetPosition(x, y, z)
-		
-		blocker._gradual_time = self.melt_time
-		blocker:ExtendSnowBlocker(self.inst, true, self.melt_time)
-		if blocker.SetSnowBlockRange then
-			blocker:SetSnowBlockRange(self.melt_range)
-		end
-		
-		return blocker
-	end]]
-	
-	return SpawnPolarSnowBlocker(self.inst:GetPosition(), self:GetMeltRange(), self.melt_time, self.inst) -- Generalised method, should do the same
+	return SpawnPolarSnowBlocker(self.inst:GetPosition(), self:GetMeltRange(), duration, self.inst) -- Generalised method, should do the same
+end
+
+local function DoMelt(inst, self)
+	self:Melt()
 end
 
 function SnowwaveMelter:StartMelting()
 	self.melting = true
 	self.melt_start_time = GetTime()
 	
+	if self.inst:IsAsleep() then
+		self.melting_paused = true
+		return
+	end
+	
 	if self.melt_task == nil then
-		self.melt_task = self.inst:DoPeriodicTask(self.melt_rate, function() self:Melt() end, 0)
+		self.melt_task = self.inst:DoPeriodicTask(self.melt_rate, DoMelt, 0, self)
 	end
 end
 
@@ -96,6 +83,22 @@ function SnowwaveMelter:StopMelting()
 	
 	self.melt_start_time = nil
 	self.melting = false
+	self.melting_paused = false
+end
+
+function SnowwaveMelter:OnEntitySleep()
+	self.melting_paused = self.melting
+	
+	if self.melt_task then
+		self.melt_task:Cancel()
+		self.melt_task = nil
+	end
+end
+
+function SnowwaveMelter:OnEntityWake()
+	if self.melting_paused and self.melt_task == nil then
+		self.melt_task = self.inst:DoPeriodicTask(self.melt_rate, DoMelt, 0, self)
+	end
 end
 
 return SnowwaveMelter

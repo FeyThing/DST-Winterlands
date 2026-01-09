@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Waah-ha-ha!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Is time for good brawl!"
+	ANNOUNCE.BATTLECRY.WALRUS = "Big mistake. Wolfgang hunts you now!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Hmm? Hah! You got Wolfgang good."

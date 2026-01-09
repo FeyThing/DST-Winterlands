@@ -31,7 +31,8 @@ local Builder = require("components/builder")
 		local block_range = TUNING.SNOW_PLOW_RANGES.REPLACED or 0
 		
 		if recipe and recipe.placer and block_range > 0 then
-			SpawnPolarSnowBlocker(pt, block_range, TUNING.POLARPLOW_BLOCKER_DURATION, self.inst)
+			local duration = GetPolarPlowDuration(self.inst, nil, "building")
+			SpawnPolarSnowBlocker(pt, block_range, duration, self.inst)
 		end
 		
 		return OldDoBuild(self, recname, pt, ...)

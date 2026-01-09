@@ -16,5 +16,6 @@
 		<Element name="polarglobe.png" u1="0.62209375" u2="0.74509375" v2="0.999" v1="0.751" />
 		<Element name="rock_polar.png" u1="0.62209375" u2="0.707984375" v2="0.749" v1="0.5400625" />
 		<Element name="trap_polarteeth.png" u1="0.74709375" u2="0.87009375" v2="0.999" v1="0.751" />
+		<Element name="tree_leafy_polar.png" u1="0.501" u2="0.624" v2="0.5380625" v1="0.2900625" />
 	</Elements>
 </Atlas>

@@ -502,7 +502,7 @@ CommonStates.AddWalrusBeartrapHandlers(states, events, {
 		inst:SetEnraged(false)
 	end,
 	onexitfn = function(inst, trap)
-		inst:SetEnraged(true)
+		--inst:SetEnraged(true) KEEP CALM
 	end,
 })
 

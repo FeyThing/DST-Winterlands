@@ -44,6 +44,10 @@ local function fn()
 	
 	inst.AnimState:SetBuild("evergreen_new_2")
 	
+	inst:AddTag("snowblocker")
+	inst._snowblockrange = net_smallbyte(inst.GUID, "winter_tree_sparse._snowblockrange")
+	inst._snowblockrange:set(3)
+	
 	if not TheWorld.ismastersim then
 		return inst
 	end

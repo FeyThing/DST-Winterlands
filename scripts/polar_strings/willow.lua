@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "To waaaa-r!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "I'll stuff Bernie with your fur!"
+	ANNOUNCE.BATTLECRY.WALRUS = "If you wanna fight, we gonna fight!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Huh? Who put this stupid fish on me?!"

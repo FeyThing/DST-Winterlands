@@ -92,6 +92,13 @@ function SpawnPolarSnowBlocker(pos, radius, duration, doer)
 	return blocker, blockers
 end
 
+function GetPolarPlowDuration(doer, t, cause)
+	local iscanadian = doer and (doer:HasTag("polite") or doer:HasTag("pinetreepioneer"))
+	t = t or TUNING.POLARPLOW_BLOCKER_DURATION
+	
+	return t * (iscanadian and TUNING.POLARPLOW_BLOCKER_CANADIAN_MULT or 1)
+end
+
 function MakePolarCovered(inst, polar)
 	if polar then
 		inst.AnimState:OverrideSymbol("snow", "polar_snow", "snow") -- The snow is snowier than before...

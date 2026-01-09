@@ -45,7 +45,8 @@ local function OnPreBuilt(inst, builder, materials, recipe)
 				local block_range = TUNING.SNOW_PLOW_RANGES.USED or 0
 				
 				if block_range > 0 then
-					SpawnPolarSnowBlocker(builder:GetPosition(), block_range, TUNING.POLARPLOW_BLOCKER_DURATION, builder)
+					local duration = GetPolarPlowDuration(builder, nil, "polarsnowmaterial")
+					SpawnPolarSnowBlocker(builder:GetPosition(), block_range, duration, builder)
 				end
 				
 				break

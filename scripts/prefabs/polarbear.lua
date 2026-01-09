@@ -455,7 +455,7 @@ end
 local function DoGrowl(inst)
 	inst.SoundEmitter:PlaySound(inst.sounds.growl)
 	
-	if inst.enraged and inst.components.health and not inst.components.health:IsDead() then
+	if inst.enraged and inst.components.health and not inst.components.health:IsDead() and not inst:IsInLimbo() then
 		inst._growltask = inst:DoTaskInTime(1 + math.random() * 0.4, inst.DoGrowl)
 	end
 end

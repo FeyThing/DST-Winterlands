@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Dance on ice with me, little birdy!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "Teddy or not, here I come!"
+	ANNOUNCE.BATTLECRY.WALRUS = "Did you mistake me for an easy prey? Hyuyu!"
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "A prank upon the prankster? This can't be!"

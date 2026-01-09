@@ -4,7 +4,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 --	Announcements
 	
 	--	Actions
+	ANNOUNCE.BATTLECRY.PENGUIN  = "Return to your natural habitat!"
 	ANNOUNCE.BATTLECRY.POLARBEAR = "I shall prevail over brute force!"
+	ANNOUNCE.BATTLECRY.WALRUS = "End of the line."
 	
 	--	World, Events
 	ANNOUNCE.ANNOUNCE_ARCTIC_FOOL_FISH_REMOVED = "Well. It's good to see everyone laughing, at least."
