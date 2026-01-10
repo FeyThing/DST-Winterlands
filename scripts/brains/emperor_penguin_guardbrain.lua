@@ -2,6 +2,7 @@ require "behaviours/wander"
 require "behaviours/runaway"
 require "behaviours/doaction"
 require "behaviours/standstill"
+require "behaviours/attackwall"
 
 local BrainCommon = require("brains/braincommon")
 
@@ -103,6 +104,8 @@ function Emperor_Penguin_GuardBrain:OnStart()
 		BrainCommon.PanicTrigger(self.inst),
 		BrainCommon.ElectricFencePanicTrigger(self.inst),
 		
+		AttackWall(self.inst),
+		
 		WhileNode(function() return ShouldRunAway(self.inst) end, "Escaping",
             PriorityNode({
 				IfNode(function() return FindNearbyHopPoint(self.inst) end, "Close Enough To Hop Into The Ocean!",
@@ -112,6 +115,7 @@ function Emperor_Penguin_GuardBrain:OnStart()
 		
 		WhileNode(function() return ShouldRecoverStamina(self.inst) end, "Recover Stamina",
 			ActionNode(function() self.inst.recovering_stamina = true self.inst:PushEvent("guard_panting") end)),
+		
 		ChaseAndAttack(self.inst, MAX_CHASE_TIME, MAX_CHASE_DIST, 15),
 		Wander(self.inst, GetWanderHome, GetWanderDistFn),
 		StandStill(self.inst),

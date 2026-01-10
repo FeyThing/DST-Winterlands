@@ -505,6 +505,8 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		},
 		
 		onexit = function(inst)
+			inst.SoundEmitter:KillSound("spinLoop")
+			
 			inst.Physics:ClearCollisionMask()
 			inst.Physics:SetCollisionMask(
 				COLLISION.WORLD,
@@ -523,7 +525,6 @@ local states = { -- PRO TIP: KillAllSounds on any new state, slide loop tends to
 		
 		onenter = function(inst)
 			inst.AnimState:PlayAnimation("emperor_panic", true)
-			inst.SoundEmitter:KillSound("spinLoop")
 			inst.SoundEmitter:PlaySound("dontstarve/movement/iceslab_slipping")
 			inst.Physics:SetMotorVelOverride(5, 0, 0)
 			

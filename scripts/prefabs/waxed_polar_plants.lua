@@ -4,6 +4,8 @@ ASSETS = {
 	Asset("SCRIPT", "scripts/prefabs/waxed_plant_common.lua")
 }
 
+-------------------------------------------------------------------------------------------------
+
 local function Plantable_GetAnimFn(inst)
 	if inst.components.pickable and inst.components.pickable:CanBePicked() then
 		return "idle"
@@ -14,6 +16,14 @@ local function Plantable_GetAnimFn(inst)
 	end
 	
 	return "picked"
+end
+
+local function Tree_MultColorFn()
+	return 0.5 + math.random() * 0.5
+end
+
+local function Tree_Minimap_CommonPostInit(inst)
+	inst.MiniMapEntity:SetPriority(-1)
 end
 
 local function TreeSapling_GetAnimFn(inst)
@@ -52,6 +62,48 @@ end
 
 -------------------------------------------------------------------------------------------------
 
+local DECIDPOLAR_ANIMSET_LIST = {
+	"sway1_loop", "sway2_loop", "burnt", "stump"
+}
+
+local DECIDPOLAR_ANIMSET = {}
+
+for _, anim in ipairs(DECIDPOLAR_ANIMSET_LIST) do
+	local short, normal, tall = anim.."_short", anim.."_normal", anim.."_tall"
+	
+	if anim == "burnt" or anim == "stump" then
+		local minimapicon = "tree_leafy_"..anim..".png"
+		
+		DECIDPOLAR_ANIMSET[short] = {anim = short, minimap = minimapicon, stump = anim == "stump"}
+		DECIDPOLAR_ANIMSET[normal] = {anim = normal, minimap = minimapicon, stump = anim == "stump"}
+		DECIDPOLAR_ANIMSET[tall] = {anim = tall, minimap = minimapicon, stump = anim == "stump"}
+	else
+		DECIDPOLAR_ANIMSET[short] = {anim = short, minimap = "tree_leafy_polar.png"}
+		DECIDPOLAR_ANIMSET[normal] = {anim = normal, minimap = "tree_leafy_polar.png"}
+		DECIDPOLAR_ANIMSET[tall] = {anim = tall, minimap = "tree_leafy_polar.png"}
+	end
+end
+
+local function DecidPolar_GetAnimFn(inst)
+	if inst:HasTag("burnt") or (inst.components.burnable and inst.components.burnable:IsBurning()) then
+		return "burnt_"..inst.size
+	end
+	
+	if inst:HasTag("stump") then
+		return "stump_"..inst.size
+	end
+	
+	return inst.AnimState:IsCurrentAnimation("sway2_loop_"..inst.size) and "sway2_loop_"..inst.size or "sway1_loop_"..inst.size
+end
+
+local function DecidPolar_CommonPostInit(inst)
+	inst.MiniMapEntity:SetPriority(-1)
+	
+	inst.displayname = "DECIDUOUSTREE"
+end
+
+-------------------------------------------------------------------------------------------------
+
 local ret = {
 	CreateWaxedTreeSapling("antler_tree", "antler_tree_sapling", "idle_planted"),
 	
@@ -67,6 +119,21 @@ local ret = {
 		multcolor = Grass_MultColorFn,
 		assets = ASSETS,
 		deployspacing = DEPLOYSPACING.MEDIUM,
+	}),
+	
+	WAXED_PLANTS.CreateWaxedPlant({
+		prefab = "deciduoustree_polar",
+		bank = "tree_leaf",
+		build = "tree_leaf_trunk_build",
+		anim = "sway1_loop_tall",
+		minimapicon = "tree_leafy_polar",
+		action = "CHOP",
+		physics = {MakeObstaclePhysics, 0.25},
+		animset = DECIDPOLAR_ANIMSET,
+		getanim_fn = DecidPolar_GetAnimFn,
+		common_postinit = DecidPolar_CommonPostInit,
+		multcolor = Tree_MultColorFn,
+		assets = ASSETS,
 	}),
 }
 

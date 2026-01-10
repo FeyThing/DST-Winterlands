@@ -50,7 +50,6 @@ local function RetargetFn(inst)
 	local targets = {}
 	local target
 	
-	print("RetargetFn?")
 	if inst:HasTag("hostile") and TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner.emperor == inst then
 		for ID, data in pairs(inst.attackerUSERIDs) do
 			for i, player in ipairs(AllPlayers) do
@@ -61,7 +60,7 @@ local function RetargetFn(inst)
 		end
 		
 		target = #targets > 0 and targets[math.random(#targets)] or nil
-		print("target?", target)
+		
 		if target then
 			return target
 		else
@@ -416,21 +415,30 @@ local function OnTimerDone(inst, data)
 	end
 end
 
---[[local function IsInCastle(inst, t)
-	if TheWorld.components.emperorpenguinspawner and TheWorld.components.emperorpenguinspawner:IsInstInsideCastle(inst) then
-		inst.time_outside_castle = nil
+local function ClearRecentlyCharged(inst, other)
+	inst.recentlycharged[other] = nil
+end
+
+local function OnDestroyOther(inst, other)
+	if other:IsValid() and other.components.workable and other.components.workable:CanBeWorked() and other:HasTag("wall") and not inst.recentlycharged[other] then
 		
-		return true
-	elseif inst.time_outside_castle and t then
-		return GetTime() - inst.time_outside_castle > t
-	else
-		if inst.time_outside_castle == nil then
-			inst.time_outside_castle = GetTime()
+		SpawnPrefab("collapse_small").Transform:SetPosition(other.Transform:GetWorldPosition())
+		other.components.workable:Destroy(inst)
+		
+		if other:IsValid() and other.components.workable and other.components.workable:CanBeWorked() then
+			inst.recentlycharged[other] = true
+			inst:DoTaskInTime(3, ClearRecentlyCharged, other)
 		end
-		
-		return false
 	end
-end]]
+end
+
+local function OnCollide(inst, other)
+	if not (inst.sg and inst.sg:HasStateTag("nointerrupt")) and other:IsValid() and other.components.workable and other.components.workable:CanBeWorked()
+		and other:HasAnyTag("heavy", "wall") and (not other:HasTag("icecastlepart") or other:HasTag("heavy")) and not inst.recentlycharged[other] then
+		
+		inst:DoTaskInTime(2 * FRAMES, OnDestroyOther, other)
+	end
+end
 
 local function SetEmperorTowerDirty(inst)
 	local tower = inst.emperor_tower:value()
@@ -488,6 +496,9 @@ local function fn()
 	
 	inst.attackerUSERIDs = {}
 	inst._soundpath = "dontstarve/creatures/pengull/" -- TEMP
+	
+	inst.recentlycharged = {}
+	inst.Physics:SetCollisionCallback(OnCollide)
 	
 	inst:AddComponent("combat")
 	inst.components.combat.battlecryenabled = false
@@ -551,7 +562,6 @@ local function fn()
 	inst.eggsLayed = 0
 	inst.eggprefab = "emperor_egg"
 	inst.MakeDefeated = MakeDefeated
-	--inst.IsInCastle = IsInCastle
 	inst.ForceQuitTowerState = ForceQuitTowerState
 	inst.DoExtraEgg = DoExtraEgg
 	inst.TryRipMantle = TryRipMantle
@@ -564,7 +574,7 @@ local function fn()
 		if not inst:IsAsleep() then
 			OnDefeated(inst, data)
 		end
-    end
+	end
 	
 	inst:SetStateGraph("SGpenguin")
 	inst:SetBrain(brain)

@@ -95,7 +95,7 @@ local Combat_Replica = require("components/combat_replica")
 	
 	local OldCanTarget = Combat_Replica.CanTarget
 	function Combat_Replica:CanTarget(target, ...)
-		if self.inst:HasTag("penguin") and target and target.prefab == "wall_polar" then
+		if self.inst:HasTag("penguin") and target and target:HasTag("icecastlepart") then
 			return false -- We don't want Pengulls to break their castle...
 		end
 		

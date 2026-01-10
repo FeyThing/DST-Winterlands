@@ -149,6 +149,7 @@ function Emperor_PenguinBrain:OnStart()
 			ActionNode(function() self.inst.sg:GoToState("summon_guards") end)),
 		IfNode(function() return ShouldJuggle(self.inst) end, "Go Juggling",
 			ActionNode(function() self.inst.sg:GoToState("emperor_juggle") end)),
+		
 		WhileNode(function() return ShouldGetToTower(self.inst) end, "Climb Tower",
 			ParallelNode{
 				PriorityNode({
@@ -160,8 +161,12 @@ function Emperor_PenguinBrain:OnStart()
 					ActionNode(function()
 						if self.inst.sg:HasStateTag("busy") and not self.inst.sg:HasStateTag("hit") then
 							self.inst.components.stuckdetection:Reset()
-						elseif self.inst.components.stuckdetection:IsStuck() and not self.inst.components.combat:InCooldown() then
-							self.inst.components.combat:TryAttack()
+						elseif self.inst.components.stuckdetection:IsStuck() then
+							if ShouldSpin(self.inst) then
+								inst:PushEvent("emperor_spin")
+							elseif not self.inst.components.combat:InCooldown() then
+								self.inst.components.combat:TryAttack()
+							end
 						end
 					end),
 				},

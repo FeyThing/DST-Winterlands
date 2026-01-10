@@ -71,6 +71,14 @@ local function SlipperyRate(inst, target)
 	return 2.75 / 2
 end
 
+local function GetRevealTargetFn(inst, doer)
+	return inst:GetPosition()
+end
+
+local function PreRevealFn(inst, doer)
+	return true -- Maybe we should only reveal when freshly spawned, but, that should be fine
+end
+
 local function DoFireWatch(inst, target)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	
@@ -127,6 +135,7 @@ local function ice()
 	inst.entity:AddNetwork()
 	
 	inst.MiniMapEntity:SetIcon("emperor_penguin.png")
+	inst.MiniMapEntity:SetPriority(-1)
 	
 	inst.AnimState:SetBank("emperor_penguin_ice")
 	inst.AnimState:SetBuild("emperor_penguin_ice")
@@ -137,6 +146,7 @@ local function ice()
 	
 	inst:AddTag("antlion_sinkhole_blocker")
 	inst:AddTag("birdblocker")
+	inst:AddTag("mapspotrevealer")
 	inst:AddTag("NOCLICK")
 	inst:AddTag("polarcastlefloor")
 	inst:AddTag("slipperyfeettarget")
@@ -150,6 +160,10 @@ local function ice()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst:AddComponent("mapspotrevealer") -- Applied in emperorpenguinspawner, but currently not used
+	inst.components.mapspotrevealer:SetGetTargetFn(GetRevealTargetFn)
+	inst.components.mapspotrevealer:SetPreRevealFn(PreRevealFn)
 	
 	inst:AddComponent("slipperyfeettarget")
 	inst.components.slipperyfeettarget:SetIsSlipperyAtPoint(IsSlipperyAtPosition)

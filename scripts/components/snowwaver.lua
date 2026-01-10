@@ -29,6 +29,13 @@ return Class(function(self, inst)
 	
 	--
 	
+	local function GetWaveKey(x, z, spacing_x, spacing_y)
+		local gx = math.floor(x / spacing_x + 0.5)
+		local gz = math.floor(z / spacing_y + 0.5)
+		
+		return gx * 100000 + gz
+	end
+	
 	function self:OnTemperatureChanged(temperature)
 		if not _player then
 			return
@@ -89,16 +96,18 @@ return Class(function(self, inst)
 			local row = math.floor((batch_index - 1) / self.lines) + 1
 			local line = (batch_index - 1) % self.lines + 1
 			local pt = self:GetWavePosition(row, line, cx, cy, cz)
-			local pt_str = string.format("%.2f_%.2f", pt.x, pt.z)
 			
-			local wave = self.waves_positions[pt_str]
+			local pt_key = GetWaveKey(pt.x, pt.z, self.spacing_x, self.spacing_y)
+			local wave = self.waves_positions[pt_key]
+			
 			local insnow = TheWorld.Map:GetTileAtPoint(pt.x, 0, pt.z) == WORLD_TILES.POLAR_SNOW
 				and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z, TUNING.POLAR_SNOW_FORGIVENESS.SNOWWAVE)
-				
+			
 			if wave == nil and insnow then
 				wave = SpawnPrefab("snowwave")
 				wave.Transform:SetPosition(pt.x, pt.y, pt.z)
-				self.waves_positions[pt_str] = wave
+				self.waves_positions[pt_key] = wave
+				
 				wave:DoWaveFade()
 			elseif wave and wave:IsValid() then
 				if not insnow and not wave._fading then
@@ -113,14 +122,33 @@ return Class(function(self, inst)
 		end
 		
 		if batch_index > batch_total then
-			for pt_str, wave in pairs(self.waves_positions) do
-				if wave and wave:IsValid() then
-					local x, _, z = wave.Transform:GetWorldPosition()
-					local tile = TheWorld.Map:GetTileAtPoint(x, 0, z)
+			local valid_positions = {}
+			
+			for row = 1, self.rows do
+				for line = 1, self.lines do
+					local pt = self:GetWavePosition(row, line, cx, cy, cz)
+					local pt_key = GetWaveKey(pt.x, pt.z, self.spacing_x, self.spacing_y)
 					
-					if tile ~= WORLD_TILES.POLAR_SNOW then
+					valid_positions[pt_key] = true
+				end
+			end
+			
+			for key, wave in pairs(self.waves_positions) do
+				if not valid_positions[key] then
+					if wave and wave:IsValid() then
 						wave:DoWaveFade(true, wave.Remove)
-						self.waves_positions[pt_str] = nil
+					end
+					self.waves_positions[key] = nil
+				else
+					if wave and wave:IsValid() then
+						local x, _, z = wave.Transform:GetWorldPosition()
+						local insnow = TheWorld.Map:GetTileAtPoint(x, 0, z) == WORLD_TILES.POLAR_SNOW
+							and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z, TUNING.POLAR_SNOW_FORGIVENESS.SNOWWAVE)
+						
+						if not insnow then
+							wave:DoWaveFade(true, wave.Remove)
+							self.waves_positions[key] = nil
+						end
 					end
 				end
 			end
@@ -171,7 +199,9 @@ return Class(function(self, inst)
 			return
 		end
 		
-		self:SetWaves()
+		if self.blocker_update or batch_index <= batch_total then
+			self:SetWaves()
+		end
 	end
 	
 	--

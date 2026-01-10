@@ -117,6 +117,18 @@ return Class(function(self, inst)
 	
 	--	Create castle + populace
 	
+	local function RevealCastleOnMap(castle_floor)
+		if castle_floor and castle_floor:IsValid() and castle_floor.components.mapspotrevealer then
+			local pt = self.ice_castle_pos or castle_floor:GetPosition()
+			
+			for i, player in ipairs(AllPlayers) do
+				if player:GetDistanceSqToPoint(pt:Get()) < TUNING.EMPEROR_PENGUIN_CASTLE_REVEAL_MAP_IN_RANGE then
+					castle_floor.components.mapspotrevealer:RevealMap(player)
+				end
+			end
+		end
+	end
+	
 	local function SpawnCastleEnt(num, pt_ent, center_pos)
 		local part_def = CASTLE_DEFS.PARTS[tostring(num)]
 		
@@ -168,6 +180,9 @@ return Class(function(self, inst)
 			z = z - 1
 			i = i + rows
 		end
+		
+		--TODO: Not used because this auto opens the map, which could be risky here. But ideally we want to the map for nearby players !
+		--RevealCastleOnMap(castle_floor)
 		
 		return true
 	end
@@ -551,24 +566,30 @@ return Class(function(self, inst)
 	local function OnSeasonTick(inst, data)
 		local curseason = POLARRIFY_MOD_SEASONS[TheWorld.state.season] or "autumn"
 		
-		if curseason ~= SEASONS.WINTER or TheWorld.state.remainingdaysinseason < 3 then
-			local pt = self.ice_castle_pos
-			
-			if pt then
-				local castle_floor = TheSim:FindEntities(pt.x, pt.y, pt.z, 8, CASTLE_TAGS)[1]
-				
-				-- If players left the castle for a little while but built in it, leave it behind !
-				if castle_floor and castle_floor:IsAsleep() then
-					local t = GetTime()
-					local structure = FindEntity(castle_floor, 12, nil, nil, CASTLE_NOT_SKIP_DESTROY_TAGS, CASTLE_SKIP_DESTROY_TAGS)
-					
-					if castle_floor._time_asleep == nil then
-						castle_floor._time_asleep = t
-					elseif t - castle_floor._time_asleep > TUNING.TOTAL_DAY_TIME * 0.8 then
-						self:DespawnCastle(self.defeated and structure ~= nil)
-					end
-				end
+		local pt = self.ice_castle_pos
+		if not pt then
+			return
+		end
+		
+		local castle_floor = TheSim:FindEntities(pt.x, pt.y, pt.z, 8, CASTLE_TAGS)[1]
+		if not (castle_floor and castle_floor:IsAsleep()) then
+			if castle_floor then
+				castle_floor._time_asleep = nil
 			end
+			
+			return
+		end
+		
+		castle_floor._time_asleep = castle_floor._time_asleep or GetTime()
+		if GetTime() - castle_floor._time_asleep < TUNING.EMPEROR_PENGUIN_CASTLE_DEFEATED_DESPAWN_TIME then
+			return
+		end
+		
+		if (not self.defeated and (curseason ~= SEASONS.WINTER or TheWorld.state.remainingdaysinseason <= 3))
+			or (self.defeated and curseason ~= SEASONS.WINTER) then
+			
+			local structure = FindEntity(castle_floor, 12, nil, nil, CASTLE_NOT_SKIP_DESTROY_TAGS, CASTLE_SKIP_DESTROY_TAGS)
+			self:DespawnCastle(self.defeated and structure ~= nil)
 		end
 	end
 	
