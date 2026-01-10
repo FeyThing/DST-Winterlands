@@ -248,14 +248,6 @@ local function AddFlag(inst)
 	inst.flag = flag
 end
 
-local function OnEntitySleep(inst)
-	inst.components.polarmistemitter:StopMisting()
-end
-
-local function OnEntityWake(inst)
-	inst.components.polarmistemitter:StartMisting()
-end
-
 local function TeleportOverrideFn(inst)
 	local emperor = inst.tower_emperor and inst.tower_emperor:value()
 	
@@ -355,6 +347,14 @@ local function OpenTheNoor(inst)
 		inst._opened_door:Cancel()
 	end
 	inst._opened_door = inst:DoTaskInTime(0.85, CloseTheNoor)]]
+end
+
+local function OnEntitySleep(inst)
+	inst.components.polarmistemitter:StopMisting()
+end
+
+local function OnEntityWake(inst)
+	inst.components.polarmistemitter:StartMisting()
 end
 
 local function UpdateFacing(inst)
@@ -499,6 +499,25 @@ local function FlagWindUpdate(inst)
 	inst._windupdate = inst:DoTaskInTime(1 + math.random(), inst.FlagWindUpdate)
 end
 
+--[[local function FlagFlap(inst)
+	inst.SoundEmitter:PlaySound("polarsounds/icecastle/flag_flap")
+	
+	inst._flaptask = inst:DoTaskInTime(0.6 + math.random() * 0.8, FlagFlap)
+end
+
+local function Flag_OnEntitySleep(inst)
+	if inst._flaptask then
+		inst._flaptask:Cancel()
+		inst._flaptask = nil
+	end
+end
+
+local function Flag_OnEntityWake(inst)
+	if inst._flaptask == nil then
+		inst._flaptask = inst:DoTaskInTime(0.6 + math.random() * 0.8, FlagFlap)
+	end
+end]]
+
 local function flag()
 	local inst = CreateEntity()
 	
@@ -537,6 +556,8 @@ local function flag()
 	
 	inst.FlagWindUpdate = FlagWindUpdate
 	inst:FlagWindUpdate()
+	--inst.OnEntitySleep = Flag_OnEntitySleep
+	--inst.OnEntityWake = Flag_OnEntityWake
 	
 	return inst
 end

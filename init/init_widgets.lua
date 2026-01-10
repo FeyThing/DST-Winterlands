@@ -313,20 +313,29 @@ end)
 
 --	Show mob quantities with Ursa Trials
 
+local BEAR_TAGS = {"bear", "_combat"}
+local BEAR_NOT_TAGS = {"bear_major", "INLIMBO", "isdead"}
+
 local POLARBEAR_TRIALS_QUANTITY = nil
 
 local function GetPolarBears()
 	local x, y, z = ThePlayer.Transform:GetWorldPosition()
-	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS, {"bear"}, {"bear_major"})
+	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS, BEAR_TAGS, BEAR_NOT_TAGS)
 	local angries = 0
 	
 	for _, bear in ipairs(bears) do
-		if bear.enraged then -- TODO: Not networked btw!
+		if bear:HasTag("hostile") then
 			angries = angries + 1
 		end
 	end
 	
 	return #bears - angries
+end
+
+local function GetPolarBearsUpdate()
+	if ThePlayer then -- Updates nearby bears availability while trial recipe is shown
+		ThePlayer:PushEvent("refreshcrafting")
+	end
 end
 
 local IngredientUI = require("widgets/ingredientui")
@@ -349,6 +358,11 @@ local CraftingMenuIngredients = require("widgets/redux/craftingmenu_ingredients"
 			for i, ing in ipairs(recipe.tech_ingredients) do
 				if ing.type == "polarbear_material" then
 					POLARBEAR_TRIALS_QUANTITY = ing.amount or 1
+					
+					if self.inst and self._bearupdate == nil then
+						self._bearupdate = self.inst:DoPeriodicTask(0.25, GetPolarBearsUpdate)
+					end
+					
 					break
 				end
 			end
@@ -359,18 +373,23 @@ local CraftingMenuIngredients = require("widgets/redux/craftingmenu_ingredients"
 	
 local RecipePopup = require("widgets/recipepopup")
 	
-	local OldSetRecipe = CraftingMenuIngredients.SetRecipe
-	function CraftingMenuIngredients:SetRecipe(recipe, ...)
+	local OldSetRecipe_RecipePopUp = RecipePopup.SetRecipe
+	function RecipePopup:SetRecipe(recipe, ...)
 		if recipe then
 			for i, ing in ipairs(recipe.tech_ingredients) do
 				if ing.type == "polarbear_material" then
 					POLARBEAR_TRIALS_QUANTITY = ing.amount or 1
+					
+					if self.inst and self._bearupdate == nil then
+						self._bearupdate = self.inst:DoPeriodicTask(0.1, GetPolarBearsUpdate)
+					end
+					
 					break
 				end
 			end
 		end
 		
-		OldSetRecipe(self, recipe, ...)
+		OldSetRecipe_RecipePopUp(self, recipe, ...)
 	end
 	
 --	WX-78 Circuits

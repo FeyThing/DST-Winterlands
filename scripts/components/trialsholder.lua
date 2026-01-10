@@ -72,25 +72,21 @@ end
 
 function TrialsHolder:TryStartTrial(trialname, doer)
 	local trialdata = trials[trialname]
+	local success = trialdata ~= nil and (self.canstarttrial == nil or self.canstarttrial(self.inst, trialdata, doer))
+	local reason
 	
-	local failed = false	
-	if trialdata == nil then
-		failed = true
+	if success and trialdata.canstarttrial then
+		success, reason = trialdata.canstarttrial(self, doer)
 	end
 	
-	if (self.canstarttrial ~= nil and not self.canstarttrial(self.inst, trialdata)) or
-	(trialdata.canstarttrial ~= nil and not trialdata.canstarttrial()) then
-		failed = true
-	end
-	
-	if failed then
-		if self.onfailstarttrial ~= nil then
-			self.onfailstarttrial(self.inst, trialdata)
+	if not success then
+		if self.onfailstarttrial then
+			self.onfailstarttrial(self.inst, trialdata, reason)
 		end
 		
 		self.inst:PushEvent("trialstartfailed")
 		
-		return false
+		return false, reason
 	end
 	
 	if trialdata.radius then

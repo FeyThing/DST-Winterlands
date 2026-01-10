@@ -85,6 +85,7 @@ local prefabs = {
 	"pond",
 	"rabbit",
 	"rainometer",
+	"reskin_tool",
 	"rock_ice",
 	"shadowworker",
 	"snowball_item",

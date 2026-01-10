@@ -8,6 +8,11 @@ local function OnTurnOn(inst)
 	
 	if target == nil and inst.sg and not inst.sg:HasStateTag("busy") and inst.components.timer and not inst.components.timer:TimerExists("walrustrade_greet") then
 		inst.components.timer:StartTimer("walrustrade_greet", 30)
+		
+		if inst.components.locomotor then
+			inst.components.locomotor:Stop()
+		end
+		
 		inst.sg:GoToState("funny_idle")
 		inst.AnimState:PlayAnimation("idle_creepy")
 	end

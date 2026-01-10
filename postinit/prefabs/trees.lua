@@ -84,7 +84,9 @@ local function Tree_CanMeltSnow(inst)
 		return true -- Tree Guards
 	end
 	
-	return inst:HasTag("shelter") and not inst:HasTag("burnt") and not inst:HasTag("stump")
+	local stop_melting = inst:HasTag("burnt") or inst:HasTag("stump")
+	
+	return inst:HasTag("shelter") and not stop_melting, stop_melting
 end
 
 local function Tree_GetMeltSnowRangeFn(inst)
@@ -102,7 +104,7 @@ local function Tree_SetSnowMelter(inst, snowblockranges)
 		inst:AddComponent("snowwavemelter")
 		inst.components.snowwavemelter.canmeltfn = Tree_CanMeltSnow
 		inst.components.snowwavemelter.melt_range = Tree_GetMeltSnowRangeFn
-		inst.components.snowwavemelter.melt_rate = 1 -- math.random(30, 60)
+		inst.components.snowwavemelter.melt_rate = math.random(30, 60)
 		inst.components.snowwavemelter:StartMelting()
 	end
 end

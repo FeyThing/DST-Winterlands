@@ -82,7 +82,7 @@ PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryi
 PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_underrock"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 																				{"DECOR"}, {"turf_dragonfly"})
 PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 																				{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
-PolarRecipe("polarheadstick", 		{Ingredient("twigs", 4)}, 																	TECH.LOST, 				{placer = "polarheadstick_placer", min_spacing = 0.9, nameoverride = "polarheadstick_name"}, 	{"DECOR"}, {"sewing_mannequin"})
+PolarRecipe("polarheadstick", 		{Ingredient("twigs", 4)}, 																	TECH.LOST, 				{placer = "polarheadstick_placer", min_spacing = 0.9}, 											{"DECOR"}, {"sewing_mannequin"})
 
 PolarRecipe("chesspiece_emperor_penguin_fruity_builder", 	{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_fruity.tex"}, 	{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})
 PolarRecipe("chesspiece_emperor_penguin_juggle_builder", 	{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_juggle.tex"}, 	{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})

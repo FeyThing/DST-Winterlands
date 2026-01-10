@@ -49,7 +49,6 @@ local function GetMajorPos(inst)
 	return inst.current_major ~= nil and inst.current_major:GetPosition() or nil
 end
 
-
 --	Followin'
 
 local function GetLeader(inst)
@@ -321,20 +320,42 @@ local function DoPlowingAction(inst)
 	end
 end
 
-local function GetFaceTargetNearestPlayerFn(inst)
-	if inst._arctic_fooling_around or (inst.components.combat and inst.components.combat.target) then
-		return
+--	Choppin'
+
+local CHOP_TAGS = {"CHOP_workable"}
+local CHOP_CANT_TAGS = {"carnivalgame_part", "event_trigger", "waxedplant"}
+
+local function GetValidDecidMonster(inst)
+	local has_tree_target = inst.tree_target and inst.tree_target:IsValid() and not inst.tree_target:HasAnyTag("stump", "burnt")
+	
+	if has_tree_target then
+		return inst.tree_target
+	else
+		inst.tree_target = nil
+	end
+end
+
+local function ChopTreeKeepGoing(inst, leaderdist, finddist)
+	local leader = GetLeader(inst)
+	
+	local valid_tree_target = (inst.tree_target and inst.tree_target:IsValid() and not inst.tree_target:HasTag("stump"))
+	if not valid_tree_target then
+		inst.tree_target = nil
 	end
 	
-	local x, y, z = inst.Transform:GetWorldPosition()
-	return FindClosestPlayerInRange(x, y, z, MIN_FOLLOW_DIST, true)
+	return (leader and leader.components.timer and leader.components.timer:TimerExists("polarbear_loyaltyboost"))
+		or GetValidDecidMonster(inst) ~= nil
 end
 
-local function KeepFaceTargetNearestPlayerFn(inst, target)
-	return GetFaceTargetNearestPlayerFn(inst) == target
+local function ChopTreeFinder(inst, leaderdist, finddist)
+	local target = GetValidDecidMonster(inst) or FindEntity(inst, finddist, nil, CHOP_TAGS, CHOP_CANT_TAGS)
+	
+	if target then
+		return BufferedAction(inst, target, ACTIONS.CHOP)
+	end
 end
 
---
+--	Chattin'
 
 local function ShouldPauseChatty(inst)
 	return inst.components.timer and inst.components.timer:TimerExists("pause_chatty")
@@ -368,8 +389,8 @@ local function GetCombatLines(inst)
 	if ShouldPauseChatty(inst) then
 		return
 	end
-	local target = inst.components.combat and inst.components.combat.target
 	
+	local target = inst.components.combat and inst.components.combat.target
 	if target then
 		if target.components.timer and target.components.timer:TimerExists("stealing_bear_stuff") then
 			return STRINGS.POLARBEAR_PROTECTSTUFF[math.random(#STRINGS.POLARBEAR_PROTECTSTUFF)]
@@ -381,6 +402,29 @@ local function GetCombatLines(inst)
 	end
 	
 	return STRINGS.POLARBEAR_FIGHT[math.random(#STRINGS.POLARBEAR_FIGHT)]
+end
+
+local function GetWorkingLines(inst)
+	local t = GetTime()
+	if ShouldPauseChatty(inst) or (inst.next_work_chatter and t < inst.next_work_chatter) then
+		return
+	end
+	
+	inst.next_work_chatter = t + 3 + math.random() * 3
+	return STRINGS.POLARBEAR_HELP_CHOP_WOOD[math.random(#STRINGS.POLARBEAR_HELP_CHOP_WOOD)]
+end
+
+local function GetFaceTargetNearestPlayerFn(inst)
+	if inst._arctic_fooling_around or (inst.components.combat and inst.components.combat.target) then
+		return
+	end
+	
+	local x, y, z = inst.Transform:GetWorldPosition()
+	return FindClosestPlayerInRange(x, y, z, MIN_FOLLOW_DIST, true)
+end
+
+local function KeepFaceTargetNearestPlayerFn(inst, target)
+	return GetFaceTargetNearestPlayerFn(inst) == target
 end
 
 --  Trialin'
@@ -447,26 +491,32 @@ local function GetTrialFollowMaxDist(inst)
 	return inst.nearby_trial and inst.nearby_trial.components.trialsholder.trialdata.radius + 4 or 24 + 2
 end
 
+--
+
+local function HasRageZoomies(inst)
+	return inst.enraged and GetValidDecidMonster(inst) == nil
+end
+
 local PolarBearBrain = Class(Brain, function(self, inst)
 	Brain._ctor(self, inst)
 end)
 
 function PolarBearBrain:OnStart()
 	local combat_trial_nodes = ChattyNode(self.inst, GetTrialParticipatorLines,
-							       ChaseAndAttack(self.inst, 999, 999))
-
+		ChaseAndAttack(self.inst, 999, 999))
+	
 	-- local fun_trial_nodes = PriorityNode({
 	-- 	WhileNode(function() return self.inst.trialdata.fun_trial end,
 	-- 		ChattyNode(self.inst, GetTrialParticipatorLines,
 	-- 			TODO))
 	-- }, 0)
-
+	
 	local observe_trial_nodes = PriorityNode({
 		Follow(self.inst, GetNearbyTrial, GetTrialFollowMinDist, GetTrialFollowTargetDist, GetTrialFollowMaxDist, true),
 		ChattyNode(self.inst, GetTrialSpectatorLines,
 			FaceEntity(self.inst, GetNearbyTrial, KeepFaceNearbyTrial), 5, 5, 1, 1)
 	}, 0)
-
+	
 	local root = PriorityNode({
 		-- Panic nodes
 		WhileNode( function() return self.inst.components.hauntable and self.inst.components.hauntable.panic end, "Panic Haunted",
@@ -478,11 +528,11 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return BrainCommon.ShouldAvoidElectricFence(self.inst) end, "Shocked",
 			ChattyNode(self.inst, "POLARBEAR_PANICELECTRICITY",
 				AvoidElectricFence(self.inst))),
-
+		
 		-- Trial participation nodes
 		WhileNode(function() return self.inst:HasTag("trial_participator") and self.inst.trialdata.combat_trial end, "Participate In Combat Trial", combat_trial_nodes),
 		-- WhileNode(function() return self.inst:HasTag("trial_participator") and self.inst.trialdata.fun_trial end, "Participate In Fun Trial", fun_trial_nodes),
-
+		
 		-- Common nodes
 		ChattyNode(self.inst, GetCombatLines,
 			WhileNode(function() return not self.inst.components.combat:InCooldown() end, "Attack Momentarily",
@@ -490,17 +540,17 @@ function PolarBearBrain:OnStart()
 		WhileNode(function() return IsHomeOnFire(self.inst) end, "On Fire",
 			ChattyNode(self.inst, "POLARBEAR_PANICHOUSEFIRE",
 				Panic(self.inst))),
-				
+		
 		-- Trial spectating nodes
 		WhileNode(function() if not self.inst:HasTag("trial_participator") then return FindNearbyTrial(self.inst) ~= nil end end, "Observe Trial", observe_trial_nodes),
-
+		
 		-- Common nodes
 		WhileNode(function() return KeepMajor(self.inst) end, "Face Major",
 			PriorityNode({
 				Leash(self.inst, GetMajorPos, LEASH_MAJOR_MAX_DIST, LEASH_MAJOR_RETURN_DIST, true),
 				FaceEntity(self.inst, GetMajor, KeepMajor)
 			}, 0)),
-		WhileNode(function() return self.inst.enraged end, "Rage Zoomin",
+		WhileNode(function() return HasRageZoomies(self.inst) end, "Rage Zoomin",
 			Panic(self.inst)),
 		EventNode(self.inst, "gohome",
 			ChattyNode(self.inst, "POLARBEAR_BLIZZARD",
@@ -518,6 +568,14 @@ function PolarBearBrain:OnStart()
 		IfNode(function() return not ShouldPauseChatty(self.inst) end, "Other Trade",
 			ChattyNode(self.inst, "POLARBEAR_ATTEMPT_TRADE",
 				FaceEntity(self.inst, GetTraderFn, KeepTraderFn))),
+		BrainCommon.NodeAssistLeaderDoAction(self, {
+			action = "CHOP",
+			chatterstring = GetWorkingLines,
+			keepgoing = ChopTreeKeepGoing,
+			finder = ChopTreeFinder,
+			shouldrun = true,
+		}),
+			
 		ChattyNode(self.inst, "POLARBEAR_FIND_TOOTH",
 			DoAction(self.inst, FindToothAction, nil, true)),
 		ChattyNode(self.inst, "POLARBEAR_FIND_FOOD",

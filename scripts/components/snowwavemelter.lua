@@ -23,7 +23,7 @@ end
 function SnowwaveMelter:GetMeltRange(skip_growth)
 	local range = FunctionOrValue(self.melt_range, self.inst)
 	
-	-- Gonna adjust melt_range based on burnable size, so items don't cover as much range as burning tree !
+	-- Gonna adjust melt_range based on burnable size, so burning items don't cover as much range as burning tree !
 	if self.inst.components.firefx then
 		local level = self.inst.components.firefx.level or 3
 		
@@ -44,11 +44,13 @@ function SnowwaveMelter:GetMeltRange(skip_growth)
 	return range
 end
 
---local SNOWBLOCKER_TAGS = {"snowblocker"}
---local MIN_SNOWBLOCKER_DIST = 2
-
 function SnowwaveMelter:Melt()
-	if not self:CanMelt() then
+	local canmelt, stopmelting = self:CanMelt()
+	
+	if stopmelting then
+		self:StopMelting()
+	end
+	if not canmelt then
 		return
 	end
 	

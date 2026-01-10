@@ -28,6 +28,17 @@ local function Generic_PlayerRewards(player, maxhealing_mult)
 	end)
 end
 
+local function Generic_CanStartCombatTrial(self, doer)
+	local hashealth = doer.components.health == nil or doer.components.health.currenthealth > 1
+		or doer.components.health.maxhealth == 1 -- Well damn
+	
+	if not hashealth then
+		return false, "LOWHEALTH"
+	end
+	
+	return true
+end
+
 --  [ Fist Fight ]
 
 local FistFight_Player_OnHealthDelta
@@ -85,6 +96,9 @@ local function StartFistFightTrail(self)
 	bear.trialdata = self.trialdata
 	bear:AddTag("trial_participator")
 	if bear.sg then
+		if bear.StopPolarPlowing then
+			bear:StopPolarPlowing()
+		end
 		bear.sg:GoToState("abandon")
 	end
 	
@@ -250,6 +264,9 @@ local function StartDuoFightTrail(self)
 		bear.trialdata = self.trialdata
 		bear:AddTag("trial_participator")
 		if bear.sg then
+			if bear.StopPolarPlowing then
+				bear:StopPolarPlowing()
+			end
 			bear.sg:GoToState("abandon")
 		end
 		
@@ -467,6 +484,9 @@ local function SpawnRumbleWave(self)
 		bear.trialdata = self.trialdata
 		bear:AddTag("trial_participator")
 		if bear.sg then
+			if bear.StopPolarPlowing then
+				bear:StopPolarPlowing()
+			end
 			bear.sg:GoToState("abandon")
 		end
 		
@@ -521,7 +541,7 @@ local function StartAllOutRumbleTrial(self)
 	end
 	
 	for player, _ in pairs(self.trialdata.player_participants) do
-		player:ListenForEvent("healthdelta", FistFight_Player_OnHealthDelta)
+		player:ListenForEvent("healthdelta", AllOutRumble_Player_OnHealthDelta)
 		player:ListenForEvent("onremove", Generic_Participant_OnRemove)
 	end
 	
@@ -554,7 +574,7 @@ end
 
 local function OnDisqualifyAllOutRumbleTrial(self, participant)
 	if self.trialdata.players_left[participant] then
-		participant:RemoveEventCallback("healthdelta", FistFight_Player_OnHealthDelta)
+		participant:RemoveEventCallback("healthdelta", AllOutRumble_Player_OnHealthDelta)
 		participant:RemoveEventCallback("onremove", Generic_Participant_OnRemove)
 		return
 	end
@@ -643,7 +663,7 @@ local trials = {
 		combat_trial = true,
 		audience_valid = true,
 		
-		--canstarttrial = function() return not TheWorld.state.iscavenight end,
+		canstarttrial = Generic_CanStartCombatTrial,
 		talkerstartstring = STRINGS.POLARBEARKING_TRIAL_START1,
 		
 		disqualify_fn = OnDisqualifyFistFightTrial,
@@ -659,7 +679,7 @@ local trials = {
 		combat_trial = true,
 		audience_valid = true,
 		
-		--canstarttrial = function() return not TheWorld.state.iscavenight end,
+		canstarttrial = Generic_CanStartCombatTrial,
 		talkerstartstring = STRINGS.POLARBEARKING_TRIAL_START2,
 		
 		disqualify_fn = OnDisqualifyDuoFightTrial,
@@ -674,7 +694,7 @@ local trials = {
 		combat_trial = true,
 		audience_valid = true,
 		
-		--canstarttrial = function() return not TheWorld.state.iscavenight end,
+		canstarttrial = Generic_CanStartCombatTrial,
 		talkerstartstring = STRINGS.POLARBEARKING_TRIAL_START3,
 		
 		start_fn = StartAllOutRumbleTrial,

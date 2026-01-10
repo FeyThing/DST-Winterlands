@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.3.30"
+version = "1.3.32"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[

@@ -25,7 +25,8 @@ polarflea_clear_fn = function(inst) end
 --[[ Mob Heads skin functions ]]
 --------------------------------------------------------------------------
 function polarheadstick_init_fn(inst, build_name)
-	if inst.components.constructionsite then
+	if inst.components.constructionsite and inst.material_loaded then
+		inst.components.constructionsite:DropAllMaterials()
 		inst:RemoveComponent("constructionsite")
 	end
 	
@@ -48,7 +49,9 @@ function polarheadstick_init_fn(inst, build_name)
 	end
 	
 	if inst.Stick_OnConstructed then
-		inst:AddComponent("constructionsite")
+		if inst.components.constructionsite == nil then
+			inst:AddComponent("constructionsite")
+		end
 		inst.components.constructionsite:SetConstructionPrefab("construction_container")
 		inst.components.constructionsite:SetOnConstructedFn(inst.Stick_OnConstructed)
 	end

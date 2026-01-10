@@ -10,8 +10,6 @@ local function OverrideIsCarefulWalking(inst)
 	end
 end
 
---
-
 local function PolarSnowUpdate(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local polarsnowlevel = TheWorld.components.polarsnow_manager and TheWorld.components.polarsnow_manager:GetDataAtPoint(x, y, z)
@@ -23,6 +21,35 @@ end
 
 local function OnNearHighSnowDirty(inst)
 	inst:PushEvent("refreshcrafting")
+end
+
+--
+
+local OldCalcDamage
+local function CalcDamage(combat, target, ...) -- Special CalcDamage edit for trial fighting, players play nice :)
+	local damage, spdamage = OldCalcDamage(combat, target, ...)
+	
+	if combat.inst:HasTag("player_trial_participator") and target and target.components.health
+		and combat.inst.trialdata and combat.inst.trialdata.participants[target] then -- The target is a trial participant
+		
+		return math.max(1, math.min(target.components.health.currenthealth - 1, damage)), nil -- Cap the damage to targets HP - 1
+	end
+	
+	return damage, spdamage
+end
+
+local OldGetBattleCryString
+local function GetBattleCryString(combat, target, ...)
+	local str = OldGetBattleCryString and OldGetBattleCryString(combat, target, ...)
+	
+	if str == GetString(combat.inst, "BATTLECRY") then -- Got GENERIC so far
+		return GetString(combat.inst, "BATTLECRY", (target:HasTag("bear") and "BEAR")
+			or (target:HasTag("penguin") and "PENGUIN")
+			or (target:HasTag("walrus") and "WALRUS")
+			or nil)
+	end
+	
+	return str
 end
 
 --
@@ -81,6 +108,8 @@ local function OnUsedArcticFoolFish(inst)
 	TheFrontEnd:GetSound():PlaySound("polarsounds/arctic_fools/stick_fish")
 end
 
+--
+
 ENV.AddPlayerPostInit(function(inst)
 	if not TheNet:IsDedicated() then
 		inst._polarsnowfx = SpawnPrefab("snow_polar")
@@ -118,6 +147,18 @@ ENV.AddPlayerPostInit(function(inst)
 		inst.components.areaaware:StartWatchingTile(WORLD_TILES.POLAR_SNOW)
 	end
 	
+	if inst.components.combat then
+		if OldCalcDamage == nil then
+			OldCalcDamage = inst.components.combat.CalcDamage
+		end
+		if OldGetBattleCryString == nil then
+			OldGetBattleCryString = inst.components.combat.GetBattleCryString
+		end
+		
+		inst.components.combat.CalcDamage = CalcDamage
+		inst.components.combat.GetBattleCryString = GetBattleCryString
+	end
+	
 	inst:AddComponent("polarwalker")
 	
 	if not inst.components.updatelooper then
@@ -125,21 +166,6 @@ ENV.AddPlayerPostInit(function(inst)
 	end
 	
 	inst:AddComponent("tumblewindattractor")
-
-	local old_CalcDamage = inst.components.combat.CalcDamage
-	inst.components.combat.CalcDamage = function(self, target, ...) -- Special CalcDamage edit for trial fighting, players play nice :)
-		local damage, spdamage = old_CalcDamage(self, target, ...)
-
-		if inst:HasTag("player_trial_participator") and inst.trialdata.participants[target] then -- The target is a trial participant
-			local target_hp = target.components.health.currenthealth
-
-			if target_hp <= TUNING.POLARBEAR_DAMAGE then
-				return target_hp - 1, nil -- Cap the damage to targets hp - 1
-			end
-		end
-
-		return damage, spdamage
-	end
 	
 	if OldOnSave == nil then
 		OldOnSave = inst.OnSave

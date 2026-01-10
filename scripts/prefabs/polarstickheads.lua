@@ -61,6 +61,9 @@ local function OnLoad(inst, data)
 	if data and data.burnt then
 		inst.components.burnable.onburnt(inst)
 	end
+	
+	-- When skin is applied, materials already placed needs to drop (polarheadstick_init_fn), except on reload, we don't want that
+	inst.material_loaded = true
 end
 
 local function OnFinishHaunt(inst)
@@ -251,7 +254,7 @@ local function builder_common(constructioname)
 	inst.constructionname = constructioname
 	inst.net_constructionname = net_string(inst.GUID, "polarheadstick.net_constructionname", "net_constructionnamedirty")
 	
-	inst:SetPrefabNameOverride("polarheadstick")
+	inst.reskin_prefabswap = "polarheadstick" -- reskin_tool postinit, we need this to cycle between the skins despite each having unique prefabs
 	
 	inst.entity:SetPristine()
 	
@@ -268,15 +271,19 @@ local function builder_common(constructioname)
 	inst.components.constructionsite:SetOnConstructedFn(inst.Stick_OnConstructed)
 	
 	inst:AddComponent("inspectable")
+	inst.components.inspectable.nameoverride = "polarheadstick"
 	
 	inst:AddComponent("lootdropper")
 	inst.components.lootdropper:SetLoot({"twigs", "twigs"})
 	
+	inst:AddComponent("named")
+	inst.components.named:SetName(STRINGS.NAMES.POLARHEADSTICK_NAME)
+	
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
 	inst.components.workable:SetWorkLeft(2)
+	inst.components.workable:SetOnFinishCallback(OnFinish_Stick)
 	inst.components.workable:SetOnWorkCallback(OnWorked_Stick)
-	inst.components.workable.onfinish = OnFinish_Stick
 	
 	MakeHauntableWork(inst)
 	MakeSmallBurnable(inst, nil, nil, true)

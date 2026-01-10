@@ -4,6 +4,10 @@ require("stategraphs/commonstates_polar")
 local actionhandlers = {
 	ActionHandler(ACTIONS.ADDFUEL, "pickup"),
 	ActionHandler(ACTIONS.ATTACK, "attack_action"),
+	ActionHandler(ACTIONS.CHOP, "chop"),
+	ActionHandler(ACTIONS.CHOP, function(inst)
+		return inst.enraged and "attack_chomp" or "chop"
+	end),
 	ActionHandler(ACTIONS.DROP, "dropitem"),
 	ActionHandler(ACTIONS.EAT, "eat"),
 	ActionHandler(ACTIONS.EQUIP, "pickup"),
@@ -28,6 +32,11 @@ local events = {
 	CommonHandlers.OnFallInVoid(),
 	CommonHandlers.OnIpecacPoop(),
 	CommonHandlers.OnElectrocute(),
+	EventHandler("doaction", function(inst, data)
+		if data.action == ACTIONS.CHOP and not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
+			inst.sg:GoToState("chop", data.target)
+		end
+	end),
 	EventHandler("doattack", function(inst)
 		if not (inst.sg:HasStateTag("busy") or inst.components.health:IsDead()) then
 			if inst.enraged and not (inst.components.timer and inst.components.timer:TimerExists("chompcooldown")) then
@@ -200,6 +209,8 @@ local states = {
 				end
 			end),
 			TimeEvent(20 * FRAMES, function(inst)
+				inst:PerformBufferedAction() -- Chop tree, mainly
+				
 				inst.SoundEmitter:PlaySound("dontstarve/wilson/attack_whoosh")
 				inst.Physics:SetMotorVel(TUNING.POLARBEAR_BITE_VEL, 0, 0)
 			end),
@@ -269,6 +280,28 @@ local states = {
 	},
 	
 	State{
+		name = "chop",
+		tags = {"chopping"},
+		
+		onenter = function(inst)
+			inst.Physics:Stop()
+			inst.AnimState:PlayAnimation("atk")
+		end,
+		
+		timeline = {
+			TimeEvent(13 * FRAMES, function(inst)
+				inst:PerformBufferedAction()
+			end),
+		},
+		
+		events = {
+			EventHandler("animover", function(inst)
+				inst.sg:GoToState("idle")
+			end),
+		},
+	},
+	
+	State{
 		name = "eat",
 		tags = {"busy"},
 		
@@ -280,8 +313,14 @@ local states = {
 			inst.Physics:Stop()
 		end,
 		
+		onupdate = function(inst)
+			SetEnragedHead(inst, false)
+		end,
+		
 		onexit = function(inst)
 			inst.SoundEmitter:KillSound("chewing")
+			
+			SetEnragedHead(inst, inst.enraged)
 		end,
 		
 		timeline = {

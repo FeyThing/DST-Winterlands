@@ -2,35 +2,44 @@ local assets = {
 	Asset("ANIM", "anim/armor_walrus_bagpipe.zip"),
 }
 
-local banddt = 1
+local bagpipedt = 1
 local FOLLOWER_ONEOF_TAGS = {"walrus", "hound", "farm_plant"}
 local FOLLOWER_CANT_TAGS = {"player"}
 
-local function band_update(inst)
-	local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
+local function bagpipe_update(inst)
+	local doer = inst.components.inventoryitem and inst.components.inventoryitem.owner or inst
+	if not (doer and doer:IsValid()) then
+		return
+	end
 	
-	if owner and owner.components.leader then
-		local x, y, z = owner.Transform:GetWorldPosition()
-		local ents = TheSim:FindEntities(x, y, z, TUNING.ONEMANBAND_RANGE, nil, FOLLOWER_CANT_TAGS, FOLLOWER_ONEOF_TAGS)
-		
-		for k, v in pairs(ents) do
-			if v.components.follower and not v.components.follower.leader and not owner.components.leader:IsFollower(v) then
-			elseif v.components.farmplanttendable then
-				v.components.farmplanttendable:TendTo(owner)
+	local x, y, z = doer.Transform:GetWorldPosition()
+	local ents = TheSim:FindEntities(x, y, z, TUNING.ONEMANBAND_RANGE, nil, FOLLOWER_CANT_TAGS, FOLLOWER_ONEOF_TAGS)
+	
+	for i, v in ipairs(ents) do
+		if v.components.farmplanttendable then
+			v.components.farmplanttendable:TendTo(doer)
+		end
+	end
+	
+	if doer.components.leader then
+		for k, v in pairs(doer.components.leader.followers) do
+			if k.components.combat then
+				k:AddDebuff("buff_walrusally", "buff_walrusally")
 			end
 		end
-		
-		for _, v in ipairs(AllPlayers) do
-			if not v:HasTag("playerghost") and v:GetDistanceSqToPoint(x, y, z) < TUNING.ONEMANBAND_RANGE * TUNING.ONEMANBAND_RANGE and
-				not (v.components.timer and v.components.timer:TimerExists("walrusally_oncooldown")) then
-				v:AddDebuff("buff_walrusally", "buff_walrusally")
-			end
+	end
+	
+	for i, v in ipairs(AllPlayers) do
+		if not v:HasTag("playerghost") and v:GetDistanceSqToPoint(x, y, z) < TUNING.ONEMANBAND_RANGE * TUNING.ONEMANBAND_RANGE and
+			not (v.components.timer and v.components.timer:TimerExists("walrusally_oncooldown")) then
+			
+			v:AddDebuff("buff_walrusally", "buff_walrusally")
 		end
 	end
 end
 
 local function OnEquip(inst, owner)
-	inst.updatetask = inst:DoPeriodicTask(banddt, band_update, 0)
+	inst.updatetask = inst:DoPeriodicTask(bagpipedt, bagpipe_update, 0)
 	
 	owner.AnimState:OverrideSymbol("swap_body_tall", "armor_walrus_bagpipe", "torso")
 	owner:DoTaskInTime(0.2 + math.random() * 0.5, function()
@@ -87,6 +96,33 @@ local function OnPerish(inst)
 	inst:Remove()
 end
 
+local function OnHaunt(inst)
+	if inst._hauntedtask == nil then
+		inst._hauntedtask = inst:DoPeriodicTask(bagpipedt, function()
+			local x, y, z = inst.Transform:GetWorldPosition()
+			
+			if inst.components.inventoryitem and not inst:IsInLimbo() and inst.components.inventoryitem.is_landed then
+				inst.components.inventoryitem:DoDropPhysics(x, y, z, true, math.random())
+			end
+			
+			bagpipe_update(inst)
+		end, 0)
+	end
+	
+	inst.SoundEmitter:PlaySound("polarsounds/walrus/bagpipes", "haunted_bagpipe")
+	
+	return true
+end
+
+local function OnUnHaunt(inst)
+	if inst._hauntedtask then
+		inst._hauntedtask:Cancel()
+		inst._hauntedtask = nil
+	end
+	
+	inst.SoundEmitter:KillSound("haunted_bagpipe")
+end
+
 local function fn()
 	local inst = CreateEntity()
 	
@@ -119,6 +155,9 @@ local function fn()
 	inst.components.equippable:SetOnUnequip(OnUnequip)
 	inst.components.equippable:SetOnEquipToModel(OnEquipToModel)
 	
+	inst:AddComponent("fuel")
+	inst.components.fuel.fuelvalue = TUNING.LARGE_FUEL
+	
 	inst:AddComponent("fueled")
 	inst.components.fueled.fueltype = FUELTYPE.USAGE
 	inst.components.fueled:InitializeFuelLevel(TUNING.WALRUS_BAGPIPE_PERISHTIME)
@@ -131,7 +170,14 @@ local function fn()
 	
 	inst:AddComponent("leader")
 	
-	--TODO: Custom haunt reaction
+	inst:AddComponent("hauntable")
+	inst.components.hauntable.cooldown = TUNING.HAUNT_COOLDOWN_HUGE
+	inst.components.hauntable:SetHauntValue(TUNING.HAUNT_SMALL)
+	inst.components.hauntable:SetOnHauntFn(OnHaunt)
+	inst.components.hauntable:SetOnUnHauntFn(OnUnHaunt)
+	
+	MakeSmallBurnable(inst, TUNING.LARGE_BURNTIME)
+	MakeSmallPropagator(inst)
 	
 	return inst
 end

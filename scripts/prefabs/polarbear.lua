@@ -32,9 +32,13 @@ local BODY_PAINTINGS = {
 	"red",
 }
 
+local MAX_TARGET_SHARES = 10
+local SHARE_TARGET_DIST = 30
+
 local RETARGET_MUST_TAGS = {"_combat", "_health"}
 local RETARGET_ONEOF_TAGS = {"hound", "walrus", "warg", "pirate", "wonkey", "abominable_snowman"}
 local RETARGET_NOT_TAGS = {"bearbuddy"}
+
 local function RetargetFn(inst)
 	if inst:HasTag("trial_participator") and inst.trialdata.combat_trial then
 		return not inst:IsInLimbo() and FindEntity(inst, inst.trialdata.radius * 2, function(guy)
@@ -52,6 +56,28 @@ end
 
 local function KeepTargetFn(inst, target)
 	return not (target.sg and target.sg:HasStateTag("hiding")) and inst.components.combat:CanTarget(target)
+end
+
+local DECIDROOTTARGET_MUST_TAGS = {"_combat", "_health", "bear"}
+local DECIDROOTTARGET_CANT_TAGS = {"INLIMBO"}
+
+local function OnAttackedByDecidRoot(inst, attacker)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local ents = TheSim:FindEntities(x, y, z, SHARE_TARGET_DIST * 0.5, DECIDROOTTARGET_MUST_TAGS, DECIDROOTTARGET_CANT_TAGS)
+	local num_helpers = 0
+	
+	for i, v in ipairs(ents) do
+		if v ~= inst and not v.components.health:IsDead() then
+			v:PushEvent("suggest_tree_target", {tree = attacker})
+			num_helpers = num_helpers + 1
+			
+			if num_helpers >= MAX_TARGET_SHARES then
+				break
+			end
+		end
+	end
+	
+	inst:PushEvent("suggest_tree_target", {tree = attacker})
 end
 
 local function OnAttacked(inst, data)
@@ -77,13 +103,18 @@ local function OnAttacked(inst, data)
 		return
 	end
 	
-	if data and data.attacker then
-		inst.components.combat:SetTarget(data.attacker)
-		
-		if not inst:HasTag("trial_participator") then
-			inst.components.combat:ShareTarget(data.attacker, 30, function(dude)
-				return dude:HasTag("bear") and dude.components.health and not dude.components.health:IsDead()
-			end, 10)
+	local attacker = data and data.attacker
+	if attacker then
+		if attacker.prefab == "deciduous_root" and attacker.owner then
+			OnAttackedByDecidRoot(inst, attacker.owner)
+		else
+			inst.components.combat:SetTarget(attacker)
+			
+			if not inst:HasTag("trial_participator") then
+				inst.components.combat:ShareTarget(attacker, SHARE_TARGET_DIST, function(dude)
+					return dude:HasTag("bear") and dude.components.health and not dude.components.health:IsDead()
+				end, MAX_TARGET_SHARES)
+			end
 		end
 	end
 	
@@ -180,8 +211,11 @@ local function GetTeethReward(inst, item, giver)
 		weightsum = weightsum + weight
 	end
 	
-	local amt = TUNING.POLARBEAR_NUM_TREASURES[item.prefab] or 1
-	for i = 1, amt do
+	local hasboost = giver.components.timer and giver.components.timer:TimerExists("polarbear_loyaltyboost")
+	local tradedata = TUNING.POLARBEAR_TREASURES_DATA[item.prefab] or {}
+	local tradeamt = (tradedata.amt or 1) + ((hasboost and not tradedata.cantboost) and 1 or 0)
+	
+	for i = 1, tradeamt do
 		local rnd = math.random() * weightsum
 		
 		for prefab, weight in pairs(loot_table) do
@@ -464,7 +498,7 @@ local function SetEnraged(inst, enable)
 	if enable and inst.trialdata and inst.trialdata.name == "trial_fist_fight" then
 		return -- Don't enrage during a fist fight
 	end
-
+	
 	if enable ~= inst.enraged then
 		local colour = inst.body_paint ~= DEFAULT_PAINTING and inst.body_paint or nil
 		
@@ -473,8 +507,13 @@ local function SetEnraged(inst, enable)
 	end
 	
 	inst._isenraged:set(enable)
-	
 	inst:AddOrRemoveTag("hostile", enable)
+	
+	if inst.components.workmultiplier then
+		local mult = enable and TUNING.POLARBEAR_WORKEFFECTIVENESS_RAGE_MODIFIER or TUNING.POLARBEAR_WORKEFFECTIVENESS_MODIFIER
+		inst.components.workmultiplier:AddMultiplier(ACTIONS.CHOP, mult, inst)
+	end
+	
 	if inst.enraged then
 		inst:StopPolarPlowing()
 		
@@ -552,6 +591,14 @@ local function OnUnequip(inst, data)
 		inst.AnimState:Show("ARM_carry")
 		inst.AnimState:Hide("ARM_carry_up")
 		inst.AnimState:ClearOverrideSymbol("swap_object")
+	end
+end
+
+local function SuggestTreeTarget(inst, data)
+	local ba = inst:GetBufferedAction()
+	
+	if data and data.tree and (ba == nil or ba.action ~= ACTIONS.CHOP) then
+		inst.tree_target = data.tree
 	end
 end
 
@@ -640,18 +687,16 @@ local function fn()
 	inst.components.combat:SetRetargetFunction(1, RetargetFn)
 	inst.components.combat:SetKeepTargetFunction(KeepTargetFn)
 
-	local old_CalcDamage = inst.components.combat.CalcDamage
-	inst.components.combat.CalcDamage = function(self, target, ...) -- Special CalcDamage edit for trial fighting, bears play nice :)
-		local damage, spdamage = old_CalcDamage(self, target, ...)
-
-		if inst:HasTag("trial_participator") and inst.trialdata.players_left[target] then -- The target is a trial participant
-			local target_hp = target.components.health.currenthealth
-
-			if target_hp <= TUNING.POLARBEAR_DAMAGE then
-				return target_hp - 1, nil -- Cap the damage to targets hp - 1
-			end
+	local OldCalcDamage = inst.components.combat.CalcDamage
+	inst.components.combat.CalcDamage = function(combat, target, ...) -- Special CalcDamage edit for trial fighting, bears play nice :)
+		local damage, spdamage = OldCalcDamage(combat, target, ...)
+		
+		if inst:HasTag("trial_participator") and target and target.components.health
+			and inst.trialdata and inst.trialdata.players_left[target] then -- The target is a trial participant
+			
+			return math.max(1, math.min(target.components.health.currenthealth - 1, damage)), nil -- Cap the damage to targets HP - 1
 		end
-
+		
 		return damage, spdamage
 	end
 	
@@ -717,6 +762,9 @@ local function fn()
 	inst:AddComponent("updatelooper")
 	inst.components.updatelooper:AddPostUpdateFn(UpdateHead)
 	
+	inst:AddComponent("workmultiplier")
+	inst.components.workmultiplier:AddMultiplier(ACTIONS.CHOP, TUNING.POLARBEAR_WORKEFFECTIVENESS_MODIFIER, inst)
+	
 	MakeMediumFreezableCharacter(inst, "pig_torso")
 	inst.components.freezable:SetResistance(8)
 	inst.components.freezable:SetDefaultWearOffTime(5)
@@ -747,6 +795,7 @@ local function fn()
 	inst:ListenForEvent("loseloyalty", OnMarkForTeleport)
 	inst:ListenForEvent("startfollowing", OnUnmarkForTeleport)
 	inst:ListenForEvent("stopfollowing", OnMarkForTeleport)
+	inst:ListenForEvent("suggest_tree_target", SuggestTreeTarget)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
 	inst:SetStateGraph("SGpolarbear")
