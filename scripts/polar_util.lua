@@ -162,7 +162,10 @@ function PolarifySpeech(ret, inst)
 end
 
 local OldSpecialCases = GetDescription_AddSpecialCases
+local getcharacterstring = PolarUpvalue(GetDescription_AddSpecialCases, "getcharacterstring")
 function GetDescription_AddSpecialCases(ret, charactertable, inst, item, modifier, ...)
+	local _getcharacterstring = getcharacterstring
+	
 	if inst and type(inst) == "table" then
 		ret = PolarifySpeech(ret, inst)
 	end

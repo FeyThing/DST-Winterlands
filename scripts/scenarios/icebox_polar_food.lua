@@ -26,7 +26,7 @@ local function OnCreate(inst, scenariorunner)
 			initfn = RandomPerishPercent,
 		},
 		{
-			item = "heatstone",
+			item = "heatrock",
 			chance = 0.5,
 		},
 		{

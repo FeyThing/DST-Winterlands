@@ -257,7 +257,7 @@ AddRoom("PolarIsland_BurntDeciduousForest", {
 		distributepercent = 0.4,
 		distributeprefabs = {
 			antler_tree_burnt = 0.01,
-			deciduoustree = 1.25,
+			deciduoustree_polar = 1.25,
 			deciduoustree_polar = 0.25,
 			deciduoustree_stump = 0.05,
 			twiggytree = 0.05,
@@ -265,7 +265,7 @@ AddRoom("PolarIsland_BurntDeciduousForest", {
 		
 		prefabdata = {
 			catcoonden = function() return {burnt = math.random() < 0.8} end,
-			deciduoustree = function() return {burnt = true} end,
+			deciduoustree_polar = function() return {burnt = true} end,
 			snowwave_itemrespawner = {canspawnsnowitem = true},
 			twiggytree = function() return {burnt = math.random() < 0.8} end,
 		},

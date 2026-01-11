@@ -34,7 +34,7 @@ return Class(function(self, inst)
 	self.IGNORE_ICE_BREAKING_ONREMOVE_TAGS = deepcopy(IGNORE_ICE_TAGS)
 	self.IGNORE_ICE_FORMING_ONREMOVE_TAGS = deepcopy(IGNORE_ICE_TAGS)
 	self.ICE_FORMING_BLOCKER_TAGS = {"shadecanopy", "shadecanopysmall", "crabking", "boat", "oceantrawler"}
-	self.ICE_DESTROY_BLOCKER_TAGS = {"icecaveshelter", "polarcave_entrance"}
+	self.ICE_DESTROY_BLOCKER_TAGS = {"icecaveshelter", "polarcave_entrance", "protuberancespawnblocker"}
 	
 	local breaking_ignore_tags = {"ignorewalkableplatformdrowning"}
 	local forming_ignore_tags = {"underwater_salvageable", "walkableplatform"}

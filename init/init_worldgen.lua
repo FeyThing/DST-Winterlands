@@ -35,6 +35,9 @@ AddTaskSetPreInitAny(function(self)
 		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		self.set_pieces["PolarFox_Solo"] = {count = 3, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		
+		if winterlands_preset then
+			self.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands", "Polar Floe", "Polar Quarry"}}
+		end
 		if math.random() < 0.5 then
 			self.set_pieces["skeleton_beartrapped"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands"}}
 		else
@@ -160,6 +163,6 @@ end
 
 polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
 
-polar_taskset.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Floe", "Polar Quarry"}}
+--polar_taskset.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Floe", "Polar Quarry"}}
 
 AddTaskSet("polar", polar_taskset)

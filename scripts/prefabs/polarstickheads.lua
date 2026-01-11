@@ -89,6 +89,7 @@ local function OnHaunt(inst, haunter)
 end
 
 --	TODO: Add bunnyman head
+--	TODO: Add burnt strings and getstatus
 
 local function create_common(bankandbuild, combattags, combatnottags)
 	local inst = CreateEntity()
