@@ -50,7 +50,7 @@ local WALRUS_BEARTRAP_REMOVE = PolarAction("WALRUS_BEARTRAP_REMOVE", {priority =
 	
 	WALRUS_BEARTRAP_REMOVE.strfn = function(act)
 		local guid = act.target and act.target.GUID
-		return guid and guid ~= ThePlayer.GUID and "HELP_OTHER" or nil
+		return guid and guid ~= act.doer.GUID and "HELP_OTHER" or nil
 	end
 	
 local STICK_ARCTIC_FISH = PolarAction("STICK_ARCTIC_FISH", {priority = 4})

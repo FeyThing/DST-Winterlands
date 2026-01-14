@@ -115,7 +115,8 @@ local function fn()
 	inst:AddComponent("repairer")
 	inst.components.repairer.repairmaterial = MATERIALS.DRYICE
 	inst.components.repairer.healthrepairvalue = TUNING.REPAIR_CUTSTONE_HEALTH
-	inst.components.repairer.perishrepairpercent = 0.25
+	inst.components.repairer.perishrepairpercent = 1
+	inst.components.repairer.boatrepairsound = "dontstarve_DLC001/common/iceboulder_hit"
 	
 	inst:AddComponent("smotherer")
 	

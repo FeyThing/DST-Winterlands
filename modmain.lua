@@ -71,6 +71,7 @@ local prefabs = {
 	"frogs",
 	"grass",
 	--"heatrock",
+	"ice",
 	"klaus_sack",
 	"krampus",
 	"lavae",
@@ -173,6 +174,7 @@ local components = {
 }
 
 local stategraphs = {
+	"boat_ice",
 	"hound",
 	"krampus",
 	"lavae",

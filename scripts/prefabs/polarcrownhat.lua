@@ -150,8 +150,10 @@ local function fn()
 	inst.AnimState:SetBuild("hat_polarcrown")
 	inst.AnimState:PlayAnimation("anim")
 	
+	inst:AddTag("frozen")
 	inst:AddTag("hat")
-	inst:AddTag("polarsnowimmunity")
+	inst:AddTag("icebox_valid")
+	--inst:AddTag("polarsnowimmunity")
 	
 	inst:AddComponent("snowmandecor")
 	

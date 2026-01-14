@@ -11,7 +11,7 @@ local prefabs = {
 	"goldnugget",
 	"meat",
 	"walrus_bagpipe",
-	"walrus_trap",
+	"walrus_beartrap",
 	"walrus_tusk",
 }
 
@@ -21,7 +21,7 @@ SetSharedLootTable("girl_walrus", {
 	{"goldnugget", 		0.8},
 	{"meat", 			1},
 	{"walrus_bagpipe", 	1},
-	{"walrus_trap", 	0.5},
+	{"walrus_beartrap", 0.5},
 	{"walrus_tusk", 	0.5},
 })
 

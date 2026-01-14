@@ -406,7 +406,7 @@ local states = {
 		tags = {"idle", "canrotate"},
 		
 		onenter = function(inst)
-			inst.AnimState:PushAnimation("walk_pst")
+			inst.AnimState:PlayAnimation("walk_pst")
 			
 			inst.components.locomotor:StopMoving()
 		end,

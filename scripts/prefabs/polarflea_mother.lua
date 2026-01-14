@@ -20,15 +20,15 @@ SetSharedLootTable("polarflea_mother", {
 
 local spew_prefabs = {
 	polarflea = 0.9,
-	winter_ornament_boss_polarflea = IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 0.1 or 0,
+	winter_ornament_boss_polarflea = IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 0.06 or 0,
 }
 
 local function KeepTargetFn(inst, target)
-	return target and inst:IsNear(target, 30)
+	return target and inst:IsNear(target, 20)
 end
 
 local RETARGET_MUST_TAGS = {"_combat"}
-local RETARGET_CANT_TAGS = {"flea"}
+local RETARGET_CANT_TAGS = {"flea", "bearbuddy"}
 local RETARGET_ONEOF_TAGS = {"player", "monster", "plant"}
 
 local function Retarget(inst)
@@ -146,6 +146,7 @@ local function fn()
 	inst.components.sanityaura.aura = -TUNING.SANITYAURA_LARGE
 	
 	inst:AddComponent("sleeper")
+	inst.components.sleeper:SetResistance(2)
 	
 	inst:AddComponent("timer")
 	

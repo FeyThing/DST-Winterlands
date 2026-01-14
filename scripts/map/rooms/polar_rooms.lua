@@ -264,8 +264,8 @@ AddRoom("PolarIsland_BurntDeciduousForest", {
 		},
 		
 		prefabdata = {
-			catcoonden = function() return {burnt = math.random() < 0.8} end,
-			deciduoustree_polar = function() return {burnt = true} end,
+			catcoonden = function() return {burnt = math.random() < 0.5} end,
+			deciduoustree_polar = function() return {burnt = math.random() < 0.8} end,
 			snowwave_itemrespawner = {canspawnsnowitem = true},
 			twiggytree = function() return {burnt = math.random() < 0.8} end,
 		},

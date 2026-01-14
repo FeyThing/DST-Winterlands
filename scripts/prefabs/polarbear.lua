@@ -55,7 +55,8 @@ local function RetargetFn(inst)
 end
 
 local function KeepTargetFn(inst, target)
-	return not (target.sg and target.sg:HasStateTag("hiding")) and inst.components.combat:CanTarget(target)
+	return not (target.sg and target.sg:HasStateTag("hiding")) and inst.components.combat:CanTarget(target) and
+		not (target:HasTag("trial_participator") and target.trialdata.combat_trial)
 end
 
 local DECIDROOTTARGET_MUST_TAGS = {"_combat", "_health", "bear"}
@@ -607,6 +608,8 @@ local function OnTimerDone(inst, data)
 		inst:SetEnraged(false)
 	elseif data.name == "plowinthemorning" then
 		inst:StopPolarPlowing()
+	elseif data.name == "trial_participator_ending" and inst.components.minigame_participator then
+		inst:RemoveComponent("minigame_participator")
 	end
 end
 

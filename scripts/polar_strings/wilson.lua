@@ -161,7 +161,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.POLARICESTAFF = "I like all my staves but this one is frost among equals."
 	DESCRIBE.POLARMOOSEHAT = "Quite the articstic headpiece."
 	DESCRIBE.WALRUS_BAGPIPE = "Welcome to MacTusk N' Wilson hunting party."
-	DESCRIBE.WALRUS_BEARTRAP = "That's lucky I'm not a bear!"
+	DESCRIBE.WALRUS_BEARTRAP = "Good thing I'm not a bear!"
 	DESCRIBE.WINTERS_FISTS = "Packed ice for packing a punch."
 	
 	--	Others

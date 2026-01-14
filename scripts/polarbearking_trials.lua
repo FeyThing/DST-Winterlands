@@ -95,6 +95,9 @@ local function StartFistFightTrail(self)
 	
 	bear.trialdata = self.trialdata
 	bear:AddTag("trial_participator")
+	if bear.components.minigame_participator == nil then
+		bear:AddComponent("minigame_participator") -- Prevents other followers from bothering us
+	end
 	if bear.sg then
 		if bear.StopPolarPlowing then
 			bear:StopPolarPlowing()
@@ -263,6 +266,9 @@ local function StartDuoFightTrail(self)
 		
 		bear.trialdata = self.trialdata
 		bear:AddTag("trial_participator")
+		if bear.components.minigame_participator == nil then
+			bear:AddComponent("minigame_participator") -- Prevents other followers from bothering us
+		end
 		if bear.sg then
 			if bear.StopPolarPlowing then
 				bear:StopPolarPlowing()
@@ -483,6 +489,9 @@ local function SpawnRumbleWave(self)
 		
 		bear.trialdata = self.trialdata
 		bear:AddTag("trial_participator")
+		if bear.components.minigame_participator == nil then
+			bear:AddComponent("minigame_participator")
+		end
 		if bear.sg then
 			if bear.StopPolarPlowing then
 				bear:StopPolarPlowing()

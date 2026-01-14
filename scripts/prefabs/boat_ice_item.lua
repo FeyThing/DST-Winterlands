@@ -132,7 +132,7 @@ local function ocean_fn()
 	end
 	
 	if inst.components.stackable then
-		inst.components.stackable:SetStackSize(2, 4)
+		inst.components.stackable:SetStackSize(math.random(2, 4))
 	end
 	
 	return inst

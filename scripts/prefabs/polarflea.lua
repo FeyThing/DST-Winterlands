@@ -5,7 +5,7 @@ local assets = {
 local brain = require("brains/polarfleabrain")
 
 local function KeepTargetFn(inst, target)
-	return target and inst:IsNear(target, 30)
+	return target and inst:IsNear(target, 20)
 end
 
 local RETARGET_MUST_TAGS = {"_combat"}

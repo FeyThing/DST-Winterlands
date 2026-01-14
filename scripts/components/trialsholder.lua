@@ -188,7 +188,7 @@ function TrialsHolder:EndTrial(result, reason)
 	for participant, _ in pairs(self.trialdata.participants) do
 		participant:RemoveTag("trial_participator")
 		if participant.components.timer and not participant.components.timer:TimerExists("trial_participator_ending") then
-			participant.components.timer:StartTimer("trial_participator_ending", 2)
+			participant.components.timer:StartTimer("trial_participator_ending", 2) -- minigame_participator gets removed here
 		end
 	end
 	
