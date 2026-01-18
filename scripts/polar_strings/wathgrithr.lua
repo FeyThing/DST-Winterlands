@@ -155,7 +155,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "Full of mine tiny warriors, ready for battle!"
 	DESCRIBE.POLARICESTAFF = "Steer clear, or stay put."
 	DESCRIBE.POLARMOOSEHAT = "A horned helmet to fight off the cold."
-	DESCRIBE.WALRUS_BAGPIPE = "Though it stinks, it strengthens my allies."
+	DESCRIBE.WALRUS_BAGPIPE = "Though it stinks, it bestows me with new allies."
 	DESCRIBE.WALRUS_BEARTRAP = "A snare for a beast and the heedless."
 	DESCRIBE.WINTERS_FISTS = "Not my prefered weaponry, but it doth well on the battlefield."
 	

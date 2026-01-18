@@ -68,7 +68,8 @@ local function fn()
 	end
 	
 	inst:AddComponent("edible")
-	inst.components.edible.foodtype = FOODTYPE.GENERIC
+	inst.components.edible.foodtype = FOODTYPE.GOODIES
+	--inst.components.edible.secondaryfoodtype = FOODTYPE.MONSTER
 	inst.components.edible.healthvalue = TUNING.HEALING_LARGE
 	inst.components.edible.hungervalue = TUNING.CALORIES_MED
 	inst.components.edible.sanityvalue = -TUNING.SANITY_MED
@@ -90,6 +91,9 @@ local function fn()
 	
 	inst:AddComponent("upgrader")
 	inst.components.upgrader.upgradetype = UPGRADETYPES.POLARFLEA_SACK
+	
+	MakeSmallBurnable(inst, TUNING.LARGE_BURNTIME)
+	MakeSmallPropagator(inst)
 	
 	MakeHauntableLaunch(inst)
 	

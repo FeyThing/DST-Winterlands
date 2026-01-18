@@ -155,7 +155,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.POLARBEARHAT = "Woby won't stop growling about it..."
 	DESCRIBE.POLARICESTAFF = "I feel sorry for all the bugs around, just minding their own business."
 	DESCRIBE.POLARMOOSEHAT = "Moose fur, no doubt. Did you smell it?"
-	DESCRIBE.WALRUS_BAGPIPE = "Walruses'll follow this thing anywhere."
+	DESCRIBE.WALRUS_BAGPIPE = "Walruses would follow this thing anywhere."
 	DESCRIBE.WALRUS_BEARTRAP = "Best pick this up before someone gets hurt!"
 	DESCRIBE.WINTERS_FISTS = "I aim better with my slingshot than... my own two hands."
 	

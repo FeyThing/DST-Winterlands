@@ -50,31 +50,31 @@ POLARAMULET_STATION_MOONPHASE_TRADEDATA = {
 	quarter = {
 		{product = "twigs", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 6, max = 12}},
 		{product = "rocks", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 4, max = 8}},
-		{product = "berries", 			ingredients = {Ingredient("boneshard", 1)}, 	limits = {min = 2, max = 4}},
+		{product = "berries", 			ingredients = {Ingredient("boneshard", 1)}, 	limits = {min = 3, max = 6}},
 	},
 	half = {
 		{product = "cutreeds", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 6, max = 12}},
-		{product = "flint", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 2, max = 4}},
-		{product = "monstermeat", 		ingredients = {Ingredient("boneshard", 1)}, 	limits = {min = 1, max = 2}},
+		{product = "flint", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 4, max = 8}},
+		{product = "monstermeat", 		ingredients = {Ingredient("boneshard", 1)}, 	limits = {min = 3, max = 6}},
 	},
 	threequarter = {
 		{product = "log", 				ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 6, max = 12}},
 		{product = "goldnugget", 		ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 1, max = 2}},
-		{product = "red_cap", 			ingredients = {Ingredient("boneshard", 1)}, 	limits = {min = 2, max = 4}}, -- TODO: Change to white shrooms later ?
+		{product = "red_cap", 			ingredients = {Ingredient("boneshard", 1)}, 	limits = {min = 3, max = 6}}, -- TODO: Change to white shrooms later ?
 	},
 	full = {
 		{product = "cutgrass", 			ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 9, max = 18}},
 		{product = "bluegem_shards", 	ingredients = {Ingredient("houndstooth", 1)}, 	limits = {min = 3, max = 6}},
-		{product = "glommerfuel", 		ingredients = {Ingredient("spoiled_food", 1), Ingredient("spoiled_fish", 1), Ingredient("rottenegg", 1)}, limits = {min = 1, max = 1}, description = "polar_trade_glommerfuel"},
+		{product = "glommerfuel", 		ingredients = {Ingredient("spoiled_food", 1), Ingredient("spoiled_fish", 1), Ingredient("rottenegg", 1)}, limits = {min = 3, max = 3}, description = "polar_trade_glommerfuel"},
 	},
 }
 
 POLARWALRUS_TRADEDATA = { -- Note: Default chance for each trade is 50%, respect same min/max stock on the same product !
 	walrus = {
 		{product = "blowdart_pipe",	 	ingredients = {Ingredient("smallmeat", 2)}, 		limits = {min = 3, max = 4}, chance = 1},
-		{product = "blowdart_sleep",	ingredients = {Ingredient("smallmeat", 1)}, 		limits = {min = 3, max = 6}, numtogive = 2, chance = 1},
+		{product = "blowdart_sleep",	ingredients = {Ingredient("smallmeat", 1)}, 		limits = {min = 4, max = 6}, numtogive = 2, chance = 1},
 		{product = "flint", 			ingredients = {Ingredient("fishmeat_small", 2)}, 	limits = {min = 1, max = 8}},
-		{product = "goldnugget", 		ingredients = {Ingredient("fishmeat", 2)}, 			limits = {min = 5, max = 12}, chance = 1},
+		{product = "goldnugget", 		ingredients = {Ingredient("fishmeat", 2)}, 			limits = {min = 5, max = 12}},
 		{product = "goldnugget", 		ingredients = {Ingredient("trunk_summer", 1)}, 		limits = {min = 5, max = 12}, numtogive = 4, chance = 1},
 		{product = "goldnugget", 		ingredients = {Ingredient("trunk_winter", 1)}, 		limits = {min = 5, max = 12}, numtogive = 5, chance = 1},
 		{product = "nonslipgrit",		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 3}},

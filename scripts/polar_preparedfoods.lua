@@ -21,7 +21,7 @@ local polar_preparedfoods = {
 	},
 	
 	filet_o_flea = {
-		test = function(cooker, names, tags) return tags.monster and tags.monster >= 1 and names.polarflea end,
+		test = function(cooker, names, tags) return tags.monster and tags.monster >= 2 and names.polarflea end,
 		hunger = TUNING.CALORIES_SMALL * 4,
 		health = -TUNING.HEALING_MED,
 		sanity = -TUNING.SANITY_MEDLARGE,
@@ -94,7 +94,7 @@ local polar_preparedfoods = {
 	-- Alt recipes, postinit/components/stewer is where its at
 	
 	jellybean_fleaeggs = {
-		test = function(cooker, names, tags) return names.polarfleaeggsack and not tags.inedible and not tags.monster end,
+		test = function(cooker, names, tags) return names.polarfleaeggsack and not names.royal_jelly and not tags.inedible and not tags.monster end,
 		name = "jellybean_fleaeggs",
 		hunger = 0,
 		health = TUNING.JELLYBEAN_TICK_VALUE,

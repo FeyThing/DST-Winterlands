@@ -148,7 +148,9 @@ local function OnStopDay(inst)
 end
 
 local function OnNewTarget(inst, data)
-	if data and data.target and inst.components.timer and not inst.components.timer:TimerExists("walrusboosting_prep") then
+	if data and data.target and data.target:HasAnyTag("character", "hostile", "monster") and inst.components.timer and
+		not inst.components.timer:TimerExists("walrusboosting_prep") then
+		
 		inst.components.timer:StartTimer("walrusboosting_prep", TUNING.POLAR_WALRUSBOOST_PREPTIME + math.random())
 	end
 end

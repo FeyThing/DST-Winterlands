@@ -155,7 +155,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.POLARFLEA_SACK = "If you mess with me, you mess with my back bugs."
 	DESCRIBE.POLARICESTAFF = "You gotta freeze to please."
 	DESCRIBE.POLARMOOSEHAT = "Hey, Woodie. Do you still have all of your backside?"
-	DESCRIBE.WALRUS_BAGPIPE = "Walruses'll follow this thing anywhere."
+	DESCRIBE.WALRUS_BAGPIPE = "My ears are still ringing from this thing."
 	DESCRIBE.WALRUS_BEARTRAP = "That'll clamp ya good."
 	DESCRIBE.WINTERS_FISTS = "A tool to make snowballs... that hit like cinder blocks."
 	

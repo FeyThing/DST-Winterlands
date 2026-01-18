@@ -368,7 +368,7 @@ local CraftingMenuIngredients = require("widgets/redux/craftingmenu_ingredients"
 			end
 		end
 		
-		OldSetRecipe(self, recipe, ...)
+		return OldSetRecipe(self, recipe, ...)
 	end
 	
 local RecipePopup = require("widgets/recipepopup")
@@ -389,7 +389,7 @@ local RecipePopup = require("widgets/recipepopup")
 			end
 		end
 		
-		OldSetRecipe_RecipePopUp(self, recipe, ...)
+		return OldSetRecipe_RecipePopUp(self, recipe, ...)
 	end
 	
 --	WX-78 Circuits

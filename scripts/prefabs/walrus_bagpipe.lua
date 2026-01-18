@@ -30,7 +30,7 @@ local function bagpipe_update(inst)
 	end
 	
 	for i, v in ipairs(AllPlayers) do
-		if not v:HasTag("playerghost") and v:GetDistanceSqToPoint(x, y, z) < TUNING.ONEMANBAND_RANGE * TUNING.ONEMANBAND_RANGE and
+		if not v:HasTag("playerghost") and v:GetDistanceSqToPoint(x, y, z) < 30 * 30 and
 			not (v.components.timer and v.components.timer:TimerExists("walrusally_oncooldown")) then
 			
 			v:AddDebuff("buff_walrusally", "buff_walrusally")
