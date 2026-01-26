@@ -20,9 +20,6 @@ require("map/polar_terrain")
 
 --	Setpieces
 
-local Layouts = require("map/layouts").Layouts
-local StaticLayout = require("map/static_layout")
-
 local polar_layouts = {
 	["BearTown1"] = {},
 	["BearTown2"] = {},
@@ -51,6 +48,7 @@ local polar_layouts = {
 			fishingrecipe = {"oceanfishingbobber_ball_tacklesketch", "oceanfishingbobber_robin_winter_tacklesketch", "oceanfishinglure_hermit_snow_tacklesketch"},
 		},
 	},
+	["Polar_Bushes"] = 			{},
 	["PolarFox_Duo"] = 			{},
 	["PolarFox_Solo"] = 		{},
 	["PolarFlea_Farm"] = 		{},
@@ -81,33 +79,45 @@ local polar_layouts = {
 			welcomitem = IsSpecialEventActive(SPECIAL_EVENTS.HALLOWED_NIGHTS) and {"pumpkin_lantern"} or {"marsh_bush"},
 		},
 	},
-}
-
-for k, v in pairs(polar_layouts) do
-	Layouts[k] = StaticLayout.Get("map/static_layouts/"..(v.name or string.lower(k)), {
-		layout_position = v.layout_position,
-		defs = v.defs,
-	})
-	Layouts[k].ground_types = POLAR_GROUND_TYPES
-end
-
---	Retrofit
-
-local retrofit_islands = {"retrofit_polarisland"}
-
-for i, layout in ipairs(retrofit_islands) do
-	Layouts[layout] = StaticLayout.Get("map/static_layouts/"..layout, {
+	
+	["retrofit_polarisland"] = {
 		start_mask = PLACE_MASK.IGNORE_IMPASSABLE,
 		fill_mask = PLACE_MASK.IGNORE_IMPASSABLE,
-		add_topology = {room_id = "StaticLayoutIsland:Polar Lands", tags = {"RoadPoison", "polararea", "not_mainland"}},
+		add_topology = {
+			room_id = "StaticLayoutIsland:Polar Lands",
+			tags = {"RoadPoison", "polararea", "not_mainland"},
+		},
 		min_dist_from_land = 0,
-	})
-	Layouts[layout].ground_types = POLAR_GROUND_TYPES
+	},
+}
+
+require("map/network")
+
+local OldGlobalPrePopulate = Graph.GlobalPrePopulate
+function Graph:GlobalPrePopulate(...)
+	-- NOTE: Static layouts must be registered *after* prefab swaps are selected !
+	-- Registering them earlier causes prefab proxies (berrybush, grass, etc) to resolve before world settings are known, breaking swap variants in setpieces only.
+	local Layouts = require("map/layouts").Layouts
+	local StaticLayout = require("map/static_layout")
 	
-	if WORLD_TILES.OCEAN_SHALLOW then -- SW requires different water tiles in retrofit
-		Layouts[layout.."_sw"] = Layouts[layout]
-		Layouts[layout.."_sw"].ground_types = POLAR_GROUND_TYPES_SW
+	for k, v in pairs(polar_layouts) do
+		local layout_name = v.name or string.lower(k)
+		
+		local layout = StaticLayout.Get("map/static_layouts/"..layout_name, {
+			layout_position = v.layout_position,
+			defs = v.defs,
+			
+			start_mask = v.start_mask,
+			fill_mask = v.fill_mask,
+			add_topology = v.add_topology,
+			min_dist_from_land = v.min_dist_from_land,
+		})
+		
+		layout.ground_types = POLAR_GROUND_TYPES
+		Layouts[k] = layout
 	end
+	
+	return OldGlobalPrePopulate(self, ...)
 end
 
 --	Tags, Keys
@@ -196,7 +206,7 @@ end)
 
 WINTERLANDS_TYPE = ENV.GetModConfigData("biome_type") or "island"
 
-function Polar_CompatibleShard(location)
+function Polar_CompatibleShard(location, retrofit)
 	location = location or "forest"
 	
 	if location == TUNING.POLAR_SHARD then

@@ -88,6 +88,10 @@ local function RetargetFn(inst)
 	return #targets > 0 and targets[math.random(#targets)] or nil
 end
 
+local function CustomCombatDamage(inst, target, weapon, multiplier, mount)
+	return (weapon and target and not target:HasTag("player")) and 2 or 1
+end
+
 --
 
 local function ShouldSleep(inst)
@@ -210,6 +214,8 @@ local function fn()
 	inst:AddComponent("combat")
 	inst.components.combat.hiteffectsymbol = "body"
 	inst.components.combat.hurtsound = "polarsounds/emperor_guard/hit_metal"
+	inst.components.combat.playerdamagepercent = TUNING.PENGUIN_GUARD_DAMAGE_PLAYER_PERCENT
+	inst.components.combat.customdamagemultfn = CustomCombatDamage -- ^ Complement to this, but in case we have a weapon (which we do, normally)
 	inst.components.combat:SetRetargetFunction(1, RetargetFn)
 	inst.components.combat:SetDefaultDamage(TUNING.PENGUIN_GUARD_DAMAGE)
 	inst.components.combat:SetAttackPeriod(TUNING.PENGUIN_GUARD_ATTACK_PERIOD)
@@ -261,7 +267,7 @@ local function fn()
 		if not inst:IsAsleep() then
 			OnDefeated(inst, data)
 		end
-    end
+	end
 	
 	inst:ListenForEvent("equip", OnEquip)
 	inst:ListenForEvent("unequip", OnUnequip)

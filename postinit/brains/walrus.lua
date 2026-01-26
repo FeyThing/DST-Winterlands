@@ -19,11 +19,17 @@ local WalrusBrain = require("brains/walrusbrain")
 	
 	local OldGetNoLeaderFollowTarget = PolarUpvalue(WalrusBrain.OnStart, "GetNoLeaderFollowTarget")
 	local function GetNoLeaderFollowTarget(inst, ...)
-		local ally = FindEntity(inst, 10, nil, PLAYER_ALLY_TAGS, PLAYER_ALLY_NOT_TAGS)
+		local target = OldGetNoLeaderFollowTarget and OldGetNoLeaderFollowTarget(inst, ...) or nil
 		
-		if ally == nil and OldGetNoLeaderFollowTarget then
-			return OldGetNoLeaderFollowTarget(inst, ...)
+		if target then
+			local ally = FindEntity(inst, 10, nil, PLAYER_ALLY_TAGS, PLAYER_ALLY_NOT_TAGS)
+			
+			if ally ~= nil or target:HasTag("spawnprotection") or (target.components.age and target.components.age:GetAge() < 10) then
+				return -- Don't follow if player has spawned recently or uses bagpipes
+			end
 		end
+		
+		return target
 	end
 	
 	PolarUpvalue(WalrusBrain.OnStart, "ShouldRunAway", ShouldRunAway)

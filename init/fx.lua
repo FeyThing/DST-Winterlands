@@ -18,6 +18,18 @@ local function GroundOrientation(inst)
 	inst.AnimState:SetLayer(LAYER_BACKGROUND)
 end
 
+local function UrsaMajorBuffFn(inst, scale)
+	if inst.components.colourtweener == nil then
+		inst:AddComponent("colourtweener")
+	end
+	
+	inst.AnimState:SetMultColour(1, 0, 0, 0)
+	inst.components.colourtweener:StartTween({1, 1, 1, 0.3 + math.random() * 0.6}, FRAMES * math.random(6, 11))
+	
+	inst.entity:AddSoundEmitter()
+	inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/bearger/swhoosh", nil, 0.6 + math.random() * 0.2)
+end
+
 local function PolarSplashFn(inst, scale)
 	inst.AnimState:SetScale(0.4 * scale, 0.6 * scale)
 	inst.AnimState:SetMultColour(1, 1, 1, 0.5)
@@ -25,6 +37,22 @@ local function PolarSplashFn(inst, scale)
 end
 
 local POLAR_FX = {
+	{
+		name = "buff_ursamajor_atk_fx",
+		bank = "buff_ursamajor_fx",
+		build = "buff_ursamajor_fx",
+		anim = "atk",
+		fourfaced = true,
+		fn = UrsaMajorBuffFn,
+	},
+	{
+		name = "buff_ursamajor_chop_fx",
+		bank = "buff_ursamajor_fx",
+		build = "buff_ursamajor_fx",
+		anim = "chop",
+		fourfaced = true,
+		fn = UrsaMajorBuffFn,
+	},
 	{
 		name = "polar_splash",
 		bank = "splash",

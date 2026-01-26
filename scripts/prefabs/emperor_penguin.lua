@@ -503,6 +503,7 @@ local function fn()
 	inst:AddComponent("combat")
 	inst.components.combat.battlecryenabled = false
 	inst.components.combat.hiteffectsymbol = "body"
+	inst.components.combat.playerdamagepercent = TUNING.EMPEROR_PENGUIN_DAMAGE_PLAYER_PERCENT
 	inst.components.combat:SetKeepTargetFunction(KeepTarget)
 	inst.components.combat:SetRetargetFunction(1, RetargetFn)
 	inst.components.combat:SetDefaultDamage(TUNING.EMPEROR_PENGUIN_DAMAGE)

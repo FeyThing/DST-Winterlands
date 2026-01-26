@@ -57,12 +57,18 @@ local ALLY_NOT_TAGS = {"isdead"}
 local PLAYER_ALLY_TAGS = {"walruspal"}
 local PLAYER_ALLY_NOT_TAGS = {"INLIMBO", "isdead"}
 
-local function GetNoLeaderFollowTarget(inst)
-	local ally = FindEntity(inst, 10, nil, PLAYER_ALLY_TAGS, PLAYER_ALLY_NOT_TAGS)
+local function GetNoLeaderFollowTarget(inst, ...)
+	local target = GetLeader(inst) == nil and FindClosestPlayerToInst(inst, MAX_PLAYER_STALK_DISTANCE, true) or nil
 	
-	if ally == nil then
-		return GetLeader(inst) == nil and FindClosestPlayerToInst(inst, MAX_PLAYER_STALK_DISTANCE, true) or nil
+	if target then
+		local ally = FindEntity(inst, 10, nil, PLAYER_ALLY_TAGS, PLAYER_ALLY_NOT_TAGS)
+		
+		if ally ~= nil or target:HasTag("spawnprotection") or (target.components.age and target.components.age:GetAge() < 10) then
+			return -- Don't follow if player has spawned recently or uses bagpipes
+		end
 	end
+	
+	return target
 end
 
 local function GetAllies(inst)

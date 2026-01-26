@@ -47,11 +47,11 @@ function PolarWalker:ShouldSlow()
 		return false, "MELTED"
 	end
 	
-	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
+	if self.inst.components.rider and self.inst.components.rider:IsRiding() and not self.ignore_riding then
 		return false, "RIDING"
 	end
 	
-	if self.inst:HasTag("flying") or HasPolarSnowImmunity(self.inst) then
+	if (self.inst:HasTag("flying") and not self.ignore_flying) or HasPolarSnowImmunity(self.inst) then
 		return false, "IMMUNE"
 	end
 	
@@ -65,11 +65,11 @@ function PolarWalker:ShouldDebuff()
 		return false, "MELTED"
 	end
 	
-	if self.inst.components.rider and self.inst.components.rider:IsRiding() then
+	if self.inst.components.rider and self.inst.components.rider:IsRiding() and not self.ignore_riding then
 		return false, "RIDING"
 	end
 	
-	if self.inst:HasTag("flying") or self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst) then
+	if (self.inst:HasTag("flying") and not self.ignore_flying) or self.inst.components.moisture == nil or HasPolarDebuffImmunity(self.inst) then
 		return false, "IMMUNE"
 	end
 	

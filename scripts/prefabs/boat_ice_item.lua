@@ -81,6 +81,8 @@ local function fn()
 	
 	inst:AddTag("boatbuilder")
 	inst:AddTag("deploykititem")
+	inst:AddTag("frozen")
+	inst:AddTag("icebox_valid")
 	inst:AddTag("usedeployspacingasoffset")
 	inst:AddTag("show_spoilage")
 	

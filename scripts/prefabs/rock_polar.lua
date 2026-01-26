@@ -43,11 +43,12 @@ local function UpdateVariation(inst, num)
 	inst.AnimState:OverrideSymbol("rock0", "rock_polar", "rock"..(inst.variation - 1))
 end
 
-local function SetAsCave(inst) -- TEMP, but we have the whole update to do first lol
-	inst:AddComponent("named")
-	inst.components.named:SetName(STRINGS.NAMES.CAVE_ENTRANCE_POLAR)
+local function SetAsCave(inst)
 	if inst.components.inspectable then
 		inst.components.inspectable:SetNameOverride("cave_entrance_polar")
+	end
+	if inst.components.named then
+		inst.components.named:SetName(STRINGS.NAMES.CAVE_ENTRANCE_POLAR)
 	end
 	
 	inst.AnimState:SetBank("cave_entrance")
@@ -121,7 +122,8 @@ end
 
 local function OnLoad(inst, data)
 	if data then
-		if data.iscave_temp then -- NOTE: Temporary saved data, restore protuberance later if this is here, for when we add 'the effect' (wink wink)
+		 -- NOTE: Temporary saved data, when update is completed, use this to restore protuberance fully, as we'll add 'the effect' upon mining (wink wink)
+		if data.iscave_temp then
 			inst:MakeCaveEntrance()
 		elseif data.variation then
 			UpdateVariation(inst, data.variation)
@@ -165,6 +167,8 @@ local function fn()
 	
 	inst:AddComponent("lootdropper")
 	inst.components.lootdropper:SetChanceLootTable("rock_polar")
+	
+	inst:AddComponent("named")
 	
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkLeft(TUNING.POLAR_ROCK_MINE_TALL)

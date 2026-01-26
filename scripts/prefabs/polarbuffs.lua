@@ -237,7 +237,28 @@ end
 
 --	[[			Ursa Major Buff			]]	--
 
-local function UrsaMajor_OnAttached(inst, target) -- TODO: We should add some nice visuals to actions performed while this is active
+local function ursamajor_onnewstate(target, data)
+	if not (target and target.sg) then
+		return
+	end
+	
+	local isattacking = target.sg:HasStateTag("abouttoattack")
+	local ischopping = target.sg:HasStateTag("chopping")
+	local ismining = target.sg:HasStateTag("mining")
+	local ishammering = target.sg:HasStateTag("hammering")
+	
+	if isattacking or ischopping or ismining or ishammering then
+		local x, y, z = target.Transform:GetWorldPosition()
+		local fx = SpawnPrefab(ischopping and "buff_ursamajor_chop_fx" or "buff_ursamajor_atk_fx")
+		
+		fx.Transform:SetPosition(x, y, z)
+		fx.Transform:SetRotation(target.Transform:GetRotation())
+	elseif target.sg.currentstate.name == "hit" and target.SoundEmitter then
+		target.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/bearger/hurt", nil, 0.2 + math.random() * 0.2)
+	end
+end
+
+local function UrsaMajor_OnAttached(inst, target)
 	if target.components.combat then
 		target.components.combat.externaldamagemultipliers:SetModifier(inst, TUNING.BUFF_ATTACK_MULTIPLIER)
 	end
@@ -252,6 +273,8 @@ local function UrsaMajor_OnAttached(inst, target) -- TODO: We should add some ni
 	target.components.workmultiplier:AddMultiplier(ACTIONS.CHOP, TUNING.BUFF_WORKEFFECTIVENESS_MODIFIER, inst)
 	target.components.workmultiplier:AddMultiplier(ACTIONS.MINE, TUNING.BUFF_WORKEFFECTIVENESS_MODIFIER, inst)
 	target.components.workmultiplier:AddMultiplier(ACTIONS.HAMMER, TUNING.BUFF_WORKEFFECTIVENESS_MODIFIER, inst)
+	
+	inst:ListenForEvent("newstate", ursamajor_onnewstate, target)
 end
 
 local function UrsaMajor_OnDetached(inst, target)
@@ -268,6 +291,8 @@ local function UrsaMajor_OnDetached(inst, target)
 		target.components.workmultiplier:RemoveMultiplier(ACTIONS.MINE, inst)
 		target.components.workmultiplier:RemoveMultiplier(ACTIONS.HAMMER, inst)
 	end
+	
+	inst:RemoveEventCallback("newstate", ursamajor_onnewstate, target)
 end
 
 --	[[	Timefreeze Watch Invincibility	]]	--

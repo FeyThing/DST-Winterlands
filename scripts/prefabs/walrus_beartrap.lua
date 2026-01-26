@@ -90,7 +90,9 @@ local function OnReset(inst)
 	inst:RemoveTag("mine_not_reusable")
 	inst:RemoveTag("NOCLICK")
 	
-	inst.components.mine:SetAlignment("nobody")
+	if inst.components.mine then
+		inst.components.mine:SetAlignment("nobody")
+	end
 	if inst.components.inventoryitem then
 		inst.components.inventoryitem.canbepickedup = false
 	end
@@ -314,14 +316,16 @@ local function OnDeploy(inst, pt, deployer)
 end
 
 local function OnHaunt(inst, haunter)
-	if not inst.components.mine.issprung and math.random() <= TUNING.HAUNT_CHANCE_OFTEN then
+	if inst.components.mine and not inst.components.mine.issprung and math.random() <= TUNING.HAUNT_CHANCE_OFTEN then
 		inst.components.hauntable.hauntvalue = TUNING.HAUNT_MEDIUM
 		inst.components.mine:Explode(nil)
 		
 		return true
 	elseif math.random() <= TUNING.HAUNT_CHANCE_OFTEN then
 		inst.components.hauntable.hauntvalue = TUNING.HAUNT_SMALL
-		inst.components.mine:Reset()
+		if inst.components.mine then
+			inst.components.mine:Reset()
+		end
 		
 		return true
 	end
@@ -330,12 +334,12 @@ local function OnHaunt(inst, haunter)
 end
 
 local function OnSave(inst, data)
-	data.walrus_owned = inst.components.mine and inst.components.mine.alignment == "walrus"
+	data.walrus_owned = inst.components.mine and inst.components.mine.alignment == "walrus" or nil
 end
 
 local function OnLoad(inst, data)
 	if data then
-		if data.walrus_owned then
+		if data.walrus_owned and inst.components.mine then
 			inst.components.mine:SetAlignment("walrus")
 		end
 	end

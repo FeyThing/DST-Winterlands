@@ -53,11 +53,11 @@ local SpawnMember
 local OldSpawnHuntingParty
 local function SpawnHuntingParty(inst, target, houndsonly, ...)
 	if OldSpawnHuntingParty then
-		local leader = GetMember(inst, "walrus")
-		
 		OldSpawnHuntingParty(inst, target, houndsonly, ...)
-		if leader then
-			return -- Support has only once chance to spawn, party must be cleared before retries...
+		
+		local leader = GetMember(inst, "walrus")
+		if not leader then
+			return -- MaTusk has a chance to go out daily, but only if MacTusk is available to go out
 		end
 		
 		local support = GetMember(inst, "girl_walrus")

@@ -667,6 +667,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	STRINGS.UI.ARCTIC_FOOL_FISH_BUTTON = "\"Hit me!\""
 	
+	--table.insert(STRINGS.UI.WORLDGEN.NOUNS, "fuel for Wysp...")
 	table.insert(STRINGS.UI.WORLDGEN.NOUNS, "icicles...")
 	table.insert(STRINGS.UI.WORLDGEN.NOUNS, "way too many snowfleas...")
 	table.insert(STRINGS.UI.WORLDGEN.VERBS, "Freezing")

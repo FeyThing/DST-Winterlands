@@ -75,10 +75,14 @@ AddRoom("PolarIsland_Lakes", {
 	internal_type = NODE_INTERNAL_CONNECTION_TYPE.EdgeCentroid,
 	tags = {"PolarThrone"},
 	contents = {
+		countstaticlayouts = {
+			["Polar_Bushes"] = function() return math.random() <= 0.01 and 1 or 0 end,
+		},
+		
 		countprefabs = {
-			leif_sparse = function() return math.random() < 0.02 and math.random(4) or 0 end,
-			skeleton_notplayer_1 = function() return math.random() < 0.01 and 1 or 0 end,
-			skeleton_notplayer_2 = function() return math.random() < 0.01 and 1 or 0 end,
+			leif_sparse = function() return math.random() <= 0.02 and math.random(4) or 0 end,
+			skeleton_notplayer_1 = function() return math.random() <= 0.01 and 1 or 0 end,
+			skeleton_notplayer_2 = function() return math.random() <= 0.01 and 1 or 0 end,
 			snowwave_itemrespawner = function() return math.random(8, 12) end,
 			rock1 = function() return math.random(0, 1) end,
 			rocks = 4,
@@ -107,10 +111,14 @@ AddRoom("PolarIsland_DeciduousLakes", {
 	internal_type = NODE_INTERNAL_CONNECTION_TYPE.EdgeCentroid,
 	tags = {"PolarThrone"},
 	contents = {
+		countstaticlayouts = {
+			["Polar_Bushes"] = function() return math.random() <= 0.01 and 1 or 0 end,
+		},
+		
 		countprefabs = {
 			catcoonden = function() return math.random(0, 1) end,
-			skeleton_notplayer_1 = function() return math.random() < 0.01 and 1 or 0 end,
-			skeleton_notplayer_2 = function() return math.random() < 0.01 and 1 or 0 end,
+			skeleton_notplayer_1 = function() return math.random() <= 0.01 and 1 or 0 end,
+			skeleton_notplayer_2 = function() return math.random() <= 0.01 and 1 or 0 end,
 			snowwave_itemrespawner = function() return math.random(8, 12) end,
 			rock1 = function() return math.random(0, 1) end,
 			rocks = 4,

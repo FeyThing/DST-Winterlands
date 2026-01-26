@@ -1,32 +1,31 @@
+local ENV = env
+GLOBAL.setfenv(1, GLOBAL)
+
 local Levels = require("map/levels")
 local StartLocations = require("map/startlocations")
 local TaskSets = require("map/tasksets")
 
-local deepcopy = GLOBAL.deepcopy
-local STRINGS = GLOBAL.STRINGS
-require("polar_strings/strings")
-
 local polar_tasks = {"Polar Village", math.random() <= 0.66 and "Polar Lands" or "Polar Deciduous Lands", "Polar Caves"}
-local polar_start_required_tasks = {"Polar Floe", "Polar Quarry"}
+local polar_start_required_tasks = {"Polar Floe", "Polar Quarry"} -- "Polar Gnomes" & "Polar Icerink" tasks are still optional on custom start
 
 --	Add Island, Setpieces, ...
 
 require("map/tasks/polar")
 
-AddTaskSetPreInitAny(function(self)
-	if GLOBAL.WINTERLANDS_TYPE == "skip" then
+ENV.AddTaskSetPreInitAny(function(self)
+	if WINTERLANDS_TYPE == "skip" then
 		return
 	end
 	
-	local winterlands_preset = self.name == STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
+	local is_winterlands_preset = self.name == STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
 	
-	if GLOBAL.Polar_CompatibleShard(self.location) then
+	if Polar_CompatibleShard(self.location) then
 		for i, task in ipairs(polar_tasks) do
 			table.insert(self.tasks, task)
 		end
 		
 		for task, chance in pairs(TUNING.POLAR_TASKS_OPTIONALITY) do
-			if (winterlands_preset and table.contains(polar_start_required_tasks, task)) or math.random() < chance then
+			if (is_winterlands_preset and table.contains(polar_start_required_tasks, task)) or math.random() < chance then
 				table.insert(self.tasks, task)
 			end
 		end
@@ -35,15 +34,13 @@ AddTaskSetPreInitAny(function(self)
 		self.set_pieces["PolarFox_Duo"] = {count = 1, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		self.set_pieces["PolarFox_Solo"] = {count = 3, tasks = {"Polar Lands", "Polar Village", "Polar Quarry"}}
 		
-		if winterlands_preset then
-			self.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands", "Polar Floe", "Polar Quarry"}}
+		if math.random() < 0.33 then
+			self.set_pieces["skeleton_beartrapped"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands"}}
 		end
 		if math.random() < 0.5 then
-			self.set_pieces["skeleton_beartrapped"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands"}}
-		else
 			self.set_pieces["skeleton_icicle"] = {count = 1, tasks = {"Polar Caves"}}
 		end
-		if math.random() < 0.33 then
+		if math.random() < 0.25 then
 			self.set_pieces["arrowsigns_polarvillages"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands", "Polar Village"}}
 		end
 		
@@ -57,8 +54,8 @@ AddTaskSetPreInitAny(function(self)
 	end
 end)
 
-AddRoomPreInit("OceanRough", function(self)
-	if GLOBAL.Polar_CompatibleShard("forest") then
+ENV.AddRoomPreInit("OceanRough", function(self)
+	if WINTERLANDS_TYPE ~= "skip" and Polar_CompatibleShard("forest") then
 		if self.contents.countstaticlayouts == nil then
 			self.contents.countstaticlayouts = {}
 		end
@@ -67,8 +64,8 @@ AddRoomPreInit("OceanRough", function(self)
 	end
 end)
 
-AddRoomPreInit("OceanCoastal", function(self)
-	if GLOBAL.Polar_CompatibleShard("forest") then
+ENV.AddRoomPreInit("OceanCoastal", function(self)
+	if WINTERLANDS_TYPE ~= "skip" and Polar_CompatibleShard("forest") then
 		if self.contents.countprefabs == nil then
 			self.contents.countprefabs = {}
 		end
@@ -79,13 +76,13 @@ end)
 
 --	World Settings
 
---AddCustomizeGroup(LEVELCATEGORY.SETTINGS, "polar", STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR, nil, nil, 4.1)
---AddCustomizeGroup(LEVELCATEGORY.WORLDGEN, "polar", STRINGS.UI.SANDBOXMENU.WORLDGENERATION_POLAR, nil, nil, 3.1)
+--ENV.AddCustomizeGroup(LEVELCATEGORY.SETTINGS, "polar", STRINGS.UI.SANDBOXMENU.WORLDSETTINGS_POLAR, nil, nil, 4.1)
+--ENV.AddCustomizeGroup(LEVELCATEGORY.WORLDGEN, "polar", STRINGS.UI.SANDBOXMENU.WORLDGENERATION_POLAR, nil, nil, 3.1)
 
 for k, v in pairs(require("map/polar_customizations")) do
-	AddCustomizeItem(v.category, v.group, v.name, {
+	ENV.AddCustomizeItem(v.category, v.group, v.name, {
 		value = v.value,
-		desc = type(v.desc) == "string" and GetCustomizeDescription(v.desc) or v.desc,
+		desc = type(v.desc) == "string" and ENV.GetCustomizeDescription(v.desc) or v.desc,
 		world = v.world or {"forest", "cave", "shipwrecked", "volcanoworld", "porkland"},
 		image = v.image,
 		atlas = "images/worldgen_polar.xml",
@@ -108,9 +105,28 @@ local polar_start = deepcopy(StartLocations.GetStartLocation("default")) or {}
 
 polar_start.name = STRINGS.UI.SANDBOXMENU.POLARSTART
 
-AddStartLocation("polar", polar_start)
+ENV.AddStartLocation("polar", polar_start)
 
---
+--	Taskset
+
+--	TODO(?): custom task_set configs seems bugged big time on successive world-regens ! It return to the "Together" one if we left and rejoin the world (plus never shows in world setting pannel)...
+--	this causes incomplete Winterlands start the next times. Why does that happen ? And what do we do about that ? I've no idea :(
+
+local polar_taskset = deepcopy(TaskSets.GetGenTasks("default")) or {}
+
+if polar_taskset.required_prefabs == nil then
+	polar_taskset.required_prefabs = {}
+end
+
+if polar_taskset.set_pieces == nil then
+	polar_taskset.set_pieces = {}
+end
+
+polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
+
+ENV.AddTaskSet("polar", polar_taskset)
+
+--	Level
 
 local polar_level = deepcopy(Levels.GetDataForLevelID("SURVIVAL_TOGETHER")) or {}
 
@@ -127,16 +143,17 @@ polar_level.overrides.season_start = "winter"
 polar_level.overrides.start_location = "polar"
 polar_level.overrides.task_set = "polar"
 
-AddLevel(LEVELTYPE.SURVIVAL, polar_level)
+ENV.AddLevel(LEVELTYPE.SURVIVAL, polar_level)
 
-local OldChooseSetPieces = GLOBAL.Level.ChooseSetPieces
-GLOBAL.Level.ChooseSetPieces = function(self, ...)
+local OldChooseSetPieces = Level.ChooseSetPieces
+Level.ChooseSetPieces = function(self, ...)
 	local start_location = self.overrides and self.overrides.start_location
 	if start_location == "polar" then
 		if self.set_pieces == nil then
 			self.set_pieces = {}
 		end
 		self.set_pieces["PolarStart"] = {count = 1, tasks = {"Polar Village", "Polar Lands", "Polar Deciduous Lands"}}
+		self.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Deciduous Lands", "Polar Floe", "Polar Quarry"}}
 		
 		if self.required_prefabs == nil then
 			self.required_prefabs = {}
@@ -148,21 +165,3 @@ GLOBAL.Level.ChooseSetPieces = function(self, ...)
 	
 	OldChooseSetPieces(self, ...)
 end
-
---
-
-local polar_taskset = deepcopy(TaskSets.GetGenTasks("default")) or {}
-
-if polar_taskset.required_prefabs == nil then
-	polar_taskset.required_prefabs = {}
-end
-
-if polar_taskset.set_pieces == nil then
-	polar_taskset.set_pieces = {}
-end
-
-polar_taskset.name = STRINGS.UI.CUSTOMIZATIONSCREEN.TASKSETNAMES.POLAR
-
---polar_taskset.set_pieces["skeleton_polar"] = {count = 1, tasks = {"Polar Lands", "Polar Floe", "Polar Quarry"}}
-
-AddTaskSet("polar", polar_taskset)
