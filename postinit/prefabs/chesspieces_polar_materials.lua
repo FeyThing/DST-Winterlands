@@ -98,4 +98,6 @@ AddPrefabPostInit("winch", function(inst)
 	inst:ListenForEvent("itemlose", OnItemLose)
 end)
 
---	Mighty Gym (component postinit)
+--	Mighty Gym ("mightygym" component postinit)
+
+--	Mini Sign + Empty Frame ("drawable" component postinit)

@@ -122,6 +122,7 @@ local components = {
 	"deerclopsspawner",
 	"deployable",
 	"dynamicmusic", -- : (
+	"drawable",
 	"expertsailor",
 	"explosive",
 	"follower",

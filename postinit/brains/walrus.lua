@@ -24,7 +24,7 @@ local WalrusBrain = require("brains/walrusbrain")
 		if target then
 			local ally = FindEntity(inst, 10, nil, PLAYER_ALLY_TAGS, PLAYER_ALLY_NOT_TAGS)
 			
-			if ally ~= nil or target:HasTag("spawnprotection") or (target.components.age and target.components.age:GetAge() < 10) then
+			if ally ~= nil or target:HasTag("spawnprotection") or (target.components.age and target.components.age:GetAge() < 15) then
 				return -- Don't follow if player has spawned recently or uses bagpipes
 			end
 		end

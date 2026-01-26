@@ -91,10 +91,8 @@ local polar_layouts = {
 	},
 }
 
-require("map/network")
-
-local OldGlobalPrePopulate = Graph.GlobalPrePopulate
-function Graph:GlobalPrePopulate(...)
+local OldChooseSetPieces = Level.ChooseSetPieces
+function Level:ChooseSetPieces(...)
 	-- NOTE: Static layouts must be registered *after* prefab swaps are selected !
 	-- Registering them earlier causes prefab proxies (berrybush, grass, etc) to resolve before world settings are known, breaking swap variants in setpieces only.
 	local Layouts = require("map/layouts").Layouts
@@ -117,7 +115,7 @@ function Graph:GlobalPrePopulate(...)
 		Layouts[k] = layout
 	end
 	
-	return OldGlobalPrePopulate(self, ...)
+	return OldChooseSetPieces(self, ...)
 end
 
 --	Tags, Keys
