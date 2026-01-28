@@ -699,10 +699,13 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 		end
 	end
 	
-	--	Fix spawning-in shadow, remove non polar penguin on spawn in the Winterlands !
+	--	Remove non polar penguin on spawn in the Winterlands !
 	
 	local oldappear_enter = sg.states["appear"].onenter
 	sg.states["appear"].onenter = function(inst, ...)
+		inst.AnimState:HideSymbol("1") -- These two are the ugly looking splash FX penguin do when they come out the water.
+		inst.AnimState:HideSymbol("2") -- It's using old wave-water sprites and it looks like it comes out the floor more than the ocean... nobody will miss those.
+		
 		local x, y, z = inst.Transform:GetWorldPosition()
 		if inst.prefab == "penguin" and GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil then
 			inst:Remove()
@@ -710,7 +713,7 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 		end
 		
 		if inst.DynamicShadow then
-			inst.DynamicShadow:Enable(false)
+			inst.DynamicShadow:Enable(false) -- Fix spawning-in shadow, this also looks super weird because they spawn away of their shadow...
 		end
 		
 		oldappear_enter(inst, ...)
@@ -718,6 +721,9 @@ ENV.AddStategraphPostInit("penguin", function(sg)
 	
 	local oldappear_exit = sg.states["appear"].onexit
 	sg.states["appear"].onexit = function(inst, ...)
+		inst.AnimState:ShowSymbol("1")
+		inst.AnimState:ShowSymbol("2")
+		
 		if inst.DynamicShadow then
 			inst.DynamicShadow:Enable(true)
 		end

@@ -28,7 +28,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 	--	Buffs
 	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_HUNTMOAR = "Wanna play hide and seek with the forest animals?"
 	ANNOUNCE.ANNOUNCE_DETACH_BUFF_HUNTMOAR = "Where are they...? Oh well, you win!"
-	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Eep! Some snow's getting under the hood!"
+	ANNOUNCE.ANNOUNCE_ATTACH_BUFF_POLARWETNESS = "Eep! Some snow's getting in my hood!"
 	ANNOUNCE.ANNOUNCE_DETACH_BUFF_POLARWETNESS = "Brr... I just need a bit more clothing."
 	
 --	Worldgen

@@ -15,6 +15,8 @@ PrefabFiles = {
 	"emperor_penguin_guard",
 	"emperor_penguinhat",
 	"frostwalkeramulet",
+	"frosty_simple",
+	"frosty_snowball",
 	"girl_walrus",
 	"grass_polar",
 	"icelettuce_spawner",
@@ -38,6 +40,7 @@ PrefabFiles = {
 	"polarbearfur",
 	"polarbearhat",
 	"polarbearhouse",
+	"polarbearking",
 	"polarbuffs",
 	"polarcastle",
 	"polarcrownhat",
@@ -65,6 +68,7 @@ PrefabFiles = {
 	"snowwave_itemrespawner",
 	"spawnpoint_polar",
 	"trap_polarteeth",
+	"trial_radius_fx",
 	"tumbleweed_polar",
 	"veggies_polar",
 	"walls_polar",
@@ -77,11 +81,6 @@ PrefabFiles = {
 	"winters_fists",
 	"winters_fists_snowballs",
 	"wysp_skeleton",
-	"frosty_simple",
-	"frosty_snowball",
-	"polarbearking",
-	"polarkingtrials",
-	"trial_radius_fx",
 	
 --	Skin stuff
 	

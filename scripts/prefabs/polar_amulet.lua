@@ -102,7 +102,6 @@ local function OnEquip(inst, owner)
 		end
 	end
 	
-	--local polarwargstooth = #parts["polarwargstooth"]
 	if polarwargstooth > 0 and owner.components.areaaware then
 		inst._onpolartiles = function(owner, data, amulet, force_disable)
 			OnPolarTiles(inst or amulet, owner, data, force_disable)

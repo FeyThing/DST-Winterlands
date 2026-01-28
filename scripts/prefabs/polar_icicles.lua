@@ -323,9 +323,11 @@ local function UpdateAnim(inst)
 end
 
 local function OnWork(inst, worker, workleft)
+	if inst.components.lootdropper and (workleft <= 0 or worker and worker:HasTag("_health")) then
+		inst.components.lootdropper:DropLoot() -- Natural breaking cycle leaves just 1 Ice
+	end
+	
 	if workleft <= 0 then
-		inst.components.lootdropper:DropLoot()
-		
 		inst:Remove()
 	else
 		UpdateAnim(inst)

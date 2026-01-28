@@ -7,10 +7,15 @@ local GroundPounder = require("components/groundpounder")
 	
 	local OldGroundPound = GroundPounder.GroundPound
 	function GroundPounder:GroundPound(...)
-		local x, y, z = self.inst.Transform:GetWorldPosition()
-		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+		local pt = self.inst:GetPosition()
+		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(pt:Get())
 		
 		if self.destroyer or self.workefficiency then
+			--	Plow High Snow
+			local duration = GetPolarPlowDuration(self.inst, nil, "groundpound")
+			SpawnPolarSnowBlocker(pt, TUNING.SNOW_PLOW_RANGES.GROUNDPOUND, duration, self.inst)
+			
+			--	Crack ice tiles
 			if not self.inst._ignore_polarice then
 				if TheWorld.components.polarice_manager then
 					for dx = -1, 1 do
@@ -21,10 +26,11 @@ local GroundPounder = require("components/groundpounder")
 				end
 			end
 			
+			--	Drop nearby Icicles
 			if not self.inst._ignore_polaricicle then
-				local icicles = TheSim:FindEntities(x, y, z, self.radiusStepDistance * 25, ICICLE_TAGS)
+				local icicles = TheSim:FindEntities(pt.x, pt.y, pt.z, self.radiusStepDistance * 25, ICICLE_TAGS)
 				for i, icicle in ipairs(icicles) do
-					local dist = math.sqrt(icicle:GetDistanceSqToPoint(x, y, z))
+					local dist = math.sqrt(icicle:GetDistanceSqToPoint(pt.x, pt.y, pt.z))
 					local break_time = 0.5 * (dist / 12)
 					
 					icicle:DoTaskInTime(break_time, function()

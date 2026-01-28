@@ -109,7 +109,7 @@ function WandaTimeFreezeOver:MakeHands()
 		hand:GetAnimState():SetBuild("wanda_timefreeze_over")
 		hand:GetAnimState():PlayAnimation(anim)
 		hand:GetAnimState():AnimateWhilePaused(false)
-		hand:GetAnimState():SetMultColour(1, 1, 1, 0.3)
+		hand:GetAnimState():SetMultColour(1, 1, 1, 0.2) -- A bit hard to see during the day :/ but quite visible at night, aaaa
 		hand:GetAnimState():Pause()
 		hand:SetClickable(false)
 		
@@ -182,32 +182,28 @@ function WandaTimeFreezeOver:OnTick()
 	--	Tic, Tac, Tic, Tac
 	
 	local short_p = self.current_short % 1
-	local long_p  = self.current_long % 1
+	local long_p = self.current_long % 1
 	
-	self.delta_accum_short = self.delta_accum_short or 0
-	self.delta_accum_long  = self.delta_accum_long  or 0
-	self.last_short_percent = self.last_short_percent or short_p
-	self.last_long_percent  = self.last_long_percent  or long_p
+	local delta_short = math.abs(short_p - (self.last_short_percent or short_p))
+	local delta_long = math.abs(long_p - (self.last_long_percent or long_p))
+	
+	self.delta_accum_short = (self.delta_accum_short or 0) + delta_short
+	self.delta_accum_long = (self.delta_accum_long or 0) + delta_long
 	self.tac = self.tac or false
-	
-	local delta_short = math.abs(short_p - self.last_short_percent)
-	local delta_long  = math.abs(long_p  - self.last_long_percent)
-	
-	self.delta_accum_short = self.delta_accum_short + delta_short
-	self.delta_accum_long  = self.delta_accum_long  + delta_long
 	
 	if not self.rewinding and (self.delta_accum_short >= TIC_THRESHOLD or self.delta_accum_long >= TIC_THRESHOLD) then
 		local sound = "polarsounds/timefreeze/clock_"..(self.tac and "tac" or "tic")
 		
-		TheFrontEnd:GetSound():PlaySoundWithParams(sound, {clock = self.percent})
+		-- The sound is quieter if we aren't at the start or the end
+		TheFrontEnd:GetSound():PlaySoundWithParams(sound, {clock = self.percent}, 0.05 + 0.2 * math.abs(2 * self.percent - 1))
 		self.tac = not self.tac
 		
 		self.delta_accum_short = 0
-		self.delta_accum_long  = 0
+		self.delta_accum_long = 0
 	end
 	
 	self.last_short_percent = short_p
-	self.last_long_percent  = long_p
+	self.last_long_percent = long_p
 end
 
 return WandaTimeFreezeOver

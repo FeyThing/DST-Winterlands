@@ -21,10 +21,28 @@ local function OnLoad(inst, data)
 	end
 end
 
+local FLOORING_OVERHANG_RAD = 2
 local ICICLE_AVOID_TAGS = {"bigicicle", "antlion_sinkhole_blocker", "birdblocker", "HAMMER_workable", "boulder", "teleporter", "structure", "wall", "icicleimmune", "character"}
 
-local function NoIcicleInRange(pt)
-	return not TheWorld.Map:IsPointNearHole(pt) and #TheSim:FindEntities(pt.x, pt.y, pt.z, 9, nil, nil, ICICLE_AVOID_TAGS) == 0
+local function CanSpawnIcicleAtPoint(pt)
+	local tile = TheWorld.Map:GetTileAtPoint(pt:Get())
+	
+	if GROUND_FLOORING[tile] then
+		return false
+	end
+	
+	local rad = math.ceil(TILE_SCALE / FLOORING_OVERHANG_RAD)
+	for x = -rad, rad do
+		for z = -rad, rad do
+			tile = TheWorld.Map:GetTileAtPoint(pt.x + x, pt.y, pt.z + z)
+			
+			if GROUND_FLOORING[tile] then
+				return false
+			end
+		end
+	end
+	
+	return not TheWorld.Map:IsPointNearHole(pt) and #TheSim:FindEntities(pt.x, pt.y, pt.z, TILE_SCALE * 2 + 1, nil, nil, ICICLE_AVOID_TAGS) == 0
 end
 
 local function GetSpawnPoint(inst)
@@ -33,7 +51,7 @@ local function GetSpawnPoint(inst)
 	local range = 4
 	
 	while offset == nil and range < TUNING.SHADE_POLAR_RANGE do
-		offset = FindWalkableOffset(pt, math.random() * TWOPI, range, 6, true, false, NoIcicleInRange)
+		offset = FindWalkableOffset(pt, math.random() * TWOPI, range, 6, true, false, inst.CanSpawnIcicleAtPoint)
 		range = range + 2
 	end
 	
@@ -51,7 +69,6 @@ local function OnInit(inst)
 				local icicle = SpawnPrefab("polar_icicle")
 				icicle.Transform:SetPosition(spawnpoint:Get())
 				icicle.stage = math.random(3)
-				
 			end
 		end
 		
@@ -94,23 +111,23 @@ end
 local DROP_ITEMS_DIST_MIN = 2
 local DROP_ITEMS_DIST_VARIANCE = 6
 local function DropLightningItems(inst, items)
-    local x, _, z = inst.Transform:GetWorldPosition()
-    local num_items = #items
+	local x, _, z = inst.Transform:GetWorldPosition()
+	local num_items = #items
 
-    for i, item_prefab in ipairs(items) do
-        local dist = DROP_ITEMS_DIST_MIN + DROP_ITEMS_DIST_VARIANCE * math.random()
-        local theta = TWOPI * math.random()
+	for i, item_prefab in ipairs(items) do
+		local dist = DROP_ITEMS_DIST_MIN + DROP_ITEMS_DIST_VARIANCE * math.random()
+		local theta = TWOPI * math.random()
 
-        inst:DoTaskInTime(i * 5 * FRAMES, function()
-            local item = SpawnPrefab(item_prefab)
-            item.Transform:SetPosition(x + dist * math.cos(theta), 20, z + dist * math.sin(theta))
+		inst:DoTaskInTime(i * 5 * FRAMES, function()
+			local item = SpawnPrefab(item_prefab)
+			item.Transform:SetPosition(x + dist * math.cos(theta), 20, z + dist * math.sin(theta))
 
-            if i == num_items then
-                inst._lightning_drop_task:Cancel()
-                inst._lightning_drop_task = nil
-            end 
-        end)
-    end
+			if i == num_items then
+				inst._lightning_drop_task:Cancel()
+				inst._lightning_drop_task = nil
+			end 
+		end)
+	end
 end
 
 local ICICLE_TAGS = { "bigicicle" }
@@ -129,18 +146,18 @@ local function OnLightningStrike(inst, pos)
 		end)
 	end
 
-    if inst._lightning_drop_task then
-        return
-    end
+	if inst._lightning_drop_task then
+		return
+	end
 
-    local num_items = math.random(MIN_DROP_ICE_LIGHTNING, MAX_DROP_ICE_LIGHTNING)
-    local items_to_drop = {  }
+	local num_items = math.random(MIN_DROP_ICE_LIGHTNING, MAX_DROP_ICE_LIGHTNING)
+	local items_to_drop = {  }
 
-    for i = 1, num_items do
-        table.insert(items_to_drop, "ice")
-    end
+	for i = 1, num_items do
+		table.insert(items_to_drop, "ice")
+	end
 
-    inst._lightning_drop_task = inst:DoTaskInTime(20*FRAMES, DropLightningItems, items_to_drop)
+	inst._lightning_drop_task = inst:DoTaskInTime(20*FRAMES, DropLightningItems, items_to_drop)
 end
 
 local function commonfn()
@@ -210,10 +227,11 @@ local function shadefn()
 	inst.components.polarmistemitter.maxmist = 15
 	inst.components.polarmistemitter.maxmist_range = 8
 
-    inst:AddComponent("lightningblocker")
-    inst.components.lightningblocker:SetBlockRange(TUNING.SHADE_POLAR_RANGE)
-    inst.components.lightningblocker:SetOnLightningStrike(OnLightningStrike)
+	inst:AddComponent("lightningblocker")
+	inst.components.lightningblocker:SetBlockRange(TUNING.SHADE_POLAR_RANGE)
+	inst.components.lightningblocker:SetOnLightningStrike(OnLightningStrike)
 	
+	inst.CanSpawnIcicleAtPoint = CanSpawnIcicleAtPoint
 	inst.DoRainProtection = DoRainProtection
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad

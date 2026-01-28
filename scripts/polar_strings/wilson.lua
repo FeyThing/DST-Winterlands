@@ -168,8 +168,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.ARCTIC_FOOL_FISH = "All I got to do is act natural."
 	DESCRIBE.BOAT_ICE_ITEM = "These are just good to get a-round."
 	DESCRIBE.POCKETWATCH_POLAR = {
-		GENERIC = "Ms. Wanda sure has a lot of clocks!",
-		RECHARGING = "Is that clock ticking backwards?",
+		GENERIC = "I bet there's a lot of interesting science inside.",
+		RECHARGING = "It's doing \"time stuff\", that's the technical term.",
 	}
 	DESCRIBE.POLARGLOBE = {
 		GENERIC = "It's still going.",

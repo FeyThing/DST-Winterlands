@@ -238,10 +238,11 @@ local function fn()
 	inst:AddComponent("knownlocations")
 	
 	inst:AddComponent("sleeper")
+	inst.components.sleeper.diminishingreturns = true
+	inst.components.sleeper.extraresist = GetRandomMinMax(4, 6)
 	inst.components.sleeper:SetResistance(3)
 	inst.components.sleeper:SetSleepTest(ShouldSleep)
 	inst.components.sleeper:SetWakeTest(ShouldWake)
-	inst.components.sleeper.diminishingreturns = true
 	
 	inst:AddComponent("stuckdetection")
 	inst.components.stuckdetection:SetTimeToStuck(2)

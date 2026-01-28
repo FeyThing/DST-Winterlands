@@ -233,4 +233,26 @@ local function fn()
 	return inst
 end
 
-return Prefab("polarbearking", fn, assets)
+--
+
+local function trial_builder()
+	local inst = CreateEntity()
+	
+	inst.entity:AddTransform()
+	
+	inst:AddTag("CLASSIFIED")
+	
+	inst.persists = false
+	
+	inst:DoTaskInTime(0, inst.Remove)
+	
+	return inst
+end
+
+local prefabs = {Prefab("polarbearking", fn, assets)}
+
+for k, v in pairs(require("polarbearking_trials")) do
+	table.insert(prefabs, Prefab(k, trial_builder))
+end
+
+return unpack(prefabs)

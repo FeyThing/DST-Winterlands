@@ -195,6 +195,7 @@ AddRoom("PolarIsland_IceQuarry", {
 			grass_polar = 6,
 			grass_polar_spawner = function() return math.random() < 0.33 and 1 or 0 end,
 			pond = function() return math.random(1, 2) end,
+			pond_mos = function() return math.random(0, 1) end,
 			snowwave_itemrespawner = function() return math.random(6, 10) end,
 			rock1 = 1,
 			rock2 = 1,

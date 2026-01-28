@@ -24,6 +24,13 @@ local function OnHammered(inst)
 		item.Transform:SetPosition(x, y, z)
 	end
 	
+	if inst.plow_pond_fx then
+		for i, v in ipairs(inst.plow_pond_fx) do
+			v:Remove()
+		end
+	end
+	inst.plow_pond_fx = nil
+	
 	inst:Remove()
 end
 
@@ -48,6 +55,7 @@ local function Finished(inst, force_fx)
 			v:Remove()
 		end
 	end
+	inst.plow_pond_fx = nil
 	
 	if inst.deploy_item_save_record then
 		local item = SpawnSaveRecord(inst.deploy_item_save_record)
@@ -115,6 +123,7 @@ end
 local function DoBreakIce(inst, tx, ty, delay)
 	if TheWorld.Map:GetTile(tx, ty) == WORLD_TILES.POLAR_ICE then
 		inst._ice_demolished = inst._ice_demolished + 1
+		
 		TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, false, delay, true)
 	end
 end
@@ -158,6 +167,7 @@ local function BreakIce(inst)
 		
 		SpawnPrefab("fx_ice_crackle").Transform:SetPosition(x, y, z)
 		
+		inst._ice_harvested = (inst._ice_harvested or 0) + 2
 		if inst.plow_pond_fx == nil then
 			inst.plow_pond_fx = {}
 		end
@@ -177,7 +187,10 @@ local function OnLoadPostPass(inst, newents, data)
 	if data then
 		inst.deploy_item_save_record = data.deploy_item
 		if data.haspond then
-			inst.plow_pond = GetClosestInstWithTag(POND_TAGS, inst, 1)
+			local pond = GetClosestInstWithTag(POND_TAGS, inst, 1)
+			
+			inst.plow_pond = pond
+			pond.polarice_plow = inst
 		end
 	end
 	
@@ -246,12 +259,12 @@ local function OnDeploy(inst, pt, deployer)
 	local cx, cy, cz
 	
 	local ponds = TheSim:FindEntities(pt.x, 0, pt.z, POND_DIST, POND_TAGS)
-	local plow_pond
+	local pond
 	
 	for i, v in ipairs(ponds) do
-		if v.AnimState:IsCurrentAnimation("frozen") then
+		if (v.frozen or v.AnimState:IsCurrentAnimation("frozen")) and not (v.polarice_plow and v.polarice_plow:IsValid()) then
 			cx, cy, cz = v.Transform:GetWorldPosition()
-			plow_pond = v
+			pond = v
 			
 			break
 		end
@@ -298,7 +311,11 @@ local function OnDeploy(inst, pt, deployer)
 	
 	local obj = SpawnPrefab("polarice_plow")
 	obj.Transform:SetPosition(cx, cy, cz)
-	obj.plow_pond = plow_pond
+	
+	if pond then
+		obj.plow_pond = pond
+		pond.polarice_plow = obj
+	end
 	
 	inst.components.finiteuses:Use(1)
 	
