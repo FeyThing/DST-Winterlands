@@ -39,8 +39,9 @@ end
 
 local OldCanSpawn
 local function CanSpawn(inst, ...)
-	if inst:GetTimeAlive() < 1 and IsInPolar(inst) then
-		return false -- First spawn is like, instant, we just need to block the first one before frozen state is properly handled !
+	-- First spawn is like, instant, we just need to block the first one before frozen state is properly handled !
+	if (inst:GetTimeAlive() < 1 or inst.frozen) and IsInPolar(inst) then
+		return false
 	end
 	
 	if OldCanSpawn then

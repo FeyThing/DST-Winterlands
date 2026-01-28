@@ -380,8 +380,11 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 	local oldemote_event = sg.events["emote"].fn
 	sg.events["emote"].fn = function(inst, data, ...)
 		if data and data.insnowonly then
+			local x, y, z = inst.Transform:GetWorldPosition()
 			local tile, tileinfo = inst:GetCurrentTileType()
-			local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.5))
+			
+			local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays
+				and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.5)) and TheWorld.Map:IsLandTileAtPoint(x, y, z)
 			
 			if not in_snow then
 				return

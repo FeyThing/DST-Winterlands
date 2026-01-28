@@ -44,6 +44,12 @@ local function OnDeploy(inst, pt, deployer)
 	return boat
 end
 
+local function OnPutInInventory(inst, pickupguy, src_pos)
+	if inst.components.perishable then
+		inst.components.perishable:StartPerishing()
+	end
+end
+
 function CLIENT_CanDeployBoat(inst, pt, mouseover, deployer, rotation)
 	local inventory = deployer and deployer.replica.inventory
 	
@@ -107,6 +113,7 @@ local function fn()
 	inst:AddComponent("inspectable")
 	
 	inst:AddComponent("inventoryitem")
+	inst.components.inventoryitem:SetOnPutInInventoryFn(OnPutInInventory)
 	
 	inst:AddComponent("perishable")
 	inst.components.perishable:SetPerishTime(TUNING.PERISH_SUPERSLOW + TUNING.PERISH_PRESERVED)

@@ -84,6 +84,10 @@ local function SpawnSnowItem(inst)
 		if inst.snowitem then
 			inst.snowitem.Transform:SetPosition(inst.Transform:GetWorldPosition())
 			
+			if inst.components.perishable then
+				inst.components.perishable:StopPerishing()
+			end
+			
 			inst:ListenForEvent("onpickup", inst.onsnowitempicked, inst.snowitem)
 			inst:ListenForEvent("onremove", inst.onsnowitempicked, inst.snowitem)
 		end
@@ -124,6 +128,10 @@ local function OnLoadPostPass(inst, newents, savedata)
 end
 
 local function OnSnowItemPicked(inst, item, data)
+	if item and item.components.perishable then
+		item.components.perishable:StartPerishing()
+	end
+	
 	inst:RemoveEventCallback("onpickup", inst.onsnowitempicked, inst.snowitem)
 	inst:RemoveEventCallback("onremove", inst.onsnowitempicked, inst.snowitem)
 	

@@ -9,22 +9,40 @@ local prefabs = {
 local WAXED_PLANTS = require("prefabs/waxed_plant_common")
 
 local function OnAnimOverStorm(inst)
-	if inst.AnimState:IsCurrentAnimation("idle") or inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2")
-		and inst:HasTag("pickable") and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
-		
-		inst.AnimState:PlayAnimation("blown_loop"..math.random(2))
+	if not inst:HasTag("pickable") then
+		return
+	end
+	
+	if TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+		if inst.AnimState:IsCurrentAnimation("idle") or inst.AnimState:IsCurrentAnimation("blown_pst") then
+			inst.AnimState:PlayAnimation("blown_pre")
+		else
+			inst.AnimState:PlayAnimation("blown_loop"..math.random(2))
+		end
+	else
+		if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") then
+			inst.AnimState:PlayAnimation("blown_pst")
+			inst.AnimState:PushAnimation("idle", false)
+		else
+			inst.AnimState:PlayAnimation("idle")
+		end
 	end
 end
 
 local function OnPolarstormChanged(inst, active)
-	if active and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
-		if inst:HasTag("pickable") and inst._blizzardbreak == nil then
-			inst:ListenForEvent("animover", OnAnimOverStorm)
-			inst.AnimState:PushAnimation("blown_pre", false)
-			inst.AnimState:PushAnimation("blown_loop"..math.random(2), false)
+	if active then
+		inst:ListenForEvent("animover", OnAnimOverStorm)
+		
+		if TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL and inst:HasTag("pickable") and inst._blizzardbreak == nil then
+			if inst.AnimState:IsCurrentAnimation("idle") then
+				inst.AnimState:PlayAnimation("blown_pre")
+				inst.AnimState:PushAnimation("blown_loop"..math.random(2), false)
+			end
 			
 			inst._blizzardbreak = inst:DoTaskInTime(2 + math.random(10), function()
-				if math.random() < TUNING.GRASS_POLAR_BLIZZARDPICK_CHANCE and inst.components.pickable and inst:HasTag("pickable") then
+				if (inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2"))
+					and math.random() < TUNING.GRASS_POLAR_BLIZZARDPICK_CHANCE and inst.components.pickable and inst:HasTag("pickable") then
+					
 					inst.components.pickable:MakeEmpty()
 					
 					inst.AnimState:PlayAnimation("fall")
@@ -37,17 +55,20 @@ local function OnPolarstormChanged(inst, active)
 				end
 			end)
 		end
-	elseif inst._blizzardbreak and not active then
+	else
 		inst:RemoveEventCallback("animover", OnAnimOverStorm)
-		if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") then
-			inst.AnimState:PushAnimation("blown_pst", false)
-		end
+		
 		if inst:HasTag("pickable") then
-			inst.AnimState:PushAnimation("idle", true)
+			if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") then
+				inst.AnimState:PlayAnimation("blown_pst")
+				inst.AnimState:PushAnimation("idle")
+			end
 		end
 		
-		inst._blizzardbreak:Cancel()
-		inst._blizzardbreak = nil
+		if inst._blizzardbreak then
+			inst._blizzardbreak:Cancel()
+			inst._blizzardbreak = nil
+		end
 	end
 end
 

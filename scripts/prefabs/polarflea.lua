@@ -225,6 +225,9 @@ local function SetHost(inst, host, kick, given)
 		end
 		inst.skinname = nil
 		
+		if inst._host then
+			inst.Transform:SetPosition(inst._host.Transform:GetWorldPosition())
+		end
 		inst:PushEvent("fleahostkick", {host = inst._host})
 		inst._host = nil
 		

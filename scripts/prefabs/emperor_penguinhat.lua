@@ -55,6 +55,7 @@ local function fn()
 	inst.AnimState:PlayAnimation("anim")
 	
 	inst:AddTag("hat")
+	inst:AddTag("icebox_valid")
 	inst:AddTag("show_spoilage")
 	
 	inst:AddComponent("snowmandecor")
