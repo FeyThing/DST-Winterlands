@@ -194,7 +194,7 @@ local function shadefn()
 	
 	inst.MiniMapEntity:SetIcon("pillar_polarcave.png")
 	
-	inst.blizzardprotect_rad = TUNING.SHADE_POLAR_RANGE
+	inst.blizzardprotect_rad = TUNING.SHADE_POLAR_RANGE + 4
 	inst.rainprotect_rad = TUNING.SHADE_POLAR_RANGE
 	
 	if not TheNet:IsDedicated() then

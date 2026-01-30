@@ -61,8 +61,8 @@ local function OnPolarstormChanged(inst, active)
 		if inst:HasTag("pickable") then
 			if inst.AnimState:IsCurrentAnimation("blown_loop1") or inst.AnimState:IsCurrentAnimation("blown_loop2") then
 				inst.AnimState:PlayAnimation("blown_pst")
-				inst.AnimState:PushAnimation("idle")
 			end
+			inst.AnimState:PushAnimation("idle")
 		end
 		
 		if inst._blizzardbreak then
