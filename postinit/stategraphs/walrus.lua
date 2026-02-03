@@ -35,7 +35,7 @@ local events = {
 		end
 	end),
 	EventHandler("walrusboosted", function(inst)
-		if inst.components.health and not inst.components.health:IsDead() and not inst._walrusboost then
+		if inst.components.health and not inst.components.health:IsDead() and not inst._walrusboost and not inst.sg:HasStateTag("busy") then
 			inst.sg:GoToState("walrusboost")
 		end
 	end),

@@ -99,7 +99,7 @@ local HAUNTFN = ACTIONS.HAUNT.fn -- Ghosts can plow High Snow
 		local plow_pos = act:GetActionPoint() or act.doer:GetPosition()
 		local plowed = false
 		
-		if plow_pos then
+		if plow_pos and TheWorld.Map:IsPolarSnowAtPoint(plow_pos.x, plow_pos.y, plow_pos.z, true) then
 			local duration = GetPolarPlowDuration(act.doer, nil, "haunt")
 			SpawnPolarSnowBlocker(plow_pos, TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, act.doer)
 			

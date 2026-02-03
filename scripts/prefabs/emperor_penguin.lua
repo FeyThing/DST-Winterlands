@@ -285,7 +285,10 @@ end
 local function TryRipMantle(inst)
 	if inst.components.lootdropper and (inst.healthtrigger_cutdmg or 0) >= TUNING.EMPEROR_PENGUIN_HEALTH_CUTDAMAGE then
 		local rip = inst.components.lootdropper:SpawnLootPrefab("malbatross_feathered_weave")
-		rip.AnimState:SetScale(0.7, 0.7)
+		
+		if rip then
+			rip.AnimState:SetScale(0.7, 0.7)
+		end
 		
 		inst.SoundEmitter:PlaySound("polarsounds/emperor_penguin/rip_mantle")
 		inst.healthtrigger_cutdmg = 0
@@ -433,7 +436,7 @@ local function OnDestroyOther(inst, other)
 end
 
 local function OnCollide(inst, other)
-	if not (inst.sg and inst.sg:HasStateTag("nointerrupt")) and other:IsValid() and other.components.workable and other.components.workable:CanBeWorked()
+	if not (inst.sg and inst.sg:HasStateTag("nointerrupt")) and other and other:IsValid() and other.components.workable and other.components.workable:CanBeWorked()
 		and other:HasAnyTag("heavy", "wall") and (not other:HasTag("icecastlepart") or other:HasTag("heavy")) and not inst.recentlycharged[other] then
 		
 		inst:DoTaskInTime(2 * FRAMES, OnDestroyOther, other)

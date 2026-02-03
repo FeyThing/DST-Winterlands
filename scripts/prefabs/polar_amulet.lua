@@ -268,6 +268,7 @@ local function SetAmuletPower(inst, data)
 	if polarwargstooth > 0 then
 		add_fueled = false
 		
+		inst:AddTag("icebox_valid")
 		--inst:AddTag("polarimmunity")
 		inst:AddTag("polarsnowimmunity")
 		inst:AddTag("show_spoilage")

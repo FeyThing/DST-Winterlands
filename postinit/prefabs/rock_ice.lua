@@ -26,11 +26,11 @@ local function SetStage(inst, stage, source, ...)
 	end
 	
 	if inst.stage == "empty" then
-		if TheWorld.Map:IsPassableAtPoint(inst.Transform:GetWorldPosition()) then
+		--if TheWorld.Map:IsPassableAtPoint(inst.Transform:GetWorldPosition()) then
 			inst.AnimState:Hide("snow")
-		else
-			inst:Remove()
-		end
+		--else
+		--	inst:Remove()
+		--end
 	end
 end
 

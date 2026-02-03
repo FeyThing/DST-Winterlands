@@ -84,18 +84,23 @@ local function fn()
 		return inst
 	end
 	
-	inst.components.combat:SetKeepTargetFunction(KeepTarget)
-	inst.components.combat:SetRetargetFunction(1, RetargetFn)
+	if inst.components.combat then
+		inst.components.combat:SetKeepTargetFunction(KeepTarget)
+		inst.components.combat:SetRetargetFunction(1, RetargetFn)
+	end
 	
 	inst:AddComponent("drownable")
 	
 	if inst.components.herdmember then
 		inst.components.herdmember.herdprefab = "polar_penguinherd"
+		inst.components.herdmember.enabled = false -- These seems to be a bug that causes lots of herds to appear in the same area. Testing if this solves it?
 	end
 	
 	inst:RemoveComponent("hunger")
 	
-	inst.components.locomotor.pathcaps = {allowocean = true}
+	if inst.components.locomotor then
+		inst.components.locomotor.pathcaps = {allowocean = true}
+	end
 	
 	inst:RemoveComponent("teamattacker")
 	

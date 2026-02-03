@@ -90,7 +90,7 @@ local function OnShedAntler(inst, other)
 end
 
 local function OnCollide(inst, other)
-	if ValidShedAntlerTarget(inst, other) and Vector3(inst.Physics:GetVelocity()):LengthSq() >= TUNING.POLAR_MOOSE_SHED_MIN_VEL then
+	if other and ValidShedAntlerTarget(inst, other) and Vector3(inst.Physics:GetVelocity()):LengthSq() >= TUNING.POLAR_MOOSE_SHED_MIN_VEL then
 		inst:DoTaskInTime(2 * FRAMES, OnShedAntler, other)
 	end
 end
