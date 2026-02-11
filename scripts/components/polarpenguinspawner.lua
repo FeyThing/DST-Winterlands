@@ -6,6 +6,9 @@ return Class(function(self, inst)
 	
 	local SHORE_CHECK_ATTEMPTS = 20
 	local SPAWN_POINT_ATTEMPTS = 20
+	local SPAWN_POINT_HERDFREE_RANGE = 40
+	
+	local HERD_TAGS = {"herd"}
 	
 	local _herds = {}
 	local _spawntask
@@ -15,7 +18,9 @@ return Class(function(self, inst)
 	end
 	
 	local function IsPenguinBeach(pt)
-		return GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil
+		local ents = TheSim:FindEntities(pt.x, 0, pt.z, SPAWN_POINT_HERDFREE_RANGE, HERD_TAGS)
+		
+		return GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil and #ents <= 0
 	end
 	
 	local function GetHerdSpawnPos()

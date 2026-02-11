@@ -537,6 +537,10 @@ local function UndoTerraform(inst)
 		end
 	end
 	
+	if inst.components.timer and inst.components.timer:TimerExists("undo_terraforming") then
+		inst.components.timer:StopTimer("undo_terraforming")
+	end
+	
 	inst:Remove()
 end
 
@@ -555,6 +559,10 @@ local function terraformer_OnInit(inst)
 end
 
 local function terraformer_OnRemove(inst)
+	if inst.components.timer and inst.components.timer:TimerExists("undo_terraforming") then
+		inst:UndoTerraform()
+	end
+	
 	if TheWorld.components.snowwaver then
 		TheWorld.components.snowwaver:AddEnabler(inst, false)
 	end
@@ -578,7 +586,7 @@ end
 
 local function OnLoad(inst, data)
 	if inst.components.timer and not inst.components.timer:TimerExists("undo_terraforming") then
-		inst.components.timer:StartTimer("undo_terraforming", 10) -- This fixes when the fists couldn't actually undo terraforming, oops !
+		inst.components.timer:StartTimer("undo_terraforming", 10)
 	end
 end
 
@@ -589,6 +597,7 @@ local function terraformer()
 	inst.entity:AddSoundEmitter()
 	inst.entity:AddNetwork()
 	
+	inst:AddTag("CLASSIFIED")
 	inst:AddTag("ignorewalkableplatforms")
 	inst:AddTag("NOBLOCK")
 	inst:AddTag("NOCLICK")

@@ -343,9 +343,15 @@ local function OnPolarFreeze(inst, forming)
 		local ents = TheSim:FindEntities(x, y, z, 20, nil, nil, ICEPROTUBERANCE_TAGS)
 		if #ents == 0 then
 			SpawnPrefab("rock_polar_spawner").Transform:SetPosition(x, y, z)
+			inst.SoundEmitter:PlaySound("turnoftides/common/together/boat/anchor/ocean_hit_statue")
+		else
+			inst.SoundEmitter:PlaySound("turnoftides/common/together/boat/anchor/ocean_hit")
 		end
 		
-		SpawnPrefab("ice_splash").Transform:SetPosition(x, y, z)
+		if not inst:IsAsleep() then
+			SpawnPrefab("ice_splash").Transform:SetPosition(x, y, z)
+			SpawnPrefab("crab_king_bubble"..math.random(3)).Transform:SetPosition(x, y, z)
+		end
 	end
 	
 	inst:Remove()

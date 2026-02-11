@@ -184,6 +184,7 @@ return Class(function(self, inst)
 		
 		center_x = center_x + (spawn_offset * math.cos(spawn_angle))
 		center_z = center_z + (spawn_offset * math.sin(spawn_angle))
+		
 		ice_degrade_fx.Transform:SetPosition(center_x, 0, center_z)
 	end
 	
@@ -379,31 +380,38 @@ return Class(function(self, inst)
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1) * 1.4142
 		
 		local entities_near_ice = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, nil, self.IGNORE_ICE_FORMING_ONREMOVE_TAGS)
+		
 		for _, ent in ipairs(entities_near_ice) do
-			if ent.components.inventoryitem and ent.Physics then
-				if not ent.components.inventoryitem.nobounce then
-					LaunchAway(ent)
-				end
-				ent.components.inventoryitem:SetLanded(false, true)
-			end
+			local ex, ey, ez = ent.Transform:GetWorldPosition()
 			
-			if ent.OnPolarFreeze then
-				ent:OnPolarFreeze(true)
-			elseif ent.components.oceanfishable then
-				local rod = ent.components.oceanfishable:GetRod()
-				
-				if rod and rod.components.oceanfishingrod then
-					rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair, so we keep the things
+			if _map:IsPassableAtPoint(ex, ey, ez) then
+				if ent.components.inventoryitem and ent.Physics then
+					if not ent.components.inventoryitem.nobounce then
+						LaunchAway(ent)
+					end
+					ent.components.inventoryitem:SetLanded(false, true)
 				end
-			elseif not ent:HasTag("locomotor") and ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
-				print("Polar Ice (Forming) removed ent:", ent)
-				DestroyEntity(ent, inst, true, true)
+				
+				if ent.OnPolarFreeze then
+					ent:OnPolarFreeze(true)
+				elseif ent.components.oceanfishable then
+					local rod = ent.components.oceanfishable:GetRod()
+					
+					if rod and rod.components.oceanfishingrod then
+						rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair, so we keep the things
+					end
+				elseif not ent:HasTag("locomotor") and ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
+					print("Polar Ice (Forming) removed ent:", ent)
+					DestroyEntity(ent, inst, true, true)
+				end
 			end
 		end
 		
 		local floaterobjects = TheSim:FindEntities(x, 0, z, tile_radius_plus_overhang, FLOATEROBJECT_TAGS)
 		for _, floaterobject in ipairs(floaterobjects) do
-			if floaterobject.components.floater then
+			local ex, ey, ez = floaterobject.Transform:GetWorldPosition()
+			
+			if floaterobject.components.floater and _map:IsPassableAtPoint(ex, ey, ez) then
 				local fx, fy, fz = floaterobject.Transform:GetWorldPosition()
 				if _map:IsOceanTileAtPoint(fx, fy, fz) then
 					floaterobject:PushEvent("on_landed")
@@ -487,50 +495,40 @@ return Class(function(self, inst)
 			end
 		end
 		
-		-- THIS IS HACKED IN TO SAVE THE PLAYER FOR NOW!
-		local hypotenuseSq = 8 + 1 -- buffer.
-		local players = FindPlayersInRangeSq(dx, 0, dz, hypotenuseSq, true)
-		if players and #players > 0 then
-			for i, player in ipairs(players)do
-				local px, py, pz = player.Transform:GetWorldPosition()
-				local ptile_x, ptile_y = _map:GetTileCoordsAtPoint(px, py, pz)
-				local ptile = _map:GetTile(ptile_x, ptile_y)
-				if ptile == tile then
-					player.Physics:Teleport(dx, dy, dz)
-				end
-			end
-		end
-		
 		_map:SetTile(tx, ty, old_tile)
 		
 		local tile_radius_plus_overhang = ((TILE_SCALE / 2) + 1.0) * 1.4142
 		local is_ocean_tile = IsOceanTile(old_tile)
+		
 		if is_ocean_tile then
-			-- Behaviour pulled from walkableplatform's onremove/DestroyObjectsOnPlatform response.
 			local entities_near_ice = TheSim:FindEntities(dx, dy, dz, tile_radius_plus_overhang, nil, self.IGNORE_ICE_BREAKING_ONREMOVE_TAGS)
+			
 			for _, ent in ipairs(entities_near_ice) do
-				if ent:IsValid() then
+				local ex, ey, ez = ent.Transform:GetWorldPosition()
+				
+				if ent:IsValid() and not _map:IsPassableAtPoint(ex, ey, ez) then
 					local has_drownable = ent.components.drownable ~= nil
 					-- We're testing the overhang, so we need to verify that anything we find isn't
 					-- still on some adjacent dock or land tile or other platform after we remove ourself.
 					
-					local ignore_drown = ent.entity:GetParent() or ent.components.amphibiouscreature
-						or _map:IsVisualGroundAtPoint(ent.Transform:GetWorldPosition()) or ent:GetCurrentPlatform()
+					local ignore_drown = ent.entity:GetParent() or ent.components.amphibiouscreature or ent:GetCurrentPlatform()
 					
-					if not has_drownable and not ignore_drown then
-						if ent.OnPolarFreeze then
-							ent:OnPolarFreeze(false)
-						elseif ent.components.submersible then
-							ent.components.submersible:Submerge()
-						elseif ent.components.inventoryitem and ent.components.health == nil then
-							ent.components.inventoryitem:SetLanded(false, true)
-						elseif not ent:HasTag("ignorewalkableplatforms") then -- Not ocean stuff
-							print("Polar Ice (Breaking) removed ent:", ent)
-							DestroyEntity(ent, inst, true, true)
+					if not ignore_drown then
+						if not has_drownable then
+							if ent.OnPolarFreeze then
+								ent:OnPolarFreeze(false)
+							elseif ent.components.submersible then
+								ent.components.submersible:Submerge()
+							elseif ent.components.inventoryitem and ent.components.health == nil then
+								ent.components.inventoryitem:SetLanded(false, true)
+							elseif not ent:HasTag("ignorewalkableplatforms") then -- Not ocean stuff
+								print("Polar Ice (Breaking) removed ent:", ent)
+								DestroyEntity(ent, inst, true, true)
+							end
+						else
+							local shore_point = has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz)) or nil
+							ent:PushEvent("onsink", {boat = nil, shore_pt = shore_point})
 						end
-					elseif has_drownable and not ignore_drown then
-						local shore_point = has_drownable and Vector3(FindRandomPointOnShoreFromOcean(dx, dy, dz)) or nil
-						ent:PushEvent("onsink", {boat = nil, shore_pt = shore_point})
 					end
 				end
 			end
@@ -538,7 +536,9 @@ return Class(function(self, inst)
 		
 		local floaterobjects = TheSim:FindEntities(dx, 0, dz, tile_radius_plus_overhang, FLOATEROBJECT_TAGS)
 		for _, floaterobject in ipairs(floaterobjects) do
-			if floaterobject.components.floater then
+			local ex, ey, ez = floaterobject.Transform:GetWorldPosition()
+			
+			if floaterobject.components.floater and not _map:IsPassableAtPoint(ex, ey, ez) then
 				local fx, fy, fz = floaterobject.Transform:GetWorldPosition()
 				if is_ocean_tile or _map:IsOceanTileAtPoint(fx, fy, fz) then
 					floaterobject:PushEvent("on_landed")
