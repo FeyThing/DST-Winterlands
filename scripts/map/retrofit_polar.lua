@@ -90,6 +90,8 @@ local function PolarRetrofitting_Island(map, savedata)
 	end, args = {entitiesOut = entities, width = map_width, height = map_height, rand_offset = false, debug_prefab_list = nil}}
 	
 	local function TryToAddLayout(name, area_size)
+		GetPolarLayouts()
+		
 		local layout = obj_layout.LayoutForDefinition(name)
 		local tile_size = #layout.ground
 		

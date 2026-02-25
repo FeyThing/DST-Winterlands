@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.3.45"
+version = "1.3.46"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[
@@ -33,7 +33,8 @@ server_filter_tags = {
 }
 
 local configs = {
-	language = "Language",
+	language = "Language ",
+	
 	biome = "Worldgen",
 	difficulty = "Difficulty",
 	misc = "Misc",

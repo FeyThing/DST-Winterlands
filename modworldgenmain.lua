@@ -91,8 +91,7 @@ local polar_layouts = {
 	},
 }
 
-local OldChooseSetPieces = Level.ChooseSetPieces
-function Level:ChooseSetPieces(...)
+function GetPolarLayouts()
 	-- NOTE: Static layouts must be registered *after* prefab swaps are selected !
 	-- Registering them earlier causes prefab proxies (berrybush, grass, etc) to resolve before world settings are known, breaking swap variants in setpieces only.
 	local Layouts = require("map/layouts").Layouts
@@ -114,8 +113,21 @@ function Level:ChooseSetPieces(...)
 		layout.ground_types = POLAR_GROUND_TYPES
 		Layouts[k] = layout
 	end
+end
+
+local OldChooseSetPieces = Level.ChooseSetPieces
+function Level:ChooseSetPieces(...)
+	GetPolarLayouts()
 	
 	return OldChooseSetPieces(self, ...)
+end
+
+local obj_layout = require("map/object_layout")
+local OldLayoutForDefinition = obj_layout.LayoutForDefinition
+function obj_layout:LayoutForDefinition(...)
+	GetPolarLayouts()
+	
+	return OldLayoutForDefinition(self, ...)
 end
 
 --	Tags, Keys

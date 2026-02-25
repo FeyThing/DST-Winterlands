@@ -271,4 +271,3 @@ AddPrefabPostInit("wanda", function(inst)
 		return inst
 	end
 end)
-
