@@ -67,9 +67,11 @@ local function PolarRetrofitting_Island(map, savedata)
 	local add_fn = {fn = function(prefab, points_x, points_y, current_pos_idx, entitiesOut, width, height, prefab_list, prefab_data, rand_offset)
 		local x = math.ceil((points_x[current_pos_idx] - width / 2) * TILE_SCALE)
 		local y = math.ceil((points_y[current_pos_idx] - height / 2) * TILE_SCALE)
+		
 		if entitiesOut[prefab] == nil then
 			entitiesOut[prefab] = {}
 		end
+		
 		local save_data = {x = x, z = y}
 		if prefab_data then
 			if prefab_data.data then
@@ -86,12 +88,11 @@ local function PolarRetrofitting_Island(map, savedata)
 				save_data["scenario"] = prefab_data.scenario
 			end
 		end
+		
 		table.insert(entitiesOut[prefab], save_data)
 	end, args = {entitiesOut = entities, width = map_width, height = map_height, rand_offset = false, debug_prefab_list = nil}}
 	
 	local function TryToAddLayout(name, area_size)
-		GetPolarLayouts()
-		
 		local layout = obj_layout.LayoutForDefinition(name)
 		local tile_size = #layout.ground
 		
@@ -110,10 +111,12 @@ local function PolarRetrofitting_Island(map, savedata)
 		local candidates = {}
 		local foundarea = false
 		local num_steps = 50
+		
 		for x = 0, num_steps do
 			for y = 0, num_steps do
 				local left = 8 + (x > 0 and ((x * math.floor(map_width / num_steps)) - area_size - 16) or 0)
 				local top  = 8 + (y > 0 and ((y * math.floor(map_height / num_steps)) - area_size - 16) or 0)
+				
 				if isvalidarea(left, top) then
 					table.insert(candidates, {top = top, left = left, distsq = VecUtil_LengthSq(left - map_width / 2, top - map_height / 2)})
 				end
@@ -122,7 +125,9 @@ local function PolarRetrofitting_Island(map, savedata)
 		
 		if #candidates > 0 then
 			local world_size = tile_size * 4
+			
 			table.sort(candidates, function(a, b) return a.distsq < b.distsq end)
+			
 			for _, candidate in ipairs(candidates) do
 				local top, left = candidate.top, candidate.left
 				local world_top, world_left = left * 4 - (map_width * 0.5 * 4), top * 4 - (map_height * 0.5 * 4)
@@ -136,6 +141,7 @@ local function PolarRetrofitting_Island(map, savedata)
 					end
 					
 					obj_layout.Place({left, top}, name, add_fn, nil, map)
+					
 					if layout.add_topology ~= nil then
 						AddSquareTopology(topology, world_top, world_left, world_size, "StaticLayoutIsland:Dummy_WL1", {"not_mainland"})
 						-- ^ Why ? Because adding a Layout with add_topology will cover staticlayouts in the ocean, so minimize the risks with a non-important tag one under first

@@ -27,12 +27,12 @@ local states = {
 		tags = {"doing", "busy", "canrotate"},
 		
 		onenter = function(inst)
+			inst.components.locomotor:Stop()
 			if inst.components.playercontroller then
 				inst.components.playercontroller:Enable(false)
 			end
 			
 			inst.AnimState:PlayAnimation("polarcast")
-			inst.components.locomotor:Stop()
 		end,
 		
 		timeline = {
@@ -71,6 +71,8 @@ local states = {
 				or "winterfist_large"
 			local pre = spelltype == 2 and "deploytoss_pre" or nil
 			
+			inst.components.locomotor:Stop()
+			
 			if inst.bufferedaction and inst.bufferedaction.target == inst then
 				spelltype = 4
 				
@@ -92,7 +94,6 @@ local states = {
 				
 				inst.SoundEmitter:PlaySound("polarsounds/winters_fists/use"..spelltype, nil, 0.5)
 			end
-			inst.components.locomotor:Stop()
 			
 			inst.sg.statemem.spelltype = spelltype
 		end,
@@ -184,8 +185,14 @@ local states = {
 		tags = {"busy", "canrotate"},
 		
 		onenter = function(inst, is_over)
-			inst.AnimState:PlayAnimation(is_over and "emote_fistshake" or "emote_flex")
 			inst.components.locomotor:Stop()
+			
+			if not (inst.components.inventory and inst.components.inventory:IsHeavyLifting())
+				and not (inst.components.rider and inst.components.rider:IsRiding())
+				and not (inst:HasTag("beaver") or inst:HasTag("weremoose") or inst:HasTag("weregoose")) then
+				
+				inst.AnimState:PlayAnimation(is_over and "emote_fistshake" or "emote_flex")
+			end
 			
 			inst:SetCameraZoomed(true)
 			inst.sg.statemem.is_over = is_over
@@ -586,8 +593,10 @@ local states_client = {
 	State{
 		name = "polarspawn",
 		tags = {"busy", "noattack", "nopredict", "nodangle"},
+		server_states = {"polarspawn"},
 		
 		onenter = function(inst)
+			inst.components.locomotor:Stop()
 			inst.AnimState:OverrideSymbol("swap_frozen", "frozen", "frozen")
 			inst.AnimState:PlayAnimation("frozen")
 			
@@ -612,9 +621,14 @@ local states_client = {
 		tags = {"busy", "canrotate"},
 		server_states = {"challenge_bearking"},
 		
-		onenter = function(inst)
-			inst.AnimState:PlayAnimation("emote_flex")
+		onenter = function(inst, is_over)
 			inst.components.locomotor:Stop()
+			if not (inst.replica.inventory and inst.replica.inventory:IsHeavyLifting())
+				and not (inst.replica.rider and inst.replica.rider:IsRiding())
+				and not (inst:HasTag("beaver") or inst:HasTag("weremoose") or inst:HasTag("weregoose")) then
+				
+				inst.AnimState:PlayAnimation(is_over and "emote_fistshake" or "emote_flex")
+			end
 			
 			inst:PerformPreviewBufferedAction()
 			inst.sg:SetTimeout(2)
@@ -634,7 +648,7 @@ local states_client = {
 			inst:ClearBufferedAction()
 			inst.sg:GoToState("idle", true)
 		end,
-    },
+	},
 }
 
 ENV.AddStategraphPostInit("wilson_client", function(sg)

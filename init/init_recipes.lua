@@ -1,7 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local function PolarRecipe(name, ingredients, tech, config, filters, order)
+function PolarRecipe(name, ingredients, tech, config, filters, order)
 	if config == nil then
 		config = {}
 	end

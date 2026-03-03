@@ -69,7 +69,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		GENERIC = "Probably more susceptible to hold its ground than the other ones.",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Took you long to show up!"
-	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "All that shine, but no sense of stealth."
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "All that glitter must be worth some gold..."
 	DESCRIBE.POLARBEAR = {
 		DEAD = "At least he will be well preserved here.",
 		ENRAGED = "You want to see ME lose my cool?!",

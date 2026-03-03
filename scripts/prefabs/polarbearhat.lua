@@ -122,6 +122,7 @@ local function fn()
 	
 	inst:AddTag("hat")
 	inst:AddTag("bearhead")
+	inst:AddTag("fullhelm_hat")
 	
 	inst:AddComponent("snowmandecor")
 	
