@@ -69,8 +69,11 @@ end
 function PolarMistEmitter:StartMisting()
 	self:StopMisting()
 	
-	local rate = GetMistRate(self, self.inst)
-	self.mist_task = self.inst:DoPeriodicTask(rate, function() self:DoMist() end)
+	--	NOTE: It would appear the frosty mist currently causes a lot of lag for players with bad network (I kind of see why now...),
+	--	currently disabling it until we can make improvements !
+	
+	--local rate = GetMistRate(self, self.inst)
+	--self.mist_task = self.inst:DoPeriodicTask(rate, function() self:DoMist() end)
 end
 
 function PolarMistEmitter:StopMisting()

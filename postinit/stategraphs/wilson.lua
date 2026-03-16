@@ -384,6 +384,7 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 			oldattacked_event(inst, data, ...)
 		end
 	end
+	
 	local oldemote_event = sg.events["emote"].fn
 	sg.events["emote"].fn = function(inst, data, ...)
 		if data and data.insnowonly then

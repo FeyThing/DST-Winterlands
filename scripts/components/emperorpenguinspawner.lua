@@ -580,8 +580,10 @@ return Class(function(self, inst)
 			return
 		end
 		
-		castle_floor._time_asleep = castle_floor._time_asleep or GetTime()
-		if GetTime() - castle_floor._time_asleep < TUNING.EMPEROR_PENGUIN_CASTLE_DEFEATED_DESPAWN_TIME then
+		local t = GetTime()
+		castle_floor._time_asleep = castle_floor._time_asleep or t
+		
+		if t - castle_floor._time_asleep < TUNING.EMPEROR_PENGUIN_CASTLE_DEFEATED_DESPAWN_TIME then
 			return
 		end
 		
