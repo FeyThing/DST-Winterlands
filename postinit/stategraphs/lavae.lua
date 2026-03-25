@@ -39,8 +39,6 @@ ENV.AddStategraphPostInit("lavae", function(sg)
 		sg.states[state.name] = state
 	end
 	
-	--	Fix spawning in shadow, remove non-polar penguin on spawn
-	
 	local oldidle_enter = sg.states["idle"].onenter
 	sg.states["idle"].onenter = function(inst, ...)
 		if inst.wantstopolarbuff then

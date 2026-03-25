@@ -5,6 +5,11 @@ local Repairable = require("components/repairable")
 	
 	local OldRepair = Repairable.Repair
 	function Repairable:Repair(doer, repair_item, ...)
+		if self.inst.SoundEmitter == nil then
+			-- Items with a 'boatrepairsound' are forced to play the sound, we added this to Ice, but Ice Hat has no SoundEmitter.
+			self.inst.entity:AddSoundEmitter()
+		end
+		
 		local repair_item_repairer = repair_item and repair_item.components.repairer
 		local icing_on_top = repair_item_repairer and repair_item_repairer.repairmaterial == MATERIALS.DRYICE and self.repairmaterial == MATERIALS.ICE
 		
