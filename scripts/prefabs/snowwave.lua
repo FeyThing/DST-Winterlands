@@ -116,12 +116,12 @@ local function blocker()
 	inst.entity:AddTransform()
 	inst.entity:AddNetwork()
 	
-	--inst:AddTag("fx")
+	inst:AddTag("FX")
 	inst:AddTag("NOBLOCK")
 	inst:AddTag("snowblocker")
 	
 	inst._snowblockrange = net_smallbyte(inst.GUID, "snowwave_blocker._snowblockrange", "snowblockrangedirty")
-	inst._snowblockrange:set(6) -- For debug spawn :3
+	inst._snowblockrange:set(6) -- For debug spawn, always set manually otherwise :3
 	
 	inst:ListenForEvent("snowblockrangedirty", OnSnowBlockRangeDirty)
 	

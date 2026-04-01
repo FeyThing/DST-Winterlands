@@ -169,6 +169,10 @@ local ITEMS = {
 	"ms_treasurechest_polarice",
 }
 
+for i, v in ipairs(ITEMS) do
+	RegisterInventoryItemAtlas(GLOBAL.resolvefilepath("images/polarimages.xml"), v..".tex")
+end
+
 --	Audio Remaps
 
 local SoundRemap = {
@@ -188,10 +192,6 @@ end
 
 local scrapbook_prefabs = require("scrapbook_prefabs")
 local scrapbookdata = require("screens/redux/scrapbookdata")
-
-for i, v in ipairs(ITEMS) do
-	RegisterInventoryItemAtlas(GLOBAL.resolvefilepath("images/polarimages.xml"), v..".tex")
-end
 
 POLARAMULET_PARTS = GLOBAL.rawget(GLOBAL, "POLARAMULET_PARTS") or {}
 

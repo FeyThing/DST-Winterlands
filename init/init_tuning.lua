@@ -8,8 +8,9 @@ local total_day_time = TUNING.TOTAL_DAY_TIME
 local day_time = seg_time * day_segs
 local dusk_time = seg_time * dusk_segs
 local night_time = seg_time * night_segs
-
 local wilson_attack = TUNING.BASE_SURVIVOR_ATTACK
+
+local KnownModIndex = GLOBAL.KnownModIndex
 
 --	Configs
 	
@@ -27,7 +28,7 @@ local wilson_attack = TUNING.BASE_SURVIVOR_ATTACK
 	
 	TUNING.POLAR_TASKS_OPTIONALITY = {
 		["Polar Floe"] = 0.5,
-		["Polar Gnomes"] = 0.25,
+		["Polar Gnomes"] = KnownModIndex:IsModEnabled("workshop-3686748706") and 1 or 0.25, -- Gnome Place Like Gnome funny increase
 		["Polar Icerink"] = 0.32,
 		["Polar Quarry"] = 0.32,
 	}

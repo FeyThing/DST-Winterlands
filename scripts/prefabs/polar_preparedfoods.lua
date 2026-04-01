@@ -88,6 +88,8 @@ local function MakePreparedFood(data)
 			end
 		end
 		
+		inst.wet_prefix = data.wet_prefix
+		
 		if data.basename then
 			inst:SetPrefabNameOverride(data.basename)
 			if data.spice then
@@ -130,7 +132,6 @@ local function MakePreparedFood(data)
 		inst:AddComponent("tradable")
 		
 		inst:AddComponent("inspectable")
-		inst.wet_prefix = data.wet_prefix
 		
 		if data.perishtime and data.perishtime > 0 then
 			inst:AddComponent("perishable")

@@ -40,7 +40,7 @@ local ArcticFoolFish = Class(function(self, inst)
 end)
 
 function ArcticFoolFish:GetFishStyle(target)
-	local sym, build = "fish0"..math.random(2), "arctic_fool_fish" -- TODO: add more variety 
+	local sym, build = "fish0"..math.random(4), "arctic_fool_fish"
 	
 	return sym, build
 end

@@ -330,33 +330,34 @@ AddRoom("PolarIsland_GnomeVillage", {
 	tags = {"ForceDisconnected", "PolarThrone"},
 	type = NODE_TYPE.SeparatedRoom,
 	contents = {
-		countprefabs = {
-			polarbearhouse = function() return math.random() < 0.15 and 1 or 0 end,
-			snowwave_itemrespawner = function() return math.random(8, 13) end,
-			winter_tree_sparse = function() return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and 1 or 0 end,
+		countstaticlayouts = {
+			["Polar_Bushes"] = function() return math.random(0, 1) end,
 		},
 		
-		distributepercent = 0.25,
+		countprefabs = {
+			polarbearhouse = function() return math.random(0, 1) end,
+			snowwave_itemrespawner = function() return math.random(10, 16) end,
+			winter_tree_sparse = function() return IsSpecialEventActive(SPECIAL_EVENTS.WINTERS_FEAST) and math.random(1, 3) or 0 end,
+		},
+		
+		distributepercent = 0.4,
 		distributeprefabs = {
-			polartrinket_1 = 0.45,
-			polartrinket_2 = 0.3,
-			trinket_4 = 0.4,
-			trinket_13 = 0.25,
+			polargnomespawner = 1.4,
 			
 			antler_tree = 0.35,
-			evergreen = 2.5,
-			evergreen_sparse = 1.2,
-			twiggytree = 0.2,
+			evergreen = 3.5,
+			evergreen_sparse = 1.5,
+			twiggytree = 0.45,
 			marsh_bush = 1.5,
-			rock_ice = 0.5,
-			rocks = 0.5,
+			rock_ice = 1,
+			rock1 = 0.5,
 			
-			mushtree_medium = 0.15,
-			mushtree_small = 0.32,
+			mushtree_medium = 0.7,
+			mushtree_small = 0.6,
 			mushtree_tall = 0.5,
 			
-			red_mushroom = 0.3,
-			green_mushroom = 0.64,
+			red_mushroom = 1,
+			green_mushroom = 1,
 			blue_mushroom = 1,
 		},
 		

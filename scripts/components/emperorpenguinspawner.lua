@@ -275,7 +275,7 @@ return Class(function(self, inst)
 	
 	--	Building castle rules...
 	
-	local CASTLE_AVOID_TAGS = {"blocker", "structure", "wall", "character"}
+	local CASTLE_AVOID_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "structure", "wall", "character"}
 	local CASTLE_AVOID_NOT_TAGS = {"icecastlepart", "penguinicepart", "INLIMBO", "player"}
 	
 	function self:GetValidCastlePos(pt)

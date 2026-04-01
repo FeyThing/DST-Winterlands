@@ -155,7 +155,7 @@ local function fx()
 	end
 	
 	inst:AddComponent("colourtweener")
-	inst.components.colourtweener:StartTween({0.63 + math.random() * 0.2, 0.7, 0.9, 0.3}, 0.2, inst.DoPuppetFade)
+	inst.components.colourtweener:StartTween({0.63 + math.random() * 0.2, 0.7, 0.9, 0.3}, 0.2)
 	
 	inst:AddComponent("skinner")
 	inst.components.skinner:SetupNonPlayerData()

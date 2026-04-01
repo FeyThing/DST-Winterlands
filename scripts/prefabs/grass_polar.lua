@@ -326,22 +326,22 @@ local function OnInit(inst)
 end
 
 local function spawner()
-    local inst = CreateEntity()
+	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
-    inst.entity:AddNetwork()
+	inst.entity:AddNetwork()
 	
-    inst.entity:SetPristine()
-
-    if not TheWorld.ismastersim then
-        return inst
-    end
-
-    inst:DoTaskInTime(0.1, OnInit)
+	inst.entity:SetPristine()
+	
+	if not TheWorld.ismastersim then
+		return inst
+	end
+	
+	inst:DoTaskInTime(0.1, OnInit)
 	
 	inst.persists = false
-
-    return inst
+	
+	return inst
 end
 
 local waxed_data = {

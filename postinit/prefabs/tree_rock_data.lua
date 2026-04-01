@@ -5,8 +5,6 @@ local TREE_ROCK_DATA = require("prefabs/tree_rock_data")
 
 --
 
-local WEIGHTED_VINE_LOOT = TREE_ROCK_DATA.WEIGHTED_VINE_LOOT
-
 local LOOT = {
 	POLAR_AREA = {
 		["rocks"] 			= 3,
@@ -26,12 +24,10 @@ local LOOT = {
 }
 
 for k, v in pairs(LOOT) do
-	WEIGHTED_VINE_LOOT[k] = v
+	TREE_ROCK_DATA.WEIGHTED_VINE_LOOT[k] = v
 end
 
 --
-
-local VINE_LOOT_DATA = TREE_ROCK_DATA.VINE_LOOT_DATA
 
 local LOOT_DATA = {
 	["bluegem_shards"] = 	{build = "tree_rock_polar", symbols = {"swap_bluegem_shards"}},
@@ -39,29 +35,34 @@ local LOOT_DATA = {
 }
 
 for k, v in pairs(LOOT_DATA) do
-	VINE_LOOT_DATA[k] = v
+	TREE_ROCK_DATA.VINE_LOOT_DATA[k] = v
 end
 
 --
 
-local ROOMS_TO_LOOT_KEY = TREE_ROCK_DATA.ROOMS_TO_LOOT_KEY
-
 local ROOMS = {
-	["PolarIsland_BG"] = 			"POLAR_AREA",
-	["PolarIsland_Village"] = 		"POLAR_AREA",
-	["PolarIsland_Lakes"] = 		"POLAR_AREA",
-	["PolarIsland_Walrus"] = 		"POLAR_AREA",
-	["PolarIsland_FloeField"] = 	"POLAR_AREA",
-	["PolarIsland_BurntForest"] = 	"POLAR_AREA",
-	["PolarIsland_BigLake"] = 		"POLAR_AREA",
-	["PolarIsland_Rink"] = 			"POLAR_AREA",
-	
-	["PolarIsland_Caves"] = 		"POLARCAVE_AREA",
-	["PolarIsland_TrappedCaves"] = 	"POLARCAVE_AREA",
+	["PolarIsland_Caves"] = "POLARCAVE_AREA",
+	["PolarIsland_TrappedCaves"] = "POLARCAVE_AREA",
 }
 
 for k, v in pairs(ROOMS) do
-	ROOMS_TO_LOOT_KEY[k] = v
+	TREE_ROCK_DATA.ROOMS_TO_LOOT_KEY[k] = v
+end
+
+local TASKS = {
+	["Polar Lands"] = "POLAR_AREA", -- Default Winterlands loot
+}
+
+for k, v in pairs(TASKS) do
+	TREE_ROCK_DATA.TASKS_TO_LOOT_KEY[k] = v
+end
+
+local LAYOUTS = {
+	["Polar Lands"] = "POLAR_AREA", -- Retrofitted Winterlands fallback
+}
+
+for k, v in pairs(LAYOUTS) do
+	TREE_ROCK_DATA.STATIC_LAYOUTS_TO_LOOT_KEY[k] = v
 end
 
 --	Just changing dirt to snow...
