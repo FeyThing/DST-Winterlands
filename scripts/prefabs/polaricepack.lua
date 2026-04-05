@@ -2,12 +2,10 @@ local assets = {
 	Asset("ANIM", "anim/polaricepack.zip"),
 }
 
---if owner:HasTag("pocketdimension_container") or owner:HasTag("buried") then
-
 local function OnOwnerUsed(inst, owner)
 	local _owner = inst.components.inventoryitem:GetGrandOwner()
 	
-	if owner and owner.components.container then
+	if owner and owner.components.container and not (owner:HasTag("pocketdimension_container") or owner:HasTag("buried")) then
 		if owner.components.polarmistemitter == nil then
 			owner:AddComponent("polarmistemitter")
 			owner.components.polarmistemitter.maxmist = 6
@@ -34,9 +32,9 @@ local function OnOwnerChange(inst)
 	end
 	
 	if owner and owner:IsValid() and owner ~= inst._owner then
-		if owner.components.preserver == nil then
-			owner:AddComponent("preserver")
-		end
+		--[[if owner.components.preserver == nil then
+			owner:AddComponent("preserver")	NOTE: preserver and tag-based container spoilage rates (like "fridge") are mutually exclusive, we can't use this :/
+		end]]
 		
 		inst:ListenForEvent("onclose", inst._onownerused, owner)
 		inst:ListenForEvent("onopen", inst._onownerused, owner)

@@ -116,7 +116,7 @@ local function blocker()
 	inst.entity:AddTransform()
 	inst.entity:AddNetwork()
 	
-	inst:AddTag("FX")
+	--inst:AddTag("FX")
 	inst:AddTag("NOBLOCK")
 	inst:AddTag("snowblocker")
 	

@@ -1,4 +1,5 @@
-local PocketWatchCommon = require "prefabs/pocketwatch_common"
+local PocketWatchCommon = require("prefabs/pocketwatch_common")
+local PlayerCommonExtensions = require("prefabs/player_common_extensions")
 
 local assets = {
 	Asset("ANIM", "anim/pocketwatch_polar.zip"),
@@ -37,15 +38,7 @@ end
 
 --
 
-local EQUIPS_SYM_OVERRIDE = {
-	swap_hat 		= EQUIPSLOTS.HEAD,
-	swap_body 		= EQUIPSLOTS.BODY,
-	swap_body_tall 	= EQUIPSLOTS.BODY,
-	swap_object 	= EQUIPSLOTS.HANDS,
-	lantern_overlay = EQUIPSLOTS.HANDS,
-}
-
-local function GetDebugAnim(target) -- Too much asked to get just the current anim I guess
+local function GetDebugAnim(target)
 	local dbg = target:GetDebugString()
 	
 	if dbg then
@@ -56,75 +49,120 @@ local function GetDebugAnim(target) -- Too much asked to get just the current an
 	return nil
 end
 
-local function SetPuppetStyle(inst, data)
-	local doer = data and data.doer
+local function UpdateEquipped(inst, owner)
+	if inst.components.skinner then
+		inst.components.skinner:CopySkinsFromPlayer(owner)
+	end
 	
-	if doer and inst.components.skinner then
-		inst.components.skinner:CopySkinsFromPlayer(doer)
-		local anim = GetDebugAnim(doer)
-		if anim then
-			inst.AnimState:PlayAnimation(anim, true)
-		end
+	inst._equipped = inst._equipped or {}
+	local updated = {}
+	
+	for slot, item in pairs(owner.components.inventory.equipslots or {}) do
+		local equipped = inst._equipped[slot]
+		updated[slot] = true
 		
-		if data.z then
-			inst.Transform:SetPosition(data.x, data.y, data.z)
-		end
-		inst.Transform:SetRotation(doer.Transform:GetRotation())
-		
-		for sym, equipslot in pairs(EQUIPS_SYM_OVERRIDE) do
-			local build_override, sym_override = doer.AnimState:GetSymbolOverride(sym)
-			local item = doer.components.inventory and doer.components.inventory:GetEquippedItem(equipslot)
-			local hastool = nil
-			
-			if sym == "swap_hat" then
-				if sym_override then
-					inst.AnimState:Show("HAT")
-					inst.AnimState:Show("HAIR_HAT")
-					inst.AnimState:Hide("HAIR_NOHAT")
-					inst.AnimState:Hide("HAIR")
-					inst.AnimState:Hide("HEAD")
-					inst.AnimState:Show("HEAD_HAT")
-					inst.AnimState:Show("HEAD_HAT_NOHELM")
-					inst.AnimState:Hide("HEAD_HAT_HELM")
-				else
-					inst.AnimState:Hide("HAT")
-					inst.AnimState:Hide("HAIR_HAT")
-					inst.AnimState:Show("HAIR_NOHAT")
-					inst.AnimState:Show("HAIR")
-					inst.AnimState:Show("HEAD")
-					inst.AnimState:Hide("HEAD_HAT")
-					inst.AnimState:Hide("HEAD_HAT_NOHELM")
-					inst.AnimState:Hide("HEAD_HAT_HELM")
+		local valid = item and item:IsValid()
+		if equipped and equipped:IsValid() then
+			if not valid or (equipped.prefab ~= item.prefab) or (equipped:GetSkinName() ~= item:GetSkinName()) then
+				if equipped.components.equippable:IsEquipped() then
+					inst.components.inventory:Unequip(slot)
 				end
-			elseif (sym == "swap_object" or sym == "lantern_overlay") and not hastool then
-				if sym_override then
-					hastool = true
-					inst.AnimState:Show("ARM_carry")
-					inst.AnimState:Hide("ARM_normal")
-				elseif not item then
-					inst.AnimState:Hide("ARM_carry")
-					inst.AnimState:Show("ARM_normal")
-				end
-			end
-			
-			if item then
-				local build_override, sym_override = doer.AnimState:GetSymbolOverride(sym)
 				
-				if sym_override then
-					local skin_name = item:GetSkinName() or item.skinname
-					local skin_build = skin_name and GetBuildForItem(skin_name)
-					
-					if skin_build then
-						inst.AnimState:OverrideItemSkinSymbol(sym, skin_build, sym, item.GUID, item.AnimState:GetBuild())
-					else
-						inst.AnimState:OverrideSymbol(sym, build_override, sym_override)
+				equipped:Remove()
+				inst._equipped[slot] = nil
+			end
+		end
+		
+		if valid then
+			if inst._equipped[slot] == nil then
+				equipped = SpawnPrefab(item.prefab, item.skinname, item.skin_id)
+			end
+			
+			if equipped then
+				--equipped:SetPersistData(item:GetPersistData()) That wouuuld be better but also causes issues with certain items (like lanterns)
+				if not equipped.components.equippable:IsEquipped() then
+					inst.components.inventory:Equip(equipped)
+				end
+				
+				if equipped.fx then
+					if equipped.fx.pocketwatch_polar_active then
+						equipped.fx.pocketwatch_polar_active:set(true)
 					end
+					
+					if TheWorld.ismastersim then
+						if equipped.fx.Activate_PocketwatchPolar then
+							equipped.fx:Activate_PocketwatchPolar(true)
+						end
+					end
+					
+					equipped.persists = false
+					equipped:Hide()
 				end
 			end
 		end
 		
-		inst.AnimState:SetFrame(doer.AnimState:GetCurrentAnimationFrame())
-		inst.AnimState:Pause()
+		inst._equipped[slot] = equipped
+	end
+	
+	for slot, equipped in pairs(inst._equipped) do
+		if not updated[slot] then
+			if equipped:IsValid() then
+				if equipped.components.equippable:IsEquipped() then
+					inst.components.inventory:Unequip(slot)
+				end
+				
+				equipped:Remove()
+			end
+			
+			inst._equipped[slot] = nil
+		end
+	end
+end
+
+local function RestartFade(inst)
+	if inst.components.colourtweener == nil then
+		inst:AddComponent("colourtweener")
+	end
+	
+	inst.components.colourtweener:StartTween({0.63 + math.random() * 0.2, 0.7, 0.9, 0.3}, 0.2)
+	inst:DoTaskInTime(0.21, function()
+		inst.components.colourtweener:StartTween({0.2, 0.7, 0.9, 0}, 0.2, inst.Hide)
+	end)
+	
+	for slot, item in pairs(inst.components.inventory.equipslots or {}) do
+		if item and item.fx then
+			if item.fx.pocketwatch_polar_dofade then
+				item.fx.pocketwatch_polar_dofade:push()
+			end
+			
+			if TheWorld.ismastersim then
+				if item.fx.DoFade_PocketwatchPolar then
+					item.fx:DoFade_PocketwatchPolar()
+				end
+			end
+		end
+	end
+	
+	inst:Show()
+end
+
+local function SetPuppetStyle(inst, data)
+	local owner = data and data.owner
+	
+	if owner == nil or not owner:IsValid() or not owner.components.inventory then
+		inst:Remove()
+		return
+	end
+	
+	inst:UpdateEquipped(owner)
+	
+	inst.Transform:SetPosition(owner.Transform:GetWorldPosition())
+	inst.Transform:SetRotation(owner.Transform:GetRotation())
+	
+	local anim = GetDebugAnim(owner)
+	if anim then
+		inst.AnimState:PlayAnimation(anim, true)
+		inst.AnimState:SetFrame(owner.AnimState:GetCurrentAnimationFrame() or 0)
 	end
 end
 
@@ -133,20 +171,33 @@ local function fx()
 	
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
+	inst.entity:AddSoundEmitter()
 	inst.entity:AddNetwork()
 	
 	inst.Transform:SetFourFaced()
 	
+	inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
 	inst.AnimState:SetBank("wilson")
 	inst.AnimState:SetBuild("wanda")
 	inst.AnimState:SetFinalOffset(-6)
+	inst.AnimState:UsePointFiltering(true)
+	inst.AnimState:SetDeltaTimeMultiplier(0)
 	inst.AnimState:SetAddColour(0.3, 0.52 + math.random() * 0.1, 0.85 + math.random() * 0.15, 0)
 	inst.AnimState:SetMultColour(0, 0, 0, 0)
 	inst.AnimState:SetScale(1 + math.random() * 0.15, 1 + math.random() * 0.15)
 	inst.AnimState:SetLightOverride(0.1)
 	inst.AnimState:SetErosionParams(0, math.random() * 0.5, 1)
 	
-	inst:AddTag("FX")
+	if PlayerCommonExtensions.SetupBaseSymbolVisibility then -- TODO: Remove this after WX skiltree beta
+		PlayerCommonExtensions.SetupBaseSymbolVisibility(inst)
+	end
+	
+	inst.SoundEmitter:OverrideVolumeMultiplier(0)
+	
+	inst:AddTag("afterimagefx")
+	inst:AddTag("CLASSIFIED")
+	inst:AddTag("equipmentmodel")
+	inst:AddTag("NOCLICK")
 	
 	inst.entity:SetPristine()
 	
@@ -154,17 +205,21 @@ local function fx()
 		return inst
 	end
 	
+	inst:AddComponent("bloomer")
+	
+	inst:AddComponent("colouradder")
+	
 	inst:AddComponent("colourtweener")
-	inst.components.colourtweener:StartTween({0.63 + math.random() * 0.2, 0.7, 0.9, 0.3}, 0.2)
+	
+	inst:AddComponent("inventory")
+	inst.components.inventory.maxslots = 0
 	
 	inst:AddComponent("skinner")
 	inst.components.skinner:SetupNonPlayerData()
 	
+	inst.RestartFade = RestartFade
 	inst.SetPuppetStyle = SetPuppetStyle
-	
-	inst:DoTaskInTime(0.21, function()
-		inst.components.colourtweener:StartTween({0.2, 0.7, 0.9, 0}, 0.2, inst.Remove)
-	end)
+	inst.UpdateEquipped = UpdateEquipped
 	
 	inst.persists = false
 	

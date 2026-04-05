@@ -398,6 +398,8 @@ local function rock()
 	
 	inst.OnPolarFreeze = OnPolarFreeze
 	
+	MakeHauntableWork(inst) -- TODO: Remove NOCLICK for ceiling icicles and give them a mousethrough for alive players, ghost can haunt them and make them fall
+	
 	local scale = math.random() > 0.5 and 1 or -1
 	inst.AnimState:SetScale(scale, 1)
 	

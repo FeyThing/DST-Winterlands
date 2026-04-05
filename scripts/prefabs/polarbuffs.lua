@@ -341,29 +341,28 @@ local function wandatimefreeze_ontemperaturedelta(inst, target, data)
 	end
 end
 
-local function wandatimefreeze_nexttween(inst)
-	if inst and inst:IsValid() then
-		inst._tweening = inst._tweening == 2 and 3 or 1
-	end
-end
-
 local function wandatimefreeze_ontick(inst, target)
 	target:AddTag("vigorbuff")
 	
-	local fx = SpawnPrefab("wandatimefreeze_player_fx")
-	if fx and fx.SetPuppetStyle then
-		local x, y, z = target.Transform:GetWorldPosition()
-		fx:SetPuppetStyle({doer = target, x = x, y = y - 0.08, z = z})
+	if inst._afterimages == nil then
+		inst._afterimages = {}
+		inst._afterimage_i = 1
+		
+		for i = 1, TUNING.POCKETWATCH_BUFF_TRAIL_PUPPETS do
+			inst:DoTaskInTime(FRAMES * i, function()
+				if inst._afterimages then
+					table.insert(inst._afterimages, SpawnPrefab("wandatimefreeze_player_fx"))
+				end
+			end)
+		end
 	end
 	
-	if target.components.colourtweener then
-		if inst._tweening == 1 then
-			inst._tweening = 2
-			target.components.colourtweener:StartTween({0.63, 0.7, 0.9, 0.6}, 1, function() wandatimefreeze_nexttween(inst) end)
-		elseif inst._tweening == 3 then
-			inst._tweening = 4
-			target.components.colourtweener:StartTween({0.8, 0.8, 0.8, 1}, 1, function() wandatimefreeze_nexttween(inst) end)
-		end
+	local fx = inst._afterimages[inst._afterimage_i]
+	inst._afterimage_i = (inst._afterimage_i >= #inst._afterimages and 1) or (inst._afterimage_i + 1)
+	
+	if fx and fx:IsValid() then
+		fx:SetPuppetStyle({owner = target})
+		fx:RestartFade()
 	end
 	
 	local percent = math.clamp(inst.components.timer:GetTimeLeft("buffover") / TUNING.POCKETWATCH_BUFF_DURATION, 0, 1)
@@ -382,13 +381,20 @@ local function WandaTimeFreeze_OnAttached(inst, target)
 	inst.ontemperaturedeltafn = function(src, data) wandatimefreeze_ontemperaturedelta(inst, target, data) end
 	inst:ListenForEvent("temperaturedelta", inst.ontemperaturedeltafn, target)
 	
-	inst:DoTaskInTime(1, function() inst._tweening = 1 end)
 	inst.task = inst:DoPeriodicTask(TUNING.POCKETWATCH_BUFF_TICK, wandatimefreeze_ontick, nil, target)
 end
 
 local function WandaTimeFreeze_OnDetached(inst, target)
 	target:RemoveTag("frozenstats")
 	target.SoundEmitter:PlaySound("polarsounds/timefreeze/clock_stop")
+	
+	if inst._afterimages then
+		for i, fx in ipairs(inst._afterimages) do
+			fx:Remove()
+		end
+		
+		inst._afterimages = nil
+	end
 	
 	if target.components.colourtweener then
 		target.components.colourtweener:EndTween()
