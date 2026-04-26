@@ -62,6 +62,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLAR_THRONE = "Naughty Throne"
 	NAMES.POLAR_THRONE_GIFTS = "Gift Pile"
 	NAMES.POLARAMULET_STATION = "\"The Polar Exchange\""
+	NAMES.POLARBEAR_RUG = "Bear Rug"
 	NAMES.POLARBEARHEAD = "Polar Bear Head"
 	NAMES.POLARBEARHOUSE = "Bear Bothy"
 	NAMES.POLARHEADSTICK = "Creature Head"
@@ -73,7 +74,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 --	Items
 	
 	--	Food
-	NAMES.DRYICECREAM = "Dry Ice Cream"
+	NAMES.DRYICECREAM = "Dry Ice Cornet"
 	NAMES.FILET_O_FLEA = "Filet-O-Flea"
 	NAMES.ICECREAM_EMPEROR = NAMES.ICECREAM
 	NAMES.ICELETTUCE = "Iceberg Lettuce"
@@ -113,7 +114,6 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.WALRUS_BAGPIPE = "Bagpipes"
 	NAMES.WALRUS_BEARTRAP = "Bear Trap"
 	NAMES.WINTERS_FISTS = "Winter's Fists"
-	NAMES.WINTERS_FISTS_BLUEPRINT = "Winter's Fists Blueprint"
 	
 	--	Others
 	NAMES.ARCTIC_FOOL_FISH = "Arctic Fools' Fish"
@@ -142,6 +142,12 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.TRIAL_FIST_FIGHT = "A Bear, Bare Paws"
 	NAMES.TRIAL_ENDURENCE_FIGHT = "Fair Odds"
 	NAMES.TRIAL_ALL_OUT_RUMBLE = "All Out Rumble"
+	NAMES.WINTERS_FISTS_BLUEPRINT = "Winter's Fists Blueprint"
+	
+	NAMES.WALRUSTRADE_POLARBEAR_RUG_BLUEPRINT = "Bear Rug Blueprint"
+	NAMES.WALRUSTRADE_BUNDLEWRAP_BLUEPRINT = "Bundling Wrap Blueprint"
+	NAMES.WALRUSTRADE_DESERTHAT_BLUEPRINT = "Desert Goggles Blueprint"
+	NAMES.WALRUSTRADE_DRAGONFLYFURNACE_BLUEPRINT = "Scaled Furnace Blueprint"
 	
 --	Skins
 	
@@ -154,6 +160,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_NAMES.ms_goldenshovel_polar = "Goldenice Shovel"
 	STRINGS.SKIN_NAMES.ms_dragonflychest_polarice = "Dry \"Ice Box\""
 	STRINGS.SKIN_NAMES.ms_minerhat_boreal = "Boreal Headlamp"
+	STRINGS.SKIN_NAMES.ms_polarbear_rug_red = "Red Paint"
 	STRINGS.SKIN_NAMES.ms_polarheadstick_merm = "Merm Head"
 	STRINGS.SKIN_NAMES.ms_polarheadstick_pig = "Pig Head"
 	STRINGS.SKIN_NAMES.ms_polarheadstick_walrus = "Walrus Head"
@@ -171,6 +178,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SKIN_DESCRIPTIONS.ms_goldenshovel_polar = "It glints with the pale shimmer of freshly frozen ground."
 	STRINGS.SKIN_DESCRIPTIONS.ms_dragonflychest_polarice = "It's almost like if you had a large Ice Box. Well, the impression strikes out more in the dead of winter."
 	STRINGS.SKIN_DESCRIPTIONS.ms_minerhat_boreal = "Its glow wiggles and waves like a pocket-sized aurora leading the way."
+	STRINGS.SKIN_DESCRIPTIONS.ms_polarbear_rug_red = "No, we don't have it in purple."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_merm = "Give off a fearsome sight and smell to anyone entering your turf."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_pig = "Let those pigs know this place is no ham-usement park."
 	STRINGS.SKIN_DESCRIPTIONS.ms_polarheadstick_walrus = "Up this neatly stacked pile of blow dart pipes, their owner rest here."
@@ -292,6 +300,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.POLARBEAR_TOOTHTRADE_PRE = {"HMM... OH HO!", "LOOKS SHARP!", "WILL MAKE PRETTY ONE", "NOT BAD, NOT BAD", "YES..."}
 	STRINGS.POLARBEAR_TOOTHTRADE_PST = {"YOU DESERVE IT", "HERE, STILL FRESH", "HERE'S MY OFFER", "YOU CAN HAVE THIS", "TAKE THAT", "TAKE, TAKE!", "A FINE TRADE"}
 	STRINGS.POLARBEAR_TOOTHTRADE_EMPTY = {"OUT OF STOCK", "GOT NOTHING TO TRADE", "YOU TAKE SNOWFLEAS?", "ALL OUT"} -- Unused (for now?)
+	STRINGS.POLARBEAR_WILSON_ON_RUG = {"G-GOTTA GO", "GULP...", "OH HO NO!", "UH... BYE", "YIKES!", "WON'T BE NEXT"}
 	
 	STRINGS.POLARBEARKING_TRIAL_LOST_LEFT = {"NO SLIPPING AWAY!", "OHHH HO, ESCAPING SO SOON?", "WHERE DO YOU THINK YOU'RE GOING?"}
 	STRINGS.POLARBEARKING_TRIAL_LOST_DEAD1 = {"ENOUGH, YOU ARE NOT WORTHY", "SUCH A WASTE OF TIME, LEAVE THIS GROUND!", "WEAKNESS BRINGS NO REFRESHMENT"}
@@ -362,6 +371,80 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 		"Yuck! I'm out of here.",
 	}
 	
+	STRINGS.STORYTELLER.WALTER.POLARBEAR_RUG = {
+		CRYPTID_STORY = {
+			lines = {
+				{duration = 3, 		line = "Okay, this story is a bit different..."},
+				{duration = 1.5, 	line = "I found it written in a journal--"},
+				{duration = 1, 		line = "what?"},
+				{duration = 1, 		line = "Oh, right."},
+				{duration = 1.5, 	line = "(Ahem)... Woby found it"},
+				{duration = 1.5, 	line = "half-buried in the snow,"},
+				{duration = 2, 		line = "while WE were braving the blizzard!"},
+				{duration = 1.5, 	line = "It's full of weird notes"},
+				{duration = 2, 		line = "about a mysterious cryptid."},
+				{duration = 2.5, 	line = "Which may or may not exist,"},
+				{duration = 2.5, 	line = "but it's said to live here..."},
+				{duration = 3, 		line = "And I have the journal with me for proof, look!"},
+				{duration = 1, 		line = "Wait, no."},
+				{duration = 1.5, 	line = "That's my handbook."},
+				{duration = 2, 		line = "Uhh... Woby? Where's the journal?"},
+			},
+		},
+		
+		ICE_CYCLE = {
+			lines = {
+				{duration = 2, 		line = "Gather 'round, everyone!"},
+				{duration = 2.5, 	line = "This next one's a real spine-chiller,"},
+				{duration = 3, 		line = "and I call it: the ice-cycle..."},
+				{duration = 2.5, 	line = "heh... get it..? No?"},
+				{duration = 1.5, 	line = "Well. I'll explain..."},
+				{duration = 2, 		line = "You know this icy cave, over here,"},
+				{duration = 2.5, 	line = "full of icicles, above our heads?"},
+				{duration = 2, 		line = "It's really quiet here..."},
+				{duration = 2, 		line = "except, for the dripping"},
+				{duration = 2, 		line = "...drip..."},
+				{duration = 2, 		line = "...drop..."},
+				{duration = 1.5, 	line = "...and sometimes..."},
+				{duration = 1, 		line = "a shake!"},
+				{duration = 1.5, 	line = "A CRACK!"},
+				{duration = 2, 		line = "...By the time you hear it,"},
+				{duration = 1.5, 	line = "it's already too late."},
+				{duration = 2, 		line = "But it gets worse. Yup."},
+				{duration = 3.5, 	line = "When your soul tries to drift away from your impaled body,"},
+				{duration = 2.5, 	line = "it gets stuck on the ceiling,"},
+				{duration = 1.5, 	line = "unable to escape,"},
+				{duration = 2, 		line = "and freezes... grows..."},
+				{duration = 2, 		line = "into the next icicle."},
+				{duration = 2, 		line = "And next time someone walks by..."},
+				{duration = 3, 		line = "you'll be the one hanging overhead."},
+				{duration = 2, 		line = "Hey, are you still with me?"},
+				{duration = 2.5, 	line = "You're looking pale as snow here..."},
+			},
+		},
+		
+		URSA_MAJOR = {
+			lines = {
+				{duration = 2.5, 	line = "Sooo... I know a secret"},
+				{duration = 3.5, 	line = "about Ursa Major's past, one nobody should talk about."},
+				{duration = 2.5, 	line = "It's said, that for the longest time,"},
+				{duration = 3, 		line = "a giant angler fish lurked around the Winterlands' shores,"},
+				{duration = 2.5, 	line = "luring lone fisher-bears, with its shiny teeth..."},
+				{duration = 2.5, 	line = "it was so big it could swallow them whole!"},
+				{duration = 2, 		line = "And that it did, a lot!"},
+				{duration = 3, 		line = "But one night, young Ursa went out looking for his parents,"},
+				{duration = 3, 		line = "who didn't show up for his bedtime story."}, -- I will end you, Waltuh
+				{duration = 3, 		line = "That's where he found a bunch of strange shaped teeth,"},
+				{duration = 1.5, 	line = "poking through the ice floe."},
+				{duration = 2, 		line = "And upon taking a closer look..."},
+				{duration = 2, 		line = "the giant angler fish gobbled him right up!"},
+				{duration = 2.5, 	line = "The end."},
+				{duration = 3, 		line = "Well... I guess the Major gave him a good sucker punch."},
+				{duration = 2, 		line = "You know how the stories go..."},
+			},
+		},
+	}
+	
 --	UI
 	
 	--	Actions
@@ -374,6 +457,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_2 = "Bigball!!"
 	STRINGS.ACTIONS.CASTSPELL.WINTERS_FISTS_3 = "Hugeball!!!"
 	STRINGS.ACTIONS.OPEN_CRAFTING.URSATALK = "Talk to"
+	STRINGS.ACTIONS.USEITEMON.TOWER_POLAR_FLAG_ITEM = "Place Back"
 	STRINGS.ACTIONS.WALRUS_BEARTRAP_REMOVE = {
 		GENERIC = "Struggle",
 		HELP_OTHER = "Rescue",
@@ -522,6 +606,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.ANTLER_TREE_STICK = "Improves movement in high snow and speed by 25% when held.\n\nAlso increases stability on ice."
 	STRINGS.SCRAPBOOK.SPECIALINFO.COMPASS_POLAR = "Functions just like a normal Compass. But it points to the north-i-est place of all."
 	STRINGS.SCRAPBOOK.SPECIALINFO.EMPEROR_EGG = "...somebody might know... what to do with it..."
+	STRINGS.SCRAPBOOK.SPECIALINFO.EMPEROR_PENGUINHAT = "Grants the wearer authority over the lowly Pengulls. Deambulate through the flock to your heart's content and collect taxes (you know, eggs)."
 	STRINGS.SCRAPBOOK.SPECIALINFO.FROSTWALKERAMULET = "Freezes the water around the wearer and under itself when dropped.\n\nAlso greatly increases stability on ice."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICELETTUCE = "Ingesting this will help you brave high snow with ease for a while."
 	STRINGS.SCRAPBOOK.SPECIALINFO.ICICLESTAFF = "Creates a salvo of 15 Icicles.\n\nNote to self: Keep clear from the area."
@@ -531,6 +616,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLAR_THRONE_GIFTS = "Free gifts!"
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET = "Can hold 3 teeth, which are said to gain new powers.\n\nWhat powers? Who knows.\nMaybe that... shape(?) in the shack."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARAMULET_STATION = "There's something shady about that shaky shack... but oh well, might as well make use of the services."
+	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEAR_RUG = "A warm surface for everyone to enjoy, besides bears."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHAT = "Slightly improves vision in a storm... also good to make others think you're an actual bear."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARHEAD = "Being around Polar Bear Heads boosts your damage dealt and absorption against bears of all kind by 12.5% for up to 4 Polar Bear Heads."
 	STRINGS.SCRAPBOOK.SPECIALINFO.POLARBEARKING = "Take part in the chieftain trials of raw strength to grow your esteem among all of Bearfolk!\n\nThese challenges require to bring a certain amount of specific creatures around Ursa Major, and fight them honorably (that means follow whatever rules may apply)."
@@ -548,7 +634,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALRUS_BAGPIPE = "Lose your wits playing the Bagpipes! Its tune keeps hounds and hound waves at ease momentarily, and opens hunters for safe trading to you and nearby allies."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WALRUS_BEARTRAP = "A nasty trap deployed and hidden in the snow by trappers.\n\nCreatures caught by the mechanism will be stuck in place momentarily. One can attempt to break free from it, or be rescued by allies or foes' attacks alike.\n\nCan be disarmed by placing an item atop, or risking your life."
 	STRINGS.SCRAPBOOK.SPECIALINFO.WINTERS_FISTS = "Put on those heavy ice chunk and pound the ground to burst out temporary snowy areas.\n\nSnowball combos can be performed WHILE standing in snow, making them bigger at each throw, dealing more damage, more freezing, and finally hurl down a deadly avalanche taking anything down its path!\n\nFrozen targets take up to double damage from punches."
-	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "Plugs into WX78's circuit board.\n\nRequires 1 socket and multiplies all sorts of Naughtiness gained as followed per circuit installed:\nx2 > x3 > x3.5 > x4 > x4.5 > x5"
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NAUGHTY = "Plugs into WX-78's Beta circuit board. Crafting recipe is scanned from Klaus or the Wrathful Rabbit King.\n\nRequires 1 socket and multiplies all sorts of Naughtiness gained as followed per circuit installed:\nx2 > x3 > x3.5 > x4 > x4.5 > x5 > x6\n\nBeta Circuit Tinkering II boosts this circuit by restoring sanity when killing innocent creatures."
 	
 	STRINGS.UI.PLANTREGISTRY.DESCRIPTIONS.ICELETTUCE = "A most capricious vegetable...\nbut don't give it the cold shoulders. -W"
 	
@@ -576,6 +662,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.POLAR_TRADE_3 = "...is your belly rrrumbling... or was it mine?"
 	RECIPE_DESC.POLAR_TRADE_GLOMMERFUEL = "...it's a secret... hmm, family rrrecipe..."
 	RECIPE_DESC.POLARAMULET_BUILDER = "Assemble your own traditional necklace."
+	RECIPE_DESC.POLARBEAR_RUG = "The bear minimum to any hunter home."
 	RECIPE_DESC.POLARBEARHAT = "Stay ahead of the blizzard."
 	RECIPE_DESC.POLARBEARHOUSE = "This place bears a bear."
 	RECIPE_DESC.POLARCROWNHAT = "Rule over the blizzard!"
@@ -600,6 +687,7 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	RECIPE_DESC.WALRUSTRADE_DESICCANT = "(Rubs flippers)"
 	RECIPE_DESC.WALRUSTRADE_NONSLIPGRIT = "(Monoculour eyeroll)"
 	RECIPE_DESC.WALRUSTRADE_WALRUSHAT = "(Clicks of approval)"
+	RECIPE_DESC.WALRUSTRADE_BLUEPRINT = "(Conspiratorial wink)"
 	RECIPE_DESC.WALRUSTRADE_SEWING_KIT = "(Miscontent clicks)"
 	RECIPE_DESC.WALRUSTRADE_COOKINGRECIPECARD = "(Pinch flippers)"
 	RECIPE_DESC.WALRUSTRADE_MEAT = "(Incoherant squealing)"
@@ -674,7 +762,15 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	table.insert(STRINGS.UI.WORLDGEN.VERBS, "Thawing")
 	
 --	Tweaked
+
+if not rawget(_G, "POLAR_WORLDGEN") then
+	--	Skilltree
+	local SKILLTREE_DEFS = require("prefabs/skilltree_defs").SKILLTREE_DEFS
 	
+	local OLDWX78_BETA_CIRCUIT_BUFFS_2_DESC = SKILLTREE_DEFS.wx78.wx78_circuitry_betabuffs_2.desc
+	SKILLTREE_DEFS.wx78.wx78_circuitry_betabuffs_2.desc = OLDWX78_BETA_CIRCUIT_BUFFS_2_DESC:gsub(", and ", ", Evildoer Circuit, and ", 1)
+	
+	--	Scrapbook
 	local OLDSCRAPBOOK_BOOK_RAIN = STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN or ""
 	STRINGS.SCRAPBOOK.SPECIALINFO.BOOK_RAIN = OLDSCRAPBOOK_BOOK_RAIN.."\n\nThis book will affect the blizzard instead when used in the Winterlands."
 	
@@ -692,3 +788,48 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	
 	local OLDSCRAPBOOK_WINTEROMETOR = STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR or ""
 	STRINGS.SCRAPBOOK.SPECIALINFO.WINTEROMETOR = OLDSCRAPBOOK_WINTEROMETOR.."\nAgitates early ahead of nearby blizzard episodes."
+	
+	local function UpdateMobsInModuleInfo(str, added, removed)
+		return str:gsub("(scanned from )([^.\n]+)%.?(\n+)", function(prefix, mobfix, suffix)
+			local mobs = {}
+			for mob in mobfix:gsub(" or ", ","):gmatch("[^,]+") do
+				table.insert(mobs, mob:match("^%s*(.-)%s*$"))
+			end
+			
+			if removed then
+				for i = #mobs, 1, -1 do
+					if table.contains(removed, mobs[i]) then
+						table.remove(mobs, i)
+					end
+				end
+			end
+			
+			if added then
+				for i, mob in ipairs(added) do
+					if not table.contains(mobs, mob) then
+						table.insert(mobs, mob)
+					end
+				end
+			end
+			
+			if #mobs == 0 then
+				mobfix = "no known lifeform"
+			elseif #mobs == 1 then
+				mobfix = mobs[1]
+			else
+				local last = table.remove(mobs)
+				mobfix = table.concat(mobs, ", ").." or "..last
+			end
+			
+			return prefix..mobfix.."."..suffix
+		end)
+	end
+	
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_COLD = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_COLD, {"an Ice Varg"})
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MAXHEALTH = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MAXHEALTH, {"a Snowflea"})
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MAXHEALTH2 = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MAXHEALTH2, {"a Motherflea"})
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MAXHUNGER1 = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MAXHUNGER1, {"a Polar Bear", "Ursa Major"})
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MOVESPEED2 = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_MOVESPEED2, {"a Moose", "the Specter Moose"})
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NIGHTVISION = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_NIGHTVISION, {"a Frost Tail"})
+	STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_SPIN = UpdateMobsInModuleInfo(STRINGS.SCRAPBOOK.SPECIALINFO.WX78MODULE_SPIN, {"the Emperor Pengull"})
+end

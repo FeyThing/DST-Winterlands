@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORMWOOD.DESCRIBE
 		GENERIC = "Someone home?",
 		OPEN = "Hello...! Hello?",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Doing big sleep"
 	DESCRIBE.POLARBEARHEAD = "Why Big Fuzzy so quiet?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Smells fishy",

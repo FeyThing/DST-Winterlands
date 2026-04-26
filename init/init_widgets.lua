@@ -311,12 +311,16 @@ AddClassPostConstruct("screens/playerinfopopupscreen", function(self, owner, pla
 	end
 end)
 
---	Show mob quantities with Ursa Trials
+--	Show mob quantities with Ursa Trials (TODO: Support any entity type detection, not just bears)
+
+--	Also quick touch up on Bear Rug's sewing kit ingredient slot, to display % used
+--	NOTE: Keep an eye out for future game updates if these type of systems becomes officially supported (it might just...)
+
+local POLARBEAR_TRIALS_QUANTITY = nil
+local SEWINGKIT_DURABILITY = nil
 
 local BEAR_TAGS = {"bear", "_combat"}
 local BEAR_NOT_TAGS = {"bear_major", "INLIMBO", "isdead"}
-
-local POLARBEAR_TRIALS_QUANTITY = nil
 
 local function GetPolarBears()
 	local x, y, z = ThePlayer.Transform:GetWorldPosition()
@@ -344,7 +348,15 @@ local IngredientUI = require("widgets/ingredientui")
 	function IngredientUI:_ctor(atlas, image, quantity, on_hand, has_enough, name, owner, recipe_type, quant_text_scale, ingredient_recipe)
 		if recipe_type == "polarbear_material" and quantity == nil and ThePlayer then
 			on_hand = GetPolarBears()
-			quantity = POLARBEAR_TRIALS_QUANTITY or 1
+			quantity = POLARBEAR_TRIALS_QUANTITY or 1 -- Tech ingredients don't show / transfer quantity required to ing slot
+		end
+		
+		if SEWINGKIT_DURABILITY then
+			on_hand = 1 / TUNING.SEWINGKIT_USES
+			quantity = 1 / TUNING.SEWINGKIT_USES
+			recipe_type = CHARACTER_INGREDIENT.MAX_HEALTH
+			
+			SEWINGKIT_DURABILITY = nil
 		end
 		
 		return OldIngredientUI_ctor(self, atlas, image, quantity, on_hand, has_enough, name, owner, recipe_type, quant_text_scale, ingredient_recipe)
@@ -366,6 +378,15 @@ local CraftingMenuIngredients = require("widgets/redux/craftingmenu_ingredients"
 					break
 				end
 			end
+			
+			if recipe.name == "polarbear_rug" then
+				for i, v in ipairs(recipe.ingredients) do
+					if v.type == "sewing_kit" then
+						SEWINGKIT_DURABILITY = true
+						break
+					end
+				end
+			end
 		end
 		
 		return OldSetRecipe(self, recipe, ...)
@@ -385,6 +406,15 @@ local RecipePopup = require("widgets/recipepopup")
 					end
 					
 					break
+				end
+			end
+			
+			if recipe.name == "polarbear_rug" then
+				for i, v in ipairs(recipe.ingredients) do
+					if v.type == "sewing_kit" then
+						SEWINGKIT_DURABILITY = true
+						break
+					end
 				end
 			end
 		end

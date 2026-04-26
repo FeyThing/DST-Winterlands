@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Got a bad feeling about this.",
 		OPEN = "Is a little d-dark in here...",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Ha. I remember this one."
 	DESCRIBE.POLARBEARHEAD = "He has seen happier days."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Big fish had tough life.",

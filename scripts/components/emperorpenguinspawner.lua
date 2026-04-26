@@ -275,7 +275,7 @@ return Class(function(self, inst)
 	
 	--	Building castle rules...
 	
-	local CASTLE_AVOID_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "structure", "wall", "character"}
+	local CASTLE_AVOID_TAGS = {"antlion_sinkhole_blocker", "birdblocker", "blocker", "playerowned", "structure", "wall", "character"}
 	local CASTLE_AVOID_NOT_TAGS = {"icecastlepart", "penguinicepart", "INLIMBO", "player"}
 	
 	function self:GetValidCastlePos(pt)
@@ -560,7 +560,7 @@ return Class(function(self, inst)
 	end
 	
 	local CASTLE_TAGS = {"polarcastlefloor"}
-	local CASTLE_SKIP_DESTROY_TAGS = {"structure"}
+	local CASTLE_SKIP_DESTROY_TAGS = {"playerowned", "structure"}
 	local CASTLE_NOT_SKIP_DESTROY_TAGS = {"INLIMBO", "icecastlepart"}
 	
 	local function OnSeasonTick(inst, data)

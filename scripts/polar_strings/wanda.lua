@@ -107,6 +107,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		GENERIC = "Why would anyone want to live here of all places?",
 		OPEN = "Do as you wish, but I like my workshop with less... shadows.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Ah, I forgot to clean my shoes... oh well."
 	DESCRIBE.POLARBEARHEAD = "Who would make such a thing...? Oh. I think I recall who."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Burnt yet cold.",

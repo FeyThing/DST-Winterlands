@@ -110,6 +110,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		GENERIC = "It's a mystery how this shack holds together.",
 		OPEN = "Er, my mistake. Wrong address.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "He's just a big softie, now."
 	DESCRIBE.POLARBEARHEAD = "I wouldn't mess with a bear, or the one who killed it."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Holy mackerel!",

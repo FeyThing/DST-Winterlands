@@ -77,7 +77,24 @@ PolarRecipe("boat_ice_item", 		{Ingredient("polar_dryice", 1)}, 											TECH.
 PolarRecipe("polarice_plow_item", 	{Ingredient("log", 3), Ingredient("cutstone", 1), Ingredient("mole", 1)}, 	TECH.SEAFARING_ONE, 	nil, 				{"FISHING", "SEAFARING", "WINTER"}, {"ocean_trawler_kit", "flotationcushion", "winterometer"})
 
 --	Decor / Structure
+local BEAR_RUG_PLACER_TAGS = {"polarbearrug", "antlion_sinkhole_blocker", "polarbearrug_blocker"}
+local BEAR_RUG_PLACER_NOT_TAGS = {"boat"}
+
+function BearRugFn(pt)
+	local rug_rad = TUNING.POLARBEAR_RUG_RADIUS
+	
+	for theta = 0, TWOPI, PI / 4 do
+		if not TheWorld.Map:IsPassableAtPoint(pt.x + rug_rad * math.cos(theta), 0, pt.z + rug_rad * math.sin(theta)) then
+			return false
+		end
+	end
+	
+	return not TheWorld.Map:IsPointNearHole(pt, rug_rad + 0.25)
+		and #TheSim:FindEntities(pt.x, pt.y, pt.z, rug_rad + 0.25, nil, BEAR_RUG_PLACER_NOT_TAGS, BEAR_RUG_PLACER_TAGS) == 0
+end
+
 PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 2), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 																							{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})
+PolarRecipe("polarbear_rug", 		{Ingredient("sewing_kit", 0), Ingredient("polarbearfur", 2)}, 								TECH.LOST, 				{placer = "polarbear_rug_placer", min_spacing = 0, testfn = BearRugFn}, 						{"DECOR", "WINTER"}, {"sewing_mannequin", "tent"})
 PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 															{"STRUCTURES"}, {"rabbithouse"})
 PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_underrock"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 																				{"DECOR"}, {"turf_dragonfly"})
@@ -90,15 +107,15 @@ PolarRecipe("chesspiece_emperor_penguin_magestic_builder", 	{Ingredient(TECH_ING
 PolarRecipe("chesspiece_emperor_penguin_spin_builder", 		{Ingredient(TECH_INGREDIENT.SCULPTING, 2), Ingredient("rocks", 2)}, TECH.LOST, 	{nounlock = true, actionstr = "SCULPTING", image = "chesspiece_emperor_penguin_spin.tex"}, 		{"CRAFTING_STATION"}, {"chesspiece_sharkboi_builder"})
 
 --	Events
-PolarRecipe("arctic_fool_fish", 			{Ingredient("papyrus", 1), Ingredient("silk", 1)}, 						TECH.ARCTIC_FOOLS, 				{numtogive = 4, hint_msg = "NEEDSARCTIC_FOOL"}, 													{"SPECIAL_EVENT"})
+PolarRecipe("arctic_fool_fish", 			{Ingredient("papyrus", 1)}, 											TECH.ARCTIC_FOOLS, 				{numtogive = 4, hint_msg = "NEEDSARCTIC_FOOL"}, 													{"SPECIAL_EVENT"})
 PolarRecipe("snowball_item_polar", 			{Ingredient("ice", 1), Ingredient(TECH_INGREDIENT.POLARSNOW, 2)}, 		TECH.WINTERS_FEAST, 			{product = "snowball_item", description = "snowball_item_polar", hint_msg = "NEEDSWINTERS_FEAST"}, 	{"SPECIAL_EVENT"}, {"giftwrap"})
-PolarRecipe("wintercooking_polarcrablegs",	{Ingredient("wintersfeastfuel", 1), Ingredient("polarflea", 2)}, 		TECH.WINTERSFEASTCOOKING_ONE, 	{nounlock = true, manufactured = true, actionstr = "COOK", image = "polarcrablegs.tex"}, 			{"CRAFTING_STATION"}, {"wintercooking_tourtiere"})
+PolarRecipe("wintercooking_polarcrablegs", 	{Ingredient("wintersfeastfuel", 1), Ingredient("polarflea", 2)}, 		TECH.WINTERSFEASTCOOKING_ONE, 	{nounlock = true, manufactured = true, actionstr = "COOK", image = "polarcrablegs.tex"}, 			{"CRAFTING_STATION"}, {"wintercooking_tourtiere"})
 
 --	Survivors
 local function pocketwatch_nodecon(inst) return not inst:HasTag("pocketwatch_inactive") end
 
 PolarRecipe("pocketwatch_polar", 		{Ingredient("pocketwatch_parts", 2), Ingredient("bluegem_shards", 6), Ingredient("polarwargstooth", 2)}, 	TECH.SCIENCE_TWO, 			{builder_tag = "clockmaker", no_deconstruction = pocketwatch_nodecon}, 	{"CHARACTER", "ARMOUR"}, {"pocketwatch_portal", "wathgrithr_shield"})
-PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 													TECH.ROBOTMODULECRAFT_ONE, 	{builder_tag = "upgrademoduleowner", nounlock = false}, 				{"CHARACTER", "MAGIC"}, {"wx78module_light", "nightmarefuel"})
+PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 													TECH.ROBOTMODULECRAFT_ONE, 	{builder_tag = "upgrademoduleowner", nounlock = false}, 				{"CHARACTER", "MAGIC"}, {"wx78module_stacksize"})
 
 --	[ 	Crafting Station	]	--
 
@@ -106,7 +123,7 @@ PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("char
 
 PolarRecipe("polaramulet_builder", 			{Ingredient("rope", 3)}, 									TECH.POLARAMULET_STATION, 	{image = "polaramulet.tex", manufactured = true, nounlock = true, sg_state = "give"}, 	{"CRAFTING_STATION"})
 PolarRecipe("polar_fishingrod",				{Ingredient("smallmeat", 2)}, 								TECH.POLARAMULET_STATION, 	{product = "fishingrod", nounlock = true, image = "fishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 					{"CRAFTING_STATION"})
-PolarRecipe("polar_oceanfishingrod",		{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 		TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", nounlock = true, image = "oceanfishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 		{"CRAFTING_STATION"})
+PolarRecipe("polar_oceanfishingrod",		{Ingredient("fishingrod", 1), Ingredient("meat", 4)}, 		TECH.POLARAMULET_STATION, 	{product = "oceanfishingrod", nounlock = true, image = "oceanfishingrod.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give"}, 			{"CRAFTING_STATION"})
 PolarRecipe("winters_fists_blueprint", 		{Ingredient("papyrus", 1), Ingredient("emperor_egg", 1)}, 	TECH.POLARAMULET_STATION, 	{nounlock = true, image = "blueprint_rare.tex", actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, {"CRAFTING_STATION"})
 
 PolarRecipe("polarcrownhat", 				{Ingredient("ice", 200), Ingredient("bluegem_overcharged", 1)}, 											TECH.LOST, 					{nounlock = true, actionstr = "POLAREXCHANCESHOP", sg_state = "give", hint_msg = "NEEDSPOLARAMULET_STATION"}, 	{"CRAFTING_STATION"})--{"ARMOUR", "MAGIC"}, {"dreadstonehat", "dreadstonehat"})

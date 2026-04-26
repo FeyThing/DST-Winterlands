@@ -93,7 +93,6 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	NAMES.POLARICESTAFF = "Zimowa Różdżka"
 	NAMES.POLARMOOSEHAT = "Uszanka"
 	NAMES.WINTERS_FISTS = "Zimowe Pięści"
-	NAMES.WINTERS_FISTS_BLUEPRINT = "Projekt Zimowych Pięści"
 	
 	--	Others
 	NAMES.ARCTIC_FOOL_FISH = "Prima Arybilis"
@@ -115,7 +114,8 @@ local RECIPE_DESC = STRINGS.RECIPE_DESC
 	--	Recipe Names (needed for blueprints)
 	NAMES.SHARDS_BLUEGEM = "Odłamki Niebieskiego Klejnotu"
 	NAMES.SNOWBALL_ITEM_POLAR = "Kula Śniegu"
-
+	NAMES.WINTERS_FISTS_BLUEPRINT = "Projekt Zimowych Pięści"
+	
 --	Skins
 	
 	--	Names

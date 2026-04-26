@@ -67,6 +67,23 @@ local function RescueLeaderAction(inst)
 	return BufferedAction(inst, GetFrozenLeader(inst), ACTIONS.ATTACK)
 end
 
+local function UpdateLeaderOnRug(inst)
+	local leader = inst.components.follower and inst.components.follower:GetLeader()
+	
+	if leader and leader._polarbear_rug then
+		inst.components.follower:StopFollowing()
+		
+		if inst.SetEnraged then
+			inst:SetEnraged(false)
+		end
+		if inst.sg and not inst.sg:HasStateTag("busy") and not (inst.components.combat and inst.components.combat.target) then
+			inst.sg:GoToState("disapproval")
+		end
+		
+		return true
+	end
+end
+
 --	Eatin' & Stealin'
 
 local function GetTraderFn(inst)
@@ -559,6 +576,7 @@ function PolarBearBrain:OnStart()
 			WhileNode(function() return GetFrozenLeader(self.inst) end, "Leader Frozen",
 				DoAction(self.inst, RescueLeaderAction, "Rescue Leader", true))),
 		RunAway(self.inst, "icecrackfx", 5, 7),
+		ConditionNode(function() return UpdateLeaderOnRug(self.inst) end, "Leave Creepy Leader"),
 		
 		-- Teeth trading nodes
 		FailIfSuccessDecorator(ActionNode(function() DoToothTrade(self.inst) end, "Tooth Trade")),
@@ -575,7 +593,7 @@ function PolarBearBrain:OnStart()
 			finder = ChopTreeFinder,
 			shouldrun = true,
 		}),
-			
+		
 		ChattyNode(self.inst, "POLARBEAR_FIND_TOOTH",
 			DoAction(self.inst, FindToothAction, nil, true)),
 		ChattyNode(self.inst, "POLARBEAR_FIND_FOOD",

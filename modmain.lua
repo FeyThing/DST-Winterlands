@@ -3,6 +3,8 @@ local modimport = ENV.modimport
 GLOBAL.ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+POLAR_WORLDGEN = false
+
 --	Strings, Translations
 
 local translation = ENV.GetModConfigData("language")
@@ -187,6 +189,7 @@ local stategraphs = {
 }
 
 local brains = {
+	"penguin",
 	"walrus",
 }
 

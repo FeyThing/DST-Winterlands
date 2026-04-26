@@ -15,7 +15,7 @@ local function OnEquip(inst, owner)
 		owner.AnimState:OverrideSymbol("swap_hat", "hat_polarcrown", "swap_hat")
 	end
 	
-	if inst._fx == nil and not (inst.components.rechargeable and not inst.components.rechargeable:IsCharged()) then --and not owner:HasTag("equipmentmodel") then
+	if inst._fx == nil and not (inst.components.rechargeable and not inst.components.rechargeable:IsCharged()) then
 		inst:StartForceField(owner)
 	end
 	

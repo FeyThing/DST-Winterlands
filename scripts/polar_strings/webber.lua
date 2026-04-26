@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		GENERIC = "Looks like the cabin Walter described around the fire!",
 		OPEN = "Can you stop looking at our fangs?",
 	}
+	DESCRIBE.POLARBEAR_RUG = "It would make a great bed if it was a bit more stuffed."
 	DESCRIBE.POLARBEARHEAD = "What did it do to deserve this?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Rest in peace... to the spider on the ceiling.",

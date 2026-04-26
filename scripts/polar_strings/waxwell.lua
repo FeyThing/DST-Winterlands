@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "Well, well. Talk about a hospitable-looking dwelling.",
 		OPEN = "...I will pretend I didn't see what's inside.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "A very...tasteful... decoration."
 	DESCRIBE.POLARBEARHEAD = "Some would call it a trophy."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "If only the scorching sun would spare this place.",

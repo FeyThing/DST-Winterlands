@@ -182,6 +182,18 @@ table.insert(prefs, CreatePrefabSkin("ms_glasscutter_polar", {
 	skin_tags = {"POLAR", "GLASSCUTTER", "CRAFTABLE"},
 }))
 
+table.insert(prefs, CreatePrefabSkin("ms_polarbear_rug_red", {
+	assets = {
+		Asset("DYNAMIC_ANIM", "anim/dynamic/polarbear_rug_red.zip"),
+		Asset("PKGREF", "anim/dynamic/polarbear_rug_red.dyn"),
+	},
+	base_prefab = "polarbear_rug",
+	type = "item",
+	build_name_override = "polarbear_rug_red",
+	rarity = "ModMade",
+	skin_tags = {"POLAR", "POLARBEAR_RUG", "CRAFTABLE"},
+}))
+
 -- Just added to keep log clear, using this fake skin name allows us to filtrate stackability of fleas
 table.insert(prefs, CreatePrefabSkin("ms_polarflea_unstackable", {
 	base_prefab = "polarflea",

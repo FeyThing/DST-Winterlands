@@ -257,6 +257,8 @@ local function fn()
 	inst:AddTag("NOCLICK")
 	inst:AddTag("NOBLOCK")
 	
+	inst.scrapbook_inspectonseen = true
+	
 	inst.entity:SetPristine()
 	
 	if not TheWorld.ismastersim then
@@ -303,7 +305,6 @@ local function trap()
 	
 	return inst
 end
-
 
 --
 
@@ -398,7 +399,7 @@ local function rock()
 	
 	inst.OnPolarFreeze = OnPolarFreeze
 	
-	MakeHauntableWork(inst) -- TODO: Remove NOCLICK for ceiling icicles and give them a mousethrough for alive players, ghost can haunt them and make them fall
+	MakeHauntableWork(inst) -- TODO: Remove NOCLICK for ceiling icicles and give them a mousethrough for alive players, ghost should haunt them to make them fall
 	
 	local scale = math.random() > 0.5 and 1 or -1
 	inst.AnimState:SetScale(scale, 1)

@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		GENERIC = "Oooh, this gotta be that dental museum I've heard about!",
 		OPEN = "Hi! Are you open to visitors?",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Welcome one and all to my spooky story parlor.\nPlease, take a sit!"
 	DESCRIBE.POLARBEARHEAD = "Is it too late to return it to its owner?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "That's a frostburn if I ever saw one. Heh.",
@@ -182,4 +183,3 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.WALL_POLAR_ITEM = "Don't you dare lick it, Woby!"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it match the season."
 	DESCRIBE.WX78MODULE_NAUGHTY = "Robot guts! Neat!"
-	

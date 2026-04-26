@@ -109,6 +109,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 		GENERIC = "It must get lonely in here.",
 		OPEN = "What's in store for today, Mister-y?",
 	}
+	DESCRIBE.POLARBEAR_RUG = "The other bears probably won't like much..."
 	DESCRIBE.POLARBEARHEAD = "How rude!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "This home has seen better days.",

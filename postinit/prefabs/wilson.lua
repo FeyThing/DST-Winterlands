@@ -256,6 +256,39 @@ AddPrefabPostInit("woodie", function(inst)
 	inst.polar_slowtime = Woodie_Polar_Time
 end)
 
+--	Walter can tell (new) stories around a Bear Rug
+
+ENV.AddPrefabPostInit("walter", function(inst)
+	if not TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.storyteller then
+		local OldStoryToTellFn = inst.components.storyteller.storytotellfn
+		
+		inst.components.storyteller.storytotellfn = function(inst, story_prop, ...)
+			if story_prop.prefab == "polarbear_rug" and TheWorld.state.isnight then
+				local rug_stories = STRINGS.STORYTELLER.WALTER["POLARBEAR_RUG"]
+				
+				if rug_stories then
+					if inst._story_proxy then
+						inst._story_proxy:Remove()
+						inst._story_proxy = nil
+					end
+					
+					inst._story_proxy = SpawnPrefab("walter_campfire_story_proxy")
+					inst._story_proxy:Setup(inst, story_prop)
+					
+					local story_id = GetRandomKey(rug_stories)
+					return {style = "CAMPFIRE", id = story_id, lines = rug_stories[story_id].lines}
+				end
+			end
+			
+			return OldStoryToTellFn(inst, story_prop, ...)
+		end
+	end
+end)
+
 --	Wanda's new Timefreeze watch has a networked overlay showing for how long it'll last
 
 AddPrefabPostInit("wanda", function(inst)

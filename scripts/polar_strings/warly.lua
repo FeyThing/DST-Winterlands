@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		GENERIC = "Must be a veritable boucherie inside...",
 		OPEN = "You can have what I don't plan on cooking.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "It belongs in a banquet room."
 	DESCRIBE.POLARBEARHEAD = "What a waste of -- I mean what a shame, a real shame."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Thought I smelled sardines.",

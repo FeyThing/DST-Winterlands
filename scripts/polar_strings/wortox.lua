@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		GENERIC = "Full of mischief, no doubt!",
 		OPEN = "Oh my, friend, what tricksy smile you have!",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Once roaming free, now under me."
 	DESCRIBE.POLARBEARHEAD = "How unpleasant!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Even this frosty den couldn't escape a fiery end.",

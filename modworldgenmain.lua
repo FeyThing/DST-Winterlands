@@ -3,13 +3,17 @@ local modimport = ENV.modimport
 GLOBAL.ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+POLAR_WORLDGEN = true
+
 --	Import
 
 local translation = ENV.GetModConfigData("language")
 
 require("polar_strings/strings")
+package.loaded["polar_strings/strings"] = nil
 if translation and softresolvefilepath("scripts/polar_strings/"..translation.."/strings.lua") then
 	require("polar_strings/"..translation.."/strings")
+	package.loaded["polar_strings/"..translation.."/strings"] = nil
 end
 
 modimport("init/init_tuning")

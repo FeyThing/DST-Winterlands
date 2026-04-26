@@ -33,11 +33,12 @@ Assets = {
 	Asset("ATLAS", "images/rain_polar.xml"),
 	
 	Asset("ANIM", "anim/polarstatus_wx.zip"),
+	Asset("ANIM", "anim/polarstatus_wx_chest.zip"),
 	Asset("ANIM", "anim/wx_polarchips.zip"),
 	
 	Asset("ANIM", "anim/polarcalendar.zip"),
 	Asset("ANIM", "anim/polarcalendar_icons.zip"),
-	Asset("ANIM", "anim/polarcalendar_temp_anims.zip"), -- From 17 to 19th
+	Asset("ANIM", "anim/polarcalendar_temp_anims.zip"),
 	
 	-- Shaders / Shades
 	Asset("SHADER", "shaders/snowed.ksh"),
@@ -116,6 +117,7 @@ local ITEMS = {
 	"polar_spear",
 	"polaramulet",
 	"polarbear_material",
+	"polarbear_rug",
 	"polarbearfur",
 	"polarbearhat",
 	"polarbearhat_red",
@@ -161,6 +163,7 @@ local ITEMS = {
 	"ms_goldenpickaxe_polar",
 	"ms_goldenshovel_polar",
 	"ms_minerhat_boreal",
+	"ms_polarbear_rug_red",
 	"ms_polarheadstick_merm",
 	"ms_polarheadstick_pig",
 	"ms_polarheadstick_walrus",

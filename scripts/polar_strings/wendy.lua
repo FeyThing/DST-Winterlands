@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "It's away from the others for a reason.",
 		OPEN = "Can you teach me your art?",
 	}
+	DESCRIBE.POLARBEAR_RUG = "I like it."
 	DESCRIBE.POLARBEARHEAD = "Promise, I will take better care of the next one."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "No longer a refuge from the biting cold.",

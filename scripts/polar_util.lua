@@ -265,8 +265,12 @@ function PlayFootstep(inst, volume, ispredicted, ...)
 		return target.components.slipperyfeettarget and target.components.slipperyfeettarget:IsSlipperyAtPosition(x, y, z)
 	end, PENGUIN_ICE_TAGS)
 	
-	if penguin_ice then
+	if inst._polarbear_rug then
+		inst.SoundEmitter:PlaySound("dontstarve/movement/"..(inst.sg and inst.sg:HasStateTag("running") and "run" or "walk").."_carpet")
+		volume = 0
+	elseif penguin_ice then
 		inst.SoundEmitter:PlaySound("dontstarve/movement/"..(inst.sg and inst.sg:HasStateTag("running") and "run" or "walk").."_iceslab")
+		volume = 0
 	end
 	
 	OldPlayFootstep(inst, volume, ispredicted, ...)

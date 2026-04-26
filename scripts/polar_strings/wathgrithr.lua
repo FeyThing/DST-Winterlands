@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		GENERIC = "A most intriguing hall of trade.",
 		OPEN = "Those wares gleam with the promise of battle's aid.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Aye! 'Tis one's a fine trophy."
 	DESCRIBE.POLARBEARHEAD = "T'was an honorable warrior, but t'wasn't the strongest."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "The house fish has gone into smoke.",

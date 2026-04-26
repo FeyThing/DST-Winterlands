@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		GENERIC = "Burning this place down would be doing it a favor.",
 		OPEN = "So that's how the Tooth Fairy looks like... oh well.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "What's wrong Bernie? Ohhh... right."
 	DESCRIBE.POLARBEARHEAD = "I wouldn't like to be in your place."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Ha ha! Your fish house stood no chance!",

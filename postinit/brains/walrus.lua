@@ -3,15 +3,10 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local WalrusBrain = require("brains/walrusbrain")
 	
-	local OldShouldRunAway = PolarUpvalue(WalrusBrain.OnStart, "ShouldRunAway")
-	local function ShouldRunAway(guy, ...)
-		if guy and guy:HasTag("walruspal") then
-			return false
-		end
-		
-		if OldShouldRunAway then
-			return OldShouldRunAway(guy, ...)
-		end
+	local HUNTER_PARAMS = PolarUpvalue(WalrusBrain.OnStart, "HUNTER_PARAMS")
+	
+	if HUNTER_PARAMS and HUNTER_PARAMS.notags then
+		table.insert(HUNTER_PARAMS.notags, "walruspal")
 	end
 	
 	local PLAYER_ALLY_TAGS = {"walruspal"}
@@ -25,12 +20,11 @@ local WalrusBrain = require("brains/walrusbrain")
 			local ally = FindEntity(inst, 10, nil, PLAYER_ALLY_TAGS, PLAYER_ALLY_NOT_TAGS)
 			
 			if ally ~= nil or target:HasTag("spawnprotection") or (target.components.age and target.components.age:GetAge() < 15) then
-				return -- Don't follow if player has spawned recently or uses bagpipes
+				return -- Don't follow if player has spawned recently or someone plays bagpipes
 			end
 		end
 		
 		return target
 	end
 	
-	PolarUpvalue(WalrusBrain.OnStart, "ShouldRunAway", ShouldRunAway)
 	PolarUpvalue(WalrusBrain.OnStart, "GetNoLeaderFollowTarget", GetNoLeaderFollowTarget)

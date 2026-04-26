@@ -149,12 +149,6 @@ end
 
 --
 
-local function _set_placer_layer(inst)
-	inst.AnimState:SetLayer(LAYER_WORLD_BACKGROUND)
-	inst.AnimState:SetSortOrder(2)
-	inst.AnimState:SetFinalOffset(7)
-end
-
 local function _check_placer_offset(inst, boat_radius)
 	local inventory = ThePlayer and ThePlayer.replica.inventory
 	
@@ -166,12 +160,15 @@ local function _check_placer_offset(inst, boat_radius)
 	end
 end
 
-local function placer_postinit(inst)
-	_set_placer_layer(inst)
+local function PlacerPostInit(inst)
+	inst.AnimState:SetLayer(LAYER_WORLD_BACKGROUND)
+	inst.AnimState:SetSortOrder(2)
+	inst.AnimState:SetFinalOffset(7)
+	
 	_check_placer_offset(inst, TUNING.OCEAN_ICE_RADIUS)
 	ControllerPlacer_Boat_SpotFinder(inst, TUNING.OCEAN_ICE_RADIUS)
 end
 
 return Prefab("boat_ice_item", fn, assets, prefabs),
 	Prefab("boat_ice_item_worldgen", ocean_fn, assets),
-	MakePlacer("boat_ice_item_placer", "boat_ice", "boat_ice", "idle1", true, false, false, nil, nil, nil, placer_postinit, 4.5)
+	MakePlacer("boat_ice_item_placer", "boat_ice", "boat_ice", "idle1", true, false, false, nil, nil, nil, PlacerPostInit, 4.5)

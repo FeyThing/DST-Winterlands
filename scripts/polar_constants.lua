@@ -71,15 +71,19 @@ POLARAMULET_STATION_MOONPHASE_TRADEDATA = {
 
 POLARWALRUS_TRADEDATA = { -- Note: Default chance for each trade is 50%, respect same min/max stock on the same product !
 	walrus = {
-		{product = "blowdart_pipe",	 	ingredients = {Ingredient("smallmeat", 2)}, 		limits = {min = 3, max = 4}, chance = 1},
-		{product = "blowdart_sleep",	ingredients = {Ingredient("smallmeat", 1)}, 		limits = {min = 4, max = 6}, numtogive = 2, chance = 1},
-		{product = "flint", 			ingredients = {Ingredient("fishmeat_small", 2)}, 	limits = {min = 1, max = 8}},
-		{product = "goldnugget", 		ingredients = {Ingredient("fishmeat", 2)}, 			limits = {min = 5, max = 12}},
-		{product = "goldnugget", 		ingredients = {Ingredient("trunk_summer", 1)}, 		limits = {min = 5, max = 12}, numtogive = 4, chance = 1},
-		{product = "goldnugget", 		ingredients = {Ingredient("trunk_winter", 1)}, 		limits = {min = 5, max = 12}, numtogive = 5, chance = 1},
-		{product = "nonslipgrit",		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 3}},
-		{product = "desiccant", 		ingredients = {Ingredient("goldnugget", 1)}, 		limits = {min = 1, max = 3}},
-		{product = "walrushat",		 	ingredients = {Ingredient("polarbearfur", 2)}, 		limits = {min = 1, max = 1}, chance = 1},
+		{product = "blowdart_pipe",	 				ingredients = {Ingredient("smallmeat", 2)}, 							limits = {min = 3, max = 4}, chance = 1},
+		{product = "blowdart_sleep",				ingredients = {Ingredient("smallmeat", 1)}, 							limits = {min = 4, max = 6}, numtogive = 2, chance = 1},
+		{product = "flint", 						ingredients = {Ingredient("fishmeat_small", 2)}, 						limits = {min = 1, max = 8}},
+		{product = "goldnugget", 					ingredients = {Ingredient("fishmeat", 2)}, 								limits = {min = 5, max = 12}},
+		{product = "goldnugget", 					ingredients = {Ingredient("trunk_summer", 1)}, 							limits = {min = 5, max = 12}, numtogive = 4, chance = 1},
+		{product = "goldnugget", 					ingredients = {Ingredient("trunk_winter", 1)}, 							limits = {min = 5, max = 12}, numtogive = 5, chance = 1},
+		{product = "nonslipgrit",					ingredients = {Ingredient("goldnugget", 1)}, 							limits = {min = 1, max = 3}},
+		{product = "desiccant", 					ingredients = {Ingredient("goldnugget", 1)}, 							limits = {min = 1, max = 3}},
+		{product = "walrushat",		 				ingredients = {Ingredient("polarbearfur", 2)}, 							limits = {min = 1, max = 1}, chance = 1},
+		{product = "polarbear_rug_blueprint",		ingredients = {Ingredient("papyrus", 1), Ingredient("goldnugget", 1)}, 	limits = {min = 1, max = 1}, nameoverride = "walrustrade_polarbear_rug_blueprint", description = "WALRUSTRADE_BLUEPRINT", image = "blueprint_rare.tex"},
+		{product = "bundlewrap_blueprint",			ingredients = {Ingredient("papyrus", 1), Ingredient("goldnugget", 4)}, 	limits = {min = 1, max = 1}, chance = 0.05, nameoverride = "walrustrade_bundlewrap_blueprint", description = "WALRUSTRADE_BLUEPRINT", image = "blueprint_rare.tex"},
+		{product = "deserthat_blueprint",			ingredients = {Ingredient("papyrus", 1), Ingredient("goldnugget", 2)}, 	limits = {min = 1, max = 1}, chance = 0.05, nameoverride = "walrustrade_deserthat_blueprint", description = "WALRUSTRADE_BLUEPRINT", image = "blueprint_rare.tex"},
+		{product = "dragonflyfurnace_blueprint", 	ingredients = {Ingredient("papyrus", 1), Ingredient("goldnugget", 3)}, 	limits = {min = 1, max = 1}, chance = 0.05, nameoverride = "walrustrade_dragonflyfurnace_blueprint", description = "WALRUSTRADE_BLUEPRINT", image = "blueprint_rare.tex"},
 	},
 	little_walrus = {
 		{product = "smallmeat", 		ingredients = {Ingredient("ice", 2)}, 					limits = {min = 3, max = 8}, chance = 1},
@@ -141,7 +145,7 @@ ARCTIC_FOOLS_TAGS = {--	Prioritize important tags first
 
 SPECIAL_EVENTS.ARCTIC_FOOLS = "arctic_fools"
 
-ApplyExtraEvent(SPECIAL_EVENTS.ARCTIC_FOOLS) -- EVENT TOGGLE ! Keep this around about ~ 1 Week upon April's Fool :>
+--ApplyExtraEvent(SPECIAL_EVENTS.ARCTIC_FOOLS) -- EVENT TOGGLE ! Keep this around about ~ 1 Week upon April's Fool :>
 
 --	Teeth Stuff
 

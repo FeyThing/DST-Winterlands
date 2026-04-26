@@ -3,6 +3,11 @@ local assets = {
 }
 
 local function OnEquip(inst, owner)
+	if inst.dropped_anim then
+		inst.dropped_anim = nil
+		inst.AnimState:PlayAnimation("idle")
+	end
+	
 	local skin_build = inst:GetSkinBuild()
 	if skin_build then
 		owner:PushEvent("equipskinneditem", inst:GetSkinName())
@@ -13,17 +18,15 @@ local function OnEquip(inst, owner)
 	owner.AnimState:Show("ARM_carry")
 	owner.AnimState:Hide("ARM_normal")
 	
-	if inst.dropped_anim then
-		inst.dropped_anim = nil
-		inst.AnimState:PlayAnimation("idle")
-	end
-	
 	if owner.components.slipperyfeet then
 		owner.components.slipperyfeet.threshold = owner.components.slipperyfeet.threshold + TUNING.ANTLER_TREE_STICK_SLIPPINESS
 	end
-	if inst.components.fueled then
-		inst.components.fueled:StartConsuming()
+	if inst._owner then
+		inst:RemoveEventCallback("locomote", inst._onlocomote, inst._owner)
 	end
+	
+	inst._owner = owner
+	inst:ListenForEvent("locomote", inst._onlocomote, owner)
 end
 
 local function OnUnequip(inst, owner)
@@ -39,6 +42,11 @@ local function OnUnequip(inst, owner)
 	end
 	if inst.components.fueled then
 		inst.components.fueled:StopConsuming()
+	end
+	
+	if inst._owner then
+		inst:RemoveEventCallback("locomote", inst._onlocomote, inst._owner)
+		inst._owner = nil
 	end
 end
 
@@ -139,6 +147,16 @@ local function fn()
 	inst.DropSticc = DropSticc
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
+	
+	inst._onlocomote = function(owner)
+		if owner.components.locomotor.wantstomoveforward then
+			if not inst.components.fueled.consuming then
+				inst.components.fueled:StartConsuming()
+			end
+		elseif inst.components.fueled.consuming then
+			inst.components.fueled:StopConsuming()
+		end
+	end
 	
 	return inst
 end

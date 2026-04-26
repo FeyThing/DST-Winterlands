@@ -1,11 +1,19 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local WX78Common = require("prefabs/wx78_common")
 local WX78_MODULES_DEF = require("wx78_moduledefs")
+
 local module_definitions = WX78_MODULES_DEF.module_definitions
 local polarmodule_definitions = {}
 
---	New modules
+--	[[	New modules	 ]]  --
+
+local function IsSkillActivated(wx, skill)
+	return wx.components.skilltreeupdater and wx.components.skilltreeupdater:IsActivated(skill)
+end
+
+--	Evildoer
 
 local function naughty_onkill(wx, data)
 	local victim = data and data.victim
@@ -17,25 +25,29 @@ local function naughty_onkill(wx, data)
 		naughty_val = 0
 	end
 	
-	local stackmult = data and data.stackmult
+	local stackmult = data and data.stackmult or 1
 	local israbbit = victim and victim:HasAnyTag("rabbit", "manrabbit")
 	local curtime = GetTime()
 	
 	if (victim == nil or not victim:HasAnyTag(SOULLESS_TARGET_TAGS)) and wx.components.talker and (wx._nextnaughtytaunt == nil or wx._nextnaughtytaunt < curtime) then
-		wx._nextnaughtytaunt = curtime + math.random(4, 6)
+		wx._nextnaughtytaunt = curtime + math.random(4, 40)
 		wx.components.talker:Say(GetString(wx, israbbit and "ANNOUNCE_WX_NAUGHTYCHIP_RABBIT" or "ANNOUNCE_WX_NAUGHTYCHIP_KRAMPUS"))
 	end
 	
-	if TheWorld.components.kramped and naughty_val > 0 then
+	if naughty_val > 0 then
 		local naughty_total = naughty_val * TUNING.WX78_NAUGHTY_CHIPBOOSTS[math.min(wx._naughtychips or 1, #TUNING.WX78_NAUGHTY_CHIPBOOSTS)]
 		
-		TheWorld.components.kramped:AddFromWX_NaughtyModule(naughty_total * (stackmult or 1), wx)
-	end
-	
-	if TheWorld.components.rabbitkingmanager and naughty_val > 0 and israbbit then
-		local naughty_total = naughty_val * TUNING.WX78_NAUGHTY_CHIPBOOSTS[math.min(wx._naughtychips or 1, #TUNING.WX78_NAUGHTY_CHIPBOOSTS)]
+		if TheWorld.components.kramped then
+			TheWorld.components.kramped:AddFromWX_NaughtyModule(naughty_total * stackmult, wx)
+		end
 		
-		TheWorld.components.rabbitkingmanager:AddNaughtinessFromPlayer(wx, naughty_total * (stackmult or 1))
+		if TheWorld.components.rabbitkingmanager and israbbit then
+			TheWorld.components.rabbitkingmanager:AddNaughtinessFromPlayer(wx, naughty_total * stackmult)
+		end
+		
+		if wx.components.sanity and IsSkillActivated(wx, "wx78_circuitry_betabuffs_2") then
+			wx.components.sanity:DoDelta(TUNING.WX78_NAUGHTY_CHIPSANITY * (naughty_total * stackmult))
+		end
 	end
 end
 
@@ -64,12 +76,19 @@ end
 local NAUGHTY_MODULE_DATA = {
 	name = "naughty",
 	slots = 1,
+	type = CIRCUIT_BARS.BETA,
 	activatefn = naughty_activate,
 	deactivatefn = naughty_deactivate,
+	overridebank = "polarchips",
+	overridebuild = "wx_polarchips",
+	overrideminiuibuild = "polarstatus_wx",
+	overrideuibuild = "polarstatus_wx_chest",
 }
 table.insert(polarmodule_definitions, NAUGHTY_MODULE_DATA)
 
---	Heat module melts snow around
+--	[[	  Tweaked	 ]]  --
+
+--	Thermal Circuit now melts snow around
 
 local oldheat_activatefn
 local function heat_activatefn(inst, wx, ...)
@@ -129,18 +148,22 @@ for i, data in ipairs(module_definitions) do
 	end
 end
 
---	New creatures to scan
+--	[[	 New Scans	 ]]  --
 
 local WX78_POLARMOBS_SCAN = {
-	krampus = {module = "naughty", amt = 3},
-	klaus = {module = "naughty", amt = 6},
+	klaus = 				{module = "naughty", amt = 10},
+	rabbitking_aggressive = {module = "naughty", amt = 4},
 	
-	moose_polar = {module = "movespeed2", amt = 5},
-	moose_specter = {module = "movespeed2", amt = 6},
-	polarbear = {module = "maxhunger1", amt = 4},
-	polarfox = {module = "nightvision", amt = 2},
-	polarwarg = {module = "cold", amt = 6},
-	shadow_icicler = {module = "maxsanity", amt = 3},
+	emperor_penguin = 		{module = "spin", amt = 6},
+	moose_polar = 			{module = "movespeed2", amt = 5},
+	moose_specter = 		{module = "movespeed2", amt = 6},
+	polarbear = 			{module = "maxhunger1", amt = 3},
+	polarbearking = 		{module = "maxhunger1", amt = 4},
+	polarflea = 			{module = "maxhealth", amt = 2},
+	polarflea_mother = 		{module = "maxhealth2", amt = 6},
+	polarfox = 				{module = "nightvision", amt = 2},
+	polarwarg = 			{module = "cold", amt = 4},
+	shadow_icicler = 		{module = "maxsanity", amt = 3},
 }
 
 for mob, data in pairs(WX78_POLARMOBS_SCAN) do
@@ -154,12 +177,12 @@ for i, definition in ipairs(polarmodule_definitions) do
 	WX78_MODULES_DEF.AddNewModuleDefinition(definition)
 	table.insert(WX78_MODULES_DEF.module_definitions, module_def)
 	
-	ENV.AddPrefabPostInit("wx78module_"..module_def.name, function(inst)
+	--[[ENV.AddPrefabPostInit("wx78module_"..module_def.name, function(inst)
 		inst.AnimState:SetBank("polarchips")
 		inst.AnimState:SetBuild("wx_polarchips")
 		
 		if not TheWorld.ismastersim then
 			return
 		end
-	end)
+	end)]]
 end

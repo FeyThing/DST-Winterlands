@@ -1,3 +1,5 @@
+-- This is no longer in use, it was a placeholder for up until the Emperor Pengull release !
+
 local chestfunctions = require("scenarios/chestfunctions")
 
 ---------------------------------------------------------------------------------------------------------

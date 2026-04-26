@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "Curious location for a commerce... or who knows what.",
 		OPEN = "I still have all my teeth, dear, and I intend to keep them.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "A little too macabre but certainly snuggy."
 	DESCRIBE.POLARBEARHEAD = "This is meant to be taken as a warning."
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "It has succumbed to flames.",

@@ -47,11 +47,9 @@ local function RetargetFn(inst)
 	end
 	
 	return not inst:IsInLimbo() and FindEntity(inst, TUNING.PIG_TARGET_DIST, function(guy)
-		return inst.components.combat:CanTarget(guy)
-				and guy:HasAnyTag(RETARGET_ONEOF_TAGS) or guy:HasAnyTag(POLARBEAR_FISHY_TAGS)
-		end,
-		RETARGET_MUST_TAGS, RETARGET_NOT_TAGS
-	) or nil
+		return inst.components.combat:CanTarget(guy) and (guy:HasAnyTag(RETARGET_ONEOF_TAGS) or guy:HasAnyTag(POLARBEAR_FISHY_TAGS))
+		
+	end, RETARGET_MUST_TAGS, RETARGET_NOT_TAGS) or nil
 end
 
 local function KeepTargetFn(inst, target)

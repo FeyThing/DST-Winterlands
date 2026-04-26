@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "I'm very offended.",
 		OPEN = "I don't need your curses.",
 	}
+	DESCRIBE.POLARBEAR_RUG = "Ahh, I feel right at home."
 	DESCRIBE.POLARBEARHEAD = "Creepy, but also kinda impressive yknow?"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Guess it was only built to withstand the cold.",

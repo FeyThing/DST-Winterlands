@@ -249,7 +249,7 @@ local function GetPolarMistMult(inst)
 	return 3
 end
 
-local function AddFlag(inst)
+local function AddFlag(inst, item)
 	local flag = SpawnPrefab("tower_polar_flag")
 	
 	flag.Transform:SetPosition(inst.Transform:GetWorldPosition())
@@ -551,6 +551,7 @@ local function flag()
 	inst.AnimState:SetScale(1.25, 1.25)
 	inst.AnimState:SetFinalOffset(3)
 	
+	inst:AddTag("polarcastleflag")
 	inst:AddTag("structure")
 	
 	inst.entity:SetPristine()
@@ -591,6 +592,37 @@ local function OnDeploy(inst, pt, deployer)
 	end
 end
 
+local function ResetInUse(inst)
+	inst.components.useabletargeteditem:StopUsingItem()
+end
+
+local function OnUsedOnTower(inst, target, doer)
+	if target:HasTag("polarcastletower") and target.AddFlag and target.flag == nil then
+		target:AddFlag(inst)
+		
+		if target.SoundEmitter then
+			target.SoundEmitter:PlaySound("dontstarve/common/place_structure_wood", nil, 0.5)
+		end
+		if inst.components.stackable then
+			inst.components.stackable:Get():Remove()
+		else
+			inst:Remove()
+		end
+		
+		if inst:IsValid() then
+			inst:DoStaticTaskInTime(0, ResetInUse)
+		end
+		
+		return true
+	end
+	
+	return false
+end
+
+local function UseableTargetedItem_ValidTarget(inst, target, doer)
+	return target and target:HasTag("polarcastletower") and GetClosestInstWithTag("polarcastleflag", target, 0.1) == nil
+end
+
 local function item()
 	local inst = CreateEntity()
 	
@@ -605,6 +637,8 @@ local function item()
 	inst.AnimState:PlayAnimation("flag_item")
 	
 	MakeInventoryFloatable(inst)
+	
+	inst.UseableTargetedItem_ValidTarget = UseableTargetedItem_ValidTarget
 	
 	inst.entity:SetPristine()
 	
@@ -625,6 +659,9 @@ local function item()
 	
 	inst:AddComponent("stackable")
 	inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
+	
+	inst:AddComponent("useabletargeteditem")
+	inst.components.useabletargeteditem:SetOnUseFn(OnUsedOnTower)
 	
 	MakeSmallBurnable(inst, TUNING.SMALL_BURNTIME)
 	MakeSmallPropagator(inst)

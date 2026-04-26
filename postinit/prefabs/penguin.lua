@@ -79,7 +79,8 @@ local function OnAttacked_Castle(inst, data)
 			return dude:HasTag("penguin_guard") and not (dude.components.health and dude.components.health:IsDead())
 		end, 5)
 		
-		if TheWorld.components.emperorpenguinspawner then
+		-- TODO: Don't exclude mutated pengulls if castle is in mutated emperor state (If we end up doing that at all !)
+		if TheWorld.components.emperorpenguinspawner and not inst:HasTag("mutated_penguin") then
 			TheWorld.components.emperorpenguinspawner:ProvokeCastle(inst, attacker)
 		end
 	end
@@ -93,7 +94,18 @@ for i, v in ipairs(penguin_prefabs) do
 			return
 		end
 		
-		if v == "penguin" then
+		if v == "penguin" or v == "mutated_penguin" then
+			if inst.components.combat then
+				local RETARGET_CANT_TAGS = PolarUpvalue(inst.components.combat.targetfn, "RETARGET_CANT_TAGS")
+				local RETARGET_MUTATED_CANT_TAGS = PolarUpvalue(inst.components.combat.targetfn, "RETARGET_MUTATED_CANT_TAGS")
+				
+				if RETARGET_CANT_TAGS then
+					table.insert(RETARGET_CANT_TAGS, "emperorpengullcrowned")
+				elseif RETARGET_MUTATED_CANT_TAGS then
+					table.insert(RETARGET_MUTATED_CANT_TAGS, "emperorpengullcrowned")
+				end
+			end
+			
 			inst:AddComponent("drownable")
 			
 			--inst.OnPolarFreeze = OnPolarFreeze

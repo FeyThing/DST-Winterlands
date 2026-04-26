@@ -11,6 +11,8 @@ local function OnEquip(inst, owner)
 		owner.AnimState:OverrideSymbol("swap_hat", "hat_emperor_penguin", "swap_hat")
 	end
 	
+	owner:AddTag("emperorpengullcrowned")
+	
 	owner.AnimState:Show("HAT")
 	owner.AnimState:Hide("HAIR_HAT")
 	owner.AnimState:Show("HAIR_NOHAT")
@@ -28,6 +30,8 @@ local function OnUnequip(inst, owner)
 	if skin_build then
 		owner:PushEvent("unequipskinneditem", inst:GetSkinName())
 	end
+	
+	owner:RemoveTag("emperorpengullcrowned")
 	
 	owner.AnimState:ClearOverrideSymbol("swap_hat")
 	owner.AnimState:Hide("HAT")
@@ -54,6 +58,7 @@ local function fn()
 	inst.AnimState:SetBuild("hat_emperor_penguin")
 	inst.AnimState:PlayAnimation("anim")
 	
+	inst:AddTag("frozen")
 	inst:AddTag("hat")
 	inst:AddTag("icebox_valid")
 	inst:AddTag("show_spoilage")

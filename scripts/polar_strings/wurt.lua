@@ -105,6 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "Probably... safe.",
 		OPEN = "Hello? You not Bearfolk?",
 	}
+	DESCRIBE.POLARBEAR_RUG = "It all about sending a message, flort."
 	DESCRIBE.POLARBEARHEAD = "Ha ha!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Yesss, one less!",

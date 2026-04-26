@@ -27,6 +27,9 @@ local Temperature = require("components/temperature")
 		if self.inst:HasTag("heatrock") and IsInPolar(self.inst) then
 			winterPolarI = winterPolarI * TUNING.HEATROCK_INSULATION_POLARMULT
 		end
+		if self.inst._polarbear_rug then
+			winterPolarI = winterPolarI + (TUNING.POLARBEAR_RUG_INSULATION * (self.inst:HasTag("polite") and TUNING.POLARBEAR_RUG_MULT_CANADIAN or 1))
+		end
 		
 		return math.max(0, winterPolarI), math.max(0, summerPolarI)
 	end
