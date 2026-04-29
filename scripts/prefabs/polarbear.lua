@@ -656,6 +656,7 @@ local function fn()
 	
 	inst:AddTag("bear")
 	inst:AddTag("character")
+	inst:AddTag("polarbear")
 	inst:AddTag("polarwet")
 	inst:AddTag("scarytoprey")
 	

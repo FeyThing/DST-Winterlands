@@ -46,6 +46,7 @@ end
 
 local function GoToTowerAction(inst)
 	if inst._juggle_tower then
+		--TODO: Also allow to clear collisions after a little time (like on escaping), to prevent being blocked from towers
 		return BufferedAction(inst, inst._juggle_tower, ACTIONS.GOHOME)
 	end
 end

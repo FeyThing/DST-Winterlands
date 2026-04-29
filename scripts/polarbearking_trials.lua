@@ -84,7 +84,7 @@ local function StartFistFightTrail(self)
 	
 	local bear = FindEntity(self.inst, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, function(guy)
 		return not guy.components.health:IsDead()
-	end, {"bear"}, {"bear_major", "INLIMBO"})
+	end, {"polarbear"}, {"bear_major", "INLIMBO"})
 	
 	if bear == nil then
 		return
@@ -248,7 +248,7 @@ local function StartDuoFightTrail(self)
 	end
 	
 	local x, y, z = self.inst.Transform:GetWorldPosition()
-	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, {"bear"}, {"bear_major", "INLIMBO"})
+	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, {"polarbear"}, {"bear_major", "INLIMBO"})
 	
 	if #bears < 2 then
 		return
@@ -534,7 +534,7 @@ local function StartAllOutRumbleTrial(self)
 	end
 	
 	local x, y, z = self.inst.Transform:GetWorldPosition()
-	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, {"bear"}, {"bear_major", "INLIMBO"})
+	local bears = TheSim:FindEntities(x, y, z, TUNING.TRIALS_INGREDIANT_ACCESS_RADIUS + 4, {"polarbear"}, {"bear_major", "INLIMBO"})
 	
 	if #bears < 7 then
 		return

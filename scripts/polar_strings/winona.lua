@@ -105,7 +105,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		GENERIC = "I'm better outside than in this shoddy shack.",
 		OPEN = "Buddy, ever heard of proper lighting? It's creepy in here.",
 	}
-	DESCRIBE.POLARBEAR_RUG = "That's some doormat we got there."
+	DESCRIBE.POLARBEAR_RUG = "That's some big doormat we got there."
 	DESCRIBE.POLARBEARHEAD = "Speak of somethin' creepy. Yeesh!"
 	DESCRIBE.POLARBEARHOUSE = {
 		BURNT = "Hm. Probably another wildfire.",

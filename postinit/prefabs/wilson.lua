@@ -43,7 +43,7 @@ local function GetBattleCryString(combat, target, ...)
 	local str = OldGetBattleCryString and OldGetBattleCryString(combat, target, ...)
 	
 	if str == GetString(combat.inst, "BATTLECRY") then -- Got GENERIC so far
-		return GetString(combat.inst, "BATTLECRY", (target:HasTag("bear") and "BEAR")
+		return GetString(combat.inst, "BATTLECRY", (target:HasTag("polarbear") and "BEAR")
 			or (target:HasTag("penguin") and "PENGUIN")
 			or (target:HasTag("walrus") and "WALRUS")
 			or nil)

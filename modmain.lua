@@ -138,6 +138,7 @@ local components = {
 	"inspectable",
 	"klaussackloot",
 	"kramped",
+	"leaderrollcall",
 	"locomotor",
 	"map",
 	"mightygym",

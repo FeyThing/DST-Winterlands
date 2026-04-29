@@ -61,7 +61,7 @@ local function GetStatus(inst)
 	return not (inst.components.fueled and inst.components.fueled:IsEmpty()) and "ON" or nil
 end
 
-local BEAR_TAGS = {"bear"}
+local BEAR_TAGS = {"polarbear"}
 local BEAR_NOT_TAGS = {"INLIMBO", "sleeping"}
 
 local function ChangeToItem(inst)

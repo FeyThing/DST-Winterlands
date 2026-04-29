@@ -50,7 +50,7 @@ local events = {
 
 local BITE_TAGS = {"_combat"}
 local BITE_NOT_TAGS = {"wall", "structure", "INLIMBO", "flight", "invisible", "notarget", "noattack"}
-local BITE_AVOID_TAGS = {"bear", "bearbuddy"}
+local BITE_AVOID_TAGS = {"polarbear", "bearbuddy"}
 
 local DEFAULT_PAINTING = "blue"
 

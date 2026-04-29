@@ -63,6 +63,9 @@ local function OnAnimOver(inst)
 			if inst.components.inventoryitem then
 				inst.components.inventoryitem.canbepickedup = true
 			end
+			if inst.components.workable then
+				inst.components.workable:SetWorkable(true)
+			end
 			if inst.components.finiteuses then
 				inst.components.finiteuses:Use(1)
 			end
@@ -96,6 +99,9 @@ local function OnReset(inst)
 	if inst.components.inventoryitem then
 		inst.components.inventoryitem.canbepickedup = false
 	end
+	if inst.components.workable then
+		inst.components.workable:SetWorkable(false)
+	end
 	
 	if not inst.AnimState:IsCurrentAnimation("idle") then
 		inst.SoundEmitter:PlaySound("polarsounds/walrus/trap_bear_reset")
@@ -111,6 +117,9 @@ local function SetSprung(inst)
 	if inst.components.inventoryitem then
 		inst.components.inventoryitem.canbepickedup = true
 	end
+	if inst.components.workable then
+		inst.components.workable:SetWorkable(true)
+	end
 end
 
 local function SetInactive(inst)
@@ -121,6 +130,9 @@ local function SetInactive(inst)
 	
 	if inst.components.inventoryitem then
 		inst.components.inventoryitem.canbepickedup = true
+	end
+	if inst.components.workable then
+		inst.components.workable:SetWorkable(true)
 	end
 end
 
@@ -200,6 +212,9 @@ local function SetTrapTarget(inst, target, trapped)
 	
 	if inst.components.inventoryitem then
 		inst.components.inventoryitem.canbepickedup = not trapped
+	end
+	if inst.components.workable then
+		inst.components.workable:SetWorkable(not trapped)
 	end
 	
 	if target.components.locomotor and isvalid then
@@ -333,6 +348,23 @@ local function OnHaunt(inst, haunter)
 	return false
 end
 
+local function OnHit(inst)
+	LaunchTrap(inst, 2)
+end
+
+local function OnHammered(inst)
+	if inst.components.inventoryitem then
+		inst.components.inventoryitem.canbepickedup = false
+	end
+	if inst.components.finiteuses then
+		inst.components.finiteuses:SetPercent(0)
+	end
+end
+
+local function ShouldRecoil(inst, worker, tool, numworks) -- No actual recoil, but only players can damage Bear Traps
+	return false, not (worker and worker:HasTag("player")) and 0 or numworks
+end
+
 local function OnSave(inst, data)
 	data.walrus_owned = inst.components.mine and inst.components.mine.alignment == "walrus" or nil
 end
@@ -376,6 +408,7 @@ local function fn()
 	inst.AnimState:SetFinalOffset(3)
 	
 	inst:AddTag("cattoy")
+	inst:AddTag("DECOR") -- Prevents most AoE from trying to hit the trap
 	inst:AddTag("trap")
 	inst:AddTag("walrus_beartrap")
 	inst:AddTag("noepicmusic")
@@ -421,6 +454,14 @@ local function fn()
 	
 	inst:AddComponent("hauntable")
 	inst.components.hauntable:SetOnHauntFn(OnHaunt)
+	
+	inst:AddComponent("workable")
+	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
+	inst.components.workable:SetWorkLeft(1)
+	inst.components.workable:SetOnWorkCallback(OnHit)
+	inst.components.workable:SetOnFinishCallback(OnHammered)
+	inst.components.workable:SetShouldRecoilFn(ShouldRecoil)
+	inst.components.workable:SetWorkable(false)
 	
 	inst._target_attacked = function(target, data) OnTargetAttacked(inst, target, data) end
 	inst._target_removed = function(target) inst:DoTrapStruggle(target, true) end

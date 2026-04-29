@@ -1,7 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local BEAR_TAGS = {"bear", "_combat"}
+local BEAR_TAGS = {"polarbear", "_combat"}
 local BEAR_NOT_TAGS = {"bear_major", "INLIMBO", "isdead"}
 
 local function HasPolarIngredient(self, ingredient)

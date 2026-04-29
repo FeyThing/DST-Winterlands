@@ -131,7 +131,7 @@ ARCTIC_FOOLS_TAGS = {--	Prioritize important tags first
 	{tag = "bearger", 	sym = "bearger_body", 		ups = {5}, 			scale = 1.4},
 	{tag = "deerclops", sym = "deerclops_body", 	ups = {1}, 			scale = 1.4},
 	{tag = "leif", 		sym = "pieces", 			ups = {18}, 		scale = 1.3, 			face_up_only = true},
-	{tag = "bear", 		sym = "pig_torso", 			ups = {2, 5}, 		scale = 1.1},
+	{tag = "polarbear", sym = "pig_torso", 			ups = {2, 5}, 		scale = 1.1},
 	{tag = "manrabbit", sym = "manrabbit_torso", 	ups = {2, 4}},
 	{tag = "merm", 		sym = "pig_torso", 			ups = {2, 5}, 		nottags = {"mermking", "shadowminion"}},
 	{tag = "pig", 		sym = "pig_torso", 			ups = {2, 5}},

@@ -319,7 +319,7 @@ end)
 local POLARBEAR_TRIALS_QUANTITY = nil
 local SEWINGKIT_DURABILITY = nil
 
-local BEAR_TAGS = {"bear", "_combat"}
+local BEAR_TAGS = {"polarbear", "_combat"}
 local BEAR_NOT_TAGS = {"bear_major", "INLIMBO", "isdead"}
 
 local function GetPolarBears()

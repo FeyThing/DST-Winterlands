@@ -38,16 +38,13 @@ ENV.AddComponentPostInit("dynamicmusic", function(self)
 	--	Work Music
 	
 	function self:UpdatePolarMusic(self, ignore)
-		if ThePlayer == nil then
+		if ThePlayer == nil or ignore then
 			return
 		end
 
-		if ignore then
-			return
-		end
-		
 		local x, y, z = ThePlayer.Transform:GetWorldPosition()
-		local setpolar = GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil
+		local setpolar = GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil or nil
+		
 		if self._polar ~= setpolar then
 			local isplaying = TheFocalPoint.SoundEmitter:PlayingSound("busy")
 			

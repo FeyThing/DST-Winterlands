@@ -120,7 +120,7 @@ function TrialsHolder:EndTrial(result, reason)
 		self.inst.SoundEmitter:PlaySound("polarsounds/polarbearking/jingle_victory")
 		
 		local x, y, z = self.inst.Transform:GetWorldPosition()
-		local spectators = TheSim:FindEntities(x, y, z, 20, {"bear"}, {"bear_major", "INLIMBO", "isdead"})
+		local spectators = TheSim:FindEntities(x, y, z, 20, {"polarbear"}, {"bear_major", "INLIMBO", "isdead"})
 		for _, spectator in ipairs(spectators) do
 			spectator:DoTaskInTime(math.random() * 0.5, function()
 				if spectator.sg and not spectator.sg:HasStateTag("busy") then
@@ -144,7 +144,7 @@ function TrialsHolder:EndTrial(result, reason)
 		self.inst.SoundEmitter:PlaySound("polarsounds/polarbearking/jingle_defeat")
 		
 		local x, y, z = self.inst.Transform:GetWorldPosition()
-		local spectators = TheSim:FindEntities(x, y, z, 20, {"bear"}, {"bear_major", "INLIMBO", "isdead"})
+		local spectators = TheSim:FindEntities(x, y, z, 20, {"polarbear"}, {"bear_major", "INLIMBO", "isdead"})
 		for _, spectator in ipairs(spectators) do
 			spectator:DoTaskInTime(math.random() * 0.5, function()
 				if spectator.sg and not spectator.sg:HasStateTag("busy") then

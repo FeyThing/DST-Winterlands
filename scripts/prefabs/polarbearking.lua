@@ -37,7 +37,7 @@ local function OnInfighting(inst, attacker, victim)
 	end
 end
 
-local BEAR_TAGS = {"bear", "_combat"}
+local BEAR_TAGS = {"polarbear", "_combat"}
 local BEAR_NOT_TAGS = {"bear_major", "isdead"}
 local PREY_ONE_OF_TAGS = {"prey", "bird"}
 local PREY_NOT_TAGS = {"INLIMBO", "isdead"}
@@ -49,11 +49,11 @@ local function DoRoar(inst)
 	
 	for _, bear in ipairs(bears) do
 		if bear.components.health and not bear.components.health:IsDead() then
-			if bear.components.combat:HasTarget() and bear.components.combat.target:HasTag("bear") then -- If they're targeting another bear, drop the target and face the major
+			if bear.components.combat:HasTarget() and bear.components.combat.target:HasTag("polarbear") then -- If they're targeting another bear, drop the target and face the major
 				bear.components.combat:DropTarget()
 			end
 			
-			if not bear.components.combat:HasTarget() or bear.components.combat.target:HasTag("bear") then
+			if not bear.components.combat:HasTarget() or bear.components.combat.target:HasTag("polarbear") then
 				bear.current_major = inst
 				bear:DoTaskInTime(6, function(inst) inst.current_major = nil end)
 				
@@ -207,7 +207,7 @@ local function fn()
 	end
 	
 	inst:AddComponent("epicscare")
-	table.insert(inst.components.epicscare.scareexcludetags, "bear")
+	table.insert(inst.components.epicscare.scareexcludetags, "polarbear")
 	
 	inst:AddComponent("inspectable")
 	
