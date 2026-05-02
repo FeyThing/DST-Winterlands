@@ -65,7 +65,6 @@ local function DoRelease(inst, target)
 	end
 	
 	--inst.transported[target] = nil
-	
 	--inst:KnockbackEnts()
 end
 
@@ -230,7 +229,9 @@ local function OnHit(inst, attacker, target)
 					local damage = inst.size <= 1 and TUNING.WINTERS_FISTS_DAMAGE_SMALLBALL or TUNING.WINTERS_FISTS_DAMAGE_MEDBALL
 					ent.components.combat:GetAttacked(attacker or inst, ent:HasTag("dryice") and 0 or damage)
 				end
-				if ent.components.workable and inst.size > 1 then
+				
+				local workable_action = ent.components.workable and ent.components.workable.action
+				if workable_action and workable_action ~= ACTIONS.DIG and workable_action ~= ACTIONS.NET and inst.size > 1 then
 					local workdone = inst.size > 2 and TUNING.WINTERS_FISTS_SNOWBALL_GIANT_WORKS or TUNING.WINTERS_FISTS_SNOWBALL_MED_WORKS
 					ent.components.workable:WorkedBy(inst, ent:HasTag("dryice") and 0 or workdone)
 				end

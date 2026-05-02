@@ -85,7 +85,9 @@ local STICK_ARCTIC_FISH = PolarAction("STICK_ARCTIC_FISH", {priority = 4})
 	
 local CASTSPELLSTR = ACTIONS.CASTSPELL.strfn
 	ACTIONS.CASTSPELL.strfn = function(act, ...)
-		if act.invobject and act.invobject:HasTag("wintersfists") and act.target == act.doer then
+		if act.invobject and act.invobject:HasTag("wintersfists") and (act.target == act.doer
+			or (act.target == nil and act:GetActionPoint() == nil)) then
+			
 			return "WINTERS_FISTS"
 		end
 		
@@ -287,16 +289,6 @@ local oldspellcaster_equipped = COMPONENT_ACTIONS.EQUIPPED.spellcaster
 		end
 		if oldspellcaster_equipped then
 			oldspellcaster_equipped(inst, doer, target, actions, right, ...)
-		end
-	end
-	
-local oldspellcaster_inventory = COMPONENT_ACTIONS.INVENTORY.spellcaster
-	COMPONENT_ACTIONS.INVENTORY.spellcaster = function(inst, doer, actions, ...)
-		if inst:HasTag("castonpolarsnow")  then
-			return
-		end
-		if oldspellcaster_inventory then
-			oldspellcaster_inventory(inst, doer, actions, ...)
 		end
 	end
 	

@@ -65,7 +65,8 @@ local states = {
 		tags = {"doing", "busy", "canrotate", "winterfistscast"},
 		
 		onenter = function(inst)
-			local spelltype = (inst.bufferedaction and inst.bufferedaction.invobject) and tonumber(inst.bufferedaction.invobject.spelltype:sub(-1)) or 1
+			local fists = inst.bufferedaction and inst.bufferedaction.invobject
+			local spelltype = fists and tonumber(fists.spelltype:sub(-1)) or 1
 			local anim = spelltype == 1 and "throw"
 				or spelltype == 2 and "deploytoss"
 				or "winterfist_large"
@@ -73,12 +74,17 @@ local states = {
 			
 			inst.components.locomotor:Stop()
 			
-			if inst.bufferedaction and inst.bufferedaction.target == inst then
+			local action_pos = inst.bufferedaction and inst.bufferedaction:GetActionPoint()
+			local target = inst.bufferedaction and inst.bufferedaction.target
+			
+			if (target == inst or (target == nil and action_pos == nil))
+				and (fists == nil or (fists.components.rechargeable == nil or fists.components.rechargeable:IsCharged())) then
+				
 				spelltype = 4
 				
 				inst.AnimState:PlayAnimation("atk_leap")
 				inst.AnimState:SetSymbolHue("fx_leap_phase", 0.6)
-			else
+			elseif target or action_pos then
 				if spelltype > 1 then
 					inst.AnimState:PlayAnimation("useitem_dir_pre")
 					
@@ -93,6 +99,9 @@ local states = {
 				end
 				
 				inst.SoundEmitter:PlaySound("polarsounds/winters_fists/use"..spelltype, nil, 0.5)
+			else
+				inst.sg:GoToState("idle")
+				return
 			end
 			
 			inst.sg.statemem.spelltype = spelltype
@@ -559,6 +568,82 @@ local states_client = {
 			inst:ClearBufferedAction()
 			inst.sg:GoToState("idle")
 		end
+	},
+	
+	State{
+		name = "winterfistcast",
+		tags = {"doing", "busy", "canrotate", "winterfistscast"},
+		server_states = {"winterfistcast"},
+		
+		onenter = function(inst)
+			local fists = inst.bufferedaction and inst.bufferedaction.invobject
+			local spelltype = fists and tonumber(fists.spelltype:sub(-1)) or 1
+			local anim = spelltype == 1 and "throw"
+				or spelltype == 2 and "deploytoss"
+				or "winterfist_large"
+			local pre = spelltype == 2 and "deploytoss_pre" or nil
+			
+			inst.components.locomotor:Stop()
+			
+			local action_pos = inst.bufferedaction and inst.bufferedaction:GetActionPoint()
+			local target = inst.bufferedaction and inst.bufferedaction.target
+			
+			if (target == inst or (target == nil and action_pos == nil))
+				and (fists == nil or fists:HasTag("castfrominventory")) then
+				
+				spelltype = 4
+				
+				inst.AnimState:PlayAnimation("atk_leap")
+				inst.AnimState:SetSymbolHue("fx_leap_phase", 0.6)
+			elseif target or action_pos then
+				if spelltype > 1 then
+					inst.AnimState:PlayAnimation("useitem_dir_pre")
+					
+					if pre then
+						inst.AnimState:PushAnimation(pre, false)
+						inst.AnimState:PushAnimation(anim, false)
+					else
+						inst.AnimState:PushAnimation(anim, false)
+					end
+				else
+					inst.AnimState:PlayAnimation(anim, false)
+				end
+				
+				inst.SoundEmitter:PlaySound("polarsounds/winters_fists/use"..spelltype, nil, 0.5)
+			end
+			
+			if action_pos then
+				inst.sg.statemem.spelltype = spelltype
+			end
+			
+			inst:PerformPreviewBufferedAction()
+			inst.sg:SetTimeout(2)
+		end,
+		
+		onupdate = function(inst)
+			if inst.sg:ServerStateMatches() then
+				if inst.entity:FlattenMovementPrediction() then
+					inst.sg:GoToState("idle", "noanim")
+				end
+			elseif inst.bufferedaction == nil then
+				inst.sg:GoToState("idle")
+			end
+		end,
+		
+		ontimeout = function(inst)
+			inst:ClearBufferedAction()
+			inst.sg:GoToState("idle")
+		end,
+		
+		onexit = function(inst)
+			inst.AnimState:SetSymbolHue("fx_leap_phase", 0)
+		end,
+		
+		events = {
+			EventHandler("animqueueover", function(inst)
+				inst.sg:GoToState("idle")
+			end)
+		},
 	},
 	
 	State{

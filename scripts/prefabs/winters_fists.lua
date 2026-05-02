@@ -142,12 +142,15 @@ local function OnUse(inst, target, pos, caster)
 	end
 	
 	local x, y, z = caster.Transform:GetWorldPosition()
-	local usesmash = target == caster
+	local usesmash = (target == caster or (target == nil and pos == nil))
+		and (inst.components.rechargeable == nil or inst.components.rechargeable:IsCharged())
+	
 	pos = target and target:GetPosition() or pos or caster:GetPosition()
 	
 	--inst:AddOrRemoveTag("rechargeable_bonus", not usesmash)
 	
 	if usesmash then
+		target = target or caster
 		inst:DoSmashAoE(caster, target)
 		
 		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(x, y, z)
@@ -248,6 +251,10 @@ local function OnAttackOther(owner, data, inst)
 	end
 end
 
+local function ReticuleTargetFn()
+	return Vector3(ThePlayer.entity:LocalToWorldSpace(5, 0.001, 0))
+end
+
 local function OnSpellTypeDirty(inst)
 	local num = inst._spelltype:value() or 1
 	inst.spelltype = "WINTERS_FISTS_"..math.clamp(num, 1, TUNING.WINTERS_FISTS_SPELL_TYPES)
@@ -276,6 +283,14 @@ local function fn()
 	inst:AddTag("toolpunch")
 	inst:AddTag("weapon")
 	inst:AddTag("wintersfists")
+	
+	inst:AddComponent("reticule")
+	inst.components.reticule.targetfn = ReticuleTargetFn
+	inst.components.reticule.twinstickcheckscheme = true
+	inst.components.reticule.twinstickmode = 1
+	inst.components.reticule.twinstickrange = 15
+	inst.components.reticule.ease = true
+	inst.components.reticule.ispassableatallpoints = true
 	
 	MakeInventoryFloatable(inst, "small", 0.15, 0.9)
 	
