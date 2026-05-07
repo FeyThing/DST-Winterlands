@@ -22,11 +22,12 @@ local function OnStarving(inst)
 end
 
 local function BonusDamageFn(inst, target, damage, weapon)
-	local amulet = inst.components.follower and inst.components.follower:GetLeader()
+	local amulet = inst.components.follower and inst.components.follower.leader
 	local parts = (amulet and amulet.GetAmuletParts) and amulet:GetAmuletParts()
 	local houndstooth = parts and #parts["houndstooth"] or 0
+	local polarwargstooth = parts and #parts["polarwargstooth"] or 0
 	
-	return houndstooth > 0 and (TUNING.POLARAMULET.LAVAE_TOOTH.HOUNDSTOOTH_DAMAGE * houndstooth) or 0
+	return houndstooth > 0 and (TUNING.POLARAMULET.LAVAE_TOOTH.HOUNDSTOOTH_DAMAGE * (houndstooth + polarwargstooth)) or 0
 end
 
 local function OnAttackOther(inst, data)
@@ -35,7 +36,7 @@ local function OnAttackOther(inst, data)
 	-- Only burn if fed, unless we have icy / watery teeth linked
 	inst:DoTaskInTime(0.1, function()
 		if target and target:IsValid() and inst._polaramuletbuffed then
-			local amulet = inst.components.follower and inst.components.follower:GetLeader()
+			local amulet = inst.components.follower and inst.components.follower.leader
 			local parts = (amulet and amulet.GetAmuletParts) and amulet:GetAmuletParts()
 			
 			local gnarwail_horn = parts and #parts["gnarwail_horn"] or 0
@@ -76,11 +77,6 @@ local function OnEat(inst, food)
 	local hunger = inst.components.hunger
 	
 	if hunger then -- and foodvalue > 0 then
-		local amulet = inst.components.follower and inst.components.follower:GetLeader()
-		local parts = (amulet and amulet.GetAmuletParts) and amulet:GetAmuletParts()
-		
-		local polarwargstooth = parts and #parts["polarwargstooth"] or 0
-		
 		hunger:SetPercent(1)
 	end
 	
@@ -90,7 +86,7 @@ local function OnEat(inst, food)
 end
 
 local function LinkToPolarAmulet(inst, amulet)
-	amulet = amulet or inst.components.follower and inst.components.follower:GetLeader()
+	amulet = amulet or inst.components.follower and inst.components.follower.leader
 	local parts = (amulet and amulet.GetAmuletParts) and amulet:GetAmuletParts()
 	
 	if parts == nil then
@@ -139,6 +135,13 @@ local function LinkToPolarAmulet(inst, amulet)
 	end
 	
 	if polarwargstooth > 0 then
+		if inst._snowblockrange then
+			inst._snowblockrange:set(0)
+		end
+		if inst.components.snowwavemelter then
+			inst.components.snowwavemelter.melt_range = 0
+		end
+		
 		inst.AnimState:SetHue(0.5)
 		if inst.Light then
 			inst.Light:SetColour(12 / 255, 121 / 255, 235 / 255)
@@ -156,14 +159,12 @@ local function LinkToPolarAmulet(inst, amulet)
 end
 
 local function SetPolarAmuletFed(inst, buffed, noanim)
-	local amulet = inst.components.follower and inst.components.follower:GetLeader()
+	local amulet = inst.components.follower and inst.components.follower.leader
 	local parts = (amulet and amulet.GetAmuletParts) and amulet:GetAmuletParts()
 	
 	if parts == nil then
 		return
 	end
-	
-	local walrus_tusk = #parts["walrus_tusk"]
 	
 	if buffed ~= inst._polaramuletbuffed then
 		if buffed then
@@ -179,7 +180,8 @@ local function SetPolarAmuletFed(inst, buffed, noanim)
 		inst.components.combat:SetDefaultDamage(buffed and TUNING.POLARAMULET.LAVAE_TOOTH.LAVAE_DAMAGE or TUNING.POLARAMULET.LAVAE_TOOTH.STARVED_DAMAGE)
 	end
 	
-	if inst.components.health then
+	local walrus_tusk = #parts["walrus_tusk"]
+	if inst.components.health and walrus_tusk > 0 then
 		inst.components.health:SetMaxHealth(TUNING.POLARAMULET.LAVAE_TOOTH.LAVAE_HEALTH + (TUNING.POLARAMULET.LAVAE_TOOTH.WALRUS_TUSK_HEALTH * walrus_tusk))
 		inst.components.health:SetInvincible(not buffed)
 	end
@@ -207,6 +209,24 @@ ENV.AddPrefabPostInit("lavae_pet", function(inst)
 	
 	inst.LinkToPolarAmulet = LinkToPolarAmulet
 	inst.SetPolarAmuletFed = SetPolarAmuletFed
+end)
+
+--
+
+local OldSetVariation
+local function SetVariation(inst, ...)
+	return OldSetVariation and OldSetVariation(inst, ...)
+end
+
+ENV.AddPrefabPostInit("lavae_move_fx", function(inst)
+	if not TheWorld.ismastersim then
+		return
+	end
+	
+	if OldSetVariation == nil then
+		OldSetVariation = inst.SetVariation
+	end
+	inst.SetVariation = SetVariation
 end)
 
 --

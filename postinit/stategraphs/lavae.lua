@@ -48,4 +48,26 @@ ENV.AddStategraphPostInit("lavae", function(sg)
 		
 		oldidle_enter(inst, ...)
 	end
+	
+	local oldwalk_enter = sg.states["walk"].onenter
+	sg.states["walk"].onenter = function(inst, ...)
+		oldwalk_enter(inst, ...)
+		
+		if inst.sg.statemem.task then
+			local oldtaskfn = inst.sg.statemem.task.fn
+			inst.sg.statemem.task.fn = function(...)
+				local amulet = inst.components.follower and inst.components.follower.leader
+				local parts = (amulet and amulet.GetAmuletParts) and amulet:GetAmuletParts()
+				
+				if parts then
+					local polarwargstooth = #parts["polarwargstooth"]
+					if polarwargstooth > 0 then
+						return
+					end
+				end
+				
+				oldtaskfn(...)
+			end
+		end
+	end
 end)

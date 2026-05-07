@@ -474,7 +474,7 @@ local KnownModIndex = GLOBAL.KnownModIndex
 			POLARWARGSTOOTH_STARVE_RATE_MULT = 0.66,
 			WALRUS_TUSK_HEALTH = 500,
 			
-			PERISHTIME = total_day_time * 2,
+			PERISHTIME = total_day_time * 5,
 			FIRE_RESIST = 0.3,
 		},
 	}

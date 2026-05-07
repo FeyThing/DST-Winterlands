@@ -1,7 +1,7 @@
 name = "The Winterlands"
 author = "ADM, Feything, Gearless, LukaS, Notka 󰀃"
 
-version = "1.3.55"
+version = "1.3.56"
 local info_version = "󰀔 [ Version "..version.." ]"
 
 description = info_version..[[ 
@@ -76,7 +76,7 @@ local options = {
 	toggle = {{description = "Disabled", data = false}, {description = "Enabled", data = true}},
 	moreless = {{description = "None", data = -2}, {description = "Less", data = -1}, {description = "Default", data = 0}, {description = "More", data = 1}, {description = "Most", data = 2}},
 	language = {{description = "English", data = false}, {description = "简体中文", data = "zhs", hover = "By heavenmoon0107"}, {description = "繁體中文", data = "zht", hover = "By heavenmoon0107"}, {description = "Français", hover = "By ADM & Steamerclaw", data = "fr"}, {description = "한국인", hover = "By taeseong1120", data = "kr"}, {description = "Polski", hover = "By LukaS", data = "pl"}},
-	biometype = {{description = "Island", data = "island", hover = "As its own separated region. Recommended!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommended..."}, {description = "Skip", data = "skip", hover = "Will not generate (can be useful for multi-shards setup)."}},
+	biometype = {{description = "Skip", data = "skip", hover = "Will not generate.\n(Can be useful for dedi servers with many shards!)"}, {description = "Island", data = "island", hover = "As its own separated region. Recommended!"}, {description = "Mainland", data = "mainland", hover = "Connected with the rest. Not recommended..."}},
 	shards = {{description = "Forest", data = "forest", hover = "The surface, default location"}, {description = "Shipwrecked", data = "shipwrecked", hover = "For Island Adventures"}, {description = "Anywhere Possible", data = "all", hover = "Won't generate in Caves, nor Hamlet, Volcano..."}},
 	retrofit = {{description = "Updated", data = 0, hover = "Change this to another setting if you miss some content."}, {description = "Generate Island", data = 1, hover = "Spawn The Winterlands as a setpiece at sea."}},
 }

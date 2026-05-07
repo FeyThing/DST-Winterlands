@@ -35,30 +35,26 @@ local function OnPetDespawn(inst, pet)
 	pet:Remove()
 end
 
-local function OnPolarTiles(inst, owner, on_polar, force_disable)
+local function UpdateWargTeethSpeed(inst, owner)
 	local tile, tileinfo = owner:GetCurrentTileType()
-	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15))
+	local in_snow = (tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15)))
+		or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(owner))
 	
-	on_polar = not force_disable and (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(owner) or in_snow) or false
-	
-	--if owner.components.locomotor then
-		if on_polar then
-			local polarwargstooth = inst:GetAmuletParts("polarwargstooth")
-			if polarwargstooth > 0 and not inst._polartile_speed then
-				local oldmult = inst.components.equippable.walkspeedmult or 1
-				inst._polartile_speed = polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED
-				
-				inst.components.equippable.walkspeedmult = oldmult + inst._polartile_speed
-				--owner.components.locomotor:SetExternalSpeedMultiplier(owner, "polaramulet", 1 + (polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED))
-			end
-		elseif inst._polartile_speed then
+	if in_snow then
+		local polarwargstooth = inst:GetAmuletParts("polarwargstooth")
+		
+		if polarwargstooth > 0 and not inst._polartile_speed then
 			local oldmult = inst.components.equippable.walkspeedmult or 1
+			inst._polartile_speed = polarwargstooth * TUNING.POLARAMULET.POLARWARGSTOOTH.SNOWMOVEMENT_SPEED
 			
-			inst.components.equippable.walkspeedmult = oldmult - inst._polartile_speed
-			inst._polartile_speed = nil
-			--owner.components.locomotor:RemoveExternalSpeedMultiplier(owner, "polaramulet")
+			inst.components.equippable.walkspeedmult = oldmult + inst._polartile_speed
 		end
-	--end
+	elseif inst._polartile_speed then
+		local oldmult = inst.components.equippable.walkspeedmult or 1
+		
+		inst.components.equippable.walkspeedmult = oldmult - inst._polartile_speed
+		inst._polartile_speed = nil
+	end
 end
 
 --
@@ -79,7 +75,7 @@ local function OnEquip(inst, owner)
 	
 	local houndstooth = #parts["houndstooth"]
 	local polarwargstooth = #parts["polarwargstooth"]
-	if houndstooth > 0 and owner.components.combat then
+	if (houndstooth + polarwargstooth) > 0 and owner.components.combat then
 		owner.components.combat.externaldamagemultipliers:SetModifier(inst, 1 + ((houndstooth + polarwargstooth) * TUNING.POLARAMULET.HOUNDSTOOTH.DAMAGE_MULT))
 	end
 	
@@ -102,8 +98,8 @@ local function OnEquip(inst, owner)
 		end
 	end
 	
-	if polarwargstooth > 0 and owner.components.areaaware then
-		inst._onpolartiles = function(owner, data, amulet, force_disable)
+	if polarwargstooth > 0 and owner.components.areaaware and inst._updatewargteethspeed == nil then
+		--[[inst._onpolartiles = function(owner, data, amulet, force_disable)
 			OnPolarTiles(inst or amulet, owner, data, force_disable)
 		end
 		
@@ -116,7 +112,9 @@ local function OnEquip(inst, owner)
 		inst._onpolartiles(owner, nil, inst)
 		--inst:ListenForEvent("on_POLAR_ICE_tile", inst._onpolartiles, owner)
 		inst:ListenForEvent("on_POLAR_SNOW_tile", inst._onpolartiles, owner)
-		inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)
+		inst:ListenForEvent("ms_stormchanged", inst.onpolarstormchanged, TheWorld)]]
+		
+		inst._updatewargteethspeed = inst:DoPeriodicTask(0.2, inst.UpdateWargTeethSpeed, 0, owner)
 	end
 	
 	if inst.components.fueled then
@@ -150,13 +148,17 @@ local function OnUnequip(inst, owner)
 		owner.components.health.externalfiredamagemultipliers:RemoveModifier(inst)
 	end
 	
-	if inst._onpolartiles then
+	--[[if inst._onpolartiles then
 		--inst:RemoveEventCallback("on_POLAR_ICE_tile",  inst._onpolartiles, owner)
 		inst:RemoveEventCallback("on_POLAR_SNOW_tile", inst._onpolartiles, owner)
 		inst:RemoveEventCallback("ms_stormchanged", inst.onpolarstormchanged, owner)
 		inst._onpolartiles(owner, nil, inst, true)
 		inst._onpolartiles = nil
 		inst.onpolarstormchanged = nil
+	end]]
+	if inst._updatewargteethspeed then
+		inst._updatewargteethspeed:Cancel()
+		inst._updatewargteethspeed = nil
 	end
 	
 	if inst._onattackother then
@@ -392,6 +394,7 @@ local function fn()
 	inst.GetAmuletParts = GetAmuletParts
 	inst.SetAmuletParts = SetAmuletParts
 	inst.SetAmuletPower = SetAmuletPower
+	inst.UpdateWargTeethSpeed = UpdateWargTeethSpeed
 	
 	inst:ListenForEvent("ondeconstructstructure", OnDeconstructed)
 	
