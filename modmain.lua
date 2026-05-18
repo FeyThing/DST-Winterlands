@@ -67,10 +67,10 @@ local prefabs = {
 	"cookingrecipecard",
 	"desiccant",
 	"dirtpile",
+	"driedplants",
 	"farm_plants",
 	"flower",
-	"forest",
-	"frogs",
+	"forest", -- simpostinit
 	"grass",
 	--"heatrock",
 	"ice",
@@ -116,8 +116,9 @@ local prefabs = {
 local components = {
 	"ambientsound",
 	"birdspawner",
-	"builder",
 	"brushable",
+	"builder",
+	"butterflyspawner",
 	"combat",
 	"container",
 	"debuffable",
@@ -125,10 +126,12 @@ local components = {
 	"deployable",
 	"dynamicmusic", -- : (
 	"drawable",
+	"eater",
 	"expertsailor",
 	"explosive",
 	"follower",
 	"freezable",
+	"frograin",
 	"groundpounder",
 	"health",
 	"hounded",
@@ -175,6 +178,8 @@ local components = {
 	"wavemanager",
 	"weather",
 	"wisecracker",
+	"worldstate",
+	"worldtemperature",
 }
 
 local stategraphs = {

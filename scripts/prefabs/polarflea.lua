@@ -223,7 +223,7 @@ local function SetHost(inst, host, kick, given)
 		if inst.components.health then
 			inst.components.health:StopRegen()
 		end
-		inst.skinname = nil
+		inst.cant_stack:set(false)
 		
 		if inst._host then
 			inst.Transform:SetPosition(inst._host.Transform:GetWorldPosition())
@@ -280,7 +280,7 @@ local function SetHost(inst, host, kick, given)
 	
 	local fleapack = inst.components.inventoryitem and inst.components.inventoryitem.owner
 	if not (fleapack and fleapack.components.upgradeable and fleapack.components.upgradeable:GetStage() >= 2) then
-		inst.skinname = "ms_polarflea_unstackable"
+		inst.cant_stack:set(true)
 	end
 	
 	inst._host:PushEvent("gotpolarflea", {flea = inst, given = given})
@@ -525,7 +525,7 @@ local function HostingInit(inst)
 	
 	local container = inst.components.inventoryitem.owner
 	if inst._host and not (container and container:HasTag("fleapack") and container.components.upgradeable and container.components.upgradeable:GetStage() >= 2) then
-		inst.skinname = "ms_polarflea_unstackable"
+		inst.cant_stack:set(true)
 	end
 	
 	inst._try_hosting = nil
@@ -533,6 +533,10 @@ end
 
 local function CanMouseThrough(inst)
 	return ThePlayer and ThePlayer.replica.inventory and ThePlayer.replica.inventory:EquipHasTag("fleapack")
+end
+
+local function CanStackWithFn(inst, item)
+	return not (inst.cant_stack and inst.cant_stack:value())
 end
 
 local function fn()
@@ -567,7 +571,10 @@ local function fn()
 	
 	MakeFeedableSmallLivestockPristine(inst)
 	
+	inst.cant_stack = net_bool(inst.GUID, "polarflea.cant_stack", "can_stackdirty")
+	
 	inst.CanMouseThrough = CanMouseThrough
+	inst.stackable_CanStackWithFn = CanStackWithFn
 	
 	inst.entity:SetPristine()
 	
@@ -617,6 +624,7 @@ local function fn()
 	
 	inst:AddComponent("stackable")
 	inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
+	inst.components.stackable.forcedropsingle = true
 	
 	inst:AddComponent("sleeper")
 	

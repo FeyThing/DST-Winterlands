@@ -25,7 +25,7 @@ local function MakeObstacle(inst)
 	inst._ispathfinding:set(true)
 	
 	if inst.components.polarmistemitter then
-		inst.components.polarmistemitter:StartMisting()
+		inst.components.polarmistemitter:SetEnabled(true)
 	end
 end
 
@@ -34,7 +34,7 @@ local function ClearObstacle(inst)
 	inst._ispathfinding:set(false)
 	
 	if inst.components.polarmistemitter then
-		inst.components.polarmistemitter:StopMisting()
+		inst.components.polarmistemitter:SetEnabled(false)
 	end
 end
 
@@ -95,6 +95,7 @@ local function OnLoad(inst, data)
 			inst.wallanim = data.wallanim
 			inst.AnimState:PlayAnimation(inst.wallanim, false)
 		end
+		
 		if data.gridnudge then
 			local function normalize(coord)	   
 				local temp = coord%0.5 
@@ -135,6 +136,7 @@ local function ValidRepairFn(inst)
 		for i, v in ipairs(TheSim:FindEntities(x, 0, z, 1, PLAYER_TAGS)) do
 			if v ~= inst and v.entity:IsVisible() and v.components.placer == nil and v.entity:GetParent() == nil then
 				local px, _, pz = v.Transform:GetWorldPosition()
+				
 				if math.floor(x) == math.floor(px) and math.floor(z) == math.floor(pz) then
 					return false
 				end
@@ -145,26 +147,16 @@ local function ValidRepairFn(inst)
 	return true
 end
 
-local function GetPolarMistMult(inst)
-	return math.max(2 * (inst.components.health and inst.components.health:GetPercent() or 1), 1.5)
+local function GetPolarMistScale(inst)
+	return math.max(2 * (inst.replica.health and inst.replica.health:GetPercent() or 1), 1.5)
 end
 
 local function OnPutInInv(inst, owner)
-	inst.components.polarmistemitter:StopMisting()
+	inst.components.polarmistemitter:SetEnabled(false)
 end
 
 local function OnDropped(inst)
-	inst.components.polarmistemitter:StartMisting()
-end
-
-local function OnEntitySleep(inst)
-	inst.components.polarmistemitter:StopMisting()
-end
-
-local function OnEntityWake(inst)
-	if not inst.inlimbo then
-		inst.components.polarmistemitter:StartMisting()
-	end
+	inst.components.polarmistemitter:SetEnabled(true)
 end
 
 local function OnAttacked(inst, data)
@@ -224,10 +216,10 @@ function MakeWallType(data)
 		
 		MakeInventoryPhysics(inst)
 		
-		inst:AddTag("wallbuilder")
 		if data.polar then
 			inst:AddTag("dryice")
 		end
+		inst:AddTag("wallbuilder")
 		
 		inst.AnimState:SetBank("wall")
 		inst.AnimState:SetBuild("wall_"..data.name)
@@ -237,6 +229,8 @@ function MakeWallType(data)
 		if item_floats then
 			MakeInventoryFloatable(inst)
 		end
+		
+		inst:AddComponent("polarmistemitter")
 		
 		inst.entity:SetPristine()
 		
@@ -270,14 +264,10 @@ function MakeWallType(data)
 		end
 		
 		if data.polar then
-			inst:AddComponent("polarmistemitter")
-			inst.components.polarmistemitter:StartMisting()
+			inst.components.polarmistemitter:SetEnabled(true)
 			
 			inst.components.inventoryitem:SetOnPutInInventoryFn(OnPutInInv)
 			inst.components.inventoryitem:SetOnDroppedFn(OnDropped)
-			
-			inst.OnEntitySleep = OnEntitySleep
-			inst.OnEntityWake = OnEntityWake
 		end
 		
 		MakeHauntableLaunch(inst)
@@ -335,6 +325,7 @@ function MakeWallType(data)
 		if data.buildsound then
 			inst.SoundEmitter:PlaySound(data.buildsound)
 		end
+		
 		MakeObstacle(inst)
 	end
 	
@@ -351,6 +342,10 @@ function MakeWallType(data)
 		MakeObstaclePhysics(inst, 0.5)
 		inst.Physics:SetDontRemoveOnSleep(true)
 		
+		inst.AnimState:SetBank("wall")
+		inst.AnimState:SetBuild("wall_"..data.name)
+		inst.AnimState:PlayAnimation("half")
+		
 		inst:AddTag("wall")
 		inst:AddTag("noauradamage")
 		
@@ -358,9 +353,9 @@ function MakeWallType(data)
 			inst:AddTag(v)
 		end
 		
-		inst.AnimState:SetBank("wall")
-		inst.AnimState:SetBuild("wall_"..data.name)
-		inst.AnimState:PlayAnimation("half")
+		inst:AddComponent("polarmistemitter")
+		inst.components.polarmistemitter.maxdist = 2
+		inst.components.polarmistemitter.scale = GetPolarMistScale
 		
 		inst._pfpos = nil
 		inst._ispathfinding = net_bool(inst.GUID, "_ispathfinding", "onispathfindingdirty")
@@ -402,10 +397,7 @@ function MakeWallType(data)
 		inst.components.workable:SetOnWorkCallback(OnHit)
 		
 		if data.polar then
-			inst:AddComponent("polarmistemitter")
-			inst.components.polarmistemitter:StartMisting()
-			inst.components.polarmistemitter.scale = GetPolarMistMult
-			inst.components.polarmistemitter.maxmist = 4
+			inst.components.polarmistemitter:SetEnabled(true)
 			
 			inst.OnEntitySleep = OnEntitySleep
 			inst.OnEntityWake = OnEntityWake

@@ -8,12 +8,14 @@ local prefabs = {
 
 local WAXED_PLANTS = require("prefabs/waxed_plant_common")
 
+local BLIZZARD_EXPOSED_LEVEL = TUNING.SANDSTORM_FULL_LEVEL * 0.75
+
 local function OnAnimOverStorm(inst)
 	if not inst:HasTag("pickable") then
 		return
 	end
 	
-	if TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+	if TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= BLIZZARD_EXPOSED_LEVEL then
 		if inst.AnimState:IsCurrentAnimation("idle") or inst.AnimState:IsCurrentAnimation("blown_pst") then
 			inst.AnimState:PlayAnimation("blown_pre")
 		else
@@ -33,7 +35,7 @@ local function OnPolarstormChanged(inst, active)
 	if active then
 		inst:ListenForEvent("animover", OnAnimOverStorm)
 		
-		if TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL and inst:HasTag("pickable") and inst._blizzardbreak == nil then
+		if TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= BLIZZARD_EXPOSED_LEVEL and inst:HasTag("pickable") and inst._blizzardbreak == nil then
 			if inst.AnimState:IsCurrentAnimation("idle") then
 				inst.AnimState:PlayAnimation("blown_pre")
 				inst.AnimState:PushAnimation("blown_loop"..math.random(2), false)
@@ -83,7 +85,7 @@ local function OnRegenFn(inst)
 	inst.AnimState:PushAnimation("idle", true)
 	inst:TryGetFlea()
 	
-	if inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+	if inst.onpolarstormchanged and TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= BLIZZARD_EXPOSED_LEVEL then
 		OnPolarstormChanged(inst, true)
 	end
 end
@@ -202,7 +204,7 @@ end
 local function GetFleaCapacity(inst, flea)
 	if flea and flea.components.combat and flea.components.combat.target then
 		return 0
-	elseif TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= TUNING.SANDSTORM_FULL_LEVEL then
+	elseif TheWorld.components.polarstorm and TheWorld.components.polarstorm:GetPolarStormLevel(inst) >= BLIZZARD_EXPOSED_LEVEL then
 		return 0
 	end
 	

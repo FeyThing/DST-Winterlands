@@ -20,34 +20,36 @@ local TREE_SNOWMELTER_DATA = {
 	},
 	
 	deciduoustree = {
-		prefabs = {"deciduoustree"},
 		snowblock = {1, 2, 2, 0},
 	},
 
 	moon_tree = {
-		prefabs = {"moon_tree"},
 		snowblock = {2, 2, 4},
 	},
 
 	palmconetree = {
-		prefabs = {"palmconetree"},
 		snowblock = {1, 2, 3},
 	},
 
 	ancienttree_nightvision = {
-		prefabs = {"ancienttree_nightvision"},
-		snowblock = {4},
+		snowblock = {5},
 	},
 
 	ancienttree_gem = {
-		prefabs = {"ancienttree_gem"},
+		snowblock = {4},
+	},
+	
+	tree_rock1 = {
+		snowblock = {3},
+	},
+	
+	tree_rock2 = {
 		snowblock = {4},
 	},
 
 	-- Mods
 	
 	jungletree = {
-		prefabs = {"jungletree"},
 		snowblock = {2, 3, 4},
 	},
 
@@ -57,12 +59,10 @@ local TREE_SNOWMELTER_DATA = {
 	},
 	
 	clawpalmtree = {
-		prefabs = {"clawpalmtree"},
 		snowblock = {1, 2, 3},
 	},
 	
 	rainforesttree = {
-		prefabs = {"rainforesttree"},
 		snowblock = {2, 3, 4},
 	},
 	
@@ -111,8 +111,8 @@ end
 
 --	[[		Postinits		]]	--
 
-for i, data in pairs(TREE_SNOWMELTER_DATA) do
-	for j, prefab in ipairs(data.prefabs) do
+for tree, data in pairs(TREE_SNOWMELTER_DATA) do
+	for i, prefab in ipairs(data.prefabs or {tree}) do
 		ENV.AddPrefabPostInit(prefab, function(inst)
 			if not TheWorld.ismastersim then
 				return

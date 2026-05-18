@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 		GENERIC = "You may have longer horns, but I have an axe.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "For now a baby, but soon it'll turn old and crusty."
+	DESCRIBE.FLOWER_POLAR = "Such a delight to the eye."
 	DESCRIBE.ICELETTUCE_SEEDS = "Let's give them some soil, before they spoil."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "I know a prank when I see one!"
 	DESCRIBE.FILET_O_FLEA = "Oh noes! I've got nothing to do with this, promise!"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "It tastes of mortali-tea."
 	DESCRIBE.ICELETTUCE = "Mortals will cultivate plants, no matter how mean they come by."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "The pain was veritable, to grow such vegetable."
 	DESCRIBE.ICEBURRITO = "I suppose I could have a bite. A frostbite, hyuyu!"
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Whoopsie! I broke it again."
 	DESCRIBE.EMPEROR_EGG = "Would they come back for it? Mmm. Best snatch it!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Well that's too bad, for you!"
+	DESCRIBE.PETALS_POLAR = "I find them more enjoyable in the ground."
+	DESCRIBE.PETALS_POLAR_DRIED = "I'd eyed it'd dried."
 	DESCRIBE.POLAR_DRYICE = "Cold as can be, it's perfect for me."
 	DESCRIBE.POLARBEARFUR = "A thick fur for frolicking in the snow."
 	DESCRIBE.POLARWARGSTOOTH = "I admit, this one might be a worthy contender."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Cruel? Maybe. Fun? Certainly!"
 	DESCRIBE.TURF_POLAR_CAVES = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.TURF_POLAR_DRYICE = "Floor or ceiling, depending on your perspective."
+	DESCRIBE.TURF_POLAR_GRASS = "Floor or ceiling, depending on your perspective."
 	DESCRIBE.WALL_POLAR = "Does it keep the cold out, or in?"
 	DESCRIBE.WALL_POLAR_ITEM = "It's of no use there on the ground."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Daring today, are we?"

@@ -3,27 +3,14 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
+--	[[	Server 	]]	--
+
 local function OverrideIsCarefulWalking(inst)
 	local old_IsCarefulWalking = inst.IsCarefulWalking
 	inst.IsCarefulWalking = function(inst, ...)
 		return old_IsCarefulWalking(inst, ...) or inst.deepinhighsnow:value()
 	end
 end
-
-local function PolarSnowUpdate(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local polarsnowlevel = TheWorld.components.polarsnow_manager and TheWorld.components.polarsnow_manager:GetDataAtPoint(x, y, z)
-	
-	if polarsnowlevel then
-		inst.player_classified.polarsnowlevel:set(polarsnowlevel)
-	end
-end
-
-local function OnNearHighSnowDirty(inst)
-	inst:PushEvent("refreshcrafting")
-end
-
---
 
 local OldCalcDamage
 local function CalcDamage(combat, target, ...) -- Special CalcDamage edit for trial fighting, players play nice :)
@@ -51,8 +38,6 @@ local function GetBattleCryString(combat, target, ...)
 	
 	return str
 end
-
---
 
 local OldOnSave
 local function OnSave(inst, data, ...)
@@ -102,6 +87,32 @@ local function RemoveArcticFoolFish(inst)
 			end
 		end)
 	end
+end
+
+--	[[	Client	]]	--
+
+local TEMP_THRESHOLD_MAX = TUNING.POLAR_SNOW_MELT_TEMP_MAX
+local TEMP_THRESHOLD_MIN = TUNING.POLAR_SNOW_MELT_TEMP
+local TEMP_TRANSITION_BAND = 1.5
+
+local function PolarSnowUpdate(inst)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local snow_level = TheWorld.components.polarsnow_manager and TheWorld.components.polarsnow_manager:GetDataAtPoint(x, y, z) or 0
+	local max_depth = TheWorld.components.polarsnow_manager and TheWorld.components.polarsnow_manager:GetMaxDepth() or 1
+	
+	local temperature = TheWorld.state.temperature or 0
+	local temperature_ratio = math.clamp((temperature - TEMP_THRESHOLD_MIN) / (TEMP_THRESHOLD_MAX - TEMP_THRESHOLD_MIN), 0, 1)
+	local temperature_depth = temperature_ratio * max_depth
+	
+	local t = (snow_level <= temperature_depth and 0)
+		or (snow_level >= temperature_depth + TEMP_TRANSITION_BAND and 1)
+		or (snow_level - temperature_depth) / TEMP_TRANSITION_BAND
+	
+	inst.player_classified.polarsnowlevel:set(t)
+end
+
+local function OnNearHighSnowDirty(inst)
+	inst:PushEvent("refreshcrafting")
 end
 
 local function OnUsedArcticFoolFish(inst)
@@ -184,37 +195,43 @@ ENV.AddPlayerPostInit(function(inst)
 	end)
 end)
 
-AddPrefabPostInit("player_classified", function(inst)
-	inst.stormtypechange = net_event(inst.GUID, "stormtypedirty") -- stormtype lacks a dirty event
+--	[[	Classified	]]	--
 
-	local base_polarsnow_particles_per_tick = 16
+local function UpdatePolarSnowFX(inst)
+	if not inst._parent or not inst._parent._polarsnowfx then
+		return
+	end
+	
+	local snow_level = inst.polarsnowlevel:value()
+	local base_polarsnow_particles_per_tick = 12
+	
+	inst._parent._polarsnowfx.particles_per_tick = base_polarsnow_particles_per_tick * snow_level
+	
+	if inst.stormtype:value() == STORM_TYPES.POLARSTORM then
+		local storm_level = inst._parent:GetStormLevel(STORM_TYPES.POLARSTORM)
+		
+		inst._parent._polarsnowfx.particles_per_tick = Lerp(base_polarsnow_particles_per_tick, base_polarsnow_particles_per_tick * 4, storm_level)
+		inst._parent._polarsnowfx.particles_acceleration = {0, Lerp(-1, -20, storm_level), Lerp(-9.8, -9.8 * 4, storm_level), Lerp(1, 24, storm_level)}
+	else
+		inst._parent._polarsnowfx.particles_acceleration = {0, -1, -9.8, 1}
+	end
+end
+
+--
+
+AddPrefabPostInit("player_classified", function(inst)
 	inst.polarsnowlevel = net_float(inst.GUID, "polarsnowlevel", "polarsnowleveldirty")
 	
+	--inst.stormtypechange = net_event(inst.GUID, "stormtypedirty") -- stormtype lacks a dirty event
+	
 	inst:DoStaticTaskInTime(0, function(inst)
-		inst:ListenForEvent("polarsnowleveldirty", function(inst)
-			if inst._parent._polarsnowfx then
-				inst._parent._polarsnowfx.particles_per_tick = base_polarsnow_particles_per_tick * inst.polarsnowlevel:value()
-
-				if inst.stormtype:value() == STORM_TYPES.POLARSTORM then
-					inst._parent._polarsnowfx.particles_per_tick = inst._parent._polarsnowfx.particles_per_tick * 4
-				end
-			end
-		end)
-
-		inst:ListenForEvent("stormtypedirty", function(inst)
-			if inst._parent._polarsnowfx then
-				inst._parent._polarsnowfx.particles_per_tick = base_polarsnow_particles_per_tick * inst.polarsnowlevel:value()
-
-				if inst.stormtype:value() == STORM_TYPES.POLARSTORM then
-					inst._parent._polarsnowfx.particles_per_tick = inst._parent._polarsnowfx.particles_per_tick * 4
-					inst._parent._polarsnowfx.particles_acceleration = { 0, -20, -9.80 * 4, 24 }
-				else
-					inst._parent._polarsnowfx.particles_acceleration = { 0, -1, -9.80, 1 }
-				end
-			end
-		end)
+		inst:ListenForEvent("polarsnowleveldirty", UpdatePolarSnowFX)
+		--inst:ListenForEvent("stormtypedirty", UpdatePolarSnowFX)
+		inst:ListenForEvent("stormleveldirty", UpdatePolarSnowFX)
 	end)
 end)
+
+--	[[	Characters	]]	--
 
 --	Wolfgang beats snow when mighty, not when wimpy :<
 
@@ -242,7 +259,7 @@ AddPrefabPostInit("wolfgang", function(inst)
 	inst.polar_slowtime = Wolfgang_Polar_Time
 end)
 
---	Woodie transformations deal with snow easier (or with his cane!)
+--	Woodie transformations gives him an easier time in the snow (or with a Walking Sticks too!)
 
 local function Woodie_Polar_Time(inst, slowtime)
 	return inst:HasTag("wereplayer") and (slowtime * TUNING.WEREMODE_POLAR_SLOWTIME) or 0

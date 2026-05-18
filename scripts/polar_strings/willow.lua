@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 		GENERIC = "You better burn well.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Brrr... c'mon, grow so I can burn you!"
+	DESCRIBE.FLOWER_POLAR = "I though the only colors in this place were white, green, and more white."
 	DESCRIBE.ICELETTUCE_SEEDS = "Some seeds."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Warly. Listen here."
 	DESCRIBE.FILET_O_FLEA = "It's still twitching. Awesome!"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "It's not exactly my favorite."
 	DESCRIBE.ICELETTUCE = "This is the opposite of good."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Great."
 	DESCRIBE.ICEBURRITO = "I don't think any hot sauce can fix this."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Awful little splinters."
 	DESCRIBE.EMPEROR_EGG = "Brrr... just the thought of it gives me nightmares!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Now what to do with this stick..."
+	DESCRIBE.PETALS_POLAR = "What's else to do with 'em but burn 'em?"
+	DESCRIBE.PETALS_POLAR_DRIED = "Mmm... So dry. So flammable."
 	DESCRIBE.POLAR_DRYICE = "What's the point if it can't even melt?"
 	DESCRIBE.POLARBEARFUR = "It keeps heat well."
 	DESCRIBE.POLARWARGSTOOTH = "It frosted its last bite."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Would still be better with fire."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground is boring and cold."
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground is boring and cold."
+	DESCRIBE.TURF_POLAR_GRASS = "The ground is boring and cold."
 	DESCRIBE.WALL_POLAR = "I hate it."
 	DESCRIBE.WALL_POLAR_ITEM = "Maybe I'll give it a chance."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Not quite my favorite."

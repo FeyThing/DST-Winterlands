@@ -39,6 +39,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 		GENERIC = "Looks like it's frozen in time.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Why must it take so long for plants to grow?"
+	DESCRIBE.FLOWER_POLAR = "It's been waiting all year to come out... makes you think."
 	DESCRIBE.ICELETTUCE_SEEDS = "Why waste time growing them when I can just eat them now?"
 	
 	--	Rocks and stones
@@ -127,6 +128,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "And, when will you add the flavor? Ah."
 	DESCRIBE.FILET_O_FLEA = "Wait a tick... I don't remember cooking... this?"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "What's in this one again?"
 	DESCRIBE.ICELETTUCE = "Do I have to wait and drink it... or?"
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Good thing it grew quite large, I was growing quite tired of it!"
 	DESCRIBE.ICEBURRITO = "I'm still figuring things out."
@@ -140,6 +142,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "I prefer to work with smaller pieces anyway."
 	DESCRIBE.EMPEROR_EGG = "Nothing would come out... best use it some-how-else."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "This better be worth it."
+	DESCRIBE.PETALS_POLAR = "Surely they will grow back?"
+	DESCRIBE.PETALS_POLAR_DRIED = "Smells lovely."
 	DESCRIBE.POLAR_DRYICE = "Now what can I use this for?"
 	DESCRIBE.POLARBEARFUR = "It's like holding onto warm snow."
 	DESCRIBE.POLARWARGSTOOTH = "I couldn't make a piece of flint sharper than it even if I tried!"
@@ -181,6 +185,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "I don't know many things worse than being stuck in place."
 	DESCRIBE.TURF_POLAR_CAVES = "Why am I wasting time staring at the ground?"
 	DESCRIBE.TURF_POLAR_DRYICE = "A road to where, exactly?"
+	DESCRIBE.TURF_POLAR_GRASS = "Why am I wasting time staring at the ground?"
 	DESCRIBE.WALL_POLAR = "I wouldn't want to punch it for certain."
 	DESCRIBE.WALL_POLAR_ITEM = "That shouldn't melt anytime soon."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "So lifelike I'd swear it would melt... very... soon..."

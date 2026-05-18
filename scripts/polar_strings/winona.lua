@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 		GENERIC = "Looks sharp, but I've got sharper.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Would it grow faster under the sun?"
+	DESCRIBE.FLOWER_POLAR = "Must be getting warmer 'round here."
 	DESCRIBE.ICELETTUCE_SEEDS = "I got no idea what they'd grow into."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Snow sure is nothin' after you eat that stuff."
 	DESCRIBE.FILET_O_FLEA = "Should've looked in the pot twice."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "I'm off this stuff!"
 	DESCRIBE.ICELETTUCE = "In mint condition? It's practically cryopreserved!"
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Sure hope y'all love eating salad!"
 	DESCRIBE.ICEBURRITO = "Just what I needed to wrap up the day."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Pretty sure the cold could glue them back itself."
 	DESCRIBE.EMPEROR_EGG = "(Knock knock) That's premium material right here."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "You fought well, bucko."
+	DESCRIBE.PETALS_POLAR = "Doesn't smell like anything..."
+	DESCRIBE.PETALS_POLAR_DRIED = "These are nice and dry."
 	DESCRIBE.POLAR_DRYICE = "Get it down the ice-embly line."
 	DESCRIBE.POLARBEARFUR = "It's warm, and more importantly it's mine."
 	DESCRIBE.POLARWARGSTOOTH = "I don't suppose he used those to feed on plants."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Cruel but clever."
 	DESCRIBE.TURF_POLAR_CAVES = "That's a chunk of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "That's a chunk of road."
+	DESCRIBE.TURF_POLAR_GRASS = "That's a chunk of grassy ground."
 	DESCRIBE.WALL_POLAR = "Yeah, that's pretty ice."
 	DESCRIBE.WALL_POLAR_ITEM = "Assembly time."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Nothin' says winter like this one."

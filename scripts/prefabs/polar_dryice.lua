@@ -5,26 +5,16 @@ local assets = {
 local names = {"f1", "f2", "f3"}
 
 local function OnPutInInv(inst, owner)
+	inst.components.polarmistemitter:SetEnabled(false)
+	
 	if owner.prefab == "mole" and owner.components.inventory then
 		owner.components.inventory:DropItem(inst, true, true)
 		owner.components.freezable:AddColdness(TUNING.DRYICE_FREEZABLE_COLDNESS * 4)
 	end
-	
-	inst.components.polarmistemitter:StopMisting()
 end
 
 local function OnDropped(inst)
-	inst.components.polarmistemitter:StartMisting()
-end
-
-local function OnEntitySleep(inst)
-	inst.components.polarmistemitter:StopMisting()
-end
-
-local function OnEntityWake(inst)
-	if not inst.inlimbo then
-		inst.components.polarmistemitter:StartMisting()
-	end
+	inst.components.polarmistemitter:SetEnabled(true)
 end
 
 local function OnSave(inst, data)
@@ -72,6 +62,8 @@ local function fn()
 	
 	MakeInventoryPhysics(inst)
 	
+	inst:AddComponent("polarmistemitter")
+	
 	inst.entity:SetPristine()
 	
 	if not TheWorld.ismastersim then
@@ -107,10 +99,7 @@ local function fn()
 	inst.components.perishable:StartPerishing()
 	inst.components.perishable:SetOnPerishFn(inst.Remove)
 	
-	inst:AddComponent("polarmistemitter")
-	inst.components.polarmistemitter.maxmist = 8
-	inst.components.polarmistemitter.scale = 1.5
-	inst.components.polarmistemitter:StartMisting()
+	inst.components.polarmistemitter:SetEnabled(true)
 	
 	inst:AddComponent("repairer")
 	inst.components.repairer.repairmaterial = MATERIALS.DRYICE

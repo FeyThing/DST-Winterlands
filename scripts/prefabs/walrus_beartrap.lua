@@ -85,7 +85,8 @@ end
 
 local function OnExplode(inst, target)
 	inst:RemoveTag("canbait")
-	inst.AnimState:PlayAnimation("trap") -- OnAnimOver...
+	inst.AnimState:PlayAnimation("trap") -- OnAnimOver takes care of the rest
+	inst.proxytrap_activated:set(false)
 end
 
 local function OnReset(inst)
@@ -103,10 +104,10 @@ local function OnReset(inst)
 		inst.components.workable:SetWorkable(false)
 	end
 	
-	if not inst.AnimState:IsCurrentAnimation("idle") then
+	inst.AnimState:PlayAnimation("idle_invisible")
+	if not inst.proxytrap_activated:value() then
 		inst.SoundEmitter:PlaySound("polarsounds/walrus/trap_bear_reset")
-		inst.AnimState:PlayAnimation("reset")
-		inst.AnimState:PushAnimation("idle", false)
+		inst.proxytrap_activated:set(true)
 	end
 end
 
@@ -120,6 +121,7 @@ local function SetSprung(inst)
 	if inst.components.workable then
 		inst.components.workable:SetWorkable(true)
 	end
+	inst.proxytrap_activated:set(false)
 end
 
 local function SetInactive(inst)
@@ -134,6 +136,7 @@ local function SetInactive(inst)
 	if inst.components.workable then
 		inst.components.workable:SetWorkable(true)
 	end
+	inst.proxytrap_activated:set(false)
 end
 
 --	Trap behaviours
@@ -149,6 +152,7 @@ local function DoTrapUpdate(inst, target)
 				inst.AnimState:PlayAnimation("trap_pst")
 				return
 			end
+			
 			if not target:HasTag("walrus_beartrapped") and not target:HasTag("player") then -- Not an ent with auto-struggle. Needs help from the trap !
 				if inst._autostruggle_task == nil then
 					local struggletime = math.random(TUNING.WALRUS_BEARTRAP_AUTOSTRUGGLE_TIMES.min, TUNING.WALRUS_BEARTRAP_AUTOSTRUGGLE_TIMES.max)
@@ -262,41 +266,6 @@ local function SetTrapTarget(inst, target, trapped)
 	target:PushEvent("walrus_beartrapped", {trap = inst, captured = trapped, released = not trapped})
 end
 
-local function UpdateSnowCamo(inst, snowlevel)
-	if ThePlayer == nil then
-		return
-	end
-	
-	snowlevel = snowlevel or TheWorld.state.snowlevel
-	local tile, tileinfo = inst:GetCurrentTileType()
-	
-	if not inst.AnimState:IsCurrentAnimation("idle") or not TileGroupManager:IsLandTile(tile) or
-		not ((tile and tile == WORLD_TILES.POLAR_SNOW) or (tileinfo and not tileinfo.nogroundoverlays)) then
-		
-		return inst.AnimState:SetMultColour(1, 1, 1, 1)
-	end
-	
-	local snow_visibility = math.max(0, math.min(1, 1 - (tile == WORLD_TILES.POLAR_SNOW and 1 or snowlevel * 3)))
-	local dist = inst:GetDistanceSqToInst(ThePlayer)
-	local a = snow_visibility
-	
-	local min_d = TUNING.WALRUS_BEARTRAP_VISILITY_SNOWDISTS.min
-	local max_d = TUNING.WALRUS_BEARTRAP_VISILITY_SNOWDISTS.max
-	
-	if dist then
-		dist = math.sqrt(dist)
-		
-		if dist <= min_d then
-			a = 1
-		elseif dist < max_d then
-			local t = (dist - min_d) / (max_d - min_d)
-			a = 1 + (snow_visibility - 1) * t
-		end
-	end
-	
-	inst.AnimState:SetMultColour(1, 1, 1, math.max(0.1, a))
-end
-
 --	Item components
 
 local function OnFinished(inst)
@@ -377,16 +346,115 @@ local function OnLoad(inst, data)
 	end
 end
 
---
+--	Client
 
 local PLAYER_TAGS = {"player"}
 
 local function CanDeployFn(inst, pt, mouseover, deployer, rotation)
-	if not TheWorld.Map:IsAboveGroundAtPoint(pt:Get()) or not TheWorld.Map:IsDeployPointClear(pt, inst, inst.replica.inventoryitem:DeploySpacingRadius()) then
+	if not TheWorld.Map:IsPassableAtPoint(pt:Get()) or not TheWorld.Map:IsDeployPointClear(pt, inst, inst.replica.inventoryitem:DeploySpacingRadius()) then
 		return false
 	end
 	
 	return TheNet:GetPVPEnabled() or FindEntity(inst, TUNING.WALRUS_BEARTRAP_RADIUS + 0.2, function(guy) return guy ~= deployer end, PLAYER_TAGS) == nil
+end
+
+local function UpdateSnowCamo(inst, snowlevel)
+	if ThePlayer == nil then
+		return
+	end
+	
+	snowlevel = snowlevel or (IsInPolar(inst) and 0 or TheWorld.state.snowlevel) -- (Snow overlay is disabled in Winterlands)
+	local tile, tileinfo = inst:GetCurrentTileType()
+	
+	if not inst.AnimState:IsCurrentAnimation("idle") or not TileGroupManager:IsLandTile(tile) or
+		not ((tile and tile == WORLD_TILES.POLAR_SNOW) or (tileinfo and not tileinfo.nogroundoverlays)) then
+		
+		return inst.AnimState:SetMultColour(1, 1, 1, 1)
+	end
+	
+	local snow_visibility = math.max(0, math.min(1, 1 - (tile == WORLD_TILES.POLAR_SNOW and 1 or snowlevel * 3)))
+	local dist = inst:GetDistanceSqToInst(ThePlayer)
+	local a = snow_visibility
+	
+	local min_d = TUNING.WALRUS_BEARTRAP_VISILITY_SNOWDISTS.min
+	local max_d = TUNING.WALRUS_BEARTRAP_VISILITY_SNOWDISTS.max
+	
+	if dist then
+		dist = math.sqrt(dist)
+		
+		if dist <= min_d then
+			a = 1
+		elseif dist < max_d then
+			local t = (dist - min_d) / (max_d - min_d)
+			a = 1 + (snow_visibility - 1) * t
+		end
+	end
+	
+	inst.AnimState:SetMultColour(1, 1, 1, math.max(0.1, a))
+end
+
+local function OnEntityReplicated(inst)
+	local parent = inst.entity:GetParent()
+	
+	if parent and parent.prefab == "atrium_gate" then
+		table.insert(parent.highlightchildren, inst)
+	end
+end
+
+local function OnRemoveEntity(inst)
+	local parent = inst.entity:GetParent()
+	if parent and parent.highlightchildren then
+		table.removearrayvalue(parent.highlightchildren, inst)
+	end
+end
+
+local function OnProxyTrapActivatedDirty(inst)
+	local proxy = inst._proxytrap
+	
+	if proxy == nil then
+		proxy = SpawnPrefab("walrus_beartrap_proxy")
+		proxy.entity:SetParent(inst.entity)
+		proxy.components.highlightchild:SetOwner(inst)
+		
+		inst._proxytrap = proxy
+	end
+	
+	if inst.proxytrap_activated:value() then
+		proxy.AnimState:PlayAnimation("reset")
+		proxy.AnimState:PushAnimation("idle", false)
+	else
+		proxy.AnimState:PlayAnimation("idle_invisible")
+	end
+end
+
+local function proxy()
+	local inst = CreateEntity()
+	
+	inst:AddTag("NOCLICK")
+	inst:AddTag("FX")
+	inst:AddTag("NOBLOCK")
+	
+	inst.entity:SetCanSleep(false)
+	inst.persists = false
+	
+	inst.entity:AddTransform()
+	inst.entity:AddAnimState()
+	
+	inst.AnimState:SetBank("walrus_beartrap")
+	inst.AnimState:SetBuild("walrus_beartrap")
+	inst.AnimState:PlayAnimation("idle_invisible")
+	inst.AnimState:SetScale(1.35, 1.35)
+	inst.AnimState:SetFinalOffset(3)
+	
+	inst:AddComponent("highlightchild")
+	
+	inst.UpdateSnowCamo = UpdateSnowCamo
+	
+	if not TheNet:IsDedicated() then
+		inst:DoPeriodicTask(FRAMES * 2, inst.UpdateSnowCamo, 0)
+	end
+	
+	return inst
 end
 
 local function fn()
@@ -403,24 +471,24 @@ local function fn()
 	
 	inst.AnimState:SetBank("walrus_beartrap")
 	inst.AnimState:SetBuild("walrus_beartrap")
-	inst.AnimState:PlayAnimation("idle")
+	inst.AnimState:PlayAnimation("inactive")
 	inst.AnimState:SetScale(1.35, 1.35)
 	inst.AnimState:SetFinalOffset(3)
 	
 	inst:AddTag("cattoy")
-	inst:AddTag("DECOR") -- Prevents most AoE from trying to hit the trap
 	inst:AddTag("trap")
 	inst:AddTag("walrus_beartrap")
 	inst:AddTag("noepicmusic")
 	
 	inst._custom_candeploy_fn = CanDeployFn
 	
-	--inst._owner = net_entity(inst.GUID, "walrus_beartrap._owner", "ownerdirty")
-	
-	--inst:WatchWorldState("snowlevel", UpdateSnowCamo) Well, that mainly only updates in winter so...
-	inst:DoPeriodicTask(FRAMES * 2, UpdateSnowCamo, 0)
+	inst.proxytrap_activated = net_bool(inst.GUID, "walrus_beartrap.proxytrap_activated", "proxytrap_activateddirty")
 	
 	inst.entity:SetPristine()
+	
+	if not TheNet:IsDedicated() then
+		inst:ListenForEvent("proxytrap_activateddirty", OnProxyTrapActivatedDirty)
+	end
 	
 	if not TheWorld.ismastersim then
 		return inst
@@ -445,7 +513,8 @@ local function fn()
 	inst.components.mine:SetOnResetFn(OnReset)
 	inst.components.mine:SetOnSprungFn(SetSprung)
 	inst.components.mine:SetOnDeactivateFn(SetInactive)
-	inst.components.mine:Reset()
+	inst.components.mine:Deactivate()
+	inst.components.mine.issprung = true
 	
 	inst:AddComponent("deployable")
 	inst.components.deployable.ondeploy = OnDeploy
@@ -477,4 +546,5 @@ local function fn()
 end
 
 return Prefab("walrus_beartrap", fn, assets),
+	Prefab("walrus_beartrap_proxy", proxy, assets),
 	MakePlacer("walrus_beartrap_placer", "walrus_beartrap", "walrus_beartrap", "idle", nil, nil, nil, 1.35)

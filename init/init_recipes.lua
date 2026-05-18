@@ -96,8 +96,9 @@ end
 PolarRecipe("polar_brazier_item", 	{Ingredient("boneshard", 2), Ingredient("cutstone", 1), Ingredient("rope", 1)}, 			TECH.LOST, 				nil, 																							{"LIGHT", "STRUCTURES", "WINTER"}, {"dragonflyfurnace", "dragonflyfurnace", "dragonflyfurnace"})
 PolarRecipe("polarbear_rug", 		{Ingredient("sewing_kit", 0), Ingredient("polarbearfur", 2)}, 								TECH.LOST, 				{placer = "polarbear_rug_placer", min_spacing = 0, testfn = BearRugFn}, 						{"DECOR", "WINTER"}, {"sewing_mannequin", "tent"})
 PolarRecipe("polarbearhouse", 		{Ingredient("boards", 4), Ingredient("polar_dryice", 3), Ingredient("polarbearfur", 4)}, 	TECH.SCIENCE_TWO, 		{placer = "polarbearhouse_placer"}, 															{"STRUCTURES"}, {"rabbithouse"})
-PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_underrock"})
+PolarRecipe("turf_polar_caves", 	{Ingredient("ice", 2), Ingredient("rocks", 1)}, 											TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_vent"})
 PolarRecipe("turf_polar_dryice", 	{Ingredient("polar_dryice", 1), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 4}, 																				{"DECOR"}, {"turf_dragonfly"})
+PolarRecipe("turf_polar_grass", 	{Ingredient("petals_polar", 6)}, 															TECH.TURFCRAFTING_TWO, 	{numtogive = 4}, 																				{"DECOR"}, {"turf_polar_caves"})
 PolarRecipe("wall_polar_item", 		{Ingredient("polar_dryice", 2), Ingredient("bluegem", 1)}, 									TECH.SCIENCE_TWO, 		{numtogive = 6}, 																				{"STRUCTURES", "DECOR"}, {"wall_moonrock_item", "wall_moonrock_item"})
 PolarRecipe("polarheadstick", 		{Ingredient("twigs", 4)}, 																	TECH.LOST, 				{placer = "polarheadstick_placer", min_spacing = 0.9}, 											{"DECOR"}, {"sewing_mannequin"})
 
@@ -164,6 +165,19 @@ for walrus, walrus_data in pairs(POLARWALRUS_TRADEDATA) do
 		
 		PolarRecipe(recipe_name, recipe_data.ingredients, TECH.LOST, {product = recipe_data.product, description = recipe_data.description or "walrustrade_"..recipe_data.product, numtogive = recipe_data.numtogive, limitedamount = true, nounlock = true, actionstr = "WALRUSSHOP", sg_state = "give", nameoverride = recipe_data.nameoverride, image = recipe_data.image, hint_msg = "NEEDSWANDERINGWALRUSSHOP"}, {"CRAFTING_STATION"})
 	end
+end
+
+-- Tea Teas
+
+local NUM_TEASHOP_LEVELS = 3
+local NUM_COMMON_PETALS_FOR_TEASHOP_LEVEL = {8, 6, 4}
+local NUM_RARE_PETALS_FOR_TEASHOP_LEVEL = {6, 4, 2}
+
+for i = 1, NUM_TEASHOP_LEVELS do
+	local num_common_petals = NUM_COMMON_PETALS_FOR_TEASHOP_LEVEL[i]
+	local num_rare_petals = NUM_RARE_PETALS_FOR_TEASHOP_LEVEL[i]
+	
+	PolarRecipe("hermitcrabtea_petals_polar_"..i, {Ingredient("messagebottleempty", 1), Ingredient("petals_polar_dried", num_common_petals)}, TECH.LOST, {product = "hermitcrabtea_petals_polar", nounlock = true, sg_state = "give", manufactured = true, actionstr = "HERMITCRABSHOP", hint_msg = "NEEDSHERMITCRAB_TEASHOP"})
 end
 
 --	[ 	Deconstruction		]	--

@@ -1,22 +1,6 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local function MoleOnLocomote(inst)
-	local inpolar = IsInPolar(inst)
-	
-	if inpolar and not inst.polar_mole then
-		inst.AnimState:OverrideSymbol("dirt_base", "dirt_to_polar_builds", "dirt_base")
-		inst.AnimState:OverrideSymbol("hill", "dirt_to_polar_builds", "hill")
-		inst.AnimState:OverrideSymbol("wormmovefx", "dirt_to_polar_builds", "wormmovefx")
-	elseif not inpolar and inst.polar_mole then
-		inst.AnimState:ClearOverrideSymbol("dirt_base")
-		inst.AnimState:ClearOverrideSymbol("hill")
-		inst.AnimState:ClearOverrideSymbol("wormmovefx")
-	end
-	
-	inst.polar_mole = inpolar
-end
-
 local olddisplaynamefn
 local function displaynamefn(inst, ...)
 	local name = olddisplaynamefn and olddisplaynamefn(inst, ...)
@@ -38,19 +22,14 @@ ENV.AddPrefabPostInit("mole", function(inst)
 		return
 	end
 	
-	inst:ListenForEvent("locomote", MoleOnLocomote)
-	inst:DoTaskInTime(0, MoleOnLocomote)
+	MakeSnowAndDirtToggleable(inst, {
+		{symbol = "dirt_base", 	build = "dirt_to_polar_builds"},
+		{symbol = "hill", 		build = "dirt_to_polar_builds"},
+		{symbol = "wormmovefx", build = "dirt_to_polar_builds"},
+	})
 end)
 
 --
-
-local function PolarInit(inst)
-	if IsInPolar(inst) then
-		inst.AnimState:OverrideSymbol("dirt_base", "dirt_to_polar_builds", "dirt_base")
-		inst.AnimState:OverrideSymbol("hill", "dirt_to_polar_builds", "hill")
-		inst.AnimState:OverrideSymbol("wormmovefx", "dirt_to_polar_builds", "wormmovefx")
-	end
-end
 
 ENV.AddPrefabPostInit("molehill", function(inst)
 	inst:AddTag("icicleimmune")
@@ -59,26 +38,23 @@ ENV.AddPrefabPostInit("molehill", function(inst)
 		return
 	end
 	
-	inst:DoTaskInTime(0, PolarInit)
+	MakeSnowAndDirtToggleable(inst, {
+		{symbol = "dirt_base", 	build = "dirt_to_polar_builds"},
+		{symbol = "hill", 		build = "dirt_to_polar_builds"},
+		{symbol = "wormmovefx", build = "dirt_to_polar_builds"},
+	})
 end)
 
 --
 
 local function PolarInit_Fx(inst)
-	if IsInPolar(inst) then
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true)
+		or (not IsInPolar(inst) and TheWorld.state.issnowcovered)
+	
+	if in_snow then
 		ReplacePrefab(inst, "mole_move_polar_fx")
 	end
-end
-
-local olddisplaynamefn_fx
-local function displaynamefn_fx(inst, ...)
-	local name = olddisplaynamefn_fx and olddisplaynamefn_fx(inst, ...)
-	
-	if IsInPolar(inst) then
-		name = STRINGS.NAMES.MOLE_UNDERGROUND_POLAR
-	end
-	
-	return name
 end
 
 ENV.AddPrefabPostInit("mole_move_fx", function(inst)

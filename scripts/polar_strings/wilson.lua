@@ -42,6 +42,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 		GENERIC = "This tree is axing for a fight.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "A frozen baby tree."
+	DESCRIBE.FLOWER_POLAR = "I'm sure it smells nice but my nose's a bit runny."
 	DESCRIBE.ICELETTUCE_SEEDS = "It's some seeds."
 	
 	--	Rocks and stones
@@ -130,6 +131,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Carbon dioxide flavor is hard to best."
 	DESCRIBE.FILET_O_FLEA = "Hmm. Has anyone ordered a bug-er?"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "Scien-tea-fically speaking, they tastes better."
 	DESCRIBE.ICELETTUCE = "That's a little too much seasoning."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "This one knows to dress to impress!"
 	DESCRIBE.ICEBURRITO = "I really dig that name."
@@ -143,6 +145,8 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "A puzzle of mineralogical intrigue."
 	DESCRIBE.EMPEROR_EGG = "I don't think it'd hatch. Just melt."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "This thing's heavy!"
+	DESCRIBE.PETALS_POLAR = "Botany suggests these may have medicinal applications."
+	DESCRIBE.PETALS_POLAR_DRIED = "Nice dry."
 	DESCRIBE.POLAR_DRYICE = "I could build something reeeally cool with that."
 	DESCRIBE.POLARBEARFUR = "It's snuggy. Fur real!"
 	DESCRIBE.POLARWARGSTOOTH = "It's sharper!"
@@ -184,6 +188,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Now that's a cold reception..."
 	DESCRIBE.TURF_POLAR_CAVES = "Yet another cave type."
 	DESCRIBE.TURF_POLAR_DRYICE = "Tougher than most ice around here."
+	DESCRIBE.TURF_POLAR_GRASS = "A chunk of ground."
 	DESCRIBE.WALL_POLAR = "I feel so safe and cold within those."
 	DESCRIBE.WALL_POLAR_ITEM = "Useful to keep one's cool."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "This one should spruce up the tree just right."

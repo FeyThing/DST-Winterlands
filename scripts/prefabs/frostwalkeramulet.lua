@@ -18,7 +18,7 @@ local function FormIceBridge(inst, owner)
 				inst.components.fueled:DoDelta(-TUNING.FROSTWALKERAMULET_FREEZE_TILE_USE)
 			end
 			
-			TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
+			TheWorld.components.polarice_manager:CreateIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME, true)
 		end
 	end
 end
@@ -74,10 +74,12 @@ local function OnLanded(inst)
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
 		local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
+		
 		if next(TheSim:FindEntities(cx, cy, cz, 10, nil, nil, ICE_FORMING_BLOCKER_TAGS)) == nil then
 			local tile = TheWorld.Map:GetTile(tx, ty)
+			
 			if TileGroupManager:IsOceanTile(tile) or tile == WORLD_TILES.POLAR_ICE then
-				TheWorld.components.polarice_manager:CreateTemporaryIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME)
+				TheWorld.components.polarice_manager:CreateIceAtTile(tx, ty, TUNING.FROSTWALKERAMULET_ICE_STAY_TIME, true)
 			end
 		end
 	end)

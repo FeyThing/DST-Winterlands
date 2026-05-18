@@ -387,7 +387,9 @@ local function GetChatterLines(inst)
 	end
 	
 	local x, y, z = inst.Transform:GetWorldPosition()
-	if GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil and TheWorld.components.polarstorm and not TheWorld.components.polarstorm:IsPolarStormActive() then
+	local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32) ~= nil
+	
+	if in_polar and TheWorld.components.polarstorm and not TheWorld.components.polarstorm:IsPolarStormActive() then
 		local time_before_storm = TheWorld.components.polarstorm:GetTimeLeft()
 		
 		if time_before_storm and time_before_storm <= TUNING.POLARBEAR_BLIZZARD_WARNTIME then
@@ -397,6 +399,13 @@ local function GetChatterLines(inst)
 	
 	if FindEntity(inst, 2, nil, BUDDY_TAGS, BUDDY_NOT_TAGS) then
 		return STRINGS.POLARBEAR_LOOKATBEARSON[math.random(#STRINGS.POLARBEAR_LOOKATBEARSON)]
+	end
+	
+	local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+	if (TheWorld.components.polarsnow_manager and TheWorld.components.polarsnow_manager:IsTileMelting(tx, ty))
+		or (not in_polar and TheWorld.state.temperature >= 5) then
+		
+		return STRINGS.POLARBEAR_LOOKATWILSON_HOT[math.random(#STRINGS.POLARBEAR_LOOKATWILSON_HOT)]
 	end
 	
 	return STRINGS.POLARBEAR_LOOKATWILSON[math.random(#STRINGS.POLARBEAR_LOOKATWILSON)]
@@ -575,7 +584,7 @@ function PolarBearBrain:OnStart()
 		ChattyNode(self.inst, "POLARBEAR_RESCUE",
 			WhileNode(function() return GetFrozenLeader(self.inst) end, "Leader Frozen",
 				DoAction(self.inst, RescueLeaderAction, "Rescue Leader", true))),
-		RunAway(self.inst, "icecrackfx", 5, 7),
+		RunAway(self.inst, "ice_crack_fx", 5, 7),
 		ConditionNode(function() return UpdateLeaderOnRug(self.inst) end, "Leave Creepy Leader"),
 		
 		-- Teeth trading nodes

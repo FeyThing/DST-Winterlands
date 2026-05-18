@@ -6,7 +6,7 @@ local tracks = {"animal_track", "dirtpile"}
 local function PolarInit(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	if GetClosestPolarTileToPoint(x, 0, z, 32) then
-		inst.AnimState:OverrideSymbol("art", "dirt_to_polar_builds", "art")
+		inst.AnimState:OverrideSymbol("art", "dirt_to_polar_builds", "art") -- Not using MakeSnowAndDirtToggleable for this one, it should be everywhere in WL
 	end
 end
 

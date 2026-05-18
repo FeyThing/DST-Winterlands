@@ -249,22 +249,17 @@ end
 --
 
 local function OnSave(inst, data)
+	data.furswapprogress = inst.furswapprogress or 0
+	
 	if inst._trusted_survivors and not IsTableEmpty(inst._trusted_survivors) then
 		data.trusted_survivors = inst._trusted_survivors
-	end
-	if inst._mainlanded then
-		data.mainlanded = true
 	end
 end
 
 local function OnLoad(inst, data)
 	if data then
+		inst.furswapprogress = data.furswapprogress or inst.furswapprogress
 		inst._trusted_survivors = data.trusted_survivors
-		inst._mainlanded = data.mainlanded
-		
-		if inst._mainlanded then
-			inst.AnimState:SetBuild("polarfox_grey")
-		end
 	end
 end
 
@@ -277,7 +272,7 @@ local function HuntRandomPrey(inst, tier)
 	local offset = FindWalkableOffset(pt, math.random() * TWOPI, 1, 8, true, false, NoHoles)
 	
 	if offset then
-		local preyfab = GetClosestPolarTileToPoint(pt.x, 0, pt.z, 32) ~= nil and weighted_random_choice(inst.snowhuntPrefabs)
+		local preyfab = TheWorld.Map:IsPolarSnowAtPoint(pt.x, pt.y, pt.z, true) and weighted_random_choice(inst.snowhuntPrefabs)
 			or weighted_random_choice(inst.dirthuntPrefabs)
 		
 		local prey = SpawnPrefab(preyfab)
@@ -339,18 +334,8 @@ local function OnTimerDone(inst, data)
 	end
 end
 
-local function OnSeasonChange(inst, season)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local mainlanded = GetClosestPolarTileToPoint(x, 0, z, 32) == nil or nil
-	
-	if mainlanded ~= inst._mainlanded then
-		inst._mainlanded = mainlanded
-		inst.AnimState:SetBuild(inst._mainlanded and "polarfox_grey" or "polarfox")
-		
-		if inst.tail then
-			inst.tail:PlayTailAnim("swip", (inst.components.follower and inst.components.follower.leader ~= nil) and "wiggle" or "idle")
-		end
-	end
+local function RememberKnownLocation(inst)
+	inst.components.knownlocations:RememberLocation("respawnpoint", inst:GetPosition(), true)
 end
 
 --
@@ -378,9 +363,30 @@ local function TailTask(inst)
 	end
 end
 
-local function RememberKnownLocation(inst)
-	inst.components.knownlocations:RememberLocation("respawnpoint", inst:GetPosition(), true)
-	OnSeasonChange(inst, TheWorld.state.season)
+local FUR_SWAP_DT = 1
+
+local function UpdateFurswap(inst, respawned)
+	local x, y, z = inst.Transform:GetWorldPosition()
+	local temperature = GetTemperatureAtXZ(x, z)
+	
+	local swap_time = inst.furswapprogress_time or TUNING.POLARFOX_COLD_TIME.min
+	local dt = FUR_SWAP_DT / (respawned and FUR_SWAP_DT or swap_time)
+	
+	if temperature >= (inst.furswapprogress_temp or TUNING.POLARFOX_COLD_TEMP.min) then
+		inst.furswapprogress = math.min(1, inst.furswapprogress + dt)
+	else
+		inst.furswapprogress = math.max(0, inst.furswapprogress - dt)
+	end
+	
+	local mainlanded = inst.furswapprogress >= 1
+	if mainlanded ~= inst._mainlanded and (inst.furswapprogress <= 0 or inst.furswapprogress >= 1) then
+		inst._mainlanded = mainlanded
+		
+		inst.AnimState:SetBuild(mainlanded and "polarfox_grey" or "polarfox")
+		if inst.tail then
+			inst.tail:PlayTailAnim("swip", (inst.components.follower and inst.components.follower.leader) and "wiggle" or "idle")
+		end
+	end
 end
 
 local function fn()
@@ -491,6 +497,9 @@ local function fn()
 	inst.components.freezable:SetResistance(6)
 	inst.components.freezable:SetDefaultWearOffTime(3)
 	
+	inst.furswapprogress = 0
+	inst.furswapprogress_temp = GetRandomMinMax(TUNING.POLARFOX_FURSWAP_TEMP.min, TUNING.POLARFOX_FURSWAP_TEMP.max)
+	inst.furswapprogress_time = GetRandomMinMax(TUNING.POLARFOX_FURSWAP_TIME.min, TUNING.POLARFOX_FURSWAP_TIME.max)
 	inst.snowhuntPrefabs = snowhuntPrefabs
 	inst.dirthuntPrefabs = dirthuntPrefabs
 	
@@ -499,19 +508,20 @@ local function fn()
 	inst.OnPlayerDrop = function(player, data) OnPlayerDrop(inst, player, data) end
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
-	
-	inst:DoTaskInTime(0, RememberKnownLocation)
-	inst:DoTaskInTime(0, TailTask)
+	inst.UpdateFurswap = UpdateFurswap
 	
 	inst:ListenForEvent("attacked", OnAttacked)
 	inst:ListenForEvent("death", OnDeath)
 	inst:ListenForEvent("loot_prefab_spawned", OnLootPrefabSpawned)
 	inst:ListenForEvent("timerdone", OnTimerDone)
 	
-	inst:WatchWorldState("season", OnSeasonChange)
-	
 	inst:SetStateGraph("SGpolarfox")
 	inst:SetBrain(polarfox_brain)
+	
+	inst:DoTaskInTime(0, RememberKnownLocation)
+	inst:DoTaskInTime(0, TailTask)
+	
+	inst._furswap_task = inst:DoPeriodicTask(FUR_SWAP_DT, inst.UpdateFurswap)
 	
 	return inst
 end

@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 		GENERIC = "Thy branches would make a fine weapon.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "'Twill grow resilient and tall, then 'twill be cut down."
+	DESCRIBE.FLOWER_POLAR = "It brings joy in the moment."
 	DESCRIBE.ICELETTUCE_SEEDS = "'Tis a handful of seeds, for not-meat."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Home flavored!"
 	DESCRIBE.FILET_O_FLEA = "Who shall devour it as a test of their might?"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "I shan't be tempted!"
 	DESCRIBE.ICELETTUCE = "Non-meat made of ice."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "You fought well, plant, but we persevered!"
 	DESCRIBE.ICEBURRITO = "Fish lying in its frozen bedroll!"
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "The gem hath been defeated."
 	DESCRIBE.EMPEROR_EGG = "The cowardly bird left it."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Fare thee well..."
+	DESCRIBE.PETALS_POLAR = "I'd imagine Yggdrasil leaves just as delicate."
+	DESCRIBE.PETALS_POLAR_DRIED = "T'would make a most worthy offering to the gods!"
 	DESCRIBE.POLAR_DRYICE = "Chunks from an ice giant!"
 	DESCRIBE.POLARBEARFUR = "A pelt only the fiercest warriors can acquire."
 	DESCRIBE.POLARWARGSTOOTH = "To wield this is to have tamed the frost."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Dangers lurk beneath the snow."
 	DESCRIBE.TURF_POLAR_CAVES = "A piece of the battlefield."
 	DESCRIBE.TURF_POLAR_DRYICE = "This road leads me home."
+	DESCRIBE.TURF_POLAR_GRASS = "A piece of the battlefield."
 	DESCRIBE.WALL_POLAR = "Cold and unyielding, as is my resolve!"
 	DESCRIBE.WALL_POLAR_ITEM = "Fortifications made of an ice giant."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "A frigid token fit for the halls of Valhalla."

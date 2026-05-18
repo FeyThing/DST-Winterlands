@@ -3,20 +3,10 @@ local assets = {
 }
 
 local function OnOwnerUsed(inst, owner)
-	local _owner = inst.components.inventoryitem:GetGrandOwner()
-	
-	if owner and owner.components.container and not (owner:HasTag("pocketdimension_container") or owner:HasTag("buried")) then
-		if owner.components.polarmistemitter == nil then
-			owner:AddComponent("polarmistemitter")
-			owner.components.polarmistemitter.maxmist = 6
-			owner.components.polarmistemitter.scale = 2.5
-		end
+	if owner and owner.components.container and owner.components.polarmistemitter
+		and not (owner:HasTag("pocketdimension_container") or owner:HasTag("buried")) then
 		
-		if owner.components.container:IsOpen() then
-			owner.components.polarmistemitter:StartMisting()
-		else
-			owner.components.polarmistemitter:StopMisting()
-		end
+		owner.components.polarmistemitter:SetEnabled(owner.components.container:IsOpen())
 	end
 end
 
@@ -28,7 +18,7 @@ local function OnOwnerChange(inst)
 		inst:RemoveEventCallback("onopen", inst._onownerused, inst._owner)
 		
 		inst:_onownerused(owner)
-		inst.components.polarmistemitter:StartMisting()
+		inst.components.polarmistemitter:SetEnabled(true)
 	end
 	
 	if owner and owner:IsValid() and owner ~= inst._owner then
@@ -40,7 +30,7 @@ local function OnOwnerChange(inst)
 		inst:ListenForEvent("onopen", inst._onownerused, owner)
 		
 		inst:_onownerused(owner)
-		inst.components.polarmistemitter:StopMisting()
+		inst.components.polarmistemitter:SetEnabled(false)
 	end
 	
 	inst._owner = owner
@@ -61,6 +51,7 @@ local function fn()
 	inst.AnimState:SetBuild("polaricepack")
 	inst.AnimState:PlayAnimation("idle")
 	
+	inst:AddTag("dryice")
 	inst:AddTag("icepack")
 	inst:AddTag("icebox_valid")
 	inst:AddTag("saltbox_valid")
@@ -68,6 +59,8 @@ local function fn()
 	
 	inst.pickupsound = "rock"
 	inst.preserver_mult = TUNING.POLARICEPACK_PRESERVE_MULT
+	
+	inst:AddComponent("polarmistemitter")
 	
 	inst.entity:SetPristine()
 	
@@ -85,19 +78,17 @@ local function fn()
 	inst.components.perishable:StartPerishing()
 	inst.components.perishable:SetOnPerishFn(inst.Remove)
 	
-	inst:AddComponent("polarmistemitter")
-	inst.components.polarmistemitter.maxmist = 8
-	inst.components.polarmistemitter.scale = 1.5
-	inst.components.polarmistemitter:StartMisting()
+	inst.components.polarmistemitter:SetEnabled(true)
 	
 	MakeHauntableLaunch(inst)
 	
-	inst._onownerused = function(owner) OnOwnerUsed(inst, owner) end
+	--	Dryice making containers emit mist was moved to any postinit, this is no longer specific to the Ice Pack
+	--[[inst._onownerused = function(owner) OnOwnerUsed(inst, owner) end
 	
 	inst:ListenForEvent("onputininventory", OnOwnerChange)
 	inst:ListenForEvent("ondropped", OnOwnerChange)
 	
-	OnOwnerChange(inst)
+	OnOwnerChange(inst)]]
 	
 	return inst
 end

@@ -24,7 +24,13 @@ return Class(function(self, inst)
 	
 	local function OnInPolar(inst, enable)
 		self.in_polar = enable
-		self:OnTemperatureChanged()
+		
+		local gotenablers = not IsTableEmpty(self.enablers)
+		if (self.in_polar or gotenablers) and not self.enabled then
+			self:Enable(true)
+		elseif not self.in_polar and self.enabled and not gotenablers then
+			self:Enable(false)
+		end
 	end
 	
 	--
@@ -34,22 +40,6 @@ return Class(function(self, inst)
 		local gz = math.floor(z / spacing_y + 0.5)
 		
 		return gx * 100000 + gz
-	end
-	
-	function self:OnTemperatureChanged(temperature)
-		if not _player then
-			return
-		end
-		
-		local x, y, z = _player.Transform:GetWorldPosition()
-		temperature = temperature or TheWorld.state.temperature
-		
-		local gotenablers = not IsTableEmpty(self.enablers)
-		if (self.in_polar or gotenablers) and temperature <= TUNING.POLAR_SNOW_MELT_TEMP and not self.enabled then
-			self:Enable(true)
-		elseif (not self.in_polar or temperature > TUNING.POLAR_SNOW_MELT_TEMP) and self.enabled and not gotenablers then
-			self:Enable(false)
-		end
 	end
 	
 	--	TODO: Angular positioning is disabled until SetWaves can recognize their old position under all camera angles, and spacing other than multiples of 2
@@ -169,7 +159,12 @@ return Class(function(self, inst)
 			self.enablers[src] = enabled or nil
 		end
 		
-		self:OnTemperatureChanged()
+		local gotenablers = not IsTableEmpty(self.enablers)
+		if (self.in_polar or gotenablers) and not self.enabled then
+			self:Enable(true)
+		elseif not self.in_polar and self.enabled and not gotenablers then
+			self:Enable(false)
+		end
 	end
 	
 	function self:Enable(enabled)
@@ -180,7 +175,7 @@ return Class(function(self, inst)
 			inst:StartUpdatingComponent(self)
 			
 			-- For fires or other blockers that don't update the client
-			self.update_internal = inst:DoPeriodicTask(TUNING.POLAR_SNOW_UPDATE_RATE, function()
+			self.update_internal = inst:DoPeriodicTask(TUNING.SNOWWAVER_UPDATE_RATE, function()
 				self.blocker_update = true
 			end)
 			
@@ -210,8 +205,8 @@ return Class(function(self, inst)
 		if _player ~= player then
 			if _player == nil then
 				inst:ListenForEvent("setinpolar", function(src, enable) OnInPolar(self, enable) end, player)
-				inst:ListenForEvent("temperaturetick", function(src, temperature) self:OnTemperatureChanged(temperature) end)
 			end
+			
 			_player = player
 		end
 	end
@@ -219,7 +214,7 @@ return Class(function(self, inst)
 	local function OnPlayerDeactivated(inst, player)
 		if _player == player then
 			inst:RemoveEventCallback("setinpolar", function(src, enable) OnInPolar(self, enable) end, _player)
-			inst:RemoveEventCallback("temperaturetick", function(src, temperature) self:OnTemperatureChanged(temperature) end)
+			
 			_player = nil
 		end
 	end

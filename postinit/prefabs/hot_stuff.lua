@@ -30,7 +30,7 @@ local FIRES = {
 	saladfurnace = 				{snow_block = 6},
 	stafflight = 				{prot_range = PROTECTION.FIRE, 		snow_block = SNOWBLOCK.STAR, 		snow_melt = true},
 	
-	--	Just visual
+	--	Just visual (also check trees postinit)
 	mermthrone = 				{snow_block = 6},
 	penguin_ice = 				{snow_block = 12},
 	winona_teleport_pad = 		{snow_block = 4},

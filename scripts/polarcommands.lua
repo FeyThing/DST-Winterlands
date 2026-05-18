@@ -32,6 +32,7 @@ function c_polartime(player)
 	
 	local items = {"antler_tree_stick", "torch", "shovel", "polarmoosehat", "trunkvest_winter", "log", "cutgrass", "twigs", "rocks", "smallmeat_dried"}
 	if player then
+		local selected = c_sel()
 		c_select(player)
 		
 		if player.components.inventory then
@@ -46,6 +47,8 @@ function c_polartime(player)
 				end
 			end
 		end
+		
+		c_select(selected)
 	end
 end
 
@@ -55,6 +58,7 @@ function c_icewizard(player)
 	
 	local items = {"polaricestaff", "iciclestaff", "polarcrownhat", "frostwalkeramulet"}
 	if player then
+		local selected = c_sel()
 		c_select(player)
 		
 		if player.components.inventory then
@@ -71,6 +75,8 @@ function c_icewizard(player)
 				end
 			end
 		end
+		
+		c_select(selected)
 	end
 end
 
@@ -96,6 +102,7 @@ function c_teethnecklace(player)
 	end
 	
 	if player then
+		local selected = c_sel()
 		c_select(player)
 		
 		if player.components.inventory then
@@ -106,6 +113,8 @@ function c_teethnecklace(player)
 				c_give(v, amt - has, true)
 			end
 		end
+		
+		c_select(selected)
 	end
 end
 

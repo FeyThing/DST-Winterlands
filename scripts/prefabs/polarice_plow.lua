@@ -124,7 +124,7 @@ local function DoBreakIce(inst, tx, ty, delay)
 	if TheWorld.Map:GetTile(tx, ty) == WORLD_TILES.POLAR_ICE then
 		inst._ice_demolished = inst._ice_demolished + 1
 		
-		TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, false, delay, true)
+		TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx, ty, TUNING.POLAR_ICEGEN_DEFAULT_HOLE_TIME - delay, delay)
 	end
 end
 
@@ -282,8 +282,11 @@ local function OnDeploy(inst, pt, deployer)
 		if valid then
 			for dx = -1, 1 do
 				for dy = -1, 1 do
-					local temp_time = TheWorld.components.polarice_manager:GetTemporaryIceTime(tx + dx, ty + dy)
-					if temp_time and type(temp_time) == "number" and temp_time <= 10 then
+					-- Can't break ice if we're on a short-lived temporary ice tile
+					local is_ice, expiry, is_cracking = TheWorld.components.polarice_manager:GetTileState(tx + dx, ty + dy)
+					local timeleft = expiry and GetTime() - expiry
+					
+					if is_cracking or (timeleft and timeleft <= TUNING.POLARICE_PLOW_TEMPORARY_TILE_MIN_DURATION) then
 						valid = false
 						break
 					end

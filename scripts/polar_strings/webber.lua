@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 		GENERIC = "Mooses don't like them. But we think they're nice.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "We almost missed it in all this snow..."
+	DESCRIBE.FLOWER_POLAR = "They've had a big nap under the snow."
 	DESCRIBE.ICELETTUCE_SEEDS = "We could grow something with these."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "It won't drop even if we hold it upside down!"
 	DESCRIBE.FILET_O_FLEA = "Not bad... a bit fleecy though."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "Don't say you don't like it before trying, it's the rule."
 	DESCRIBE.ICELETTUCE = "Eat our greens? But it's all blue."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Hooray! Wait. We're eating salad all week now? Not hooray."
 	DESCRIBE.ICEBURRITO = "Legend says this burrito never falls apart!"
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Maybe we could have been more careful."
 	DESCRIBE.EMPEROR_EGG = "So they left the kids behind? Just like that?"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "We got your horns! And... life, besides."
+	DESCRIBE.PETALS_POLAR = "He likes the taste, I just like how they look."
+	DESCRIBE.PETALS_POLAR_DRIED = "Did we pick these?"
 	DESCRIBE.POLAR_DRYICE = "Those are ruled out in snowball fights."
 	DESCRIBE.POLARBEARFUR = "We've got ourselves a pillow."
 	DESCRIBE.POLARWARGSTOOTH = "It sure is sharper than ours."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Our frozen web is getting bigger."
 	DESCRIBE.TURF_POLAR_CAVES = "Some ground that we dug up."
 	DESCRIBE.TURF_POLAR_DRYICE = "Don't step on the cracks!"
+	DESCRIBE.TURF_POLAR_GRASS = "Some ground that we dug up."
 	DESCRIBE.WALL_POLAR = "The walls of our Frosty Fort!"
 	DESCRIBE.WALL_POLAR_ITEM = "First rule of the Frosty Fort: do not lick the walls."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "We like to keep it (a bit) simple."

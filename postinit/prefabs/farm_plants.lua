@@ -242,7 +242,6 @@ local lettuce_stage_names = {"seed", "sprout", "small", "med", "full"}
 
 local function GrowthStagesPostInit(OLD_GROWTH_STAGES)
 	local GROWTH_STAGES = {}
-	--local LETTUCE_GROWTH_STAGES = {}
 	
 	for i, stage in ipairs(OLD_GROWTH_STAGES) do
 		if stage.name == "seed" and OldGetGerminationTime == nil then
@@ -253,31 +252,21 @@ local function GrowthStagesPostInit(OLD_GROWTH_STAGES)
 			stage.time = GetGrowTime
 		end
 		
-		--if table.contains(lettuce_stage_names, stage.name) then
-			local OldGrowFn = stage.fn
-			stage.fn = function(inst, stage, stage_data, ...)
-				if OldGrowFn then
-					OldGrowFn(inst, stage, stage_data, ...)
-				end
-				
-				if inst:HasTag("farm_plant_icelettuce") then
-					local mist_scale = math.min(inst.components.growable.stage - 1, 3.5)
-					if inst.components.polarmistemitter then
-						inst.components.polarmistemitter.scale = mist_scale
-						
-						if mist_scale >= 1 and not inst:HasTag("farm_plant_killjoy") then -- Not a seed or rotten
-							inst.components.polarmistemitter:StartMisting()
-							inst:AddTag("farm_plant_freezejoy")
-						else
-							inst.components.polarmistemitter:StopMisting()
-							inst:RemoveTag("farm_plant_freezejoy")
-						end
-					end
-				end
+		local OldGrowFn = stage.fn
+		stage.fn = function(inst, _stage, stage_data, ...)
+			if OldGrowFn then
+				OldGrowFn(inst, _stage, stage_data, ...)
 			end
 			
-			--table.insert(LETTUCE_GROWTH_STAGES, stage)
-		--end
+			if inst:HasTag("farm_plant_icelettuce") then
+				local is_freezejoy = stage_data.name ~= "seed" and stage_data.name ~= "rotten"
+				
+				if inst.components.polarmistemitter then
+					inst.components.polarmistemitter:SetEnabled(is_freezejoy)
+				end
+				inst:AddOrRemoveTag("farm_plant_freezejoy", is_freezejoy)
+			end
+		end
 		
 		table.insert(GROWTH_STAGES, stage)
 	end
@@ -296,11 +285,8 @@ local function GetHeatFn_IceLettuce(inst)
 	return (TUNING.ICELETTUCE_COOLER * stage) / 6
 end
 
-local function PolarInit(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	if GetClosestPolarTileToPoint(x, 0, z, 32) then
-		inst.AnimState:OverrideSymbol("soil01", "dirt_to_polar_builds", "soil01")
-	end
+local function GetPolarMistScale(inst)
+	return 2 -- Should scale with growth stage...
 end
 
 for k, data in pairs(PLANT_DEFS) do
@@ -309,6 +295,9 @@ for k, data in pairs(PLANT_DEFS) do
 	ENV.AddPrefabPostInit(data.prefab, function(inst)
 		if is_lettuce then
 			inst:AddTag("HASHEATER")
+			
+			inst:AddComponent("polarmistemitter")
+			inst.components.polarmistemitter.scale = GetPolarMistScale
 		end
 		
 		if not TheWorld.ismastersim then
@@ -318,11 +307,7 @@ for k, data in pairs(PLANT_DEFS) do
 		if inst.components.growable and not data.is_randomseed then
 			local GROWTH_STAGES = GrowthStagesPostInit(deepcopy(inst.components.growable.stages))
 			
-			--if is_lettuce then
-			--	inst.components.growable.stages = LETTUCE_GROWTH_STAGES
-			--else
-				inst.components.growable.stages = GROWTH_STAGES
-			--end
+			inst.components.growable.stages = GROWTH_STAGES
 		end
 		
 		if is_lettuce then
@@ -332,9 +317,6 @@ for k, data in pairs(PLANT_DEFS) do
 				end
 				inst.components.farmplanttendable.ontendtofn = OnTendTo
 			end
-			
-			inst:AddComponent("polarmistemitter")
-			inst.components.polarmistemitter.maxmist_range = 2
 			
 			inst:AddComponent("heater")
 			inst.components.heater:SetThermics(false, true)
@@ -355,7 +337,7 @@ for k, data in pairs(PLANT_DEFS) do
 			PolarUpvalue(Prefabs[data.prefab].fn, "SeasonStressTest", SeasonStressTest)
 		end
 		
-		inst:DoTaskInTime(0, PolarInit)
+		MakeSnowAndDirtToggleable(inst, {symbol = "soil01", build = "dirt_to_polar_builds", clearbuild = "farm_soil"})
 	end)
 end
 
@@ -376,6 +358,6 @@ for i, v in ipairs(soil) do
 			return
 		end
 		
-		inst:DoTaskInTime(0, PolarInit)
+		MakeSnowAndDirtToggleable(inst, {symbol = "soil01", build = "dirt_to_polar_builds", clearbuild = "farm_soil"})
 	end)
 end

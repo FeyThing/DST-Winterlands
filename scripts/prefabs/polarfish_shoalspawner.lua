@@ -65,7 +65,7 @@ local function fn()
 	return inst
 end
 
-local function spawner_fn()
+local function spawner_fn() -- Bunch spawner for ice floes biome
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()

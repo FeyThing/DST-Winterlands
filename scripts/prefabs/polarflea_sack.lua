@@ -117,8 +117,8 @@ local function OnUpgraded(inst, upgrader, item)
 		end
 		
 		inst.components.container:ForEachItem(function(item)
-			if item:HasTag("flea") then
-				item.skinname = nil
+			if item:HasTag("flea") and item.cant_stack then
+				item.cant_stack:set(false)
 			end
         end)
 		
@@ -162,8 +162,8 @@ end
 local function ItemGet(inst, data)
 	local item = data and data.item
 	
-	if item and item:HasTag("flea") and inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2 then
-		item.skinname = nil
+	if item and item:HasTag("flea") and item.cant_stack and inst.components.upgradeable and inst.components.upgradeable:GetStage() >= 2 then
+		item.cant_stack:set(false)
 	end
 end
 

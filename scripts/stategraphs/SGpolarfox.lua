@@ -427,30 +427,40 @@ local states = {
 				inst.Physics:ClearMotorVelOverride()
 				inst.Physics:Stop()
 				
-				inst.sg.statemem.dig_pos = inst:GetPosition()
+				local pt = inst:GetPosition()
+				SpawnPrefab("mole_move_fx").Transform:SetPosition(pt:Get())
+				inst.sg.statemem.dig_pos = pt
 			end),
 			TimeEvent(16 * FRAMES, function(inst)
-				local pt = inst.sg.statemem.dig_pos
-				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+				local pt = inst.sg.statemem.dig_pos or inst:GetPosition()
+				if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
 					SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				else
+					SpawnPrefab("shovel_dirt").Transform:SetPosition(pt:Get())
 				end
 			end),
 			TimeEvent(20 * FRAMES, function(inst)
-				local pt = inst.sg.statemem.dig_pos
-				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+				local pt = inst.sg.statemem.dig_pos or inst:GetPosition()
+				if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
 					SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+				else
+					SpawnPrefab("shovel_dirt").Transform:SetPosition(pt:Get())
 				end
 			end),
 			TimeEvent(24 * FRAMES, function(inst)
-				local pt = inst.sg.statemem.dig_pos
-				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+				local pt = inst.sg.statemem.dig_pos or inst:GetPosition()
+				if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
 					SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				else
+					SpawnPrefab("shovel_dirt").Transform:SetPosition(pt:Get())
 				end
 			end),
 			TimeEvent(28 * FRAMES, function(inst)
-				local pt = inst.sg.statemem.dig_pos
-				if pt and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+				local pt = inst.sg.statemem.dig_pos or inst:GetPosition()
+				if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
 					SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
+				else
+					SpawnPrefab("shovel_dirt").Transform:SetPosition(pt:Get())
 				end
 			end),
 		},
@@ -523,24 +533,27 @@ local states = {
 			inst.AnimState:PushAnimation("jump_loop", false)
 			inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive_hit")
 			
-			-- if inst.wantstohunt then
-			-- TODO: Frost Tails should be able to hunt on their own but because they currently don't attack I'd rather not have them litter the place too much
-			--		 or maybe we can make them insta-kill their prey if they aren't befriended...
 			if inst.wantstohunt and inst.components.follower and inst.components.follower.leader then
 				inst:HuntRandomPrey()
 				inst.wantstohunt = nil
 			end
 			
 			local pt = inst:GetPosition()
-			if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
-				SpawnPrefab("polar_splash").Transform:SetPosition(pt:Get())
-			end
+			SpawnPrefab("mole_move_fx").Transform:SetPosition(pt:Get())
+			inst.sg.statemem.dig_pos = pt
 		end,
 		
 		timeline = {
 			TimeEvent(6 * FRAMES, function(inst)
 				inst.SoundEmitter:PlaySound("polarsounds/polarfox/dive")
 				inst.Physics:SetMotorVelOverride(6, 0, 0)
+				
+				local pt = inst.sg.statemem.dig_pos or inst:GetPosition()
+				if TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) then
+					SpawnPrefab("polar_splash_large").Transform:SetPosition(pt:Get())
+				else
+					SpawnPrefab("shovel_dirt").Transform:SetPosition(pt:Get())
+				end
 			end),
 			TimeEvent(12 * FRAMES, function(inst)
 				inst.AnimState:PlayAnimation("jump_pst")

@@ -38,18 +38,16 @@ function ChangePolarConfigs(config, value)
 	KnownModIndex:SaveConfigurationOptions(function() end, WINTERLANDS_MOD_ID, configs, false)
 end
 
---	Constant lower temperature
+--[[Constant lower temperature
 
--- Testing
--- \frac{x+31}{\left(a+1\right)-ac}-31\left\{-31\le x\le100\right\}
--- a = 0 | 0 <=a <= 10, S: 0.5
--- c = 0 | 0 <=a <= 1, S: 0.05
+\frac{x+31}{\left(a+1\right)-ac}-31\left\{-31\le x\le100\right\}
+a = 0 | 0 <=a <= 10, S: 0.5
+c = 0 | 0 <=a <= 1, S: 0.05
 
--- local x, y, z = ThePlayer.Transform:GetWorldPosition() print(GetTemperatureAtXZ(x, z))
--- Testing
+local pt = ThePlayer:GetPosition() print(GetTemperatureAtXZ(pt.x, pt.z))]]
 
 local MIN_TEMPERATURE = -31
--- local MAX_TEMPERATURE = 100
+
 function GetPolarTemperature(temperature, x, z)
 	if TheWorld.components.polartemperature_manager then
 		local dist_factor = 1 - TheWorld.components.polartemperature_manager:GetDataAtPoint(x, 0, z)
@@ -66,67 +64,44 @@ function GetTemperatureAtXZ(x, z, ...)
 	return GetPolarTemperature(temperature, x, z)
 end
 
---	We keep snow on things here, and thicken it
+--	Always covered in snow, always no grow in winter...
 
-local OldMakeSnowCovered = MakeSnowCovered
+local OldMakeSnowCovered = MakeSnowCovered -- Also see worldstate postinit
 function MakeSnowCovered(inst, ...)
 	OldMakeSnowCovered(inst, ...)
-	
-	local load_polar = inst.polar_toggle == nil
-	if load_polar then
-		inst.polar_toggle = function() OnPolarCover(inst, load_polar) end
-		inst:ListenForEvent("phasechanged", inst.polar_toggle, TheWorld)
-		inst:DoTaskInTime(0, inst.polar_toggle)
-	end
+	SetPolarComponentsUpdates(inst, POPULATING)
 end
-
---	Most growable and pickable plants are paused
 
 local OldMakeNoGrowInWinter = MakeNoGrowInWinter
 function MakeNoGrowInWinter(inst, ...)
-	OldMakeNoGrowInWinter(inst, ...)
-	if not inst:HasTag("canpolargrow") and inst.components.pickable then
+	if not inst:HasTag("canpolargrow") and (inst.components.growable or inst.components.pickable) then
 		inst.pause_grow_in_polar = true
 	end
 	
-	local load_polar = inst.polar_toggle == nil
-	if load_polar then
-		inst.polar_toggle = function() OnPolarCover(inst, load_polar) end
-		inst:ListenForEvent("phasechanged", inst.polar_toggle, TheWorld)
-		inst:DoTaskInTime(0, inst.polar_toggle)
+	OldMakeNoGrowInWinter(inst, ...)
+	SetPolarComponentsUpdates(inst, POPULATING)
+end
+
+--	Ice Cave sheltering
+
+local SHADE_ICECAVE_TAGS = {"icecaveshelter"}
+
+function IsUnderIceCaveAtXZ(x, z)
+	if #TheSim:FindEntities(x, 0, z, TUNING.SHADE_POLAR_RANGE, SHADE_ICECAVE_TAGS) > 0 then
+		return true
 	end
 end
 
---	Add buff from eating Ice Lettuce things
-
-function EatIceLettuce(inst, eater, duration, freeziness, temperature)
-	if freeziness and eater.components.freezable then
-		eater.components.freezable:AddColdness(freeziness)
+local OldIsUnderRainDomeAtXZ = IsUnderRainDomeAtXZ
+function IsUnderRainDomeAtXZ(x, z, ...)
+	if IsUnderIceCaveAtXZ(x, z) then
+		return true -- Stops lunar hail
 	end
 	
-	if temperature and eater.components.temperature and eater.components.temperature.current then
-		eater.components.temperature:SetTemperature(eater.components.temperature.current + temperature)
-	end
-	
-	if eater.components.debuffable == nil then
-		eater:AddComponent("debuffable")
-	end
-	
-	if not duration then
-		return
-	end
-	
-	local buff = eater.components.debuffable:GetDebuff("buff_polarimmunity") or eater.components.debuffable:AddDebuff("buff_polarimmunity", "buff_polarimmunity")
-	local timeleft = (buff and buff.components.timer) and buff.components.timer:GetTimeLeft("buffover") or nil
-	
-	if timeleft and duration and duration > timeleft then
-		buff.components.timer:SetTimeLeft("buffover", duration)
-	end
-	
-	return buff
+	return OldIsUnderRainDomeAtXZ(x, z, ...)
 end
 
---	Descs get sneazy while having the snow debuff
+--	Sneazy speech from Frozen Wetness
 
 function PolarifySpeech(ret, inst)
 	local ret_poses = {}
@@ -173,7 +148,7 @@ function GetDescription_AddSpecialCases(ret, charactertable, inst, item, modifie
 	return OldSpecialCases(ret, charactertable, inst, item, modifier, ...)
 end
 
---	Can't see the name of things in snow, unless it's tall enough or we get close
+--	Hide small things in High Snow
 
 function IsTooDeepInSnow(inst, viewer)
 	local insnow = false
@@ -182,10 +157,8 @@ function IsTooDeepInSnow(inst, viewer)
 	
 	if TUNING.POLAR_WAVES_ENABLED and inst:IsValid() and not inst:IsInLimbo() and inst.Transform and inst.AnimState then
 		local x, y, z = inst.Transform:GetWorldPosition()
-		local temperature = TheWorld.state.temperature
 		
 		insnow = TheWorld.Map:IsPolarSnowAtPoint(x, 0, z, true) and not TheWorld.Map:IsPolarSnowBlocked(x, 0, z)
-			and temperature and temperature < TUNING.POLAR_SNOW_MELT_TEMP
 		
 		if insnow and not inst:HasTag("snowhidden") then
 			local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
@@ -203,41 +176,7 @@ function EntityScript:GetDisplayName(...)
 	return IsTooDeepInSnow(self, ThePlayer) and STRINGS.NAMES.IN_POLARSNOW or OldGetDisplayName(self, ...)
 end
 
---	Ice Cave protects from rain (this is more for the Lunar Hail than anything)
-local SHADE_ICECAVE_TAGS = {"icecaveshelter"}
-
-local OldIsUnderRainDomeAtXZ = IsUnderRainDomeAtXZ
-function IsUnderRainDomeAtXZ(x, z, ...)
-	if #TheSim:FindEntities(x, 0, z, TUNING.SHADE_POLAR_RANGE, SHADE_ICECAVE_TAGS) > 0 then
-		return true
-	end
-	
-	return OldIsUnderRainDomeAtXZ(x, z, ...)
-end
-
---	Dryice leaves a big cloud when it sinks
-require("ocean_util")
-
-local OldSinkEntity = SinkEntity
-function SinkEntity(inst, ...)
-	OldSinkEntity(inst, ...)
-	
-	if inst:HasTag("dryice") then
-		local pt = inst:GetPosition()
-		
-		for i = 1, 16 do
-			local offset = FindWalkableOffset(pt, math.random() * TWOPI, 0.2, 12, false, true, nil, true, true)
-			
-			if offset then
-				local mist = SpawnPrefab("polar_mist")
-				mist.Transform:SetPosition((pt + offset):Get())
-				mist:SetEmitter(inst, 2, 0.5 * math.random())
-			end
-		end
-	end
-end
-
---	Spawning FXs as we walk in high snow (Also icy surfaces will do icy footsteps)
+--	Misc
 
 local PENGUIN_ICE_TAGS = {"slipperyfeettarget"}
 
@@ -274,4 +213,16 @@ function PlayFootstep(inst, volume, ispredicted, ...)
 	end
 	
 	OldPlayFootstep(inst, volume, ispredicted, ...)
+end
+
+require("ocean_util")
+
+local OldSinkEntity = SinkEntity
+function SinkEntity(inst, ...)
+	local dryice_sinking = inst:HasTag("dryice")
+	if dryice_sinking then
+		inst:AddTag("dryice_sunk") -- polarmistemitter spawns a ring of mist when dry ice sinks
+	end
+	
+	OldSinkEntity(inst, ...)
 end

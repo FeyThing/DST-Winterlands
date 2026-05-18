@@ -11,9 +11,9 @@ end
 local PolarCaveShade = Class(function(self, inst)
 	self.inst = inst
 	
-	self.range = TUNING.SHADE_POLAR_RANGE / 4
+	self.range = math.floor(TUNING.SHADE_POLAR_RANGE / 4)
 	
-	self.PolarCaveShade_positions = {}
+	self.shade_positions = {}
 	self.spawned = false
 	
 	inst:DoTaskInTime(0, GenerateAndSpawnPolarCaveShadePositions)
@@ -38,11 +38,12 @@ function PolarCaveShade:GeneratePolarCaveShadePositions()
 				local newx = math.floor((x + i * 4) / 4) * 4 + 2
 				local newz = math.floor((z + t * 4) / 4) * 4 + 2
 				
+				table.insert(self.shade_positions, {newx, newz})
+				
 				local shadetile_key = newx.."-"..newz
 				local shadetile = PolarCaveShades[shadetile_key]
 				
 				if not shadetile then
-					table.insert(self.PolarCaveShade_positions, {newx, newz})
 					PolarCaveShades[shadetile_key] = {refs = 1, spawnrefs = 0}
 				else
 					shadetile.refs = shadetile.refs + 1
@@ -53,7 +54,7 @@ function PolarCaveShade:GeneratePolarCaveShadePositions()
 end
 
 function PolarCaveShade:RemovePolarCaveShadePositions()
-	for i, v in ipairs(self.PolarCaveShade_positions) do
+	for i, v in ipairs(self.shade_positions) do
 		local x, z = v[1], v[2]
 		
 		local shadetile_key = x.."-"..z
@@ -67,13 +68,13 @@ function PolarCaveShade:RemovePolarCaveShadePositions()
 end
 
 function PolarCaveShade:OnEntitySleep()
-	if not IsTableEmpty(self.PolarCaveShade_positions) then
+	if not IsTableEmpty(self.shade_positions) then
 		self:DespawnShadows()
 	end
 end
 
 function PolarCaveShade:OnEntityWake()
-	if not IsTableEmpty(self.PolarCaveShade_positions) then
+	if not IsTableEmpty(self.shade_positions) then
 		self:SpawnShadows()
 	end
 end
@@ -83,7 +84,7 @@ function PolarCaveShade:SpawnShadows()
 		return
 	end
 	
-	for i, v in ipairs(self.PolarCaveShade_positions) do
+	for i, v in ipairs(self.shade_positions) do
 		local x, z = v[1], v[2]
 		local shadetile = PolarCaveShades[x.."-"..z]
 		
@@ -101,7 +102,7 @@ function PolarCaveShade:DespawnShadows(ignore_entity_sleep)
 		return
 	end
 	
-	for i, v in ipairs(self.PolarCaveShade_positions) do
+	for i, v in ipairs(self.shade_positions) do
 		local x, z = v[1], v[2]
 		local shadetile = PolarCaveShades[x.."-"..z]
 		

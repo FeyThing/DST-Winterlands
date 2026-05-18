@@ -164,20 +164,18 @@ AddRoom("PolarIsland_FloeField", {
 		countprefabs = {
 			polarfish_shoalspawner_spawner_ice = 1,
 			rock_ice_spawner_polar = function() return math.random() < 0.4 and 1 or 0 end,
+			seastack_spawner_polar = 1,
 		},
 		
-		distributepercent = 0.03,
+		distributepercent = 0.06,
 		distributeprefabs = {
-			marsh_bush = 7,
+			marsh_bush = 1.5,
 			rock_ice = 0.5,
 			
-			polarfox = 2,
+			polarfox = 0.5,
 			
-			icelettuce_spawner = 4.6,
-			snowwave_itemrespawner = 5.3,
-			
-			seastack = 0.35,
-			wobster_den = 0.05,
+			icelettuce_spawner = 1.25,
+			snowwave_itemrespawner = 1.25,
 		},
 		
 		prefabdata = {

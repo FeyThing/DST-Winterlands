@@ -464,8 +464,6 @@ end
 
 --
 
-local DEFAULT_ORIGINAL_TILE = WORLD_TILES.DIRT
-
 local function DoTerraform(inst, is_load)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local radius = TUNING.WINTERS_FISTS_TERRAFORMER_RAD
@@ -494,17 +492,14 @@ local function DoTerraform(inst, is_load)
 					if current_tile ~= inst.tile then
 						delete = false
 					end
-					--local old_tile = TheWorld.components.undertile:GetTileUnderneath(tx, ty) or DEFAULT_ORIGINAL_TILE
+					
 					local current_undertile = TheWorld.components.undertile:GetTileUnderneath(tx, ty)
 					
 					TheWorld.Map:SetTile(tx, ty, inst.tile)
 					TheWorld.components.undertile:SetTileUnderneath(tx, ty, current_undertile or current_tile)
-					
-					--TheWorld.components.undertile:ClearTileUnderneath(tx, ty)
-					--TheWorld.Map:SetTile(tx, ty, old_tile)
 				else
 					if TheWorld.components.polarice_manager then
-						TheWorld.components.polarice_manager:StartDestroyingIceAtTile(nx, 0, nz, false)
+						TheWorld.components.polarice_manager:StartDestroyingIceAtTile(nx, 0, nz, TUNING.POLAR_ICEGEN_DEFAULT_HOLE_TIME, nil, "ice")
 					end
 				end
 			end

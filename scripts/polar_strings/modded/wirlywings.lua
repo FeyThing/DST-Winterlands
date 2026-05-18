@@ -41,6 +41,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 		GENERIC = "This tree looks like it was never alive.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Wow! The dead tree! It's growing back!"
+	DESCRIBE.FLOWER_POLAR = "I had no idea flowers could grow here!"
 	DESCRIBE.ICELETTUCE_SEEDS = "A lettuce seed."
 	
 	--	Rocks and stones
@@ -71,7 +72,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 		GENERIC = "They're bigger than I thought...",
 	}
 	DESCRIBE.MOOSE_SPECTER = "Wow. Fairy moose!"
-	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "What a pretty fish! Can we put it fishbowl?"
+	DESCRIBE.OCEANFISH_MEDIUM_POLAR1 = "What a pretty fish! Can we put it in a fishbowl?"
 	DESCRIBE.POLARBEAR = {
 		DEAD = "C'mon, wake up...",
 		ENRAGED = "Meek! Watch out!",
@@ -129,6 +130,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "It's so cold it burns a bit..."
 	DESCRIBE.FILET_O_FLEA = "So that's where it went. Oh well!"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "Best shared with an evil monster."
 	DESCRIBE.ICELETTUCE = "My paper boat's worst enemy."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "You're welcome..."
 	DESCRIBE.ICEBURRITO = "I'll try a cherrito next time."
@@ -142,6 +144,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "I think these two pieces go together. But this one..."
 	DESCRIBE.EMPEROR_EGG = "Be careful not to drop the baby."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "What do I even do with these?"
+	DESCRIBE.PETALS_POLAR = "We had some of those growing at home."
+	DESCRIBE.PETALS_POLAR_DRIED = "Tiny spices."
 	DESCRIBE.POLAR_DRYICE = "It's like cut stone but, made of air?"
 	DESCRIBE.POLARBEARFUR = "It's made out of coziness."
 	DESCRIBE.POLARWARGSTOOTH = "A piece of that big monster's mouth."
@@ -183,6 +187,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Not a place to do snow angels."
 	DESCRIBE.TURF_POLAR_CAVES = "Food for moleworms."
 	DESCRIBE.TURF_POLAR_DRYICE = "Not like the road to school."
+	DESCRIBE.TURF_POLAR_GRASS = "Food for plants and worms."
 	DESCRIBE.WALL_POLAR = "This one might stand a chance, in tale of three pigs."
 	DESCRIBE.WALL_POLAR_ITEM = "We could make some igloo, but, without a roof."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "The perfect ornament doesn- ooh!"

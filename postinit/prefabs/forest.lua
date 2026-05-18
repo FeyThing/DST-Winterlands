@@ -3,6 +3,8 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local AddPrefabPostInit = ENV.AddPrefabPostInit
 
+---------------------------------
+
 local forest_shards = {"forest", "shipwrecked", "porkland"}
 local cave_shards = {"cave", "volcano"}
 
@@ -62,6 +64,8 @@ for i, v in ipairs(forest_shards) do
 		
 		inst:AddComponent("polarfleamotherspawner")
 		
+		inst:AddComponent("polarflowerspawner")
+		
 		inst:AddComponent("polarfoxrespawner")
 		
 		inst:AddComponent("polarice_manager")
@@ -92,18 +96,11 @@ for i, v in ipairs(cave_shards) do
 	end)
 end
 
---
-
-ENV.AddSimPostInit(function()
-	ENV.modimport("postinit/shadeeffects")
-	
-	if TheWorld.components.winterlands_manager then
-		TheWorld.components.winterlands_manager:Initialize()
-	end
-end)
+---------------------------------
 
 local function DisableParticlesInWinterlands(inst)
 	local mt = deepcopy(getmetatable(inst))
+	
 	if inst.particles_per_tick then
 		mt.__index["particles_per_tick"] = 0
 	end
@@ -113,26 +110,30 @@ local function DisableParticlesInWinterlands(inst)
 	end
 	
 	mt.__newindex = function(t, key, val) -- Don't actually assign splashes and particles, __index runs only if the value is nil
-		if key == "particles_per_tick" then
-			local mt2 = deepcopy(getmetatable(inst))
-			if ThePlayer and ThePlayer.player_classified.polarsnowlevel:value() ~= 0 then
-				mt2.__index["particles_per_tick"] = 0
-			else
-				mt2.__index["particles_per_tick"] = val
+		if ThePlayer and ThePlayer.player_classified and TheWorld then
+			local x, y, z = ThePlayer.Transform:GetWorldPosition()
+			local snow_level = ThePlayer.player_classified.polarsnowlevel:value() or 0
+			
+			if inst.prefab == "pollen" and TheWorld.components.polartemperature_manager then
+				snow_level = TheWorld.components.polartemperature_manager:GetDataAtPoint(x, y, z) > 0 and 1 or 0
 			end
 			
-			setmetatable(inst, mt2)
-		elseif key == "splashes_per_tick" then
-			local mt2 = deepcopy(getmetatable(inst))
-			if ThePlayer and ThePlayer.player_classified.polarsnowlevel:value() ~= 0 then
-				mt2.__index["splashes_per_tick"] = 0
-			else
-				mt2.__index["splashes_per_tick"] = val
-			end
+			local mult = 1 - (snow_level / 0.5)
+			mult = math.clamp(mult, 0, 1)
 			
-			setmetatable(inst, mt2)
-		else
-			rawset(t, key, val)
+			if key == "particles_per_tick" then
+				local mt2 = deepcopy(getmetatable(inst))
+				mt2.__index["particles_per_tick"] = val * mult
+				
+				setmetatable(inst, mt2)
+			elseif key == "splashes_per_tick" then
+				local mt2 = deepcopy(getmetatable(inst))
+				mt2.__index["splashes_per_tick"] = val * mult
+				
+				setmetatable(inst, mt2)
+			else
+				rawset(t, key, val)
+			end
 		end
 	end
 	
@@ -141,6 +142,34 @@ local function DisableParticlesInWinterlands(inst)
 	setmetatable(inst, mt)
 end
 
-AddPrefabPostInit("snow", DisableParticlesInWinterlands)
 AddPrefabPostInit("rain", DisableParticlesInWinterlands)
+AddPrefabPostInit("snow", DisableParticlesInWinterlands)
 AddPrefabPostInit("pollen", DisableParticlesInWinterlands)
+
+local OldSpawnRaindropAtXZ
+local function SpawnRaindropAtXZ(inst, x, z, ...)
+	if IsUnderIceCaveAtXZ(x, z) then
+		return
+	end
+	
+	return OldSpawnRaindropAtXZ and OldSpawnRaindropAtXZ(inst, x, z, ...)
+end
+
+---------------------------------
+
+local postinits = {
+	"shadeeffects",
+}
+
+ENV.AddSimPostInit(function()
+	OldSpawnRaindropAtXZ = PolarUpvalue(Prefabs["rain"].fn, "SpawnRaindropAtXZ")
+	PolarUpvalue(Prefabs["rain"].fn, "SpawnRaindropAtXZ", SpawnRaindropAtXZ)
+	
+	for _, v in pairs(postinits) do
+		ENV.modimport("postinit/"..v)
+	end
+	
+	if TheWorld.components.winterlands_manager then
+		TheWorld.components.winterlands_manager:Initialize()
+	end
+end)

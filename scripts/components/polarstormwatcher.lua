@@ -2,14 +2,14 @@ local PolarStormWatcher = Class(function(self, inst)
     self.inst = inst
 	self.enabled = false
     self.polarstormspeedmult = TUNING.SANDSTORM_SPEED_MOD
-
+	
 	if TheWorld.components.polarstorm then
 		inst:ListenForEvent("ms_stormchanged", function(src, data)
 			if data.stormtype == STORM_TYPES.POLARSTORM then
 				self:TogglePolarStorm(data.setting)
 			end
 		end, TheWorld)
-
+		
 		if TheWorld.components.polarstorm:IsPolarStormActive() then
 			self:TogglePolarStorm(true)
 		end
@@ -32,6 +32,7 @@ local function RemovePolarStormWalkSpeedListeners(inst)
     inst:RemoveEventCallback("ghostvision", UpdatePolarStormWalkSpeed)
     inst:RemoveEventCallback("mounted", UpdatePolarStormWalkSpeed)
     inst:RemoveEventCallback("dismounted", UpdatePolarStormWalkSpeed)
+	
     inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "polarstorm")
 end
 
@@ -43,6 +44,7 @@ end
 
 function PolarStormWatcher:TogglePolarStorm(active)
 	active = active or false
+	
 	if self.enabled ~= active then
 		if self.polarstormspeedmult < 1 then
 			if active then
@@ -51,9 +53,9 @@ function PolarStormWatcher:TogglePolarStorm(active)
 				RemovePolarStormWalkSpeedListeners(self.inst)
 			end
 		end
-
+		
 		self.enabled = active
-
+		
 		if active then
 			self:UpdatePolarStormLevel()
 		end
@@ -62,7 +64,8 @@ end
 
 function PolarStormWatcher:SetPolarStormSpeedMultiplier(mult)
     mult = math.clamp(mult, 0, 1)
-    if self.polarstormspeedmult ~= mult then
+    
+	if self.polarstormspeedmult ~= mult then
 		if self.enabled then
 			if mult >= 1 then
 				RemovePolarStormWalkSpeedListeners(self.inst)
@@ -70,9 +73,9 @@ function PolarStormWatcher:SetPolarStormSpeedMultiplier(mult)
 				AddPolarStormWalkSpeedListeners(self.inst)
 			end
 		end
-
+		
 		self.polarstormspeedmult = mult
-
+		
 		if self.enabled then
 			self:UpdatePolarStormWalkSpeed()
 		end
@@ -81,8 +84,9 @@ end
 
 function PolarStormWatcher:UpdatePolarStormLevel()
 	local level = self:GetPolarStormLevel()
+	
 	self:UpdatePolarStormWalkSpeed_Internal(level)
-	self.inst:PushEvent("blizzardstormlevel", { level = level })
+	self.inst:PushEvent("blizzardstormlevel", {level = level})
 end
 
 function PolarStormWatcher:UpdatePolarStormWalkSpeed()
@@ -106,8 +110,6 @@ function PolarStormWatcher:GetPolarStormLevel()
     if self.inst.components.stormwatcher then
         return self.inst.components.stormwatcher:GetStormLevel(STORM_TYPES.POLARSTORM)
     end
-
-    return nil
 end
 
 return PolarStormWatcher

@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 		GENERIC = "This tree appears to mimic Cervidae defenses with its branches.", -- THE MIMIC!!!
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "How long has this sapling been dormant under the snow?"
+	DESCRIBE.FLOWER_POLAR = "Pretty and looks an awful lot like a member of the Colchicum genus."
 	DESCRIBE.ICELETTUCE_SEEDS = "It can't begin growing until it's been planted, dear."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "His secret recipes aren't all that secret sometimes."
 	DESCRIBE.FILET_O_FLEA = "I can taste the entomology."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "It's poison."
 	DESCRIBE.ICELETTUCE = "Frigidaria brassica. Its leaves put mint to shame."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "The result of perseverance, brute-forcing and, perhaps, stubbornness."
 	DESCRIBE.ICEBURRITO = "Fresh sustenance, followed by a certain brain freeze."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Matter is neither created nor destroyed, only shattered."
 	DESCRIBE.EMPEROR_EGG = "The poor thing shan't hatch, but it can still find a purpose."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Not exactly what I meant by \"studying it\"... but this can work out."
+	DESCRIBE.PETALS_POLAR = "Every bits of this plant is loaded with colchicine... it means I advice against ingesting it."
+	DESCRIBE.PETALS_POLAR_DRIED = "The drying process enhances the aroma."
 	DESCRIBE.POLAR_DRYICE = "Solid carbon dioxide."
 	DESCRIBE.POLARBEARFUR = "I ought to wash it... you can never be too prudent with fleas."
 	DESCRIBE.POLARWARGSTOOTH = "Not a single cavity, I'll give him that."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "An interesting application of cryogenics."
 	DESCRIBE.TURF_POLAR_CAVES = "The ground. You step on it."
 	DESCRIBE.TURF_POLAR_DRYICE = "The ground. You step on it."
+	DESCRIBE.TURF_POLAR_GRASS = "The ground. You step on it."
 	DESCRIBE.WALL_POLAR = "Barriers of ice, frigid and formidable."
 	DESCRIBE.WALL_POLAR_ITEM = "Structural components for glacial barriers."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "One must not forget the classics."

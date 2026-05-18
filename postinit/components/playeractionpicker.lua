@@ -35,3 +35,20 @@ function PlayerActionPicker:GetRightClickActions(position, target, ...)
 	
 	return actions
 end
+
+local OldGetInventoryActions = PlayerActionPicker.GetInventoryActions
+function PlayerActionPicker:GetInventoryActions(useitem, right, ...)
+	local actions = OldGetInventoryActions(self, useitem, right, ...)
+	
+	-- We don't want players to be able to manually DROP snowfleas, only hold them
+	if useitem and useitem:HasTag("flea") then
+		for i = #actions, 1, -1 do
+			if actions[i].action == ACTIONS.DROP then
+				print("removed?")
+				table.remove(actions, i)
+			end
+		end
+	end
+	
+	return actions
+end

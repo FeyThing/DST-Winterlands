@@ -23,6 +23,11 @@ local events = {
 	EventHandler("fleahostkick", function(inst, data)
 		inst.sg:GoToState("fall", data)
 	end),
+	EventHandler("on_loot_dropped", function(inst)
+		if not inst:HasTag("busy") then
+			inst.sg:GoToState("fall")
+		end
+	end),
 	EventHandler("trapped", function(inst)
 		if not inst.sg:HasStateTag("busy") then
 			inst.sg:GoToState("trapped")
@@ -182,7 +187,7 @@ local states = {
 	
 	State{
 		name = "fall",
-		tags = {"busy"},
+		tags = {"busy", "temp_invincible"},
 		
 		onenter = function(inst, data)
 			inst.AnimState:PlayAnimation("idle", true)

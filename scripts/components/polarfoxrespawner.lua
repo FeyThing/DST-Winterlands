@@ -14,9 +14,7 @@ return Class(function(self, inst)
 	end
 	
 	local function ShouldFoxSpawn(pt)
-		local temperature = TheWorld.state.temperature
-		
-		return #TheSim:FindEntities(pt.x, pt.y, pt.z, 5, SPAWN_AVOID_TAGS) == 0 and not (temperature and temperature >= TUNING.POLAR_SNOW_MELT_TEMP)
+		return #TheSim:FindEntities(pt.x, pt.y, pt.z, 5, SPAWN_AVOID_TAGS) == 0 and not TheWorld.state.issummer
 			and not (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsPolarStormActive())
 	end
 	
@@ -47,6 +45,10 @@ return Class(function(self, inst)
 			if ShouldFoxSpawn(pt) then
 				local fox = SpawnPrefab("polarfox")
 				fox.Transform:SetPosition(pt:Get())
+				
+				if fox.UpdateFurswap then
+					fox:UpdateFurswap(true)
+				end
 				
 				_foxspawns[pt] = nil
 			else
@@ -140,10 +142,10 @@ return Class(function(self, inst)
 				local pt = self:FindSpawnPoint()
 				
 				if pt then
-					print("PolarFoxRespawner: "..i..": success, at ", pt)
+					print("- "..i..": success, at ", pt)
 					self:RespawnFox(pt)
 				else
-					print("PolarFoxRespawner: "..i..": failed")
+					print("- "..i..": failed")
 				end
 			end
 		end

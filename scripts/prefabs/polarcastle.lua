@@ -205,7 +205,7 @@ local function MakeObstacle(inst)
 	inst._ispathfinding:set(true)
 	
 	if inst.components.polarmistemitter then
-		inst.components.polarmistemitter:StartMisting()
+		inst.components.polarmistemitter:SetEnabled(true)
 	end
 end
 
@@ -214,7 +214,7 @@ local function ClearObstacle(inst)
 	inst._ispathfinding:set(false)
 	
 	if inst.components.polarmistemitter then
-		inst.components.polarmistemitter:StopMisting()
+		inst.components.polarmistemitter:SetEnabled(false)
 	end
 end
 
@@ -244,10 +244,6 @@ local function GetStatus(inst)
 	local emperor = inst.tower_emperor and inst.tower_emperor:value()
 	
 	return emperor and "PENGUIN" or nil
-end
-
-local function GetPolarMistMult(inst)
-	return 3
 end
 
 local function AddFlag(inst, item)
@@ -364,14 +360,6 @@ local function OpenTheNoor(inst)
 	inst._opened_door = inst:DoTaskInTime(0.85, CloseTheNoor)]]
 end
 
-local function OnEntitySleep(inst)
-	inst.components.polarmistemitter:StopMisting()
-end
-
-local function OnEntityWake(inst)
-	inst.components.polarmistemitter:StartMisting()
-end
-
 local function UpdateFacing(inst)
 	local castle_floor = GetClosestInstWithTag(CASTLE_FLOOR_TAGS, inst, 12)
 	local facing = inst.AnimState:GetCurrentFacing()
@@ -446,6 +434,10 @@ local function tower()
 	
 	inst:AddComponent("highlightchild")
 	
+	inst:AddComponent("polarmistemitter")
+	inst.components.polarmistemitter.maxmist = 4
+	inst.components.polarmistemitter.scale = 3
+	
 	inst:AddComponent("updatelooper")
 	inst.components.updatelooper:AddPostUpdateFn(UpdateFacing)
 	
@@ -463,10 +455,7 @@ local function tower()
 	inst:AddComponent("lootdropper")
 	inst.components.lootdropper:SetChanceLootTable("tower_polar")
 	
-	inst:AddComponent("polarmistemitter")
-	inst.components.polarmistemitter:StartMisting()
-	inst.components.polarmistemitter.scale = GetPolarMistMult
-	inst.components.polarmistemitter.maxmist = 4
+	inst.components.polarmistemitter:SetEnabled(true)
 	
 	inst:AddComponent("teleportedoverride")
 	inst.components.teleportedoverride:SetDestPositionFn(TeleportOverrideFn)
@@ -483,8 +472,6 @@ local function tower()
 	MakeHauntableWork(inst)
 	
 	inst.AddFlag = AddFlag
-	inst.OnEntitySleep = OnEntitySleep
-	inst.OnEntityWake = OnEntityWake
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad
 	--inst.OpenTheNoor = OpenTheNoor

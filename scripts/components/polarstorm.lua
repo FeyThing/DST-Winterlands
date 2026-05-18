@@ -1,133 +1,139 @@
 return Class(function(self, inst)
-    assert(TheWorld.ismastersim, "Polar Storm should not exist on client")
-    
+	assert(TheWorld.ismastersim, "Polar Storm should not exist on client")
+	
 	-- [ Public fields ] --
-    self.inst = inst
-
+	
+	self.inst = inst
+	
 	-- [ Private fields ] --
-    local _polarstormactive = false
+	
+	local _polarstormactive = false
 	
 	local POLAR_BLIZZARDS_CONFIG = TUNING.POLAR_BLIZZARDS_CONFIG
-    local _blizzard_cooldown_min = TUNING.POLAR_STORM_COOLDOWN_MIN
-    local _blizzard_cooldown_max = TUNING.POLAR_STORM_COOLDOWN_MAX
-    local _blizzard_length_min = TUNING.POLAR_STORM_LENGTH_MIN
-    local _blizzard_length_max = TUNING.POLAR_STORM_LENGTH_MAX
-
-    local _blizzard_configs = {
-        [-2] = 0,   -- Doesn't really matter, polarstorm is not added to the world if None is selected
-        [-1] = 0.5, -- Less
-        [0] = 1,    -- Default
-        [1] = 2,    -- More
-        [2] = 4     -- Most
-    }
-
-    local _season = SEASONS.AUTUMN
-    local _blizzard_season_mult = {
-        autumn = { cooldown_mult = 1,    length_mult = 1 },
-        winter = { cooldown_mult = 0.66, length_mult = 1.33 },
-        spring = { cooldown_mult = 1,    length_mult = 1.2 },
-        summer = { cooldown_mult = 2,    length_mult = 0.66 }
-    }
+	local _blizzard_cooldown_min = TUNING.POLAR_STORM_COOLDOWN_MIN
+	local _blizzard_cooldown_max = TUNING.POLAR_STORM_COOLDOWN_MAX
+	local _blizzard_length_min = TUNING.POLAR_STORM_LENGTH_MIN
+	local _blizzard_length_max = TUNING.POLAR_STORM_LENGTH_MAX
 	
-    local _blizzard_cd_task
-    local _blizzard_time_task
+	local _blizzard_configs = {
+		[-2] = 0, 	-- Doesn't really matter, polarstorm is not added to the world if None is selected
+		[-1] = 0.5, -- Less
+		[0] = 1, 	-- Default
+		[1] = 2, 	-- More
+		[2] = 4 	-- Most
+	}
+	
+	local _season = SEASONS.AUTUMN
+	local _blizzard_season_mult = {
+		autumn = {cooldown_mult = 1,	length_mult = 1},
+		winter = {cooldown_mult = 0.66, length_mult = 1.33},
+		spring = {cooldown_mult = 1,	length_mult = 1.2},
+		summer = {cooldown_mult = 2,	length_mult = 0.66}
+	}
+	
+	local _blizzard_cd_task
+	local _blizzard_time_task
 	local _blizzard_start_time
-    
+	
 	local BLIZZARD_SHELTER_TAGS = {"blizzardprotection"}
 	local BLIZZARD_SHELTER_NOT_TAGS = {"INLIMBO"}
 	
 	-- [ Functions ] --
-    local function OnSeasonChange(_, season)
+	
+	local function OnSeasonChange(_, season)
 		local curseason = POLARRIFY_MOD_SEASONS[season]
-        _season = curseason
+		_season = curseason
 		
 		if _blizzard_season_mult[curseason] == nil then
 			_season = "autumn"
 		end
 		
-        if _blizzard_time_task then -- Update task period
-            local timeleft = _blizzard_time_task.period * _blizzard_season_mult[curseason].cooldown_mult
-            _blizzard_time_task.period = timeleft
-        end
-
-        if _blizzard_cd_task then -- Update task period
-            local timeleft = _blizzard_cd_task.period * _blizzard_season_mult[curseason].length_mult
-            _blizzard_cd_task.period = timeleft
-        end
-    end
-
-    local function StartBlizzard()
-        if _polarstormactive then
-            return
-        end
-
-        _polarstormactive = true
-		_blizzard_start_time = nil
+		if _blizzard_time_task then
+			local timeleft = _blizzard_time_task.period * _blizzard_season_mult[curseason].cooldown_mult
+			_blizzard_time_task.period = timeleft
+		end
 		
-        inst:PushEvent("ms_stormchanged", { stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive })
-    end
-
-    local function StopBlizzard()
-        if not _polarstormactive then
-            return
-        end
-
-        _polarstormactive = false
-        inst:PushEvent("ms_stormchanged", { stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive })
-    end
-
-    local function RestartTasks()
-        if _blizzard_cd_task then
-            _blizzard_cd_task:Cancel()
-            _blizzard_cd_task = nil
-        end
-
-        if _blizzard_time_task then
-            _blizzard_time_task:Cancel()
-            _blizzard_time_task = nil
-            StopBlizzard()
-        end
-    end
-
+		if _blizzard_cd_task then
+			local timeleft = _blizzard_cd_task.period * _blizzard_season_mult[curseason].length_mult
+			_blizzard_cd_task.period = timeleft
+		end
+	end
+	
+	local function StartBlizzard()
+		if _polarstormactive then
+			return
+		end
+		
+		_polarstormactive = true
+		_blizzard_start_time = GetTime()
+		
+		inst:PushEvent("ms_stormchanged", {stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive})
+	end
+	
+	local function StopBlizzard()
+		if not _polarstormactive then
+			return
+		end
+		
+		_polarstormactive = false
+		inst:PushEvent("ms_stormchanged", {stormtype = STORM_TYPES.POLARSTORM, setting = _polarstormactive})
+	end
+	
+	local function RestartTasks()
+		if _blizzard_cd_task then
+			_blizzard_cd_task:Cancel()
+			_blizzard_cd_task = nil
+		end
+		
+		if _blizzard_time_task then
+			_blizzard_time_task:Cancel()
+			_blizzard_time_task = nil
+			StopBlizzard()
+		end
+	end
+	
 	-- [ Initialization ] --
-    inst:WatchWorldState("season", OnSeasonChange)
-    OnSeasonChange(inst, inst.state.season)
-
-    function self:OnPostInit()
-        if _blizzard_cd_task == nil and _blizzard_time_task == nil then
-            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
-        end
-    end
-
-    -- [ Methods ] --
-    function self:RequeueBlizzard(cooldown) -- Requeues a blizzard to happen after [cooldown], length is random, next blizzard will set the default cooldown
-        RestartTasks()
+	
+	inst:WatchWorldState("season", OnSeasonChange)
+	OnSeasonChange(inst, inst.state.season)
+	
+	function self:OnPostInit()
+		if _blizzard_cd_task == nil and _blizzard_time_task == nil then
+			self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
+		end
+	end
+	
+	-- [ Methods ] --
+	
+	function self:RequeueBlizzard(cooldown) -- Requeues a blizzard to happen after [cooldown], length is random, next blizzard will set the default cooldown
+		RestartTasks()
 		
 		_blizzard_start_time = GetTime() + cooldown
-        _blizzard_cd_task = inst:DoTaskInTime(cooldown, function()
-            StartBlizzard()
-            _blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max) * _blizzard_season_mult[_season].length_mult * _blizzard_configs[POLAR_BLIZZARDS_CONFIG], function()
-                StopBlizzard()
-                self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
-            end)
-
-            _blizzard_cd_task = nil
-        end)
-    end
-
-    function self:PushBlizzard(length) -- Forces an instant blizzard of length [length], the next blizzard will roll the default length
-        RestartTasks()
-        
-        StartBlizzard()
-        _blizzard_time_task = inst:DoTaskInTime(length, function()
-            StopBlizzard()
-            self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
-        end)
-    end
-    
-    function self:IsInPolarStorm(ent)
-        return self:GetPolarStormLevel(ent) ~= 0
-    end
+		_blizzard_cd_task = inst:DoTaskInTime(cooldown, function()
+			StartBlizzard()
+			
+			_blizzard_time_task = inst:DoTaskInTime(math.random(_blizzard_length_min, _blizzard_length_max) * _blizzard_season_mult[_season].length_mult * _blizzard_configs[POLAR_BLIZZARDS_CONFIG], function()
+				StopBlizzard()
+				self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
+			end)
+			
+			_blizzard_cd_task = nil
+		end)
+	end
+	
+	function self:PushBlizzard(length) -- Forces an instant blizzard of length [length], the next blizzard will roll the default length
+		RestartTasks()
+		StartBlizzard()
+		
+		_blizzard_time_task = inst:DoTaskInTime(length, function()
+			StopBlizzard()
+			self:RequeueBlizzard(math.random(_blizzard_cooldown_min, _blizzard_cooldown_max) * _blizzard_season_mult[_season].cooldown_mult / _blizzard_configs[POLAR_BLIZZARDS_CONFIG])
+		end)
+	end
+	
+	function self:IsInPolarStorm(ent)
+		return self:GetPolarStormLevel(ent) ~= 0
+	end
 	
 	function self:GetPolarStormLevel(ent)
 		local stormlevel = (ent and self:IsPolarStormActive() and TheWorld.components.polarsnow_manager)
@@ -163,12 +169,19 @@ return Class(function(self, inst)
 			minlevel = TUNING.POLAR_STORM_LIGHTER_LEVEL
 		end
 		
+		-- Small forgiveness time to react to a blizzard, although you could have seen it coming :p
+		if minlevel > 0.1 and ent:HasTag("player") and _blizzard_start_time then
+			local elapsed = GetTime() - _blizzard_start_time
+			
+			minlevel = Lerp(0.1, minlevel, math.clamp(elapsed / TUNING.POLAR_STORM_RAMP_TIME, 0, 1))
+		end
+		
 		return minlevel
 	end
 	
-    function self:IsPolarStormActive()
-        return _polarstormactive
-    end
+	function self:IsPolarStormActive()
+		return _polarstormactive
+	end
 	
 	function self:GetTimeLeft()
 		if self:IsPolarStormActive() then
@@ -178,24 +191,25 @@ return Class(function(self, inst)
 		end
 	end
 	
-    -- [ Save / Load ] --
-    function self:OnSave()
-        if _blizzard_time_task then -- If (for some reason) both timers exist prioritize blizzard time left
-            return { blizzard_time_left = GetTaskRemaining(_blizzard_time_task) }
-        elseif _blizzard_cd_task then
-            return { blizzard_cd_left = GetTaskRemaining(_blizzard_cd_task) }
-        end
-    end
-
-    function self:OnLoad(data)
-        if data then
-            if data.blizzard_time_left then
-                self:PushBlizzard(data.blizzard_time_left)
-            elseif data.blizzard_cd_left then
-                self:RequeueBlizzard(data.blizzard_cd_left)
-            end
-        end
-    end
+	-- [ Save / Load ] --
+	
+	function self:OnSave()
+		if _blizzard_time_task then -- If (for some reason) both timers exist prioritize blizzard time left
+			return {blizzard_time_left = GetTaskRemaining(_blizzard_time_task)}
+		elseif _blizzard_cd_task then
+			return {blizzard_cd_left = GetTaskRemaining(_blizzard_cd_task)}
+		end
+	end
+	
+	function self:OnLoad(data)
+		if data then
+			if data.blizzard_time_left then
+				self:PushBlizzard(data.blizzard_time_left)
+			elseif data.blizzard_cd_left then
+				self:RequeueBlizzard(data.blizzard_cd_left)
+			end
+		end
+	end
 	
 	function self:LongUpdate(dt)
 		local time_left = self:GetTimeLeft()

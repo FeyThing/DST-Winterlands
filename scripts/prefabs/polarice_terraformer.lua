@@ -1,12 +1,15 @@
 local function OnInit(inst)
 	if TheWorld.components.polarice_manager then
-		TheWorld.components.polarice_manager:CreateIceAtPoint(inst.Transform:GetWorldPosition())
+		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(inst.Transform:GetWorldPosition())
+		
+		TheWorld.components.polarice_manager:SetIceLevelAtTile(tx, ty, 1)
+		TheWorld.components.polarice_manager:CreateIceAtTile(tx, ty, nil, true)
 	end
 	
 	inst:Remove()
 end
 
-local function fn()
+local function fn() -- Used in some setpieces to force non-melting Ice Tiles to generate outside of the Winterlands
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()

@@ -5,10 +5,11 @@ local SnowmanDecoratable = require("components/snowmandecoratable")
 	
 	local ITEM_DATA = PolarUpvalue(SnowmanDecoratable.GetItemData, "ITEM_DATA")
 	local POLAR_ITEM_DATA = {
-		["antler_tree_stick"] = 			{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "sticc", 	canflip = true},
-		["moose_polar_antler"] = 			{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "antler", 	canflip = true},
-		["oceanfish_medium_polar1_inv"] = 	{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "fish", 		canflip = true},
-		["polarwargstooth"] = 				{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "wargtooth", canflip = true},
+		["antler_tree_stick"] = 			{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "sticc", 		canflip = true},
+		["moose_polar_antler"] = 			{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "antler", 		canflip = true},
+		["oceanfish_medium_polar1_inv"] = 	{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "fish", 			canflip = true},
+		["petals_polar"] = 					{bank = "flower_petals_polar", 	build = "flower_petals_polar", 	anim = "snowman_decor", canflip = true},
+		["polarwargstooth"] = 				{bank = "polar_snowman_decor", 	build = "polar_snowman_decor", 	anim = "wargtooth", 	canflip = true},
 	}
 	
 	if ITEM_DATA then

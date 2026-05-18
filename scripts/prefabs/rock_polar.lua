@@ -35,12 +35,12 @@ local function UpdateVariation(inst, num)
 		return
 	end
 	
+	inst.AnimState:OverrideSymbol("rock0", "rock_polar", "rock"..(inst.variation - 1))
 	inst.AnimState:PlayAnimation(
 		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 4.2 and "idle_low") or
 		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 2.1 and "idle_med") or
 		(workleft <= TUNING.POLAR_ROCK_MINE_TALL / 1.3 and "idle_tall") or
 		"idle_full")
-	inst.AnimState:OverrideSymbol("rock0", "rock_polar", "rock"..(inst.variation - 1))
 end
 
 local function SetAsCave(inst)
@@ -227,7 +227,7 @@ local function OnPolarFreeze(inst, forming)
 	inst:Remove()
 end
 
-local function spawner() -- These are left by sunken Icicles, grows back into protuberance when ice comes back (if we need to repopulate a little !)
+local function spawner() -- These are left by sunken Icicles, grows back into protuberances when ice comes back (if we need to repopulate a little !)
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
@@ -241,7 +241,7 @@ local function spawner() -- These are left by sunken Icicles, grows back into pr
 	return inst
 end
 
-local function rock_ice_spawner() -- This is the bunch spawner for rock_ice at sea
+local function rock_ice_spawner() -- Bunch spawners for stuff on our borders & ice floes biome
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
@@ -253,4 +253,5 @@ end
 
 return Prefab("rock_polar", fn, assets, prefabs),
 	Prefab("rock_polar_spawner", spawner),
-	Prefab("rock_ice_spawner_polar", rock_ice_spawner)
+	Prefab("rock_ice_spawner_polar", rock_ice_spawner),
+	Prefab("seastack_spawner_polar", rock_ice_spawner)

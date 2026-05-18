@@ -51,6 +51,30 @@ local Bunches = {
 			WORLD_TILES.POLAR_ICE,
 		},
 	},
+	seastack_spawner_polar = {
+		prefab = function(world, spawnerx, spawnerz)
+			for _z = 3, -3, -3 do
+				for _x = -3, 3 do
+					local x = spawnerx + (_x * 4)
+					local z = spawnerz + (_z * 4)
+					
+					local tile = world:GetTile(x, z)
+					if tile == WORLD_TILES.POLAR_ICE or tile == WORLD_TILES.OCEAN_POLAR then
+						return math.random() < 0.8 and "seastack" or "wobster_den"
+					end
+				end
+			end
+		end,
+		range = 20,
+		min = 4,
+		max = 6,
+		min_spacing = 8,
+		valid_tile_types = {
+			WORLD_TILES.OCEAN_COASTAL,
+			WORLD_TILES.OCEAN_POLAR,
+			WORLD_TILES.POLAR_ICE,
+		},
+	},
 }
 
 return {

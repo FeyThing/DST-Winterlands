@@ -17,7 +17,7 @@ function Map:IsPolarSnowBlocked(x, y, z, range_mod)
 	local ents = TheSim:FindEntities(x, y, z, SNOWBLOCKER_DIST, nil, SNOWBLOCKER_NOT_TAGS, SNOWBLOCKER_TAGS)
 	for i, v in ipairs(ents) do
 		local ent_range = 0 --(v._snowblockrange == nil and v:HasTag("fire") and TUNING.SNOW_BLOCK_RANGES.FIRE) or 0
-		--					^ OLD METHOD NO LONGER IN USE, 'fire' tagged range is now determined by their firefx level
+		--					^ OLD METHOD NO LONGER IN USE, 'fire' tagged range is now determined by their firefx's own _snowblockrange
 		
 		-- Mostly use range_mod for forgiveness, snowwaves might not display due to the grid pattern while there can be microscopic gaps between blockers
 		local range = math.max(v._snowblockrange and v._snowblockrange:value() or 0, ent_range)

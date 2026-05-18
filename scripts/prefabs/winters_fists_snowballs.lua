@@ -14,18 +14,15 @@ local ROLL_MAX_SCALE = 2
 local ROLL_MAX_SCALE_TIME = 2
 
 local HIT_TAGS = {"_combat", "pickable", "_inventoryitem"}
-local HIT_NOT_TAGS = {"INLIMBO", "isdead", "notarget", "heavy"}
+local HIT_NOT_TAGS = {"INLIMBO", "isdead", "notarget", "invincible", "invisible"}
 
 local HARVEST_TAGS = {"_combat", "pickable", "_inventoryitem"}
-local HARVEST_NOT_TAGS = {"INLIMBO", "isdead", "heavy", "playerghost", "structure", "wall", "notarget"}
+local HARVEST_NOT_TAGS = {"INLIMBO", "isdead", "playerghost", "wall", "notarget", "invincible", "invisible"}
 local HARVEST_START_RAD = 1
 local HARVEST_ROLL_RAD = 2
-local HARVEST_SPEED = 12
 
-local KNOCKBACK_TAGS = {"_combat"} -- Knockback is disabled currently
-local KNOCKBACK_NOT_TAGS = {"INLIMBO", "isdead", "playerghost", "structure", "wall", "notarget"}
-local KNOCKBACK_RAD = 2
-local KNOCKBACK_SPEED = 12
+local TRANSPORT_TAGS = {"_health", "locomotor"}
+local TRANSPORT_NO_TAGS = {"epic", "largecreature"}
 
 --
 
@@ -60,19 +57,17 @@ local function DoRelease(inst, target)
 			end
 		end
 	end
+	
 	if target.components.grogginess then
 		target.components.grogginess:AddGrogginess(TUNING.WINTERS_FISTS_SNOWBALL_GIANT_GROGGINESS, TUNING.WINTERS_FISTS_SNOWBALL_GIANT_KO_TIME)
 	end
-	
-	--inst.transported[target] = nil
-	--inst:KnockbackEnts()
 end
 
 local function ReleaseTarget(inst, target)
 	if target and target:IsValid() and inst.transported[target] then
 		inst:DoRelease(target)
-		inst.transported[target] = nil
 		
+		inst.transported[target] = nil
 	elseif target == nil then
 		for transported, v in pairs(inst.transported) do
 			if transported:IsValid() then
@@ -101,50 +96,6 @@ end
 
 --
 
-local function KnockbackEnts(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, KNOCKBACK_RAD, nil, KNOCKBACK_NOT_TAGS, KNOCKBACK_TAGS)
-	local attacker = inst.components.complexprojectile and inst.components.complexprojectile.attacker or nil
-	
-	for i, ent in ipairs(ents) do
-		if attacker and ent ~= inst and ent.Physics and ent:IsValid() and ent.entity:IsVisible() and
-			(ent ~= attacker and (not (ent:HasTag("player") and attacker:HasTag("player")) or TheNet:GetPVPEnabled())) then
-			
-			local ex, ey, ez = ent.Transform:GetWorldPosition()
-			local dx = ex - x
-			local dz = ez - z
-			local dist_sq = dx * dx + dz * dz
-			
-			if dist_sq > 0 and dist_sq <= KNOCKBACK_RAD * KNOCKBACK_RAD then
-				local dist = math.sqrt(dist_sq)
-				local strength = KNOCKBACK_SPEED -- * (1 - dist / KNOCKBACK_RAD)
-				
-				if ent:HasTag("epic") then
-					strength = strength / 3
-				elseif ent:HasTag("largecreature") then
-					strength = strength / 2
-				end
-				
-				if ent.sg and not (ent.sg:HasStateTag("knockback") or ent.sg:HasStateTag("nointerrupt")) then
-					ent:PushEvent("knockback", {knocker = inst, radius = 1, strengthmult = 1, forcelanded = false})
-				end
-				
-				if not ent:HasTag("player") then
-					local nx, nz = dx / dist, dz / dist
-					local vx, vz = nx * strength, nz * strength
-					ent.Physics:SetMotorVelOverride(vx, 0, vz)
-					
-					ent:DoTaskInTime(0.25, function()
-						if ent:IsValid() and ent.Physics then
-							ent.Physics:SetMotorVelOverride(0, 0, 0)
-						end
-					end)
-				end
-			end
-		end
-	end
-end
-
 local function RollingTask(inst)
 	local progress = math.min(inst:GetTimeAlive() / ROLL_MAX_SCALE_TIME, 1)
 	local scale = 1 + (ROLL_MAX_SCALE - 1) * progress
@@ -162,39 +113,35 @@ local function RollingTask(inst)
 	local ents = TheSim:FindEntities(x, y, z, HARVEST_RAD, nil, HARVEST_NOT_TAGS, HARVEST_TAGS)
 	local attacker = inst.components.complexprojectile and inst.components.complexprojectile.attacker or nil
 	
-	local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
-	local inst_bby = bby2 - bby1
+	--local bbx1, bby1, bbx2, bby2 = inst.AnimState:GetVisualBB()
+	--local inst_bby = bby2 - bby1
 	
 	for i, ent in ipairs(ents) do
-		if attacker and ent ~= inst and not inst.attacked[ent] and not inst.transported[ent] and ent:IsValid() and ent.entity:IsVisible() and
-			(ent ~= attacker and (not (ent:HasTag("player") and attacker:HasTag("player")) or TheNet:GetPVPEnabled())) then
-			inst.attacked[ent] = true
+		if attacker and ent ~= inst and ent ~= attacker and not inst.attacked[ent] and not inst.transported[ent]
+			and ent:IsValid() and ent.entity:IsVisible() and attacker.components.combat and not attacker.components.combat:IsAlly(ent) then
 			
+			inst.attacked[ent] = true
 			--local bbx3, bby3, bbx4, bby4 = ent.AnimState:GetVisualBB()
 			--local ent_bby = bby4 - bby3
 			
-			local is_dead = ent.components.health and ent.components.health:IsDead()
-			local is_smaller = not ent:HasTag("epic") and not ent:HasTag("largecreature") and -- (ent_bby * 0.6) <= inst_bby
-				not (ent.sg and ent.sg:HasStateTag("nointerrupt"))
+			local can_transport = ent:HasTags(TRANSPORT_TAGS) and not ent:HasAnyTag(TRANSPORT_NO_TAGS) and -- (ent_bby * 0.6) <= inst_bby
+				not (ent.sg and (ent.sg:HasStateTag("nointerrupt" or ent.sg:HasStateTag("temp_invincible"))))
 			
 			if ent.components.combat then
-				ent.components.combat:GetAttacked(attacker or inst, TUNING.WINTERS_FISTS_DAMAGE + (is_smaller and 0 or TUNING.WINTERS_FISTS_DAMAGE_SNOWBALL))
-			end
-			if ent.components.freezable and not is_smaller then
-				ent.components.freezable:AddColdness(TUNING.WINTERS_FISTS_SNOWBALL_COLDNESS)
+				ent.components.combat:GetAttacked(attacker or inst, TUNING.WINTERS_FISTS_DAMAGE + (can_transport and 0 or TUNING.WINTERS_FISTS_DAMAGE_SNOWBALL))
 			end
 			
-			if ent.components.health and not is_dead and is_smaller then
+			local is_dead = ent.components.health and ent.components.health:IsDead()
+			
+			if ent.components.freezable and not can_transport then
+				ent.components.freezable:AddColdness(TUNING.WINTERS_FISTS_SNOWBALL_COLDNESS)
+			end
+			if ent.components.health and not is_dead and can_transport then
 				inst:TransportTarget(ent)
 			elseif ent.components.pickable and ent.components.pickable:CanBePicked() then
 				ent.components.pickable:Pick(inst)
 			elseif inst.components.inventory and not is_dead and ent.components.inventoryitem and ent.entity:GetParent() == nil then
 				inst.components.inventory:GiveItem(ent)
-			end
-			
-			if not is_smaller then
-				SpawnPrefab("splash_snow_fx").Transform:SetPosition(x, 0, z)
-				inst:Remove()
 			end
 		end
 	end
@@ -207,39 +154,37 @@ local function RollingTask(inst)
 end
 
 local function OnHit(inst, attacker, target)
-	if inst.components.wateryprotection then
-		inst.components.wateryprotection:SpreadProtection(inst)
-	end
+	local docrash = inst._collided or target or inst.size < #SNOWBALL_SIZE_DATA
 	
-	if inst._collided or target or inst.size < #SNOWBALL_SIZE_DATA then
+	if docrash then
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local ents = TheSim:FindEntities(x, y, z, HARVEST_START_RAD, nil, HIT_NOT_TAGS, HIT_TAGS)
 		local attacker = inst.components.complexprojectile and inst.components.complexprojectile.attacker or nil
-		
-		--[[if inst.size == 2 then
-			inst:KnockbackEnts()
-		end]]
 		
 		if target and target:IsValid() and not table.contains(ents, target) and not target:HasAnyTag(HIT_NOT_TAGS) then
 			table.insert(ents, target)
 		end
 		for i, ent in ipairs(ents) do
-			if ent ~= inst and attacker and ent ~= attacker and ent:IsValid() and (not (ent:HasTag("player") and attacker:HasTag("player")) or TheNet:GetPVPEnabled()) then
+			if attacker and ent ~= inst and ent ~= attacker and ent:IsValid() and attacker.components.combat and
+				not attacker.components.combat:IsAlly(ent) then
+				
+				local isdryice = ent:HasTag("dryice") -- Mainly so we don't break the castle walls...
+				
 				if ent.components.combat and inst.size <= 2 then
 					local damage = inst.size <= 1 and TUNING.WINTERS_FISTS_DAMAGE_SMALLBALL or TUNING.WINTERS_FISTS_DAMAGE_MEDBALL
-					ent.components.combat:GetAttacked(attacker or inst, ent:HasTag("dryice") and 0 or damage)
+					ent.components.combat:GetAttacked(attacker or inst, isdryice and 0 or damage)
 				end
 				
 				local workable_action = ent.components.workable and ent.components.workable.action
 				if workable_action and workable_action ~= ACTIONS.DIG and workable_action ~= ACTIONS.NET and inst.size > 1 then
 					local workdone = inst.size > 2 and TUNING.WINTERS_FISTS_SNOWBALL_GIANT_WORKS or TUNING.WINTERS_FISTS_SNOWBALL_MED_WORKS
-					ent.components.workable:WorkedBy(inst, ent:HasTag("dryice") and 0 or workdone)
+					
+					ent:DoTaskInTime(0, function()
+						ent.components.workable:WorkedBy(TheWorld, isdryice and 0 or workdone)
+					end)
 				end
 			end
 		end
-		
-		SpawnPrefab("splash_snow_fx").Transform:SetPosition(inst.Transform:GetWorldPosition())
-		inst:Remove()
 	else
 		inst.Physics:SetMotorVel(SNOWBALL_SIZE_DATA[inst.size].speed * 0.8, 0, 0)
 		
@@ -252,6 +197,15 @@ local function OnHit(inst, attacker, target)
 			end)
 		end
 		inst.SoundEmitter:PlaySound("dontstarve_DLC001/creatures/mole/move", "move")
+	end
+	
+	if inst.components.wateryprotection then
+		inst.components.wateryprotection:SpreadProtection(inst)
+	end
+	
+	if docrash then
+		SpawnPrefab("splash_snow_fx").Transform:SetPosition(inst.Transform:GetWorldPosition())
+		inst:Remove()
 	end
 end
 
@@ -315,8 +269,11 @@ local function ThrowAt(inst, targetpos, owner)
 	inst.Physics:SetCollisionCallback(inst.OnCollide)
 	
 	inst.components.complexprojectile:Launch(targetpos, owner, inst)
-	if inst.components.wateryprotection and owner:HasTag("player") then
-		inst.components.wateryprotection:AddIgnoreTag("player")
+	if inst.components.wateryprotection then
+		if owner:HasTag("player") then
+			inst.components.wateryprotection:AddIgnoreTag("player")
+		end
+		inst.components.wateryprotection:AddIgnoreTag("invisible")
 	end
 end
 
@@ -382,7 +339,6 @@ local function fn()
 	--inst.components.wateryprotection.addcoldness = TUNING.FIRESUPPRESSOR_ADD_COLDNESS
 	
 	inst.DoRelease = DoRelease
-	inst.KnockbackEnts = KnockbackEnts
 	inst.OnCollide = OnCollide
 	inst.OnSave = OnSave
 	inst.OnLoad = OnLoad

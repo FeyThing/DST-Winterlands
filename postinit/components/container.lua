@@ -7,12 +7,10 @@ local Container = require("components/container")
 	
 	local OldGiveItem = Container.GiveItem
 	function Container:GiveItem(item, slot, ...)
-		if item and item:HasTag("flea") and self.inst:HasTag("fleapack") and self.inst.components.upgradeable and self.inst.components.upgradeable:GetStage() >= 2
-			and item.components.stackable == nil then
+		if item and item:HasTag("flea") and self.inst:HasTag("fleapack") and item.cant_stack
+			and self.inst.components.upgradeable and self.inst.components.upgradeable:GetStage() >= 2 then
 			
-			item:AddComponent("stackable")
-			item.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
-			item.skinname = nil
+			item.cant_stack:set(false)
 		end
 		
 		return OldGiveItem(self, item, slot, ...)

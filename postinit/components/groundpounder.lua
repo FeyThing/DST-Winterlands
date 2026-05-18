@@ -20,7 +20,7 @@ local GroundPounder = require("components/groundpounder")
 				if TheWorld.components.polarice_manager then
 					for dx = -1, 1 do
 						for dy = -1, 1 do
-							TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx + dx, ty + dy, false)
+							TheWorld.components.polarice_manager:StartDestroyingIceAtTile(tx + dx, ty + dy, TUNING.POLAR_ICEGEN_DEFAULT_HOLE_TIME, nil, "ice")
 						end
 					end
 				end

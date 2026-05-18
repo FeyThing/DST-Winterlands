@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 		GENERIC = "I think it's... pretty.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "I might be fully frozen before it's fully grown."
+	DESCRIBE.FLOWER_POLAR = "Soon to be buried alive under the snow. How poetic."
 	DESCRIBE.ICELETTUCE_SEEDS = "It's a plant that's waiting to be."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "A mouthful of snowstorm."
 	DESCRIBE.FILET_O_FLEA = "I wanted treats, not a threat."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "It's to die for."
 	DESCRIBE.ICELETTUCE = "This year's harvest was most disappointing."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "What did this crop do to deserve such love and care?"
 	DESCRIBE.ICEBURRITO = "My frozen heart won't feel the change."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Broken like, hm... so many other things."
 	DESCRIBE.EMPEROR_EGG = "If anything's inside, it's long dead."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "But you can have this if you want."
+	DESCRIBE.PETALS_POLAR = "I live... I live not, I live... oh well."
+	DESCRIBE.PETALS_POLAR_DRIED = "I like how they smell."
 	DESCRIBE.POLAR_DRYICE = "Ghostly."
 	DESCRIBE.POLARBEARFUR = "It carries the weight of its loss, and vermins."
 	DESCRIBE.POLARWARGSTOOTH = "How would it feel to have daggers for teeth?"
@@ -177,8 +181,9 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.POLARTRINKET_1 = "I'd carry this to the end of the world."
 	DESCRIBE.POLARTRINKET_2 = "I'd carry this to the end of the world."
 	DESCRIBE.TRAP_POLARTEETH = "Can you let me finish them off? Pretty please?"
-	DESCRIBE.TURF_POLAR_CAVES = "Some ground."
+	DESCRIBE.TURF_POLAR_CAVES = "Some cold ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold stone beneath my feet."
+	DESCRIBE.TURF_POLAR_GRASS = "Some cold ground."
 	DESCRIBE.WALL_POLAR = "Alas, they won't melt easily."
 	DESCRIBE.WALL_POLAR_ITEM = "Parts of an icy prison to lock myself away."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Some baubles are heartwarming, while others..."

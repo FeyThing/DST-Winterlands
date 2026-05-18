@@ -7,8 +7,8 @@ local assets_small = {
 	Asset("ANIM", "anim/pillar_ice_med.zip"),
 }
 
-local function GetPolarMistRange(inst)
-	return math.random(4, 8)
+local function GetPolarMistScale(inst)
+	return math.random(6, 8)
 end
 
 local function OnSave(inst, data)
@@ -174,8 +174,6 @@ local function commonfn()
 	inst:AddTag("birdblocker")
 	inst:AddTag("NOCLICK")
 	
-	inst.entity:SetPristine()
-	
 	local scale = math.random() > 0.5 and 1 or -1
 	inst.AnimState:SetScale(scale, 1)
 	
@@ -204,6 +202,15 @@ local function shadefn()
 		inst:AddComponent("polarcaveshade")
 	end
 	
+	inst:AddComponent("polarmistemitter")
+	inst.components.polarmistemitter.lifetime = TUNING.POLAR_MIST_LIFETIME * 2
+	inst.components.polarmistemitter.maxmist = 16
+	inst.components.polarmistemitter.rate = 0.2
+	inst.components.polarmistemitter.scale = GetPolarMistScale
+	inst.components.polarmistemitter.speed = 0.6
+	
+	inst.entity:SetPristine()
+	
 	if not TheWorld.ismastersim then
 		return inst
 	end
@@ -218,14 +225,7 @@ local function shadefn()
 	inst.components.periodicspawner:SetOnlySpawnOffscreen(true)
 	inst.components.periodicspawner:Start()
 	
-	inst:AddComponent("polarmistemitter")
-	inst.components.polarmistemitter:StartMisting()
-	inst.components.polarmistemitter.rate = 0.1
-	inst.components.polarmistemitter.radius = GetPolarMistRange
-	inst.components.polarmistemitter.scale = 5
-	inst.components.polarmistemitter.speed = 0.6
-	inst.components.polarmistemitter.maxmist = 15
-	inst.components.polarmistemitter.maxmist_range = 8
+	inst.components.polarmistemitter:SetEnabled(true)
 
 	inst:AddComponent("lightningblocker")
 	inst.components.lightningblocker:SetBlockRange(TUNING.SHADE_POLAR_RANGE)
@@ -251,6 +251,8 @@ local function smallfn()
 	inst.AnimState:PlayAnimation("idle")
 	
 	--inst.MiniMapEntity:SetIcon("iceboulder.png")
+	
+	inst.entity:SetPristine()
 	
 	return inst
 end

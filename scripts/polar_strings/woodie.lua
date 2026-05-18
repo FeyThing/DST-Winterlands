@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 		GENERIC = "Not now Luce, I'll butt with this one personally!",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Looks like we'll have firewood soon!"
+	DESCRIBE.FLOWER_POLAR = "A lil marvel of the tundra."
 	DESCRIBE.ICELETTUCE_SEEDS = "Maybe I could plant them?"
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "I actually prefer ice cream in winter, yup."
 	DESCRIBE.FILET_O_FLEA = "That'll teach you goin' in places you shouldn't, eh."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "It tastes good, but it isn't."
 	DESCRIBE.ICELETTUCE = "Like biting ice cubes in a drink."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Didn't think you had it in you, buddy."
 	DESCRIBE.ICEBURRITO = "It's better to eat fresh."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Lucy is more the type to do puzzles than I am."
 	DESCRIBE.EMPEROR_EGG = "And, uh, what do I do with that?"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "That would look good over a fireplace."
+	DESCRIBE.PETALS_POLAR = "Could make a bouquet of those, they're Lucy's favorite."
+	DESCRIBE.PETALS_POLAR_DRIED = "Smells nice."
 	DESCRIBE.POLAR_DRYICE = "Building blocks for the cool kids."
 	DESCRIBE.POLARBEARFUR = "I should stuff my plaid with it."
 	DESCRIBE.POLARWARGSTOOTH = "My jaw hurts just by staring at it..."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "It's one step further in trickery."
 	DESCRIBE.TURF_POLAR_CAVES = "Just more ground, eh?"
 	DESCRIBE.TURF_POLAR_DRYICE = "Now to find ice skates in here..."
+	DESCRIBE.TURF_POLAR_GRASS = "Just more ground, eh?"
 	DESCRIBE.WALL_POLAR = "Anyone's feelin' like breaking the ice?"
 	DESCRIBE.WALL_POLAR_ITEM = "How aboot we build some igloo, eh Lucy?"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "That one's perfect."

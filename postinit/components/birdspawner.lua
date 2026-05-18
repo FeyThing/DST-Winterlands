@@ -2,12 +2,11 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 local BirdSpawner = require("components/birdspawner")
-local OldBirdSpawner_ctor = BirdSpawner._ctor
-
-local ICECAVE_TAGS = {"icecaveshelter"}
 
 --	NOTE: this is not fully working in Island Adventures maps because they forbid any bird spawn outside of their known tiles :/
+--	MORE-NOTE: I'm told it was changed recently so this could be looked up again
 
+local OldBirdSpawner_ctor = BirdSpawner._ctor
 BirdSpawner._ctor = function(self, ...)
 	OldBirdSpawner_ctor(self, ...)
 	
@@ -21,12 +20,13 @@ BirdSpawner._ctor = function(self, ...)
 	BIRD_TYPES[WORLD_TILES.POLAR_ICE] = {"puffin"}
 	BIRD_TYPES[WORLD_TILES.POLAR_CAVES] = {"crow"}
 	BIRD_TYPES[WORLD_TILES.POLAR_DRYICE] = {"crow"}
+	BIRD_TYPES[WORLD_TILES.POLAR_GRASS] = {"robin"}
 	
 	local function PickBird(spawnpoint, ...)
 		local prefab = OldPickBird(spawnpoint, ...)
 		local _BIRD_TYPES = BIRD_TYPES -- Keeping this here for simpler mod compat
 		
-		if prefab and #TheSim:FindEntities(spawnpoint.x, 0, spawnpoint.z, TUNING.SHADE_POLAR_RANGE, ICECAVE_TAGS) > 0 then
+		if IsUnderIceCaveAtXZ(spawnpoint.x, spawnpoint.z) then
 			return
 		end
 		

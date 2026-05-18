@@ -9,17 +9,20 @@ local LOOT = {
 	POLAR_AREA = {
 		["rocks"] 			= 3,
 		["flint"] 			= 2,
-		["polarflea"] 		= 2,
-		["boneshard"] 		= 3,
+		["boneshard"] 		= 1,
+		["bluegem"] 		= 0.5,
+		["bluegem_shards"] 	= 1,
+		["polarflea"] 		= 2.5,
 	},
 	
 	POLARCAVE_AREA = {
-		["rocks"] 			= 8,
-		["flint"] 			= 5,
-		["goldnugget"] 		= 2,
-		["nitre"] 			= 2,
-		["bluegem"] 		= 1,
-		["bluegem_shards"] 	= 2,
+		["rocks"] 			= 3,
+		["flint"] 			= 1,
+		["goldnugget"] 		= 0.5,
+		["nitre"] 			= 0.5,
+		["bluegem"] 		= 1.5,
+		["bluegem_shards"] 	= 3,
+		["polarflea"] 		= 0.5,
 	},
 }
 
@@ -41,6 +44,7 @@ end
 --
 
 local ROOMS = {
+	["PolarIsland_BG"] = "POLAR_AREA",
 	["PolarIsland_Caves"] = "POLARCAVE_AREA",
 	["PolarIsland_TrappedCaves"] = "POLARCAVE_AREA",
 }
@@ -50,7 +54,14 @@ for k, v in pairs(ROOMS) do
 end
 
 local TASKS = {
-	["Polar Lands"] = "POLAR_AREA", -- Default Winterlands loot
+	["Polar Caves"] = "POLAR_AREA",
+	["Polar Deciduous Lands"] = "POLAR_AREA",
+	["Polar Floe"] = "POLAR_AREA",
+	["Polar Gnomes"] = "POLAR_AREA",
+	["Polar Icerink"] = "POLAR_AREA",
+	["Polar Lands"] = "POLAR_AREA",
+	["Polar Quarry"] = "POLAR_AREA",
+	["Polar Village"] = "POLAR_AREA",
 }
 
 for k, v in pairs(TASKS) do
@@ -69,19 +80,12 @@ end
 
 local tree_rocks = {"tree_rock1", "tree_rock2"}
 
-local function PolarInit(inst)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	if GetClosestPolarTileToPoint(x, 0, z, 32) then
-		inst.AnimState:OverrideSymbol("tree_ground_rocks", "dirt_to_polar_builds", "tree_ground_rocks")
-	end
-end
-
 for i, v in ipairs(tree_rocks) do
 	ENV.AddPrefabPostInit(v, function(inst)
 		if not TheWorld.ismastersim then
 			return
 		end
 		
-		inst:DoTaskInTime(0, PolarInit)
+		MakeSnowAndDirtToggleable(inst, {symbol = "tree_ground_rocks", build = "dirt_to_polar_builds"})
 	end)
 end

@@ -16,7 +16,7 @@ local TARGET_FAR_DIST = TUNING.POLARFOX_LEADER_RUN_DIST
 
 local SEE_FOOD_DIST = 10
 
-local AVOID_TAGS = {"scarytoprey", "hostile", "icecrackfx"}
+local AVOID_TAGS = {"scarytoprey", "hostile", "ice_crack_fx"}
 local AVOID_NOT_TAGS = {"INLIMBO", "companion", "shadowcreature", "brightmare_gestalt"}
 local FINDFOOD_CANT_TAGS = {"FX", "NOCLICK", "DECOR", "INLIMBO", "outofreach", "show_spoiled"}
 
@@ -88,7 +88,7 @@ local function IsValidDivingPos(pt, inst)
 	local insnow = TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
 	
 	if ((not inst._mainlanded and insnow) or (inst._mainlanded and not insnow))
-		and #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, DIVE_AVOID_TAGS) == 0 then
+		and #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, DIVE_AVOID_TAGS, AVOID_NOT_TAGS) == 0 then
 		
 		if not (inst.components.follower and inst.components.follower.leader) then
 			local players = FindPlayersInRangeSq(pt.x, pt.y, pt.z, 10, true)
@@ -152,8 +152,9 @@ local function ShouldRunAway(target, inst)
 	local dist = inst:GetDistanceSqToInst(target)
 	local leader = GetLeader(inst)
 	
-	if target.components.health and target.components.health:IsDead() then
+	if target:HasTag("INLIMBO") or target.components.health and target.components.health:IsDead() then
 		return false
+	--	Grow some balls when you have a leader
 	elseif not target:HasTag("hostile") and target:HasTag("scarytoprey") and leader ~= nil then
 		return false
 	end

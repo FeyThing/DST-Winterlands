@@ -63,7 +63,7 @@ return {
 					visible = true,
 					properties = {}
 				},
-				{
+				--[[{
 					name = "",
 					type = "skeleton",
 					shape = "rectangle",
@@ -73,7 +73,7 @@ return {
 					height = 0,
 					visible = true,
 					properties = {}
-				},
+				},]]
 				{
 					name = "",
 					type = "fishingitem",

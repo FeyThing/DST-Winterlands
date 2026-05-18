@@ -82,6 +82,14 @@ GLOBAL.setfenv(1, GLOBAL)
 	
 	params.winter_tree_sparse = params.winter_tree
 	
+--	Patching
+	
+	local oldsisturn_itemtestfn = params.sisturn.itemtestfn
+	function params.sisturn.itemtestfn(container, item, slot, ...)
+		return oldsisturn_itemtestfn and oldsisturn_itemtestfn(container, item, slot, ...)
+			or item.prefab == "petals_polar" 
+	end
+	
 --	[ 		Screens			]	--
 
 local AddClassPostConstruct = ENV.AddClassPostConstruct
@@ -141,7 +149,7 @@ local PolarMoistureOverlay = require("widgets/polarmoistureoverlay")
 		end
 	end
 	
---	Combined Status' world temperature badge should show polar difference
+--	Combined Status' world temperature badge shows if player is in the Winterlands
 
 AddClassPostConstruct("widgets/statusdisplays", function(self)
 	self.inst:DoTaskInTime(1, function()
@@ -156,7 +164,7 @@ AddClassPostConstruct("widgets/statusdisplays", function(self)
 				if oldupdatetemp then
 					local function updatetemp(val, ...)
 						local x, y, z = ThePlayer.Transform:GetWorldPosition()
-						local in_polar = GetClosestPolarTileToPoint(x, 0, z, 32)
+						local in_polar = TheWorld.components.polartemperature_manager and TheWorld.components.polartemperature_manager:GetDataAtPoint(x, y, z) > 0
 						
 						if in_polar ~= self.worldtempbadge_polar then
 							if self.worldtempbadge.head then
@@ -247,6 +255,19 @@ AddClassPostConstruct("widgets/itemtile", function(self, invitem)
 	end
 end)
 
+--	Prevent Snowfleas drop control
+
+local InvSlot = require("widgets/invslot")
+	
+	local OldDropItem = InvSlot.DropItem
+	function InvSlot:DropItem(...)
+		if self.tile and self.tile.item and self.tile.item:HasTag("flea") then
+			return
+		end
+		
+		return OldDropItem(self, ...)
+	end
+	
 --	Arctic Fools' Fish on Self Inspect
 
 AddClassPostConstruct("screens/playerinfopopupscreen", function(self, owner, player_name, data)

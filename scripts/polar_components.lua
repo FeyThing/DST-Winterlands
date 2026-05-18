@@ -1,3 +1,5 @@
+--	Biome detection
+
 function IsInPolarAtPoint(x, y, z, range)
 	local node = TheWorld.Map:FindNodeAtPoint(x, y, z)
 	
@@ -24,35 +26,37 @@ function IsInPolar(inst, range)
 end
 
 function GetClosestPolarTileToPoint(x, y, z, maxdist) -- LukaS: Kinda hacky, don't overuse it or suffer the consequences of L A G
-	if TheWorld.components.winterlands_manager == nil then
-		return
-	end
-
 	if IsInPolarAtPoint(x, y, z) then
 		return TheWorld.Map:GetTileAtPoint(x, y, z), 0
 	end
-
+	
+	if TheWorld.components.winterlands_manager == nil then
+		return
+	end
+	
 	maxdist = maxdist or math.huge
-	local polartiles = TheWorld.components.winterlands_manager:GetGrid().grid
 	local mindist = math.huge
 	local tile
-
-	for i, ispolar in pairs(polartiles) do
+	
+	for i, ispolar in pairs(TheWorld.components.winterlands_manager:GetGrid().grid) do
 		if ispolar then
 			local tx, ty = TheWorld.components.winterlands_manager:GetGrid():GetXYFromIndex(i)
 			local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
 			local dist = distsq(x, z, cx, cz)
+			
 			if dist < mindist then
 				mindist = dist
 				tile = TheWorld.Map:GetTileAtPoint(cx, cy, cz)
 			end
 		end
 	end
-
+	
 	if math.sqrt(mindist) <= maxdist then
 		return tile, math.sqrt(mindist)
 	end
 end
+
+--	Plowing
 
 local SNOWBLOCKER_TAGS = {"snowblocker"}
 local MIN_SNOWBLOCKER_DIST = 2
@@ -60,6 +64,8 @@ local MIN_SNOWBLOCKER_DIST = 2
 function SpawnPolarSnowBlocker(pos, radius, duration, doer)
 	local blockers = TheSim:FindEntities(pos.x, pos.y, pos.z, radius or 0, SNOWBLOCKER_TAGS)
 	local dist = radius
+	
+	TheWorld:PushEvent("ms_plowarea_pre", {doer = doer, pt = pos, radius = radius, blockers = blockers}) -- (Useful to know if area was previously covered)
 	
 	duration = duration or TUNING.POLARPLOW_BLOCKER_DURATION
 	
@@ -89,6 +95,8 @@ function SpawnPolarSnowBlocker(pos, radius, duration, doer)
 		end
 	end
 	
+	TheWorld:PushEvent("ms_plowarea", {doer = doer, pt = pos, radius = radius, blocker = blocker, blockers = blockers})
+	
 	return blocker, blockers
 end
 
@@ -96,31 +104,20 @@ function GetPolarPlowDuration(doer, t, cause)
 	local iscanadian = doer and (doer:HasTag("polite") or doer:HasTag("pinetreepioneer"))
 	t = t or TUNING.POLARPLOW_BLOCKER_DURATION
 	
+	if cause == "frostfall" then
+		t = t * (2 - math.random())
+	end
+	
 	return t * (iscanadian and TUNING.POLARPLOW_BLOCKER_CANADIAN_MULT or 1)
 end
 
-function MakePolarCovered(inst, polar)
-	if polar then
-		inst.AnimState:OverrideSymbol("snow", "polar_snow", "snow") -- The snow is snowier than before...
-		inst.AnimState:Show("snow")
-	else
-		if inst.polar_snowed then
-			inst.AnimState:OverrideSymbol("snow", "snow", "snow")
-		end
-		if not TheWorld.state.issnowcovered then
-			inst.AnimState:Hide("snow")
-		end
-	end
-	
-	inst.polar_snowed = polar or nil
-	inst.polarsnow_task = nil
-end
+--	MakeNoGrowInWinter(lands) / Make(High)SnowCovered loop
 
-function OnPolarCover(inst, loading)
-	local polar = IsInPolar(inst)
+function DoPolarComponentsUpdate(inst, loading)
+	local in_polar = IsInPolar(inst)
 	
 	if inst.pause_grow_in_polar then
-		if polar then
+		if in_polar then
 			if inst.components.growable then
 				if not inst:HasTag("canpolargrow") then
 					inst.components.growable:Pause("polar")
@@ -136,20 +133,80 @@ function OnPolarCover(inst, loading)
 				inst.components.growable:Resume("polar")
 			end
 			if inst.components.pickable then
-				inst.components.pickable:PolarPause()
+				inst.components.pickable:PolarPause(false)
 			end
 		end
 	end
 	
 	if inst:HasTag("SnowCovered") then
-		if inst.polarsnow_task then
-			inst.polarsnow_task:Cancel()
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local tx, ty = TheWorld.Map:GetTileCoordsAtPoint(x, y, z)
+		
+		local lock_covered = IsUnderIceCaveAtXZ(x, z)
+		local snow_covered = in_polar and not lock_covered and TheWorld.components.polarsnow_manager and
+			not TheWorld.components.polarsnow_manager:IsTileMelting(tx, ty)
+		
+		if snow_covered then
+			--inst.AnimState:OverrideSymbol("snow", "polar_snow", "snow") -- The snow is snowier than before...
+			inst.AnimState:Show("snow")
+		else
+			if lock_covered or not TheWorld.state.issnowcovered then
+				inst.AnimState:Hide("snow")
+			end
 		end
 		
-		local covered_time = loading and 0 or GetRandomMinMax(TUNING.POLAR_COVERTIME.min, TUNING.POLAR_COVERTIME.max)
-		inst.polarsnow_task = inst:DoTaskInTime(covered_time, function() MakePolarCovered(inst, polar) end)
+		inst.polar_snow_covered = snow_covered
+	end
+	
+	local cd = loading and 0.1 or GetRandomMinMax(TUNING.POLAR_SNOWCOVERED_TIME.min, TUNING.POLAR_SNOWCOVERED_TIME.max)
+	inst._polarcomponents_task = inst:DoTaskInTime(cd, function() DoPolarComponentsUpdate(inst) end)
+end
+
+function SetPolarComponentsUpdates(inst, loading)
+	DoPolarComponentsUpdate(inst, loading)
+end
+
+--	Convert dirt sprites to snow
+
+function MakeSnowAndDirtToggleable(inst, overrides)
+	if overrides then
+		inst._polardirt_overrides = #overrides > 0 and overrides or {overrides}
+	end
+	
+	if inst._polardirt_callback then
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true)
+			or (not IsInPolar(inst) and (TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.25))
+		
+		for i, v in ipairs(inst._polardirt_overrides or {}) do
+			if in_snow then
+				inst.AnimState:OverrideSymbol(v.symbol, v.build, v.override or v.symbol)
+			elseif v.clearbuild then -- If this needs another override instead of clearing !
+				inst.AnimState:OverrideSymbol(v.symbol, v.clearbuild, v.clearsym or v.symbol)
+			else
+				inst.AnimState:ClearOverrideSymbol(v.symbol)
+			end
+		end
+	else
+		inst._polardirt_callback = function() MakeSnowAndDirtToggleable(inst) end
+		
+		if inst.components.locomotor then
+			if inst.components.areaaware == nil then
+				inst:AddComponent("areaaware")
+				inst.components.areaaware:SetUpdateDist(0.45)
+			end
+			inst.components.areaaware:StartWatchingTile(WORLD_TILES.POLAR_SNOW)
+		end
+		
+		inst:ListenForEvent("on_POLAR_SNOW_tile", inst._polardirt_callback)
+		inst:ListenForEvent("onterraform", inst._polardirt_callback, TheWorld)
+		inst:WatchWorldState("snowlevel", inst._polardirt_callback)
+		
+		inst:DoTaskInTime(0, inst._polardirt_callback)
 	end
 end
+
+--	Frozen Wetness
 
 function SetPolarWetness(inst, level)
 	if level <= 0 then
@@ -219,11 +276,40 @@ function HasPolarSnowImmunity(inst)
 	return false
 end
 
+--	Ice Lettuce things buff
+
+function EatIceLettuce(inst, eater, duration, freeziness, temperature)
+	if freeziness and eater.components.freezable then
+		eater.components.freezable:AddColdness(freeziness)
+	end
+	
+	if temperature and eater.components.temperature and eater.components.temperature.current then
+		eater.components.temperature:SetTemperature(eater.components.temperature.current + temperature)
+	end
+	
+	if eater.components.debuffable == nil then
+		eater:AddComponent("debuffable")
+	end
+	
+	if not duration then
+		return
+	end
+	
+	local buff = eater.components.debuffable:GetDebuff("buff_polarimmunity") or eater.components.debuffable:AddDebuff("buff_polarimmunity", "buff_polarimmunity")
+	local timeleft = (buff and buff.components.timer) and buff.components.timer:GetTimeLeft("buffover") or nil
+	
+	if timeleft and duration and duration > timeleft then
+		buff.components.timer:SetTimeLeft("buffover", duration)
+	end
+	
+	return buff
+end
+
+--	EZ compatibilities
+
 function IsWintersFistsSnowball(item)
 	return item.prefab == "snowball_item" -- I'm tired atm but later we should add other mod snowballs
 end
-
-local TIMEFREEZE_DRAINS = TUNING.POCKERWATCH_BUFF_DRAINS
 
 function WandaTimeFreezeDrain(inst, stat, delta, old, max, min)
 	local buff = inst:GetDebuff("buff_wandatimefreeze")
@@ -232,7 +318,7 @@ function WandaTimeFreezeDrain(inst, stat, delta, old, max, min)
 	end
 	
 	local new = math.clamp(old + delta, min or 0, max or 100) - old
-	local mult = TIMEFREEZE_DRAINS[stat] or 0
+	local mult = TUNING.POCKERWATCH_BUFF_DRAINS[stat] or 0
 	local drain = math.abs(new) * mult
 	
 	if new == 0 or mult == 0 or drain <= 0 then

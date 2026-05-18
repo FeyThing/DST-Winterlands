@@ -48,6 +48,10 @@ local function SetStage(inst, stage, source, ...)
 			inst.components.floater:OnLandedServer()
 		end
 	end
+	
+	if not TheWorld.Map:IsPassableAtPoint(x, y, z) and inst._puddle then
+		inst._puddle:Hide()
+	end
 end
 
 local function OnPolarInit(inst, ismastersim)

@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 		GENERIC = "Hm, you far friend of swamp tree?",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Glurph! Almost tripped on tree."
+	DESCRIBE.FLOWER_POLAR = "Look ok, I guess."
 	DESCRIBE.ICELETTUCE_SEEDS = "Put in ground!"
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Glurr- tonguh-- stuuucc!"
 	DESCRIBE.FILET_O_FLEA = "Blegh!! How it got in here?"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "Blegh, want other one!"
 	DESCRIBE.ICELETTUCE = "Is icy-cream growing in ground?!"
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Me did it! Me finally did it!"
 	DESCRIBE.ICEBURRITO = "Huh? Gluurrgh... poor fish in it."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Glorp, can put them back together?"
 	DESCRIBE.EMPEROR_EGG = "Left shiny behind!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Me did do it. Sorry."
+	DESCRIBE.PETALS_POLAR = "Should ask Wicker-lady if it's Eddy-bluh, florp."
+	DESCRIBE.PETALS_POLAR_DRIED = "Dried bits not yummy."
 	DESCRIBE.POLAR_DRYICE = "Why this ice not Eddy-bluh?"
 	DESCRIBE.POLARBEARFUR = "Me could eat it as revenge... but won't."
 	DESCRIBE.POLARWARGSTOOTH = "Want some like that too, florp!"
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "And now me watch. Hee-hee!"
 	DESCRIBE.TURF_POLAR_CAVES = "Ground bit."
 	DESCRIBE.TURF_POLAR_DRYICE = "Make ground walk-ier!"
+	DESCRIBE.TURF_POLAR_GRASS = "Ground bit."
 	DESCRIBE.WALL_POLAR = "Brrr... don't want to live in ice castle!"
 	DESCRIBE.WALL_POLAR_ITEM = "Will make big ice castle, flort."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Want to keep it!"

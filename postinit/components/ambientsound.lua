@@ -6,6 +6,7 @@ local POLAR_AMBIENT_SOUND = { -- TODO: new ambiences
 	[WORLD_TILES.POLAR_SNOW] = {sound = "dontstarve/AMB/grassland_winter"},
 	[WORLD_TILES.POLAR_CAVES] = {sound = "dontstarve/AMB/caves/main"},
 	[WORLD_TILES.POLAR_DRYICE] = {sound = "dontstarve/AMB/rocky_winter"},
+	[WORLD_TILES.POLAR_GRASS] = {sound = "dontstarve/AMB/meadow", wintersound = "dontstarve/AMB/meadow_winter", springsound = "dontstarve/AMB/meadow", summersound = "dontstarve_DLC001/AMB/meadow_summer", rainsound = "dontstarve/AMB/meadow_rain"},
 	
 	[WORLD_TILES.OCEAN_POLAR] = {sound = "turnoftides/together_amb/ocean/shallow", rainsound = "turnoftides/together_amb/ocean/shallow_rain"}
 }

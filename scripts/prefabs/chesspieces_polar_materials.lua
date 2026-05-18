@@ -53,10 +53,13 @@ local function makepiece_dryice(name)
 		inst.AnimState:SetSymbolSaturation("swap_body", 0.48)
 		inst.AnimState:SetSymbolBrightness("swap_body", 1.23)
 		
-		if inst.prefab then -- NOTE: Reusing spawning prefab rather than unifying it later! Makes the dryice patch easier and won't cause big problems if mod is removed
+		 -- NOTE: Reusing spawning prefab rather than unifying it later ! Makes the dryice patch easier and won't cause big problems if mod is removed
+		if inst.prefab then
 			inst:SetPrefabNameOverride(inst.prefab)
 			inst:SetPrefabName(inst.prefab.."_dryice")
 		end
+		
+		--inst:AddComponent("polarmistemitter")
 		
 		if not TheWorld.ismastersim then
 			return inst
@@ -77,11 +80,8 @@ local function makepiece_dryice(name)
 			inst.components.equippable:SetOnEquip(OnEquip)
 			inst.components.equippable:SetOnUnequip(OnUnequip)
 		end
-		
-		--[[inst:AddComponent("polarmistemitter")
-		inst.components.polarmistemitter.maxmist = 8
-		inst.components.polarmistemitter.scale = 1.5
-		inst.components.polarmistemitter:StartMisting()]]
+
+		--inst.components.polarmistemitter:SetEnabled(true)
 		
 		inst:DoTaskInTime(0, OnInit)
 		

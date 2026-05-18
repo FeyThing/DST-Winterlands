@@ -423,8 +423,12 @@ local function MakeVeggie(name, has_seeds)
 		inst:AddTag("waxable")
 		inst:AddTag("oversized_veggie")
 		inst:AddTag("show_spoilage")
+		
 		if name == "icelettuce" then
 			inst:AddTag("HASHEATER")
+			
+			inst:AddComponent("polarmistemitter")
+			inst.components.polarmistemitter.scale = 3
 		end
 		
 		inst.gymweight = 4
@@ -492,10 +496,7 @@ local function MakeVeggie(name, has_seeds)
 			inst.components.heater.heatfn = GetHeatFn_IceLettuce
 			inst.components.heater.equippedheat = TUNING.ICELETTUCE_COOLER
 			
-			inst:AddComponent("polarmistemitter")
-			inst.components.polarmistemitter.maxmist_range = 2
-			inst.components.polarmistemitter.scale = 3.5
-			inst.components.polarmistemitter:StartMisting()
+			inst.components.polarmistemitter:SetEnabled(true)
 		end
 		
 		MakeMediumBurnable(inst)

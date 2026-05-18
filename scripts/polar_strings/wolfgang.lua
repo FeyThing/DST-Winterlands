@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 		GENERIC = "Tree with horns? Tree wants fight?",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Will grow mighty and cold."
+	DESCRIBE.FLOWER_POLAR = "Is pretty, when is not hiding."
 	DESCRIBE.ICELETTUCE_SEEDS = "Is little tiny seeds for burying."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Is not melting, but goes psshh in air!"
 	DESCRIBE.FILET_O_FLEA = "Protein is protein. Yes?"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "Smells good, must taste good?"
 	DESCRIBE.ICELETTUCE = "Leaves very crunchy..."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Will carry it into the pot! But with gloves."
 	DESCRIBE.ICEBURRITO = "Is first burrito to survive Wolfgang's grip."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Is too tiny. Need to make big one!"
 	DESCRIBE.EMPEROR_EGG = "Oh no, they left frozen baby behind!"
 	DESCRIBE.MOOSE_POLAR_ANTLER = "Mighty sorry."
+	DESCRIBE.PETALS_POLAR = "Is still pretty in hands, but less."
+	DESCRIBE.PETALS_POLAR_DRIED = "Wolfgang appreciate delicate fragrance."
 	DESCRIBE.POLAR_DRYICE = "Stronger than ice."
 	DESCRIBE.POLARBEARFUR = "Ha-ha! I make carpet now."
 	DESCRIBE.POLARWARGSTOOTH = "Tooth of bigger puppy."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "To turn monster into punching bag."
 	DESCRIBE.TURF_POLAR_CAVES = "Cold step stones."
 	DESCRIBE.TURF_POLAR_DRYICE = "Cold step stones."
+	DESCRIBE.TURF_POLAR_GRASS = "Cold step stones."
 	DESCRIBE.WALL_POLAR = "I see handsome man trapped inside!"
 	DESCRIBE.WALL_POLAR_ITEM = "Big ice chunk!"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Is pretty. Pretty fragile."

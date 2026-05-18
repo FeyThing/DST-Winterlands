@@ -1,9 +1,9 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
--- Use Any when there's a fair chance of modded content of the same kind to be out there
+-- Use Any when there's a fair chance of modded content of the same kind to be out there, otherwise, not worth it
 
---	[[		Shovels		]]	--
+--	[[  Shovels  ]]  --
 
 local SHOVEL_PLOW_RANGES = {
 	shovel = TUNING.SNOW_PLOW_RANGES.SHOVEL,
@@ -26,7 +26,7 @@ local function ShovelPostInit(inst)
 	end
 end
 
---	[[	Walrus / Hounds	]]	--
+--	[[ Walrus / Hounds ]]  --
 
 local function NoWalrusAllyRetarget(inst, target)
 	if target:HasTag("walruspal") or (target.components.age and target.components.age:GetAge() <= 20) then -- Leave freshly spawned players alone, yknow why
@@ -49,7 +49,7 @@ local function WalrusOrHoundPostInit(inst)
 	end
 end
 
---	[[	Animated Equippable	]]	-- 	Server/client Timefreeze Watch activation handles
+--	[[ Animated Equippable ]]  -- Server/client Timefreeze Watch activation handles
 
 local function Activate_PocketwatchPolar(inst, activate)
 	local active = activate or inst.pocketwatch_polar_active:value()
@@ -123,11 +123,55 @@ local function AnimatedEquippableInit(inst)
 	end
 end
 
+--	[[ Misty Containers ]]  -- Dry Ice in containers causes mist fall-off
+
+local function UpdateDryIceContainer(inst, data)
+	if inst.components.container and inst.components.polarmistemitter then
+		local dryice = inst.components.container:GetItemsWithTag("dryice")
+		
+		inst.components.polarmistemitter:SetEnabled(#dryice > 0 and inst.components.container:IsOpen())
+	end
+end
+
+
+--	[[  Vases  ]]  -- Crocuses show in vases
+
+local function VasePostInit(inst)
+	local oldonupdateflowerfn = inst.components.vase and inst.components.vase.onupdateflowerfn
+	
+	if oldonupdateflowerfn then
+		local function OnUpdateFlower(inst, flowerid, fresh, ...)
+			oldonupdateflowerfn(inst, flowerid, fresh, ...)
+			
+			if flowerid and flowerid >= 141 and flowerid <= 143 then -- Unique ID for Crocus Petals, plz don't use those elsewhere :(
+				inst.AnimState:ShowSymbol("swap_flower")
+				inst.AnimState:OverrideSymbol("swap_flower", "swap_flower_polar", string.format("f%d%s", flowerid - 140, fresh and "" or "_wilt"))
+			end
+		end
+		
+		inst.components.vase:SetOnUpdateFlowerFn(OnUpdateFlower)
+	end
+end
+
 --
 
 ENV.AddPrefabPostInitAny(function(inst)
 	if inst:HasTag("FX") and inst.components.colouraddersync then
 		AnimatedEquippableInit(inst)
+	end
+	
+	-- _container isn't explicitely added into pristine so this will have to do
+	local iscontainer = inst:HasTag("structure") and not (inst:HasTag("buried") or inst:HasTag("pocketdimension_container"))
+		and inst.components.polarmistemitter == nil
+	
+	if iscontainer then
+		inst:AddComponent("polarmistemitter")
+		inst.components.polarmistemitter.fadein = 1
+		inst.components.polarmistemitter.fadeout = 1
+		inst.components.polarmistemitter.lifetime = 3
+		inst.components.polarmistemitter.maxdist = 0
+		inst.components.polarmistemitter.rate = 0.4
+		inst.components.polarmistemitter.speed = 0.03
 	end
 	
 	if not TheWorld.ismastersim then
@@ -140,5 +184,18 @@ ENV.AddPrefabPostInitAny(function(inst)
 	
 	if inst:HasTag("hound") or inst:HasTag("walrus") then
 		WalrusOrHoundPostInit(inst)
+	end
+	
+	if iscontainer and inst._update_dryicecontainer == nil then
+		inst._update_dryicecontainer = UpdateDryIceContainer
+		
+		inst:ListenForEvent("itemget", inst._update_dryicecontainer)
+		inst:ListenForEvent("itemlose", inst._update_dryicecontainer)
+		inst:ListenForEvent("onclose", inst._update_dryicecontainer)
+		inst:ListenForEvent("onopen", inst._update_dryicecontainer)
+	end
+	
+	if inst.components.vase then
+		VasePostInit(inst)
 	end
 end)

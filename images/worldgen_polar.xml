@@ -1,20 +1,25 @@
 ﻿<Atlas>
 	<Texture filename="worldgen_polar.tex" />
 	<Elements>
-		<Element name="antler_trees.tex" u1="0.001" u2="0.249" v2="0.999" v1="0.751" />
-		<Element name="arctic_fools.tex" u1="0.251" u2="0.499" v2="0.999" v1="0.751" />
-		<Element name="emperor_penguin.tex" u1="0.001" u2="0.249" v2="0.749" v1="0.501" />
-		<Element name="grass_polar.tex" u1="0.251" u2="0.499" v2="0.749" v1="0.501" />
-		<Element name="icelettuce_regrowth.tex" u1="0.501" u2="0.749" v2="0.999" v1="0.751" />
-		<Element name="moose_polar.tex" u1="0.501" u2="0.749" v2="0.749" v1="0.501" />
-		<Element name="polar_icicles.tex" u1="0.751" u2="0.999" v2="0.999" v1="0.751" />
-		<Element name="polar_throne.tex" u1="0.751" u2="0.999" v2="0.749" v1="0.501" />
-		<Element name="polarbearhouses.tex" u1="0.001" u2="0.249" v2="0.499" v1="0.251" />
-		<Element name="polarbears.tex" u1="0.001" u2="0.249" v2="0.249" v1="0.001" />
-		<Element name="polarflea_mother.tex" u1="0.251" u2="0.499" v2="0.499" v1="0.251" />
-		<Element name="polarfleas.tex" u1="0.501" u2="0.749" v2="0.499" v1="0.251" />
-		<Element name="polarfoxes.tex" u1="0.251" u2="0.499" v2="0.249" v1="0.001" />
-		<Element name="rocks_polar.tex" u1="0.501" u2="0.749" v2="0.249" v1="0.001" />
-		<Element name="tumbleweed_polar.tex" u1="0.751" u2="0.999" v2="0.499" v1="0.251" />
+		<Element name="antler_trees.tex" u1="0.001" u2="0.124" v2="0.999" v1="0.751" />
+		<Element name="arctic_fools.tex" u1="0.126" u2="0.249" v2="0.999" v1="0.751" />
+		<Element name="emperor_penguin.tex" u1="0.001" u2="0.124" v2="0.749" v1="0.501" />
+		<Element name="flowers_polar.tex" u1="0.126" u2="0.249" v2="0.749" v1="0.501" />
+		<Element name="grass_polar.tex" u1="0.251" u2="0.374" v2="0.999" v1="0.751" />
+		<Element name="icelettuce_regrowth.tex" u1="0.251" u2="0.374" v2="0.749" v1="0.501" />
+		<Element name="moose_polar.tex" u1="0.376" u2="0.499" v2="0.999" v1="0.751" />
+		<Element name="polar_icicles.tex" u1="0.376" u2="0.499" v2="0.749" v1="0.501" />
+		<Element name="polar_throne.tex" u1="0.001" u2="0.124" v2="0.499" v1="0.251" />
+		<Element name="polarbearhouses.tex" u1="0.001" u2="0.124" v2="0.249" v1="0.001" />
+		<Element name="polarbears.tex" u1="0.126" u2="0.249" v2="0.499" v1="0.251" />
+		<Element name="polarflea_mother.tex" u1="0.251" u2="0.374" v2="0.499" v1="0.251" />
+		<Element name="polarfleas.tex" u1="0.126" u2="0.249" v2="0.249" v1="0.001" />
+		<Element name="polarfoxes.tex" u1="0.251" u2="0.374" v2="0.249" v1="0.001" />
+		<Element name="polarice.tex" u1="0.376" u2="0.499" v2="0.499" v1="0.251" />
+		<Element name="polarsnow.tex" u1="0.376" u2="0.499" v2="0.249" v1="0.001" />
+		<Element name="polarsnow_melt.tex" u1="0.501" u2="0.624" v2="0.999" v1="0.751" />
+		<Element name="polarstorms.tex" u1="0.626" u2="0.749" v2="0.999" v1="0.751" />
+		<Element name="rocks_polar.tex" u1="0.501" u2="0.624" v2="0.749" v1="0.501" />
+		<Element name="tumbleweed_polar.tex" u1="0.751" u2="0.874" v2="0.999" v1="0.751" />
 	</Elements>
 </Atlas>

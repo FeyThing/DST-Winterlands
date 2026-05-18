@@ -10,9 +10,9 @@ StormWatcher._ctor = function(self, ...)
 	local old_onstormtype = self._.currentstorm[2] -- Accessing the prop function for currentstorm
 	self._.currentstorm[2] = function(self, ...)
 		old_onstormtype(self, ...)
-		if self.inst.player_classified then
+		--[[if self.inst.player_classified then
 			self.inst.player_classified.stormtypechange:push()
-		end
+		end]]
 	end
 	
 	if TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsPolarStormActive() then

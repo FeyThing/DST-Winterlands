@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 		GENERIC = "Oh! I almost ran into it.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Just a petite bébé."
+	DESCRIBE.FLOWER_POLAR = "I worry they won't stay here forever."
 	DESCRIBE.ICELETTUCE_SEEDS = "These will grow some nice fresh vegetables."
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Ice cream for the cool kids!"
 	DESCRIBE.FILET_O_FLEA = "The secret ingredient is a dash of shame."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "I said \"poisson frais\" ma'am, not... ah well."
 	DESCRIBE.ICELETTUCE = "Brr... could use dressing..."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "Ça alors, it's a huge salade!"
 	DESCRIBE.ICEBURRITO = "This is the last time I rely on Wilson to name my recipes."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Could use a bit of glue."
 	DESCRIBE.EMPEROR_EGG = "Now that's a culinarius- er, curious find."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "I was more looking forward to try the meat."
+	DESCRIBE.PETALS_POLAR = "Could use some taste test."
+	DESCRIBE.PETALS_POLAR_DRIED = "A fine ingredient!"
 	DESCRIBE.POLAR_DRYICE = "What big ice cubes!"
 	DESCRIBE.POLARBEARFUR = "The coziest of snowballs."
 	DESCRIBE.POLARWARGSTOOTH = "That would leave a dent."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Grips like a fork, cuts like a butcher knife."
 	DESCRIBE.TURF_POLAR_CAVES = "It's like an ingredient for the ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "It's like an ingredient for the ground."
+	DESCRIBE.TURF_POLAR_GRASS = "Will I need to cut this?"
 	DESCRIBE.WALL_POLAR = "Aaah. Isn't that ice?"
 	DESCRIBE.WALL_POLAR_ITEM = "I trust it won't melt anytime soon."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Frosting for our festive tree."

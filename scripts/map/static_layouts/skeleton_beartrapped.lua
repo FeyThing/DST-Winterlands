@@ -67,7 +67,9 @@ return {
 					height = 0,
 					visible = true,
 					properties = {
-						["data.finiteuses.percent"] = "0.9"
+						["data.finiteuses.percent"] = "0.9",
+						["data.mine.sprung"] = "false",
+						["data.mine.inactive"] = "false"
 					}
 				},
 				{

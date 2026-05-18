@@ -43,10 +43,6 @@ function PolarWalker:IsPolarEdgeAtPoint(pt)
 end
 
 function PolarWalker:ShouldSlow()
-	if TheWorld.state.temperature > TUNING.POLAR_SNOW_MELT_TEMP then
-		return false, "MELTED"
-	end
-	
 	if self.inst.components.rider and self.inst.components.rider:IsRiding() and not self.ignore_riding then
 		return false, "RIDING"
 	end
@@ -61,10 +57,6 @@ function PolarWalker:ShouldSlow()
 end
 
 function PolarWalker:ShouldDebuff()
-	if TheWorld.state.temperature > TUNING.POLAR_SNOW_MELT_TEMP then
-		return false, "MELTED"
-	end
-	
 	if self.inst.components.rider and self.inst.components.rider:IsRiding() and not self.ignore_riding then
 		return false, "RIDING"
 	end

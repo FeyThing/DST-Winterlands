@@ -18,8 +18,6 @@ local POLAR_WAVETINTS = {
 
 --	Lands
 
--- TODO(?) change cannotbedug to some new thing and require a special pitchfork made of charged bluegem (or emperor egg	?) to retrieve turfs from the island?
-
 AddTile("POLAR_ICE", "LAND",
 	{
 		ground_name = 	"Polar Ice",
@@ -115,6 +113,31 @@ AddTile("POLAR_DRYICE", "LAND",
 	}
 )
 
+AddTile("POLAR_GRASS", "LAND",
+	{
+		ground_name = 	"Tundra",
+	},
+	{
+		name = 			"polargrass",
+		noise_texture = "levels/textures/noise_polargrass.tex",
+		runsound = 		"dontstarve/movement/run_snow",
+		walksound = 	"dontstarve/movement/run_snow",
+		snowsound = 	"dontstarve/movement/run_snow",
+		mudsound = 		"dontstarve/movement/run_snow",
+		colors = 		POLAR_COLOR,
+	},
+	{
+		name = 			"map_edge",
+		noise_texture = "levels/textures/mini_noise_polargrass.tex",
+	},
+	{
+		name = 			"polar_grass",
+		anim = 			"turf3",
+		bank_build = 	"turf_polar",
+		pickupsound = 	"vegetation_grassy",
+	}
+)
+
 AddTile("POLAR_CAVES_NOISE", "NOISE")
 AddTile("POLAR_FOREST_NOISE", "NOISE")
 AddTile("POLAR_TUNDRA_NOISE", "NOISE")
@@ -144,6 +167,16 @@ AddTile("OCEAN_POLAR", "OCEAN",
 		noise_texture = "levels/textures/mini_water_coral.tex",
 	}
 )
+
+--	Fall-off
+
+local TileGroups = GLOBAL.TileGroups
+local TileGroupManager = GLOBAL.TileGroupManager
+
+if TileGroups and TileGroups.OceanIceTiles then
+	TileGroupManager:AddValidTile(TileGroups.OceanIceTiles, WORLD_TILES.POLAR_ICE)
+	TileGroupManager:AddValidTile(TileGroups.OceanIceTiles, WORLD_TILES.POLAR_SNOW)
+end
 
 --	Noise Tiles
 
@@ -183,15 +216,16 @@ NOISES[WORLD_TILES.POLAR_GNOMES_NOISE] = GetTileForPolarGnomes
 
 ChangeTileRenderOrder(WORLD_TILES.OCEAN_POLAR, WORLD_TILES.OCEAN_HAZARDOUS, true)
 ChangeTileRenderOrder(WORLD_TILES.POLAR_CAVES, WORLD_TILES.ROCKY, true)
-ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.UNDERROCK, true)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES)
 ChangeTileRenderOrder(WORLD_TILES.POLAR_DRYICE, WORLD_TILES.WOODFLOOR)
+ChangeTileRenderOrder(WORLD_TILES.POLAR_GRASS, WORLD_TILES.FOREST)
 
 --	Setpiece Ground Type
 
 local POLAR_GROUND_TYPES = {
 	WORLD_TILES.IMPASSABLE, WORLD_TILES.POLAR_SNOW, WORLD_TILES.POLAR_ICE, WORLD_TILES.POLAR_CAVES, WORLD_TILES.POLAR_DRYICE, -- 1, 2, 3, 4, 5
 	WORLD_TILES.OCEAN_POLAR, WORLD_TILES.DIRT, WORLD_TILES.ROCKY, WORLD_TILES.UNDERROCK, WORLD_TILES.MONKEY_DOCK, -- 6, 7, 8, 9, 10
-	WORLD_TILES.OCEAN_COASTAL_SHORE, WORLD_TILES.WOODFLOOR, WORLD_TILES.PEBBLEBEACH -- 11, 12, 13
+	WORLD_TILES.OCEAN_COASTAL_SHORE, WORLD_TILES.WOODFLOOR, WORLD_TILES.PEBBLEBEACH, WORLD_TILES.POLAR_GRASS -- 11, 12, 13, 14
 }
 
 GLOBAL.POLAR_GROUND_TYPES = POLAR_GROUND_TYPES

@@ -34,9 +34,10 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 		BURNING = "A tree on fire? Here? Of all places?",
 		BURNT = "Huh. Well I wonder how that happened.",
 		CHOPPED = "The axe won the clash.",
-		GENERIC = "The specter m- ah, it's a tree. Still cool though.",
+		GENERIC = "The spectral moo-- ah! It's a tree. Still cool though.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "Aww, you're so small!"
+	DESCRIBE.FLOWER_POLAR = "Nature always find a way!"
 	DESCRIBE.ICELETTUCE_SEEDS = "Where should we plant them, Woby?"
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "Ice cream, sparkling water edition."
 	DESCRIBE.FILET_O_FLEA = "This won't get me to quit outdoor cooking, but yikes!"
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "Maybe the poison magically went away."
 	DESCRIBE.ICELETTUCE = "Would it lettuce freeze? Get it? Because... forget it..."
 	DESCRIBE.ICELETTUCE_OVERSIZED = "I knew this seed wouldn't lettuce dow- okay I'll stop now."
 	DESCRIBE.ICEBURRITO = "It won't fall apart one bit."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "I bet I can piece this mystery together."
 	DESCRIBE.EMPEROR_EGG = "This thing's sturdy! Not sure how a chick could get free of it."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "It didn't have to come to this."
+	DESCRIBE.PETALS_POLAR = "Mm... my instincts are telling me to let a wild animal try them first."
+	DESCRIBE.PETALS_POLAR_DRIED = "Dried perfectly!"
 	DESCRIBE.POLAR_DRYICE = "Let's build a snow golem!"
 	DESCRIBE.POLARBEARFUR = "Woah, check out all the fleas in it!"
 	DESCRIBE.POLARWARGSTOOTH = "Reminds me, I'll have to brush your teeth soon, girl."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "If this doesn't catch the Werebeaver, I quit!"
 	DESCRIBE.TURF_POLAR_CAVES = "A patch of ground."
 	DESCRIBE.TURF_POLAR_DRYICE = "Some road that sends shivers up my legs."
+	DESCRIBE.TURF_POLAR_GRASS = "A patch of ground."
 	DESCRIBE.WALL_POLAR = "This mist sets a fine spooky vibe."
 	DESCRIBE.WALL_POLAR_ITEM = "Don't you dare lick it, Woby!"
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "Well, it match the season."

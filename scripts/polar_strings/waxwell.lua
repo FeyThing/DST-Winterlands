@@ -37,6 +37,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 		GENERIC = "Hmph. Shabby thing... it barely holds together.",
 	}
 	DESCRIBE.ANTLER_TREE_SAPLING = "It insist upon growing despite the cold."
+	DESCRIBE.FLOWER_POLAR = "Why hello there."
 	DESCRIBE.ICELETTUCE_SEEDS = "Am I supposed to plant these?"
 	
 	--	Rocks and stones
@@ -125,6 +126,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	--	Food
 	DESCRIBE.DRYICECREAM = "You could break a skull open with that thing."
 	DESCRIBE.FILET_O_FLEA = "Don't starve you say? I think I'd prefer to."
+	DESCRIBE.HERMITCRABTEA_PETALS_POLAR = "It's an acquired taste."
 	DESCRIBE.ICELETTUCE = "So, we are eating crunchy water now?"
 	DESCRIBE.ICELETTUCE_OVERSIZED = "And this thing didn't even want us to care for it."
 	DESCRIBE.ICEBURRITO = "I don't assume it tastes bad but..."
@@ -138,6 +140,8 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.BLUEGEM_SHARDS = "Glitters."
 	DESCRIBE.EMPEROR_EGG = "Can't make omelette with unbreakable eggs."
 	DESCRIBE.MOOSE_POLAR_ANTLER = "I ought to extract the magic inside."
+	DESCRIBE.PETALS_POLAR = "Anyone fancy a tea?"
+	DESCRIBE.PETALS_POLAR_DRIED = "They're all shrivelled up."
 	DESCRIBE.POLAR_DRYICE = "Reminds me... I've never had myself sculpted in ice, yet."
 	DESCRIBE.POLARBEARFUR = "Now this is- Gah! So many fleas!"
 	DESCRIBE.POLARWARGSTOOTH = "I say, it looks quite fashionable."
@@ -179,6 +183,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.TRAP_POLARTEETH = "Malicious. I like it!"
 	DESCRIBE.TURF_POLAR_CAVES = "Turf."
 	DESCRIBE.TURF_POLAR_DRYICE = "At least this one is useful."
+	DESCRIBE.TURF_POLAR_GRASS = "Scratchy."
 	DESCRIBE.WALL_POLAR = "I like them for their atmospheric touch."
 	DESCRIBE.WALL_POLAR_ITEM = "Wall-sized ice cubes. Yup."
 	DESCRIBE.WINTER_ORNAMENTPOLAR = "It's subtle but quaint."
