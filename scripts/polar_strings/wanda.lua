@@ -153,6 +153,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WANDA.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Finally some bearable armor."
 	DESCRIBE.COMPASS_POLAR = "Imagine reading a clock like that... oh, the horror."
 	DESCRIBE.EMPEROR_PENGUINHAT = "I'm not taking his place."
+	DESCRIBE.FLOWER_POLARHAT = "I don't even know what it does but I already like it."
 	DESCRIBE.FROSTWALKERAMULET = "Good! I've had more than enough of these damnable rivers."
 	DESCRIBE.ICICLESTAFF = "Beware of friendly fire... and friendly ice. All elements would want us dead!"
 	DESCRIBE.POLAR_SPEAR = "Make the most of it while it's fresh."

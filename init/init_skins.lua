@@ -21,7 +21,6 @@ ENV.ModdedCurios = {
 local POLAR_DISPLAY_BLACKLIST = {
 	"ms_dragonflychest_upgraded_polarice",
 	"ms_treasurechest_upgraded_polarice",
-	"ms_polarflea_unstackable",
 }
 
 for i, skin in ipairs(POLAR_DISPLAY_BLACKLIST) do

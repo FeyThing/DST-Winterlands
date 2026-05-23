@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WAXWELL.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Serviceable, and somewhat refined."
 	DESCRIBE.COMPASS_POLAR = "It promises me with something greater than North."
 	DESCRIBE.EMPEROR_PENGUINHAT = "How fowlish."
+	DESCRIBE.FLOWER_POLARHAT = "It's an acquired taste."
 	DESCRIBE.FROSTWALKERAMULET = "A pity for the fish in my wake. But oh well."
 	DESCRIBE.ICICLESTAFF = "A fate worse than rotten tomatoes."
 	DESCRIBE.POLAR_SPEAR = "I'll admit, it might tear through my suit. At best."

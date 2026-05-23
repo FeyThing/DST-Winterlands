@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOLFGANG.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Don't get too cozy now, muscles."
 	DESCRIBE.COMPASS_POLAR = "Both uncomfortable to read, and hold. Brrrr!"
 	DESCRIBE.EMPEROR_PENGUINHAT = "King of funny walking birds? Is big responsibility for Wolfgang!"
+	DESCRIBE.FLOWER_POLARHAT = "Pretty but feels strange."
 	DESCRIBE.FROSTWALKERAMULET = "Ice better not crumble under Wolfgang's mighty steps."
 	DESCRIBE.ICICLESTAFF = "Not as fun as throwing punches."
 	DESCRIBE.POLAR_SPEAR = "Is ice but spiky!"

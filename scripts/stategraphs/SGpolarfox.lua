@@ -59,6 +59,11 @@ local function SnowHasSpace(pt)
 	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 5, nil, nil, EXITSNOW_BLOCKER_TAGS) == 0 and TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true)
 end
 
+local function DirtHasSpace(pt)
+	return #TheSim:FindEntities(pt.x, pt.y, pt.z, 5, nil, nil, EXITSNOW_BLOCKER_TAGS) == 0 and TheWorld.Map:CanPlantAtPoint(pt.x, 0, pt.z)
+		and TheWorld.Map:IsLandTileAtPoint(pt.x, 0, pt.z)
+end
+
 local states = {
 	State{
 		name = "idle",
@@ -492,7 +497,7 @@ local states = {
 				local pt = inst:GetPosition()
 				local dist = (inst.components.follower and inst.components.follower.leader ~= nil) and GetRandomMinMax(4, 12) or GetRandomMinMax(10, 20)
 				
-				local offset = FindWalkableOffset(pt, math.random() * TWOPI, dist, 12, false, true, SnowHasSpace)
+				local offset = FindWalkableOffset(pt, math.random() * TWOPI, dist, 12, false, true, inst._mainlanded and DirtHasSpace or SnowHasSpace)
 				if offset then
 					inst.Transform:SetPosition((pt + offset):Get())
 				end

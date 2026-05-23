@@ -176,7 +176,7 @@ function MakeSnowAndDirtToggleable(inst, overrides)
 	if inst._polardirt_callback then
 		local x, y, z = inst.Transform:GetWorldPosition()
 		local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true)
-			or (not IsInPolar(inst) and (TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.25))
+			or (not IsInPolar(inst) and (TheWorld.state.snowlevel and TheWorld.state.snowlevel > TUNING.DIRT_TO_SNOW_MIN_LEVEL))
 		
 		for i, v in ipairs(inst._polardirt_overrides or {}) do
 			if in_snow then

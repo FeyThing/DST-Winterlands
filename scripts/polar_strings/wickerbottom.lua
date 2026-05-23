@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WICKERBOTTOM.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Comfort and protection!"
 	DESCRIBE.COMPASS_POLAR = "It seems to align with someplace else than the other compasses."
 	DESCRIBE.EMPEROR_PENGUINHAT = "I do suppose a ruler is best cool headed."
+	DESCRIBE.FLOWER_POLARHAT = "Local folklore says it brings good health."
 	DESCRIBE.FROSTWALKERAMULET = "Fascinating. It solidifies water through rapid thermal regulation."
 	DESCRIBE.ICICLESTAFF = "An accurate cast is worth two errant ones."
 	DESCRIBE.POLAR_SPEAR = "Crude, but highly durable in the cold."

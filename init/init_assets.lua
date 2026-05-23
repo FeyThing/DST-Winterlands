@@ -101,6 +101,7 @@ local ITEMS = {
 	"emperor_egg",
 	"emperor_penguinhat",
 	"filet_o_flea",
+	"flower_polarhat",
 	"frostwalkeramulet",
 	"hermitcrabtea_petals_polar",
 	"iceburrito",

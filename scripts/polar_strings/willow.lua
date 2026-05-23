@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WILLOW.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "I'll never take it off! Unless it starts to stink."
 	DESCRIBE.COMPASS_POLAR = "Grrr! I give up with this dumb thing!"
 	DESCRIBE.EMPEROR_PENGUINHAT = "I'd rather stay a poor plebeian than have this on my head."
+	DESCRIBE.FLOWER_POLARHAT = "Hey. Where did my tastebuds go?"
 	DESCRIBE.FROSTWALKERAMULET = "Woah cool! I mean... that sucks, but it's kinda cool."
 	DESCRIBE.ICICLESTAFF = "Never thought I'd fight side by side with ice."
 	DESCRIBE.POLAR_SPEAR = "Keep your cool, if you must."

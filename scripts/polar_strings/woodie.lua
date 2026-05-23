@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WOODIE.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Yup. I'm good in here."
 	DESCRIBE.COMPASS_POLAR = "Think it's worth following it, eh?"
 	DESCRIBE.EMPEROR_PENGUINHAT = "I don't want to rule over the birds. I want them to get lost."
+	DESCRIBE.FLOWER_POLARHAT = "Pretty but also irksome."
 	DESCRIBE.FROSTWALKERAMULET = "To turn the ocean into one giant hockey field."
 	DESCRIBE.ICICLESTAFF = "That will mess you up more than a whole falling tree."
 	DESCRIBE.POLAR_SPEAR = "Ice suppose that would hurt a little."

@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WURT.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Turned Mermfolk enemies into shirt!"
 	DESCRIBE.COMPASS_POLAR = "Metal fishie want me go this way."
 	DESCRIBE.EMPEROR_PENGUINHAT = "Glurp... should release poor fishies in water."
+	DESCRIBE.FLOWER_POLARHAT = "I know nature secrets. But won't tell you."
 	DESCRIBE.FROSTWALKERAMULET = "Close enough from swimming, flort."
 	DESCRIBE.ICICLESTAFF = "Makes super heavy rain drops."
 	DESCRIBE.POLAR_SPEAR = "But, Wicker-lady said not to play with food?"

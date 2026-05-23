@@ -401,7 +401,7 @@ ENV.AddStategraphPostInit("wilson", function(sg)
 			local tile, tileinfo = inst:GetCurrentTileType()
 			
 			local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays
-				and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.5)) and TheWorld.Map:IsLandTileAtPoint(x, y, z)
+				and TheWorld.state.snowlevel and TheWorld.state.snowlevel > TUNING.DIRT_TO_SNOW_MIN_LEVEL)) and TheWorld.Map:IsLandTileAtPoint(x, y, z)
 			
 			if not in_snow then
 				return

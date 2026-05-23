@@ -15,6 +15,7 @@ PrefabFiles = {
 	"emperor_penguin_guard",
 	"emperor_penguinhat",
 	"flower_polar",
+	"flower_polarhat",
 	"frostwalkeramulet",
 	"frosty_simple",
 	"frosty_snowball",

@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WALTER.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Armors might as well protect from other things, heh?"
 	DESCRIBE.COMPASS_POLAR = "Err... give me a sec, I just have to average where it points."
 	DESCRIBE.EMPEROR_PENGUINHAT = "...Is this really indispensable to be a king? Oh well."
+	DESCRIBE.FLOWER_POLARHAT = "I makes me look like a druid."
 	DESCRIBE.FROSTWALKERAMULET = "Oh, uh... I should maybe have made a dog collar from it."
 	DESCRIBE.ICICLESTAFF = "How about we sling a shot? Heh. Good one, Walter."
 	DESCRIBE.POLAR_SPEAR = "Sorry Wobers, you can't have this stick."

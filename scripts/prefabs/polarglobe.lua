@@ -1,3 +1,6 @@
+-- Unreleased and unfinished item !! This might be introduced sometime later in a future update however (craftable with Frozen Egg ? There's a castle in it)
+-- Possibly allowing to trigger blizzards in a radius rather than what it does rn...
+
 local assets = {
 	Asset("ANIM", "anim/polarglobe.zip"),
 }
@@ -12,7 +15,8 @@ local function OnGlobeShake(inst)
 		
 		for i, v in ipairs(AllPlayers) do
 			v:ShakeCamera(CAMERASHAKE.FULL, 2, 0.08, 3)
-			if inst:GetDistanceSqToInst(v) >= 25 then
+			
+			if inst:GetDistanceSqToInst(v) <= 200 then
 				v:PushEvent("knockback", {knocker = v, radius = 100})
 			end
 			

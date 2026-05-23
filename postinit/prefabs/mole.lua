@@ -50,7 +50,7 @@ end)
 local function PolarInit_Fx(inst)
 	local x, y, z = inst.Transform:GetWorldPosition()
 	local in_snow = TheWorld.Map:IsPolarSnowAtPoint(x, y, z, true)
-		or (not IsInPolar(inst) and TheWorld.state.issnowcovered)
+		or (not IsInPolar(inst) and TheWorld.state.snowlevel and TheWorld.state.snowlevel > TUNING.DIRT_TO_SNOW_MIN_LEVEL)
 	
 	if in_snow then
 		ReplacePrefab(inst, "mole_move_polar_fx")

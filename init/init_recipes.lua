@@ -66,6 +66,7 @@ PolarRecipe("winters_fists", 		{Ingredient("emperor_egg", 2), Ingredient("polar_
 
 --	Armor / Clothing
 PolarRecipe("armorpolar", 			{Ingredient("polarbearfur", 3), Ingredient("pigskin", 1)}, 								TECH.SCIENCE_TWO, 	nil, 		{"ARMOUR", "WINTER"}, {"armor_bramble", "raincoat"})
+PolarRecipe("flower_polarhat", 		{Ingredient("petals_polar", 12)}, 														TECH.MAGIC_TWO, 	nil, 		{"CLOTHING", "MAGIC"}, {"flowerhat", "antlionhat"})
 PolarRecipe("polarbearhat", 		{Ingredient("polarbearfur", 1), Ingredient("meat", 1)}, 								TECH.SCIENCE_ONE, 	nil, 		{"CLOTHING", "WINTER"}, {"beefalohat", "beefalohat"})
 PolarRecipe("polarflea_sack", 		{Ingredient("polarbearfur", 2), Ingredient("polarflea", 2), Ingredient("cutreeds", 6)}, TECH.SCIENCE_TWO, 	nil, 		{"CONTAINERS", "WINTER"}, {"spicepack", "beargervest"})
 
@@ -116,7 +117,7 @@ PolarRecipe("wintercooking_polarcrablegs", 	{Ingredient("wintersfeastfuel", 1), 
 local function pocketwatch_nodecon(inst) return not inst:HasTag("pocketwatch_inactive") end
 
 PolarRecipe("pocketwatch_polar", 		{Ingredient("pocketwatch_parts", 2), Ingredient("bluegem_shards", 6), Ingredient("polarwargstooth", 2)}, 	TECH.SCIENCE_TWO, 			{builder_tag = "clockmaker", no_deconstruction = pocketwatch_nodecon}, 	{"CHARACTER", "ARMOUR"}, {"pocketwatch_portal", "wathgrithr_shield"})
-PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 													TECH.ROBOTMODULECRAFT_ONE, 	{builder_tag = "upgrademoduleowner", nounlock = false}, 				{"CHARACTER", "MAGIC"}, {"wx78module_stacksize"})
+PolarRecipe("wx78module_naughty", 		{Ingredient("scandata", 4), Ingredient("charcoal", 2)}, 													TECH.ROBOTMODULECRAFT_ONE, 	{builder_tag = "upgrademoduleowner", nounlock = false}, 				{"CHARACTER", "MAGIC"}, {"wx78module_stacksize", "leif_idol"})
 
 --	[ 	Crafting Station	]	--
 

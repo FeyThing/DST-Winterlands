@@ -22,5 +22,5 @@ local Eater = require("components/eater")
 			return true
 		end
 		
-		return OldTestFood(self, food, ...)
+		return OldTestFood and OldTestFood(self, food, ...)
 	end

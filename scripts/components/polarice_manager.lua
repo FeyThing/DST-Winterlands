@@ -142,8 +142,8 @@ return Class(function(self, inst)
 		local degrade_offset = TUNING.OCEAN_ICE_RADIUS * (0.4 + 0.65 * math.sqrt(math.random()))
 		
 		degrade_angle = degrade_angle or math.random() * TWOPI
-		center_x = center_x + (degrade_offset * math.cos(degrade_angle))
-		center_z = center_z + (degrade_offset * math.sin(degrade_angle))
+		x = x + (degrade_offset * math.cos(degrade_angle))
+		z = z + (degrade_offset * math.sin(degrade_angle))
 		
 		degrade.Transform:SetPosition(x, y, z)
 	end

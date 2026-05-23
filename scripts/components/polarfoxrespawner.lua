@@ -9,7 +9,7 @@ return Class(function(self, inst)
 	local SPAWN_CANCEL_NOT_TAGS = {"campfire"}
 	
 	local function CanFoxSpawn(pt)
-		return TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+		return TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) --and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
 			and #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, SPAWN_CANCEL_TAGS, SPAWN_CANCEL_NOT_TAGS) == 0
 	end
 	

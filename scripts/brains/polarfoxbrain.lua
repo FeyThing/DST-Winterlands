@@ -85,9 +85,10 @@ end
 local DIVE_AVOID_TAGS = {"wall", "structure", "hostile"}
 
 local function IsValidDivingPos(pt, inst)
-	local insnow = TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+	local insnow = TheWorld.Map:IsPolarSnowAtPoint(pt.x, 0, pt.z, true) -- and not TheWorld.Map:IsPolarSnowBlocked(pt.x, 0, pt.z)
+	local plantable = TheWorld.Map:CanPlantAtPoint(pt.x, 0, pt.z) and TheWorld.Map:IsLandTileAtPoint(pt.x, 0, pt.z)
 	
-	if ((not inst._mainlanded and insnow) or (inst._mainlanded and not insnow))
+	if ((not inst._mainlanded and insnow) or (inst._mainlanded and plantable))
 		and #TheSim:FindEntities(pt.x, pt.y, pt.z, 2, DIVE_AVOID_TAGS, AVOID_NOT_TAGS) == 0 then
 		
 		if not (inst.components.follower and inst.components.follower.leader) then

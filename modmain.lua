@@ -73,6 +73,7 @@ local prefabs = {
 	"forest", -- simpostinit
 	"grass",
 	--"heatrock",
+	"hermitcrabtea",
 	"ice",
 	"klaus_sack",
 	"krampus",
@@ -127,6 +128,7 @@ local components = {
 	"dynamicmusic", -- : (
 	"drawable",
 	"eater",
+	"edible",
 	"expertsailor",
 	"explosive",
 	"follower",

@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WINONA.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "It's as tough as leather can get."
 	DESCRIBE.COMPASS_POLAR = "Sheesh, how can I read you shakin' like that?!"
 	DESCRIBE.EMPEROR_PENGUINHAT = "I'm lookin' cool. Quite literally."
+	DESCRIBE.FLOWER_POLARHAT = "Makes me feel a lil' tingly."
 	DESCRIBE.FROSTWALKERAMULET = "This'll keep me from slipping on the job. Ha!"
 	DESCRIBE.ICICLESTAFF = "I wouldn't overlook the wind conditions with this thing."
 	DESCRIBE.POLAR_SPEAR = "Pfft. Alright. Assuming you live in a freezer..."

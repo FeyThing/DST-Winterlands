@@ -36,8 +36,8 @@ local KnownModIndex = GLOBAL.KnownModIndex
 	TUNING.POLARCAVES_MIGRATION_ID = 78.095
 	
 	-- Ice Tiles
-	TUNING.POLAR_ICEGEN_COOLDOWN = day_time -- Min time between each layer processing
-	TUNING.POLAR_ICEGEN_COOLDOWN_SHORT = 1 -- Time between each update in the same layer
+	TUNING.POLAR_ICEGEN_COOLDOWN = 10--day_time -- Min time between each layer processing
+	TUNING.POLAR_ICEGEN_COOLDOWN_SHORT = 3 -- Time between each update in the same layer
 	TUNING.POLAR_ICEGEN_TILES_PER_UPDATE = 20
 	
 	TUNING.POLAR_ICEGEN_CRACKING_TIME = 3.5
@@ -55,8 +55,8 @@ local KnownModIndex = GLOBAL.KnownModIndex
 	TUNING.ANTLER_TREE_SAPLING_GROW_TIME = {base = 5 * day_time, random = 1 * day_time}
 	
 	-- Crocus Bloom
-	TUNING.FLOWER_POLAR_GROW_TILE = {base = 3 * day_time, random = 3 * day_time}
-	TUNING.MAX_FLOWER_POLAR = 750
+	TUNING.FLOWER_POLAR_GROW_TILE = {base = 8 * day_time, random = 32 * day_time} -- For flowers growing outside meltover
+	TUNING.MAX_FLOWER_POLAR = 750 -- Only counts the ones spawned during the meltover
 	
 	-- Farming
 	TUNING.ICELETTUCE_COOLER = -10 -- Heater (oversized)
@@ -706,6 +706,8 @@ local KnownModIndex = GLOBAL.KnownModIndex
 	
 	TUNING.SNOWED_SHADER_MAX_SUBMERGE = -0.6 -- LukaS: Distance, in in-game units (4 = tile), to shift the player model on the Y axis
 	TUNING.SNOWED_SHADER_MAX_FREEZE = 0.55
+	
+	TUNING.DIRT_TO_SNOW_MIN_LEVEL = 0.25
 	
 	-- Plowing / Melting
 	TUNING.POLARPLOW_BLOCKER_DURATION = total_day_time - (seg_time * 2)

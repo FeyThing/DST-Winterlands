@@ -56,10 +56,11 @@ local function ReleaseStack(inst)
 					item.AnimState:OverrideSymbol("shell", "polar_flea", "shell_mini")
 				end
 				
+				item.Physics:Teleport(inst.Transform:GetWorldPosition())
+				
 				if item.components.inventoryitem then
 					item.components.inventoryitem:OnDropped()
 				end
-				item.Physics:Teleport(inst.Transform:GetWorldPosition())
 				item:PushEvent("fleahostkick", {host = inst._host})
 				
 				table.insert(fleas, item)
@@ -223,7 +224,7 @@ local function SetHost(inst, host, kick, given)
 		if inst.components.health then
 			inst.components.health:StopRegen()
 		end
-		inst.cant_stack:set(false)
+		inst.cant_stack:set(true)
 		
 		if inst._host then
 			inst.Transform:SetPosition(inst._host.Transform:GetWorldPosition())
@@ -260,11 +261,14 @@ local function SetHost(inst, host, kick, given)
 		inst.components.follower:SetLeader(nil)
 	end
 	
+	local entered_host = true
 	local inventory = inst._host.components.inventory or inst._host.components.container
+	
 	if inventory then
 		if inst.components.inventoryitem and not inst.components.inventoryitem:IsHeld() then
 			inst._try_hosting = true -- Needed for fleas to go in pockets and prioritize Itchhiker Pack
-			inventory:GiveItem(inst, nil, pt)
+			entered_host = inventory:GiveItem(inst, nil, pt)
+			
 			inst._try_hosting = nil
 		end
 	else
@@ -278,9 +282,9 @@ local function SetHost(inst, host, kick, given)
 		inst:RemoveFromScene()
 	end
 	
-	local fleapack = inst.components.inventoryitem and inst.components.inventoryitem.owner
-	if not (fleapack and fleapack.components.upgradeable and fleapack.components.upgradeable:GetStage() >= 2) then
-		inst.cant_stack:set(true)
+	if not entered_host or not inst:HasTag("INLIMBO") then
+		inst._host = nil
+		return -- Something weird happened...
 	end
 	
 	inst._host:PushEvent("gotpolarflea", {flea = inst, given = given})
@@ -523,11 +527,6 @@ local function HostingInit(inst)
 		end
 	end
 	
-	local container = inst.components.inventoryitem.owner
-	if inst._host and not (container and container:HasTag("fleapack") and container.components.upgradeable and container.components.upgradeable:GetStage() >= 2) then
-		inst.cant_stack:set(true)
-	end
-	
 	inst._try_hosting = nil
 end
 
@@ -572,6 +571,7 @@ local function fn()
 	MakeFeedableSmallLivestockPristine(inst)
 	
 	inst.cant_stack = net_bool(inst.GUID, "polarflea.cant_stack", "can_stackdirty")
+	inst.cant_stack:set(true) -- Controlled by the Itchhiker Pack (& Container.GiveItem)
 	
 	inst.CanMouseThrough = CanMouseThrough
 	inst.stackable_CanStackWithFn = CanStackWithFn

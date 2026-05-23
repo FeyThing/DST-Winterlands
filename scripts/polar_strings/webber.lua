@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WEBBER.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "We would like to wear it furever."
 	DESCRIBE.COMPASS_POLAR = "It's having a hard time figuring the way."
 	DESCRIBE.EMPEROR_PENGUINHAT = "Does that mean we won?"
+	DESCRIBE.FLOWER_POLARHAT = "We're feeling a bit strange wearing it."
 	DESCRIBE.FROSTWALKERAMULET = "Better to have cold legs than soggy."
 	DESCRIBE.ICICLESTAFF = "Yikes! That looks sharp!"
 	DESCRIBE.POLAR_SPEAR = "It's like a giant icicle on a stick!"

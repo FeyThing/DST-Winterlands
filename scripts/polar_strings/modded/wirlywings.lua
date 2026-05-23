@@ -155,6 +155,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WIRLYWINGS.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Now I feel twice as safe!"
 	DESCRIBE.COMPASS_POLAR = "It's not pointing toward home."
 	DESCRIBE.EMPEROR_PENGUINHAT = "To dress like an empress."
+	DESCRIBE.FLOWER_POLARHAT = "I'll make some for my friends too."
 	DESCRIBE.FROSTWALKERAMULET = "Hope it'll last me for another walk or two."
 	DESCRIBE.ICICLESTAFF = "I wouldn't go play under that rain..."
 	DESCRIBE.POLAR_SPEAR = "Not a cherry flavored popsicle. It's blood on it."

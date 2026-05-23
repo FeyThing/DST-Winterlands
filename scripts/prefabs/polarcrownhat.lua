@@ -152,7 +152,7 @@ local function fn()
 	
 	inst:AddTag("frozen")
 	inst:AddTag("hat")
-	inst:AddTag("icebox_valid")
+	inst:AddTag("open_top_hat")
 	--inst:AddTag("polarsnowimmunity")
 	
 	inst:AddComponent("snowmandecor")

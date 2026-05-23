@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WENDY.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "To strangle oneself with warmth."
 	DESCRIBE.COMPASS_POLAR = "Wherever it points, it seems quite afraid of it."
 	DESCRIBE.EMPEROR_PENGUINHAT = "The crown has fallen, it shall not arise again."
+	DESCRIBE.FLOWER_POLARHAT = "A poison against poison."
 	DESCRIBE.FROSTWALKERAMULET = "Even the water can't escape death's cold embrace."
 	DESCRIBE.ICICLESTAFF = "Be careful around it, Abigail."
 	DESCRIBE.POLAR_SPEAR = "It will eventually fall apart."

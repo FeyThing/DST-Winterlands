@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WATHGRITHR.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Worthy of a Valkyrie."
 	DESCRIBE.COMPASS_POLAR = "It hears the whispers of northern lights."
 	DESCRIBE.EMPEROR_PENGUINHAT = "It reeks of past hubris... and fish."
+	DESCRIBE.FLOWER_POLARHAT = "A token of Freyr's blessing."
 	DESCRIBE.FROSTWALKERAMULET = "Makes crossing the seas a real breeze!"
 	DESCRIBE.ICICLESTAFF = "Calls upon a rain of ice spears."
 	DESCRIBE.POLAR_SPEAR = "'Tis weapon might is short-lived."

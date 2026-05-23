@@ -156,6 +156,7 @@ local DESCRIBE = STRINGS.CHARACTERS.GENERIC.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "That's the stuff!"
 	DESCRIBE.COMPASS_POLAR = "Am I getting warmer?"
 	DESCRIBE.EMPEROR_PENGUINHAT = "Refrigerated regal."
+	DESCRIBE.FLOWER_POLARHAT = "I'm feeling like doing some questionable experiences."
 	DESCRIBE.FROSTWALKERAMULET = "Science can explain this phenomenon... but I won't."
 	DESCRIBE.ICICLESTAFF = "Always useful. If we forget about the \"incident\"."
 	DESCRIBE.POLAR_SPEAR = "That's one big pokesicle!"

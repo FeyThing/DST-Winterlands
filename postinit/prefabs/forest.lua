@@ -109,31 +109,25 @@ local function DisableParticlesInWinterlands(inst)
 		mt.__index["splashes_per_tick"] = 0
 	end
 	
-	mt.__newindex = function(t, key, val) -- Don't actually assign splashes and particles, __index runs only if the value is nil
-		if ThePlayer and ThePlayer.player_classified and TheWorld then
-			local x, y, z = ThePlayer.Transform:GetWorldPosition()
-			local snow_level = ThePlayer.player_classified.polarsnowlevel:value() or 0
-			
-			if inst.prefab == "pollen" and TheWorld.components.polartemperature_manager then
-				snow_level = TheWorld.components.polartemperature_manager:GetDataAtPoint(x, y, z) > 0 and 1 or 0
-			end
-			
-			local mult = 1 - (snow_level / 0.5)
-			mult = math.clamp(mult, 0, 1)
-			
-			if key == "particles_per_tick" then
-				local mt2 = deepcopy(getmetatable(inst))
-				mt2.__index["particles_per_tick"] = val * mult
+	mt.__newindex = function(t, key, val)
+		if key == "particles_per_tick" or key == "splashes_per_tick" then
+			if ThePlayer and ThePlayer.player_classified and TheWorld then
+				local x, y, z = ThePlayer.Transform:GetWorldPosition()
+				local snow_level = ThePlayer.player_classified.polarsnowlevel:value() or 0
 				
-				setmetatable(inst, mt2)
-			elseif key == "splashes_per_tick" then
-				local mt2 = deepcopy(getmetatable(inst))
-				mt2.__index["splashes_per_tick"] = val * mult
+				if inst.prefab == "pollen" and TheWorld.components.polartemperature_manager then
+					snow_level = TheWorld.components.polartemperature_manager:GetDataAtPoint(x, y, z) > 0 and 1 or 0
+				end
 				
-				setmetatable(inst, mt2)
+				local mult = 1 - (snow_level / 0.5)
+				mult = math.clamp(mult, 0, 1)
+				
+				mt.__index[key] = val * mult
 			else
-				rawset(t, key, val)
+				mt.__index[key] = val
 			end
+		else
+			rawset(t, key, val)
 		end
 	end
 	

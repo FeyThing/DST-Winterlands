@@ -24,7 +24,7 @@ Weather._ctor = function(self, ...)
 		return 1, false
 	end
 	
-	-- Rain sfx fades when approching the Winterlands, but slowly comes back when melting over
+	-- Rain fades when approching the Winterlands, but slowly comes back when melting over
 	
 	local StopAmbientRainSound = PolarUpvalue(self.OnUpdate, "StopAmbientRainSound")
 	

@@ -261,7 +261,8 @@ local function IsInSnow(owner, target)
 	end
 	
 	local tile, tileinfo = owner:GetCurrentTileType()
-	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15))
+	local in_snow = tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays
+		and TheWorld.state.snowlevel and TheWorld.state.snowlevel > TUNING.DIRT_TO_SNOW_MIN_LEVEL))
 	
 	if in_snow or owner == target then
 		return true

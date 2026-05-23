@@ -151,6 +151,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WARLY.DESCRIBE
 	DESCRIBE.ARMORPOLAR = "Some furry protection."
 	DESCRIBE.COMPASS_POLAR = "Show me the way to the freezer, please."
 	DESCRIBE.EMPEROR_PENGUINHAT = "I'm not one to dislike fish. However..."
+	DESCRIBE.FLOWER_POLARHAT = "I can't taste or smell anything anymore... please! Take it away!"
 	DESCRIBE.FROSTWALKERAMULET = "This takes frosting to the next level!"
 	DESCRIBE.ICICLESTAFF = "Il pleut il mouille? No, it kills!"
 	DESCRIBE.POLAR_SPEAR = "It's all fun until it starts dripping."

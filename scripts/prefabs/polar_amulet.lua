@@ -37,7 +37,8 @@ end
 
 local function UpdateWargTeethSpeed(inst, owner)
 	local tile, tileinfo = owner:GetCurrentTileType()
-	local in_snow = (tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays and TheWorld.state.snowlevel and TheWorld.state.snowlevel > 0.15)))
+	local in_snow = (tile and (tile == WORLD_TILES.POLAR_SNOW or (tileinfo and not tileinfo.nogroundoverlays
+		and TheWorld.state.snowlevel and TheWorld.state.snowlevel > TUNING.DIRT_TO_SNOW_MIN_LEVEL)))
 		or (TheWorld.components.polarstorm and TheWorld.components.polarstorm:IsInPolarStorm(owner))
 	
 	if in_snow then

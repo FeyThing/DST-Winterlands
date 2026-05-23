@@ -61,6 +61,7 @@ local function fn()
 	inst:AddTag("frozen")
 	inst:AddTag("hat")
 	inst:AddTag("icebox_valid")
+	inst:AddTag("open_top_hat")
 	inst:AddTag("show_spoilage")
 	
 	inst:AddComponent("snowmandecor")
@@ -95,7 +96,7 @@ local function fn()
 	
 	inst:AddComponent("tradable")
 	
-	MakeHauntableLaunch(inst)
+	MakeHauntableLaunchAndPerish(inst)
 	
 	return inst
 end

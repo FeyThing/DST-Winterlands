@@ -150,6 +150,7 @@ local DESCRIBE = STRINGS.CHARACTERS.WORTOX.DESCRIBE
 	DESCRIBE.ANTLER_TREE_STICK = "This stick gets the jog done."
 	DESCRIBE.ARMORPOLAR = "When damage is a problem, add more fur!"
 	DESCRIBE.EMPEROR_PENGUINHAT = "Long live the fish!"
+	DESCRIBE.FLOWER_POLARHAT = "It's casting a happy little spell on me."
 	DESCRIBE.COMPASS_POLAR = "I have no compass-ion for this defecting thing!"
 	DESCRIBE.FROSTWALKERAMULET = "New paths unfold when the water grows cold."
 	DESCRIBE.ICICLESTAFF = "Look sharp! For spikes could leave a naughty mark."
