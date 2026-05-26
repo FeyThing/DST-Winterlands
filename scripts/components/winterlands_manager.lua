@@ -11,12 +11,15 @@ return Class(function(self, inst)
 	-- [ Private fields ] --
 	
 	local _map = inst.Map
+	local _tiles = {}
 	local _winterlands_grid
 	
 	-- [ Initialization ] --
 	
 	local function InitializeDataGrids()
-		if _winterlands_grid then return end
+		if _winterlands_grid then
+			return
+		end
 		
 		WIDTH, HEIGHT = _map:GetSize()
 		_winterlands_grid = DataGrid(WIDTH, HEIGHT)
@@ -32,23 +35,32 @@ return Class(function(self, inst)
 		return _winterlands_grid
 	end
 	
+	function self:GetTiles()
+		return _tiles
+	end
+	
 	function self:IsWinterlandsAtTile(tx, ty)
 		return _winterlands_grid:GetDataAtPoint(tx, ty)
 	end
 	
 	function self:IsWinterlandsAtPoint(x, y, z)
 		local tx, ty = _map:GetTileCoordsAtPoint(x, y, z)
+		
 		return _winterlands_grid:GetDataAtPoint(tx, ty)
 	end
 	
 	function self:Initialize()
+		_tiles = {}
+		
 		for x = 0, WIDTH - 1 do
 			for y = 0, HEIGHT - 1 do
-				local index = _winterlands_grid:GetIndex(x, y)
-				local tx, ty, tz = _map:GetTileCenterPoint(x, y)
+				local wx, wy, wz = _map:GetTileCenterPoint(x, y)
 				
-				if IsInPolarAtPoint(tx, ty, tz) then
+				if IsInPolarAtPoint(wx, wy, wz) then
+					local index = _winterlands_grid:GetIndex(x, y)
 					_winterlands_grid:SetDataAtIndex(index, true)
+					
+					_tiles[#_tiles + 1] = {index = index, tx = x, ty = y, wx = wx, wz = wz, tile = _map:GetTileAtPoint(wx, wy, wz)}
 				end
 			end
 		end

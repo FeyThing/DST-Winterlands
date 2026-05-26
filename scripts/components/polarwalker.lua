@@ -21,10 +21,7 @@ local PolarWalker = Class(function(self, inst)
 	self.snowdepth = 0 -- LukaS: How deep the player is in snow, [0, 1]
 	
 	self.deepinhighsnow = false
-	
 	self.updating = false
-	
-	self._nextcomplain = nil
 end)
 
 function PolarWalker:OnRemoveFromEntity()
@@ -68,6 +65,7 @@ function PolarWalker:ShouldDebuff()
 	local pt = self.inst:GetPosition()
 	
 	return (IsPolarTile(pt) or self:IsPolarEdgeAtPoint(pt)) and not TheWorld.Map:IsPolarSnowBlocked(pt.x, pt.y, pt.z, 2)
+		and self.snowdepth >= (self.debuff_depth or TUNING.POLAR_SNOW_DEBUFF_DEPTH)
 end
 
 function PolarWalker:GetSlowTime()

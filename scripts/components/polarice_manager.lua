@@ -622,10 +622,13 @@ return Class(function(self, inst)
 		
 		local layer = layers[_current_layer]
 		local tiles = _icelayers[layer]
-		local should_freeze = layer > melting_layer
+		if layer == nil or tiles == nil then
+			return
+		end
 		
 		local updated = 0
 		local processed = {}
+		local should_freeze = layer > melting_layer
 		
 		for index, state in pairs(tiles) do
 			if updated >= TUNING.POLAR_ICEGEN_TILES_PER_UPDATE then

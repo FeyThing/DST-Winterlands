@@ -689,10 +689,12 @@ local KnownModIndex = GLOBAL.KnownModIndex
 	
 --	Misc
 	
+	TUNING.POLAR_SNOWCOVERED_TIME = {min = seg_time * 2, max = seg_time * 16} -- Custom snowcovered override cooldown for things in Winterlands
+	
 	-- High Snow
 	TUNING.POLAR_SLOWMULT = 0.6 -- Slowdown % in High Snow at max
 	TUNING.POLAR_SLOWTIME = 8 -- ^ Max time by default
-	TUNING.POLAR_SNOWCOVERED_TIME = {min = seg_time * 2, max = seg_time * 16} -- Custom snowcovered update cooldown
+	TUNING.POLAR_SNOW_DEBUFF_DEPTH = 0.05
 	
 	TUNING.POLAR_SNOW_MELT_TEMP = 50 -- High Snow melt-over temperature range
 	TUNING.POLAR_SNOW_MELT_TEMP_MAX = 90

@@ -25,7 +25,7 @@ function IsInPolar(inst, range)
 	return IsInPolarAtPoint(x, y, z, range)
 end
 
-function GetClosestPolarTileToPoint(x, y, z, maxdist) -- LukaS: Kinda hacky, don't overuse it or suffer the consequences of L A G
+function GetClosestPolarTileToPoint(x, y, z, maxdist)
 	if IsInPolarAtPoint(x, y, z) then
 		return TheWorld.Map:GetTileAtPoint(x, y, z), 0
 	end
@@ -34,25 +34,27 @@ function GetClosestPolarTileToPoint(x, y, z, maxdist) -- LukaS: Kinda hacky, don
 		return
 	end
 	
-	maxdist = maxdist or math.huge
-	local mindist = math.huge
-	local tile
+	local best_distsq = math.huge
+	local best_tile
 	
-	for i, ispolar in pairs(TheWorld.components.winterlands_manager:GetGrid().grid) do
-		if ispolar then
-			local tx, ty = TheWorld.components.winterlands_manager:GetGrid():GetXYFromIndex(i)
-			local cx, cy, cz = TheWorld.Map:GetTileCenterPoint(tx, ty)
-			local dist = distsq(x, z, cx, cz)
-			
-			if dist < mindist then
-				mindist = dist
-				tile = TheWorld.Map:GetTileAtPoint(cx, cy, cz)
-			end
+	maxdist = maxdist or math.huge
+	local max_distsq = maxdist * maxdist
+	
+	local tiles = TheWorld.components.winterlands_manager:GetTiles()
+	for i = 1, #tiles do
+		local t = tiles[i]
+		local dx = x - t.wx
+		local dz = z - t.wz
+		local distsq = dx * dx + dz * dz
+		
+		if distsq < best_distsq then
+			best_distsq = distsq
+			best_tile = t.tile
 		end
 	end
 	
-	if math.sqrt(mindist) <= maxdist then
-		return tile, math.sqrt(mindist)
+	if best_tile and best_distsq <= max_distsq then
+		return best_tile, math.sqrt(best_distsq)
 	end
 end
 

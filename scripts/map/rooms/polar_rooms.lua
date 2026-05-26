@@ -36,6 +36,7 @@ local cave_data = {
 			--["PolarCave_SmallPillar"] = function() return math.random(0, 1) end,
 		},
 		countprefabs = {
+			flint = function() return math.random() <= 0.1 and 1 or 0 end,
 			rock_polar = function() return math.random(4, 5) end,
 			rock2 = function() return math.random(1, 2) end,
 			polar_icicle_rock = function() return math.random(3, 6) end,
