@@ -88,11 +88,17 @@ end
 
 for i, v in ipairs(cave_shards) do
 	ENV.AddPrefabPostInit(v, function(inst)
+		if not TheNet:IsDedicated() then
+			inst:AddComponent("snowwaver")
+		end
+		
 		if not inst.ismastersim then
 			return inst
 		end
 		
 		inst:AddComponent("arcticfoolfishsavedata")
+		
+		inst:AddComponent("polarflowerspawner")
 	end)
 end
 

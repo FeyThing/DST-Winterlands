@@ -110,7 +110,11 @@ local states = {
 		
 		events = {
 			EventHandler("animover", function(inst)
-				inst.sg:GoToState("taunt_newtarget")
+				--[[if inst.components.combat.target then
+					inst.sg:GoToState("taunt_newtarget") 	They should go back in the fight early... removed
+				end]]
+				
+				inst.sg:GoToState("idle")
 			end)
 		},
 	},

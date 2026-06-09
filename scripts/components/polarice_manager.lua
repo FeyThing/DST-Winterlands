@@ -335,7 +335,7 @@ return Class(function(self, inst)
 						rod.components.oceanfishingrod:StopFishing(ent:HasTag("fishinghook") and "badcast" or "linesnapped", false) -- A bit unfair, so we keep the stuff attached on rod
 					end
 				elseif not ent:HasTag("locomotor") and ent:HasTag("ignorewalkableplatforms") then -- Ocean stuff
-					print("Polar Ice (Forming) removed ent:", ent)
+					print("[Polar Ice (Forming)] removed ent:", ent)
 					DestroyEntity(ent, inst, true, true)
 				end
 			end
@@ -425,7 +425,7 @@ return Class(function(self, inst)
 							elseif ent.components.inventoryitem and ent.components.health == nil then
 								ent.components.inventoryitem:SetLanded(false, true)
 							elseif not ent:HasTag("ignorewalkableplatforms") then -- Not ocean stuff
-								print("Polar Ice (Breaking) removed ent:", ent)
+								print("[Polar Ice (Breaking)] removed ent:", ent)
 								DestroyEntity(ent, inst, true, true)
 							end
 						else

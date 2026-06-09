@@ -44,7 +44,6 @@ function PlayerActionPicker:GetInventoryActions(useitem, right, ...)
 	if useitem and useitem:HasTag("flea") then
 		for i = #actions, 1, -1 do
 			if actions[i].action == ACTIONS.DROP then
-				print("removed?")
 				table.remove(actions, i)
 			end
 		end
