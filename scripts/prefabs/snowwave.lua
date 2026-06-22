@@ -155,8 +155,8 @@ end
 
 local function OnDig(inst, worker)
 	if worker and worker:HasTag("shadowminion") then
-		local duration = GetPolarPlowDuration(worker)
-		SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SHADOWWORKER, duration, worker)
+		local duration = GetPolarPlowDuration(worker, nil, "shovel")
+		SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SHADOWWORKER, duration, worker, "shovel")
 		
 		local fx = SpawnPrefab("polar_splash_large")
 		fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
@@ -170,8 +170,8 @@ local function OnDig(inst, worker)
 end
 
 local function CustomOnHaunt(inst, haunter)
-	local duration = GetPolarPlowDuration(haunter)
-	SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, haunter)
+	local duration = GetPolarPlowDuration(haunter, nil, "haunt")
+	SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, haunter, "haunt")
 	
 	local fx = SpawnPrefab("polar_splash_large")
 	fx.Transform:SetPosition(inst.Transform:GetWorldPosition())
@@ -189,7 +189,7 @@ local function marker()
 	local inst = CreateEntity()
 	
 	inst.entity:AddTransform()
-	inst.entity:AddAnimState() -- Needed for haunting
+	inst.entity:AddAnimState() -- Needed for haunting by Abigail
 	inst.entity:AddNetwork()
 	
 	inst:AddTag("plow_action_marker")

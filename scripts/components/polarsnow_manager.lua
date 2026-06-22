@@ -305,7 +305,7 @@ return Class(function(self, inst)
 						local duration = GetPolarPlowDuration(inst, nil, "frostfall")
 						if duration > 0 and block_range > 0 then
 							local pt = Vector3(_map:GetTileCenterPoint(tx, ty))
-							SpawnPolarSnowBlocker(pt, block_range, duration, inst)
+							SpawnPolarSnowBlocker(pt, block_range, duration, inst, "frostfall")
 						end
 					end
 				end

@@ -10,7 +10,7 @@ local function OnPreBuilt(inst, builder, materials, recipe, ...)
 				
 				if block_range > 0 then
 					local duration = GetPolarPlowDuration(builder, nil, "polarsnowmaterial")
-					SpawnPolarSnowBlocker(builder:GetPosition(), block_range, duration, builder)
+					SpawnPolarSnowBlocker(builder:GetPosition(), block_range, duration, builder, "polarsnowmaterial")
 				end
 				
 				break

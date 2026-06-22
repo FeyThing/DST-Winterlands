@@ -62,7 +62,7 @@ local states = {
 	
 	State{
 		name = "winterfistcast",
-		tags = {"doing", "busy", "canrotate", "winterfistscast"},
+		tags = {"doing", "busy", "nostunlock", "canrotate", "winterfistscast"},
 		
 		onenter = function(inst)
 			local fists = inst.bufferedaction and inst.bufferedaction.invobject
@@ -572,7 +572,7 @@ local states_client = {
 	
 	State{
 		name = "winterfistcast",
-		tags = {"doing", "busy", "canrotate", "winterfistscast"},
+		tags = {"doing", "busy", "nostunlock", "canrotate", "winterfistscast"},
 		server_states = {"winterfistcast"},
 		
 		onenter = function(inst)

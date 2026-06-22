@@ -9,7 +9,7 @@ local Deployable = require("components/deployable")
 		
 		if block_range > 0 then
 			local duration = GetPolarPlowDuration(deployer, nil, "deploy")
-			SpawnPolarSnowBlocker(pt, block_range, duration, deployer)
+			SpawnPolarSnowBlocker(pt, block_range, duration, deployer, "deploy")
 		end
 		
 		return OldDeploy(self, pt, deployer, ...)

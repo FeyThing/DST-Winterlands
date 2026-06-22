@@ -36,7 +36,7 @@ local Builder = require("components/builder")
 		-- Building structures (deploying too) creates a short High Snow blocker
 		if recipe and recipe.placer and block_range > 0 then
 			local duration = GetPolarPlowDuration(self.inst, nil, "building")
-			SpawnPolarSnowBlocker(pt, block_range, duration, self.inst)
+			SpawnPolarSnowBlocker(pt, block_range, duration, self.inst, "building")
 		end
 		
 		return OldDoBuild(self, recname, pt, ...)

@@ -103,7 +103,7 @@ local HAUNTFN = ACTIONS.HAUNT.fn -- Ghosts can plow High Snow
 		
 		if plow_pos and TheWorld.Map:IsPolarSnowAtPoint(plow_pos.x, plow_pos.y, plow_pos.z, true) then
 			local duration = GetPolarPlowDuration(act.doer, nil, "haunt")
-			SpawnPolarSnowBlocker(plow_pos, TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, act.doer)
+			SpawnPolarSnowBlocker(plow_pos, TUNING.SNOW_PLOW_RANGES.GHOST_HAUNT, duration, act.doer, "haunt")
 			
 			local fx = SpawnPrefab("polar_splash_large")
 			fx.Transform:SetPosition(plow_pos.x, plow_pos.y, plow_pos.z)

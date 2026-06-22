@@ -359,6 +359,7 @@ local function fn()
 	
 	MakeInventoryFloatable(inst, "med", nil, 0.6)
 	
+	inst:AddTag("noafterimagecopy")
 	inst:AddTag("shadowlevel")
 	
 	inst.foleysound = "dontstarve/movement/foley/jewlery"

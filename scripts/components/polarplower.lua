@@ -16,7 +16,7 @@ function PolarPlower:DoPlow(doer, pos)
 	local duration = GetPolarPlowDuration(doer, nil, "shovel")
 	local dist = self.plow_range
 	
-	local blocker, blockers = SpawnPolarSnowBlocker(pos, self.plow_range, duration, doer)
+	local blocker, blockers = SpawnPolarSnowBlocker(pos, self.plow_range, duration, doer, "shovel")
 	local fx = SpawnPrefab("polar_splash_large")
 	fx.Transform:SetPosition(pos.x, pos.y, pos.z)
 	

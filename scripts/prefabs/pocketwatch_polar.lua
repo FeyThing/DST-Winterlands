@@ -61,7 +61,7 @@ local function UpdateEquipped(inst, owner)
 		local equipped = inst._equipped[slot]
 		updated[slot] = true
 		
-		local valid = item and item:IsValid()
+		local valid = item and item:IsValid() and not item:HasTag("noafterimagecopy")
 		if equipped and equipped:IsValid() then
 			if not valid or (equipped.prefab ~= item.prefab) or (equipped:GetSkinName() ~= item:GetSkinName()) then
 				if equipped.components.equippable:IsEquipped() then

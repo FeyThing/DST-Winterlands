@@ -57,6 +57,7 @@ end
 
 local prefabs = {
 	"abigail",
+	"ancienttrees",
 	"antlion_sinkhole",
 	"bearger",
 	"birds",
@@ -109,6 +110,7 @@ local prefabs = {
 	"ents_onfreeze",
 	--"fiery_weapons",
 	"hot_stuff",
+	"noafterimagecopy",
 	"polar_walking",
 	"waxed_plants",
 	"wx78_modules",

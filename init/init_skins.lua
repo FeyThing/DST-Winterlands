@@ -15,7 +15,6 @@ ENV.ModdedCurios = {
 	},
 }
 
-
 --	Skin Blacklist, for stuff that shouldn't show in belongings / crafting wheel
 
 local POLAR_DISPLAY_BLACKLIST = {
@@ -23,8 +22,8 @@ local POLAR_DISPLAY_BLACKLIST = {
 	"ms_treasurechest_upgraded_polarice",
 }
 
-for i, skin in ipairs(POLAR_DISPLAY_BLACKLIST) do
-	ITEM_DISPLAY_BLACKLIST[skin] = true
+for i, v in ipairs(POLAR_DISPLAY_BLACKLIST) do
+	ITEM_DISPLAY_BLACKLIST[v] = true
 end
 
 --	High Snow Angel Emote
@@ -65,7 +64,7 @@ AddModUserCommand("Winterlands", "snowangel", {
 					end
 					
 					local duration = GetPolarPlowDuration(inst, TUNING.POLARPLOW_BLOCKER_DURATION, "emote")
-					SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SNOW_EMOTE or 1, duration, inst)
+					SpawnPolarSnowBlocker(inst:GetPosition(), TUNING.SNOW_PLOW_RANGES.SNOW_EMOTE or 1, duration, inst, "emote")
 					
 					inst.SoundEmitter:PlaySound("dontstarve/movement/run_snow")
 				end,

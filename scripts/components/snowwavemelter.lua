@@ -56,7 +56,7 @@ function SnowwaveMelter:Melt()
 	
 	local duration = self.use_melt_time and self.melt_time or GetPolarPlowDuration(self.inst, self.melt_time, "melted")
 	
-	return SpawnPolarSnowBlocker(self.inst:GetPosition(), self:GetMeltRange(), duration, self.inst) -- Generalised method, should do the same
+	return SpawnPolarSnowBlocker(self.inst:GetPosition(), self:GetMeltRange(), duration, self.inst, "melted")
 end
 
 local function DoMelt(inst, self)

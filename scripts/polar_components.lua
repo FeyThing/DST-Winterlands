@@ -63,11 +63,11 @@ end
 local SNOWBLOCKER_TAGS = {"snowblocker"}
 local MIN_SNOWBLOCKER_DIST = 2
 
-function SpawnPolarSnowBlocker(pos, radius, duration, doer)
+function SpawnPolarSnowBlocker(pos, radius, duration, doer, cause)
 	local blockers = TheSim:FindEntities(pos.x, pos.y, pos.z, radius or 0, SNOWBLOCKER_TAGS)
 	local dist = radius
 	
-	TheWorld:PushEvent("ms_plowarea_pre", {doer = doer, pt = pos, radius = radius, blockers = blockers}) -- (Useful to know if area was previously covered)
+	TheWorld:PushEvent("ms_plowarea_pre", {doer = doer, pt = pos, radius = radius, blockers = blockers, cause = cause}) -- (Useful to know if area was previously covered)
 	
 	duration = duration or TUNING.POLARPLOW_BLOCKER_DURATION
 	
@@ -97,7 +97,7 @@ function SpawnPolarSnowBlocker(pos, radius, duration, doer)
 		end
 	end
 	
-	TheWorld:PushEvent("ms_plowarea", {doer = doer, pt = pos, radius = radius, blocker = blocker, blockers = blockers})
+	TheWorld:PushEvent("ms_plowarea", {doer = doer, pt = pos, radius = radius, blocker = blocker, blockers = blockers, cause = cause})
 	
 	return blocker, blockers
 end

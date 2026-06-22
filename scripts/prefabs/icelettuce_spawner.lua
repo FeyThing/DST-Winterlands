@@ -44,7 +44,8 @@ end
 
 local function OnPlowArea_Pre(inst, data)
 	if inst.lettuce == nil and data and data.pt and inst:GetDistanceSqToPoint(data.pt:Get()) <= TUNING.ICELETTUCE_REGROWTH_RANGE_SQ
-		and data.doer and data.doer:HasTag("character") and math.random() <= TUNING.ICELETTUCE_REGROWTH_CHANCE then
+		and data.cause and table.contains(inst.plowarea_spawn_causes or {}, data.cause)
+		and math.random() <= TUNING.ICELETTUCE_REGROWTH_CHANCE then
 		
 		inst:SpawnLettuce(data.pt)
 	end
@@ -64,6 +65,11 @@ local function fn()
 	if not TheWorld.ismastersim then
 		return inst
 	end
+	
+	inst.plowarea_spawn_causes = { -- Seeds only get revealed in some cases !
+		"haunt", -- Player Ghosts / Abigail
+		"shovel", -- Plowing, Shadow Workers
+	}
 	
 	inst.OnSave = OnSave
 	inst.OnLoadPostPass = OnLoadPostPass

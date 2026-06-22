@@ -212,7 +212,7 @@ local function OnUse(inst, target, pos, caster)
 		
 		if block_range > 0 then
 			local duration = GetPolarPlowDuration(caster, nil, "winters_fists")
-			SpawnPolarSnowBlocker(caster:GetPosition(), block_range, duration, caster)
+			SpawnPolarSnowBlocker(caster:GetPosition(), block_range, duration, caster, "winters_fists")
 		end]]
 	end
 	

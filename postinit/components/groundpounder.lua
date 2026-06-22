@@ -13,7 +13,7 @@ local GroundPounder = require("components/groundpounder")
 		if self.destroyer or self.workefficiency then
 			--	Plow High Snow
 			local duration = GetPolarPlowDuration(self.inst, nil, "groundpound")
-			SpawnPolarSnowBlocker(pt, TUNING.SNOW_PLOW_RANGES.GROUNDPOUND, duration, self.inst)
+			SpawnPolarSnowBlocker(pt, TUNING.SNOW_PLOW_RANGES.GROUNDPOUND, duration, self.inst, "groundpound")
 			
 			--	Crack ice tiles
 			if not self.inst._ignore_polarice then
