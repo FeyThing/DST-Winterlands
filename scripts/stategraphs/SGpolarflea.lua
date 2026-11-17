@@ -33,6 +33,8 @@ local events = {
 			inst.sg:GoToState("trapped")
 		end
 	end),
+	CommonHandlers.OnKnockback(),
+	CommonHandlers.OnCorpseChomped(),
 	CommonHandlers.OnSleep(),
 	CommonHandlers.OnLocomote(true, false),
 	CommonHandlers.OnFreeze(),
@@ -313,5 +315,14 @@ local states = {
 CommonStates.AddSleepStates(states)
 CommonStates.AddFrozenStates(states)
 CommonStates.AddElectrocuteStates(states)
+
+CommonStates.AddKnockbackStates(states, {
+	knockback = {
+		FrameEvent(0, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."hit") end),
+		FrameEvent(60, function(inst) inst.SoundEmitter:PlaySound("polarsounds/snowflea/"..(inst.babyflea and "baby/" or "").."blblbl") end),
+	}
+})
+
+CommonStates.AddCorpseStates(states)
 
 return StateGraph("polarflea", states, events, "idle", actionhandlers)

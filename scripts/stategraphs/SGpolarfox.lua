@@ -14,6 +14,7 @@ local actionhandlers = {
 }
 
 local events = {
+	CommonHandlers.OnKnockback(),
 	CommonHandlers.OnAttacked(),
 	CommonHandlers.OnDeath(),
 	CommonHandlers.OnHop(),
@@ -23,6 +24,7 @@ local events = {
 	CommonHandlers.OnSleepEx(),
 	CommonHandlers.OnWakeEx(),
 	CommonHandlers.OnElectrocute(),
+	CommonHandlers.OnCorpseChomped(),
 	
 	EventHandler("locomote", function(inst)
 		if inst.components.locomotor then
@@ -624,5 +626,13 @@ CommonStates.AddFrozenStates(states,
 CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddVoidFallStates(states)
 CommonStates.AddElectrocuteStates(states)
+
+CommonStates.AddKnockbackStates(states, {
+	knockback = {
+		FrameEvent(3, function(inst) inst.SoundEmitter:PlaySound("polarsounds/polarfox/sniff_cut") end),
+	}
+})
+
+CommonStates.AddCorpseStates(states)
 
 return StateGraph("polarfox", states, events, "idle", actionhandlers)

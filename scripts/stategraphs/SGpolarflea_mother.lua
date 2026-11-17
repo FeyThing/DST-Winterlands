@@ -97,6 +97,7 @@ local events = {
 	CommonHandlers.OnLocomote(false, true),
 	CommonHandlers.OnFreeze(),
 	CommonHandlers.OnElectrocute(),
+	CommonHandlers.OnCorpseChomped(),
 }
 
 local states = {
@@ -423,6 +424,7 @@ local states = {
 	},
 }
 
+CommonStates.AddCorpseStates(states)
 CommonStates.AddSleepStates(states)
 CommonStates.AddFrozenStates(states)
 CommonStates.AddElectrocuteStates(states)

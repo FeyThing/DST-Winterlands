@@ -1,6 +1,6 @@
 local assets = {
 	Asset("ANIM", "anim/polarbear_build.zip"),
-	Asset("ANIM", "anim/polarbear_anims.zip"),
+	Asset("ANIM", "anim/polarbear_actions.zip"),
 	
 	Asset("ANIM", "anim/ds_pig_basic.zip"),
 	Asset("ANIM", "anim/ds_pig_actions.zip"),

@@ -17,6 +17,7 @@ local events = {
 	CommonHandlers.OnFreeze(),
 	CommonHandlers.OnDeath(),
 	CommonHandlers.OnElectrocute(),
+	CommonHandlers.OnCorpseChomped(),
 	
 	EventHandler("locomote", function(inst)
 		if inst:ChargeRam() then
@@ -430,6 +431,7 @@ CommonStates.AddSleepExStates(states, {
 		end),
 	},
 })
+CommonStates.AddCorpseStates(states)
 CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddElectrocuteStates(states)
 
