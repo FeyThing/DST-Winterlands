@@ -25,9 +25,11 @@ local events = {
 	CommonHandlers.OnLocomote(true, true),
 	CommonHandlers.OnSleep(),
 	CommonHandlers.OnFreeze(),
+	CommonHandlers.OnKnockback(),
 	CommonHandlers.OnAttacked(nil, TUNING.PIG_MAX_STUN_LOCKS),
 	CommonHandlers.OnDeath(),
 	CommonHandlers.OnHop(),
+	CommonHandlers.OnCorpseChomped(),
 	CommonHandlers.OnSink(),
 	CommonHandlers.OnFallInVoid(),
 	CommonHandlers.OnIpecacPoop(),
@@ -527,6 +529,17 @@ CommonStates.AddSinkAndWashAshoreStates(states)
 CommonStates.AddVoidFallStates(states)
 CommonStates.AddIpecacPoopState(states)
 CommonStates.AddElectrocuteStates(states)
+
+CommonStates.AddKnockbackStates(states, {
+	knockback = {
+		FrameEvent(1, function(inst) inst.SoundEmitter:PlaySound(inst.sounds.hit) end)
+	}
+},
+{ --anims
+	knockback = "smacked"
+})
+
+CommonStates.AddCorpseStates(states)
 
 CommonStates.AddWalrusBeartrapHandlers(states, events, {
 	anims = {
